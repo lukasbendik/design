@@ -1,0 +1,1043 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<script>
+(function(){var H='4c129f69f551195cbc5e8b57cc5a0975b6efa1e8510573524d11df03c7d010c6',K='rozcestnik__auth';try{var p=new URLSearchParams(location.search);if(p.get('k')===H){localStorage.setItem(K,'1');p.delete('k');var q=p.toString();history.replaceState(history.state,'',location.pathname+(q?'?'+q:'')+location.hash);}if(localStorage.getItem(K)!=='1')location.replace('../');}catch(e){}})();
+</script>
+<meta charset="UTF-8">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Prototyp: Zahraniční platba BEN/SHA/OUR</title>
+
+<!-- Google Analytics 4 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXX"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-XXXXXXX', { send_page_view: false });
+</script>
+
+<!-- Microsoft Clarity -->
+<script type="text/javascript">
+  (function(c,l,a,r,i,t,y){
+    c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+    t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+    y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+  })(window, document, "clarity", "script", "XXXXXXX");
+</script>
+
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+:root {
+  --red: #E3000F;
+  --red-dark: #B8000C;
+  --bg: #F4F4F4;
+  --card: #FFFFFF;
+  --text: #1A1A1A;
+  --text-2: #6A6A6A;
+  --text-3: #9A9A9A;
+  --border: #E5E5E5;
+  --border-focus: #1A1A1A;
+  --green: #0E8A4F;
+  --green-bg: #EAF6EF;
+  --orange: #D97706;
+  --orange-bg: #FEF3C7;
+  --shadow: 0 1px 3px rgba(0,0,0,0.07);
+  --shadow-md: 0 4px 16px rgba(0,0,0,0.10);
+}
+
+html, body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+  background: #2a2a2a;
+  color: var(--text);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 24px 12px 40px;
+  gap: 16px;
+}
+
+h1.proto-title { font-size: 18px; color: #fff; font-weight: 600; }
+.subtitle { color: #bdbdbd; font-size: 13px; text-align: center; max-width: 720px; line-height: 1.5; }
+
+.stage {
+  position: relative;
+  width: 390px;
+  height: 800px;
+  background: var(--bg);
+  border-radius: 40px;
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.45);
+  border: 8px solid #111;
+}
+
+.screen {
+  position: absolute;
+  inset: 0;
+  display: none;
+  flex-direction: column;
+  background: var(--bg);
+  transition: opacity 0.2s;
+}
+.screen.active { display: flex; }
+
+.topbar {
+  height: 52px;
+  display: flex;
+  align-items: center;
+  padding: 0 8px;
+  background: var(--bg);
+  flex-shrink: 0;
+  position: relative;
+}
+.topbar-title {
+  position: absolute; left: 0; right: 0;
+  text-align: center;
+  font-size: 17px; font-weight: 600;
+  pointer-events: none;
+}
+.back-btn {
+  display: flex; align-items: center;
+  background: none; border: none; cursor: pointer;
+  font-size: 17px; color: var(--text);
+  padding: 8px 10px; border-radius: 8px; z-index: 1;
+}
+.back-btn:active { background: rgba(0,0,0,0.06); }
+.close-btn {
+  margin-left: auto;
+  background: none; border: none; cursor: pointer;
+  width: 32px; height: 32px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--text-2); z-index: 1;
+}
+
+.scroll {
+  flex: 1;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: 0 14px 120px;
+}
+.scroll::-webkit-scrollbar { display: none; }
+
+.section-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-3);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  margin: 16px 0 8px;
+}
+
+.field-group {
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: var(--shadow);
+  margin-bottom: 10px;
+  overflow: hidden;
+}
+
+.field-row {
+  display: flex;
+  align-items: center;
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--border);
+  gap: 10px;
+}
+.field-row:last-child { border-bottom: none; }
+
+.field-icon {
+  width: 32px; height: 32px;
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  background: var(--bg);
+}
+
+.field-inner {
+  flex: 1;
+  min-width: 0;
+}
+.field-label {
+  font-size: 11px;
+  color: var(--text-3);
+  margin-bottom: 2px;
+  font-weight: 500;
+}
+.field-input {
+  width: 100%;
+  border: none;
+  outline: none;
+  font-size: 16px;
+  color: var(--text);
+  background: transparent;
+  font-family: inherit;
+  padding: 0;
+  -webkit-appearance: none;
+}
+.field-input::placeholder { color: var(--text-3); }
+
+.from-account-pill {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: var(--shadow);
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+.from-account-pill:active { background: #f5f5f5; }
+.account-dot {
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  background: var(--red);
+  flex-shrink: 0;
+}
+.account-name { font-size: 14px; font-weight: 600; flex: 1; }
+.account-num { font-size: 12px; color: var(--text-2); }
+.account-balance { font-size: 14px; font-weight: 600; }
+
+.amount-display {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  padding: 14px 14px 4px;
+}
+.amount-input-big {
+  flex: 1;
+  border: none; outline: none;
+  font-size: 40px;
+  font-weight: 700;
+  color: var(--text);
+  background: transparent;
+  font-family: inherit;
+  letter-spacing: -1px;
+  min-width: 0;
+  -webkit-appearance: none;
+}
+.amount-input-big::placeholder { color: var(--text-3); }
+
+.cur-select-btn {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: var(--bg);
+  border: none;
+  border-radius: 20px;
+  padding: 6px 10px 6px 8px;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text);
+  flex-shrink: 0;
+  transition: background 0.15s;
+}
+.cur-select-btn:active { background: #e0e0e0; }
+.cur-select-flag { font-size: 16px; line-height: 1; }
+.cur-select-code { font-size: 13px; font-weight: 700; }
+.cur-select-chevron { color: var(--text-3); margin-left: 1px; }
+
+.bottom-bar {
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  padding: 12px 16px 20px;
+  background: linear-gradient(to top, var(--bg) 80%, transparent);
+}
+
+.primary-btn {
+  width: 100%;
+  padding: 16px;
+  background: var(--red);
+  color: #fff;
+  border: none; border-radius: 16px;
+  font-size: 17px; font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+  box-shadow: 0 6px 20px rgba(227,0,15,0.30);
+  transition: transform 0.1s, box-shadow 0.1s;
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+}
+.primary-btn:active { transform: scale(0.98); box-shadow: 0 2px 8px rgba(227,0,15,0.2); }
+.primary-btn:disabled { background: #ccc; box-shadow: none; cursor: default; }
+
+/* ====== FEE TYPE SELECTOR ====== */
+.fee-option {
+  background: #fff;
+  border-radius: 14px;
+  padding: 14px;
+  margin-bottom: 10px;
+  border: 2px solid var(--border);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.fee-option:active { background: #f9f9f9; }
+.fee-option.selected {
+  border-color: var(--red);
+  background: #fff;
+}
+.fee-option-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 6px;
+}
+.fee-option-radio {
+  width: 20px; height: 20px;
+  border-radius: 50%;
+  border: 2px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  transition: all 0.15s;
+}
+.fee-option.selected .fee-option-radio {
+  border-color: var(--red);
+  background: var(--red);
+}
+.fee-option-radio::after {
+  content: '✓';
+  color: #fff;
+  font-size: 12px;
+  font-weight: 700;
+  opacity: 0;
+}
+.fee-option.selected .fee-option-radio::after { opacity: 1; }
+
+.fee-option-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text);
+}
+.fee-option-desc {
+  font-size: 12px;
+  color: var(--text-2);
+  line-height: 1.4;
+}
+
+.balance-hint {
+  font-size: 12px;
+  color: var(--text-3);
+  padding: 2px 14px 12px;
+}
+.balance-hint span { color: var(--text-2); font-weight: 500; }
+
+/* ====== SUMMARY SCREEN ====== */
+#screen-summary .scroll { padding: 0 14px 96px; }
+.summary-hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 18px 14px 10px;
+  text-align: center;
+}
+.summary-avatar {
+  width: 64px; height: 64px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  color: #fff; font-weight: 700; font-size: 22px;
+  background: linear-gradient(135deg,#6366F1,#4F46E5);
+  margin-bottom: 10px;
+}
+.summary-to { font-size: 13px; color: var(--text-2); }
+.summary-name { font-size: 17px; font-weight: 700; color: var(--text); margin-top: 2px; }
+.summary-amount {
+  font-size: 40px; font-weight: 700;
+  letter-spacing: -1px;
+  margin-top: 14px;
+  color: var(--text);
+}
+
+.summary-card {
+  background: #fff;
+  border-radius: 14px;
+  margin: 14px 0 12px;
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+.summary-row {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--border);
+  gap: 10px;
+}
+.summary-row:last-child { border-bottom: none; }
+.summary-row .lbl { font-size: 13px; color: var(--text-2); flex-shrink: 0; }
+.summary-row .val {
+  font-size: 14px; color: var(--text); font-weight: 500;
+  text-align: right; word-break: break-word;
+}
+.summary-row .val.green { color: var(--green); font-weight: 600; }
+.summary-row .val.orange { color: var(--orange); font-weight: 600; }
+.summary-row .val.muted { color: var(--text-3); }
+
+.summary-edit {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 12px;
+  background: transparent;
+  border: 1.5px solid var(--border);
+  border-radius: 14px;
+  width: 100%;
+  font-size: 14px;
+  color: var(--text);
+  cursor: pointer;
+  font-family: inherit;
+  margin-top: 4px;
+}
+.summary-edit:active { background: rgba(0,0,0,0.05); }
+
+.summary-info-banner {
+  background: var(--orange-bg);
+  color: var(--orange);
+  border-radius: 12px;
+  padding: 10px 12px;
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 12px;
+  line-height: 1.4;
+  margin-top: 12px;
+}
+
+/* ====== DETAIL SCREEN ====== */
+.detail-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 18px 14px 10px;
+}
+.detail-avatar {
+  width: 56px; height: 56px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  color: #fff; font-weight: 700; font-size: 20px;
+  background: linear-gradient(135deg,#6366F1,#4F46E5);
+}
+.detail-info h2 {
+  font-size: 17px; font-weight: 700; color: var(--text);
+}
+.detail-info p {
+  font-size: 13px; color: var(--text-2); margin-top: 2px;
+}
+
+/* ====== SUCCESS SCREEN ====== */
+#screen-success {
+  align-items: center;
+  justify-content: center;
+}
+.success-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 32px;
+  gap: 8px;
+  text-align: center;
+}
+.success-ring {
+  width: 80px; height: 80px;
+  border-radius: 50%;
+  background: var(--green-bg);
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: 12px;
+  animation: pop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+@keyframes pop {
+  from { transform: scale(0.5); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+.success-title {
+  font-size: 24px; font-weight: 700; letter-spacing: -0.5px;
+  color: var(--text);
+}
+.success-sub {
+  font-size: 15px; color: var(--text-2); line-height: 1.5;
+}
+.success-details {
+  background: #fff;
+  border-radius: 14px;
+  width: 100%;
+  margin-top: 20px;
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+.success-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 11px 14px;
+  border-bottom: 1px solid var(--border);
+  font-size: 14px;
+}
+.success-row:last-child { border-bottom: none; }
+.success-row .lbl { color: var(--text-2); }
+.success-row .val { font-weight: 500; text-align: right; max-width: 180px; }
+.success-row .val.green { color: var(--green); font-weight: 600; }
+.success-row .val.orange { color: var(--orange); font-weight: 600; }
+
+.success-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 12px 16px 24px;
+  width: 100%;
+}
+.secondary-btn {
+  width: 100%;
+  padding: 14px;
+  background: transparent;
+  color: var(--text);
+  border: 1.5px solid var(--border);
+  border-radius: 16px;
+  font-size: 16px; font-weight: 500;
+  cursor: pointer; font-family: inherit;
+}
+.secondary-btn:active { background: rgba(0,0,0,0.05); }
+
+.hint {
+  font-size: 12px;
+  color: #777;
+  text-align: center;
+  max-width: 360px;
+  line-height: 1.5;
+}
+.hint code {
+  background: #3a3a3a;
+  padding: 2px 5px;
+  border-radius: 4px;
+  font-size: 11px;
+}
+
+@media (max-width: 480px) {
+  html, body {
+    background: var(--bg);
+    padding: 0;
+    gap: 0;
+    align-items: stretch;
+    overflow: hidden;
+    min-height: 100dvh;
+  }
+  h1.proto-title, .subtitle, .hint { display: none; }
+  .stage {
+    width: 100vw;
+    height: 100dvh;
+    border-radius: 0;
+    border: none;
+    box-shadow: none;
+  }
+}
+</style>
+</head>
+<body>
+
+<h1 class="proto-title">Zahraniční platba s poplatky BEN/SHA/OUR</h1>
+<p class="subtitle">Prototyp zahraniční platby v USD s výběrem typu poplatku.</p>
+
+<div class="stage">
+
+  <!-- ======================== NOVÁ PLATBA ======================== -->
+  <section class="screen active" id="screen-payment">
+    <div class="topbar">
+      <button class="back-btn" id="btn-payment-back" aria-label="Zavřít">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+      <span class="topbar-title">Nová platba</span>
+    </div>
+
+    <div class="scroll">
+      <div class="section-label">Z účtu</div>
+      <div class="from-account-pill">
+        <div class="account-dot"></div>
+        <div>
+          <div class="account-name">Osobní účet · CZK</div>
+          <div class="account-num">122000/0100</div>
+        </div>
+        <div class="account-balance">38 420 Kč</div>
+      </div>
+
+      <div class="section-label">Příjemce</div>
+      <div class="field-group">
+        <div class="field-row">
+          <div class="field-icon" style="color:#6A6A6A;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          </div>
+          <div class="field-inner">
+            <div class="field-label">Jméno příjemce</div>
+            <input class="field-input" id="input-recipient-name" type="text" placeholder="Salman bin Abdulaziz" autocomplete="off">
+          </div>
+        </div>
+        <div class="field-row">
+          <div class="field-icon" style="color:#6A6A6A;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+          </div>
+          <div class="field-inner">
+            <div class="field-label">Číslo účtu IBAN</div>
+            <input class="field-input" id="input-iban" type="text" placeholder="SA038 0000 0006 0801 0167 519" autocomplete="off">
+          </div>
+        </div>
+      </div>
+
+      <div class="section-label">BIC / SWIFT kód</div>
+      <div class="field-group">
+        <div class="field-row">
+          <div class="field-icon" style="color:#6A6A6A;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a9 9 0 010 18 9 9 0 010-18z"/><path d="M12 8v8"/><path d="M8 12h8"/></svg>
+          </div>
+          <div class="field-inner">
+            <div class="field-label">BIC / SWIFT</div>
+            <input class="field-input" id="input-swift" type="text" placeholder="SAMASAR​IXXX" autocomplete="off">
+          </div>
+        </div>
+      </div>
+
+      <div class="section-label">Adresa příjemce</div>
+      <div class="field-group">
+        <div class="field-row">
+          <div class="field-icon" style="color:#6A6A6A;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          </div>
+          <div class="field-inner">
+            <div class="field-label">Ulice</div>
+            <input class="field-input" id="input-street" type="text" placeholder="King Saud Bin" autocomplete="off">
+          </div>
+        </div>
+        <div class="field-row">
+          <div class="field-icon" style="background:transparent;"></div>
+          <div class="field-inner">
+            <div class="field-label">Číslo budovy</div>
+            <input class="field-input" id="input-building" type="text" placeholder="2992" autocomplete="off">
+          </div>
+        </div>
+        <div class="field-row">
+          <div class="field-icon" style="background:transparent;"></div>
+          <div class="field-inner">
+            <div class="field-label">Město</div>
+            <input class="field-input" id="input-city" type="text" placeholder="Riyadh" autocomplete="off">
+          </div>
+        </div>
+        <div class="field-row">
+          <div class="field-icon" style="background:transparent;"></div>
+          <div class="field-inner">
+            <div class="field-label">PSČ</div>
+            <input class="field-input" id="input-postal" type="text" placeholder="12345" autocomplete="off">
+          </div>
+        </div>
+        <div class="field-row">
+          <div class="field-icon" style="background:transparent;"></div>
+          <div class="field-inner">
+            <div class="field-label">Země</div>
+            <input class="field-input" id="input-country" type="text" placeholder="Saúdská Arábie" autocomplete="off">
+          </div>
+        </div>
+      </div>
+
+      <div class="section-label">Částka</div>
+      <div class="field-group">
+        <div class="amount-display">
+          <input class="amount-input-big" id="input-amount" type="text" inputmode="decimal" placeholder="0" autocomplete="off">
+          <button class="cur-select-btn" id="cur-select-btn">
+            <span class="cur-select-flag">🇺🇸</span>
+            <span class="cur-select-code">USD</span>
+          </button>
+        </div>
+        <div class="balance-hint">Kurz: <span>1 USD = 23,94 Kč</span></div>
+      </div>
+
+      <div class="section-label">Zpráva pro příjemce</div>
+      <div class="field-group">
+        <div class="field-row">
+          <div class="field-inner">
+            <input class="field-input" id="input-message" type="text" placeholder="Thank you Salman!" autocomplete="off" maxlength="140">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="bottom-bar">
+      <button class="primary-btn" id="btn-continue" onclick="goToFeeType()">
+        Pokračovat
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+      </button>
+    </div>
+  </section>
+
+  <!-- ======================== VÝBĚR TYPU POPLATKU ======================== -->
+  <section class="screen" id="screen-fee">
+    <div class="topbar">
+      <button class="back-btn" id="btn-fee-back" aria-label="Zpět">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+      </button>
+      <span class="topbar-title">Typ poplatku</span>
+    </div>
+
+    <div class="scroll">
+      <div style="padding: 10px 0 6px;">
+        <p style="font-size: 13px; color: var(--text-2); padding: 0 14px; line-height: 1.5;">
+          Vyberte, kdo zaplatí poplatek za zahraniční platbu.
+        </p>
+      </div>
+
+      <div class="fee-option selected" id="fee-sha" onclick="selectFeeType('sha')">
+        <div class="fee-option-header">
+          <div class="fee-option-radio"></div>
+          <div class="fee-option-title">Platíte oba – SHA</div>
+        </div>
+        <div class="fee-option-desc">Vy zaplatíte poplatek nám, příjemce zaplatí své bance a připadné další banky, které se účastní platby. KB platíte vy.</div>
+        <div style="font-size: 13px; color: var(--red); font-weight: 600; margin-top: 8px;">Poplatek 200 Kč za volbu SHA</div>
+      </div>
+
+      <div class="fee-option" id="fee-our" onclick="selectFeeType('our')">
+        <div class="fee-option-header">
+          <div class="fee-option-radio"></div>
+          <div class="fee-option-title">Všě platíte vy – OUR</div>
+        </div>
+        <div class="fee-option-desc">Zaplatíte poplatek za provedení platby a poplatek 800 Kč dle ceníku.</div>
+        <div style="font-size: 13px; color: var(--red); font-weight: 600; margin-top: 8px;">Poplatek 800 Kč za volbu OUR</div>
+      </div>
+
+      <div class="fee-option" id="fee-ben" onclick="selectFeeType('ben')">
+        <div class="fee-option-header">
+          <div class="fee-option-radio"></div>
+          <div class="fee-option-title">Všé platí příjemce – BEN</div>
+        </div>
+        <div class="fee-option-desc">Vy neplatíte nic. Příjemce zaplatí všechny poplatky.</div>
+        <div style="font-size: 13px; color: var(--green); font-weight: 600; margin-top: 8px;">Vy neplatíte.</div>
+      </div>
+    </div>
+
+    <div class="bottom-bar">
+      <button class="primary-btn" id="btn-fee-continue" onclick="goToSummary()">
+        Pokračovat
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+      </button>
+    </div>
+  </section>
+
+  <!-- ======================== SOUHRN ======================== -->
+  <section class="screen" id="screen-summary">
+    <div class="topbar">
+      <button class="back-btn" id="btn-summary-back" aria-label="Zpět">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+      </button>
+      <span class="topbar-title">Zkontrolujte platbu</span>
+    </div>
+
+    <div class="scroll">
+      <div class="summary-hero">
+        <div class="summary-avatar" id="sum-avatar">SA</div>
+        <div class="summary-to">Posíláte</div>
+        <div class="summary-name" id="sum-name">Salman bin Abdulaziz</div>
+        <div class="summary-amount" id="sum-amount">100,00 USD</div>
+      </div>
+
+      <div class="summary-card">
+        <div class="summary-row">
+          <span class="lbl">Z účtu</span>
+          <span class="val">122000/0100</span>
+        </div>
+        <div class="summary-row">
+          <span class="lbl">Typ poplatku</span>
+          <span class="val orange" id="sum-fee-type">SHA</span>
+        </div>
+        <div class="summary-row">
+          <span class="lbl">Poplatek za KB</span>
+          <span class="val orange" id="sum-fee-amount">200 Kč</span>
+        </div>
+        <div class="summary-row">
+          <span class="lbl">Kurz</span>
+          <span class="val" id="sum-rate">1 USD = 23,94 Kč</span>
+        </div>
+        <div class="summary-row">
+          <span class="lbl">Odesláno</span>
+          <span class="val" id="sum-total">2 394,00 Kč + 200 Kč</span>
+        </div>
+      </div>
+
+      <button class="summary-edit" id="btn-summary-edit" onclick="goToPayment()">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+        Upravit platbu
+      </button>
+
+      <div class="summary-info-banner">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        <span>Zahraniční platby trvají typicky 2–4 pracovní dny. Doba závisí na straně příjemce.</span>
+      </div>
+    </div>
+
+    <div class="bottom-bar">
+      <button class="primary-btn" id="btn-summary-confirm" onclick="goToDetail()">
+        Odeslat platbu
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+      </button>
+    </div>
+  </section>
+
+  <!-- ======================== DETAIL ODCHOZÍ PLATBY ======================== -->
+  <section class="screen" id="screen-detail">
+    <div class="topbar">
+      <button class="back-btn" id="btn-detail-back" aria-label="Zpět">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+      </button>
+      <span class="topbar-title">Odchozí platba</span>
+    </div>
+
+    <div class="scroll">
+      <div class="detail-header">
+        <div class="detail-avatar" id="det-avatar">SA</div>
+        <div class="detail-info">
+          <h2 id="det-name">Salman bin Abdulaziz</h2>
+          <p id="det-iban">SA038 0000 0006...</p>
+        </div>
+        <div style="margin-left: auto;">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--green);">
+            <polyline points="20 6 9 17 4 12"/></svg>
+        </div>
+      </div>
+
+      <div style="display: flex; align-items: baseline; gap: 6px; padding: 14px 14px 4px; font-size: 32px; font-weight: 700; color: var(--text); letter-spacing: -0.8px;">
+        <span>−100,00 USD</span>
+      </div>
+      <div style="font-size: 13px; color: var(--text-2); padding: 0 14px 14px;">
+        Středa 8. 1. 2026 · 13:45
+      </div>
+
+      <div class="summary-card">
+        <div class="summary-row">
+          <span class="lbl">Ze kterého účtu</span>
+          <span class="val">Osobní účet<br/>122000/0100</span>
+        </div>
+        <div class="summary-row">
+          <span class="lbl">BIC / SWIFT</span>
+          <span class="val">SAMASAR​IXXX</span>
+        </div>
+        <div class="summary-row">
+          <span class="lbl">Typ poplatku</span>
+          <span class="val orange">SHA</span>
+        </div>
+        <div class="summary-row">
+          <span class="lbl">Adresa příjemce</span>
+          <span class="val" style="font-size: 12px;">King Saud Bin 2992<br/>Riyadh 12345<br/>Saúdská Arábie</span>
+        </div>
+        <div class="summary-row">
+          <span class="lbl">ID platby</span>
+          <span class="val">123123</span>
+        </div>
+        <div class="summary-row">
+          <span class="lbl">Kategorie</span>
+          <span class="val muted">Nezařídění</span>
+        </div>
+      </div>
+
+      <div style="margin-top: 8px;">
+        <button class="secondary-btn" onclick="goToFee()" style="width: calc(100% + 28px); margin-left: -14px; margin-right: 0; border-radius: 0; border-left: none; border-right: none;">
+          ↻ Poplatek za zahraniční pla...
+        </button>
+      </div>
+    </div>
+
+    <div class="bottom-bar">
+      <button class="secondary-btn" onclick="goToDetail()">Zavřít</button>
+    </div>
+  </section>
+
+  <!-- ======================== DETAIL POPLATKU ======================== -->
+  <section class="screen" id="screen-fee-detail">
+    <div class="topbar">
+      <button class="back-btn" id="btn-fee-detail-back" aria-label="Zpět" onclick="goToDetail()">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+      </button>
+      <span class="topbar-title">Poplatek za zahraniční pla...</span>
+    </div>
+
+    <div class="scroll">
+      <div class="detail-header">
+        <div class="detail-avatar" style="background: linear-gradient(135deg, #D97706, #B45309);">KB</div>
+        <div class="detail-info">
+          <h2>Komerční banka</h2>
+          <p>−200,00 Kč · Středa 8. 1. 2026</p>
+        </div>
+      </div>
+
+      <div class="summary-card">
+        <div class="summary-row">
+          <span class="lbl">Z účtu</span>
+          <span class="val">122000/0100</span>
+        </div>
+        <div class="summary-row">
+          <span class="lbl">Zpráva pro příjemce</span>
+          <span class="val">Poplatek 200,00 Kč za volbu SHA</span>
+        </div>
+        <div class="summary-row">
+          <span class="lbl">ID související platby</span>
+          <span class="val">123123</span>
+        </div>
+        <div class="summary-row">
+          <span class="lbl">Kategorie</span>
+          <span class="val muted">Nezatřídění</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="bottom-bar">
+      <button class="secondary-btn" onclick="goToDetail()">Zavřít</button>
+    </div>
+  </section>
+
+</div>
+
+<p class="hint">Prototyp · Zahraniční platba BEN/SHA/OUR · <code>UX Research 2026</code></p>
+
+<script>
+const state = {
+  recipientName: '',
+  iban: '',
+  swift: '',
+  street: '',
+  building: '',
+  city: '',
+  postal: '',
+  country: '',
+  amount: '100,00',
+  currency: 'USD',
+  message: '',
+  feeType: 'sha',
+  rate: 23.94
+};
+
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  const url = '#' + id.replace('screen-', '');
+  history.pushState({ screen: id }, '', url);
+}
+
+window.addEventListener('popstate', (e) => {
+  const id = (e.state && e.state.screen) || 'screen-payment';
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+});
+
+(function() {
+  const hash = window.location.hash.replace('#', '');
+  if (hash && document.getElementById('screen-' + hash)) {
+    showScreen('screen-' + hash);
+    history.replaceState({ screen: 'screen-' + hash }, '', window.location.hash);
+  }
+})();
+
+function saveState() {
+  state.recipientName = document.getElementById('input-recipient-name').value;
+  state.iban = document.getElementById('input-iban').value;
+  state.swift = document.getElementById('input-swift').value;
+  state.street = document.getElementById('input-street').value;
+  state.building = document.getElementById('input-building').value;
+  state.city = document.getElementById('input-city').value;
+  state.postal = document.getElementById('input-postal').value;
+  state.country = document.getElementById('input-country').value;
+  state.amount = document.getElementById('input-amount').value || '100,00';
+  state.message = document.getElementById('input-message').value;
+  localStorage.setItem('intl_payment_state', JSON.stringify(state));
+}
+
+function loadState() {
+  const saved = localStorage.getItem('intl_payment_state');
+  if (saved) {
+    Object.assign(state, JSON.parse(saved));
+    document.getElementById('input-recipient-name').value = state.recipientName;
+    document.getElementById('input-iban').value = state.iban;
+    document.getElementById('input-swift').value = state.swift;
+    document.getElementById('input-street').value = state.street;
+    document.getElementById('input-building').value = state.building;
+    document.getElementById('input-city').value = state.city;
+    document.getElementById('input-postal').value = state.postal;
+    document.getElementById('input-country').value = state.country;
+    document.getElementById('input-amount').value = state.amount;
+    document.getElementById('input-message').value = state.message;
+  }
+}
+
+function getInitials(name) {
+  return name.split(' ').map(w => w[0]).join('').toUpperCase();
+}
+
+function goToFeeType() {
+  saveState();
+  showScreen('screen-fee');
+}
+
+function selectFeeType(type) {
+  state.feeType = type;
+  document.querySelectorAll('.fee-option').forEach(el => el.classList.remove('selected'));
+  document.getElementById('fee-' + type).classList.add('selected');
+}
+
+function goToSummary() {
+  saveState();
+  document.getElementById('sum-avatar').textContent = getInitials(state.recipientName || 'Sa');
+  document.getElementById('sum-name').textContent = state.recipientName || 'Salman bin Abdulaziz';
+  document.getElementById('sum-amount').textContent = state.amount + ' USD';
+
+  let feeLabel = '';
+  let feeAmount = '';
+  if (state.feeType === 'sha') {
+    feeLabel = 'SHA';
+    feeAmount = '200 Kč';
+  } else if (state.feeType === 'our') {
+    feeLabel = 'OUR';
+    feeAmount = '800 Kč';
+  } else {
+    feeLabel = 'BEN';
+    feeAmount = 'Zdarma';
+  }
+  document.getElementById('sum-fee-type').textContent = feeLabel;
+  document.getElementById('sum-fee-amount').textContent = feeAmount;
+
+  const amountNum = parseFloat(state.amount.replace(',', '.'));
+  const total = (amountNum * state.rate).toFixed(2);
+  document.getElementById('sum-total').textContent = total + ' Kč + ' + feeAmount;
+
+  showScreen('screen-summary');
+}
+
+function goToPayment() {
+  showScreen('screen-payment');
+}
+
+function goToDetail() {
+  saveState();
+  document.getElementById('det-avatar').textContent = getInitials(state.recipientName || 'Sa');
+  document.getElementById('det-name').textContent = state.recipientName || 'Salman bin Abdulaziz';
+  document.getElementById('det-iban').textContent = (state.iban || 'SA038...').substring(0, 20) + '...';
+  showScreen('screen-detail');
+}
+
+function goToFee() {
+  showScreen('screen-fee-detail');
+}
+
+document.getElementById('btn-payment-back').addEventListener('click', () => {
+  history.back();
+});
+
+document.getElementById('btn-fee-back').addEventListener('click', () => goToPayment());
+document.getElementById('btn-summary-back').addEventListener('click', () => goToFeeType());
+document.getElementById('btn-detail-back').addEventListener('click', () => goToSummary());
+document.getElementById('btn-fee-detail-back').addEventListener('click', () => goToDetail());
+
+loadState();
+
+// Povolit výběr SHA jako výchozí
+selectFeeType('sha');
+</script>
+
+</body>
+</html>
