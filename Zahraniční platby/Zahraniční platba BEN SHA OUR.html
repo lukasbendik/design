@@ -517,6 +517,72 @@ h1.proto-title { font-size: 18px; color: #fff; font-weight: 600; }
   font-size: 11px;
 }
 
+/* ====== HOME SCREEN ====== */
+#screen-home .scroll { padding: 0 14px 96px; }
+.home-header {
+  display: flex; align-items: center;
+  padding: 18px 16px 8px;
+  gap: 12px;
+}
+.home-avatar {
+  width: 40px; height: 40px;
+  border-radius: 50%;
+  background: linear-gradient(135deg,#E3000F,#B8000C);
+  color: #fff;
+  font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 15px;
+  flex-shrink: 0;
+}
+.home-greeting {
+  flex: 1;
+}
+.home-hello { font-size: 13px; color: var(--text-2); }
+.home-name { font-size: 17px; font-weight: 700; color: var(--text); }
+.balance-card {
+  margin: 6px 14px 14px;
+  background: linear-gradient(135deg,#1A1A1A 0%, #2a2a2a 100%);
+  color: #fff;
+  border-radius: 18px;
+  padding: 18px 18px 16px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.18);
+  position: relative;
+  overflow: hidden;
+}
+.balance-card::after {
+  content: '';
+  position: absolute;
+  width: 200px; height: 200px;
+  border-radius: 50%;
+  background: rgba(227,0,15,0.18);
+  right: -80px; top: -80px;
+}
+.bc-label { font-size: 12px; opacity: 0.75; text-transform: uppercase; letter-spacing: 0.05em; }
+.bc-amount { font-size: 30px; font-weight: 700; letter-spacing: -0.6px; margin-top: 2px; }
+.bc-account { font-size: 12px; opacity: 0.65; margin-top: 6px; }
+.bc-actions { display: flex; gap: 8px; margin-top: 14px; position: relative; z-index: 1; }
+.bc-btn {
+  flex: 1;
+  padding: 10px;
+  background: rgba(255,255,255,0.10);
+  color: #fff;
+  border: 1px solid rgba(255,255,255,0.16);
+  border-radius: 12px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+  display: flex; align-items: center; justify-content: center; gap: 6px;
+  transition: background 0.15s;
+}
+.bc-btn:active { background: rgba(255,255,255,0.18); }
+.bc-btn.primary {
+  background: var(--red);
+  border-color: var(--red);
+  box-shadow: 0 4px 14px rgba(227,0,15,0.35);
+}
+.bc-btn.primary:active { background: var(--red-dark); }
+
 @media (max-width: 480px) {
   html, body {
     background: var(--bg);
@@ -544,8 +610,33 @@ h1.proto-title { font-size: 18px; color: #fff; font-weight: 600; }
 
 <div class="stage">
 
+  <!-- ======================== HOME SCREEN ======================== -->
+  <section class="screen active" id="screen-home">
+    <div class="home-header">
+      <div class="home-avatar">LB</div>
+      <div class="home-greeting">
+        <div class="home-hello">Dobré ráno</div>
+        <div class="home-name">Lukáš</div>
+      </div>
+    </div>
+
+    <div class="scroll">
+      <div class="balance-card">
+        <div class="bc-label">Osobní účet</div>
+        <div class="bc-amount">38 420 <span style="font-size:18px; opacity:0.7;">Kč</span></div>
+        <div class="bc-account">122000/0100</div>
+        <div class="bc-actions">
+          <button class="bc-btn primary" onclick="goToPayment()">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+            Zahraniční platba
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- ======================== NOVÁ PLATBA ======================== -->
-  <section class="screen active" id="screen-payment">
+  <section class="screen" id="screen-payment">
     <div class="topbar">
       <button class="back-btn" id="btn-payment-back" aria-label="Zavřít">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
@@ -888,7 +979,7 @@ h1.proto-title { font-size: 18px; color: #fff; font-weight: 600; }
     </div>
 
     <div class="bottom-bar">
-      <button class="secondary-btn" onclick="goToDetail()">Zavřít</button>
+      <button class="secondary-btn" onclick="goToHome()">Zavřít</button>
     </div>
   </section>
 
@@ -1024,8 +1115,12 @@ function goToFee() {
   showScreen('screen-fee-detail');
 }
 
+function goToHome() {
+  showScreen('screen-home');
+}
+
 document.getElementById('btn-payment-back').addEventListener('click', () => {
-  history.back();
+  goToHome();
 });
 
 document.getElementById('btn-fee-back').addEventListener('click', () => goToPayment());
