@@ -183,7 +183,7 @@ h1.proto-title { font-size: 18px; color: #fff; font-weight: 600; }
   flex: 1;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
-  padding: 0 14px 140px;
+  padding: 0 14px 110px;
 }
 .dash-scroll::-webkit-scrollbar { display: none; }
 
@@ -270,29 +270,31 @@ h1.proto-title { font-size: 18px; color: #fff; font-weight: 600; }
 .summary-divider { height: 1px; background: var(--border); margin: 10px 0; }
 .summary-diff { display: flex; justify-content: space-between; font-size: 14px; }
 
-/* Bottom action bar */
+/* Bottom floating action bar */
 .action-bar {
   position: absolute;
-  bottom: 0; left: 0; right: 0;
-  padding: 12px 16px 28px;
-  background: #fff;
-  box-shadow: 0 -1px 0 rgba(0,0,0,0.07);
+  bottom: 20px; left: 16px; right: 16px;
+  padding: 8px 0;
+  background: var(--red);
+  border-radius: 26px;
   display: flex;
-  gap: 8px;
-  flex-shrink: 0;
+  box-shadow: 0 8px 28px rgba(227,0,15,0.38);
+  z-index: 10;
 }
 .action-btn {
   flex: 1;
   display: flex; flex-direction: column; align-items: center; gap: 5px;
-  padding: 12px 8px;
-  background: var(--red);
-  border: none; border-radius: 16px;
+  padding: 10px 8px;
+  background: transparent;
+  border: none; border-right: 1px solid rgba(255,255,255,0.18);
   cursor: pointer;
   color: #fff; font-size: 12px; font-weight: 500;
   font-family: inherit;
-  transition: background 0.15s;
+  transition: opacity 0.12s;
+  -webkit-tap-highlight-color: transparent;
 }
-.action-btn:active { background: var(--red-dark); }
+.action-btn:last-child { border-right: none; }
+.action-btn:active { opacity: 0.65; }
 .action-btn svg { width: 22px; height: 22px; }
 
 /* ====== PAYMENT FORM ====== */
@@ -385,6 +387,35 @@ h1.proto-title { font-size: 18px; color: #fff; font-weight: 600; }
   font-size: 22px; font-weight: 600; color: var(--text-2);
   flex-shrink: 0; padding-bottom: 4px;
 }
+.cur-select-btn {
+  display: flex; align-items: center; gap: 4px;
+  background: var(--bg); border: none; border-radius: 20px;
+  padding: 6px 10px 6px 8px; cursor: pointer;
+  font-family: inherit; font-size: 13px; font-weight: 700;
+  color: var(--text); flex-shrink: 0;
+  transition: background 0.15s; -webkit-tap-highlight-color: transparent;
+  margin-bottom: 4px;
+}
+.cur-select-btn:active { background: #e0e0e0; }
+.cur-select-flag { font-size: 16px; line-height: 1; }
+.cur-select-code { font-size: 14px; font-weight: 700; }
+.cur-select-chevron { color: var(--text-3); margin-left: 1px; }
+
+/* Currency list in bottom sheet */
+.cur-sheet-list { overflow-y: auto; padding-bottom: 16px; }
+.cur-item {
+  display: flex; align-items: center; gap: 14px;
+  padding: 14px 20px; cursor: pointer;
+  transition: background 0.12s; -webkit-tap-highlight-color: transparent;
+}
+.cur-item:active { background: var(--bg); }
+.cur-item.selected { background: #f0f7ff; }
+.cur-item-flag { font-size: 24px; line-height: 1; flex-shrink: 0; }
+.cur-item-info { flex: 1; min-width: 0; }
+.cur-item-code { font-size: 15px; font-weight: 700; color: var(--text); }
+.cur-item-name { font-size: 12px; color: var(--text-3); margin-top: 1px; }
+.cur-item-check { color: var(--green); flex-shrink: 0; opacity: 0; transition: opacity 0.15s; }
+.cur-item.selected .cur-item-check { opacity: 1; }
 .balance-hint { font-size: 12px; color: var(--text-3); padding: 2px 14px 12px; }
 .balance-hint span { color: var(--text-2); font-weight: 500; }
 
@@ -1134,9 +1165,13 @@ h1.proto-title { font-size: 18px; color: #fff; font-weight: 600; }
       <div class="amount-area">
         <div class="amount-display">
           <input class="amount-input-big" id="wero-amount" type="number" min="0" placeholder="0" inputmode="decimal" oninput="updateWeroAmount()">
-          <span class="cur-label">Kč</span>
+          <button class="cur-select-btn" onclick="openWeroCurSheet()" id="wero-cur-btn">
+            <span class="cur-select-flag" id="wero-cur-flag">🇪🇺</span>
+            <span class="cur-select-code" id="wero-cur-code">EUR</span>
+            <svg class="cur-select-chevron" width="10" height="6" viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+          </button>
         </div>
-        <div class="balance-hint">Na účtu máte <span>18 063,38 Kč</span>.</div>
+        <div class="balance-hint" id="wero-balance-hint">Na účtu máte <span>334,26 EUR</span>.</div>
 
         <!-- Zpráva -->
         <div style="border-top:1px solid var(--border)" class="msg-row">
@@ -1145,17 +1180,17 @@ h1.proto-title { font-size: 18px; color: #fff; font-weight: 600; }
       </div>
 
       <!-- Rychlé částky -->
-      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px">
-        <button onclick="setAmount(100)" style="padding:8px 14px;border-radius:20px;border:1.5px solid var(--border);background:#fff;font-size:14px;cursor:pointer;font-family:inherit">100 Kč</button>
-        <button onclick="setAmount(200)" style="padding:8px 14px;border-radius:20px;border:1.5px solid var(--border);background:#fff;font-size:14px;cursor:pointer;font-family:inherit">200 Kč</button>
-        <button onclick="setAmount(500)" style="padding:8px 14px;border-radius:20px;border:1.5px solid var(--border);background:#fff;font-size:14px;cursor:pointer;font-family:inherit">500 Kč</button>
-        <button onclick="setAmount(1000)" style="padding:8px 14px;border-radius:20px;border:1.5px solid var(--border);background:#fff;font-size:14px;cursor:pointer;font-family:inherit">1 000 Kč</button>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px" id="wero-quick-amounts">
+        <button onclick="setAmount(10)" style="padding:8px 14px;border-radius:20px;border:1.5px solid var(--border);background:#fff;font-size:14px;cursor:pointer;font-family:inherit" class="quick-chip">10 EUR</button>
+        <button onclick="setAmount(20)" style="padding:8px 14px;border-radius:20px;border:1.5px solid var(--border);background:#fff;font-size:14px;cursor:pointer;font-family:inherit" class="quick-chip">20 EUR</button>
+        <button onclick="setAmount(50)" style="padding:8px 14px;border-radius:20px;border:1.5px solid var(--border);background:#fff;font-size:14px;cursor:pointer;font-family:inherit" class="quick-chip">50 EUR</button>
+        <button onclick="setAmount(100)" style="padding:8px 14px;border-radius:20px;border:1.5px solid var(--border);background:#fff;font-size:14px;cursor:pointer;font-family:inherit" class="quick-chip">100 EUR</button>
       </div>
 
       <!-- Info – instant + free -->
       <div style="background:#fff;border-radius:14px;box-shadow:var(--shadow);padding:12px 14px;margin-bottom:12px;">
         <div style="display:flex;align-items:center;gap:10px;font-size:13px;color:var(--text-2)">
-          <div style="width:28px;height:28px;border-radius:50%;background:var(--wero-light);display:flex;align-items:center;justify-content:center;flex-shrink:0">
+          <div style="width:28px;height:28px;border-radius:50%;background:var(--wero-yellow-light);display:flex;align-items:center;justify-content:center;flex-shrink:0">
             <svg width="14" height="14" fill="none" stroke="#000" stroke-width="2" viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
           </div>
           <div><strong>Okamžitá platba</strong> – peníze dorazí příjemci do 10 sekund.</div>
@@ -1205,8 +1240,8 @@ h1.proto-title { font-size: 18px; color: #fff; font-weight: 600; }
       <!-- Částka -->
       <div class="confirm-amount-card">
         <div class="confirm-amount-val">
-          <span id="potv-amount">500</span>
-          <span class="confirm-amount-cur">Kč</span>
+          <span id="potv-amount">0</span>
+          <span class="confirm-amount-cur" id="potv-cur-label">EUR</span>
         </div>
         <div class="confirm-instant-badge">
           <svg width="12" height="12" fill="none" stroke="#000" stroke-width="2" viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
@@ -1298,6 +1333,35 @@ h1.proto-title { font-size: 18px; color: #fff; font-weight: 600; }
   </div>
 
 
+  <!-- ===== CURRENCY BOTTOM SHEET (Wero) ===== -->
+  <div class="sheet-overlay" id="wero-cur-overlay" onclick="closeWeroCurSheet()"></div>
+  <div class="bottom-sheet" id="wero-cur-sheet">
+    <div class="sheet-handle"></div>
+    <div class="sheet-title">Vyberte měnu</div>
+    <div class="cur-sheet-list">
+      <div class="cur-item selected" id="cur-item-EUR" onclick="selectWeroCur('EUR','🇪🇺','EUR','334,26 EUR')">
+        <span class="cur-item-flag">🇪🇺</span>
+        <div class="cur-item-info"><div class="cur-item-code">EUR</div><div class="cur-item-name">Euro</div></div>
+        <svg class="cur-item-check" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="cur-item" id="cur-item-CZK" onclick="selectWeroCur('CZK','🇨🇿','Kč','18 063,38 Kč')">
+        <span class="cur-item-flag">🇨🇿</span>
+        <div class="cur-item-info"><div class="cur-item-code">CZK</div><div class="cur-item-name">Česká koruna</div></div>
+        <svg class="cur-item-check" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="cur-item" id="cur-item-USD" onclick="selectWeroCur('USD','🇺🇸','USD','0 USD')">
+        <span class="cur-item-flag">🇺🇸</span>
+        <div class="cur-item-info"><div class="cur-item-code">USD</div><div class="cur-item-name">Americký dolar</div></div>
+        <svg class="cur-item-check" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="cur-item" id="cur-item-GBP" onclick="selectWeroCur('GBP','🇬🇧','GBP','0 GBP')">
+        <span class="cur-item-flag">🇬🇧</span>
+        <div class="cur-item-info"><div class="cur-item-code">GBP</div><div class="cur-item-name">Britská libra</div></div>
+        <svg class="cur-item-check" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+    </div>
+  </div>
+
 </div><!-- /stage -->
 
 <div class="info-panel">
@@ -1354,6 +1418,42 @@ window.addEventListener('popstate', function(e) {
   }
 })();
 
+// ====== WERO CURRENCY SHEET ======
+var weroCur = { code: 'EUR', flag: '🇪🇺', label: 'EUR', balance: '334,26 EUR' };
+
+function openWeroCurSheet() {
+  document.getElementById('wero-cur-overlay').classList.add('open');
+  document.getElementById('wero-cur-sheet').classList.add('open');
+}
+function closeWeroCurSheet() {
+  document.getElementById('wero-cur-overlay').classList.remove('open');
+  document.getElementById('wero-cur-sheet').classList.remove('open');
+}
+function selectWeroCur(code, flag, label, balance) {
+  // deselect all
+  ['EUR','CZK','USD','GBP'].forEach(function(c) {
+    var el = document.getElementById('cur-item-' + c);
+    if (el) el.classList.toggle('selected', c === code);
+  });
+  weroCur = { code: code, flag: flag, label: label, balance: balance };
+  localStorage.setItem('wero_cur', JSON.stringify(weroCur));
+  // update UI
+  document.getElementById('wero-cur-flag').textContent = flag;
+  document.getElementById('wero-cur-code').textContent = label;
+  var hint = document.getElementById('wero-balance-hint');
+  if (hint) hint.innerHTML = 'Na účtu máte <span>' + balance + '</span>.';
+  // update quick chips
+  var quickMap = { EUR:[10,20,50,100], CZK:[100,200,500,1000], USD:[10,25,50,100], GBP:[10,20,50,100] };
+  var amounts = quickMap[code] || [10,20,50,100];
+  var chips = document.querySelectorAll('.quick-chip');
+  chips.forEach(function(btn, i) {
+    var val = amounts[i];
+    btn.textContent = val + ' ' + label;
+    btn.setAttribute('onclick', 'setAmount(' + val + ')');
+  });
+  closeWeroCurSheet();
+}
+
 // ====== WERO TABS ======
 function switchWeroTab(tab) {
   document.getElementById('tab-contacts').classList.toggle('active', tab === 'contacts');
@@ -1400,9 +1500,15 @@ function setAmount(val) {
 function updateWeroAmount() {
   var val = document.getElementById('wero-amount').value;
   localStorage.setItem('wero_amount', val);
-  document.getElementById('potv-amount').textContent = parseInt(val || 0).toLocaleString('cs-CZ');
-  document.getElementById('uspech-amount').textContent = (parseInt(val || 0)).toLocaleString('cs-CZ') + ' Kč';
-  document.getElementById('uspech-amount2').textContent = (parseInt(val || 0)).toLocaleString('cs-CZ') + ' Kč';
+  var cur = weroCur.label || 'EUR';
+  var formatted = parseFloat(val || 0).toLocaleString('cs-CZ', {minimumFractionDigits: 0, maximumFractionDigits: 2});
+  document.getElementById('potv-amount').textContent = formatted;
+  // update currency label on confirm screen
+  var potvCur = document.getElementById('potv-cur-label');
+  if (potvCur) potvCur.textContent = cur;
+  var uspechAmt = formatted + ' ' + cur;
+  document.getElementById('uspech-amount').textContent = uspechAmt;
+  document.getElementById('uspech-amount2').textContent = uspechAmt;
 }
 
 // ====== SEND PAYMENT ======
@@ -1416,6 +1522,14 @@ function sendWeroPayment() {
 
 // ====== RESTORE localStorage ======
 (function restoreState() {
+  // restore currency
+  var savedCur = localStorage.getItem('wero_cur');
+  if (savedCur) {
+    try {
+      var c = JSON.parse(savedCur);
+      selectWeroCur(c.code, c.flag, c.label, c.balance);
+    } catch(e) {}
+  }
   var name = localStorage.getItem('wero_name');
   var color = localStorage.getItem('wero_color');
   var phone = localStorage.getItem('wero_phone');
