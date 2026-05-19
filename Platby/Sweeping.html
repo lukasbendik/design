@@ -1134,6 +1134,8 @@ html, body {
 </div><!-- /app-shell -->
 
 <script>
+function lsSet(k,v){try{localStorage.setItem(k,v);}catch(e){}}
+function lsGet(k){try{return localStorage.getItem(k);}catch(e){return null;}}
 // ─── Telemetrie ───
 function track(action, params) {
   if (typeof gtag !== 'undefined') gtag('event', action, params || {});
@@ -1167,7 +1169,7 @@ let onbStep = 0;
 function onbNext() {
   onbStep++;
   if (onbStep >= ONB.length) {
-    localStorage.setItem('sweeping__onboarded', '1');
+    lsSet('sweeping__onboarded', '1');
     goTo('home');
     return;
   }
@@ -1188,7 +1190,7 @@ function setMode(mode) {
   ['easy','ctrl','strict'].forEach(m => {
     document.getElementById('mode-' + m).classList.toggle('active', m === mode);
   });
-  localStorage.setItem('sweeping__mode', mode);
+  lsSet('sweeping__mode', mode);
   track('mode_changed', { mode });
 }
 
@@ -1197,7 +1199,7 @@ function toggleSetting(itemEl, key) {
   const t = itemEl.querySelector('.toggle');
   t.classList.toggle('on');
   const val = t.classList.contains('on') ? '1' : '0';
-  localStorage.setItem('sweeping__' + key, val);
+  lsSet('sweeping__' + key, val);
   track('toggle_' + key, { value: val });
 }
 
@@ -1218,11 +1220,11 @@ function setLimit(el, val) {
   el.parentNode.querySelectorAll('.radio-item').forEach(r => r.classList.remove('sel'));
   el.classList.add('sel');
   document.getElementById('limit-input').value = val;
-  localStorage.setItem('sweeping__limit', val);
+  lsSet('sweeping__limit', val);
 }
 function saveRate() {
   const v = document.getElementById('rate-input').value;
-  localStorage.setItem('sweeping__rate', v);
+  lsSet('sweeping__rate', v);
   document.getElementById('rate-display').textContent = 'EUR/CZK ' + v;
   closeSheet('sheet-rate');
   track('rate_saved', { rate: v });
@@ -1247,17 +1249,17 @@ function paymentDone() {
 
 // ─── Obnova stavu z localStorage ───
 function restoreState() {
-  const mode = localStorage.getItem('sweeping__mode');
+  const mode = lsGet('sweeping__mode');
   if (mode) setMode(mode);
-  const rate = localStorage.getItem('sweeping__rate');
+  const rate = lsGet('sweeping__rate');
   if (rate) {
     document.getElementById('rate-input').value = rate;
     document.getElementById('rate-display').textContent = 'EUR/CZK ' + rate;
   }
-  const limit = localStorage.getItem('sweeping__limit');
+  const limit = lsGet('sweeping__limit');
   if (limit !== null) document.getElementById('limit-input').value = limit;
   ['auto-sweep','notif-before','reject-on-fail'].forEach(k => {
-    const stored = localStorage.getItem('sweeping__' + k);
+    const stored = lsGet('sweeping__' + k);
     if (stored === null) return;
     const t = document.querySelector('.toggle[data-key="' + k + '"]');
     if (t) t.classList.toggle('on', stored === '1');
@@ -1278,7 +1280,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Obnova obrazovky z URL hash při refresh
   const initialHash = window.location.hash.replace('#', '');
-  const onboarded = localStorage.getItem('sweeping__onboarded') === '1';
+  const onboarded = lsGet('sweeping__onboarded') === '1';
   if (initialHash && document.getElementById(initialHash)) {
     document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
     document.getElementById(initialHash).classList.add('active');

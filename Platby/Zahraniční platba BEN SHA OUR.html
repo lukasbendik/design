@@ -988,6 +988,8 @@ h1.proto-title { font-size: 18px; color: #fff; font-weight: 600; }
 <p class="hint">Prototyp · Zahraniční platba BEN/SHA/OUR · <code>UX Research 2026</code></p>
 
 <script>
+function lsSet(k,v){try{localStorage.setItem(k,v);}catch(e){}}
+function lsGet(k){try{return localStorage.getItem(k);}catch(e){return null;}}
 const state = {
   recipientName: '',
   iban: '',
@@ -1036,11 +1038,11 @@ function saveState() {
   state.country = document.getElementById('input-country').value;
   state.amount = document.getElementById('input-amount').value || '100,00';
   state.message = document.getElementById('input-message').value;
-  localStorage.setItem('intl_payment_state', JSON.stringify(state));
+  lsSet('intl_payment_state', JSON.stringify(state));
 }
 
 function loadState() {
-  const saved = localStorage.getItem('intl_payment_state');
+  const saved = lsGet('intl_payment_state');
   if (saved) {
     Object.assign(state, JSON.parse(saved));
     document.getElementById('input-recipient-name').value = state.recipientName;

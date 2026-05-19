@@ -2106,6 +2106,8 @@ trackPage('platba_jednokrokova_home');
 
 
 <script>
+function lsSet(k,v){try{localStorage.setItem(k,v);}catch(e){}}
+function lsGet(k){try{return localStorage.getItem(k);}catch(e){return null;}}
 const CURRENCIES = [
   { code: 'CZK', flag: '🇨🇿', name: 'Česká koruna',    balance: '38 420 Kč',   symbol: 'Kč',  instant: '⚡ Okamžitá platba · zdarma' },
   { code: 'EUR', flag: '🇪🇺', name: 'Euro',             balance: '1 540 €',     symbol: '€',   instant: '⚡ SEPA Instant · zdarma' },
@@ -2161,7 +2163,7 @@ const CURRENCIES = [
 
   function selectCurrency(c) {
     state.currency = c.code;
-    localStorage.setItem('novat_currency', c.code);
+    lsSet('novat_currency', c.code);
     flagEl.textContent = c.flag;
     codeEl.textContent = c.code;
     // update balance hint
@@ -2177,7 +2179,7 @@ const CURRENCIES = [
   overlay.addEventListener('click', closeSheet);
 
   // Restore from localStorage
-  const saved = localStorage.getItem('novat_currency');
+  const saved = lsGet('novat_currency');
   if (saved) {
     const c = CURRENCIES.find(x => x.code === saved);
     if (c) {
