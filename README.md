@@ -12,8 +12,6 @@ Sbírka interaktivních HTML prototypů pro testování UX návrhů. Prototypy j
 
 **URL:** https://lukinab.github.io/ux/
 
-Rozcestník je chráněný heslem. Prototypy lze sdílet přímým odkazem s tokenem `?k=...`, který heslo obchází.
-
 ## Lokální náhled
 
 ```bash
