@@ -1,0 +1,1295 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<script>
+(function(){var H='4c129f69f551195cbc5e8b57cc5a0975b6efa1e8510573524d11df03c7d010c6',K='rozcestnik__auth';try{var p=new URLSearchParams(location.search);if(p.get('k')===H){localStorage.setItem(K,'1');p.delete('k');var q=p.toString();history.replaceState(history.state,'',location.pathname+(q?'?'+q:'')+location.hash);}if(localStorage.getItem(K)!=='1')location.replace('../');}catch(e){}})();
+</script>
+<meta charset="UTF-8">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="robots" content="noindex, nofollow">
+<title>Vyrovnávací platby — Sweeping</title>
+
+<!-- Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-F1YV23DTKQ"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-F1YV23DTKQ');
+</script>
+
+<!-- Microsoft Clarity -->
+<script type="text/javascript">
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "w8hlprz19n");
+</script>
+
+<style>
+:root {
+  --kb-red: #CC0000;
+  --kb-red-dark: #A30000;
+  --kb-red-light: #FDECEC;
+  --text-primary: #1A1A1A;
+  --text-secondary: #6B6B6B;
+  --text-hint: #ABABAB;
+  --bg-screen: #F2F2F7;
+  --bg-card: #FFFFFF;
+  --border: #E5E5EA;
+  --border-soft: #EEEEEE;
+  --success: #2E7D32;
+  --success-bg: #E8F5E9;
+  --warning: #B45309;
+  --warning-bg: #FEF3C7;
+  --danger: #B91C1C;
+  --danger-bg: #FEE2E2;
+  --info: #1D4ED8;
+  --info-bg: #DBEAFE;
+  --radius-card: 14px;
+  --radius-btn: 14px;
+  --font: 'SF Pro Display', -apple-system, 'Helvetica Neue', Arial, sans-serif;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+
+html, body {
+  width: 100%; height: 100dvh;
+  font-family: var(--font);
+  background: #000;
+  overflow: hidden;
+}
+
+#app-shell {
+  position: fixed;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: min(390px, 100vw);
+  height: min(844px, 100dvh);
+  background: var(--bg-screen);
+  border-radius: min(44px, 4vw);
+  overflow: hidden;
+  box-shadow: 0 40px 100px rgba(0,0,0,0.7), 0 0 0 1px rgba(255,255,255,0.1);
+}
+
+.screen {
+  position: absolute;
+  inset: 0;
+  display: none;
+  flex-direction: column;
+  overflow: hidden;
+}
+.screen.active { display: flex; }
+
+.screen-scroll {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+  padding-bottom: 90px;
+}
+
+/* Status bar */
+.statusbar {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 14px 22px 6px;
+  color: var(--text-primary);
+  font-size: 15px;
+  font-weight: 600;
+}
+.statusbar .icons { display: flex; gap: 6px; align-items: center; font-size: 13px; }
+
+/* App header */
+.app-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 8px 18px 14px;
+  background: var(--bg-screen);
+}
+.app-header .title { font-size: 22px; font-weight: 700; color: var(--text-primary); letter-spacing: -0.3px; }
+.app-header .subtitle { font-size: 13px; color: var(--text-secondary); margin-top: 2px; }
+.btn-icon {
+  width: 38px; height: 38px; border-radius: 12px;
+  background: #fff; border: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px; color: var(--text-primary); cursor: pointer;
+}
+.btn-icon.primary { background: var(--kb-red); color: #fff; border-color: var(--kb-red); }
+
+/* Back bar */
+.back-bar {
+  display: flex; align-items: center; gap: 10px;
+  padding: 10px 14px 8px;
+  background: var(--bg-screen);
+}
+.back-btn {
+  width: 38px; height: 38px; border-radius: 50%;
+  background: #fff; border: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 20px; cursor: pointer; color: var(--text-primary);
+}
+.back-bar .h { font-size: 17px; font-weight: 700; color: var(--text-primary); }
+
+/* Card */
+.card {
+  background: var(--bg-card);
+  border-radius: var(--radius-card);
+  margin: 8px 14px;
+  padding: 16px;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+}
+.card.flat { box-shadow: none; border: 1px solid var(--border-soft); }
+.card-title { font-size: 13px; font-weight: 700; color: var(--text-secondary); letter-spacing: 0.5px; text-transform: uppercase; margin-bottom: 8px; }
+
+/* Balance hero */
+.hero {
+  margin: 6px 14px 12px;
+  padding: 18px;
+  border-radius: 16px;
+  background: linear-gradient(135deg, #1A1A1A 0%, #2D2D2D 100%);
+  color: #fff;
+}
+.hero .label { font-size: 13px; opacity: 0.7; }
+.hero .amt { font-size: 30px; font-weight: 700; margin-top: 4px; letter-spacing: -0.5px; }
+.hero .sub { font-size: 13px; opacity: 0.75; margin-top: 6px; }
+.hero-row { display: flex; gap: 10px; margin-top: 16px; }
+.chip {
+  flex: 1; background: rgba(255,255,255,0.12);
+  border-radius: 12px; padding: 10px 12px;
+  text-align: center; font-size: 13px;
+  cursor: pointer; transition: background 0.15s;
+}
+.chip:active { background: rgba(255,255,255,0.22); }
+.chip .v { font-size: 16px; font-weight: 700; margin-top: 2px; }
+
+/* Currency rows on dashboard */
+.currency-list { background: #fff; border-radius: var(--radius-card); margin: 8px 14px; overflow: hidden; }
+.currency-row {
+  display: flex; align-items: center; gap: 12px;
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--border-soft);
+  cursor: pointer;
+}
+.currency-row:last-child { border-bottom: none; }
+.currency-row .flag { font-size: 26px; }
+.currency-row .name { font-size: 15px; font-weight: 600; color: var(--text-primary); }
+.currency-row .meta { font-size: 12px; color: var(--text-secondary); margin-top: 2px; }
+.currency-row .amt { margin-left: auto; text-align: right; font-size: 15px; font-weight: 700; color: var(--text-primary); }
+.currency-row .amt small { display: block; font-size: 11px; color: var(--text-secondary); font-weight: 500; margin-top: 2px; }
+.badge {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 8px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+}
+.badge.protected { background: var(--danger-bg); color: var(--danger); }
+.badge.main { background: var(--success-bg); color: var(--success); }
+.badge.info { background: var(--info-bg); color: var(--info); }
+.badge.warn { background: var(--warning-bg); color: var(--warning); }
+
+/* Alert card */
+.alert {
+  margin: 8px 14px;
+  border-radius: 14px;
+  padding: 14px 16px;
+  display: flex; gap: 12px; align-items: flex-start;
+  cursor: pointer;
+}
+.alert.warning { background: #FFF7E6; border: 1px solid #FCD9A6; }
+.alert.danger { background: var(--danger-bg); border: 1px solid #FCA5A5; }
+.alert.info { background: var(--info-bg); border: 1px solid #BFDBFE; }
+.alert .ico { font-size: 22px; line-height: 1; }
+.alert .h { font-size: 14px; font-weight: 700; color: var(--text-primary); }
+.alert .b { font-size: 13px; color: var(--text-secondary); margin-top: 2px; line-height: 1.4; }
+
+/* Section header */
+.section-h {
+  padding: 16px 18px 8px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* List items (settings) */
+.list { background: #fff; border-radius: var(--radius-card); margin: 0 14px; overflow: hidden; }
+.list-item {
+  display: flex; align-items: center; gap: 12px;
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--border-soft);
+  cursor: pointer;
+}
+.list-item:last-child { border-bottom: none; }
+.list-item .ico {
+  width: 36px; height: 36px; border-radius: 10px;
+  background: #F2F2F7;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px;
+}
+.list-item .text { flex: 1; }
+.list-item .text .t { font-size: 15px; font-weight: 600; color: var(--text-primary); }
+.list-item .text .s { font-size: 12px; color: var(--text-secondary); margin-top: 2px; }
+.list-item .chev { color: var(--text-hint); font-size: 18px; }
+
+/* Toggle */
+.toggle {
+  width: 50px; height: 30px; border-radius: 20px;
+  background: #D1D1D6; position: relative; cursor: pointer;
+  transition: background 0.2s;
+  flex-shrink: 0;
+}
+.toggle::after {
+  content: '';
+  position: absolute; top: 2px; left: 2px;
+  width: 26px; height: 26px; border-radius: 50%;
+  background: #fff; box-shadow: 0 1px 3px rgba(0,0,0,0.25);
+  transition: transform 0.2s;
+}
+.toggle.on { background: #34C759; }
+.toggle.on::after { transform: translateX(20px); }
+
+/* Mode picker */
+.mode-picker {
+  background: #fff; margin: 8px 14px; border-radius: var(--radius-card);
+  padding: 6px;
+}
+.mode-opt {
+  padding: 12px 14px; border-radius: 10px; cursor: pointer;
+  display: flex; align-items: center; gap: 10px;
+}
+.mode-opt.active { background: var(--kb-red-light); }
+.mode-opt .dot {
+  width: 20px; height: 20px; border-radius: 50%;
+  border: 2px solid var(--border); flex-shrink: 0;
+}
+.mode-opt.active .dot { border-color: var(--kb-red); background: radial-gradient(circle, var(--kb-red) 0 5px, #fff 6px 100%); }
+.mode-opt .t { font-size: 15px; font-weight: 600; color: var(--text-primary); }
+.mode-opt .s { font-size: 12px; color: var(--text-secondary); margin-top: 2px; }
+
+/* Buttons */
+.btn-primary {
+  display: block; width: calc(100% - 28px);
+  margin: 14px;
+  padding: 16px;
+  border-radius: var(--radius-btn);
+  background: var(--kb-red);
+  color: #fff; font-size: 16px; font-weight: 600;
+  text-align: center;
+  border: none; cursor: pointer;
+}
+.btn-primary:active { background: var(--kb-red-dark); }
+.btn-secondary {
+  display: block; width: calc(100% - 28px);
+  margin: 8px 14px;
+  padding: 16px;
+  border-radius: var(--radius-btn);
+  background: #fff;
+  color: var(--text-primary); font-size: 16px; font-weight: 600;
+  text-align: center;
+  border: 1px solid var(--border);
+  cursor: pointer;
+}
+
+/* Bottom nav */
+.tabbar {
+  position: absolute; bottom: 0; left: 0; right: 0;
+  background: #fff; border-top: 1px solid var(--border-soft);
+  display: flex; justify-content: space-around;
+  padding: 8px 10px 24px;
+  z-index: 10;
+}
+.tab {
+  flex: 1; display: flex; flex-direction: column; align-items: center;
+  gap: 3px; padding: 6px 4px; cursor: pointer;
+  font-size: 11px; color: var(--text-secondary);
+}
+.tab.active { color: var(--kb-red); font-weight: 600; }
+.tab .ico { font-size: 22px; }
+
+/* Payment screen */
+.payment-merchant {
+  background: linear-gradient(135deg, #1A1A1A 0%, #2D2D2D 100%);
+  color: #fff;
+  margin: 8px 14px;
+  border-radius: 16px;
+  padding: 18px;
+}
+.payment-merchant .label { font-size: 12px; opacity: 0.7; text-transform: uppercase; letter-spacing: 0.5px; }
+.payment-merchant .name { font-size: 20px; font-weight: 700; margin-top: 6px; }
+.payment-merchant .amt { font-size: 32px; font-weight: 700; margin-top: 14px; letter-spacing: -0.5px; }
+
+/* Source row in payment */
+.source-row {
+  display: flex; align-items: center; gap: 12px;
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--border-soft);
+}
+.source-row:last-child { border-bottom: none; }
+.source-row .badge-currency {
+  width: 36px; height: 36px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  color: #fff; font-size: 11px; font-weight: 700;
+}
+.source-row.czk .badge-currency { background: #2E7D32; }
+.source-row.eur .badge-currency { background: #B45309; }
+.source-row .info { flex: 1; }
+.source-row .info .t { font-size: 14px; font-weight: 600; color: var(--text-primary); }
+.source-row .info .s { font-size: 12px; color: var(--text-secondary); margin-top: 2px; }
+.source-row .v { font-weight: 700; font-size: 15px; color: var(--text-primary); }
+
+/* Timeline */
+.timeline { position: relative; padding: 4px 16px 12px 40px; }
+.timeline::before {
+  content: ''; position: absolute;
+  left: 26px; top: 14px; bottom: 14px;
+  width: 2px; background: var(--border);
+}
+.tl-step { position: relative; padding: 12px 0; }
+.tl-step::before {
+  content: ''; position: absolute;
+  left: -22px; top: 16px;
+  width: 14px; height: 14px; border-radius: 50%;
+  background: #fff; border: 3px solid var(--text-hint);
+}
+.tl-step.done::before { border-color: var(--success); background: var(--success); }
+.tl-step.sweep::before { border-color: var(--info); background: var(--info); }
+.tl-step.warn::before { border-color: var(--warning); background: var(--warning); }
+.tl-step .t { font-size: 14px; font-weight: 600; color: var(--text-primary); }
+.tl-step .s { font-size: 12px; color: var(--text-secondary); margin-top: 2px; }
+
+/* Onboarding */
+.onb {
+  background: linear-gradient(160deg, #CC0000 0%, #7A0000 100%);
+  height: 100%;
+  color: #fff;
+  display: flex; flex-direction: column;
+}
+.onb-content {
+  flex: 1; padding: 60px 28px 20px;
+  display: flex; flex-direction: column; justify-content: center;
+}
+.onb-emoji { font-size: 72px; margin-bottom: 20px; }
+.onb h2 { font-size: 28px; font-weight: 700; letter-spacing: -0.5px; line-height: 1.2; }
+.onb p { font-size: 16px; margin-top: 14px; opacity: 0.9; line-height: 1.45; }
+.onb-dots { display: flex; gap: 6px; justify-content: center; padding: 12px 0; }
+.onb-dot { width: 8px; height: 8px; border-radius: 50%; background: rgba(255,255,255,0.4); }
+.onb-dot.active { background: #fff; width: 22px; border-radius: 4px; }
+.onb-actions { padding: 12px 14px 30px; }
+.onb-actions .btn-primary { background: #fff; color: var(--kb-red); margin: 0; width: 100%; }
+.onb-actions .skip { display: block; text-align: center; margin-top: 12px; color: #fff; opacity: 0.85; font-size: 14px; padding: 8px; }
+
+/* Notification card */
+.notif {
+  background: #fff;
+  border-radius: var(--radius-card);
+  margin: 8px 14px;
+  padding: 14px 16px;
+  display: flex; gap: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+}
+.notif .ico {
+  width: 38px; height: 38px; border-radius: 10px;
+  background: var(--kb-red); color: #fff;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 700; flex-shrink: 0;
+}
+.notif .t { font-size: 13px; font-weight: 700; color: var(--text-primary); }
+.notif .b { font-size: 13px; color: var(--text-secondary); margin-top: 2px; line-height: 1.4; }
+.notif .time { font-size: 11px; color: var(--text-hint); margin-top: 6px; }
+
+/* Transaction list */
+.tx-group { background: #fff; border-radius: var(--radius-card); margin: 8px 14px; overflow: hidden; }
+.tx-date {
+  padding: 12px 16px 6px;
+  font-size: 12px; font-weight: 600; color: var(--text-secondary);
+  text-transform: uppercase; letter-spacing: 0.5px;
+}
+.tx-row {
+  display: flex; align-items: center; gap: 12px;
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--border-soft);
+  cursor: pointer;
+}
+.tx-row:last-child { border-bottom: none; }
+.tx-row .ico {
+  width: 40px; height: 40px; border-radius: 50%;
+  background: #F2F2F7;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px;
+}
+.tx-row .info { flex: 1; min-width: 0; }
+.tx-row .info .t { font-size: 15px; font-weight: 600; color: var(--text-primary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.tx-row .info .s { font-size: 12px; color: var(--text-secondary); margin-top: 2px; }
+.tx-row .amt { font-weight: 700; font-size: 15px; color: var(--text-primary); text-align: right; }
+.tx-row .amt small { display: block; font-size: 11px; color: var(--text-secondary); font-weight: 500; margin-top: 2px; }
+.tx-row .sweep-tag {
+  display: inline-block; margin-top: 3px;
+  font-size: 10px; font-weight: 700; letter-spacing: 0.3px;
+  padding: 2px 6px; border-radius: 6px;
+  background: var(--info-bg); color: var(--info);
+}
+
+/* Pending dot */
+.pending-dot {
+  display: inline-block;
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--warning); margin-right: 4px;
+}
+
+/* Sheet */
+.sheet-bg {
+  position: absolute; inset: 0; background: rgba(0,0,0,0.4);
+  display: none; z-index: 50; align-items: flex-end;
+}
+.sheet-bg.active { display: flex; animation: fadeIn 0.2s ease; }
+.sheet {
+  background: #fff;
+  width: 100%;
+  border-radius: 22px 22px 0 0;
+  padding: 20px 16px 30px;
+  animation: slideUp 0.3s cubic-bezier(0.34,1.56,0.64,1);
+  max-height: 80%;
+  overflow-y: auto;
+}
+@keyframes fadeIn { from {opacity:0} to {opacity:1} }
+@keyframes slideUp { from {transform: translateY(100%)} to {transform: translateY(0)} }
+.sheet-handle {
+  width: 36px; height: 4px; border-radius: 2px;
+  background: #D1D1D6; margin: 0 auto 14px;
+}
+.sheet-title { font-size: 18px; font-weight: 700; margin-bottom: 6px; color: var(--text-primary); }
+.sheet-sub { font-size: 13px; color: var(--text-secondary); margin-bottom: 16px; }
+
+/* Tx detail breakdown */
+.breakdown { background: #fff; border-radius: var(--radius-card); margin: 8px 14px; padding: 8px 0; }
+.bd-row { display: flex; justify-content: space-between; padding: 10px 16px; font-size: 14px; }
+.bd-row .k { color: var(--text-secondary); }
+.bd-row .v { color: var(--text-primary); font-weight: 600; }
+.bd-row.total { border-top: 1px solid var(--border-soft); margin-top: 6px; padding-top: 14px; font-size: 16px; }
+.bd-row.total .v { font-weight: 700; }
+
+/* Why box */
+.why-box {
+  margin: 8px 14px; padding: 14px 16px;
+  background: var(--info-bg); border-radius: var(--radius-card);
+  font-size: 13px; color: #1E3A8A; line-height: 1.45;
+}
+.why-box b { color: var(--info); }
+
+/* Prediction card */
+.pred {
+  margin: 8px 14px;
+  border-radius: 16px;
+  padding: 16px 18px;
+  background: linear-gradient(135deg, #F59E0B 0%, #DC2626 100%);
+  color: #fff;
+}
+.pred .when { font-size: 12px; font-weight: 700; opacity: 0.9; letter-spacing: 0.5px; text-transform: uppercase; }
+.pred .h { font-size: 18px; font-weight: 700; margin-top: 4px; }
+.pred .b { font-size: 13px; opacity: 0.95; margin-top: 6px; line-height: 1.4; }
+.pred-actions { display: flex; gap: 10px; margin-top: 14px; }
+.pred-actions .pbtn {
+  flex: 1; background: rgba(255,255,255,0.2); color: #fff;
+  padding: 10px; border-radius: 10px; font-size: 13px; font-weight: 600;
+  text-align: center; cursor: pointer;
+}
+.pred-actions .pbtn.solid { background: #fff; color: var(--kb-red); }
+
+/* Inline message */
+.inline-msg {
+  display: flex; gap: 10px; align-items: flex-start;
+  padding: 10px 14px; margin: 6px 16px 0;
+  background: var(--warning-bg); border-radius: 10px;
+  font-size: 12px; color: var(--warning); line-height: 1.4;
+}
+.inline-msg.ok { background: var(--success-bg); color: var(--success); }
+.inline-msg.info { background: var(--info-bg); color: var(--info); }
+
+/* Stepper for radio settings */
+.radio-list { background: #fff; border-radius: var(--radius-card); margin: 0 14px; overflow: hidden; }
+.radio-item {
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--border-soft);
+  cursor: pointer;
+  display: flex; align-items: center; gap: 12px;
+}
+.radio-item:last-child { border-bottom: none; }
+.radio-item .r {
+  width: 22px; height: 22px; border-radius: 50%;
+  border: 2px solid var(--border); flex-shrink: 0;
+}
+.radio-item.sel .r { border-color: var(--kb-red); background: radial-gradient(circle, var(--kb-red) 0 5px, #fff 6px 100%); }
+.radio-item .t { font-size: 15px; font-weight: 500; color: var(--text-primary); }
+
+/* Numeric input */
+.num-input {
+  background: #fff; border-radius: var(--radius-card);
+  margin: 0 14px; padding: 14px 16px;
+  display: flex; align-items: center; gap: 8px;
+}
+.num-input input {
+  flex: 1; border: none; outline: none;
+  font-size: 18px; font-weight: 700; color: var(--text-primary);
+  font-family: var(--font);
+}
+.num-input .unit { color: var(--text-secondary); font-size: 14px; }
+
+/* CTA bar fixed */
+.cta-bar {
+  position: absolute; bottom: 0; left: 0; right: 0;
+  padding: 12px 14px 28px;
+  background: #fff;
+  border-top: 1px solid var(--border-soft);
+  z-index: 5;
+}
+.cta-bar .btn-primary { margin: 0; width: 100%; }
+
+/* Helper utility */
+.muted { color: var(--text-secondary); font-size: 13px; }
+.row-flex { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+</style>
+</head>
+<body>
+
+<div id="app-shell">
+
+<!-- ═══════════ S00 — ONBOARDING ═══════════ -->
+<div class="screen" id="s00">
+  <div class="onb">
+    <div class="onb-content">
+      <div class="onb-emoji" id="onb-emoji">💸</div>
+      <h2 id="onb-title">Jak fungují vyrovnávací platby</h2>
+      <p id="onb-body">Když v jedné měně nebude dost peněz, váš účet může automaticky použít jiné měny. Vždy jen podle pravidel, která si nastavíte sami.</p>
+    </div>
+    <div class="onb-dots">
+      <div class="onb-dot active" id="dot0"></div>
+      <div class="onb-dot" id="dot1"></div>
+      <div class="onb-dot" id="dot2"></div>
+    </div>
+    <div class="onb-actions">
+      <button class="btn-primary" onclick="onbNext()" id="onb-cta">Pokračovat</button>
+      <a class="skip" onclick="goTo('home')">Přeskočit</a>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ HOME / DASHBOARD ═══════════ -->
+<div class="screen" id="home">
+  <div class="statusbar"><span>9:41</span><span class="icons">📶 🔋</span></div>
+  <div class="app-header">
+    <div>
+      <div class="title">Multiměnový účet</div>
+      <div class="subtitle">CZ65 0100 0000 0012 3456 7890</div>
+    </div>
+    <div class="btn-icon" onclick="goTo('notif')" title="Notifikace">🔔</div>
+  </div>
+
+  <div class="screen-scroll">
+    <div class="hero">
+      <div class="label">Celkový zůstatek</div>
+      <div class="amt" id="home-total">28 540,00 Kč</div>
+      <div class="sub">Po projekci čekajících transakcí: <b id="home-projected">22 820,00 Kč</b></div>
+      <div class="hero-row">
+        <div class="chip" onclick="goTo('predict')">Predikce<div class="v">⚠ 2 rizika</div></div>
+        <div class="chip" onclick="goTo('rules')">Pravidla<div class="v">Kontrolovaný</div></div>
+      </div>
+    </div>
+
+    <div class="alert warning" onclick="goTo('predict')">
+      <div class="ico">⚡</div>
+      <div>
+        <div class="h">Za 2 dny pravděpodobné dorovnání</div>
+        <div class="b">Karetní platba Booking.com (~4 200 Kč) může spustit sweeping z EUR.</div>
+      </div>
+    </div>
+
+    <div class="section-h">Moje měny</div>
+    <div class="currency-list">
+      <div class="currency-row" onclick="goTo('rules')">
+        <span class="flag">🇨🇿</span>
+        <div>
+          <div class="name">CZK <span class="badge main">hlavní</span></div>
+          <div class="meta">Priorita 1 · dostupné</div>
+        </div>
+        <div class="amt">12 480,00 Kč<small>—</small></div>
+      </div>
+      <div class="currency-row" onclick="goTo('rules')">
+        <span class="flag">🇪🇺</span>
+        <div>
+          <div class="name">EUR</div>
+          <div class="meta">Priorita 2 · limit 100 € / měs.</div>
+        </div>
+        <div class="amt">485,20 €<small>12 040 Kč</small></div>
+      </div>
+      <div class="currency-row" onclick="goTo('rules')">
+        <span class="flag">🇺🇸</span>
+        <div>
+          <div class="name">USD <span class="badge protected">chráněno</span></div>
+          <div class="meta">Dovolená 2026</div>
+        </div>
+        <div class="amt">180,00 $<small>4 020 Kč</small></div>
+      </div>
+    </div>
+
+    <div class="section-h">Poslední pohyby</div>
+    <div class="tx-group">
+      <div class="tx-row" onclick="goTo('txDetail')">
+        <div class="ico">🎬</div>
+        <div class="info">
+          <div class="t">Netflix Premium</div>
+          <div class="s">Včera · <span class="sweep-tag">SWEEPING</span></div>
+        </div>
+        <div class="amt">−200,00 Kč<small>z CZK + EUR</small></div>
+      </div>
+      <div class="tx-row" onclick="goTo('txDetail')">
+        <div class="ico">🅱️</div>
+        <div class="info">
+          <div class="t"><span class="pending-dot"></span>Booking.com</div>
+          <div class="s">Čeká na zaúčtování</div>
+        </div>
+        <div class="amt">−4 200,00 Kč<small>autorizováno</small></div>
+      </div>
+      <div class="tx-row" onclick="goTo('txDetail')">
+        <div class="ico">☕</div>
+        <div class="info">
+          <div class="t">Costa Coffee</div>
+          <div class="s">14. 5. · z CZK</div>
+        </div>
+        <div class="amt">−89,00 Kč<small>—</small></div>
+      </div>
+    </div>
+
+    <div class="section-h">&nbsp;</div>
+  </div>
+
+  <div class="tabbar">
+    <div class="tab active" onclick="goTo('home')"><div class="ico">🏠</div>Domů</div>
+    <div class="tab" onclick="goTo('history')"><div class="ico">📋</div>Historie</div>
+    <div class="tab" onclick="goTo('pay')"><div class="ico">💳</div>Platba</div>
+    <div class="tab" onclick="goTo('predict')"><div class="ico">📈</div>Predikce</div>
+    <div class="tab" onclick="goTo('rules')"><div class="ico">⚙️</div>Pravidla</div>
+  </div>
+</div>
+
+<!-- ═══════════ RULES — Pravidla pro měny ═══════════ -->
+<div class="screen" id="rules">
+  <div class="statusbar"><span>9:41</span><span class="icons">📶 🔋</span></div>
+  <div class="back-bar">
+    <div class="back-btn" onclick="goTo('home')">‹</div>
+    <div class="h">Pravidla pro měny</div>
+  </div>
+
+  <div class="screen-scroll">
+
+    <div class="section-h">Režim účtu</div>
+    <div class="mode-picker">
+      <div class="mode-opt" id="mode-easy" onclick="setMode('easy')">
+        <div class="dot"></div>
+        <div>
+          <div class="t">Bez starostí</div>
+          <div class="s">Vše automaticky podle priority měn</div>
+        </div>
+      </div>
+      <div class="mode-opt active" id="mode-ctrl" onclick="setMode('ctrl')">
+        <div class="dot"></div>
+        <div>
+          <div class="t">Kontrolovaný</div>
+          <div class="s">Upozornit před každým sweepingem</div>
+        </div>
+      </div>
+      <div class="mode-opt" id="mode-strict" onclick="setMode('strict')">
+        <div class="dot"></div>
+        <div>
+          <div class="t">Přísná kontrola</div>
+          <div class="s">Bez automatických konverzí, platba se zamítne</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-h">Priorita měn</div>
+    <div class="list">
+      <div class="list-item">
+        <div class="ico">🇨🇿</div>
+        <div class="text"><div class="t">1 · CZK</div><div class="s">Hlavní měna</div></div>
+        <div class="chev">⇅</div>
+      </div>
+      <div class="list-item">
+        <div class="ico">🇪🇺</div>
+        <div class="text"><div class="t">2 · EUR</div><div class="s">Limit 100 € / měsíc</div></div>
+        <div class="chev">⇅</div>
+      </div>
+      <div class="list-item">
+        <div class="ico">🇺🇸</div>
+        <div class="text"><div class="t">3 · USD</div><div class="s"><span class="badge protected">chráněno</span> nikdy nepoužít</div></div>
+        <div class="chev">⇅</div>
+      </div>
+    </div>
+
+    <div class="section-h">Limity sweepingu</div>
+    <div class="list">
+      <div class="list-item" onclick="openSheet('sheet-limit')">
+        <div class="ico">📅</div>
+        <div class="text"><div class="t">Denní limit</div><div class="s">max 2 000 Kč / den</div></div>
+        <div class="chev">›</div>
+      </div>
+      <div class="list-item" onclick="openSheet('sheet-rate')">
+        <div class="ico">📉</div>
+        <div class="text"><div class="t">Minimální akceptovatelný kurz</div><div class="s" id="rate-display">EUR/CZK 24,90</div></div>
+        <div class="chev">›</div>
+      </div>
+      <div class="list-item">
+        <div class="ico">🛡️</div>
+        <div class="text"><div class="t">Chráněné měny</div><div class="s">USD, GBP</div></div>
+        <div class="chev">›</div>
+      </div>
+    </div>
+
+    <div class="section-h">Chování</div>
+    <div class="list">
+      <div class="list-item" onclick="toggleSetting(this,'auto-sweep')">
+        <div class="ico">⚡</div>
+        <div class="text"><div class="t">Auto-dorovnání plateb</div><div class="s">Zeptat se nad 1 000 Kč</div></div>
+        <div class="toggle on" data-key="auto-sweep"></div>
+      </div>
+      <div class="list-item" onclick="toggleSetting(this,'notif-before')">
+        <div class="ico">🔔</div>
+        <div class="text"><div class="t">Notifikace před sweepingem</div><div class="s">Push i e-mail</div></div>
+        <div class="toggle on" data-key="notif-before"></div>
+      </div>
+      <div class="list-item" onclick="toggleSetting(this,'reject-on-fail')">
+        <div class="ico">🛑</div>
+        <div class="text"><div class="t">Zamítnout platbu při nedostatku</div><div class="s">Místo sweepingu</div></div>
+        <div class="toggle" data-key="reject-on-fail"></div>
+      </div>
+    </div>
+
+    <div class="why-box" style="margin-top:14px">
+      <b>Tip:</b> Když nastavíte „Přísnou kontrolu", platba se v případě nedostatku v hlavní měně raději zamítne, než aby systém sahal do jiných měn.
+    </div>
+
+    <div style="height:24px"></div>
+  </div>
+
+  <div class="cta-bar"><button class="btn-primary" onclick="savedRules()">Uložit pravidla</button></div>
+</div>
+
+<!-- ═══════════ PREDIKCE ═══════════ -->
+<div class="screen" id="predict">
+  <div class="statusbar"><span>9:41</span><span class="icons">📶 🔋</span></div>
+  <div class="back-bar">
+    <div class="back-btn" onclick="goTo('home')">‹</div>
+    <div class="h">Predikce dopadů</div>
+  </div>
+
+  <div class="screen-scroll">
+    <div class="pred">
+      <div class="when">Za 2 dny</div>
+      <div class="h">Pravděpodobné dorovnání z EUR</div>
+      <div class="b">Pokud proběhne zúčtování karetní platby Booking.com (~4 200 Kč), nebude dostatek CZK a systém převede zhruba 170 € z EUR.</div>
+      <div class="pred-actions">
+        <div class="pbtn" onclick="goTo('rules')">Upravit pravidla</div>
+        <div class="pbtn solid" onclick="goTo('pay')">Dobít CZK</div>
+      </div>
+    </div>
+
+    <div class="section-h">Čekající transakce</div>
+    <div class="tx-group">
+      <div class="tx-row" onclick="goTo('txDetail')">
+        <div class="ico">🅱️</div>
+        <div class="info">
+          <div class="t"><span class="pending-dot"></span>Booking.com</div>
+          <div class="s">Pending · zaúčtování za 2 dny</div>
+        </div>
+        <div class="amt">−4 200,00 Kč<small><span class="badge warn">riziko</span></small></div>
+      </div>
+      <div class="tx-row">
+        <div class="ico">🎵</div>
+        <div class="info">
+          <div class="t"><span class="pending-dot"></span>Spotify</div>
+          <div class="s">Inkaso · 18. 5.</div>
+        </div>
+        <div class="amt">−15,00 €<small><span class="badge info">sweeping z EUR</span></small></div>
+      </div>
+      <div class="tx-row">
+        <div class="ico">🍎</div>
+        <div class="info">
+          <div class="t"><span class="pending-dot"></span>Apple</div>
+          <div class="s">Inkaso · 22. 5.</div>
+        </div>
+        <div class="amt">−1 290,00 Kč<small><span class="badge warn">riziko</span></small></div>
+      </div>
+    </div>
+
+    <div class="section-h">Projekce zůstatku</div>
+    <div class="card">
+      <div class="row-flex"><span class="muted">Dnes</span><b>12 480,00 Kč</b></div>
+      <div class="row-flex" style="margin-top:8px"><span class="muted">Za 7 dní</span><b style="color:var(--warning)">6 760,00 Kč</b></div>
+      <div class="row-flex" style="margin-top:8px"><span class="muted">Za 30 dní</span><b style="color:var(--danger)">2 480,00 Kč</b></div>
+      <div class="inline-msg" style="margin-top:12px;margin-left:0;margin-right:0">⚠ Bez akce hrozí sweeping z EUR a riziko, že neprojde inkaso elektřiny (3 480 Kč) dne 23. 5.</div>
+    </div>
+
+    <div class="section-h">Co můžete udělat</div>
+    <div class="list">
+      <div class="list-item" onclick="goTo('pay')">
+        <div class="ico">💳</div>
+        <div class="text"><div class="t">Dobít CZK</div><div class="s">Převést z EUR ručně, s lepším kurzem</div></div>
+        <div class="chev">›</div>
+      </div>
+      <div class="list-item" onclick="goTo('rules')">
+        <div class="ico">⚙️</div>
+        <div class="text"><div class="t">Povolit sweeping z USD</div><div class="s">Dočasně zrušit ochranu</div></div>
+        <div class="chev">›</div>
+      </div>
+      <div class="list-item">
+        <div class="ico">⏰</div>
+        <div class="text"><div class="t">Odložit inkaso</div><div class="s">Kontaktovat dodavatele</div></div>
+        <div class="chev">›</div>
+      </div>
+    </div>
+
+    <div style="height:30px"></div>
+  </div>
+</div>
+
+<!-- ═══════════ PLATBA — potvrzení s rozpadem ═══════════ -->
+<div class="screen" id="pay">
+  <div class="statusbar"><span>9:41</span><span class="icons">📶 🔋</span></div>
+  <div class="back-bar">
+    <div class="back-btn" onclick="goTo('home')">‹</div>
+    <div class="h">Potvrzení platby</div>
+  </div>
+
+  <div class="screen-scroll">
+    <div class="payment-merchant">
+      <div class="label">Příjemce</div>
+      <div class="name">Netflix Premium</div>
+      <div class="amt">200,00 Kč</div>
+    </div>
+
+    <div class="section-h">Zdroj prostředků</div>
+    <div class="card" style="padding:0">
+      <div class="source-row czk">
+        <div class="badge-currency">CZK</div>
+        <div class="info">
+          <div class="t">Z CZK účtu</div>
+          <div class="s">Dostupné · bez konverze</div>
+        </div>
+        <div class="v">150,00 Kč</div>
+      </div>
+      <div class="source-row eur">
+        <div class="badge-currency">EUR</div>
+        <div class="info">
+          <div class="t">Sweeping z EUR</div>
+          <div class="s">2,01 € · kurz 24,81 · spread 0,4 %</div>
+        </div>
+        <div class="v">50,00 Kč</div>
+      </div>
+    </div>
+
+    <div class="inline-msg info">
+      ℹ️ V CZK chybí 50 Kč. Systém automaticky doplní z EUR (dle vašich pravidel: <b>Kontrolovaný</b>).
+    </div>
+
+    <div class="section-h">Jiná varianta</div>
+    <div class="list">
+      <div class="list-item" onclick="alert('Změna zdroje — v plné aplikaci.')">
+        <div class="ico">💶</div>
+        <div class="text"><div class="t">Zaplatit jen z EUR</div><div class="s">8,06 € · ušetříte 0,80 Kč na spreadu</div></div>
+        <div class="chev">›</div>
+      </div>
+      <div class="list-item" onclick="alert('Odložit platbu — v plné aplikaci.')">
+        <div class="ico">⏸️</div>
+        <div class="text"><div class="t">Odložit platbu</div><div class="s">Než dobíjím CZK</div></div>
+        <div class="chev">›</div>
+      </div>
+    </div>
+
+    <div class="why-box" style="margin-top:14px">
+      <b>Co se stane po potvrzení:</b> Zdroj a kurz uvidíte v detailu transakce v historii. Před skutečným sweepingem dostanete push notifikaci.
+    </div>
+
+    <div style="height:30px"></div>
+  </div>
+
+  <div class="cta-bar"><button class="btn-primary" onclick="paymentDone()">Potvrdit · 200 Kč</button></div>
+</div>
+
+<!-- ═══════════ HISTORY — Seskupování ═══════════ -->
+<div class="screen" id="history">
+  <div class="statusbar"><span>9:41</span><span class="icons">📶 🔋</span></div>
+  <div class="back-bar">
+    <div class="back-btn" onclick="goTo('home')">‹</div>
+    <div class="h">Historie pohybů</div>
+  </div>
+
+  <div class="screen-scroll">
+    <div class="tx-date">Včera · 14. května 2026</div>
+    <div class="tx-group">
+      <div class="tx-row" onclick="goTo('txDetail')">
+        <div class="ico">🎬</div>
+        <div class="info">
+          <div class="t">Netflix Premium</div>
+          <div class="s">z CZK + EUR · <span class="sweep-tag">SWEEPING</span></div>
+        </div>
+        <div class="amt">−200,00 Kč<small>kurz 24,81</small></div>
+      </div>
+      <div class="tx-row" onclick="goTo('txDetail')">
+        <div class="ico">☕</div>
+        <div class="info">
+          <div class="t">Costa Coffee</div>
+          <div class="s">z CZK</div>
+        </div>
+        <div class="amt">−89,00 Kč</div>
+      </div>
+    </div>
+
+    <div class="tx-date">13. května 2026</div>
+    <div class="tx-group">
+      <div class="tx-row" onclick="goTo('txDetail')">
+        <div class="ico">🛒</div>
+        <div class="info">
+          <div class="t">Lidl</div>
+          <div class="s">z CZK</div>
+        </div>
+        <div class="amt">−542,80 Kč</div>
+      </div>
+      <div class="tx-row" onclick="goTo('txDetail')">
+        <div class="ico">⛽</div>
+        <div class="info">
+          <div class="t">Shell</div>
+          <div class="s">z CZK</div>
+        </div>
+        <div class="amt">−1 290,00 Kč</div>
+      </div>
+      <div class="tx-row" onclick="goTo('txDetail')">
+        <div class="ico">🅱️</div>
+        <div class="info">
+          <div class="t"><span class="pending-dot"></span>Booking.com</div>
+          <div class="s">Pending · očekávaný sweeping z EUR</div>
+        </div>
+        <div class="amt">−4 200,00 Kč<small>autorizováno</small></div>
+      </div>
+    </div>
+
+    <div class="tx-date">12. května 2026</div>
+    <div class="tx-group">
+      <div class="tx-row" onclick="goTo('txDetail')">
+        <div class="ico">💼</div>
+        <div class="info">
+          <div class="t">Mzda — KB a.s.</div>
+          <div class="s">Příchozí · CZK</div>
+        </div>
+        <div class="amt" style="color:var(--success)">+45 000,00 Kč</div>
+      </div>
+    </div>
+
+    <div style="height:30px"></div>
+  </div>
+</div>
+
+<!-- ═══════════ TX DETAIL — Timeline ═══════════ -->
+<div class="screen" id="txDetail">
+  <div class="statusbar"><span>9:41</span><span class="icons">📶 🔋</span></div>
+  <div class="back-bar">
+    <div class="back-btn" onclick="goTo('history')">‹</div>
+    <div class="h">Detail transakce</div>
+  </div>
+
+  <div class="screen-scroll">
+    <div class="payment-merchant">
+      <div class="label">Netflix Premium · 14. 5. 2026</div>
+      <div class="name">Měsíční předplatné</div>
+      <div class="amt">−200,00 Kč</div>
+    </div>
+
+    <div class="section-h">Rozpad</div>
+    <div class="breakdown">
+      <div class="bd-row"><span class="k">Z CZK účtu</span><span class="v">150,00 Kč</span></div>
+      <div class="bd-row"><span class="k">Sweeping z EUR</span><span class="v">2,01 € · 50,00 Kč</span></div>
+      <div class="bd-row"><span class="k">Použitý kurz</span><span class="v">24,81 (spread 0,4 %)</span></div>
+      <div class="bd-row total"><span class="k">Celkem zaplaceno</span><span class="v">200,00 Kč</span></div>
+    </div>
+
+    <div class="section-h">Časová osa</div>
+    <div class="card" style="padding:8px 0">
+      <div class="timeline">
+        <div class="tl-step done">
+          <div class="t">Autorizace karty</div>
+          <div class="s">14. 5. · 09:12 · ověření zůstatku</div>
+        </div>
+        <div class="tl-step warn">
+          <div class="t">Nedostatek v CZK</div>
+          <div class="s">Chybělo 50 Kč k pokrytí platby</div>
+        </div>
+        <div class="tl-step sweep">
+          <div class="t">Sweeping z EUR</div>
+          <div class="s">Spuštěno systémem dle pravidla „Auto-dorovnání"</div>
+        </div>
+        <div class="tl-step sweep">
+          <div class="t">FX konverze</div>
+          <div class="s">2,01 € → 50 Kč · kurz 24,81</div>
+        </div>
+        <div class="tl-step done">
+          <div class="t">Zaúčtováno</div>
+          <div class="s">14. 5. · 09:13 · finální stav</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="why-box">
+      <b>Proč se to stalo?</b> Pro pokrytí celé platby chyběly v CZK 50 Kč. Podle pravidla <b>Kontrolovaný režim</b> a priority měn (CZK → EUR → USD) systém doplnil 2,01 € z EUR. USD bylo chráněno.
+    </div>
+
+    <div style="padding:8px 14px">
+      <button class="btn-secondary" style="margin:0;width:100%" onclick="alert('Reklamace kurzu — v plné aplikaci.')">Reklamovat kurz</button>
+    </div>
+
+    <div style="height:30px"></div>
+  </div>
+</div>
+
+<!-- ═══════════ NOTIFIKACE ═══════════ -->
+<div class="screen" id="notif">
+  <div class="statusbar"><span>9:41</span><span class="icons">📶 🔋</span></div>
+  <div class="back-bar">
+    <div class="back-btn" onclick="goTo('home')">‹</div>
+    <div class="h">Notifikace</div>
+  </div>
+
+  <div class="screen-scroll">
+    <div class="section-h">Dnes</div>
+    <div class="notif" onclick="goTo('pay')">
+      <div class="ico">KB</div>
+      <div>
+        <div class="t">Před sweepingem</div>
+        <div class="b">Platba Spotify využije 15 € z vašeho EUR zůstatku. Klepnutím potvrďte nebo zamítněte.</div>
+        <div class="time">teď</div>
+      </div>
+    </div>
+    <div class="notif" onclick="goTo('predict')">
+      <div class="ico" style="background:var(--warning)">⚠</div>
+      <div>
+        <div class="t">Riziková situace</div>
+        <div class="b">Kvůli dnešní konverzi nemusí zítra projít inkaso elektřiny (3 480 Kč).</div>
+        <div class="time">před 1 h</div>
+      </div>
+    </div>
+
+    <div class="section-h">Včera</div>
+    <div class="notif" onclick="goTo('txDetail')">
+      <div class="ico" style="background:var(--success)">✓</div>
+      <div>
+        <div class="t">Sweeping proběhl</div>
+        <div class="b">Dorovnali jsme 50 Kč z EUR pro platbu Netflix. Kurz 24,81 — podle vašich pravidel.</div>
+        <div class="time">14. 5. · 09:13</div>
+      </div>
+    </div>
+    <div class="notif">
+      <div class="ico" style="background:var(--info)">i</div>
+      <div>
+        <div class="t">Predikce na týden</div>
+        <div class="b">Za 2 dny pravděpodobně dojde k dorovnání z EUR kvůli čekající karetní platbě.</div>
+        <div class="time">13. 5.</div>
+      </div>
+    </div>
+
+    <div style="height:30px"></div>
+  </div>
+</div>
+
+<!-- ═══════════ Sheets ═══════════ -->
+<div class="sheet-bg" id="sheet-limit" onclick="closeSheetIfBg(event,'sheet-limit')">
+  <div class="sheet">
+    <div class="sheet-handle"></div>
+    <div class="sheet-title">Denní limit sweepingu</div>
+    <div class="sheet-sub">Maximální částka, kterou systém smí denně převést mezi vašimi měnami.</div>
+    <div class="num-input"><input type="text" id="limit-input" value="2000" inputmode="numeric"><span class="unit">Kč / den</span></div>
+    <div class="radio-list" style="margin-top:14px">
+      <div class="radio-item" onclick="setLimit(this,'500')"><div class="r"></div><div class="t">500 Kč</div></div>
+      <div class="radio-item sel" onclick="setLimit(this,'2000')"><div class="r"></div><div class="t">2 000 Kč</div></div>
+      <div class="radio-item" onclick="setLimit(this,'5000')"><div class="r"></div><div class="t">5 000 Kč</div></div>
+      <div class="radio-item" onclick="setLimit(this,'')"><div class="r"></div><div class="t">Bez limitu</div></div>
+    </div>
+    <button class="btn-primary" style="margin:18px 0 0;width:100%" onclick="closeSheet('sheet-limit')">Uložit</button>
+  </div>
+</div>
+
+<div class="sheet-bg" id="sheet-rate" onclick="closeSheetIfBg(event,'sheet-rate')">
+  <div class="sheet">
+    <div class="sheet-handle"></div>
+    <div class="sheet-title">Minimální kurz</div>
+    <div class="sheet-sub">Pokud bude kurz horší než tato hodnota, systém převod neprovede a platba se zamítne nebo upozorní.</div>
+    <div class="num-input"><input type="text" id="rate-input" value="24,90" inputmode="decimal"><span class="unit">EUR/CZK</span></div>
+    <div class="inline-msg info" style="margin:14px 0 0">ℹ️ Dnešní kurz je 24,81 — váš limit by aktuální sweeping nepovolil.</div>
+    <button class="btn-primary" style="margin:18px 0 0;width:100%" onclick="saveRate()">Uložit</button>
+  </div>
+</div>
+
+</div><!-- /app-shell -->
+
+<script>
+// ─── Telemetrie ───
+function track(action, params) {
+  if (typeof gtag !== 'undefined') gtag('event', action, params || {});
+}
+
+// ─── Navigace ───
+const SCREENS = ['s00','home','rules','predict','pay','history','txDetail','notif'];
+
+function goTo(id) {
+  if (!document.getElementById(id)) return;
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  // Scroll top
+  const sc = document.getElementById(id).querySelector('.screen-scroll');
+  if (sc) sc.scrollTop = 0;
+  // Hash bez vytvoření duplicitní položky pokud už je
+  if (window.location.hash !== '#' + id) {
+    history.pushState({ screen: id }, '', '#' + id);
+  }
+  // GA page view
+  track('page_view', { page_location: window.location.href, page_title: id });
+}
+
+// ─── Onboarding ───
+const ONB = [
+  { e: '💸', t: 'Jak fungují vyrovnávací platby', b: 'Když v jedné měně nebude dost peněz, váš účet může automaticky použít jiné měny. Vždy jen podle pravidel, která si nastavíte sami.' },
+  { e: '🛡️', t: 'Chráněné měny', b: 'Některé měny si můžete označit jako chráněné — nikdy se jich systém nedotkne. Hodí se pro dovolenou nebo rezervu.' },
+  { e: '🔔', t: 'Vždy víte, co se děje', b: 'Před každým sweepingem dostanete upozornění. Po dokončení uvidíte kurz, zdroj i důvod přímo v detailu transakce.' }
+];
+let onbStep = 0;
+function onbNext() {
+  onbStep++;
+  if (onbStep >= ONB.length) {
+    localStorage.setItem('sweeping__onboarded', '1');
+    goTo('home');
+    return;
+  }
+  document.getElementById('onb-emoji').textContent = ONB[onbStep].e;
+  document.getElementById('onb-title').textContent = ONB[onbStep].t;
+  document.getElementById('onb-body').textContent = ONB[onbStep].b;
+  for (let i = 0; i < 3; i++) {
+    document.getElementById('dot' + i).classList.toggle('active', i === onbStep);
+  }
+  if (onbStep === ONB.length - 1) {
+    document.getElementById('onb-cta').textContent = 'Začít';
+  }
+  track('onboarding_step', { step: onbStep });
+}
+
+// ─── Mode picker ───
+function setMode(mode) {
+  ['easy','ctrl','strict'].forEach(m => {
+    document.getElementById('mode-' + m).classList.toggle('active', m === mode);
+  });
+  localStorage.setItem('sweeping__mode', mode);
+  track('mode_changed', { mode });
+}
+
+// ─── Toggles ───
+function toggleSetting(itemEl, key) {
+  const t = itemEl.querySelector('.toggle');
+  t.classList.toggle('on');
+  const val = t.classList.contains('on') ? '1' : '0';
+  localStorage.setItem('sweeping__' + key, val);
+  track('toggle_' + key, { value: val });
+}
+
+// ─── Sheets ───
+function openSheet(id) {
+  document.getElementById(id).classList.add('active');
+  track('sheet_open', { sheet: id });
+}
+function closeSheet(id) {
+  document.getElementById(id).classList.remove('active');
+}
+function closeSheetIfBg(e, id) {
+  if (e.target.id === id) closeSheet(id);
+}
+
+// ─── Settings sheets ───
+function setLimit(el, val) {
+  el.parentNode.querySelectorAll('.radio-item').forEach(r => r.classList.remove('sel'));
+  el.classList.add('sel');
+  document.getElementById('limit-input').value = val;
+  localStorage.setItem('sweeping__limit', val);
+}
+function saveRate() {
+  const v = document.getElementById('rate-input').value;
+  localStorage.setItem('sweeping__rate', v);
+  document.getElementById('rate-display').textContent = 'EUR/CZK ' + v;
+  closeSheet('sheet-rate');
+  track('rate_saved', { rate: v });
+}
+function savedRules() {
+  track('rules_saved');
+  // Toast náhrada — jednoduchý alert pro prototyp
+  const btn = document.querySelector('#rules .btn-primary');
+  const orig = btn.textContent;
+  btn.textContent = '✓ Uloženo';
+  btn.style.background = 'var(--success)';
+  setTimeout(() => { btn.textContent = orig; btn.style.background = ''; goTo('home'); }, 900);
+}
+function paymentDone() {
+  track('payment_confirmed');
+  const btn = document.querySelector('#pay .btn-primary');
+  const orig = btn.textContent;
+  btn.textContent = '✓ Platba odeslána';
+  btn.style.background = 'var(--success)';
+  setTimeout(() => { btn.textContent = orig; btn.style.background = ''; goTo('txDetail'); }, 1000);
+}
+
+// ─── Obnova stavu z localStorage ───
+function restoreState() {
+  const mode = localStorage.getItem('sweeping__mode');
+  if (mode) setMode(mode);
+  const rate = localStorage.getItem('sweeping__rate');
+  if (rate) {
+    document.getElementById('rate-input').value = rate;
+    document.getElementById('rate-display').textContent = 'EUR/CZK ' + rate;
+  }
+  const limit = localStorage.getItem('sweeping__limit');
+  if (limit !== null) document.getElementById('limit-input').value = limit;
+  ['auto-sweep','notif-before','reject-on-fail'].forEach(k => {
+    const stored = localStorage.getItem('sweeping__' + k);
+    if (stored === null) return;
+    const t = document.querySelector('.toggle[data-key="' + k + '"]');
+    if (t) t.classList.toggle('on', stored === '1');
+  });
+}
+
+// ─── Hashchange + initial restore ───
+window.addEventListener('hashchange', () => {
+  const id = window.location.hash.replace('#', '');
+  if (id && document.getElementById(id)) {
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+  }
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+  restoreState();
+
+  // Obnova obrazovky z URL hash při refresh
+  const initialHash = window.location.hash.replace('#', '');
+  const onboarded = localStorage.getItem('sweeping__onboarded') === '1';
+  if (initialHash && document.getElementById(initialHash)) {
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    document.getElementById(initialHash).classList.add('active');
+    history.replaceState({ screen: initialHash }, '', '#' + initialHash);
+  } else {
+    const start = onboarded ? 'home' : 's00';
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    document.getElementById(start).classList.add('active');
+    history.replaceState({ screen: start }, '', '#' + start);
+  }
+});
+</script>
+</body>
+</html>
