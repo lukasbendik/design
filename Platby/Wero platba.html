@@ -720,6 +720,33 @@ h1.proto-title { font-size: 18px; color: #fff; font-weight: 600; }
 }
 .msg-input::placeholder { color: var(--text-3); }
 
+/* ====== PIN SHEET ====== */
+.pin-dot {
+  width: 14px; height: 14px; border-radius: 50%;
+  border: 1.8px solid #555;
+  background: transparent;
+  transition: background 0.15s, border-color 0.15s;
+}
+.pin-dot.filled { background: #1A1A1A; border-color: #1A1A1A; }
+.pin-dot.error { background: var(--red); border-color: var(--red); }
+
+.pin-key {
+  width: 100%; aspect-ratio: 1;
+  border-radius: 50%;
+  background: #fff;
+  border: 1px solid #ddd;
+  font-size: 26px; font-weight: 400;
+  font-family: inherit; color: var(--text);
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: background 0.1s;
+  -webkit-tap-highlight-color: transparent;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+}
+.pin-key:active { background: #e8e8e8; }
+.pin-key-aux { background: transparent; border-color: transparent; box-shadow: none; }
+.pin-key-aux:active { background: rgba(0,0,0,0.06); }
+
 /* ====== DESKTOP INFO PANEL ====== */
 @media (min-width: 480px) {
   .info-panel {
@@ -1280,7 +1307,7 @@ h1.proto-title { font-size: 18px; color: #fff; font-weight: 600; }
     </div>
 
     <div class="sticky-btn-wrap">
-      <button class="btn-primary btn-wero" onclick="sendWeroPayment()">Odeslat platbu</button>
+      <button class="btn-primary btn-wero" onclick="openPinSheet()">Odeslat platbu</button>
     </div>
   </div>
 
@@ -1345,6 +1372,55 @@ h1.proto-title { font-size: 18px; color: #fff; font-weight: 600; }
     </div>
   </div>
 
+
+  <!-- ===== PIN BOTTOM SHEET ===== -->
+  <div class="sheet-overlay" id="pin-overlay"></div>
+  <div class="bottom-sheet" id="pin-sheet" style="padding-bottom:env(safe-area-inset-bottom,16px);max-height:92%;">
+    <div class="sheet-handle"></div>
+    <button onclick="closePinSheet()" style="position:absolute;top:16px;right:16px;width:32px;height:32px;border-radius:50%;background:#e0e0e0;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 1l12 12M13 1L1 13" stroke="#666" stroke-width="2" stroke-linecap="round"/></svg>
+    </button>
+    <div style="text-align:center;padding:4px 24px 24px;">
+      <div style="font-size:17px;font-weight:700;margin-bottom:8px;">Potvrzení platby</div>
+      <div style="font-size:15px;color:var(--text-2);margin-bottom:28px;">Potvrďte ji PIN kódem.</div>
+      <!-- PIN dots -->
+      <div style="display:flex;justify-content:center;gap:16px;margin-bottom:32px;" id="pin-dots">
+        <div class="pin-dot" id="dot-0"></div>
+        <div class="pin-dot" id="dot-1"></div>
+        <div class="pin-dot" id="dot-2"></div>
+        <div class="pin-dot" id="dot-3"></div>
+        <div class="pin-dot" id="dot-4"></div>
+        <div class="pin-dot" id="dot-5"></div>
+      </div>
+      <!-- Numpad -->
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;max-width:300px;margin:0 auto;">
+        <button class="pin-key" onclick="pinInput(1)">1</button>
+        <button class="pin-key" onclick="pinInput(2)">2</button>
+        <button class="pin-key" onclick="pinInput(3)">3</button>
+        <button class="pin-key" onclick="pinInput(4)">4</button>
+        <button class="pin-key" onclick="pinInput(5)">5</button>
+        <button class="pin-key" onclick="pinInput(6)">6</button>
+        <button class="pin-key" onclick="pinInput(7)">7</button>
+        <button class="pin-key" onclick="pinInput(8)">8</button>
+        <button class="pin-key" onclick="pinInput(9)">9</button>
+        <!-- Face ID -->
+        <button class="pin-key pin-key-aux" onclick="pinFaceId()">
+          <svg width="26" height="26" viewBox="0 0 26 26" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
+            <path d="M3 8V5a2 2 0 0 1 2-2h3M23 8V5a2 2 0 0 0-2-2h-3M3 18v3a2 2 0 0 0 2 2h3M23 18v3a2 2 0 0 1-2 2h-3"/>
+            <path d="M9 10v1M17 10v1M10 16c.8.8 4.2.8 6 0M13 10v3.5l-1.5 1"/>
+          </svg>
+        </button>
+        <button class="pin-key" onclick="pinInput(0)">0</button>
+        <!-- Backspace -->
+        <button class="pin-key pin-key-aux" onclick="pinDelete()">
+          <svg width="24" height="18" viewBox="0 0 24 18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9 1H22a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H9L1 9Z"/>
+            <path d="M13 6l6 6M19 6l-6 6"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
 
   <!-- ===== CURRENCY BOTTOM SHEET (Wero) ===== -->
   <div class="sheet-overlay" id="wero-cur-overlay" onclick="closeWeroCurSheet()"></div>
@@ -1596,6 +1672,60 @@ function sendWeroPayment() {
   document.getElementById('uspech-amount').textContent = uspechAmt;
   document.getElementById('uspech-amount2').textContent = uspechAmt;
   goTo('wero-uspech');
+}
+
+// ====== PIN SHEET ======
+var pinValue = '';
+
+function openPinSheet() {
+  pinValue = '';
+  updatePinDots();
+  document.getElementById('pin-overlay').classList.add('open');
+  document.getElementById('pin-sheet').classList.add('open');
+}
+
+function closePinSheet() {
+  document.getElementById('pin-overlay').classList.remove('open');
+  document.getElementById('pin-sheet').classList.remove('open');
+  pinValue = '';
+  updatePinDots();
+}
+
+function updatePinDots() {
+  for (var i = 0; i < 6; i++) {
+    var dot = document.getElementById('dot-' + i);
+    dot.classList.toggle('filled', i < pinValue.length);
+    dot.classList.remove('error');
+  }
+}
+
+function pinInput(digit) {
+  if (pinValue.length >= 6) return;
+  pinValue += digit;
+  updatePinDots();
+  if (pinValue.length === 6) {
+    setTimeout(function() {
+      closePinSheet();
+      sendWeroPayment();
+    }, 180);
+  }
+}
+
+function pinDelete() {
+  pinValue = pinValue.slice(0, -1);
+  updatePinDots();
+}
+
+function pinFaceId() {
+  // simulace Face ID – rovnou potvrdí
+  for (var i = 0; i < 6; i++) {
+    var dot = document.getElementById('dot-' + i);
+    dot.classList.add('filled');
+  }
+  setTimeout(function() {
+    closePinSheet();
+    sendWeroPayment();
+  }, 400);
 }
 
 // ====== RESTORE localStorage ======
