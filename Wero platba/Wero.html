@@ -1,0 +1,1481 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<script>
+(function(){var H='4c129f69f551195cbc5e8b57cc5a0975b6efa1e8510573524d11df03c7d010c6',K='rozcestnik__auth';try{var p=new URLSearchParams(location.search);if(p.get('k')===H){localStorage.setItem(K,'1');p.delete('k');var q=p.toString();history.replaceState(history.state,'',location.pathname+(q?'?'+q:'')+location.hash);}if(localStorage.getItem(K)!=='1')location.replace('../');}catch(e){}})();
+</script>
+<meta charset="UTF-8">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Prototyp: Wero platba</title>
+
+<!-- Google Analytics 4 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXX"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-XXXXXXX', { send_page_view: false });
+  function trackScreen(name) {
+    gtag('event', 'page_view', { page_title: name, page_location: location.href + '#' + name });
+  }
+</script>
+
+<!-- Microsoft Clarity -->
+<script type="text/javascript">
+  (function(c,l,a,r,i,t,y){
+    c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+    t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+    y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+  })(window, document, "clarity", "script", "XXXXXXX");
+</script>
+
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+:root {
+  --red: #E3000F;
+  --red-dark: #B8000C;
+  --bg: #F4F4F4;
+  --card: #FFFFFF;
+  --text: #1A1A1A;
+  --text-2: #6A6A6A;
+  --text-3: #9A9A9A;
+  --border: #E5E5E5;
+  --green: #0E8A4F;
+  --green-bg: #EAF6EF;
+  --wero: #6B3FA0;
+  --wero-light: #F3EEFF;
+  --wero-mid: #9B6DD0;
+  --shadow: 0 1px 3px rgba(0,0,0,0.07);
+  --shadow-md: 0 4px 16px rgba(0,0,0,0.10);
+}
+
+html, body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+  background: #2a2a2a;
+  color: var(--text);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 24px 12px 40px;
+  gap: 16px;
+}
+
+h1.proto-title { font-size: 18px; color: #fff; font-weight: 600; }
+.subtitle { color: #bdbdbd; font-size: 13px; text-align: center; max-width: 720px; line-height: 1.5; }
+
+/* ====== PHONE SHELL ====== */
+.stage {
+  position: relative;
+  width: 390px;
+  height: 844px;
+  background: var(--bg);
+  border-radius: 44px;
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.45);
+  border: 8px solid #111;
+}
+
+.screen {
+  position: absolute;
+  inset: 0;
+  display: none;
+  flex-direction: column;
+  background: var(--bg);
+}
+.screen.active { display: flex; }
+
+/* ====== STATUS BAR ====== */
+.statusbar {
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 20px 0;
+  flex-shrink: 0;
+  background: var(--bg);
+}
+.statusbar-time { font-size: 15px; font-weight: 600; color: var(--text); }
+.statusbar-icons { display: flex; align-items: center; gap: 6px; }
+.statusbar-icons svg { width: 16px; height: 16px; fill: var(--text); }
+
+/* ====== TOP BAR ====== */
+.topbar {
+  height: 52px;
+  display: flex;
+  align-items: center;
+  padding: 0 8px;
+  background: var(--bg);
+  flex-shrink: 0;
+  position: relative;
+}
+.topbar-title {
+  position: absolute; left: 0; right: 0;
+  text-align: center;
+  font-size: 17px; font-weight: 600;
+  pointer-events: none;
+}
+.back-btn {
+  display: flex; align-items: center; gap: 3px;
+  background: none; border: none; cursor: pointer;
+  font-size: 17px; color: var(--text);
+  padding: 8px 10px; border-radius: 8px; z-index: 1;
+}
+.back-btn:active { background: rgba(0,0,0,0.06); }
+.icon-btn {
+  background: none; border: none; cursor: pointer;
+  width: 36px; height: 36px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--text-2); z-index: 1;
+}
+.icon-btn:active { background: rgba(0,0,0,0.06); }
+.ml-auto { margin-left: auto; }
+
+/* ====== SCROLLABLE AREA ====== */
+.scroll {
+  flex: 1;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: 0 14px 120px;
+}
+.scroll::-webkit-scrollbar { display: none; }
+
+/* ====== DASHBOARD ====== */
+.dash-header {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 8px 16px;
+  gap: 12px;
+  flex-shrink: 0;
+}
+.dash-icon-btn {
+  position: relative;
+  background: none; border: none; cursor: pointer;
+  width: 38px; height: 38px;
+  display: flex; align-items: center; justify-content: center;
+  border-radius: 50%;
+}
+.dash-icon-btn:active { background: rgba(0,0,0,0.06); }
+.notif-badge {
+  position: absolute; top: 0; right: 0;
+  background: var(--red); color: #fff;
+  font-size: 10px; font-weight: 700;
+  width: 16px; height: 16px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+}
+.avatar-btn {
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  overflow: hidden;
+  cursor: pointer;
+  border: none; background: none; padding: 0;
+}
+.avatar-btn img { width: 100%; height: 100%; object-fit: cover; }
+
+.dash-scroll {
+  flex: 1;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: 0 14px 140px;
+}
+.dash-scroll::-webkit-scrollbar { display: none; }
+
+/* Tab bar */
+.tabbar {
+  display: flex;
+  overflow-x: auto;
+  gap: 8px;
+  padding: 0 14px 12px;
+  flex-shrink: 0;
+}
+.tabbar::-webkit-scrollbar { display: none; }
+.tab-chip {
+  flex-shrink: 0;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  border: 1.5px solid var(--border);
+  background: #fff;
+  color: var(--text-2);
+  transition: all 0.15s;
+}
+.tab-chip.active {
+  background: var(--red);
+  color: #fff;
+  border-color: var(--red);
+  font-weight: 600;
+}
+
+/* Account cards */
+.dash-card {
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: var(--shadow);
+  margin-bottom: 10px;
+  overflow: hidden;
+}
+.dash-card-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 14px 16px 4px;
+  cursor: pointer;
+}
+.dash-card-title { font-size: 15px; font-weight: 500; color: var(--text); }
+.dash-card-num { font-size: 13px; color: var(--text-3); }
+.dash-balance {
+  padding: 4px 16px 14px;
+  font-size: 32px; font-weight: 700; letter-spacing: -0.5px;
+  display: flex; align-items: flex-end; gap: 0;
+  cursor: pointer;
+}
+.dash-balance-dec { font-size: 18px; font-weight: 600; margin-bottom: 3px; }
+.dash-balance-cur { font-size: 18px; font-weight: 400; color: var(--text-2); margin-bottom: 3px; margin-left: 4px; }
+.dash-sub-chips {
+  display: flex; gap: 8px; padding: 0 16px 14px; flex-wrap: wrap;
+}
+.sub-chip {
+  display: flex; align-items: center; gap: 6px;
+  border: 1.5px solid var(--border); border-radius: 20px;
+  padding: 5px 12px;
+  font-size: 13px; font-weight: 500; color: var(--text);
+  cursor: pointer;
+}
+.sub-chip:active { background: var(--bg); }
+.sub-chip img { width: 18px; height: 18px; border-radius: 50%; }
+
+/* Summary card */
+.summary-card {
+  background: #fff; border-radius: 16px; box-shadow: var(--shadow);
+  margin-bottom: 10px; padding: 14px 16px;
+}
+.summary-title {
+  font-size: 15px; font-weight: 600; margin-bottom: 2px;
+  display: flex; align-items: center; justify-content: space-between;
+  cursor: pointer;
+}
+.summary-sub { font-size: 12px; color: var(--text-3); margin-bottom: 14px; }
+.progress-row { margin-bottom: 10px; }
+.progress-bar-bg { height: 6px; background: #eee; border-radius: 3px; margin: 6px 0; overflow: hidden; }
+.progress-bar-fill { height: 100%; border-radius: 3px; }
+.progress-label { display: flex; align-items: center; justify-content: space-between; font-size: 14px; }
+.progress-icon { width: 22px; height: 22px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-right: 6px; }
+.summary-divider { height: 1px; background: var(--border); margin: 10px 0; }
+.summary-diff { display: flex; justify-content: space-between; font-size: 14px; }
+
+/* Bottom action bar */
+.action-bar {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  padding: 12px 16px 28px;
+  background: #fff;
+  box-shadow: 0 -1px 0 rgba(0,0,0,0.07);
+  display: flex;
+  gap: 8px;
+  flex-shrink: 0;
+}
+.action-btn {
+  flex: 1;
+  display: flex; flex-direction: column; align-items: center; gap: 5px;
+  padding: 12px 8px;
+  background: var(--red);
+  border: none; border-radius: 16px;
+  cursor: pointer;
+  color: #fff; font-size: 12px; font-weight: 500;
+  font-family: inherit;
+  transition: background 0.15s;
+}
+.action-btn:active { background: var(--red-dark); }
+.action-btn svg { width: 22px; height: 22px; }
+
+/* ====== PAYMENT FORM ====== */
+.section-label {
+  font-size: 12px; font-weight: 600; color: var(--text-3);
+  letter-spacing: 0.04em; text-transform: uppercase;
+  margin: 16px 0 8px;
+}
+.field-group {
+  background: #fff; border-radius: 14px; box-shadow: var(--shadow);
+  margin-bottom: 10px; overflow: hidden;
+}
+.field-row {
+  display: flex; align-items: center;
+  padding: 13px 14px;
+  border-bottom: 1px solid var(--border);
+  gap: 10px; cursor: pointer;
+  transition: background 0.12s;
+}
+.field-row:last-child { border-bottom: none; }
+.field-row:active { background: rgba(0,0,0,0.03); }
+.field-row.no-tap { cursor: default; }
+.field-row.no-tap:active { background: transparent; }
+
+.field-icon {
+  width: 36px; height: 36px;
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.field-inner { flex: 1; min-width: 0; }
+.field-label { font-size: 11px; color: var(--text-3); margin-bottom: 2px; font-weight: 500; }
+.field-value { font-size: 16px; color: var(--text); }
+.field-placeholder { font-size: 15px; color: var(--text-3); }
+.field-input {
+  width: 100%; border: none; outline: none;
+  font-size: 16px; color: var(--text);
+  background: transparent; font-family: inherit; padding: 0;
+  -webkit-appearance: none;
+}
+.field-input::placeholder { color: var(--text-3); }
+.field-chevron { color: var(--text-3); flex-shrink: 0; }
+
+/* Wero row special */
+.wero-row { background: var(--wero-light); }
+.wero-row:active { background: #ebe3ff; }
+
+/* ====== WERO LOGO ====== */
+.wero-logo-icon {
+  width: 36px; height: 36px;
+  border-radius: 10px;
+  background: var(--wero);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  overflow: hidden;
+}
+.wero-wordmark {
+  font-size: 13px; font-weight: 800;
+  color: #fff; letter-spacing: -0.5px;
+  font-style: italic;
+}
+.wero-badge {
+  display: inline-flex; align-items: center; gap: 3px;
+  background: var(--wero); color: #fff;
+  font-size: 10px; font-weight: 700;
+  padding: 2px 7px; border-radius: 10px;
+  letter-spacing: 0.02em;
+  margin-top: 3px;
+}
+
+/* Amount area */
+.amount-area {
+  background: #fff; border-radius: 14px; box-shadow: var(--shadow);
+  margin-bottom: 10px; overflow: hidden;
+}
+.amount-display {
+  display: flex; align-items: baseline; gap: 6px;
+  padding: 16px 14px 4px;
+}
+.amount-input-big {
+  flex: 1;
+  border: none; outline: none;
+  font-size: 40px; font-weight: 700;
+  color: var(--text); background: transparent;
+  font-family: inherit; letter-spacing: -1px; min-width: 0;
+  -webkit-appearance: none;
+}
+.amount-input-big::placeholder { color: var(--text-3); }
+.cur-label {
+  font-size: 22px; font-weight: 600; color: var(--text-2);
+  flex-shrink: 0; padding-bottom: 4px;
+}
+.balance-hint { font-size: 12px; color: var(--text-3); padding: 2px 14px 12px; }
+.balance-hint span { color: var(--text-2); font-weight: 500; }
+
+/* ====== STICKY BUTTON ====== */
+.sticky-btn-wrap {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  padding: 12px 14px 28px;
+  background: linear-gradient(to bottom, transparent, var(--bg) 40%);
+  pointer-events: none;
+}
+.sticky-btn-wrap button { pointer-events: all; }
+.btn-primary {
+  width: 100%; padding: 17px;
+  background: var(--red); color: #fff;
+  border: none; border-radius: 14px;
+  font-size: 17px; font-weight: 600;
+  font-family: inherit; cursor: pointer;
+  transition: background 0.15s;
+}
+.btn-primary:active { background: var(--red-dark); }
+.btn-primary:disabled { background: #ccc; cursor: not-allowed; }
+
+.btn-wero {
+  background: var(--wero);
+}
+.btn-wero:active { background: #5a3388; }
+
+/* ====== CONTACTS ====== */
+.contact-strip {
+  display: flex; gap: 16px;
+  overflow-x: auto; padding: 4px 0 12px;
+  margin: 0 -14px; padding-left: 14px; padding-right: 14px;
+}
+.contact-strip::-webkit-scrollbar { display: none; }
+.contact-item {
+  display: flex; flex-direction: column; align-items: center; gap: 6px;
+  cursor: pointer; flex-shrink: 0;
+  padding: 4px 6px; border-radius: 12px;
+  transition: background 0.15s;
+}
+.contact-item:active { background: rgba(0,0,0,0.06); }
+.contact-avatar {
+  width: 52px; height: 52px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 20px; font-weight: 700; color: #fff;
+  flex-shrink: 0; position: relative;
+}
+.wero-verified {
+  position: absolute; bottom: -2px; right: -2px;
+  width: 18px; height: 18px; border-radius: 50%;
+  background: var(--wero);
+  border: 2px solid #fff;
+  display: flex; align-items: center; justify-content: center;
+}
+.wero-verified svg { width: 10px; height: 10px; fill: #fff; }
+.contact-name {
+  font-size: 11px; color: var(--text-2);
+  text-align: center; white-space: nowrap;
+  max-width: 64px; overflow: hidden; text-overflow: ellipsis;
+}
+.contact-phone { font-size: 10px; color: var(--text-3); text-align: center; }
+
+/* Contact list */
+.contact-list-item {
+  display: flex; align-items: center; gap: 12px;
+  padding: 12px 0; border-bottom: 1px solid var(--border);
+  cursor: pointer; transition: background 0.12s;
+}
+.contact-list-item:last-child { border-bottom: none; }
+.contact-list-item:active { background: rgba(0,0,0,0.03); margin: 0 -14px; padding: 12px 14px; border-radius: 8px; }
+
+/* ====== CONFIRMATION SCREEN ====== */
+.confirm-recipient {
+  display: flex; flex-direction: column; align-items: center;
+  padding: 24px 14px 16px;
+}
+.confirm-avatar {
+  width: 72px; height: 72px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 28px; font-weight: 700; color: #fff;
+  margin-bottom: 12px; position: relative;
+}
+.confirm-avatar .wero-verified {
+  width: 24px; height: 24px;
+  bottom: -2px; right: -2px;
+}
+.confirm-avatar .wero-verified svg { width: 13px; height: 13px; }
+.confirm-name { font-size: 20px; font-weight: 700; margin-bottom: 4px; }
+.confirm-phone { font-size: 14px; color: var(--text-3); }
+
+.confirm-amount-card {
+  background: #fff; border-radius: 16px; box-shadow: var(--shadow);
+  margin: 0 14px 10px; padding: 20px;
+  display: flex; flex-direction: column; align-items: center;
+}
+.confirm-amount-val {
+  font-size: 44px; font-weight: 800; letter-spacing: -2px;
+  color: var(--text); display: flex; align-items: flex-end; gap: 4px;
+}
+.confirm-amount-cur { font-size: 24px; font-weight: 600; color: var(--text-2); margin-bottom: 6px; }
+.confirm-instant-badge {
+  display: inline-flex; align-items: center; gap: 5px;
+  background: var(--wero-light); color: var(--wero);
+  font-size: 12px; font-weight: 600;
+  padding: 5px 12px; border-radius: 20px;
+  margin-top: 10px;
+}
+
+.confirm-detail-card {
+  background: #fff; border-radius: 14px; box-shadow: var(--shadow);
+  margin: 0 14px 10px; overflow: hidden;
+}
+.confirm-row {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 12px 14px; border-bottom: 1px solid var(--border);
+  font-size: 14px;
+}
+.confirm-row:last-child { border-bottom: none; }
+.confirm-row-label { color: var(--text-3); }
+.confirm-row-val { font-weight: 500; color: var(--text); }
+
+.confirm-note {
+  margin: 0 14px 10px;
+  font-size: 12px; color: var(--text-3);
+  line-height: 1.5; text-align: center;
+}
+
+/* ====== SUCCESS ====== */
+.success-wrap {
+  flex: 1; display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  padding: 24px 24px 40px;
+  text-align: center;
+}
+.success-icon {
+  width: 80px; height: 80px; border-radius: 50%;
+  background: var(--green-bg);
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: 20px;
+}
+.success-icon svg { width: 40px; height: 40px; }
+.success-title { font-size: 24px; font-weight: 700; margin-bottom: 8px; }
+.success-sub { font-size: 15px; color: var(--text-3); line-height: 1.5; margin-bottom: 32px; }
+.success-detail {
+  background: #fff; border-radius: 14px; box-shadow: var(--shadow);
+  width: 100%; padding: 16px; margin-bottom: 24px;
+}
+.success-detail-row {
+  display: flex; justify-content: space-between;
+  font-size: 14px; padding: 6px 0;
+  border-bottom: 1px solid var(--border);
+}
+.success-detail-row:last-child { border-bottom: none; }
+.success-detail-label { color: var(--text-3); }
+.success-detail-val { font-weight: 500; }
+
+/* ====== WERO INTRO SHEET ====== */
+.sheet-overlay {
+  position: absolute; inset: 0; z-index: 100;
+  background: rgba(0,0,0,0.4);
+  display: none;
+}
+.sheet-overlay.open { display: block; }
+.bottom-sheet {
+  position: absolute; bottom: 0; left: 0; right: 0;
+  background: #fff; border-radius: 20px 20px 0 0;
+  padding: 12px 0 0;
+  transform: translateY(100%);
+  transition: transform 0.3s cubic-bezier(.32,.72,0,1);
+  max-height: 85%;
+  overflow-y: auto;
+  z-index: 101;
+}
+.bottom-sheet::-webkit-scrollbar { display: none; }
+.bottom-sheet.open { transform: translateY(0); }
+.sheet-handle {
+  width: 36px; height: 4px; background: #ddd; border-radius: 2px;
+  margin: 0 auto 16px;
+}
+.sheet-title { font-size: 18px; font-weight: 700; padding: 0 20px 12px; }
+.sheet-body { padding: 0 20px 20px; }
+
+/* Wero feature list */
+.wero-features { list-style: none; margin-bottom: 20px; }
+.wero-features li {
+  display: flex; align-items: flex-start; gap: 12px;
+  padding: 10px 0; border-bottom: 1px solid var(--border);
+  font-size: 14px; line-height: 1.5;
+}
+.wero-features li:last-child { border-bottom: none; }
+.wero-feat-icon {
+  width: 32px; height: 32px; border-radius: 8px;
+  background: var(--wero-light); color: var(--wero);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.wero-feat-icon svg { width: 16px; height: 16px; }
+
+/* Search input */
+.search-wrap {
+  position: relative; margin-bottom: 12px;
+}
+.search-input {
+  width: 100%; padding: 11px 14px 11px 40px;
+  background: #fff; border: 1.5px solid var(--border);
+  border-radius: 12px; font-size: 15px; font-family: inherit;
+  color: var(--text); outline: none;
+}
+.search-input:focus { border-color: var(--text); }
+.search-icon {
+  position: absolute; left: 12px; top: 50%; transform: translateY(-50%);
+  color: var(--text-3); pointer-events: none;
+}
+
+/* Phone input field */
+.phone-field-wrap {
+  background: #fff; border-radius: 14px; box-shadow: var(--shadow);
+  margin-bottom: 12px; overflow: hidden;
+  display: flex; align-items: center;
+  padding: 14px;
+  border: 2px solid transparent;
+  transition: border-color 0.15s;
+}
+.phone-field-wrap:focus-within { border-color: var(--wero); }
+.phone-prefix {
+  font-size: 16px; font-weight: 500; color: var(--text);
+  padding-right: 10px; border-right: 1.5px solid var(--border);
+  margin-right: 10px; flex-shrink: 0;
+}
+.phone-input {
+  flex: 1; border: none; outline: none;
+  font-size: 16px; font-family: inherit; color: var(--text);
+  background: transparent;
+}
+.phone-input::placeholder { color: var(--text-3); }
+
+/* Tabs */
+.wero-tabs {
+  display: flex; gap: 0;
+  margin: 0 14px 16px;
+  background: var(--bg); border-radius: 10px; padding: 3px;
+}
+.wero-tab {
+  flex: 1; padding: 8px; border: none; background: transparent;
+  font-size: 14px; font-weight: 500; color: var(--text-2);
+  cursor: pointer; border-radius: 8px; font-family: inherit;
+  transition: all 0.15s;
+}
+.wero-tab.active {
+  background: #fff; color: var(--text);
+  box-shadow: 0 1px 4px rgba(0,0,0,0.12); font-weight: 600;
+}
+
+/* Message field */
+.msg-row { padding: 12px 14px; }
+.msg-input {
+  width: 100%; border: none; outline: none;
+  font-size: 15px; color: var(--text); background: transparent;
+  font-family: inherit;
+}
+.msg-input::placeholder { color: var(--text-3); }
+
+/* ====== DESKTOP INFO PANEL ====== */
+@media (min-width: 480px) {
+  .info-panel {
+    max-width: 320px;
+    background: rgba(255,255,255,0.07);
+    border-radius: 16px;
+    padding: 20px;
+    color: #e0e0e0;
+    font-size: 14px;
+    line-height: 1.6;
+    align-self: flex-start;
+    margin-top: 60px;
+  }
+  .info-panel h3 { color: #fff; font-size: 16px; margin-bottom: 10px; }
+  .info-panel ul { padding-left: 16px; }
+  .info-panel li { margin-bottom: 6px; }
+  .wrapper { display: flex; gap: 32px; align-items: flex-start; }
+}
+@media (max-width: 480px) {
+  .info-panel { display: none; }
+  .wrapper { display: contents; }
+  html, body { padding: 0; background: var(--bg); }
+  h1.proto-title, .subtitle { display: none; }
+  .stage { width: 100vw; height: 100dvh; border-radius: 0; border: none; box-shadow: none; }
+}
+</style>
+</head>
+<body>
+<h1 class="proto-title">Prototyp: Wero platba</h1>
+<p class="subtitle">Testování nové funkce Wero – platba pomocí telefonního čísla přes evropskou platební síť.</p>
+
+<div class="wrapper">
+<div class="stage" id="stage">
+
+  <!-- ===== SCREEN 1: DASHBOARD ===== -->
+  <div class="screen active" id="screen-dashboard">
+    <div class="statusbar">
+      <span class="statusbar-time">9:41</span>
+      <div class="statusbar-icons">
+        <svg viewBox="0 0 24 24"><path d="M1.5 8.5A13 13 0 0 1 22.5 8.5"/><path d="M5 12a9 9 0 0 1 14 0"/><path d="M8.5 15.5a5 5 0 0 1 7 0"/><circle cx="12" cy="19" r="1" fill="currentColor"/></svg>
+        <svg viewBox="0 0 24 24"><rect x="2" y="7" width="16" height="11" rx="2"/><path d="M18 10h2a2 2 0 0 1 2 2v2a2 2 0 0 1-2 2h-2" fill="currentColor" opacity=".4"/><rect x="4" y="9" width="10" height="7" rx="1" fill="currentColor"/></svg>
+      </div>
+    </div>
+    <div class="dash-header">
+      <div style="flex:1"></div>
+      <button class="dash-icon-btn">
+        <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+      </button>
+      <button class="dash-icon-btn" onclick="goTo('dashboard')">
+        <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+        <span class="notif-badge">1</span>
+      </button>
+      <button class="avatar-btn">
+        <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
+          <rect width="36" height="36" rx="18" fill="#c8a882"/>
+          <circle cx="18" cy="14" r="6" fill="#8a6040"/>
+          <ellipse cx="18" cy="28" rx="10" ry="6" fill="#8a6040"/>
+        </svg>
+      </button>
+    </div>
+
+    <div class="tabbar">
+      <div class="tab-chip active">Přehled</div>
+      <div class="tab-chip">Extra</div>
+      <div class="tab-chip">Karty</div>
+      <div class="tab-chip">Půjčky</div>
+      <div class="tab-chip">Spoření</div>
+      <div class="tab-chip">Pojištění</div>
+    </div>
+
+    <div class="dash-scroll">
+      <!-- Tarif -->
+      <div class="dash-card">
+        <div class="dash-card-header">
+          <span class="dash-card-title" style="font-weight:600">Tarif Komfort</span>
+          <svg width="18" height="18" fill="none" stroke="#9A9A9A" stroke-width="2" viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg>
+        </div>
+      </div>
+
+      <!-- Běžný účet 1 -->
+      <div class="dash-card">
+        <div class="dash-card-header">
+          <div><div class="dash-card-title">Běžný účet</div><div class="dash-card-num">122000/0100</div></div>
+          <svg width="18" height="18" fill="none" stroke="#9A9A9A" stroke-width="2" viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg>
+        </div>
+        <div class="dash-balance"><span>18 063</span><span class="dash-balance-dec">,38</span><span class="dash-balance-cur">Kč</span></div>
+      </div>
+
+      <!-- Běžný účet 2 -->
+      <div class="dash-card">
+        <div class="dash-card-header">
+          <div><div class="dash-card-title">Běžný účet 2</div><div class="dash-card-num">326683762/0100</div></div>
+          <svg width="18" height="18" fill="none" stroke="#9A9A9A" stroke-width="2" viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg>
+        </div>
+        <div class="dash-balance"><span>48 490</span><span class="dash-balance-dec">,20</span><span class="dash-balance-cur">Kč</span></div>
+        <div class="dash-sub-chips">
+          <div class="sub-chip">
+            <svg width="18" height="12" viewBox="0 0 18 12"><rect width="18" height="12" rx="2" fill="#D7141A"/><rect y="4" width="18" height="4" fill="white"/><rect y="8" width="18" height="4" fill="#D7141A"/></svg>
+            40 000,00 Kč
+          </div>
+          <div class="sub-chip">
+            <svg width="18" height="12" viewBox="0 0 18 12"><rect width="18" height="12" rx="2" fill="#003399"/><circle cx="9" cy="6" r="4" fill="none" stroke="#FFCC00" stroke-width="1.2"/></svg>
+            334,26 EUR
+          </div>
+        </div>
+      </div>
+
+      <!-- Spoření -->
+      <div class="dash-card">
+        <div class="dash-card-header">
+          <div><div class="dash-card-title">Spoření</div><div class="dash-card-num">326683764/0100</div></div>
+          <svg width="18" height="18" fill="none" stroke="#9A9A9A" stroke-width="2" viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg>
+        </div>
+        <div class="dash-balance"><span>11 490</span><span class="dash-balance-dec">,20</span><span class="dash-balance-cur">Kč</span></div>
+      </div>
+
+      <!-- Souhrn -->
+      <div class="summary-card">
+        <div class="summary-title">Souhrn za červen <svg width="18" height="18" fill="none" stroke="#9A9A9A" stroke-width="2" viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg></div>
+        <div class="summary-sub">Běžný účet</div>
+        <div class="progress-row">
+          <div class="progress-bar-bg"><div class="progress-bar-fill" style="width:35%;background:#1A1A1A"></div></div>
+          <div class="progress-label">
+            <span style="display:flex;align-items:center">
+              <span class="progress-icon" style="background:#1A1A1A">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              </span>
+              Výdaje
+            </span>
+            <span style="font-weight:500">-10 000,00 Kč</span>
+          </div>
+        </div>
+        <div class="progress-row">
+          <div class="progress-bar-bg"><div class="progress-bar-fill" style="width:100%;background:#0E8A4F"></div></div>
+          <div class="progress-label">
+            <span style="display:flex;align-items:center;color:#0E8A4F;font-weight:600">
+              <span class="progress-icon" style="background:#0E8A4F">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+              </span>
+              Příjmy
+            </span>
+            <span style="font-weight:600;color:#0E8A4F">20 000,00 Kč</span>
+          </div>
+        </div>
+        <div class="summary-divider"></div>
+        <div class="summary-diff"><span>Rozdíl</span><span style="font-weight:500">10 000,00 Kč</span></div>
+      </div>
+    </div>
+
+    <!-- Action bar -->
+    <div class="action-bar">
+      <button class="action-btn" onclick="goTo('nova-platba')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/><path d="M7 15h.01"/><path d="M11 15h2"/></svg>
+        Nová platba
+      </button>
+      <button class="action-btn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><path d="M14 17h7M17 14v7"/></svg>
+        QR platba
+      </button>
+      <button class="action-btn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
+        Zaplať mi
+      </button>
+    </div>
+  </div>
+
+  <!-- ===== SCREEN 2: NOVÁ PLATBA ===== -->
+  <div class="screen" id="screen-nova-platba">
+    <div class="statusbar">
+      <span class="statusbar-time">9:41</span>
+      <div class="statusbar-icons">
+        <svg viewBox="0 0 24 24"><path d="M1.5 8.5A13 13 0 0 1 22.5 8.5"/><path d="M5 12a9 9 0 0 1 14 0"/><path d="M8.5 15.5a5 5 0 0 1 7 0"/><circle cx="12" cy="19" r="1" fill="currentColor"/></svg>
+        <svg viewBox="0 0 24 24"><rect x="2" y="7" width="16" height="11" rx="2"/><path d="M18 10h2a2 2 0 0 1 2 2v2a2 2 0 0 1-2 2h-2" fill="currentColor" opacity=".4"/><rect x="4" y="9" width="10" height="7" rx="1" fill="currentColor"/></svg>
+      </div>
+    </div>
+    <div class="topbar">
+      <button class="back-btn" onclick="goTo('dashboard')">
+        <svg width="10" height="17" viewBox="0 0 10 17" fill="none"><path d="M8.5 1.5L1.5 8.5L8.5 15.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      </button>
+      <span class="topbar-title">Nová platba</span>
+      <button class="icon-btn ml-auto">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><path d="M14 17h7M17 14v7"/></svg>
+      </button>
+    </div>
+
+    <div class="scroll" style="padding-top: 8px;">
+      <!-- Zdrojový účet -->
+      <div class="field-group">
+        <div class="field-row no-tap" style="cursor:pointer;" onclick="void(0)">
+          <div class="field-inner">
+            <div class="field-label">Zdrojový účet</div>
+            <div class="field-value">Běžný účet</div>
+            <div style="font-size:12px;color:var(--text-3)">123456-4835477/0100</div>
+          </div>
+          <svg class="field-chevron" width="8" height="14" viewBox="0 0 8 14" fill="none"><path d="M1 1l6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+        </div>
+      </div>
+
+      <!-- Komu -->
+      <div class="field-group">
+        <div class="field-row no-tap">
+          <div class="field-inner">
+            <div class="field-label">Komu</div>
+            <input class="field-input" id="recipient-input" type="text" placeholder="Číslo účtu, IBAN, šablona nebo příjemce" autocomplete="off">
+          </div>
+        </div>
+      </div>
+
+      <!-- Platba na kontakt -->
+      <div class="field-group">
+        <div class="field-row" onclick="goTo('nova-platba')">
+          <div class="field-icon" style="background:transparent">
+            <svg width="28" height="28" viewBox="0 0 36 36" fill="none">
+              <circle cx="18" cy="18" r="17" fill="none" stroke="#E3000F" stroke-width="2"/>
+              <circle cx="18" cy="14" r="5" fill="#E3000F"/>
+              <path d="M8 28c0-5.5 4.5-10 10-10s10 4.5 10 10" fill="#E3000F"/>
+              <circle cx="12" cy="18" r="3" fill="#E3000F" opacity=".6"/>
+              <circle cx="24" cy="18" r="3" fill="#E3000F" opacity=".6"/>
+            </svg>
+          </div>
+          <div class="field-inner">
+            <div class="field-value" style="font-weight:500">Platba na kontakt</div>
+          </div>
+          <svg class="field-chevron" width="8" height="14" viewBox="0 0 8 14" fill="none"><path d="M1 1l6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+        </div>
+
+        <!-- WERO ROW -->
+        <div class="field-row wero-row" onclick="showWeroIntro()">
+          <div class="wero-logo-icon">
+            <svg width="24" height="20" viewBox="0 0 40 32" fill="none">
+              <!-- Wero stylized W -->
+              <path d="M2 4L10 28L20 12L30 28L38 4" stroke="white" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <div class="field-inner">
+            <div class="field-value" style="font-weight:600">Platba přes Wero</div>
+            <div style="display:flex;align-items:center;gap:6px;margin-top:3px">
+              <span style="font-size:11px;color:var(--wero);font-weight:500">Okamžitě · Zdarma · Jen tel. číslo</span>
+            </div>
+          </div>
+          <svg class="field-chevron" width="8" height="14" viewBox="0 0 8 14" fill="none"><path d="M1 1l6 6-6 6" stroke="#6B3FA0" stroke-width="1.8" stroke-linecap="round"/></svg>
+        </div>
+      </div>
+
+      <!-- Částka -->
+      <div class="amount-area">
+        <div class="amount-display">
+          <input class="amount-input-big" id="amount-input" type="number" min="0" placeholder="0" inputmode="decimal">
+          <span class="cur-label">Kč</span>
+        </div>
+        <div class="balance-hint">Na účtu máte <span>18 063,38 Kč</span>.</div>
+      </div>
+    </div>
+
+    <div class="sticky-btn-wrap">
+      <button class="btn-primary" onclick="goTo('nova-platba')">Pokračovat</button>
+    </div>
+  </div>
+
+  <!-- ===== SCREEN 3: WERO – VÝBĚR KONTAKTU ===== -->
+  <div class="screen" id="screen-wero-kontakt">
+    <div class="statusbar">
+      <span class="statusbar-time">9:41</span>
+      <div class="statusbar-icons">
+        <svg viewBox="0 0 24 24"><path d="M1.5 8.5A13 13 0 0 1 22.5 8.5"/><path d="M5 12a9 9 0 0 1 14 0"/><path d="M8.5 15.5a5 5 0 0 1 7 0"/><circle cx="12" cy="19" r="1" fill="currentColor"/></svg>
+        <svg viewBox="0 0 24 24"><rect x="2" y="7" width="16" height="11" rx="2"/><path d="M18 10h2a2 2 0 0 1 2 2v2a2 2 0 0 1-2 2h-2" fill="currentColor" opacity=".4"/><rect x="4" y="9" width="10" height="7" rx="1" fill="currentColor"/></svg>
+      </div>
+    </div>
+    <div class="topbar">
+      <button class="back-btn" onclick="goTo('nova-platba')">
+        <svg width="10" height="17" viewBox="0 0 10 17" fill="none"><path d="M8.5 1.5L1.5 8.5L8.5 15.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      </button>
+      <span class="topbar-title" style="display:flex;align-items:center;gap:8px;justify-content:center">
+        <span style="background:var(--wero);border-radius:6px;padding:2px 8px;display:inline-flex;align-items:center">
+          <svg width="18" height="14" viewBox="0 0 40 32" fill="none"><path d="M2 4L10 28L20 12L30 28L38 4" stroke="white" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </span>
+        <span>Platba přes Wero</span>
+      </span>
+    </div>
+
+    <!-- Tabs -->
+    <div class="wero-tabs">
+      <button class="wero-tab active" id="tab-contacts" onclick="switchWeroTab('contacts')">Kontakty</button>
+      <button class="wero-tab" id="tab-phone" onclick="switchWeroTab('phone')">Tel. číslo</button>
+    </div>
+
+    <div class="scroll" style="padding-top:4px;" id="wero-contacts-panel">
+      <!-- Poslední kontakty -->
+      <div class="section-label">Nedávní</div>
+      <div style="display:flex;gap:16px;overflow-x:auto;padding-bottom:12px;margin:0 -14px;padding-left:14px;padding-right:14px;" class="contact-strip">
+        <div class="contact-item" onclick="selectContact('Jana K.','jana','#FF6B6B','+420 777 123 456')">
+          <div class="contact-avatar" style="background:#FF6B6B">J
+            <div class="wero-verified"><svg viewBox="0 0 12 12" fill="white"><path d="M2 6l3 3 5-5" stroke="white" stroke-width="1.5" fill="none" stroke-linecap="round"/></svg></div>
+          </div>
+          <div class="contact-name">Jana K.</div>
+        </div>
+        <div class="contact-item" onclick="selectContact('Tomáš N.','tomas','#4ECDC4','+420 602 987 654')">
+          <div class="contact-avatar" style="background:#4ECDC4">T
+            <div class="wero-verified"><svg viewBox="0 0 12 12" fill="white"><path d="M2 6l3 3 5-5" stroke="white" stroke-width="1.5" fill="none" stroke-linecap="round"/></svg></div>
+          </div>
+          <div class="contact-name">Tomáš N.</div>
+        </div>
+        <div class="contact-item" onclick="selectContact('Petra M.','petra','#45B7D1','+420 731 456 789')">
+          <div class="contact-avatar" style="background:#45B7D1">P
+            <div class="wero-verified"><svg viewBox="0 0 12 12" fill="white"><path d="M2 6l3 3 5-5" stroke="white" stroke-width="1.5" fill="none" stroke-linecap="round"/></svg></div>
+          </div>
+          <div class="contact-name">Petra M.</div>
+        </div>
+        <div class="contact-item" onclick="selectContact('Martin S.','martin','#96CEB4','+420 608 321 987')">
+          <div class="contact-avatar" style="background:#96CEB4">M</div>
+          <div class="contact-name">Martin S.</div>
+          <div class="contact-phone" style="font-size:9px;color:var(--text-3)">bez Wero</div>
+        </div>
+        <div class="contact-item" onclick="selectContact('Lucie H.','lucie','#FFEAA7','+420 724 654 321')">
+          <div class="contact-avatar" style="background:#FFEAA7;color:#333">L
+            <div class="wero-verified"><svg viewBox="0 0 12 12" fill="white"><path d="M2 6l3 3 5-5" stroke="white" stroke-width="1.5" fill="none" stroke-linecap="round"/></svg></div>
+          </div>
+          <div class="contact-name">Lucie H.</div>
+        </div>
+      </div>
+
+      <!-- Vyhledávání -->
+      <div class="search-wrap">
+        <span class="search-icon">
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        </span>
+        <input class="search-input" type="search" placeholder="Hledat kontakt...">
+      </div>
+
+      <!-- Abecední seznam -->
+      <div class="section-label">A</div>
+      <div class="field-group">
+        <div class="contact-list-item" onclick="selectContact('Anna Kovářová','anna','#E17055','+420 777 111 222')">
+          <div class="contact-avatar" style="background:#E17055;width:44px;height:44px;font-size:17px">A
+            <div class="wero-verified" style="width:16px;height:16px"><svg viewBox="0 0 12 12"><path d="M2 6l3 3 5-5" stroke="white" stroke-width="1.5" fill="none" stroke-linecap="round"/></svg></div>
+          </div>
+          <div style="flex:1">
+            <div style="font-size:15px;font-weight:500">Anna Kovářová</div>
+            <div style="font-size:12px;color:var(--text-3)">+420 777 111 222</div>
+          </div>
+          <div class="wero-badge" style="font-size:9px;padding:1px 6px">Wero</div>
+        </div>
+      </div>
+
+      <div class="section-label">J</div>
+      <div class="field-group">
+        <div class="contact-list-item" onclick="selectContact('Jana Kratochvílová','jana','#FF6B6B','+420 777 123 456')">
+          <div class="contact-avatar" style="background:#FF6B6B;width:44px;height:44px;font-size:17px">J
+            <div class="wero-verified" style="width:16px;height:16px"><svg viewBox="0 0 12 12"><path d="M2 6l3 3 5-5" stroke="white" stroke-width="1.5" fill="none" stroke-linecap="round"/></svg></div>
+          </div>
+          <div style="flex:1">
+            <div style="font-size:15px;font-weight:500">Jana Kratochvílová</div>
+            <div style="font-size:12px;color:var(--text-3)">+420 777 123 456</div>
+          </div>
+          <div class="wero-badge" style="font-size:9px;padding:1px 6px">Wero</div>
+        </div>
+        <div class="contact-list-item" onclick="goTo('wero-castka')">
+          <div class="contact-avatar" style="background:#fdcb6e;width:44px;height:44px;font-size:17px">J</div>
+          <div style="flex:1">
+            <div style="font-size:15px;font-weight:500">Jiří Novák</div>
+            <div style="font-size:12px;color:var(--text-3)">+420 603 999 888</div>
+          </div>
+          <div style="font-size:11px;color:var(--text-3)">bez Wero</div>
+        </div>
+      </div>
+
+      <div class="section-label">L</div>
+      <div class="field-group">
+        <div class="contact-list-item" onclick="selectContact('Lucie Horáčková','lucie','#FFEAA7','+420 724 654 321')">
+          <div class="contact-avatar" style="background:#FFEAA7;color:#333;width:44px;height:44px;font-size:17px">L
+            <div class="wero-verified" style="width:16px;height:16px"><svg viewBox="0 0 12 12"><path d="M2 6l3 3 5-5" stroke="white" stroke-width="1.5" fill="none" stroke-linecap="round"/></svg></div>
+          </div>
+          <div style="flex:1">
+            <div style="font-size:15px;font-weight:500">Lucie Horáčková</div>
+            <div style="font-size:12px;color:var(--text-3)">+420 724 654 321</div>
+          </div>
+          <div class="wero-badge" style="font-size:9px;padding:1px 6px">Wero</div>
+        </div>
+      </div>
+
+      <div class="section-label">P</div>
+      <div class="field-group">
+        <div class="contact-list-item" onclick="selectContact('Petra Malá','petra','#45B7D1','+420 731 456 789')">
+          <div class="contact-avatar" style="background:#45B7D1;width:44px;height:44px;font-size:17px">P
+            <div class="wero-verified" style="width:16px;height:16px"><svg viewBox="0 0 12 12"><path d="M2 6l3 3 5-5" stroke="white" stroke-width="1.5" fill="none" stroke-linecap="round"/></svg></div>
+          </div>
+          <div style="flex:1">
+            <div style="font-size:15px;font-weight:500">Petra Malá</div>
+            <div style="font-size:12px;color:var(--text-3)">+420 731 456 789</div>
+          </div>
+          <div class="wero-badge" style="font-size:9px;padding:1px 6px">Wero</div>
+        </div>
+      </div>
+
+      <div class="section-label">T</div>
+      <div class="field-group">
+        <div class="contact-list-item" onclick="selectContact('Tomáš Novotný','tomas','#4ECDC4','+420 602 987 654')">
+          <div class="contact-avatar" style="background:#4ECDC4;width:44px;height:44px;font-size:17px">T
+            <div class="wero-verified" style="width:16px;height:16px"><svg viewBox="0 0 12 12"><path d="M2 6l3 3 5-5" stroke="white" stroke-width="1.5" fill="none" stroke-linecap="round"/></svg></div>
+          </div>
+          <div style="flex:1">
+            <div style="font-size:15px;font-weight:500">Tomáš Novotný</div>
+            <div style="font-size:12px;color:var(--text-3)">+420 602 987 654</div>
+          </div>
+          <div class="wero-badge" style="font-size:9px;padding:1px 6px">Wero</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Phone tab panel -->
+    <div class="scroll" id="wero-phone-panel" style="display:none;padding-top:8px;">
+      <div class="section-label">Zadejte telefonní číslo</div>
+      <div class="phone-field-wrap">
+        <span class="phone-prefix">🇨🇿 +420</span>
+        <input class="phone-input" id="phone-manual" type="tel" placeholder="777 123 456" inputmode="tel">
+      </div>
+      <p style="font-size:13px;color:var(--text-3);line-height:1.5;margin-bottom:20px">
+        Příjemce obdrží platbu přímo na svůj bankovní účet registrovaný u Wero. Nemusíte znát číslo účtu.
+      </p>
+
+      <div class="sticky-btn-wrap" style="position:relative;padding:0;background:transparent;margin-top:8px;">
+        <button class="btn-primary btn-wero" onclick="selectContact('Neznámý příjemce','?','#6B3FA0',document.getElementById('phone-manual').value||'+420 777 000 000')">Ověřit číslo</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== SCREEN 4: WERO – ČÁSTKA ===== -->
+  <div class="screen" id="screen-wero-castka">
+    <div class="statusbar">
+      <span class="statusbar-time">9:41</span>
+      <div class="statusbar-icons">
+        <svg viewBox="0 0 24 24"><path d="M1.5 8.5A13 13 0 0 1 22.5 8.5"/><path d="M5 12a9 9 0 0 1 14 0"/><path d="M8.5 15.5a5 5 0 0 1 7 0"/><circle cx="12" cy="19" r="1" fill="currentColor"/></svg>
+        <svg viewBox="0 0 24 24"><rect x="2" y="7" width="16" height="11" rx="2"/><path d="M18 10h2a2 2 0 0 1 2 2v2a2 2 0 0 1-2 2h-2" fill="currentColor" opacity=".4"/><rect x="4" y="9" width="10" height="7" rx="1" fill="currentColor"/></svg>
+      </div>
+    </div>
+    <div class="topbar">
+      <button class="back-btn" onclick="goTo('wero-kontakt')">
+        <svg width="10" height="17" viewBox="0 0 10 17" fill="none"><path d="M8.5 1.5L1.5 8.5L8.5 15.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      </button>
+      <span class="topbar-title">Platba přes Wero</span>
+    </div>
+
+    <div class="scroll" style="padding-top:8px;">
+      <!-- Příjemce -->
+      <div class="confirm-recipient" style="padding-bottom:8px">
+        <div class="confirm-avatar" id="castka-avatar" style="background:#FF6B6B">J
+          <div class="wero-verified" style="width:24px;height:24px">
+            <svg viewBox="0 0 12 12"><path d="M2 6l3 3 5-5" stroke="white" stroke-width="1.5" fill="none" stroke-linecap="round"/></svg>
+          </div>
+        </div>
+        <div class="confirm-name" id="castka-name">Jana Kratochvílová</div>
+        <div class="confirm-phone" id="castka-phone">+420 777 123 456</div>
+        <div class="wero-badge" style="margin-top:6px">
+          <svg width="12" height="10" viewBox="0 0 40 32" fill="none"><path d="M2 4L10 28L20 12L30 28L38 4" stroke="white" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Wero ověřen
+        </div>
+      </div>
+
+      <!-- Částka -->
+      <div class="amount-area">
+        <div class="amount-display">
+          <input class="amount-input-big" id="wero-amount" type="number" min="0" placeholder="0" inputmode="decimal" oninput="updateWeroAmount()">
+          <span class="cur-label">Kč</span>
+        </div>
+        <div class="balance-hint">Na účtu máte <span>18 063,38 Kč</span>.</div>
+
+        <!-- Zpráva -->
+        <div style="border-top:1px solid var(--border)" class="msg-row">
+          <input class="msg-input" id="wero-message" type="text" placeholder="Zpráva pro příjemce (nepovinné)" maxlength="70">
+        </div>
+      </div>
+
+      <!-- Rychlé částky -->
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px">
+        <button onclick="setAmount(100)" style="padding:8px 14px;border-radius:20px;border:1.5px solid var(--border);background:#fff;font-size:14px;cursor:pointer;font-family:inherit">100 Kč</button>
+        <button onclick="setAmount(200)" style="padding:8px 14px;border-radius:20px;border:1.5px solid var(--border);background:#fff;font-size:14px;cursor:pointer;font-family:inherit">200 Kč</button>
+        <button onclick="setAmount(500)" style="padding:8px 14px;border-radius:20px;border:1.5px solid var(--border);background:#fff;font-size:14px;cursor:pointer;font-family:inherit">500 Kč</button>
+        <button onclick="setAmount(1000)" style="padding:8px 14px;border-radius:20px;border:1.5px solid var(--border);background:#fff;font-size:14px;cursor:pointer;font-family:inherit">1 000 Kč</button>
+      </div>
+
+      <!-- Info – instant + free -->
+      <div style="background:#fff;border-radius:14px;box-shadow:var(--shadow);padding:12px 14px;margin-bottom:12px;">
+        <div style="display:flex;align-items:center;gap:10px;font-size:13px;color:var(--text-2)">
+          <div style="width:28px;height:28px;border-radius:50%;background:var(--wero-light);display:flex;align-items:center;justify-content:center;flex-shrink:0">
+            <svg width="14" height="14" fill="none" stroke="var(--wero)" stroke-width="2" viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+          </div>
+          <div><strong>Okamžitá platba</strong> – peníze dorazí příjemci do 10 sekund.</div>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;font-size:13px;color:var(--text-2);margin-top:10px">
+          <div style="width:28px;height:28px;border-radius:50%;background:var(--green-bg);display:flex;align-items:center;justify-content:center;flex-shrink:0">
+            <svg width="14" height="14" fill="none" stroke="var(--green)" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2v20M2 12h20"/><circle cx="12" cy="12" r="9"/></svg>
+          </div>
+          <div><strong>Zdarma</strong> – platby přes Wero jsou bez poplatku.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sticky-btn-wrap">
+      <button class="btn-primary btn-wero" id="wero-continue-btn" onclick="goTo('wero-potvrzeni')">Pokračovat</button>
+    </div>
+  </div>
+
+  <!-- ===== SCREEN 5: WERO – POTVRZENÍ ===== -->
+  <div class="screen" id="screen-wero-potvrzeni">
+    <div class="statusbar">
+      <span class="statusbar-time">9:41</span>
+      <div class="statusbar-icons">
+        <svg viewBox="0 0 24 24"><path d="M1.5 8.5A13 13 0 0 1 22.5 8.5"/><path d="M5 12a9 9 0 0 1 14 0"/><path d="M8.5 15.5a5 5 0 0 1 7 0"/><circle cx="12" cy="19" r="1" fill="currentColor"/></svg>
+        <svg viewBox="0 0 24 24"><rect x="2" y="7" width="16" height="11" rx="2"/><path d="M18 10h2a2 2 0 0 1 2 2v2a2 2 0 0 1-2 2h-2" fill="currentColor" opacity=".4"/><rect x="4" y="9" width="10" height="7" rx="1" fill="currentColor"/></svg>
+      </div>
+    </div>
+    <div class="topbar">
+      <button class="back-btn" onclick="goTo('wero-castka')">
+        <svg width="10" height="17" viewBox="0 0 10 17" fill="none"><path d="M8.5 1.5L1.5 8.5L8.5 15.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      </button>
+      <span class="topbar-title">Potvrzení platby</span>
+    </div>
+
+    <div class="scroll" style="padding-top:4px">
+      <!-- Příjemce -->
+      <div class="confirm-recipient">
+        <div class="confirm-avatar" id="potv-avatar" style="background:#FF6B6B">J
+          <div class="wero-verified" style="width:24px;height:24px">
+            <svg viewBox="0 0 12 12"><path d="M2 6l3 3 5-5" stroke="white" stroke-width="1.5" fill="none" stroke-linecap="round"/></svg>
+          </div>
+        </div>
+        <div class="confirm-name" id="potv-name">Jana Kratochvílová</div>
+        <div class="confirm-phone" id="potv-phone">+420 777 123 456</div>
+      </div>
+
+      <!-- Částka -->
+      <div class="confirm-amount-card">
+        <div class="confirm-amount-val">
+          <span id="potv-amount">500</span>
+          <span class="confirm-amount-cur">Kč</span>
+        </div>
+        <div class="confirm-instant-badge">
+          <svg width="12" height="12" fill="none" stroke="var(--wero)" stroke-width="2" viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+          Okamžitá platba · Wero · Zdarma
+        </div>
+      </div>
+
+      <!-- Detail -->
+      <div class="confirm-detail-card">
+        <div class="confirm-row">
+          <span class="confirm-row-label">Ze účtu</span>
+          <span class="confirm-row-val">Běžný účet · /0100</span>
+        </div>
+        <div class="confirm-row">
+          <span class="confirm-row-label">Zpráva</span>
+          <span class="confirm-row-val" id="potv-message" style="color:var(--text-3)">—</span>
+        </div>
+        <div class="confirm-row">
+          <span class="confirm-row-label">Způsob platby</span>
+          <span class="confirm-row-val" style="display:flex;align-items:center;gap:6px">
+            <span style="background:var(--wero);border-radius:4px;padding:1px 6px;display:inline-flex;align-items:center">
+              <svg width="14" height="11" viewBox="0 0 40 32" fill="none"><path d="M2 4L10 28L20 12L30 28L38 4" stroke="white" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+            Wero
+          </span>
+        </div>
+        <div class="confirm-row">
+          <span class="confirm-row-label">Poplatek</span>
+          <span class="confirm-row-val" style="color:var(--green);font-weight:600">Zdarma</span>
+        </div>
+        <div class="confirm-row">
+          <span class="confirm-row-label">Datum</span>
+          <span class="confirm-row-val">Dnes, okamžitě</span>
+        </div>
+      </div>
+
+      <p class="confirm-note">
+        Platba bude okamžitě odepsána z vašeho účtu a připsána příjemci prostřednictvím sítě Wero.
+      </p>
+    </div>
+
+    <div class="sticky-btn-wrap">
+      <button class="btn-primary btn-wero" onclick="sendWeroPayment()">Odeslat platbu</button>
+    </div>
+  </div>
+
+  <!-- ===== SCREEN 6: WERO – ÚSPĚCH ===== -->
+  <div class="screen" id="screen-wero-uspech">
+    <div class="statusbar">
+      <span class="statusbar-time">9:41</span>
+      <div class="statusbar-icons">
+        <svg viewBox="0 0 24 24"><path d="M1.5 8.5A13 13 0 0 1 22.5 8.5"/><path d="M5 12a9 9 0 0 1 14 0"/><path d="M8.5 15.5a5 5 0 0 1 7 0"/><circle cx="12" cy="19" r="1" fill="currentColor"/></svg>
+        <svg viewBox="0 0 24 24"><rect x="2" y="7" width="16" height="11" rx="2"/><path d="M18 10h2a2 2 0 0 1 2 2v2a2 2 0 0 1-2 2h-2" fill="currentColor" opacity=".4"/><rect x="4" y="9" width="10" height="7" rx="1" fill="currentColor"/></svg>
+      </div>
+    </div>
+    <div class="topbar">
+      <span class="topbar-title">Platba přes Wero</span>
+    </div>
+
+    <div class="success-wrap">
+      <div class="success-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#0E8A4F" stroke-width="2.5"><path d="M20 6L9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="success-title">Platba odeslána!</div>
+      <div class="success-sub" id="uspech-sub">Poslali jste <strong id="uspech-amount">500 Kč</strong> kontaktu <strong id="uspech-name">Jana Kratochvílová</strong>. Peníze dorazí okamžitě.</div>
+
+      <div class="success-detail">
+        <div class="success-detail-row">
+          <span class="success-detail-label">Příjemce</span>
+          <span class="success-detail-val" id="uspech-name2">Jana Kratochvílová</span>
+        </div>
+        <div class="success-detail-row">
+          <span class="success-detail-label">Telefon</span>
+          <span class="success-detail-val" id="uspech-phone">+420 777 123 456</span>
+        </div>
+        <div class="success-detail-row">
+          <span class="success-detail-label">Částka</span>
+          <span class="success-detail-val" id="uspech-amount2">500 Kč</span>
+        </div>
+        <div class="success-detail-row">
+          <span class="success-detail-label">Způsob</span>
+          <span class="success-detail-val">Wero · Okamžitá platba</span>
+        </div>
+        <div class="success-detail-row">
+          <span class="success-detail-label">Poplatek</span>
+          <span class="success-detail-val" style="color:var(--green)">Zdarma</span>
+        </div>
+      </div>
+
+      <button class="btn-primary" style="width:100%" onclick="goTo('dashboard')">Zpět na přehled</button>
+    </div>
+  </div>
+
+  <!-- ===== WERO INTRO BOTTOM SHEET ===== -->
+  <div class="sheet-overlay" id="wero-intro-overlay" onclick="closeWeroIntro()"></div>
+  <div class="bottom-sheet" id="wero-intro-sheet">
+    <div class="sheet-handle"></div>
+    <div style="padding:0 20px 4px;display:flex;align-items:center;gap:10px">
+      <div class="wero-logo-icon" style="width:44px;height:44px;border-radius:12px">
+        <svg width="28" height="23" viewBox="0 0 40 32" fill="none"><path d="M2 4L10 28L20 12L30 28L38 4" stroke="white" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div>
+        <div style="font-size:20px;font-weight:800;color:var(--wero)">Wero</div>
+        <div style="font-size:12px;color:var(--text-3)">Evropská platební síť</div>
+      </div>
+    </div>
+    <div class="sheet-body">
+      <p style="font-size:15px;color:var(--text-2);line-height:1.6;margin:12px 0 16px">
+        Posílejte peníze přátelům a rodině přímo přes jejich <strong>telefonní číslo</strong> – bez zadávání čísla účtu nebo IBAN.
+      </p>
+      <ul class="wero-features">
+        <li>
+          <div class="wero-feat-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+          </div>
+          <div><strong>Okamžitá platba</strong><br><span style="color:var(--text-3)">Peníze dorazí příjemci do 10 sekund, kdykoli – i o víkendu.</span></div>
+        </li>
+        <li>
+          <div class="wero-feat-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+          </div>
+          <div><strong>Jen telefonní číslo</strong><br><span style="color:var(--text-3)">Nepotřebujete znát IBAN. Stačí číslo z kontaktů.</span></div>
+        </li>
+        <li>
+          <div class="wero-feat-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/><path d="M9.5 9.5c.83-1.17 2.17-2 3.5-2 1.93 0 3.5 1.57 3.5 3.5 0 2.5-3.5 5-3.5 5s-3.5-2.5-3.5-5"/></svg>
+          </div>
+          <div><strong>Zdarma</strong><br><span style="color:var(--text-3)">Platby přes Wero jsou bez poplatku pro odesílatele i příjemce.</span></div>
+        </li>
+        <li>
+          <div class="wero-feat-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <div><strong>Bezpečné</strong><br><span style="color:var(--text-3)">Platba chráněná bankovní autentizací. Wero provozuje evropské bankovní konsorcium EPI.</span></div>
+        </li>
+      </ul>
+      <button class="btn-primary btn-wero" onclick="closeWeroIntro(); goTo('wero-kontakt')">Použít Wero platbu</button>
+      <button onclick="closeWeroIntro()" style="width:100%;padding:14px;background:transparent;border:none;font-size:15px;color:var(--text-3);cursor:pointer;margin-top:8px;font-family:inherit">Zrušit</button>
+    </div>
+  </div>
+
+</div><!-- /stage -->
+
+<div class="info-panel">
+  <h3>Wero platba – prototyp</h3>
+  <p style="margin-bottom:12px">Testujeme novou funkci pro platby přes evropskou síť Wero.</p>
+  <ul>
+    <li>Wero se zobrazuje v sekci <em>Platba na kontakt</em></li>
+    <li>Platba jen přes telefonní číslo</li>
+    <li>Okamžitá, zdarma</li>
+    <li>Kontakt musí mít aktivní Wero</li>
+  </ul>
+  <p style="margin-top:12px;color:#aaa;font-size:12px">Verze: 1.0 · 2026-05-19</p>
+</div>
+</div><!-- /wrapper -->
+
+<script>
+// ====== NAVIGATION ======
+var history_stack = [];
+
+function goTo(screenId, opts) {
+  opts = opts || {};
+  var screens = document.querySelectorAll('.screen');
+  screens.forEach(function(s){ s.classList.remove('active'); });
+  var next = document.getElementById('screen-' + screenId);
+  if (next) {
+    next.classList.add('active');
+    window.location.hash = screenId;
+    if (!opts.skipHistory) history_stack.push(screenId);
+    trackScreen(screenId);
+  }
+}
+
+window.addEventListener('popstate', function(e) {
+  if (e.state && e.state.screen) {
+    var screens = document.querySelectorAll('.screen');
+    screens.forEach(function(s){ s.classList.remove('active'); });
+    var el = document.getElementById(e.state.screen);
+    if (el) el.classList.add('active');
+  }
+});
+
+// Obnova obrazovky z URL hash při refresh
+(function() {
+  var hash = window.location.hash.replace('#', '');
+  if (hash) {
+    var screenId = 'screen-' + hash;
+    var el = document.getElementById(screenId);
+    if (el) {
+      var screens = document.querySelectorAll('.screen');
+      screens.forEach(function(s){ s.classList.remove('active'); });
+      el.classList.add('active');
+      history.replaceState({ screen: screenId }, '', window.location.hash);
+    }
+  }
+})();
+
+// ====== WERO INTRO SHEET ======
+function showWeroIntro() {
+  document.getElementById('wero-intro-overlay').classList.add('open');
+  document.getElementById('wero-intro-sheet').classList.add('open');
+}
+function closeWeroIntro() {
+  document.getElementById('wero-intro-overlay').classList.remove('open');
+  document.getElementById('wero-intro-sheet').classList.remove('open');
+}
+
+// ====== WERO TABS ======
+function switchWeroTab(tab) {
+  document.getElementById('tab-contacts').classList.toggle('active', tab === 'contacts');
+  document.getElementById('tab-phone').classList.toggle('active', tab === 'phone');
+  document.getElementById('wero-contacts-panel').style.display = tab === 'contacts' ? '' : 'none';
+  document.getElementById('wero-phone-panel').style.display = tab === 'phone' ? '' : 'none';
+}
+
+// ====== SELECT CONTACT ======
+function selectContact(fullName, key, color, phone) {
+  // Save to localStorage
+  localStorage.setItem('wero_name', fullName);
+  localStorage.setItem('wero_color', color);
+  localStorage.setItem('wero_phone', phone);
+  localStorage.setItem('wero_initial', fullName.charAt(0).toUpperCase());
+
+  // Update castka screen
+  document.getElementById('castka-avatar').style.background = color;
+  document.getElementById('castka-avatar').childNodes[0].textContent = fullName.charAt(0).toUpperCase();
+  document.getElementById('castka-name').textContent = fullName;
+  document.getElementById('castka-phone').textContent = phone;
+
+  // Update potvrzeni screen
+  document.getElementById('potv-avatar').style.background = color;
+  document.getElementById('potv-avatar').childNodes[0].textContent = fullName.charAt(0).toUpperCase();
+  document.getElementById('potv-name').textContent = fullName;
+  document.getElementById('potv-phone').textContent = phone;
+
+  // Update uspech screen
+  document.getElementById('uspech-name').textContent = fullName;
+  document.getElementById('uspech-name2').textContent = fullName;
+  document.getElementById('uspech-phone').textContent = phone;
+
+  goTo('wero-castka');
+}
+
+// ====== AMOUNT ======
+function setAmount(val) {
+  document.getElementById('wero-amount').value = val;
+  localStorage.setItem('wero_amount', val);
+  updateWeroAmount();
+}
+
+function updateWeroAmount() {
+  var val = document.getElementById('wero-amount').value;
+  localStorage.setItem('wero_amount', val);
+  document.getElementById('potv-amount').textContent = parseInt(val || 0).toLocaleString('cs-CZ');
+  document.getElementById('uspech-amount').textContent = (parseInt(val || 0)).toLocaleString('cs-CZ') + ' Kč';
+  document.getElementById('uspech-amount2').textContent = (parseInt(val || 0)).toLocaleString('cs-CZ') + ' Kč';
+}
+
+// ====== SEND PAYMENT ======
+function sendWeroPayment() {
+  var msg = document.getElementById('wero-message').value;
+  document.getElementById('potv-message').textContent = msg || '—';
+  document.getElementById('potv-message').style.color = msg ? 'var(--text)' : 'var(--text-3)';
+  updateWeroAmount();
+  goTo('wero-uspech');
+}
+
+// ====== RESTORE localStorage ======
+(function restoreState() {
+  var name = localStorage.getItem('wero_name');
+  var color = localStorage.getItem('wero_color');
+  var phone = localStorage.getItem('wero_phone');
+  var amount = localStorage.getItem('wero_amount');
+
+  if (name) {
+    var initial = name.charAt(0).toUpperCase();
+    ['castka', 'potv'].forEach(function(prefix) {
+      var el = document.getElementById(prefix + '-avatar');
+      if (el) { el.style.background = color || '#FF6B6B'; el.childNodes[0].textContent = initial; }
+      var nameEl = document.getElementById(prefix + '-name');
+      if (nameEl) nameEl.textContent = name;
+      var phoneEl = document.getElementById(prefix + '-phone');
+      if (phoneEl) phoneEl.textContent = phone || '';
+    });
+    if (document.getElementById('uspech-name')) document.getElementById('uspech-name').textContent = name;
+    if (document.getElementById('uspech-name2')) document.getElementById('uspech-name2').textContent = name;
+    if (document.getElementById('uspech-phone')) document.getElementById('uspech-phone').textContent = phone || '';
+  }
+  if (amount) {
+    var inp = document.getElementById('wero-amount');
+    if (inp) inp.value = amount;
+    updateWeroAmount();
+  }
+})();
+</script>
+</body>
+</html>
