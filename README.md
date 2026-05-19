@@ -1,6 +1,6 @@
 # UX Prototypy
 
-Sbírka interaktivních HTML prototypů pro testování UX návrhů. Prototypy jsou organizované do sekcí podle tématu a přístupné přes zabezpečený rozcestník.
+Sbírka interaktivních HTML prototypů pro testování UX návrhů. Prototypy jsou organizované do sekcí podle tématu a přístupné přes rozcestník.
 
 ## Jak to funguje
 
