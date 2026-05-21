@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI funkce v mobilních platbách – přehled trendů 2026</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #f5f5f7;
+      --surface: #ffffff;
+      --surface2: #f0f0f3;
+      --primary: #1a1a2e;
+      --accent: #4f46e5;
+      --accent-light: #eef2ff;
+      --text: #1a1a2e;
+      --text-muted: #6b7280;
+      --border: #e5e7eb;
+      --tag-1: #dbeafe;
+      --tag-1-text: #1e40af;
+      --tag-2: #fef9c3;
+      --tag-2-text: #854d0e;
+      --tag-3: #dcfce7;
+      --tag-3-text: #166534;
+      --radius: 16px;
+      --radius-sm: 10px;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      padding: 24px 16px 64px;
+    }
+
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+    }
+
+    /* Header */
+    .header {
+      background: var(--primary);
+      color: #fff;
+      border-radius: var(--radius);
+      padding: 36px 32px;
+      margin-bottom: 32px;
+    }
+    .header-label {
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: #a5b4fc;
+      margin-bottom: 10px;
+    }
+    .header h1 {
+      font-size: 26px;
+      font-weight: 700;
+      line-height: 1.2;
+      margin-bottom: 12px;
+    }
+    .header p {
+      font-size: 15px;
+      color: #c7d2fe;
+      max-width: 560px;
+    }
+    .header-meta {
+      display: flex;
+      gap: 20px;
+      margin-top: 24px;
+      flex-wrap: wrap;
+    }
+    .header-meta span {
+      font-size: 13px;
+      color: #a5b4fc;
+    }
+
+    /* Section title */
+    .section-title {
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+      padding-left: 4px;
+    }
+
+    /* Cards grid */
+    .cards {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 32px;
+    }
+    @media (max-width: 600px) {
+      .cards { grid-template-columns: 1fr; }
+    }
+
+    .card {
+      background: var(--surface);
+      border-radius: var(--radius);
+      padding: 24px;
+      border: 1px solid var(--border);
+      transition: box-shadow .2s;
+    }
+    .card:hover {
+      box-shadow: 0 4px 24px rgba(79,70,229,.08);
+    }
+
+    .card-icon {
+      font-size: 28px;
+      margin-bottom: 14px;
+      display: block;
+    }
+    .card h2 {
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 8px;
+      line-height: 1.3;
+    }
+    .card .trend-label {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 3px 10px;
+      border-radius: 100px;
+      margin-bottom: 12px;
+    }
+    .card p {
+      font-size: 14px;
+      color: var(--text-muted);
+      margin-bottom: 14px;
+      line-height: 1.55;
+    }
+    .card .idea {
+      background: var(--accent-light);
+      border-radius: var(--radius-sm);
+      padding: 12px 14px;
+      font-size: 13px;
+      color: var(--accent);
+      font-weight: 500;
+    }
+    .card .idea::before {
+      content: "💡 ";
+    }
+
+    /* Featured card */
+    .card.featured {
+      grid-column: 1 / -1;
+      border-color: var(--accent);
+      border-width: 2px;
+      background: linear-gradient(135deg, #f8f7ff 0%, #eff6ff 100%);
+    }
+    .card.featured h2 { font-size: 18px; }
+
+    /* Priority */
+    .priority-table {
+      background: var(--surface);
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      overflow: hidden;
+      margin-bottom: 32px;
+    }
+    .priority-table table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    .priority-table th {
+      background: var(--surface2);
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+      color: var(--text-muted);
+      padding: 12px 20px;
+      text-align: left;
+    }
+    .priority-table td {
+      padding: 14px 20px;
+      font-size: 14px;
+      border-top: 1px solid var(--border);
+      vertical-align: middle;
+    }
+    .priority-table tr:last-child td { border-bottom: none; }
+
+    .badge {
+      display: inline-block;
+      padding: 3px 12px;
+      border-radius: 100px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+    .badge-high { background: #fee2e2; color: #991b1b; }
+    .badge-mid  { background: #fef9c3; color: #854d0e; }
+    .badge-low  { background: #f3f4f6; color: #6b7280; }
+
+    .tag-big   { background: var(--tag-1); color: var(--tag-1-text); }
+    .tag-mid   { background: var(--tag-2); color: var(--tag-2-text); }
+    .tag-small { background: var(--tag-3); color: var(--tag-3-text); }
+
+    /* Sources */
+    .sources {
+      background: var(--surface);
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      padding: 24px;
+    }
+    .sources ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .sources ul li::before { content: "→ "; color: var(--accent); font-weight: 700; }
+    .sources ul li a {
+      color: var(--accent);
+      text-decoration: none;
+      font-size: 14px;
+    }
+    .sources ul li a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+<div class="container">
+
+  <!-- Header -->
+  <div class="header">
+    <div class="header-label">Výzkum · Trendy 2026</div>
+    <h1>AI funkce v mobilních platbách</h1>
+    <p>Přehled aktuálních trendů a příležitostí pro integraci umělé inteligence do mobilní platební aplikace.</p>
+    <div class="header-meta">
+      <span>7 oblastí</span>
+      <span>Zdroj: Checkout.com, JP Morgan, Mastercard, Backbase</span>
+      <span>Květen 2026</span>
+    </div>
+  </div>
+
+  <!-- Features -->
+  <div class="section-title">Identifikované příležitosti</div>
+  <div class="cards">
+
+    <!-- Featured -->
+    <div class="card featured">
+      <span class="card-icon">🤖</span>
+      <span class="trend-label tag-big">Největší trend 2026</span>
+      <h2>Agentic payments – AI jedná za uživatele</h2>
+      <p>AI agent sleduje ceny, spouští platby automaticky a vytváří úsporné plány bez zásahu uživatele. Google spustil „Buy for me", Starling Bank (UK) spustila agentic AI asistenta přímo v mobilní appce (březen 2026). Průzkumy ukazují, že průměrný uživatel je ochotný nechat agenta utratit ~$223 v jediné transakci. Gartner odhaduje, že do konce 2026 bude 40 % enterprise aplikací obsahovat task-specific AI agenty.</p>
+      <div class="idea">Automatické opakované platby s podmínkami: „zaplať nájem 1. v měsíci, jen pokud mám &gt;5 000 Kč zůstatek."</div>
+    </div>
+
+    <div class="card">
+      <span class="card-icon">🎙️</span>
+      <span class="trend-label tag-big">Vysoký potenciál</span>
+      <h2>Konverzační platby</h2>
+      <p>Nubank umožňuje posílat peníze přes WhatsApp hlasem, textem nebo obrázkem. AI to interpretuje a provede transakci. Žádné formuláře, žádné kroky navíc.</p>
+      <div class="idea">„Pošli 500 Kč Karlovi za oběd" – AI vyplní příjemce, částku a potvrdí.</div>
+    </div>
+
+    <div class="card">
+      <span class="card-icon">🧠</span>
+      <span class="trend-label tag-big">Vysoký potenciál</span>
+      <h2>Proaktivní finanční asistent</h2>
+      <p>Přechod od pasivního zobrazení transakcí k aktivním doporučením a predikci cashflow. AI komentuje výdaje v přirozeném jazyce a upozorňuje na neobvyklé vzorce.</p>
+      <div class="idea">„Tento měsíc platíš za 3 streamingové služby – chceš jednu zrušit?"</div>
+    </div>
+
+    <div class="card">
+      <span class="card-icon">🛡️</span>
+      <span class="trend-label tag-mid">Střední priorita</span>
+      <h2>Behavioral biometrics</h2>
+      <p>AI sleduje, jak uživatel telefon drží, jak píše a scrolluje – pasivní ověření identity bez PINu. Visa díky ML blokuje o 85 % více podvodů. Anomálie = okamžité upozornění nebo blokace.</p>
+      <div class="idea">Pasivní ověření pro nízké částky – snížení tření bez ztráty bezpečnosti.</div>
+    </div>
+
+    <div class="card">
+      <span class="card-icon">⚙️</span>
+      <span class="trend-label tag-mid">Střední priorita</span>
+      <h2>Personalizovaná pravidla plateb</h2>
+      <p>AI navrhuje nebo nastavuje pravidla chování: „velké nákupy z karty, malé z debetu". Přizpůsobení limitů a kategorií na základě vzorců utrácení.</p>
+      <div class="idea">„AI si všimla, že v pátek večer utratíš více – chceš nastavit limit?"</div>
+    </div>
+
+    <div class="card">
+      <span class="card-icon">💳</span>
+      <span class="trend-label tag-mid">Střední priorita</span>
+      <h2>Embedded BNPL s AI skóringem</h2>
+      <p>AI hodnotí schopnost splácet v reálném čase – ne jen při prvním nastavení. BNPL se posouvá z velkých nákupů do každodenního placení s dynamicky přizpůsobenými podmínkami.</p>
+      <div class="idea">Splátkový návrh AI přímo na platební obrazovce, přizpůsobený aktuální situaci.</div>
+    </div>
+
+    <div class="card">
+      <span class="card-icon">📍</span>
+      <span class="trend-label tag-small">Nízká priorita</span>
+      <h2>Invisible payments</h2>
+      <p>Platby se stávají neviditelnými – automatické, kontextové, bez interakce uživatele. Příklady: parkování, mýtné, předplatné. Vysoká regulatorní a technická komplexita.</p>
+      <div class="idea">Geofenced platba – zaplatí parkování automaticky při odjezdu z parkoviště.</div>
+    </div>
+
+  </div>
+
+  <!-- Priority table -->
+  <div class="section-title">Doporučené pořadí řešení</div>
+  <div class="priority-table">
+    <table>
+      <thead>
+        <tr>
+          <th>Priorita</th>
+          <th>Funkce</th>
+          <th>Důvod</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="badge badge-high">Vysoká</span></td>
+          <td><strong>Proaktivní finanční asistent</strong></td>
+          <td>Nízká technická bariéra, velký UX dopad, okamžitá hodnota pro uživatele</td>
+        </tr>
+        <tr>
+          <td><span class="badge badge-high">Vysoká</span></td>
+          <td><strong>Konverzační zadání platby</strong></td>
+          <td>Zkracuje cestu u opakovaných plateb, odlišení od konkurence</td>
+        </tr>
+        <tr>
+          <td><span class="badge badge-mid">Střední</span></td>
+          <td><strong>Personalizovaná pravidla</strong></td>
+          <td>Diferenciace produktu, zvyšuje engagement a loajalitu</td>
+        </tr>
+        <tr>
+          <td><span class="badge badge-mid">Střední</span></td>
+          <td><strong>Behavioral biometrics</strong></td>
+          <td>Zlepšuje bezpečnost i UX zároveň, ale vyžaduje více dat</td>
+        </tr>
+        <tr>
+          <td><span class="badge badge-low">Nízká</span></td>
+          <td><strong>Agentic payments</strong></td>
+          <td>Vysoká komplexita, regulatorní otazníky v CZ, zatím spíš pilotní</td>
+        </tr>
+        <tr>
+          <td><span class="badge badge-low">Nízká</span></td>
+          <td><strong>Invisible payments</strong></td>
+          <td>Infrastrukturně náročné, závislé na partnerech (parkování, mýtné)</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Sources -->
+  <div class="section-title">Zdroje</div>
+  <div class="sources">
+    <ul>
+      <li><a href="https://www.checkout.com/blog/top-9-payment-trends-for-2026" target="_blank">Top 9 payment trends for 2026 – Checkout.com</a></li>
+      <li><a href="https://www.crowdfundinsider.com/2026/03/268390-uk-digital-bank-starling-introduces-agentic-ai-features-to-enhance-ux/" target="_blank">Starling Bank – Agentic AI features – Crowdfund Insider</a></li>
+      <li><a href="https://videinfra.com/blog/17-ai-powered-features-that-will-revolutionize-banking-ux" target="_blank">17 AI-powered Features That Will Revolutionize Banking UX – Vide Infra</a></li>
+      <li><a href="https://appinventiv.com/blog/ai-in-payments-industry/" target="_blank">AI in Payments: Transforming Transactions & Security – AppInventiv</a></li>
+      <li><a href="https://www.jpmorgan.com/insights/payments/trends-innovation/five-payment-trends-in-2026" target="_blank">Five Payment Trends in 2026 – JP Morgan</a></li>
+      <li><a href="https://www.mastercard.com/us/en/news-and-trends/stories/2025/2026-payment-trends.html" target="_blank">Six industry trends shaping 2026 – Mastercard</a></li>
+      <li><a href="https://www.backbase.com/banking-predictions-report-2026/ai-and-the-future-of-banking/" target="_blank">Banking Predictions 2026: AI & the Future of Banking – Backbase</a></li>
+    </ul>
+  </div>
+
+</div>
+</body>
+</html>
