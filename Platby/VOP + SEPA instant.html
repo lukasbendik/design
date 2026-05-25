@@ -519,6 +519,12 @@
     padding: 0 30px 16px; line-height: 1.2;
     animation: slideUp 0.4s cubic-bezier(0.34,1.56,0.64,1) 0.2s both;
   }
+  .success-subtitle {
+    font-size: 16px; font-weight: 400;
+    color: var(--text-primary); padding: 0 20px 24px; line-height: 1.45;
+    animation: slideUp 0.4s 0.25s both;
+  }
+  .success-title-left { text-align: left; padding-left: 20px; padding-right: 20px; }
   .template-row {
     display: flex; align-items: center; justify-content: space-between;
     background: var(--bg-card); border-radius: var(--radius-card);
@@ -992,6 +998,29 @@
       <button class="cta-btn outline" onclick="resetAndGoHome()">Zavřít</button>
     </div>
   </div>
+
+  <!-- ══ S11: Success – platba uložena k autorizaci (limit překročen) ══ -->
+  <div id="s11" class="screen">
+    <div class="nav-bar">
+      <span class="nav-back" onclick="resetAndGoHome()" style="color:var(--text-primary);">Zavřít</span>
+    </div>
+    <div class="success-icon-wrap">
+      <div class="success-checkmark">✓</div>
+    </div>
+    <div class="success-title success-title-left">Platbu jste uložili k autorizaci</div>
+    <div class="success-subtitle">Překročen stanovený limit pro plnou autorizaci. Limity plateb můžete zkontrolovat v Nastavení.</div>
+    <div class="template-row">
+      <div class="template-left">
+        <span class="template-icon">📁</span>
+        <span class="template-text">Uložit šablonu</span>
+      </div>
+      <span class="card-chevron">›</span>
+    </div>
+    <div class="cta-wrap" style="margin-top:auto;">
+      <button class="cta-btn" onclick="resetAndGoNew()">Zadat další</button>
+      <button class="cta-btn outline" onclick="resetAndGoHome()">Zavřít</button>
+    </div>
+  </div>
   <!-- ══ Currency bottom sheet ══ -->
   <div id="currency-overlay" onclick="closeCurrencySheet()" style="display:none;position:absolute;inset:0;background:rgba(0,0,0,0.5);z-index:200;"></div>
   <div id="currency-sheet" style="display:none;position:absolute;bottom:0;left:0;right:0;background:#F2F2F7;border-radius:24px 24px 0 0;z-index:201;max-height:80%;flex-direction:column;">
@@ -1137,7 +1166,7 @@ function trackPageView(title) {
 // ── State ──
 let loginPin = '';
 let authPin = '';
-const paymentData = { iban:'', amount:'', currency:'CZK', name:'', nameVerified:false };
+const paymentData = { iban:'', amount:'', currency:'CZK', name:'', nameVerified:false, limitExceeded:false };
 
 // ── Sheet registry ──
 // Každý sheet má parent obrazovku → hash je '#<parent>/<sheet>', aby šel sheet
@@ -1260,15 +1289,20 @@ function pinPress(mode, num) {
       setTimeout(() => {
         authPin = '';
         hideAuth();
-        // deduct payment from balance
-        const amt = parseFloat(paymentData.amount) || 0;
-        const rate = EXCHANGE_RATES_ALL[paymentData.currency] || 1;
-        accountBalanceCZK = Math.max(0, accountBalanceCZK - (amt * rate));
-        // update dashboard balance
-        const whole = Math.floor(accountBalanceCZK).toLocaleString('cs-CZ');
-        const decimal = (accountBalanceCZK % 1).toFixed(2).substring(1).replace('.', ',');
-        document.getElementById('dashboard-balance').innerHTML = whole + '<span>' + decimal + ' Kč</span>';
-        goTo('s10');
+        if (paymentData.limitExceeded) {
+          // Platba čeká na plnou autorizaci → zůstatek se neodečítá
+          goTo('s11');
+        } else {
+          // deduct payment from balance
+          const amt = parseFloat(paymentData.amount) || 0;
+          const rate = EXCHANGE_RATES_ALL[paymentData.currency] || 1;
+          accountBalanceCZK = Math.max(0, accountBalanceCZK - (amt * rate));
+          // update dashboard balance
+          const whole = Math.floor(accountBalanceCZK).toLocaleString('cs-CZ');
+          const decimal = (accountBalanceCZK % 1).toFixed(2).substring(1).replace('.', ',');
+          document.getElementById('dashboard-balance').innerHTML = whole + '<span>' + decimal + ' Kč</span>';
+          goTo('s10');
+        }
       }, 400);
     }
   }
@@ -1392,6 +1426,7 @@ function openLimitSheet() { openSheet('limit'); }
 function closeLimitSheet() { closeSheet('limit'); }
 function confirmLimit() {
   closeSheet('limit', { skipTrack: true });
+  paymentData.limitExceeded = true;
   track('payment_limit_continued', { amount: paymentData.amount, currency: paymentData.currency });
   goTo('s06');
 }
@@ -1470,6 +1505,7 @@ function initS05() {
   document.getElementById('currency-code').textContent = 'Kč';
   paymentData.amount = '';
   paymentData.currency = 'CZK';
+  paymentData.limitExceeded = false;
   updateBalanceHint();
 }
 
