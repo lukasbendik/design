@@ -1106,20 +1106,111 @@ function track(action, params) {
   }
 }
 
+function trackPageView(title) {
+  if (typeof gtag !== 'undefined') {
+    gtag('event', 'page_view', {
+      page_location: window.location.href,
+      page_path: '/' + title,
+      page_title: title
+    });
+  }
+  if (typeof window.clarity === 'function') {
+    try { window.clarity('set', 'screen', title); } catch(e) {}
+  }
+}
+
 // ── State ──
 let loginPin = '';
 let authPin = '';
 const paymentData = { iban:'', amount:'', currency:'CZK', name:'', nameVerified:false };
+
+// ── Sheet registry ──
+// Každý sheet má parent obrazovku → hash je '#<parent>/<sheet>', aby šel sheet
+// trackovat v GA jako vlastní page_view i obnovit po refreshi.
+const SHEET_CONFIG = {
+  partial:      { parent: 's06', display: 'block' },
+  nomatch:      { parent: 's06', display: 'block' },
+  unverifiable: { parent: 's06', display: 'block' },
+  verify:       { parent: 's06', display: 'block' },
+  currency:     { parent: 's05', display: 'flex'  }
+};
+const SHEET_NAMES = Object.keys(SHEET_CONFIG);
+
+function parseHash() {
+  const h = (window.location.hash || '').replace('#', '');
+  if (!h) return { screen: null, sheet: null };
+  const parts = h.split('/');
+  return { screen: parts[0] || null, sheet: parts[1] || null };
+}
+
+function showSheetDOM(name) {
+  const cfg = SHEET_CONFIG[name];
+  if (!cfg) return;
+  if (name === 'verify') {
+    document.getElementById('vs-icon-match').innerHTML = ICONS.match;
+    document.getElementById('vs-icon-partial').innerHTML = ICONS.partial;
+    document.getElementById('vs-icon-nomatch').innerHTML = ICONS.nomatch;
+    document.getElementById('vs-icon-unverifiable').innerHTML = ICONS.unverifiable;
+  }
+  if (name === 'currency') renderCurrencyList();
+  document.getElementById(name + '-overlay').style.display = 'block';
+  const sheet = document.getElementById(name + '-sheet');
+  sheet.style.display = cfg.display;
+  sheet.style.animation = 'slideUpSheet 0.3s cubic-bezier(0.25,0.46,0.45,0.94)';
+}
+
+function hideSheetDOM(name) {
+  const overlay = document.getElementById(name + '-overlay');
+  const sheet = document.getElementById(name + '-sheet');
+  if (overlay) overlay.style.display = 'none';
+  if (sheet) sheet.style.display = 'none';
+}
+
+function hideAllSheets() {
+  SHEET_NAMES.forEach(hideSheetDOM);
+}
+
+function isAnySheetOpen() {
+  return SHEET_NAMES.some(n => {
+    const el = document.getElementById(n + '-sheet');
+    return el && el.style.display && el.style.display !== 'none';
+  });
+}
+
+function openSheet(name) {
+  const cfg = SHEET_CONFIG[name];
+  if (!cfg) return;
+  showSheetDOM(name);
+  const hash = '#' + cfg.parent + '/' + name;
+  if (window.location.hash !== hash) {
+    history.pushState({ screen: cfg.parent, sheet: name }, '', hash);
+  }
+  trackPageView(cfg.parent + '/' + name);
+}
+
+function closeSheet(name, opts) {
+  opts = opts || {};
+  hideSheetDOM(name);
+  const cfg = SHEET_CONFIG[name];
+  if (!cfg) return;
+  const hash = '#' + cfg.parent;
+  if (window.location.hash !== hash) {
+    history.replaceState({ screen: cfg.parent }, '', hash);
+  }
+  if (!opts.skipTrack) trackPageView(cfg.parent);
+}
 
 // ── Navigation ──
 function goTo(id) {
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
   const target = document.getElementById(id);
   target.classList.add('active');
-  window.location.hash = id;
-  if (typeof gtag !== 'undefined') {
-    gtag('event', 'page_view', { page_location: window.location.href, page_title: id });
+  if (isAnySheetOpen()) hideAllSheets();
+  const hash = '#' + id;
+  if (window.location.hash !== hash) {
+    history.pushState({ screen: id }, '', hash);
   }
+  trackPageView(id);
   // hide auth overlay if navigating away
   if (id !== 's08') {
     const auth = document.getElementById('s09');
@@ -1276,22 +1367,10 @@ const CURRENCIES = [
 
 const EXCHANGE_RATES_ALL = { CZK:1, EUR:24.79, USD:22.89, AUD:14.95, BGN:12.68, CAD:16.74, DKK:3.32, GBP:28.90, HUF:0.062, JPY:0.152, NOK:2.11, PLN:5.76, RON:4.98, SEK:2.17 };
 
-function openVerifySheet() {
-  document.getElementById('vs-icon-match').innerHTML = ICONS.match;
-  document.getElementById('vs-icon-partial').innerHTML = ICONS.partial;
-  document.getElementById('vs-icon-nomatch').innerHTML = ICONS.nomatch;
-  document.getElementById('vs-icon-unverifiable').innerHTML = ICONS.unverifiable;
-  document.getElementById('verify-overlay').style.display = 'block';
-  const sheet = document.getElementById('verify-sheet');
-  sheet.style.display = 'block';
-  sheet.style.animation = 'slideUpSheet 0.3s cubic-bezier(0.25,0.46,0.45,0.94)';
-}
-function closeVerifySheet() {
-  document.getElementById('verify-overlay').style.display = 'none';
-  document.getElementById('verify-sheet').style.display = 'none';
-}
+function openVerifySheet() { openSheet('verify'); }
+function closeVerifySheet() { closeSheet('verify'); }
 
-function openCurrencySheet() {
+function renderCurrencyList() {
   const list = document.getElementById('currency-list');
   list.innerHTML = CURRENCIES.map(c => `
     <div class="currency-item${paymentData.currency === c.code ? ' selected' : ''}" onclick="selectCurrency('${c.code}','${c.flag}')">
@@ -1299,24 +1378,16 @@ function openCurrencySheet() {
       <span class="currency-item-label">${c.label}</span>
       ${paymentData.currency === c.code ? '<span class="currency-item-check">✓</span>' : '<span style="color:var(--text-hint);">›</span>'}
     </div>`).join('');
-  const overlay = document.getElementById('currency-overlay');
-  const sheet = document.getElementById('currency-sheet');
-  overlay.style.display = 'block';
-  sheet.style.display = 'flex';
-  sheet.style.animation = 'slideUpSheet 0.3s cubic-bezier(0.25,0.46,0.45,0.94)';
 }
-
-function closeCurrencySheet() {
-  document.getElementById('currency-overlay').style.display = 'none';
-  document.getElementById('currency-sheet').style.display = 'none';
-}
+function openCurrencySheet() { openSheet('currency'); }
+function closeCurrencySheet() { closeSheet('currency'); }
 
 function selectCurrency(code, flag) {
   paymentData.currency = code;
   document.getElementById('currency-flag').textContent = flag;
   document.getElementById('currency-code').textContent = code === 'CZK' ? 'Kč' : code;
   track('currency_selected', { currency: code });
-  closeCurrencySheet();
+  closeSheet('currency', { skipTrack: true });
   updateBalanceHint();
   updateSepaBanner();
 }
@@ -1583,44 +1654,30 @@ function goToS08() {
   }
 }
 
-function showSheet(type) {
-  document.getElementById(type + '-overlay').style.display = 'block';
-  const sheet = document.getElementById(type + '-sheet');
-  sheet.style.display = 'block';
-  sheet.style.animation = 'slideUpSheet 0.3s cubic-bezier(0.25,0.46,0.45,0.94)';
-}
+function showSheet(type) { openSheet(type); }
 
-function closePartialSheet() {
-  document.getElementById('partial-overlay').style.display = 'none';
-  document.getElementById('partial-sheet').style.display = 'none';
-}
-function closeNomatchSheet() {
-  document.getElementById('nomatch-overlay').style.display = 'none';
-  document.getElementById('nomatch-sheet').style.display = 'none';
-}
-function closeUnverifiableSheet() {
-  document.getElementById('unverifiable-overlay').style.display = 'none';
-  document.getElementById('unverifiable-sheet').style.display = 'none';
-}
+function closePartialSheet() { closeSheet('partial'); }
+function closeNomatchSheet() { closeSheet('nomatch'); }
+function closeUnverifiableSheet() { closeSheet('unverifiable'); }
 
 function choosePartialSuggested() {
-  closePartialSheet();
+  closeSheet('partial', { skipTrack: true });
   paymentData.name = CORRECT_NAME;
   document.getElementById('recipient-name').value = CORRECT_NAME;
   paymentData.nameVerified = true;
   fillSummaryAndGoS08('Název odpovídá číslu účtu');
 }
 function choosePartialUser() {
-  closePartialSheet();
+  closeSheet('partial', { skipTrack: true });
   paymentData.nameVerified = false;
   fillSummaryAndGoS08('Název částečně odpovídá číslu účtu');
 }
 function confirmNomatch() {
-  closeNomatchSheet();
+  closeSheet('nomatch', { skipTrack: true });
   fillSummaryAndGoS08('Název neodpovídá číslu účtu');
 }
 function confirmUnverifiable() {
-  closeUnverifiableSheet();
+  closeSheet('unverifiable', { skipTrack: true });
   fillSummaryAndGoS08('Název nelze ověřit');
 }
 
@@ -1667,23 +1724,40 @@ document.addEventListener('DOMContentLoaded', () => {
     if (id === 's02') startSplash();
   };
 
-  // Handle browser/Android back gesture — sync screen to URL hash
+  // Handle browser/Android back gesture — sync screen + sheet to URL hash.
+  // pushState/replaceState v goTo a openSheet/closeSheet hashchange neemitují,
+  // takže tento listener reaguje jen na browser back/forward.
   window.addEventListener('hashchange', () => {
-    const id = window.location.hash.replace('#', '');
-    if (id && document.getElementById(id)) {
-      const origGoTo2 = window._origGoTo || origGoTo;
-      origGoTo2(id);
+    const { screen, sheet } = parseHash();
+    if (!screen || !document.getElementById(screen)) return;
+    const activeScreen = document.querySelector('.screen.active');
+    const screenChanged = !activeScreen || activeScreen.id !== screen;
+    if (screenChanged) {
+      document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+      document.getElementById(screen).classList.add('active');
+    }
+    if (sheet && SHEET_CONFIG[sheet]) {
+      hideAllSheets();
+      showSheetDOM(sheet);
+      trackPageView(screen + '/' + sheet);
+    } else {
+      const wasSheetOpen = isAnySheetOpen();
+      if (wasSheetOpen) hideAllSheets();
+      if (screenChanged || wasSheetOpen) trackPageView(screen);
     }
   });
   window._origGoTo = origGoTo;
 
-  // Obnova obrazovky z URL hash při refresh
-  const initialHash = window.location.hash.replace('#', '');
-  if (initialHash && document.getElementById(initialHash)) {
-    // Zobrazíme obrazovku přímo bez volání goTo (goTo mění hash → může přidat historii)
+  // Obnova obrazovky (a případného sheetu) z URL hash při refresh.
+  const { screen: initialScreen, sheet: initialSheet } = parseHash();
+  if (initialScreen && document.getElementById(initialScreen)) {
     document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-    document.getElementById(initialHash).classList.add('active');
-    history.replaceState({ screen: initialHash }, '', '#' + initialHash);
+    document.getElementById(initialScreen).classList.add('active');
+    const restoredHash = initialSheet && SHEET_CONFIG[initialSheet]
+      ? '#' + initialScreen + '/' + initialSheet
+      : '#' + initialScreen;
+    history.replaceState({ screen: initialScreen, sheet: initialSheet || null }, '', restoredHash);
+    if (initialSheet && SHEET_CONFIG[initialSheet]) showSheetDOM(initialSheet);
   }
 });
 </script>
