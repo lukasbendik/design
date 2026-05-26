@@ -1907,6 +1907,9 @@ document.addEventListener('DOMContentLoaded', () => {
       : '#' + initialScreen;
     history.replaceState({ screen: initialScreen, sheet: initialSheet || null }, '', restoredHash);
     if (initialSheet && SHEET_CONFIG[initialSheet]) showSheetDOM(initialSheet);
+  } else {
+    // Žádný hash → zapsat počáteční stav s00, aby prohlížečové zpět fungovalo správně
+    history.replaceState({ screen: 's00' }, '', '#s00');
   }
 });
 </script>
