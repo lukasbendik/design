@@ -130,6 +130,55 @@
   .anim-slideright { animation: slideInRight 0.35s cubic-bezier(0.25,0.46,0.45,0.94) both }
 
   /* ══════════════════════════
+     SCREEN 00 – Souhlas
+  ══════════════════════════ */
+  #s00 {
+    background: var(--bg-screen);
+    display: flex;
+    flex-direction: column;
+  }
+  .s00-content {
+    flex: 1;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    padding: 48px 20px 24px;
+  }
+  .s00-title {
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--text-primary);
+    line-height: 1.25;
+    margin-bottom: 24px;
+    letter-spacing: -0.4px;
+  }
+  .s00-card {
+    background: var(--bg-card);
+    border-radius: var(--radius-card);
+    padding: 0;
+    margin-bottom: 12px;
+    overflow: hidden;
+  }
+  .s00-card-section {
+    padding: 18px 16px;
+    font-size: 16px;
+    color: var(--text-primary);
+    line-height: 1.55;
+  }
+  .s00-card-section + .s00-card-section {
+    border-top: 1px solid var(--border);
+  }
+  .s00-footnote {
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.5;
+    padding: 0 4px;
+  }
+  .s00-footer {
+    padding: 12px 20px 28px;
+    background: var(--bg-screen);
+  }
+
+  /* ══════════════════════════
      SCREEN 01 – iPhone Home
   ══════════════════════════ */
   #s01 {
@@ -541,8 +590,27 @@
 
 <div id="app-shell">
 
+  <!-- ══ S00: Souhlas ══ -->
+  <div id="s00" class="screen active">
+    <div class="s00-content">
+      <h1 class="s00-title">Vítejte na uživatelském&nbsp;testování&nbsp;KB</h1>
+      <div class="s00-card">
+        <div class="s00-card-section">
+          Než budeme pokračovat v rozhovoru, potřebovali bychom od vás souhlas s jeho nahráváním v tomto nástroji Lookback.io spravovaném společností sídlící v USA a následným využitím Komerční bankou. Rádi bychom si následně záznam prošli i s jinými kolegy. Využijeme ho ke zlepšování bankovních produktů, webu a aplikace, kterou spolu dneska projdeme.
+        </div>
+        <div class="s00-card-section">
+          Souhlas bude platit 2 roky, poté data i nahrávku mažeme. Souhlas můžete kdykoliv odvolat. Stačí nám napsat e-mail na adresu respondent@kb.cz.
+        </div>
+      </div>
+      <p class="s00-footnote">Více informací najdete na webu naší banky v části Ochrana osobních údajů.</p>
+    </div>
+    <div class="s00-footer">
+      <button class="cta-btn" onclick="goTo('s01')">Souhlasím a chci pokračovat</button>
+    </div>
+  </div>
+
   <!-- ══ S01: iPhone Home ══ -->
-  <div id="s01" class="screen active">
+  <div id="s01" class="screen">
     <div class="s01-statusbar">
       <span class="s01-time">9:41</span>
       <div class="s01-icons">
