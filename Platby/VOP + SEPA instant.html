@@ -605,7 +605,18 @@
       <p class="s00-footnote">Více informací najdete na webu naší banky v části Ochrana osobních údajů.</p>
     </div>
     <div class="s00-footer">
-      <button class="cta-btn" onclick="goTo('s01')">Souhlasím a chci pokračovat</button>
+      <button class="cta-btn" onclick="goTo('s00b')">Souhlasím a chci pokračovat</button>
+    </div>
+  </div>
+
+  <!-- ══ S00B: Vyčkejte na instrukce ══ -->
+  <div id="s00b" class="screen" style="background:var(--bg-screen); flex-direction:column;">
+    <div style="padding:16px 20px 0;">
+      <span style="font-size:16px; color:var(--text-primary); cursor:pointer;" onclick="goTo('s00')">‹ Zpět</span>
+    </div>
+    <div style="padding:24px 20px 32px; flex:1;">
+      <h1 style="font-size:28px; font-weight:700; color:var(--text-primary); line-height:1.25; letter-spacing:-0.4px; margin-bottom:32px;">Vyčkejte na instrukce</h1>
+      <button class="cta-btn" onclick="goTo('s01')">Scénář 1</button>
     </div>
   </div>
 
