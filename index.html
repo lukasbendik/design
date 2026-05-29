@@ -9,7 +9,8 @@
   <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png" />
   <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
   <link rel="manifest" href="manifest.json" />
-  <meta name="theme-color" content="#1A4FD8" />
+  <meta name="theme-color" media="(prefers-color-scheme: light)" content="#f2f2f7" />
+  <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#000000" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <meta name="apple-mobile-web-app-title" content="Rozcestník" />
@@ -280,6 +281,32 @@
       height: 16px;
       flex-shrink: 0;
     }
+
+    @media (prefers-color-scheme: dark) {
+      body { background: #000; }
+      h1 { color: #fff; }
+      .card { background: #1c1c1e; }
+      .section-title { color: #fff; }
+      .divider { background: #38383a; }
+      .item { color: #fff; }
+      .item:active { background: #2c2c2e; }
+      .item-name { color: #fff; }
+      .chevron { color: #5a5a5e; }
+      .search-input { background-color: #1c1c1e; color: #fff; }
+      .search-clear:hover { color: #aeaeb2; }
+      .no-results { color: #8e8e93; }
+      .gate { background: #000; }
+      .gate-card { background: #1c1c1e; }
+      .gate-title { color: #fff; }
+      .gate-sub { color: #aeaeb2; }
+      .gate-input { background: #2c2c2e; color: #fff; }
+      .footer a { color: #8e8e93; }
+      .footer a:hover { color: #aeaeb2; }
+    }
+
+    @media (prefers-color-scheme: dark) and (hover: hover) {
+      .item:hover { background: #2c2c2e; }
+    }
   </style>
 </head>
 <body>
@@ -388,7 +415,7 @@
           </svg>
         </a>
         <div class="divider file-divider"></div>
-        <a class="item" href="Platby/VOP%20%2B%20SEPA%20instant.html?k=4c129f69f551195cbc5e8b57cc5a0975b6efa1e8510573524d11df03c7d010c6" data-name="VOP + SEPA instant" data-modified="1779203792000">
+        <a class="item" href="Platby/VOP%20%2B%20SEPA%20instant.html?k=4c129f69f551195cbc5e8b57cc5a0975b6efa1e8510573524d11df03c7d010c6" data-name="VOP + SEPA instant" data-modified="1779781242000">
           <span class="item-name">VOP + SEPA instant</span>
           <span class="badge-new" style="display:none">Nová verze</span>
           <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
