@@ -96,7 +96,7 @@ const html = `<!DOCTYPE html>
   <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
   <link rel="manifest" href="manifest.json" />
   <meta name="theme-color" media="(prefers-color-scheme: light)" content="#f2f2f7" />
-  <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#000000" />
+  <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#1c1c1e" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <meta name="apple-mobile-web-app-title" content="Rozcestník" />
@@ -369,29 +369,29 @@ const html = `<!DOCTYPE html>
     }
 
     @media (prefers-color-scheme: dark) {
-      body { background: #000; }
+      body { background: #1c1c1e; }
       h1 { color: #fff; }
-      .card { background: #1c1c1e; }
+      .card { background: #2c2c2e; }
       .section-title { color: #fff; }
       .divider { background: #38383a; }
       .item { color: #fff; }
-      .item:active { background: #2c2c2e; }
+      .item:active { background: #3a3a3c; }
       .item-name { color: #fff; }
       .chevron { color: #5a5a5e; }
-      .search-input { background-color: #1c1c1e; color: #fff; }
+      .search-input { background-color: #2c2c2e; color: #fff; }
       .search-clear:hover { color: #aeaeb2; }
       .no-results { color: #8e8e93; }
-      .gate { background: #000; }
-      .gate-card { background: #1c1c1e; }
+      .gate { background: #1c1c1e; }
+      .gate-card { background: #2c2c2e; }
       .gate-title { color: #fff; }
       .gate-sub { color: #aeaeb2; }
-      .gate-input { background: #2c2c2e; color: #fff; }
+      .gate-input { background: #3a3a3c; color: #fff; }
       .footer a { color: #8e8e93; }
       .footer a:hover { color: #aeaeb2; }
     }
 
     @media (prefers-color-scheme: dark) and (hover: hover) {
-      .item:hover { background: #2c2c2e; }
+      .item:hover { background: #3a3a3c; }
     }
   </style>
 </head>
