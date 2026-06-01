@@ -32,9 +32,9 @@
 
 <style>
   :root {
-    --kb-red: #CC0000;
-    --kb-red-dark: #A30000;
-    --kb-red-light: #E8000010;
+    --kb-red: #E2001A;
+    --kb-red-dark: #B30015;
+    --kb-red-light: #E2001A10;
     --text-primary: #1A1A1A;
     --text-secondary: #6B6B6B;
     --text-hint: #ABABAB;
@@ -216,7 +216,7 @@
     display: grid; grid-template-rows: 1fr 1fr;
     overflow: hidden; border: 2px solid white;
   }
-  .kb-icon-top { background: #CC0000; }
+  .kb-icon-top { background: #E2001A; }
   .kb-icon-bot { background: #1A1A1A; }
   .s01-dock {
     position: absolute; bottom: 20px; left: 20px; right: 20px;
@@ -547,7 +547,7 @@
   }
   .success-checkmark {
     width: 100px; height: 100px;
-    background: linear-gradient(135deg, #CC0000, #A30000);
+    background: linear-gradient(135deg, #E2001A, #B30015);
     border-radius: 28px;
     display: flex; align-items: center; justify-content: center;
     font-size: 52px; color: white;
@@ -1511,10 +1511,10 @@ function initS05() {
 
 // ── S06 logic ──
 const ICONS = {
-  info:        `<svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="11" cy="11" r="10" stroke="#CC0000" stroke-width="1.8"/><text x="11" y="16" text-anchor="middle" font-size="13" font-weight="700" fill="#CC0000" font-family="serif">i</text></svg>`,
+  info:        `<svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="11" cy="11" r="10" stroke="#E2001A" stroke-width="1.8"/><text x="11" y="16" text-anchor="middle" font-size="13" font-weight="700" fill="#E2001A" font-family="serif">i</text></svg>`,
   match:       `<svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="11" cy="11" r="10" stroke="#2E7D32" stroke-width="1.8"/><polyline points="6,11 9.5,14.5 16,8" stroke="#2E7D32" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
   partial:     `<svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M11 2L21 20H1L11 2Z" stroke="#FF9500" stroke-width="1.8" stroke-linejoin="round"/><text x="11" y="17" text-anchor="middle" font-size="11" font-weight="800" fill="#FF9500" font-family="sans-serif">!</text></svg>`,
-  nomatch:     `<svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="11" cy="11" r="10" stroke="#CC0000" stroke-width="1.8"/><line x1="7" y1="7" x2="15" y2="15" stroke="#CC0000" stroke-width="2" stroke-linecap="round"/><line x1="15" y1="7" x2="7" y2="15" stroke="#CC0000" stroke-width="2" stroke-linecap="round"/></svg>`,
+  nomatch:     `<svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="11" cy="11" r="10" stroke="#E2001A" stroke-width="1.8"/><line x1="7" y1="7" x2="15" y2="15" stroke="#E2001A" stroke-width="2" stroke-linecap="round"/><line x1="15" y1="7" x2="7" y2="15" stroke="#E2001A" stroke-width="2" stroke-linecap="round"/></svg>`,
   unverifiable:`<svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="11" cy="11" r="10" stroke="#888" stroke-width="1.8"/><text x="11" y="16" text-anchor="middle" font-size="13" font-weight="700" fill="#888" font-family="sans-serif">?</text></svg>`,
 };
 const CORRECT_NAME = 'Jan Novák';
