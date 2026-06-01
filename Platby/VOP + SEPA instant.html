@@ -236,35 +236,9 @@
   /* ══════════════════════════
      SCREEN 02 – Splash
   ══════════════════════════ */
-  #s02 { background: #E2001A; align-items: center; justify-content: center; }
-  /* Velký rámeček telefonu přes celou obrazovku (3D efekt jako v předloze) */
-  .s02-frame {
-    position: absolute; inset: 22px;
-    border-radius: 48px;
-    padding: 16px;
-    background: linear-gradient(135deg, #ff9d92 0%, #f04a3c 18%, #e2001a 42%, #a8001a 78%, #7d0014 100%);
-    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-    -webkit-mask-composite: xor;
-    mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-    mask-composite: exclude;
-    pointer-events: none;
+  #s02 {
+    background: #E2001A url('../assets/splash.png') center center / cover no-repeat;
   }
-  .s02-logo {
-    display: flex; align-items: center; gap: 18px;
-    position: relative; z-index: 1;
-    animation: scaleIn 0.5s cubic-bezier(0.34,1.56,0.64,1);
-  }
-  .s02-logo-box {
-    width: 62px; height: 62px; border-radius: 2px;
-    background: #fff;
-    display: grid; grid-template-rows: 1fr 1fr;
-    gap: 6px;
-    border: 5px solid #fff;
-    box-sizing: border-box;
-  }
-  .s02-logo-top { background: #E2001A; }
-  .s02-logo-bot { background: #000; }
-  .s02-logo-text { color: #fff; font-size: 46px; font-weight: 700; letter-spacing: -1px; }
 
   /* ══════════════════════════
      SCREEN 03 – PIN Login
@@ -711,16 +685,7 @@
   </div>
 
   <!-- ══ S02: Splash ══ -->
-  <div id="s02" class="screen" style="background:#E2001A; align-items:center; justify-content:center;">
-    <div class="s02-frame"></div>
-    <div class="s02-logo">
-      <div class="s02-logo-box">
-        <div class="s02-logo-top"></div>
-        <div class="s02-logo-bot"></div>
-      </div>
-      <div class="s02-logo-text">KB</div>
-    </div>
-  </div>
+  <div id="s02" class="screen"></div>
 
   <!-- ══ S03: PIN Login ══ -->
   <div id="s03" class="screen" style="background:#F5F5F7;">
