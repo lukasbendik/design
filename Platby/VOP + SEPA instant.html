@@ -1518,6 +1518,8 @@ const ICONS = {
   unverifiable:`<svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="11" cy="11" r="10" stroke="#888" stroke-width="1.8"/><text x="11" y="16" text-anchor="middle" font-size="13" font-weight="700" fill="#888" font-family="sans-serif">?</text></svg>`,
 };
 const CORRECT_NAME = 'Jan Novák';
+// Vypnutí stavu "Název nelze ověřit." – pro zapnutí nastav na true
+const UNVERIFIABLE_ENABLED = false;
 let unverifiableUsed = false;
 let checkTimer = null;
 let currentNameState = 'empty';
@@ -1616,7 +1618,8 @@ function checkRecipient() {
   if (!name) { setNameState('empty'); return; }
 
   // max once per payment flow
-  if (!unverifiableUsed && Math.random() < 0.3) {
+  // Přepínač zobrazování stavu "Název nelze ověřit." – pro zapnutí změň na true
+  if (UNVERIFIABLE_ENABLED && !unverifiableUsed && Math.random() < 0.3) {
     unverifiableUsed = true;
     setTimeout(() => {
       document.getElementById('verify-loader').style.display = 'none';
