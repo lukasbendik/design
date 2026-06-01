@@ -1078,28 +1078,6 @@
     </div>
   </div>
 
-  <!-- ══ S11: Success – platba uložena k autorizaci (limit překročen) ══ -->
-  <div id="s11" class="screen">
-    <div class="nav-bar">
-      <span class="nav-back" onclick="resetAndGoHome()" style="color:var(--text-primary);">Zavřít</span>
-    </div>
-    <div class="success-icon-wrap">
-      <div class="success-checkmark">✓</div>
-    </div>
-    <div class="success-title success-title-left">Platbu jste uložili k autorizaci</div>
-    <div class="success-subtitle">Překročen stanovený limit pro plnou autorizaci. Limity plateb můžete zkontrolovat v Nastavení.</div>
-    <div class="template-row">
-      <div class="template-left">
-        <span class="template-icon">📁</span>
-        <span class="template-text">Uložit šablonu</span>
-      </div>
-      <span class="card-chevron">›</span>
-    </div>
-    <div class="cta-wrap" style="margin-top:auto;">
-      <button class="cta-btn" onclick="resetAndGoNew()">Zadat další</button>
-      <button class="cta-btn outline" onclick="resetAndGoHome()">Zavřít</button>
-    </div>
-  </div>
   <!-- ══ Currency bottom sheet ══ -->
   <div id="currency-overlay" onclick="closeCurrencySheet()" style="display:none;position:absolute;inset:0;background:rgba(0,0,0,0.5);z-index:200;"></div>
   <div id="currency-sheet" style="display:none;position:absolute;bottom:0;left:0;right:0;background:#F2F2F7;border-radius:24px 24px 0 0;z-index:201;max-height:80%;flex-direction:column;">
@@ -1129,22 +1107,6 @@
           <div style="font-size:14px;color:#6B6B6B;margin-top:3px;">Vámi zadaný název</div>
         </div>
         <span style="color:#ABABAB;font-size:18px;">›</span>
-      </div>
-    </div>
-  </div>
-
-  <!-- ══ Limit alert modal (částka > 1000 EUR) ══ -->
-  <div id="limit-overlay" onclick="closeLimitSheet()" style="display:none;position:absolute;inset:0;background:rgba(0,0,0,0.4);z-index:200;"></div>
-  <div id="limit-sheet" style="display:none;position:absolute;inset:0;z-index:201;align-items:center;justify-content:center;padding:0 32px;pointer-events:none;">
-    <div style="background:#fff;border-radius:14px;width:100%;max-width:340px;overflow:hidden;box-shadow:0 4px 24px rgba(0,0,0,0.15);pointer-events:auto;">
-      <div style="padding:22px 20px 18px;text-align:center;">
-        <div style="font-size:17px;font-weight:600;color:#1A1A1A;margin-bottom:6px;line-height:1.3;">Částka přesahuje stanovený limit</div>
-        <div style="font-size:14px;color:#1A1A1A;line-height:1.4;">Platbu uložíme pro pozdější autorizaci.</div>
-      </div>
-      <div style="border-top:1px solid #d1d1d6;display:flex;">
-        <button onclick="closeLimitSheet()" style="flex:1;padding:13px;background:transparent;border:none;cursor:pointer;font-size:17px;color:#007AFF;font-weight:400;">Zavřít</button>
-        <div style="width:1px;background:#d1d1d6;"></div>
-        <button onclick="confirmLimit()" style="flex:1;padding:13px;background:transparent;border:none;cursor:pointer;font-size:17px;color:#007AFF;font-weight:400;">Pokračovat</button>
       </div>
     </div>
   </div>
@@ -1245,7 +1207,7 @@ function trackPageView(title) {
 // ── State ──
 let loginPin = '';
 let authPin = '';
-const paymentData = { iban:'', amount:'', currency:'CZK', name:'', nameVerified:false, limitExceeded:false };
+const paymentData = { iban:'', amount:'', currency:'CZK', name:'', nameVerified:false };
 
 // ── Sheet registry ──
 // Každý sheet má parent obrazovku → hash je '#<parent>/<sheet>', aby šel sheet
@@ -1255,8 +1217,7 @@ const SHEET_CONFIG = {
   nomatch:      { parent: 's06', display: 'block' },
   unverifiable: { parent: 's06', display: 'block' },
   verify:       { parent: 's06', display: 'block' },
-  currency:     { parent: 's05', display: 'flex'  },
-  limit:        { parent: 's05', display: 'flex', modal: true }
+  currency:     { parent: 's05', display: 'flex'  }
 };
 const SHEET_NAMES = Object.keys(SHEET_CONFIG);
 
@@ -1368,20 +1329,15 @@ function pinPress(mode, num) {
       setTimeout(() => {
         authPin = '';
         hideAuth();
-        if (paymentData.limitExceeded) {
-          // Platba čeká na plnou autorizaci → zůstatek se neodečítá
-          goTo('s11');
-        } else {
-          // deduct payment from balance
-          const amt = parseFloat(paymentData.amount) || 0;
-          const rate = EXCHANGE_RATES_ALL[paymentData.currency] || 1;
-          accountBalanceCZK = Math.max(0, accountBalanceCZK - (amt * rate));
-          // update dashboard balance
-          const whole = Math.floor(accountBalanceCZK).toLocaleString('cs-CZ');
-          const decimal = (accountBalanceCZK % 1).toFixed(2).substring(1).replace('.', ',');
-          document.getElementById('dashboard-balance').innerHTML = whole + '<span>' + decimal + ' Kč</span>';
-          goTo('s10');
-        }
+        // deduct payment from balance
+        const amt = parseFloat(paymentData.amount) || 0;
+        const rate = EXCHANGE_RATES_ALL[paymentData.currency] || 1;
+        accountBalanceCZK = Math.max(0, accountBalanceCZK - (amt * rate));
+        // update dashboard balance
+        const whole = Math.floor(accountBalanceCZK).toLocaleString('cs-CZ');
+        const decimal = (accountBalanceCZK % 1).toFixed(2).substring(1).replace('.', ',');
+        document.getElementById('dashboard-balance').innerHTML = whole + '<span>' + decimal + ' Kč</span>';
+        goTo('s10');
       }, 400);
     }
   }
@@ -1501,15 +1457,6 @@ const EXCHANGE_RATES_ALL = { CZK:1, EUR:24.79, USD:22.89, AUD:14.95, BGN:12.68, 
 function openVerifySheet() { openSheet('verify'); }
 function closeVerifySheet() { closeSheet('verify'); }
 
-function openLimitSheet() { openSheet('limit'); }
-function closeLimitSheet() { closeSheet('limit'); }
-function confirmLimit() {
-  closeSheet('limit', { skipTrack: true });
-  paymentData.limitExceeded = true;
-  track('payment_limit_continued', { amount: paymentData.amount, currency: paymentData.currency });
-  goTo('s06');
-}
-
 function renderCurrencyList() {
   const list = document.getElementById('currency-list');
   list.innerHTML = CURRENCIES.map(c => `
@@ -1566,13 +1513,6 @@ function goToS06() {
   paymentData.iban = iban;
   paymentData.amount = amount;
 
-  // Limit kontrola: částka > 1000 EUR → zobrazit modál místo navigace
-  if (paymentData.currency === 'EUR' && parseFloat(amount) > 1000) {
-    track('payment_limit_exceeded', { amount: amount, currency: paymentData.currency });
-    openSheet('limit');
-    return;
-  }
-
   track('payment_step1_continue', { iban: paymentData.iban, amount: paymentData.amount, currency: paymentData.currency });
   goTo('s06');
 }
@@ -1584,7 +1524,6 @@ function initS05() {
   document.getElementById('currency-code').textContent = 'Kč';
   paymentData.amount = '';
   paymentData.currency = 'CZK';
-  paymentData.limitExceeded = false;
   updateBalanceHint();
 }
 
