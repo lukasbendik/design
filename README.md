@@ -10,7 +10,7 @@ Sbírka interaktivních HTML prototypů pro testování UX návrhů. Prototypy j
 
 ## Rozcestník
 
-**URL:** https://lukinab.github.io/ux/
+**URL:** https://lukasbendik.github.io/design/
 
 ## Lokální náhled
 
@@ -33,4 +33,4 @@ versions.json        # záložní timestamps (fallback bez gitu)
 
 ## Deploy
 
-Každý push do větve `main` automaticky spustí nasazení. Stav buildu: https://github.com/lukinab/ux/actions
+Každý push do větve `main` automaticky spustí nasazení. Stav buildu: https://github.com/lukasbendik/design/actions
