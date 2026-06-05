@@ -64,7 +64,10 @@ const sections = fs
           modified,
         };
       });
-    return { section: dir, items: [...htmlFiles, ...subProtos] };
+    const items = [...htmlFiles, ...subProtos].sort((a, b) =>
+      a.name.localeCompare(b.name, "cs", { sensitivity: "base", numeric: true })
+    );
+    return { section: dir, items };
   })
   .filter((s) => s.items.length > 0);
 
