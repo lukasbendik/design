@@ -757,6 +757,55 @@
     text-decoration: underline; cursor: pointer; background: none; border: none;
     font-family: var(--font);
   }
+
+  /* Zaplať mi */
+  #s15 { background: var(--bg-screen); }
+  .pm-topbar {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 16px 20px 0; flex-shrink: 0;
+  }
+  .pm-icon { cursor: pointer; color: var(--text-primary); display: flex; }
+  .pm-title { font-size: 32px; font-weight: 700; letter-spacing: -0.5px; padding: 14px 20px 6px; }
+  .pm-sub { font-size: 16px; color: var(--text-secondary); line-height: 1.45; padding: 0 20px 18px; }
+  .pm-qr-wrap {
+    background: #fff; border-radius: 8px; width: 268px; height: 268px;
+    margin: 0 auto 22px; padding: 22px; position: relative;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .pm-qr-grid {
+    display: grid; width: 100%; height: 100%;
+    grid-template-columns: repeat(25, 1fr); grid-template-rows: repeat(25, 1fr);
+  }
+  .pm-qr-grid i { background: #000; }
+  .pm-qr-logo {
+    position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
+    width: 42px; height: 30px; background: var(--kb-red); border-radius: 3px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .pm-qr-logo::after { content: ''; width: 18px; height: 4px; background: #1A1A1A; border-radius: 1px; margin-top: 8px; }
+  .pm-qr-label { position: absolute; bottom: 14px; left: 30px; font-size: 16px; font-weight: 700; color: #1A1A1A; background: #fff; padding: 0 4px; }
+  .pm-acct {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 20px 18px; cursor: pointer;
+  }
+  .pm-acct-name { font-size: 18px; font-weight: 700; color: var(--text-primary); }
+  .pm-acct-sub { font-size: 15px; color: var(--text-hint); margin-top: 3px; }
+  .pm-field {
+    background: var(--bg-card); border: 1.5px solid var(--border);
+    border-radius: var(--radius-input); margin: 0 16px 12px; padding: 12px 16px;
+  }
+  .pm-field-label { font-size: 14px; color: var(--text-secondary); }
+  .pm-field-row { display: flex; align-items: center; justify-content: space-between; }
+  .pm-field input {
+    border: none; outline: none; background: transparent; font-size: 17px;
+    width: 100%; color: var(--text-primary); font-family: var(--font); padding-top: 6px;
+  }
+  .pm-field .pm-suffix { font-size: 17px; color: var(--text-primary); padding-top: 6px; flex-shrink: 0; }
+  .pm-how {
+    display: flex; align-items: center; justify-content: center; gap: 10px;
+    padding: 10px 20px 4px; color: var(--text-primary); cursor: pointer;
+  }
+  .pm-how span { font-size: 17px; font-weight: 600; text-decoration: underline; }
 </style>
 </head>
 <body>
@@ -998,7 +1047,7 @@
         </div>
         <div class="bottom-btn-label">QR platba</div>
       </div>
-      <div class="bottom-btn">
+      <div class="bottom-btn" onclick="openPayMe()">
         <div class="bottom-btn-icon">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
             <path d="M18 11V7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v1a2 2 0 0 0-2-2 2 2 0 0 0-2 2v1a2 2 0 0 0-2-2 2 2 0 0 0-2 2v5c0 2.8 2.2 5 5 5h2a5 5 0 0 0 5-5v-2z"/>
@@ -1307,7 +1356,7 @@
         </div>
         <div class="bottom-btn-label">QR platba</div>
       </div>
-      <div class="bottom-btn">
+      <div class="bottom-btn" onclick="openPayMe()">
         <div class="bottom-btn-icon">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
             <path d="M18 11V7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v1a2 2 0 0 0-2-2 2 2 0 0 0-2 2v1a2 2 0 0 0-2-2 2 2 0 0 0-2 2v5c0 2.8 2.2 5 5 5h2a5 5 0 0 0 5-5v-2z"/>
@@ -1468,6 +1517,57 @@
     </div>
     <div class="qr-footer">
       <button class="qr-load-link">Načíst z fotek nebo souboru</button>
+    </div>
+  </div>
+
+  <!-- ══ S15: Zaplať mi ══ -->
+  <div id="s15" class="screen">
+    <div class="pm-topbar">
+      <span class="pm-icon" onclick="closePayMe()">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg>
+      </span>
+      <span class="pm-icon">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8a2 2 0 0 1 2-2h2l1.5-2h4L16 6h1a2 2 0 0 1 2 2v3"/><path d="M21 15v6m3-3h-6" /><circle cx="11" cy="13" r="3.2"/></svg>
+      </span>
+    </div>
+    <div class="pm-title">Zaplať mi</div>
+    <div class="pm-sub">QR kód můžete poslat nebo ukázat tomu, kdo vám má zaplatit</div>
+    <div class="screen-scroll">
+      <div class="pm-qr-wrap">
+        <div class="pm-qr-grid" id="pm-qr-grid"></div>
+        <div class="pm-qr-logo"></div>
+        <span class="pm-qr-label">QR platba</span>
+      </div>
+      <div class="pm-acct">
+        <div>
+          <div class="pm-acct-name">Běžný účet</div>
+          <div class="pm-acct-sub">123456–4835477/0100<br>František Koudelka</div>
+        </div>
+        <span class="card-chevron">›</span>
+      </div>
+      <div class="pm-field">
+        <div class="pm-field-label">Částka</div>
+        <div class="pm-field-row">
+          <input type="number" id="pm-amount" placeholder="">
+          <span class="pm-suffix">Kč</span>
+        </div>
+      </div>
+      <div class="pm-field">
+        <div class="pm-field-label">Za co vám má zaplatit</div>
+        <div class="pm-field-row"><input type="text" id="pm-desc" placeholder=""></div>
+      </div>
+      <div class="pm-field">
+        <div class="pm-field-label">Variabilní symbol</div>
+        <div class="pm-field-row"><input type="text" id="pm-vs" placeholder=""></div>
+      </div>
+      <div class="pm-how">
+        <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><circle cx="11" cy="11" r="9.5" stroke="#1A1A1A" stroke-width="1.6"/><line x1="11" y1="10" x2="11" y2="15.5" stroke="#1A1A1A" stroke-width="1.8" stroke-linecap="round"/><circle cx="11" cy="6.8" r="0.9" fill="#1A1A1A"/></svg>
+        <span>Jak to funguje</span>
+      </div>
+      <div style="height:12px"></div>
+    </div>
+    <div class="cta-wrap">
+      <button class="cta-btn">Odeslat QR kód</button>
     </div>
   </div>
 
@@ -1669,6 +1769,40 @@ function closeNewPayment() { goTo(paymentOrigin || 's04'); }
 let qrOrigin = 's04';
 function openQR() { qrOrigin = (document.querySelector('.screen.active') || {}).id || 's04'; goTo('s14'); }
 function closeQR() { goTo(qrOrigin || 's04'); }
+// Zaplať mi
+let payMeOrigin = 's04';
+function openPayMe() { payMeOrigin = (document.querySelector('.screen.active') || {}).id || 's04'; goTo('s15'); }
+function closePayMe() { goTo(payMeOrigin || 's04'); }
+function renderFakeQR(id, seed) {
+  const grid = document.getElementById(id);
+  if (!grid) return;
+  let s = seed;
+  const rng = () => { s = (s * 9301 + 49297) % 233280; return s / 233280; };
+  const N = 25;
+  // finder pattern 7x7 v rozích
+  const inFinder = (r, c) => {
+    const f = (br, bc) => r >= br && r < br + 7 && c >= bc && c < bc + 7;
+    return f(0, 0) || f(0, N - 7) || f(N - 7, 0);
+  };
+  const finderOn = (r, c) => {
+    const local = (br, bc) => { const lr = r - br, lc = c - bc;
+      if (lr === 0 || lr === 6 || lc === 0 || lc === 6) return true;
+      if (lr >= 2 && lr <= 4 && lc >= 2 && lc <= 4) return true; return false; };
+    if (r < 7 && c < 7) return local(0, 0);
+    if (r < 7 && c >= N - 7) return local(0, N - 7);
+    if (r >= N - 7 && c < 7) return local(N - 7, 0);
+    return false;
+  };
+  let html = '';
+  for (let r = 0; r < N; r++)
+    for (let c = 0; c < N; c++) {
+      let on;
+      if (inFinder(r, c)) on = finderOn(r, c);
+      else on = rng() < 0.46;
+      html += on ? '<i style="grid-row:' + (r+1) + ';grid-column:' + (c+1) + '"></i>' : '';
+    }
+  grid.innerHTML = html;
+}
 const paymentData = { iban:'', amount:'', currency:'CZK', name:'', nameVerified:false };
 
 // ── Sheet registry ──
@@ -2464,6 +2598,7 @@ function renderPaymentList() {
 document.addEventListener('DOMContentLoaded', () => {
   renderTransactions('tx-list-bezny', 12345);
   renderAllPayments('tx-list-all', 67890);
+  renderFakeQR('pm-qr-grid', 24680);
   const nameIcon = document.getElementById('name-status-icon');
   if (nameIcon) nameIcon.innerHTML = ICONS.info;
 
