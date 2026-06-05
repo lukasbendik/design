@@ -317,6 +317,24 @@
     padding: 16px 18px;
     box-shadow: 0 1px 6px rgba(0,0,0,0.06);
   }
+  /* Propojený blok Tarif + Běžný účet */
+  .account-group {
+    border: 1px solid #E3E3E6; border-radius: 16px;
+    background: var(--bg-screen); margin-bottom: 12px; overflow: hidden;
+  }
+  .account-group-header {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 16px 18px; font-size: 16px; font-weight: 600;
+    color: var(--text-primary); cursor: pointer;
+  }
+  .account-group-body {
+    background: #fff; border-radius: 14px; margin: 0 6px 6px;
+    box-shadow: 0 1px 6px rgba(0,0,0,0.06); cursor: pointer;
+  }
+  .account-row { padding: 16px 18px; }
+  .account-row .card-title { font-size: 17px; font-weight: 600; color: var(--text-primary); }
+  .account-row .card-num { font-size: 15px; color: var(--text-hint); }
+  .account-row .card-amount { font-size: 30px; }
   .card-title-row {
     display: flex; justify-content: space-between; align-items: center;
     margin-bottom: 4px;
@@ -873,20 +891,23 @@
     </div>
     <div class="screen-scroll">
     <div class="s04-cards anim-slideup">
-      <!-- Tarif -->
-      <div class="s04-card" style="display:flex;justify-content:space-between;align-items:center;padding:14px 18px;">
-        <span style="font-size:16px;font-weight:600;">Tarif Komfort</span>
-        <span class="card-chevron">›</span>
-      </div>
-      <!-- Účet -->
-      <div class="s04-card" onclick="goTo('s11')" style="cursor:pointer;">
-        <div class="card-title-row">
-          <span class="card-title">Běžný účet</span>
-          <span class="card-num">122000/0100</span>
-        </div>
-        <div style="display:flex;justify-content:space-between;align-items:center;">
-          <div class="card-amount" id="dashboard-balance">125 063<span>,38 Kč</span></div>
+      <!-- Tarif + Běžný účet (propojený blok) -->
+      <div class="account-group">
+        <div class="account-group-header">
+          <span>Tarif Komfort</span>
           <span class="card-chevron">›</span>
+        </div>
+        <div class="account-group-body" onclick="goTo('s11')">
+          <div class="account-row">
+            <div class="card-title-row">
+              <span class="card-title">Běžný účet</span>
+              <span class="card-num">122000/0100</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;">
+              <div class="card-amount" id="dashboard-balance">125 063<span>,38 Kč</span></div>
+              <span class="card-chevron">›</span>
+            </div>
+          </div>
         </div>
       </div>
       <!-- Spoření -->
