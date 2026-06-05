@@ -949,7 +949,7 @@
     </div>
     </div><!-- /screen-scroll -->
     <div class="s04-bottom-bar">
-      <div class="bottom-btn" onclick="goTo('s05')">
+      <div class="bottom-btn" onclick="openNewPayment('s04')">
         <div class="bottom-btn-icon">≡◯</div>
         <div class="bottom-btn-label">Nová platba</div>
       </div>
@@ -983,7 +983,7 @@
   <!-- ══ S05: Nová platba krok 1 ══ -->
   <div id="s05" class="screen form-screen">
     <div class="nav-bar">
-      <span class="nav-back" onclick="goTo('s04')">✕ Zavřít</span>
+      <span class="nav-back" onclick="closeNewPayment()">✕ Zavřít</span>
       <span class="nav-title">Nová platba</span>
       <span class="nav-action">
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -1229,10 +1229,6 @@
           <span class="detail-acct-num">122000/0100</span>
         </div>
         <div class="detail-balance">125 063<span>,38 Kč</span></div>
-        <div class="detail-chips">
-          <div class="detail-chip active">Vše</div>
-          <div class="detail-chip"><span class="chip-flag">🇨🇿</span>125 063,38 Kč</div>
-        </div>
       </div>
       <div style="height:8px"></div>
       <div class="detail-list-card" onclick="openSheet('mgmtbezny')">
@@ -1262,7 +1258,7 @@
       <div style="height:16px"></div>
     </div>
     <div class="s04-bottom-bar">
-      <div class="bottom-btn" onclick="goTo('s05')">
+      <div class="bottom-btn" onclick="openNewPayment('s11')">
         <div class="bottom-btn-icon">≡◯</div>
         <div class="bottom-btn-label">Nová platba</div>
       </div>
@@ -1614,6 +1610,10 @@ function trackPageView(title) {
 // ── State ──
 let loginPin = '';
 let authPin = '';
+// Odkud byla otevřena nová platba (s04 home / s11 detail účtu) – kvůli návratu při Zavřít
+let paymentOrigin = 's04';
+function openNewPayment(origin) { paymentOrigin = origin || 's04'; goTo('s05'); }
+function closeNewPayment() { goTo(paymentOrigin || 's04'); }
 const paymentData = { iban:'', amount:'', currency:'CZK', name:'', nameVerified:false };
 
 // ── Sheet registry ──
