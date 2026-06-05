@@ -728,6 +728,35 @@
     border-radius: var(--radius-btn); font-size: 16px; font-weight: 600;
     color: var(--text-primary); cursor: pointer; font-family: var(--font);
   }
+
+  /* QR platba – skener */
+  #s14 { background: #fff; }
+  .qr-head { padding: 16px 20px 14px; flex-shrink: 0; }
+  .qr-close { font-size: 16px; color: var(--text-primary); cursor: pointer; }
+  .qr-instr { font-size: 16px; color: var(--text-secondary); line-height: 1.45; margin-top: 16px; }
+  .qr-camera {
+    flex: 1; position: relative; overflow: hidden;
+    display: flex; align-items: center; justify-content: center;
+    background: linear-gradient(135deg, #cdd0d2 0%, #bcc0c3 45%, #d2d5d7 100%);
+  }
+  .qr-flash {
+    position: absolute; top: 18px; right: 18px;
+    width: 48px; height: 48px; border-radius: 50%;
+    background: rgba(70,70,70,0.5); border: none; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .qr-frame { position: relative; width: 262px; height: 262px; }
+  .qr-corner { position: absolute; width: 48px; height: 48px; border: 4px solid #fff; }
+  .qr-corner.tl { top: 0; left: 0; border-right: none; border-bottom: none; border-radius: 8px 0 0 0; }
+  .qr-corner.tr { top: 0; right: 0; border-left: none; border-bottom: none; border-radius: 0 8px 0 0; }
+  .qr-corner.bl { bottom: 0; left: 0; border-right: none; border-top: none; border-radius: 0 0 0 8px; }
+  .qr-corner.br { bottom: 0; right: 0; border-left: none; border-top: none; border-radius: 0 0 8px 0; }
+  .qr-footer { flex-shrink: 0; padding: 22px 20px 26px; text-align: center; background: #fff; }
+  .qr-load-link {
+    font-size: 16px; font-weight: 600; color: var(--text-primary);
+    text-decoration: underline; cursor: pointer; background: none; border: none;
+    font-family: var(--font);
+  }
 </style>
 </head>
 <body>
@@ -953,7 +982,7 @@
         <div class="bottom-btn-icon">≡◯</div>
         <div class="bottom-btn-label">Nová platba</div>
       </div>
-      <div class="bottom-btn">
+      <div class="bottom-btn" onclick="openQR()">
         <div class="bottom-btn-icon">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
             <rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/>
@@ -1262,7 +1291,7 @@
         <div class="bottom-btn-icon">≡◯</div>
         <div class="bottom-btn-label">Nová platba</div>
       </div>
-      <div class="bottom-btn">
+      <div class="bottom-btn" onclick="openQR()">
         <div class="bottom-btn-icon">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
             <rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/>
@@ -1418,6 +1447,28 @@
       <span class="mgmt-chevron">›</span>
     </div>
     <div style="height:32px;"></div>
+  </div>
+
+  <!-- ══ S14: QR platba (skener) ══ -->
+  <div id="s14" class="screen">
+    <div class="qr-head">
+      <span class="qr-close" onclick="closeQR()">Zavřít</span>
+      <div class="qr-instr">Namiřte fotoaparát na QR kód, vyfotí se automaticky</div>
+    </div>
+    <div class="qr-camera">
+      <button class="qr-flash" aria-label="Blesk">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M13 2 4 14h6l-1 8 9-12h-6z"/><line x1="3" y1="3" x2="21" y2="21"/>
+        </svg>
+      </button>
+      <div class="qr-frame">
+        <span class="qr-corner tl"></span><span class="qr-corner tr"></span>
+        <span class="qr-corner bl"></span><span class="qr-corner br"></span>
+      </div>
+    </div>
+    <div class="qr-footer">
+      <button class="qr-load-link">Načíst z fotek nebo souboru</button>
+    </div>
   </div>
 
   <!-- ══ Detail a správa běžného účtu bottom sheet ══ -->
@@ -1614,6 +1665,10 @@ let authPin = '';
 let paymentOrigin = 's04';
 function openNewPayment(origin) { paymentOrigin = origin || 's04'; goTo('s05'); }
 function closeNewPayment() { goTo(paymentOrigin || 's04'); }
+// QR platba – návrat tam, odkud byla otevřena
+let qrOrigin = 's04';
+function openQR() { qrOrigin = (document.querySelector('.screen.active') || {}).id || 's04'; goTo('s14'); }
+function closeQR() { goTo(qrOrigin || 's04'); }
 const paymentData = { iban:'', amount:'', currency:'CZK', name:'', nameVerified:false };
 
 // ── Sheet registry ──
