@@ -31,8 +31,9 @@ const sections = fs
     return fs.statSync(f).isDirectory();
   })
   .map((dir) => {
-    const htmlFiles = fs
-      .readdirSync(dir)
+    const entries = fs.readdirSync(dir);
+    // Přímé HTML soubory ve složce sekce
+    const htmlFiles = entries
       .filter((f) => f.endsWith(".html"))
       .map((f) => {
         const filePath = `${dir}/${f}`;
@@ -43,7 +44,27 @@ const sections = fs
           modified,
         };
       });
-    return { section: dir, items: htmlFiles };
+    // Prototypy rozdělené do podadresářů (obsahují index.html)
+    const subProtos = entries
+      .filter((f) => {
+        const sub = `${dir}/${f}`;
+        return (
+          !IGNORE.has(f) &&
+          !f.startsWith(".") &&
+          fs.statSync(sub).isDirectory() &&
+          fs.existsSync(`${sub}/index.html`)
+        );
+      })
+      .map((sub) => {
+        const filePath = `${dir}/${sub}/index.html`;
+        const modified = getGitTimestamp(filePath) || versions[filePath] || 0;
+        return {
+          name: sub,
+          path: `${encodeURIComponent(dir)}/${encodeURIComponent(sub)}/index.html?k=4c129f69f551195cbc5e8b57cc5a0975b6efa1e8510573524d11df03c7d010c6`,
+          modified,
+        };
+      });
+    return { section: dir, items: [...htmlFiles, ...subProtos] };
   })
   .filter((s) => s.items.length > 0);
 
