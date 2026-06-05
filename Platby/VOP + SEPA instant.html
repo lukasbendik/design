@@ -722,6 +722,9 @@
     background: var(--bg-card); color: var(--text-primary);
   }
   .month-chip.active { background: var(--kb-red); border-color: var(--kb-red); color: #fff; }
+  .tx-month-anchor { height: 0; }
+  .tx-month-title { font-size: 15px; font-weight: 700; color: var(--text-secondary);
+    text-transform: uppercase; letter-spacing: 0.5px; padding: 18px 18px 2px; }
   .load-more-btn {
     display: block; margin: 4px auto 20px; padding: 13px 28px;
     background: var(--bg-card); border: 1.5px solid var(--border);
@@ -822,6 +825,9 @@
         </div>
         <div class="s00-card-section">
           Souhlas bude platit 2 roky, poté data i nahrávku mažeme. Souhlas můžete kdykoliv odvolat. Stačí nám napsat e-mail na adresu respondent@kb.cz.
+        </div>
+        <div class="s00-card-section">
+          Aplikaci vytvořila umělá inteligence jen pro testování. Nejsou v ní žádná skutečná data.
         </div>
       </div>
       <p class="s00-footnote">Více informací najdete na webu naší banky v části Ochrana osobních údajů.</p>
@@ -1901,6 +1907,11 @@ function goTo(id) {
     const auth = document.getElementById('s09');
     auth.style.display = 'none';
   }
+  // lišta měsíců: po zobrazení odrolovat na nejnovější (vpravo)
+  if (id === 's13') {
+    const chips = document.getElementById('month-chips');
+    if (chips) requestAnimationFrame(() => { chips.scrollLeft = chips.scrollWidth; });
+  }
 }
 
 // ── Splash auto-advance ──
@@ -2547,57 +2558,138 @@ let allPaymentsContainerId = null;
 function renderAllPayments(containerId, seed) {
   allPaymentsTxs = genAllPayments(seed);
   allPaymentsContainerId = containerId;
-  // distinct měsíce přítomné v datech, od nejstaršího po nejnovější
+  buildMonthChips();
+  renderPaymentList();
+}
+
+function buildMonthChips() {
+  // distinct měsíce přítomné v datech, od nejstaršího (vlevo) po nejnovější (vpravo)
   const keys = [...new Set(allPaymentsTxs.map(t => t.date.getFullYear() * 12 + t.date.getMonth()))].sort((a, b) => a - b);
   activeMonthKey = keys[keys.length - 1];
   const chips = document.getElementById('month-chips');
   chips.innerHTML = keys.map(k =>
     '<div class="month-chip' + (k === activeMonthKey ? ' active' : '') + '" data-key="' + k + '" onclick="selectMonth(' + k + ')">' + MONTHS_CZ[k % 12] + '</div>'
   ).join('');
-  renderPaymentList();
+  chips.scrollLeft = chips.scrollWidth;
 }
 
 function selectMonth(key) {
   activeMonthKey = key;
-  document.querySelectorAll('#month-chips .month-chip').forEach(c =>
-    c.classList.toggle('active', +c.dataset.key === key));
+  setActiveChip(key);
   track('payments_month_filter', { month: MONTHS_CZ[key % 12] });
-  renderPaymentList();
+  const anchor = document.querySelector('#' + allPaymentsContainerId + ' .tx-month-anchor[data-key="' + key + '"]');
+  const scroller = document.getElementById(allPaymentsContainerId).closest('.screen-scroll');
+  if (anchor && scroller) {
+    scroller.scrollTo({ top: anchor.offsetTop - 8, behavior: 'smooth' });
+  }
+}
+
+function setActiveChip(key) {
+  document.querySelectorAll('#month-chips .month-chip').forEach(c => {
+    const on = +c.dataset.key === key;
+    c.classList.toggle('active', on);
+    if (on) c.scrollIntoView({ block: 'nearest', inline: 'center', behavior: 'smooth' });
+  });
 }
 
 function renderPaymentList() {
-  const txs = allPaymentsTxs.filter(t => (t.date.getFullYear() * 12 + t.date.getMonth()) === activeMonthKey);
-  let html = '', lastLabel = null;
-  txs.forEach(tx => {
-    const label = dayLabel(tx.date);
-    if (label !== lastLabel) {
-      if (lastLabel !== null) html += '</div></div>';
-      html += '<div class="tx-group"><div class="tx-card"><div class="tx-group-title">' + label + '</div>';
-      lastLabel = label;
-    }
-    const badge = tx.type === 'pending' ? '<span class="tx-badge pending">◷</span>' : BADGE[tx.type];
-    const amtCls = tx.type === 'in' ? 'tx-amount in' : 'tx-amount';
-    const amtStr = (tx.amount < 0 ? '-' : '') + fmtCZK(Math.abs(tx.amount));
-    html += '<div class="tx-row">'
-      + '<div class="tx-avatar">' + TX_PERSON_ICON + badge + '</div>'
-      + '<div class="tx-main"><div class="tx-name">' + tx.name + '</div>'
-      + '<div class="tx-note">' + tx.note + '</div>'
-      + (tx.status ? '<div class="tx-status">' + tx.status + '</div>' : '')
-      + '</div>'
-      + '<div class="tx-right"><div class="' + amtCls + '">' + amtStr + '</div>'
-      + (tx.amount2 ? '<div class="tx-amount2' + (tx.type === 'in' ? ' in' : '') + '">' + tx.amount2 + '</div>' : '')
-      + (tx.tag ? '<div class="tx-tag">' + tx.tag + '</div>' : '')
-      + '</div></div>';
+  // všechny transakce pod sebou, seskupené po měsících a dnech
+  const monthKeys = [...new Set(allPaymentsTxs.map(t => t.date.getFullYear() * 12 + t.date.getMonth()))].sort((a, b) => b - a);
+  let html = '';
+  monthKeys.forEach(mk => {
+    const monthTxs = allPaymentsTxs.filter(t => (t.date.getFullYear() * 12 + t.date.getMonth()) === mk);
+    html += '<div class="tx-month-anchor" data-key="' + mk + '"></div>';
+    html += '<div class="tx-month-title">' + MONTHS_CZ[mk % 12] + ' ' + Math.floor(mk / 12) + '</div>';
+    let lastLabel = null;
+    monthTxs.forEach(tx => {
+      const label = dayLabel(tx.date);
+      if (label !== lastLabel) {
+        if (lastLabel !== null) html += '</div></div>';
+        html += '<div class="tx-group"><div class="tx-card"><div class="tx-group-title">' + label + '</div>';
+        lastLabel = label;
+      }
+      const badge = tx.type === 'pending' ? '<span class="tx-badge pending">◷</span>' : BADGE[tx.type];
+      const amtCls = tx.type === 'in' ? 'tx-amount in' : 'tx-amount';
+      const amtStr = (tx.amount < 0 ? '-' : '') + fmtCZK(Math.abs(tx.amount));
+      html += '<div class="tx-row">'
+        + '<div class="tx-avatar">' + TX_PERSON_ICON + badge + '</div>'
+        + '<div class="tx-main"><div class="tx-name">' + tx.name + '</div>'
+        + '<div class="tx-note">' + tx.note + '</div>'
+        + (tx.status ? '<div class="tx-status">' + tx.status + '</div>' : '')
+        + '</div>'
+        + '<div class="tx-right"><div class="' + amtCls + '">' + amtStr + '</div>'
+        + (tx.amount2 ? '<div class="tx-amount2' + (tx.type === 'in' ? ' in' : '') + '">' + tx.amount2 + '</div>' : '')
+        + (tx.tag ? '<div class="tx-tag">' + tx.tag + '</div>' : '')
+        + '</div></div>';
+    });
+    if (lastLabel !== null) html += '</div></div>';
   });
-  if (lastLabel !== null) html += '</div></div>';
-  if (!html) html = '<div style="text-align:center;color:var(--text-secondary);padding:40px 20px;font-size:15px;">V tomto měsíci nejsou žádné platby.</div>';
-  document.getElementById(allPaymentsContainerId).innerHTML = html;
+  if (!html) html = '<div style="text-align:center;color:var(--text-secondary);padding:40px 20px;font-size:15px;">Žádné platby.</div>';
+  const container = document.getElementById(allPaymentsContainerId);
+  container.innerHTML = html;
+  attachMonthScrollspy(container);
+}
+
+function attachMonthScrollspy(container) {
+  const scroller = container.closest('.screen-scroll');
+  if (!scroller || scroller.dataset.spyBound === '1') return;
+  scroller.dataset.spyBound = '1';
+  let ticking = false;
+  scroller.addEventListener('scroll', () => {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(() => {
+      const anchors = container.querySelectorAll('.tx-month-anchor');
+      let current = null;
+      anchors.forEach(a => {
+        if (a.offsetTop - scroller.scrollTop <= 60) current = +a.dataset.key;
+      });
+      if (current !== null && current !== activeMonthKey) {
+        activeMonthKey = current;
+        setActiveChip(current);
+      }
+      ticking = false;
+    });
+  });
+}
+
+// ── Spořicí účet – transakce ──
+const SAVINGS_TX = [
+  { type: 'in',  name: 'Vklad z běžného účtu',    note: 'Spoření',                  amount:  5000,    d: [2026, 5, 3]  },
+  { type: 'in',  name: 'Připsání úroků',          note: 'Úrok za květen',           amount:  712.40,  d: [2026, 5, 1]  },
+  { type: 'out', name: 'Srážková daň 15 %',       note: 'Daň z úroků',              amount: -106.86,  d: [2026, 5, 1]  },
+  { type: 'out', name: 'Výběr na běžný účet',     note: 'Převod',                   amount: -10000,   d: [2026, 4, 22] },
+  { type: 'in',  name: 'Vklad z běžného účtu',    note: 'Spoření',                  amount:  8000,    d: [2026, 4, 12] },
+  { type: 'in',  name: 'Připsání úroků',          note: 'Úrok za duben',            amount:  690.15,  d: [2026, 4, 1]  },
+  { type: 'out', name: 'Srážková daň 15 %',       note: 'Daň z úroků',              amount: -103.52,  d: [2026, 4, 1]  },
+  { type: 'in',  name: 'Vklad z běžného účtu',    note: 'Mimořádný vklad',          amount:  15000,   d: [2026, 3, 18] },
+  { type: 'out', name: 'Výběr na běžný účet',     note: 'Převod',                   amount: -4000,    d: [2026, 3, 9]  },
+  { type: 'in',  name: 'Připsání úroků',          note: 'Úrok za březen',           amount:  665.30,  d: [2026, 3, 1]  },
+  { type: 'out', name: 'Srážková daň 15 %',       note: 'Daň z úroků',              amount: -99.80,   d: [2026, 3, 1]  },
+  { type: 'in',  name: 'Vklad z běžného účtu',    note: 'Spoření',                  amount:  6000,    d: [2026, 2, 24] },
+  { type: 'out', name: 'Výběr na běžný účet',     note: 'Převod',                   amount: -7500,    d: [2026, 2, 15] },
+  { type: 'in',  name: 'Připsání úroků',          note: 'Úrok za únor',             amount:  601.90,  d: [2026, 2, 1]  },
+  { type: 'out', name: 'Srážková daň 15 %',       note: 'Daň z úroků',              amount: -90.29,   d: [2026, 2, 1]  },
+  { type: 'in',  name: 'Vklad z běžného účtu',    note: 'Spoření',                  amount:  10000,   d: [2026, 1, 20] },
+  { type: 'in',  name: 'Vklad z běžného účtu',    note: 'Mimořádný vklad',          amount:  20000,   d: [2026, 1, 8]  },
+  { type: 'in',  name: 'Připsání úroků',          note: 'Úrok za leden',            amount:  548.70,  d: [2026, 1, 1]  },
+  { type: 'out', name: 'Srážková daň 15 %',       note: 'Daň z úroků',              amount: -82.31,   d: [2026, 1, 1]  }
+];
+
+function renderSavingsPayments(containerId) {
+  allPaymentsTxs = SAVINGS_TX.map(tx => ({
+    type: tx.type, name: tx.name, note: tx.note, tag: null, amount: tx.amount,
+    status: null, date: new Date(tx.d[0], tx.d[1] - 1, tx.d[2])
+  }));
+  allPaymentsContainerId = containerId;
+  buildMonthChips();
+  renderPaymentList();
 }
 
 // ── Boot ──
 document.addEventListener('DOMContentLoaded', () => {
   renderTransactions('tx-list-bezny', 12345);
-  renderAllPayments('tx-list-all', 67890);
+  renderSavingsPayments('tx-list-all');
   renderFakeQR('pm-qr-grid', 24680);
   const nameIcon = document.getElementById('name-status-icon');
   if (nameIcon) nameIcon.innerHTML = ICONS.info;
