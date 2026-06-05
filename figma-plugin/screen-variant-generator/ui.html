@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Screen Variant Generator</title>
+  <style>
+    :root {
+      --bg: #f6f7fb;
+      --card: #ffffff;
+      --text: #1f2430;
+      --muted: #697186;
+      --accent: #d91e18;
+      --border: #d9dce5;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      padding: 16px;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--text);
+      background: radial-gradient(circle at top right, #ffffff 0%, var(--bg) 65%);
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 14px;
+      box-shadow: 0 8px 20px rgba(26, 31, 46, 0.08);
+    }
+
+    h1 {
+      font-size: 14px;
+      margin: 0 0 4px 0;
+      letter-spacing: 0.2px;
+    }
+
+    .subtitle {
+      font-size: 12px;
+      margin: 0 0 14px 0;
+      color: var(--muted);
+      line-height: 1.4;
+    }
+
+    label {
+      display: block;
+      margin: 10px 0 6px;
+      font-size: 11px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      font-weight: 600;
+    }
+
+    select, input {
+      width: 100%;
+      padding: 10px 10px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: #fff;
+      color: var(--text);
+      font-size: 12px;
+    }
+
+    .info {
+      margin-top: 12px;
+      font-size: 11px;
+      line-height: 1.45;
+      color: var(--muted);
+      background: #f7f1f1;
+      border: 1px dashed #ecc3c1;
+      border-radius: 8px;
+      padding: 10px;
+    }
+
+    .actions {
+      display: flex;
+      gap: 8px;
+      margin-top: 14px;
+    }
+
+    button {
+      flex: 1;
+      border: 0;
+      border-radius: 8px;
+      padding: 10px 12px;
+      cursor: pointer;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .primary {
+      background: var(--accent);
+      color: white;
+    }
+
+    .secondary {
+      background: #eceff6;
+      color: #2d3445;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>Screen Variant Generator</h1>
+    <p class="subtitle">Vyber platformu a variantu. Plugin duplikuje oznaceny Frame, upravi sirku a provede swap komponent podle mapovani.</p>
+
+    <label for="preset">Platforma</label>
+    <select id="preset"></select>
+
+    <label for="variant">Varianta</label>
+    <select id="variant"></select>
+
+    <label for="customName">Nazev nove obrazovky (volitelne)</label>
+    <input id="customName" type="text" placeholder="Napriklad Platba [IB Desktop]" />
+
+    <div class="info">
+      Potrebujes vybrat presne jeden Frame. Mapovani komponent je mozne menit v souboru code.js.
+    </div>
+
+    <div class="actions">
+      <button class="secondary" id="closeBtn">Zavrit</button>
+      <button class="primary" id="createBtn">Vytvorit variantu</button>
+    </div>
+  </div>
+
+  <script>
+    const state = {
+      presets: {}
+    };
+
+    const presetSelect = document.getElementById("preset");
+    const variantSelect = document.getElementById("variant");
+    const customNameInput = document.getElementById("customName");
+
+    function renderPresets() {
+      presetSelect.innerHTML = "";
+      Object.entries(state.presets).forEach(([id, p]) => {
+        const opt = document.createElement("option");
+        opt.value = id;
+        opt.textContent = p.label;
+        presetSelect.appendChild(opt);
+      });
+      renderVariants();
+    }
+
+    function renderVariants() {
+      const presetId = presetSelect.value;
+      const preset = state.presets[presetId];
+      variantSelect.innerHTML = "";
+
+      if (!preset) {
+        return;
+      }
+
+      preset.variants.forEach((v) => {
+        const opt = document.createElement("option");
+        opt.value = v.id;
+        opt.textContent = v.label + " (" + v.width + "px)";
+        variantSelect.appendChild(opt);
+      });
+    }
+
+    window.onmessage = (event) => {
+      const msg = event.data.pluginMessage;
+      if (!msg || msg.type !== "init") {
+        return;
+      }
+      state.presets = msg.presets;
+      renderPresets();
+    };
+
+    presetSelect.addEventListener("change", renderVariants);
+
+    document.getElementById("createBtn").addEventListener("click", () => {
+      parent.postMessage(
+        {
+          pluginMessage: {
+            type: "create-variant",
+            presetId: presetSelect.value,
+            variantId: variantSelect.value,
+            customName: customNameInput.value
+          }
+        },
+        "*"
+      );
+    });
+
+    document.getElementById("closeBtn").addEventListener("click", () => {
+      parent.postMessage({ pluginMessage: { type: "close" } }, "*");
+    });
+  </script>
+</body>
+</html>
