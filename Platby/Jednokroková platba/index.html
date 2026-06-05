@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<script>
+(function(){var H='4c129f69f551195cbc5e8b57cc5a0975b6efa1e8510573524d11df03c7d010c6',K='rozcestnik__auth';try{var p=new URLSearchParams(location.search);if(p.get('k')===H){localStorage.setItem(K,'1');p.delete('k');var q=p.toString();history.replaceState(history.state,'',location.pathname+(q?'?'+q:'')+location.hash);}if(localStorage.getItem(K)!=='1')location.replace('../../');}catch(e){}})();
+</script>
+<meta charset="UTF-8">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Prototyp: Jednokrokový platební příkaz</title>
+
+<!-- Google Analytics 4 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXX"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-XXXXXXX', { send_page_view: false });
+</script>
+
+<!-- Microsoft Clarity -->
+<script type="text/javascript">
+  (function(c,l,a,r,i,t,y){
+    c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+    t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+    y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+  })(window, document, "clarity", "script", "XXXXXXX");
+</script>
+<link rel="stylesheet" href="styl.css">
+</head>
+<body>
+<h1 class="proto-title">Jednokrokový platební příkaz</h1>
+<p class="subtitle">Všechna pole na jedné obrazovce. Výběr příjemce, částka, zpráva — a platba odchází.</p>
+
+<!-- ================================================================
+     PHONE SHELL
+     ================================================================ -->
+<div class="stage">
+
+  <!-- ======================== ÚVODNÍ OBRAZOVKA (HOME) ======================== -->
+  <section class="screen active" id="screen-home">
+
+    <div class="home-header">
+      <div class="home-avatar">LB</div>
+      <div class="home-greeting">
+        <div class="home-hello">Dobré ráno</div>
+        <div class="home-name">Lukáš</div>
+      </div>
+      <button class="home-iconbtn" aria-label="Nastavení">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 11-2.83 2.83l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 11-4 0v-.09a1.65 1.65 0 00-1-1.51 1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 11-2.83-2.83l.06-.06a1.65 1.65 0 00.33-1.82 1.65 1.65 0 00-1.51-1H3a2 2 0 110-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 112.83-2.83l.06.06a1.65 1.65 0 001.82.33H9a1.65 1.65 0 001-1.51V3a2 2 0 114 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 112.83 2.83l-.06.06a1.65 1.65 0 00-.33 1.82V9a1.65 1.65 0 001.51 1H21a2 2 0 110 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>
+      </button>
+    </div>
+
+    <div class="scroll" id="home-scroll">
+
+      <!-- ZŮSTATEK -->
+      <div class="balance-card">
+        <div class="bc-label">Osobní účet</div>
+        <div class="bc-amount">38 420 <span style="font-size:18px; opacity:0.7;">Kč</span></div>
+        <div class="bc-account">122000/0100</div>
+        <div class="bc-actions">
+          <button class="bc-btn primary" id="btn-new-payment">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+            Nová platba
+          </button>
+          <button class="bc-btn" aria-label="Vybrat">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><polyline points="19 12 12 19 5 12"/></svg>
+            Vybrat
+          </button>
+        </div>
+      </div>
+
+      <!-- RYCHLÉ AKCE -->
+      <div class="quick-actions">
+        <button class="qa" id="qa-pay">
+          <div class="qa-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+          </div>
+          <span class="qa-label">Platba</span>
+        </button>
+        <button class="qa">
+          <div class="qa-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M8 12h8"/><path d="M12 8v8"/></svg>
+          </div>
+          <span class="qa-label">QR&nbsp;kód</span>
+        </button>
+        <button class="qa">
+          <div class="qa-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.1 19.79 19.79 0 010 .42 2 2 0 012 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg>
+          </div>
+          <span class="qa-label">Kontakty</span>
+        </button>
+        <button class="qa">
+          <div class="qa-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="6" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+          </div>
+          <span class="qa-label">Více</span>
+        </button>
+      </div>
+
+      <!-- POSLEDNÍ TRANSAKCE -->
+      <div class="home-section-title">
+        <h2>Poslední transakce</h2>
+        <a>Vše</a>
+      </div>
+      <div class="tx-list">
+        <div class="tx-row">
+          <div class="tx-icon" style="background: linear-gradient(135deg,#EC4899,#DB2777);">MH</div>
+          <div class="tx-info">
+            <div class="tx-name">Marie Horáková</div>
+            <div class="tx-meta">Včera · Nájem</div>
+          </div>
+          <div class="tx-amount neg">−12 000 Kč</div>
+        </div>
+        <div class="tx-row">
+          <div class="tx-icon" style="background: linear-gradient(135deg,#059669,#047857);">MZ</div>
+          <div class="tx-info">
+            <div class="tx-name">Mzda · Acme s.r.o.</div>
+            <div class="tx-meta">23. 4. · Příchozí platba</div>
+          </div>
+          <div class="tx-amount pos">+45 800 Kč</div>
+        </div>
+        <div class="tx-row">
+          <div class="tx-icon" style="background: linear-gradient(135deg,#6366F1,#4F46E5);">JN</div>
+          <div class="tx-info">
+            <div class="tx-name">Jan Novák</div>
+            <div class="tx-meta">22. 4. · Oběd</div>
+          </div>
+          <div class="tx-amount neg">−240 Kč</div>
+        </div>
+        <div class="tx-row">
+          <div class="tx-icon" style="background: linear-gradient(135deg,#D97706,#B45309);">AP</div>
+          <div class="tx-info">
+            <div class="tx-name">Alena Procházková</div>
+            <div class="tx-meta">21. 4. · Vrácení</div>
+          </div>
+          <div class="tx-amount pos">+850 Kč</div>
+        </div>
+      </div>
+
+    </div><!-- /scroll -->
+
+  </section><!-- /screen-home -->
+
+  <!-- ======================== PLATEBNÍ PŘÍKAZ ======================== -->
+  <section class="screen" id="screen-payment">
+
+    <div class="topbar">
+      <button class="back-btn" id="btn-payment-back" aria-label="Zpět">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+      </button>
+      <span class="topbar-title">Nová platba</span>
+    </div>
+
+    <div class="scroll" id="main-scroll">
+
+      <!-- FROM ACCOUNT -->
+      <div class="section-label">Z účtu</div>
+      <div class="from-account-pill" id="from-account">
+        <div class="account-dot"></div>
+        <div>
+          <div class="account-name">Osobní účet · CZK</div>
+          <div class="account-num">122000/0100</div>
+        </div>
+        <div class="account-balance">38 420 Kč</div>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#9A9A9A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+      </div>
+
+      <!-- RECIPIENT -->
+      <div class="section-label">Příjemce</div>
+
+      <!-- Recent contacts -->
+      <div class="contacts-strip" id="contacts-strip">
+        <div class="contact-chip" data-name="Jan Novák" data-iban="CZ6508000000192000145399" data-type="contact">
+          <div class="contact-avatar" style="background: linear-gradient(135deg,#6366F1,#4F46E5);">JN</div>
+          <div class="contact-name">Jan Novák</div>
+        </div>
+        <div class="contact-chip" data-name="Marie Horáková" data-iban="CZ3455000000001234567890" data-type="contact">
+          <div class="contact-avatar" style="background: linear-gradient(135deg,#EC4899,#DB2777);">MH</div>
+          <div class="contact-name">Marie H.</div>
+        </div>
+        <div class="contact-chip" data-name="Tomáš Veselý" data-iban="CZ7601000000000000012345" data-type="contact">
+          <div class="contact-avatar" style="background: linear-gradient(135deg,#059669,#047857);">TV</div>
+          <div class="contact-name">Tomáš V.</div>
+        </div>
+        <div class="contact-chip" data-name="Alena Procházková" data-iban="CZ2420100000002301888810" data-type="contact">
+          <div class="contact-avatar" style="background: linear-gradient(135deg,#D97706,#B45309);">AP</div>
+          <div class="contact-name">Alena P.</div>
+        </div>
+        <div class="contact-chip" data-name="Nový příjemce" data-iban="" data-type="new">
+          <div class="contact-avatar" style="background: #E5E5E5; color: #6A6A6A;">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          </div>
+          <div class="contact-name">Přidat</div>
+        </div>
+      </div>
+
+      <!-- Recipient type toggle -->
+      <div class="type-toggle" id="type-toggle">
+        <button class="type-btn active" data-type="account">Číslo účtu</button>
+        <button class="type-btn" data-type="iban">IBAN</button>
+        <button class="type-btn" data-type="phone">Telefon</button>
+      </div>
+
+      <!-- Recipient field group -->
+      <div class="field-group" id="recipient-group">
+
+        <!-- Combined account + bank code input -->
+        <div class="field-row" id="row-account">
+          <div class="field-icon" style="color:#6A6A6A;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+          </div>
+          <div class="field-inner">
+            <div class="field-label">Číslo účtu / kód banky</div>
+            <input class="field-input" id="input-account-full" type="text" inputmode="text"
+              placeholder="1234567890/0100" autocomplete="off">
+            <div class="account-bank-hint" id="account-bank-hint"></div>
+          </div>
+          <div class="valid-icon" id="valid-account"></div>
+        </div>
+
+        <!-- IBAN input (hidden by default) -->
+        <div class="field-row" id="row-iban" style="display:none;">
+          <div class="field-icon" style="color:#6A6A6A;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a9 9 0 010 18 9 9 0 010-18z"/><path d="M12 8v8"/><path d="M8 12h8"/></svg>
+          </div>
+          <div class="field-inner">
+            <div class="field-label">IBAN</div>
+            <input class="field-input" id="input-iban" type="text" inputmode="text"
+              placeholder="CZ65 0800 0000 1920 0014 5399" autocomplete="off" style="font-size:14px; letter-spacing:0.04em;">
+          </div>
+          <div class="valid-icon" id="valid-iban"></div>
+        </div>
+
+        <!-- Phone input (hidden by default) -->
+        <div class="field-row" id="row-phone" style="display:none;">
+          <div class="field-icon" style="color:#6A6A6A;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.1 19.79 19.79 0 010 .42 2 2 0 012 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg>
+          </div>
+          <div class="field-inner">
+            <div class="field-label">Telefonní číslo</div>
+            <input class="field-input" id="input-phone" type="tel" inputmode="tel"
+              placeholder="+420 777 123 456" autocomplete="off">
+          </div>
+          <div class="valid-icon" id="valid-phone"></div>
+        </div>
+
+      </div><!-- /field-group recipient -->
+
+      <!-- Inline errors -->
+      <div class="field-error" id="error-account">Zadejte platné číslo účtu (předčíslí-čísloúčtu nebo jen čísloúčtu)</div>
+      <div class="field-error" id="error-iban">IBAN není platný — zkontrolujte zemi a čísla</div>
+
+      <!-- VoP badge -->
+      <div class="vop-badge" id="vop-badge">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+        <span>Název příjemce ověřen: <span class="vop-name" id="vop-name">—</span></span>
+      </div>
+
+      <!-- AMOUNT -->
+      <div class="section-label">Částka</div>
+      <div class="field-group">
+        <div class="amount-display">
+          <input class="amount-input-big" id="input-amount" type="text"
+            inputmode="decimal" placeholder="0" autocomplete="off">
+          <button class="cur-select-btn" id="cur-select-btn" aria-label="Vybrat měnu">
+            <span class="cur-select-flag" id="cur-flag">🇨🇿</span>
+            <span class="cur-select-code" id="cur-code">CZK</span>
+            <svg class="cur-select-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+        </div>
+        <div class="balance-hint" id="balance-hint">Dostupný zůstatek: <span>38 420 Kč</span></div>
+        <div class="fee-hint" id="fee-hint">⚡ Okamžitá platba · zdarma</div>
+
+        <!-- Instant payment toggle -->
+        <div class="instant-row">
+          <span class="instant-label">Okamžité připsání</span>
+          <label class="instant-switch">
+            <input type="checkbox" id="instant-toggle" checked>
+            <span class="switch-track"></span>
+          </label>
+        </div>
+
+        <!-- Expandable details -->
+        <div class="details-toggle" id="details-toggle" role="button">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--text-3);"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+          <span>Zpráva a symboly</span>
+          <svg class="details-chevron" id="details-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+        <div class="details-body" id="details-body">
+          <div class="field-row">
+            <div class="field-icon" style="color:#6A6A6A;">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+            </div>
+            <div class="field-inner">
+              <div class="field-label">Zpráva pro příjemce</div>
+              <input class="field-input" id="input-message" type="text" placeholder="Nájemné, faktura č. 123…" maxlength="140">
+            </div>
+          </div>
+          <div class="field-row">
+            <div class="field-icon" style="color:#6A6A6A;">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg>
+            </div>
+            <div class="field-inner">
+              <div class="field-label">Variabilní symbol</div>
+              <input class="field-input" id="input-vs" type="text" inputmode="numeric" placeholder="Volitelné" maxlength="10">
+            </div>
+          </div>
+          <div class="field-row">
+            <div class="field-icon" style="color:#6A6A6A;">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/></svg>
+            </div>
+            <div class="field-inner">
+              <div class="field-label">Popis pro mě</div>
+              <input class="field-input" id="input-note" type="text" placeholder="Volitelné" maxlength="64">
+            </div>
+          </div>
+        </div>
+      </div><!-- /amount group -->
+
+    </div><!-- /scroll -->
+
+    <div class="bottom-bar">
+      <button class="primary-btn" id="btn-send" disabled>
+        Pokračovat
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+      </button>
+    </div>
+
+  </section><!-- /screen-payment -->
+
+  <!-- ======================== SHRNUTÍ ======================== -->
+  <section class="screen" id="screen-summary">
+
+    <div class="topbar">
+      <button class="back-btn" id="btn-summary-back" aria-label="Zpět">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+      </button>
+      <span class="topbar-title">Zkontrolujte platbu</span>
+    </div>
+
+    <div class="scroll" id="summary-scroll">
+
+      <div class="summary-hero">
+        <div class="summary-avatar" id="sum-avatar">JN</div>
+        <div class="summary-to">Posíláte</div>
+        <div class="summary-name" id="sum-name">Jan Novák</div>
+        <div class="summary-amount" id="sum-amount">0 Kč</div>
+      </div>
+
+      <div class="summary-card">
+        <div class="summary-row">
+          <span class="lbl">Z účtu</span>
+          <span class="val">Osobní účet · 122000/0100</span>
+        </div>
+        <div class="summary-row">
+          <span class="lbl">Číslo účtu</span>
+          <span class="val" id="sum-account">—</span>
+        </div>
+        <div class="summary-row" id="sum-message-row" style="display:none;">
+          <span class="lbl">Zpráva</span>
+          <span class="val" id="sum-message">—</span>
+        </div>
+        <div class="summary-row" id="sum-vs-row" style="display:none;">
+          <span class="lbl">Variabilní symbol</span>
+          <span class="val" id="sum-vs">—</span>
+        </div>
+        <div class="summary-row">
+          <span class="lbl">Připsání</span>
+          <span class="val green" id="sum-when">⚡ Okamžitě (do několika sekund)</span>
+        </div>
+        <div class="summary-row">
+          <span class="lbl">Poplatek</span>
+          <span class="val green">Zdarma</span>
+        </div>
+      </div>
+
+      <button class="summary-edit" id="btn-summary-edit">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+        Upravit platbu
+      </button>
+
+      <div class="summary-info-banner" id="sum-info-banner">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+        <span>Příjemce ověřen v registru bank (Verification of Payee).</span>
+      </div>
+
+    </div><!-- /scroll -->
+
+    <div class="bottom-bar">
+      <button class="primary-btn" id="btn-summary-confirm">
+        Potvrdit a podepsat
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+      </button>
+    </div>
+
+  </section><!-- /screen-summary -->
+
+  <!-- ======================== BIOMETRIE ======================== -->
+  <section class="screen" id="screen-auth">
+
+    <div class="topbar" style="width:100%;">
+      <button class="back-btn" id="btn-auth-back">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+      </button>
+      <span class="topbar-title">Potvrdit platbu</span>
+    </div>
+
+    <div class="auth-content">
+      <div class="auth-amount" id="auth-amount">0 Kč</div>
+      <div class="auth-to" id="auth-to">→ Jan Novák</div>
+
+      <div class="bio-ring" id="bio-ring">
+        <!-- Face ID icon -->
+        <svg id="bio-icon-face" width="52" height="52" viewBox="0 0 64 64" fill="none" stroke="#1A1A1A" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M8 16V12a4 4 0 014-4h4"/>
+          <path d="M56 16V12a4 4 0 00-4-4h-4"/>
+          <path d="M8 48v4a4 4 0 004 4h4"/>
+          <path d="M56 48v4a4 4 0 01-4 4h-4"/>
+          <line x1="22" y1="26" x2="22" y2="32"/>
+          <line x1="42" y1="26" x2="42" y2="32"/>
+          <path d="M24 42c2 2 5 3 8 3s6-1 8-3"/>
+        </svg>
+        <!-- Check icon (hidden initially) -->
+        <svg id="bio-icon-check" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" style="display:none;">
+          <polyline points="20 6 9 17 4 12"/>
+        </svg>
+      </div>
+
+      <div class="bio-label" id="bio-label">Potvrďte platbu</div>
+      <div class="bio-sub">Podívejte se do telefonu a potvrďte odeslání platby pomocí Face ID.</div>
+    </div>
+
+    <button class="bio-cancel" id="btn-auth-cancel">Zrušit</button>
+
+  </section><!-- /screen-auth -->
+
+  <!-- ======================== HOTOVO ======================== -->
+  <section class="screen" id="screen-success">
+
+    <div class="topbar" style="width:100%;">
+      <span class="topbar-title">Platba odeslána</span>
+      <button class="close-btn" id="btn-success-close">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+
+    <div class="success-content">
+      <div class="success-ring">
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#0E8A4F" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="20 6 9 17 4 12"/>
+        </svg>
+      </div>
+      <div class="success-title">Platba odeslána</div>
+      <div class="success-sub" id="success-sub">Peníze dorazí do&nbsp;<strong id="success-when">několika sekund</strong>.</div>
+
+      <div class="success-details">
+        <div class="success-row">
+          <span class="lbl">Příjemce</span>
+          <span class="val" id="suc-recipient">—</span>
+        </div>
+        <div class="success-row">
+          <span class="lbl">Částka</span>
+          <span class="val" id="suc-amount">—</span>
+        </div>
+        <div class="success-row">
+          <span class="lbl">Poplatek</span>
+          <span class="val green">Zdarma</span>
+        </div>
+        <div class="success-row">
+          <span class="lbl">Připsání</span>
+          <span class="val green" id="suc-instant">⚡ Okamžitě</span>
+        </div>
+        <div class="success-row" id="suc-message-row" style="display:none;">
+          <span class="lbl">Zpráva</span>
+          <span class="val" id="suc-message">—</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="success-actions">
+      <button class="primary-btn" id="btn-another">Zadat další platbu</button>
+      <button class="secondary-btn" id="btn-home">Zavřít</button>
+    </div>
+
+  </section><!-- /screen-success -->
+
+</div><!-- /stage -->
+
+<!-- CURRENCY BOTTOM SHEET -->
+<div class="cur-sheet-overlay" id="cur-overlay"></div>
+<div class="cur-sheet" id="cur-sheet" role="dialog" aria-label="Výběr měny">
+  <div class="cur-sheet-handle"></div>
+  <div class="cur-sheet-title">Měna platby</div>
+  <div class="cur-sheet-list" id="cur-list"></div>
+</div>
+
+<p class="hint">Prototyp · Jednokrokový platební příkaz · <code>UX Research 2026</code></p>
+
+<!-- ================================================================
+     JAVASCRIPT
+     ================================================================ -->
+<script src="app.js"></script>
+</body>
+</html>

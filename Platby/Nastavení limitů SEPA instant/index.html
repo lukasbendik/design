@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<script>
+(function(){var H='4c129f69f551195cbc5e8b57cc5a0975b6efa1e8510573524d11df03c7d010c6',K='rozcestnik__auth';try{var p=new URLSearchParams(location.search);if(p.get('k')===H){localStorage.setItem(K,'1');p.delete('k');var q=p.toString();history.replaceState(history.state,'',location.pathname+(q?'?'+q:'')+location.hash);}if(localStorage.getItem(K)!=='1')location.replace('../../');}catch(e){}})();
+</script>
+<meta charset="UTF-8">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="robots" content="noindex, nofollow">
+<title>Nastavení limitů SEPA instant</title>
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-F1YV23DTKQ"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-F1YV23DTKQ');
+</script>
+
+<script type="text/javascript">
+(function(c,l,a,r,i,t,y){
+  c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+  t=l.createElement(r);t.async=1;t.src='https://www.clarity.ms/tag/'+i;
+  y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+})(window, document, 'clarity', 'script', 'w8hlprz19n');
+</script>
+<link rel="stylesheet" href="styl.css">
+</head>
+<body>
+<div id="app-shell">
+  <section class="screen" id="screen-overview" data-hash="overview" data-screen-name="Přehled limitů SEPA Instant">
+    <div class="status">
+      <span>9:41</span>
+      <div class="status-icons"><span>5G</span><span>100%</span></div>
+    </div>
+    <div class="topbar">
+      <button class="icon-btn" type="button" aria-label="Zpět" id="overview-back">‹</button>
+      <h1>Limity plateb</h1>
+      <button class="icon-btn" type="button" aria-label="Zavřít">×</button>
+    </div>
+    <div class="content">
+      <div class="hero">
+        <h2>SEPA Instant limity</h2>
+        <p>Nastavte si limit buď za den, nebo na jednu transakci. Změna platí okamžitě.</p>
+      </div>
+
+      <div class="card">
+        <div class="row">
+          <div>
+            <div class="label">Aktivní režim</div>
+            <div class="value" id="active-mode-label">Denní limit</div>
+          </div>
+          <div class="value"><strong id="active-limit-value">20 000 Kč</strong></div>
+        </div>
+        <div class="row">
+          <div class="label">Upozornění při čerpání</div>
+          <div class="value" id="notify-value">80 %</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <button class="row" type="button" id="open-edit" style="width:100%;background:#fff;border:none;text-align:left;cursor:pointer;">
+          <span class="label" style="font-weight:700;color:var(--kb-red);">Upravit limity SEPA Instant</span>
+          <span class="value" aria-hidden="true">›</span>
+        </button>
+      </div>
+    </div>
+    <div class="footer">
+      <button class="secondary" type="button" id="overview-close">Zavřít</button>
+    </div>
+  </section>
+
+  <section class="screen" id="screen-edit" data-hash="edit" data-screen-name="Úprava limitu SEPA Instant">
+    <div class="status">
+      <span>9:41</span>
+      <div class="status-icons"><span>5G</span><span>100%</span></div>
+    </div>
+    <div class="topbar">
+      <button class="icon-btn" type="button" aria-label="Zpět" id="edit-back">‹</button>
+      <h1>Nastavení limitu</h1>
+      <button class="icon-btn" type="button" aria-label="Zavřít" id="edit-close">×</button>
+    </div>
+
+    <div class="content">
+      <div class="segmented" role="tablist" aria-label="Režim limitu">
+        <button class="seg-btn" id="mode-daily" type="button">Denní limit</button>
+        <button class="seg-btn" id="mode-single" type="button">Na transakci</button>
+      </div>
+
+      <div class="card">
+        <div class="field-wrap">
+          <div class="field-label" id="limit-label">Limit za den</div>
+          <div class="money-input">
+            <input id="limit-input" inputmode="numeric" autocomplete="off" placeholder="0" aria-label="Limit" maxlength="9">
+            <span>Kč</span>
+          </div>
+          <div class="hint" id="limit-hint">Součet všech SEPA Instant plateb za 24 hodin.</div>
+
+          <div class="chips">
+            <button class="chip" type="button" data-add="5000">+ 5 000</button>
+            <button class="chip" type="button" data-add="10000">+ 10 000</button>
+            <button class="chip" type="button" data-add="20000">+ 20 000</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <label class="radio-card">
+          <input type="radio" name="notify" value="70">
+          <div>
+            <div class="radio-title">Upozornit při 70 % limitu</div>
+            <div class="radio-desc">Doporučeno pro vyšší kontrolu plateb.</div>
+          </div>
+        </label>
+        <label class="radio-card">
+          <input type="radio" name="notify" value="80">
+          <div>
+            <div class="radio-title">Upozornit při 80 % limitu</div>
+            <div class="radio-desc">Vyvážené nastavení.</div>
+          </div>
+        </label>
+        <label class="radio-card">
+          <input type="radio" name="notify" value="100">
+          <div>
+            <div class="radio-title">Upozornit až při dosažení limitu</div>
+            <div class="radio-desc">Notifikace pouze při vyčerpání.</div>
+          </div>
+        </label>
+      </div>
+
+      <div class="warn" id="validation-text" hidden>Minimální limit je 1 000 Kč.</div>
+    </div>
+
+    <div class="footer">
+      <button class="primary" id="continue-review" type="button">Pokračovat</button>
+    </div>
+  </section>
+
+  <section class="screen" id="screen-review" data-hash="review" data-screen-name="Rekapitulace změny limitu">
+    <div class="status">
+      <span>9:41</span>
+      <div class="status-icons"><span>5G</span><span>100%</span></div>
+    </div>
+    <div class="topbar">
+      <button class="icon-btn" type="button" aria-label="Zpět" id="review-back">‹</button>
+      <h1>Potvrzení změny</h1>
+      <button class="icon-btn" type="button" aria-label="Zavřít" id="review-close">×</button>
+    </div>
+
+    <div class="content">
+      <div class="summary-ok">✓ Změna bude aktivní okamžitě po potvrzení.</div>
+
+      <div class="card">
+        <div class="row">
+          <div class="label">Režim limitu</div>
+          <div class="value"><strong id="review-mode">Denní limit</strong></div>
+        </div>
+        <div class="row">
+          <div class="label">Nový limit</div>
+          <div class="value"><strong id="review-limit">20 000 Kč</strong></div>
+        </div>
+        <div class="row">
+          <div class="label">Upozornění</div>
+          <div class="value" id="review-notify">Při 80 % limitu</div>
+        </div>
+      </div>
+
+      <div class="hint">Prototyp simuluje potvrzení bez biometrie/PIN.</div>
+    </div>
+
+    <div class="footer">
+      <button class="primary" id="confirm-change" type="button">Potvrdit změnu</button>
+    </div>
+  </section>
+
+  <section class="screen" id="screen-success" data-hash="success" data-screen-name="Úspěšná změna limitu">
+    <div class="status">
+      <span>9:41</span>
+      <div class="status-icons"><span>5G</span><span>100%</span></div>
+    </div>
+    <div class="topbar">
+      <button class="icon-btn" type="button" aria-label="Zpět" id="success-back">‹</button>
+      <h1>Hotovo</h1>
+      <button class="icon-btn" type="button" aria-label="Zavřít" id="success-close">×</button>
+    </div>
+
+    <div class="success">
+      <div class="success-icon">✓</div>
+      <h2>Limit upraven</h2>
+      <p>SEPA Instant limit je nyní nastaven na <strong id="success-limit">20 000 Kč</strong> (<span id="success-mode">denní</span>).</p>
+    </div>
+
+    <div class="footer">
+      <button class="primary" id="back-overview" type="button">Zpět na přehled</button>
+    </div>
+  </section>
+</div>
+<script src="app.js"></script>
+</body>
+</html>
