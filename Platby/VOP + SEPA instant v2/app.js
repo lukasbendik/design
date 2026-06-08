@@ -236,6 +236,27 @@ function validateIBAN() {
   checkS05();
 }
 
+// Validace IBAN (mod-97) nebo českého čísla účtu ([predcisli-]cislo/kodbanky)
+function isValidAccountNumber(raw) {
+  const val = raw.replace(/\s+/g, '');
+  if (!val) return false;
+
+  // IBAN – začíná dvěma písmeny + dvěma číslicemi
+  if (/^[A-Za-z]{2}\d{2}[A-Za-z0-9]+$/.test(val)) {
+    if (val.length < 15 || val.length > 34) return false;
+    const rearranged = val.slice(4) + val.slice(0, 4);
+    let remainder = 0;
+    for (const ch of rearranged.toUpperCase()) {
+      const code = ch >= 'A' && ch <= 'Z' ? (ch.charCodeAt(0) - 55).toString() : ch;
+      for (const d of code) remainder = (remainder * 10 + (+d)) % 97;
+    }
+    return remainder === 1;
+  }
+
+  // České číslo účtu: volitelné předčíslí (max 6 míst), číslo (2–10 míst), lomítko, kód banky (4 míst)
+  return /^(\d{1,6}-)?\d{2,10}\/\d{4}$/.test(val);
+}
+
 // Zůstatek na běžném účtu v Kč
 let accountBalanceCZK = 125063.38;
 const EXCHANGE_RATES = { CZK: 1, EUR: 24.79, USD: 22.89, GBP: 28.90 };
@@ -351,13 +372,20 @@ function goToS06() {
   const amount = document.getElementById('amount-input').value;
   let valid = true;
 
+  const ibanErr = document.getElementById('iban-error');
   if (!iban) {
+    ibanErr.textContent = 'Číslo protiúčtu je povinný údaj.';
     document.getElementById('iban-wrap').classList.add('error-border');
-    document.getElementById('iban-error').style.display = 'block';
+    ibanErr.style.display = 'block';
+    valid = false;
+  } else if (!isValidAccountNumber(iban)) {
+    ibanErr.textContent = 'Zadejte platné číslo účtu nebo IBAN.';
+    document.getElementById('iban-wrap').classList.add('error-border');
+    ibanErr.style.display = 'block';
     valid = false;
   } else {
     document.getElementById('iban-wrap').classList.remove('error-border');
-    document.getElementById('iban-error').style.display = 'none';
+    ibanErr.style.display = 'none';
   }
 
   if (!amount || parseFloat(amount) <= 0) {
@@ -398,7 +426,7 @@ const ICONS = {
   nomatch:     `<svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="11" cy="11" r="10" stroke="#E2001A" stroke-width="1.8"/><line x1="7" y1="7" x2="15" y2="15" stroke="#E2001A" stroke-width="2" stroke-linecap="round"/><line x1="15" y1="7" x2="7" y2="15" stroke="#E2001A" stroke-width="2" stroke-linecap="round"/></svg>`,
   unverifiable:`<svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="11" cy="11" r="10" stroke="#888" stroke-width="1.8"/><text x="11" y="16" text-anchor="middle" font-size="13" font-weight="700" fill="#888" font-family="sans-serif">?</text></svg>`,
 };
-const CORRECT_NAME = 'Jan Novák';
+const CORRECT_NAME = 'Alpenpanorama Gasstehaus';
 // Vypnutí stavu "Název nelze ověřit." – pro zapnutí nastav na true
 const UNVERIFIABLE_ENABLED = false;
 let unverifiableUsed = false;
