@@ -195,11 +195,21 @@ function pinPress(mode, num) {
         // deduct payment from balance
         const amt = parseFloat(paymentData.amount) || 0;
         const rate = EXCHANGE_RATES_ALL[paymentData.currency] || 1;
-        accountBalanceCZK = Math.max(0, accountBalanceCZK - (amt * rate));
+        const amtCZK = amt * rate;
+        accountBalanceCZK = Math.max(0, accountBalanceCZK - amtCZK);
         // update dashboard balance
         const whole = Math.floor(accountBalanceCZK).toLocaleString('cs-CZ');
         const decimal = (accountBalanceCZK % 1).toFixed(2).substring(1).replace('.', ',');
         document.getElementById('dashboard-balance').innerHTML = whole + '<span>' + decimal + ' Kč</span>';
+        // přidej dokončenou platbu do historie běžného účtu
+        userPayments.push({
+          type: 'out',
+          name: paymentData.name || 'Příjemce',
+          note: 'Odchozí platba',
+          amount: -amtCZK,
+          date: new Date()
+        });
+        renderTransactions('tx-list-bezny', 12345);
         goTo('s10');
       }, 400);
     }
@@ -732,7 +742,7 @@ function genTransactions(seed) {
     const roll = rng();
     let type, src, amount;
     if (roll < 0.62) { type = 'out'; src = p(TX_OUT); amount = -r(80, 6000); }
-    else if (roll < 0.90) { type = 'in'; src = p(TX_IN); amount = r(200, 25000); }
+    else if (roll < 0.90) { type = 'in'; src = p(TX_IN); amount = (src[1] === 'Výplata') ? r(79000, 81000) : r(200, 25000); }
     else { type = 'fail'; src = p(TX_OUT); amount = -r(500, 14000); }
     const daysAgo = Math.floor(r(0, 60) * r(0, 1)); // novější váženo více
     const d = new Date();
@@ -758,8 +768,15 @@ const BADGE = {
 };
 const TX_PERSON_ICON = '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="3.5"/><path d="M5 20v-1a5 5 0 0 1 5-5h4a5 5 0 0 1 5 5v1"/></svg>';
 
+// platby dokončené uživatelem v prototypu (prepend do historie běžného účtu)
+let userPayments = [];
+
 function renderTransactions(containerId, seed) {
   const txs = genTransactions(seed);
+  if (seed === 12345 && userPayments.length) {
+    userPayments.forEach(t => txs.push(t));
+    txs.sort((a, b) => b.date - a.date);
+  }
   let html = '';
   let lastLabel = null;
   txs.forEach((tx, idx) => {
@@ -814,7 +831,7 @@ function genAllPayments(seed) {
     const roll = rng();
     let type, src, amount;
     if (roll < 0.58) { type = 'out'; src = p(PAY_OUT); amount = -r(50, 9000); }
-    else if (roll < 0.82) { type = 'in'; src = p(PAY_IN); amount = r(200, 27000); }
+    else if (roll < 0.82) { type = 'in'; src = p(PAY_IN); amount = (src[1] === 'Výplata') ? r(79000, 81000) : r(200, 27000); }
     else { type = 'pending'; src = p(PAY_OUT); amount = -r(200, 6000); }
     const tx = { type, name: src[0], note: src[1], tag: src[2] || null, amount,
                  status: type === 'pending' ? 'Platbu zpracováváme.' : null };
