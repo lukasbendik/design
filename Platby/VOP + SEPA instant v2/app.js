@@ -1,7 +1,18 @@
-// ── GA Event tracking ──
+// ── GA + Clarity Event tracking ──
 function track(action, params) {
+  params = params || {};
   if (typeof gtag !== 'undefined') {
-    gtag('event', action, params || {});
+    gtag('event', action, params);
+  }
+  if (typeof window.clarity === 'function') {
+    try {
+      // Clarity custom event
+      window.clarity('event', action);
+      // Parametry jako tagy (Clarity neumí strukturované params u eventu)
+      Object.keys(params).forEach(function(k) {
+        try { window.clarity('set', action + '_' + k, String(params[k])); } catch(e) {}
+      });
+    } catch(e) {}
   }
 }
 
@@ -23,7 +34,11 @@ let loginPin = '';
 let authPin = '';
 // Odkud byla otevřena nová platba (s04 home / s11 detail účtu) – kvůli návratu při Zavřít
 let paymentOrigin = 's04';
-function openNewPayment(origin) { paymentOrigin = origin || 's04'; goTo('s05'); }
+function openNewPayment(origin) {
+  paymentOrigin = origin || 's04';
+  track('new_payment_open', { source: paymentOrigin === 's11' ? 'account_detail' : 'homescreen' });
+  goTo('s05');
+}
 function closeNewPayment() { goTo(paymentOrigin || 's04'); }
 // QR platba – návrat tam, odkud byla otevřena
 let qrOrigin = 's04';
@@ -378,7 +393,7 @@ const CURRENCIES = [
 
 const EXCHANGE_RATES_ALL = { CZK:1, EUR:24.79, USD:22.89, AUD:14.95, BGN:12.68, CAD:16.74, DKK:3.32, GBP:28.90, HUF:0.062, JPY:0.152, NOK:2.11, PLN:5.76, RON:4.98, SEK:2.17 };
 
-function openVerifySheet() { openSheet('verify'); }
+function openVerifySheet() { track('recipient_name_info_tapped'); openSheet('verify'); }
 function closeVerifySheet() { closeSheet('verify'); }
 
 function renderCurrencyList() {
@@ -596,6 +611,7 @@ function checkRecipient() {
 }
 
 function acceptSuggestion() {
+  track('recipient_name_suggestion_accepted', { suggestion: CORRECT_NAME });
   document.getElementById('recipient-name').value = CORRECT_NAME;
   paymentData.name = CORRECT_NAME;
   setNameState('match');
@@ -666,10 +682,13 @@ function goToS08() {
   } else if (currentNameState === 'partial') {
     document.getElementById('partial-suggested-name').textContent = CORRECT_NAME;
     document.getElementById('partial-user-name').textContent = name;
+    track('sheet_select_recipient_name_shown');
     showSheet('partial');
   } else if (currentNameState === 'nomatch') {
+    track('sheet_confirm_continue_shown', { reason: 'nomatch' });
     showSheet('nomatch');
   } else if (currentNameState === 'unverifiable') {
+    track('sheet_confirm_continue_shown', { reason: 'unverifiable' });
     showSheet('unverifiable');
   } else {
     fillSummaryAndGoS08('Neověřeno.');
@@ -1048,6 +1067,30 @@ document.addEventListener('DOMContentLoaded', () => {
   renderFakeQR('pm-qr-grid', 24680);
   const nameIcon = document.getElementById('name-status-icon');
   if (nameIcon) nameIcon.innerHTML = ICONS.info;
+
+  // ── Detekce způsobu vyplnění pole (ručně vs schránka) ──
+  // Fire jednou za fill: paste => 'paste', psaní znaků => 'manual'.
+  function attachInputMethodTracking(inputId, eventName) {
+    const el = document.getElementById(inputId);
+    if (!el) return;
+    let pasted = false;
+    let reported = false;
+    el.addEventListener('paste', () => {
+      pasted = true;
+      reported = false;
+    });
+    el.addEventListener('input', (e) => {
+      if (!el.value) { reported = false; pasted = false; return; }
+      if (reported) return;
+      // inputType 'insertFromPaste' = vloženo ze schránky
+      const method = (pasted || (e.inputType === 'insertFromPaste')) ? 'paste' : 'manual';
+      track(eventName, { method });
+      reported = true;
+      pasted = false;
+    });
+  }
+  attachInputMethodTracking('iban-input', 'recipient_iban_filled');
+  attachInputMethodTracking('recipient-name', 'recipient_name_filled');
 
   // Intercept S02 activation and auto-advance
   const origGoTo = window.goTo;
