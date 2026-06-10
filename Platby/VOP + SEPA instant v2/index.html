@@ -504,13 +504,13 @@
   <!-- ══ S10: Success ══ -->
   <div id="s10" class="screen">
     <div class="nav-bar">
-      <span class="nav-back" onclick="resetAndGoHome()" style="color:var(--text-primary);">Zavřít</span>
+      <span class="nav-back" onclick="finishTask()" style="color:var(--text-primary);">Zavřít</span>
     </div>
     <div class="success-icon-wrap">
       <div class="success-checkmark">✓</div>
     </div>
     <div class="success-title">Zadali jste platbu</div>
-    <div class="template-row">
+    <div class="template-row" onclick="finishTask()">
       <div class="template-left">
         <span class="template-icon">📁</span>
         <span class="template-text">Uložit šablonu</span>
@@ -518,8 +518,8 @@
       <span class="card-chevron">›</span>
     </div>
     <div class="cta-wrap" style="margin-top:auto;">
-      <button class="cta-btn" onclick="resetAndGoNew()">Zadat další</button>
-      <button class="cta-btn outline" onclick="resetAndGoHome()">Zavřít</button>
+      <button class="cta-btn" onclick="finishTask()">Zadat další</button>
+      <button class="cta-btn outline" onclick="finishTask()">Zavřít</button>
     </div>
   </div>
 
@@ -796,6 +796,19 @@
     </div>
     <div class="cta-wrap">
       <button class="cta-btn">Odeslat QR kód</button>
+    </div>
+  </div>
+
+  <!-- ══ S16: Úkol dokončen (konec testu) ══ -->
+  <div id="s16" class="screen" style="background:var(--bg-screen);">
+    <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:24px;">
+      <div class="success-icon-wrap">
+        <div class="success-checkmark">✓</div>
+      </div>
+      <div class="success-title" style="margin-top:8px;">Úspěšně jste dokončili úkol</div>
+      <p style="margin-top:16px;max-width:300px;font-size:16px;line-height:1.5;color:var(--text-secondary);">
+        Nyní se můžete vrátit zpět do aplikace Participate a pokračovat v dalších úkolech. Děkujeme.
+      </p>
     </div>
   </div>
 

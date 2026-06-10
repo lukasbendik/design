@@ -714,6 +714,16 @@ function hideAuth() {
   updatePinDots('auth');
 }
 
+// ── Konec testu: dokončení úkolu ──
+// Smaže celý localStorage, ať další běh prototypu začíná čistý.
+function finishTask() {
+  track('task_finished');
+  try { localStorage.clear(); } catch (e) {}
+  userPayments = [];
+  userSeq = 0;
+  goTo('s16');
+}
+
 // ── Reset ──
 function resetAndGoHome() {
   loginPin = ''; authPin = '';
