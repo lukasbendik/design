@@ -65,6 +65,33 @@ function renderFakeQR(id, seed) {
 }
 const paymentData = { iban:'', amount:'', currency:'CZK', name:'', nameVerified:false };
 
+// ── Persistence (localStorage, sandbox-safe) ──
+const LS_PREFIX = 'vopsepa__';
+function lsSet(k, v) { try { localStorage.setItem(LS_PREFIX + k, JSON.stringify(v)); } catch (e) {} }
+function lsGet(k, def) { try { const r = localStorage.getItem(LS_PREFIX + k); return r == null ? def : JSON.parse(r); } catch (e) { return def; } }
+function lsRemove(k) { try { localStorage.removeItem(LS_PREFIX + k); } catch (e) {} }
+
+function persistState() {
+  lsSet('userPayments', userPayments.map(t => ({ ...t, date: t.date.toISOString() })));
+  lsSet('balance', accountBalanceCZK);
+  lsSet('paymentData', paymentData);
+}
+function restoreState() {
+  const up = lsGet('userPayments', null);
+  if (Array.isArray(up)) userPayments = up.map(t => ({ ...t, date: new Date(t.date) }));
+  const bal = lsGet('balance', null);
+  if (typeof bal === 'number') accountBalanceCZK = bal;
+  const pd = lsGet('paymentData', null);
+  if (pd && typeof pd === 'object') Object.assign(paymentData, pd);
+}
+function updateDashboardBalance() {
+  const el = document.getElementById('dashboard-balance');
+  if (!el) return;
+  const whole = Math.floor(accountBalanceCZK).toLocaleString('cs-CZ');
+  const decimal = (accountBalanceCZK % 1).toFixed(2).substring(1).replace('.', ',');
+  el.innerHTML = whole + '<span>' + decimal + ' Kč</span>';
+}
+
 // ── Sheet registry ──
 // Každý sheet má parent obrazovku → hash je '#<parent>/<sheet>', aby šel sheet
 // trackovat v GA jako vlastní page_view i obnovit po refreshi.
@@ -197,10 +224,7 @@ function pinPress(mode, num) {
         const rate = EXCHANGE_RATES_ALL[paymentData.currency] || 1;
         const amtCZK = amt * rate;
         accountBalanceCZK = Math.max(0, accountBalanceCZK - amtCZK);
-        // update dashboard balance
-        const whole = Math.floor(accountBalanceCZK).toLocaleString('cs-CZ');
-        const decimal = (accountBalanceCZK % 1).toFixed(2).substring(1).replace('.', ',');
-        document.getElementById('dashboard-balance').innerHTML = whole + '<span>' + decimal + ' Kč</span>';
+        updateDashboardBalance();
         // přidej dokončenou platbu do historie běžného účtu
         userPayments.push({
           type: 'out',
@@ -210,6 +234,7 @@ function pinPress(mode, num) {
           date: new Date()
         });
         renderTransactions('tx-list-bezny', 12345);
+        persistState();
         goTo('s10');
       }, 400);
     }
@@ -987,6 +1012,8 @@ function renderSavingsPayments(containerId) {
 
 // ── Boot ──
 document.addEventListener('DOMContentLoaded', () => {
+  restoreState();
+  updateDashboardBalance();
   renderTransactions('tx-list-bezny', 12345);
   renderSavingsPayments('tx-list-all');
   renderFakeQR('pm-qr-grid', 24680);
