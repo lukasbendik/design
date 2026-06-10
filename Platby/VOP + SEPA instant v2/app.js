@@ -78,7 +78,10 @@ function persistState() {
 }
 function restoreState() {
   const up = lsGet('userPayments', null);
-  if (Array.isArray(up)) userPayments = up.map(t => ({ ...t, date: new Date(t.date) }));
+  if (Array.isArray(up)) {
+    userPayments = up.map(t => ({ ...t, date: new Date(t.date) }));
+    userSeq = userPayments.reduce((m, t) => Math.max(m, t._seq || 0), 0);
+  }
   const bal = lsGet('balance', null);
   if (typeof bal === 'number') accountBalanceCZK = bal;
   const pd = lsGet('paymentData', null);
@@ -231,7 +234,9 @@ function pinPress(mode, num) {
           name: paymentData.name || 'Příjemce',
           note: 'Odchozí platba',
           amount: -amtCZK,
-          date: new Date()
+          date: new Date(),
+          _user: true,
+          _seq: ++userSeq
         });
         renderTransactions('tx-list-bezny', 12345);
         persistState();
@@ -795,12 +800,21 @@ const TX_PERSON_ICON = '<svg width="22" height="22" viewBox="0 0 24 24" fill="no
 
 // platby dokončené uživatelem v prototypu (prepend do historie běžného účtu)
 let userPayments = [];
+let userSeq = 0;
 
 function renderTransactions(containerId, seed) {
   const txs = genTransactions(seed);
   if (seed === 12345 && userPayments.length) {
     userPayments.forEach(t => txs.push(t));
-    txs.sort((a, b) => b.date - a.date);
+    const dayNum = d => { const x = new Date(d); x.setHours(0, 0, 0, 0); return x.getTime(); };
+    txs.sort((a, b) => {
+      const dd = dayNum(b.date) - dayNum(a.date);
+      if (dd !== 0) return dd;                       // novější den první
+      const au = a._user ? 1 : 0, bu = b._user ? 1 : 0;
+      if (au !== bu) return bu - au;                 // platby uživatele na začátku dne
+      if (au && bu) return (b._seq || 0) - (a._seq || 0); // nejnovější platba první
+      return 0;                                      // generované ponech v pořadí
+    });
   }
   let html = '';
   let lastLabel = null;
