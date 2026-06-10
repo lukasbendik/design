@@ -715,10 +715,15 @@ function hideAuth() {
 }
 
 // ── Konec testu: dokončení úkolu ──
-// Smaže celý localStorage, ať další běh prototypu začíná čistý.
+// Smaže jen klíče tohoto prototypu (LS_PREFIX), ať další běh začíná čistý.
+// Sdílený klíč rozcestnik__auth nechává být – je společný pro všechny prototypy.
 function finishTask() {
   track('task_finished');
-  try { localStorage.clear(); } catch (e) {}
+  try {
+    Object.keys(localStorage)
+      .filter(k => k.indexOf(LS_PREFIX) === 0)
+      .forEach(k => localStorage.removeItem(k));
+  } catch (e) {}
   userPayments = [];
   userSeq = 0;
   goTo('s16');
