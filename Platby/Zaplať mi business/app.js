@@ -7,12 +7,13 @@ function lsSet(k,v){try{localStorage.setItem(k,v);}catch(e){}}
 function lsGet(k){try{return localStorage.getItem(k);}catch(e){return null;}}
 
 var STORE = 'zaplatmi_business__';
-var ACCOUNT = '1234567890/0100';
 var IBAN_RAW = 'CZ6501000000001234567890';
-var IBAN_FMT = 'CZ65 0100 0000 0012 3456 7890';
 
-/* ---- amount state (v haléřích jako string s desetinnou čárkou) ---- */
-var amount = lsGet(STORE+'amount') || '';
+var PRESETS = [50, 100, 200, 500];   // rychlé předvolby (v Kč)
+var MAX_CENTS = 99999999;            // max 999 999,99 Kč
+
+/* ---- amount state: částka v haléřích (integer) ---- */
+var cents = parseInt(lsGet(STORE+'cents') || '0', 10);
 
 /* ============================================================
    NAVIGACE MEZI OBRAZOVKAMI
@@ -63,6 +64,7 @@ function showScreenNoHist(id){
   if(el){ el.classList.add('active'); }
   trackPageView(id.replace('screen-',''));
   if(id === 'screen-qr') renderQR();
+  if(id === 'screen-keypad') updateKeypad();
 }
 
 /* ---- Obnova obrazovky z URL hash při refresh ---- */
@@ -81,28 +83,74 @@ function showScreenNoHist(id){
 })();
 
 /* ============================================================
-   ČÁSTKA — formátování
+   ČÁSTKA — formátování (z haléřů)
    ============================================================ */
-function formatAmount(raw){
-  if(!raw) return '0';
-  var parts = raw.split(',');
-  var intPart = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
-  if(parts.length > 1){
-    return intPart + ',' + parts[1];
+function formatCents(c){
+  var kc = Math.floor(c / 100);
+  var ha = c % 100;
+  var kcStr = kc.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+  return kcStr + ',' + ha.toString().padStart(2,'0');
+}
+function amountForQR(c){ return (c/100).toFixed(2); }              // SPAYD AM
+function amountDisplay(c){ return formatCents(c) + ' Kč'; }
+
+/* ============================================================
+   POČÍTADLO PLATEB (dnes)
+   ============================================================ */
+function todayKey(){
+  var d = new Date();
+  return d.getFullYear() + '-' + (d.getMonth()+1) + '-' + d.getDate();
+}
+function getCount(){
+  if(lsGet(STORE+'countDate') !== todayKey()) return 0;
+  return parseInt(lsGet(STORE+'count') || '0', 10);
+}
+function incCount(){
+  var n = getCount() + 1;
+  lsSet(STORE+'countDate', todayKey());
+  lsSet(STORE+'count', String(n));
+  return n;
+}
+function updateCounter(){
+  var el = document.getElementById('kp-counter');
+  if(!el) return;
+  var n = getCount();
+  el.textContent = 'Dnes přijato: ' + n + ' ' + plural(n, 'platba','platby','plateb');
+}
+function plural(n, one, few, many){
+  if(n === 1) return one;
+  if(n >= 2 && n <= 4) return few;
+  return many;
+}
+
+/* ============================================================
+   RYCHLÉ PŘEDVOLBY
+   ============================================================ */
+function renderPresets(){
+  var wrap = document.getElementById('kp-presets');
+  if(!wrap) return;
+  wrap.innerHTML = '';
+
+  // "Naposledy" chip (pokud existuje a liší se od fixních presetů)
+  var lastCents = parseInt(lsGet(STORE+'lastCents') || '0', 10);
+  if(lastCents > 0 && PRESETS.indexOf(lastCents/100) === -1){
+    addPreset(wrap, lastCents, '↻ ' + formatCents(lastCents));
   }
-  return intPart + (raw.indexOf(',') > -1 ? ',' : '');
+  PRESETS.forEach(function(kc){
+    addPreset(wrap, kc*100, kc + ' Kč');
+  });
 }
-function amountNumber(raw){
-  if(!raw) return 0;
-  return parseFloat(raw.replace(/\s/g,'').replace(',','.')) || 0;
-}
-function amountForQR(raw){
-  // SPAYD AM: vždy s tečkou a 2 desetinnými místy
-  return amountNumber(raw).toFixed(2);
-}
-function amountDisplay(raw){
-  var n = amountNumber(raw);
-  return n.toLocaleString('cs-CZ',{minimumFractionDigits:2, maximumFractionDigits:2}) + ' Kč';
+function addPreset(wrap, c, label){
+  var b = document.createElement('button');
+  b.className = 'kp-preset';
+  b.type = 'button';
+  b.textContent = label;
+  b.addEventListener('click', function(){
+    cents = c;
+    lsSet(STORE+'cents', String(cents));
+    updateKeypad();
+  });
+  wrap.appendChild(b);
 }
 
 /* ============================================================
@@ -113,43 +161,32 @@ function updateKeypad(){
   var box = document.querySelector('.kp-amount');
   var payBtn = document.getElementById('btn-pay');
   if(!disp) return;
-  disp.textContent = formatAmount(amount);
-  box.classList.toggle('empty', !amount || amountNumber(amount) === 0);
-  payBtn.disabled = amountNumber(amount) <= 0;
+  disp.textContent = formatCents(cents);
+  box.classList.toggle('empty', cents === 0);
+  payBtn.disabled = cents <= 0;
+  updateCounter();
 }
 
 function pressKey(k){
   if(k === 'del'){
-    amount = amount.slice(0,-1);
-  } else if(k === ','){
-    if(amount.indexOf(',') === -1 && amount.length > 0) amount += ',';
-    else if(amount.length === 0) amount = '0,';
+    cents = Math.floor(cents / 10);
+  } else if(k === '00'){
+    cents = cents * 100;
   } else {
-    // číslice
-    if(amount.indexOf(',') > -1){
-      var dec = amount.split(',')[1];
-      if(dec.length >= 2) return;        // max 2 desetinná místa
-    }
-    var intPart = amount.split(',')[0].replace(/\s/g,'');
-    if(amount.indexOf(',') === -1 && intPart.length >= 7) return; // max 7 číslic celé části
-    if(amount === '0') amount = k;       // nahraď úvodní nulu
-    else amount += k;
+    cents = cents * 10 + parseInt(k, 10);
   }
-  lsSet(STORE+'amount', amount);
+  if(cents > MAX_CENTS) cents = MAX_CENTS;
+  lsSet(STORE+'cents', String(cents));
   updateKeypad();
 }
 
 /* ============================================================
    QR OBRAZOVKA
    ============================================================ */
-function genPaymentId(){
-  var id = lsGet(STORE+'paymentId');
-  return id || '—';
-}
 function newPaymentId(){
   // VS: datum + pořadové číslo (max 10 číslic dle SPAYD)
   var d = new Date();
-  var ymd = '' + (d.getMonth()+1).toString().padStart(2,'0') + d.getDate().toString().padStart(2,'0');
+  var ymd = (d.getMonth()+1).toString().padStart(2,'0') + d.getDate().toString().padStart(2,'0');
   var seq = (parseInt(lsGet(STORE+'seq') || '0', 10) + 1);
   lsSet(STORE+'seq', String(seq));
   var vs = ymd + seq.toString().padStart(4,'0'); // 8 číslic
@@ -161,11 +198,11 @@ function newPaymentId(){
 
 var qrInstance = null;
 function renderQR(){
-  var amtFixed = amountForQR(amount);
+  var amtFixed = amountForQR(cents);
   var vs = lsGet(STORE+'vs') || '';
   var pid = lsGet(STORE+'paymentId') || '—';
 
-  document.getElementById('qr-amount').textContent = amountDisplay(amount);
+  document.getElementById('qr-amount').textContent = amountDisplay(cents);
   document.getElementById('qr-id-val').textContent = pid;
 
   // SPAYD — český QR formát platby
@@ -190,6 +227,8 @@ function renderQR(){
    ============================================================ */
 document.addEventListener('DOMContentLoaded', function(){
 
+  renderPresets();
+
   // Domů → Pokladna (klávesnice)
   document.getElementById('btn-pokladna').addEventListener('click', function(){
     showScreen('screen-keypad');
@@ -206,10 +245,13 @@ document.addEventListener('DOMContentLoaded', function(){
     btn.addEventListener('click', function(){ pressKey(btn.getAttribute('data-k')); });
   });
 
-  // Zaplatit → vygeneruj ID + QR
+  // Zaplatit → vygeneruj ID + QR, ulož poslední částku, započítej platbu
   document.getElementById('btn-pay').addEventListener('click', function(){
-    if(amountNumber(amount) <= 0) return;
+    if(cents <= 0) return;
     newPaymentId();
+    lsSet(STORE+'lastCents', String(cents));
+    incCount();
+    renderPresets();
     showScreen('screen-qr');
     renderQR();
   });
@@ -222,8 +264,8 @@ document.addEventListener('DOMContentLoaded', function(){
 
   // QR — Zadat další → klávesnice (reset částky)
   document.getElementById('btn-qr-another').addEventListener('click', function(){
-    amount = '';
-    lsSet(STORE+'amount', '');
+    cents = 0;
+    lsSet(STORE+'cents', '0');
     showScreen('screen-keypad');
     updateKeypad();
   });
