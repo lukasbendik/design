@@ -9,7 +9,7 @@ function lsGet(k){try{return localStorage.getItem(k);}catch(e){return null;}}
 var STORE = 'zaplatmi_business__';
 var IBAN_RAW = 'CZ6501000000001234567890';
 
-var PRESETS = [50, 100, 200, 500];   // rychlé předvolby (v Kč)
+var PRESETS = [100, 200, 500];   // rychlé předvolby (v Kč)
 var MAX_CENTS = 99999999;            // max 999 999,99 Kč
 
 /* ---- amount state: částka v haléřích (integer) ---- */
@@ -140,7 +140,7 @@ function renderPresets(){
     var brk = document.createElement('span');
     brk.className = 'kp-presets-break';
     wrap.appendChild(brk);
-    addPreset(wrap, lastCents, 'Naposledy ' + formatCents(lastCents), true);
+    addPreset(wrap, lastCents, 'Naposledy ' + formatCents(lastCents) + ' Kč', true);
   }
 }
 function addPreset(wrap, c, label, isLast){
