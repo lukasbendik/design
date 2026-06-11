@@ -27,7 +27,372 @@
   y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
 })(window, document, 'clarity', 'script', 'w8hlprz19n');
 </script>
-<script>document.write('<link rel="stylesheet" href="styl.css?_=' + Date.now() + '">');</script>
+<style>
+:root {
+    --kb-red: #e2001a;
+    --kb-red-dark: #b30015;
+    --text: #1a1a1a;
+    --muted: #6d6d6d;
+    --line: #e6e6e9;
+    --screen: #f3f4f7;
+    --card: #ffffff;
+    --ok: #167f39;
+    --ok-bg: #eaf8ef;
+    --danger-bg: #fff4f5;
+    --shadow: 0 16px 44px rgba(8, 15, 40, 0.2);
+    --radius-xl: 20px;
+    --radius-lg: 14px;
+    --radius-md: 12px;
+    --font: 'SF Pro Display', -apple-system, 'Helvetica Neue', Arial, sans-serif;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body {
+    width: 100%;
+    height: 100dvh;
+    font-family: var(--font);
+    background: radial-gradient(circle at 30% -10%, #fafcff 0%, #e9edf4 38%, #dae1eb 100%);
+    overflow: hidden;
+  }
+
+  #app-shell {
+    position: fixed;
+    inset: 50% auto auto 50%;
+    transform: translate(-50%, -50%);
+    width: min(390px, 100vw);
+    height: min(844px, 100dvh);
+    background: var(--screen);
+    border-radius: min(42px, 4vw);
+    overflow: hidden;
+    box-shadow: var(--shadow), 0 0 0 1px rgba(255, 255, 255, 0.2);
+  }
+
+  .screen {
+    position: absolute;
+    inset: 0;
+    display: none;
+    flex-direction: column;
+    background: var(--screen);
+  }
+
+  .screen.active { display: flex; }
+
+  .status {
+    height: 54px;
+    padding: 14px 18px 8px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 13px;
+    font-weight: 600;
+    color: #111;
+  }
+
+  .status-icons { display: flex; gap: 6px; opacity: 0.7; }
+
+  .topbar {
+    height: 50px;
+    padding: 0 18px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--line);
+    background: #fff;
+  }
+
+  .topbar h1 {
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--text);
+    letter-spacing: -0.2px;
+  }
+
+  .icon-btn {
+    width: 34px;
+    height: 34px;
+    border: none;
+    background: transparent;
+    color: var(--text);
+    font-size: 24px;
+    line-height: 1;
+    cursor: pointer;
+  }
+
+  .content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 16px;
+  }
+
+  .card {
+    background: var(--card);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--line);
+    margin-bottom: 12px;
+    overflow: hidden;
+  }
+
+  .row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 15px 14px;
+    border-top: 1px solid var(--line);
+  }
+
+  .row:first-child { border-top: none; }
+
+  .label {
+    font-size: 15px;
+    color: var(--text);
+    font-weight: 500;
+  }
+
+  .value {
+    font-size: 14px;
+    color: var(--muted);
+    text-align: right;
+  }
+
+  .value strong {
+    color: var(--text);
+    font-size: 15px;
+    font-weight: 700;
+  }
+
+  .hero {
+    background: linear-gradient(145deg, #ffffff 0%, #f8f9fc 100%);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--line);
+    padding: 16px;
+    margin-bottom: 12px;
+  }
+
+  .hero h2 {
+    font-size: 20px;
+    line-height: 1.25;
+    letter-spacing: -0.3px;
+    margin-bottom: 8px;
+    color: var(--text);
+  }
+
+  .hero p {
+    color: var(--muted);
+    font-size: 14px;
+    line-height: 1.5;
+  }
+
+  .segmented {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding: 4px;
+    border-radius: 12px;
+    background: #f1f2f6;
+    gap: 4px;
+    margin-bottom: 12px;
+  }
+
+  .seg-btn {
+    border: none;
+    border-radius: 10px;
+    min-height: 40px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--muted);
+    background: transparent;
+    cursor: pointer;
+  }
+
+  .seg-btn.active {
+    color: var(--text);
+    background: #fff;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+  }
+
+  .field-wrap {
+    padding: 12px 14px;
+  }
+
+  .field-label {
+    font-size: 13px;
+    color: var(--muted);
+    margin-bottom: 8px;
+  }
+
+  .money-input {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md);
+    padding: 12px;
+    background: #fff;
+  }
+
+  .money-input input {
+    border: none;
+    outline: none;
+    width: 100%;
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    color: var(--text);
+  }
+
+  .money-input span {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--muted);
+  }
+
+  .hint {
+    margin-top: 8px;
+    font-size: 12px;
+    color: var(--muted);
+    line-height: 1.4;
+  }
+
+  .radio-card {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 12px 14px;
+    border-top: 1px solid var(--line);
+    cursor: pointer;
+  }
+
+  .radio-card:first-child { border-top: none; }
+
+  .radio-card input { margin-top: 2px; accent-color: var(--kb-red); }
+
+  .radio-title { font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: 4px; }
+
+  .radio-desc { font-size: 12px; color: var(--muted); line-height: 1.35; }
+
+  .footer {
+    padding: 12px 16px 24px;
+    border-top: 1px solid var(--line);
+    background: #fff;
+  }
+
+  .primary,
+  .secondary {
+    width: 100%;
+    border: none;
+    border-radius: 14px;
+    min-height: 50px;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+  }
+
+  .primary {
+    background: var(--kb-red);
+    color: #fff;
+  }
+
+  .primary:active { background: var(--kb-red-dark); }
+
+  .secondary {
+    background: #f1f2f6;
+    color: #232323;
+  }
+
+  .secondary:active { background: #e4e7ee; }
+
+  .chips {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-top: 12px;
+  }
+
+  .chip {
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: 8px 12px;
+    font-size: 13px;
+    color: var(--text);
+    background: #fff;
+    cursor: pointer;
+  }
+
+  .chip:active { transform: scale(0.98); }
+
+  .summary-ok {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--ok-bg);
+    border: 1px solid #cbeed8;
+    border-radius: 12px;
+    padding: 10px 12px;
+    margin-bottom: 12px;
+    font-size: 13px;
+    color: var(--ok);
+    font-weight: 600;
+  }
+
+  .warn {
+    margin-top: 8px;
+    background: var(--danger-bg);
+    border: 1px solid #ffdadd;
+    border-radius: 10px;
+    padding: 8px 10px;
+    font-size: 12px;
+    color: #8c2b33;
+  }
+
+  .success {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 20px;
+  }
+
+  .success-icon {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    background: var(--ok-bg);
+    color: var(--ok);
+    display: grid;
+    place-items: center;
+    font-size: 36px;
+    margin-bottom: 16px;
+  }
+
+  .success h2 {
+    font-size: 25px;
+    letter-spacing: -0.5px;
+    margin-bottom: 8px;
+  }
+
+  .success p {
+    color: var(--muted);
+    font-size: 14px;
+    line-height: 1.45;
+    max-width: 280px;
+  }
+
+  @media (max-width: 480px) {
+    html, body { background: #fff; }
+    #app-shell {
+      inset: 0;
+      transform: none;
+      width: 100vw;
+      height: 100dvh;
+      border-radius: 0;
+      box-shadow: none;
+    }
+  }
+
+</style>
 </head>
 <body>
 <div id="app-shell">
@@ -198,6 +563,251 @@
     </div>
   </section>
 </div>
-<script>document.write('<script src="app.js?_=' + Date.now() + '"><\/script>');</script>
+<script>
+(function () {
+  var LS_KEY = 'prototype__sepa_instant_limits';
+  var state = {
+    mode: 'daily',
+    dailyLimit: 20000,
+    singleLimit: 10000,
+    notifyAt: 80
+  };
+
+  function loadState() {
+    try {
+      var saved = JSON.parse(localStorage.getItem(LS_KEY) || '{}');
+      if (saved && typeof saved === 'object') {
+        state.mode = saved.mode === 'single' ? 'single' : 'daily';
+        state.dailyLimit = normalizeNumber(saved.dailyLimit, 20000);
+        state.singleLimit = normalizeNumber(saved.singleLimit, 10000);
+        state.notifyAt = [70, 80, 100].indexOf(Number(saved.notifyAt)) >= 0 ? Number(saved.notifyAt) : 80;
+      }
+    } catch (e) {}
+  }
+
+  function saveState() {
+    localStorage.setItem(LS_KEY, JSON.stringify(state));
+  }
+
+  function normalizeNumber(value, fallback) {
+    var num = Number(String(value || '').replace(/\D/g, ''));
+    if (!Number.isFinite(num) || num <= 0) return fallback;
+    return num;
+  }
+
+  function formatCzk(value) {
+    return Number(value || 0).toLocaleString('cs-CZ') + ' Kč';
+  }
+
+  function modeLabel(mode) {
+    return mode === 'single' ? 'Limit na transakci' : 'Denní limit';
+  }
+
+  function currentLimit() {
+    return state.mode === 'single' ? state.singleLimit : state.dailyLimit;
+  }
+
+  function notifyLabel(value) {
+    if (value === 100) return 'Při dosažení limitu';
+    return 'Při ' + value + ' % limitu';
+  }
+
+  function showScreen(screenId, options) {
+    var opts = options || {};
+    var screens = document.querySelectorAll('.screen');
+    var target = document.getElementById(screenId);
+    if (!target) return;
+
+    screens.forEach(function (el) { el.classList.remove('active'); });
+    target.classList.add('active');
+
+    var hash = target.dataset.hash || '';
+    if (!opts.skipHistory) {
+      history.pushState({ screen: screenId }, '', hash ? ('#' + hash) : location.pathname);
+    }
+
+    trackScreen(target);
+  }
+
+  function trackScreen(screenEl) {
+    var screenName = screenEl.dataset.screenName || 'Prototyp';
+    document.title = screenName + ' | Nastavení limitů SEPA instant';
+
+    if (typeof gtag === 'function') {
+      gtag('event', 'screen_view', {
+        app_name: 'UX Prototype',
+        screen_name: screenName
+      });
+    }
+
+    if (typeof window.clarity === 'function') {
+      window.clarity('set', 'prototype_screen', screenName);
+    }
+  }
+
+  function syncUi() {
+    document.getElementById('active-mode-label').textContent = modeLabel(state.mode);
+    document.getElementById('active-limit-value').textContent = formatCzk(currentLimit());
+    document.getElementById('notify-value').textContent = state.notifyAt + ' %';
+
+    var daily = document.getElementById('mode-daily');
+    var single = document.getElementById('mode-single');
+    daily.classList.toggle('active', state.mode === 'daily');
+    single.classList.toggle('active', state.mode === 'single');
+
+    document.getElementById('limit-label').textContent = state.mode === 'single' ? 'Limit na jednu platbu' : 'Limit za den';
+    document.getElementById('limit-hint').textContent = state.mode === 'single'
+      ? 'Limit se kontroluje pro každou SEPA Instant platbu samostatně.'
+      : 'Součet všech SEPA Instant plateb za 24 hodin.';
+
+    document.getElementById('limit-input').value = String(currentLimit());
+
+    document.querySelectorAll('input[name="notify"]').forEach(function (input) {
+      input.checked = Number(input.value) === state.notifyAt;
+    });
+
+    document.getElementById('review-mode').textContent = modeLabel(state.mode);
+    document.getElementById('review-limit').textContent = formatCzk(currentLimit());
+    document.getElementById('review-notify').textContent = notifyLabel(state.notifyAt);
+
+    document.getElementById('success-limit').textContent = formatCzk(currentLimit());
+    document.getElementById('success-mode').textContent = state.mode === 'single' ? 'na transakci' : 'denní';
+  }
+
+  function applyInputValue() {
+    var raw = document.getElementById('limit-input').value || '';
+    var value = Number(raw.replace(/\D/g, ''));
+    if (!Number.isFinite(value)) value = 0;
+
+    if (state.mode === 'single') {
+      state.singleLimit = value;
+    } else {
+      state.dailyLimit = value;
+    }
+
+    saveState();
+    syncUi();
+  }
+
+  function validateLimit() {
+    var min = 1000;
+    var value = currentLimit();
+    var isValid = Number(value) >= min;
+    document.getElementById('validation-text').hidden = isValid;
+    return isValid;
+  }
+
+  function goByHash() {
+    var hash = window.location.hash.replace('#', '');
+    if (!hash) {
+      showScreen('screen-overview', { skipHistory: true });
+      history.replaceState({ screen: 'screen-overview' }, '', '#overview');
+      return;
+    }
+
+    var target = document.querySelector('.screen[data-hash="' + hash + '"]');
+    if (target) {
+      showScreen(target.id, { skipHistory: true });
+      history.replaceState({ screen: target.id }, '', '#' + hash);
+    }
+  }
+
+  function bindEvents() {
+    document.getElementById('open-edit').addEventListener('click', function () { showScreen('screen-edit'); });
+    document.getElementById('overview-close').addEventListener('click', function () { showScreen('screen-overview'); });
+    document.getElementById('overview-back').addEventListener('click', function () { showScreen('screen-overview'); });
+
+    document.getElementById('edit-back').addEventListener('click', function () { showScreen('screen-overview'); });
+    document.getElementById('edit-close').addEventListener('click', function () { showScreen('screen-overview'); });
+
+    document.getElementById('review-back').addEventListener('click', function () { showScreen('screen-edit'); });
+    document.getElementById('review-close').addEventListener('click', function () { showScreen('screen-overview'); });
+
+    document.getElementById('success-back').addEventListener('click', function () { showScreen('screen-overview'); });
+    document.getElementById('success-close').addEventListener('click', function () { showScreen('screen-overview'); });
+    document.getElementById('back-overview').addEventListener('click', function () { showScreen('screen-overview'); });
+
+    document.getElementById('mode-daily').addEventListener('click', function () {
+      state.mode = 'daily';
+      saveState();
+      syncUi();
+    });
+
+    document.getElementById('mode-single').addEventListener('click', function () {
+      state.mode = 'single';
+      saveState();
+      syncUi();
+    });
+
+    document.getElementById('limit-input').addEventListener('input', function (e) {
+      e.target.value = (e.target.value || '').replace(/\D/g, '').slice(0, 9);
+      applyInputValue();
+    });
+
+    document.querySelectorAll('.chip').forEach(function (chip) {
+      chip.addEventListener('click', function () {
+        var add = Number(chip.dataset.add || 0);
+        if (state.mode === 'single') {
+          state.singleLimit = Math.max(0, state.singleLimit + add);
+        } else {
+          state.dailyLimit = Math.max(0, state.dailyLimit + add);
+        }
+        saveState();
+        syncUi();
+      });
+    });
+
+    document.querySelectorAll('input[name="notify"]').forEach(function (input) {
+      input.addEventListener('change', function () {
+        state.notifyAt = Number(input.value);
+        saveState();
+        syncUi();
+      });
+    });
+
+    document.getElementById('continue-review').addEventListener('click', function () {
+      applyInputValue();
+      if (!validateLimit()) return;
+      showScreen('screen-review');
+    });
+
+    document.getElementById('confirm-change').addEventListener('click', function () {
+      saveState();
+      syncUi();
+      showScreen('screen-success');
+    });
+
+    window.addEventListener('popstate', function () {
+      goByHash();
+    });
+
+    // Obnova obrazovky z URL hash pri refreshi
+    (function() {
+      const hash = window.location.hash.replace('#', '');
+      if (hash) {
+        const screen = document.querySelector('.screen[data-hash="' + hash + '"]');
+        if (screen) {
+          showScreen(screen.id, { skipHistory: true });
+          history.replaceState({ screen: screen.id }, '', window.location.hash);
+        }
+      }
+    })();
+
+    window.addEventListener('hashchange', function () {
+      goByHash();
+    });
+  }
+
+  loadState();
+  bindEvents();
+  syncUi();
+
+  if (!window.location.hash) {
+    history.replaceState({ screen: 'screen-overview' }, '', '#overview');
+  }
+  goByHash();
+})();
+
+</script>
 </body>
 </html>
