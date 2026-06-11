@@ -783,11 +783,3 @@
     padding: 10px 20px 4px; color: var(--text-primary); cursor: pointer;
   }
   .pm-how span { font-size: 17px; font-weight: 600; text-decoration: underline; }
-
-  /* ══════════════════════════
-     MULTIPAGE (rozdělené obrazovky) – přechody mezi stránkami
-  ══════════════════════════ */
-  /* Animace přechodů mezi stránkami i vstupní animace obsahu vypnuté –
-     na PC při cross-document navigaci blikaly. Jediná ponechaná animace je
-     slideUpSheet u bottom sheetů (řídí ji showSheetDOM v core.js). */
-  .anim-fadein, .anim-slideup, .anim-slideright { animation: none !important; }

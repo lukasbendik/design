@@ -7,7 +7,7 @@
 <meta http-equiv="Expires" content="0">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta name="robots" content="noindex, nofollow">
-<title>VOP + SEPA instant – Úkol</title>
+<title>VOP + SEPA instant</title>
 
 <!-- Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-F1YV23DTKQ"></script>
@@ -31,13 +31,35 @@
 <script type="text/javascript">(function(u,x,t,w,e,a,k,s){a=function(v){try{u.setItem(t+e,v)}catch(e){}v=JSON.parse(v);for(k=0;k<v.length;k++){s=x.createElement("script");s.text="(function(u,x,t,w,e,a,k){a=u[e]=function(){a.q.push(arguments)};a.q=[];a.t=+new Date;a.c=w;k=x.createElement('script');k.async=1;k.src=t;x.getElementsByTagName('head')[0].appendChild(k)})(window,document,'"+v[k].u+"',"+JSON.stringify(v[k].c)+",'"+v[k].g+"')";x.getElementsByTagName("head")[0].appendChild(s)}};try{k=u.getItem(t+e)}catch(e){}if(k){return a(k)}k=new XMLHttpRequest;k.onreadystatechange=function(){if(k.readyState==4&&k.status==200)a(k.responseText)};k.open("POST",w+e);k.send(x.URL)})(sessionStorage,document,"uxt:","https://api.uxtweak.com/snippet/","f59aa41b-c6cb-44d3-aff0-690a99cda7d0");</script>
 </script>
 
-<link rel="stylesheet" href="styl.css?v=4">
+<link rel="stylesheet" href="styl.css?v=5">
 </head>
-<body data-page="s00b">
+<body>
 
 <div id="app-shell" data-clarity-unmask="true">
 
-<!-- ══ S00B: Vyčkejte na instrukce ══ -->
+  <!-- ══ S00: Souhlas ══ -->
+  <div id="s00" class="screen">
+    <div class="s00-content">
+      <h1 class="s00-title">Vítejte na rozhovoru v KB</h1>
+      <div class="s00-card">
+        <div class="s00-card-section">
+          Než budeme pokračovat v rozhovoru, potřebovali bychom od vás souhlas s jeho nahráváním v tomto nástroji Lookback.io spravovaném společností sídlící v USA a následným využitím Komerční bankou. Rádi bychom si následně záznam prošli i s jinými kolegy. Využijeme ho ke zlepšování bankovních produktů, webu a aplikace, kterou spolu dneska projdeme.
+        </div>
+        <div class="s00-card-section">
+          Souhlas bude platit 2 roky, poté data i nahrávku mažeme. Souhlas můžete kdykoliv odvolat. Stačí nám napsat e-mail na adresu respondent@kb.cz.
+        </div>
+        <div class="s00-card-section">
+          Aplikaci vytvořila umělá inteligence jen pro testování. Nejsou v ní žádná skutečná data.
+        </div>
+      </div>
+      <p class="s00-footnote">Více informací najdete na webu naší banky v části Ochrana osobních údajů.</p>
+    </div>
+    <div class="s00-footer">
+      <button class="cta-btn" onclick="goTo('s00b')">Souhlasím a chci pokračovat</button>
+    </div>
+  </div>
+
+  <!-- ══ S00B: Vyčkejte na instrukce ══ -->
   <div id="s00b" class="screen active" style="background:var(--bg-screen); flex-direction:column;">
     <div style="padding:24px 20px 16px; flex:1; overflow-y:auto;">
       <h1 style="font-size:28px; font-weight:700; color:var(--text-primary); line-height:1.25; letter-spacing:-0.4px; margin-bottom:24px;">Úkol</h1>
@@ -70,9 +92,915 @@
     </div>
   </div>
 
+  <!-- ══ S01: iPhone Home ══ -->
+  <div id="s01" class="screen">
+    <div class="s01-statusbar">
+      <span class="s01-time">9:41</span>
+      <div class="s01-icons">
+        <span>▌▌▌▌</span>
+        <span>▲</span>
+        <span>🔋</span>
+      </div>
+    </div>
+    <div class="s01-grid">
+      <div class="s01-app kb-app" onclick="goTo('s02')">
+        <div class="s01-icon">
+          <div class="kb-icon-inner">
+            <div class="kb-icon-top"></div>
+            <div class="kb-icon-bot"></div>
+          </div>
+        </div>
+        <span class="s01-label">KB+</span>
+      </div>
+      <div class="s01-app">
+        <div class="s01-icon" style="background:linear-gradient(135deg,#fff,#e8e8e8)">🌸</div>
+        <span class="s01-label">Fotky</span>
+      </div>
+      <div class="s01-app">
+        <div class="s01-icon" style="background:#555">📷</div>
+        <span class="s01-label">Kamera</span>
+      </div>
+      <div class="s01-app">
+        <div class="s01-icon" style="background:#fff">📅</div>
+        <span class="s01-label">Kalendář</span>
+      </div>
+      <div class="s01-app">
+        <div class="s01-icon" style="background:linear-gradient(135deg,#34c759,#30b055)">🗺</div>
+        <span class="s01-label">Mapy</span>
+      </div>
+      <div class="s01-app">
+        <div class="s01-icon" style="background:#fff">❤️</div>
+        <span class="s01-label">Zdraví</span>
+      </div>
+      <div class="s01-app">
+        <div class="s01-icon" style="background:#1a1a1a">💳</div>
+        <span class="s01-label">Peněženka</span>
+      </div>
+      <div class="s01-app">
+        <div class="s01-icon" style="background:#8e8e93">⚙️</div>
+        <span class="s01-label">Nastavení</span>
+      </div>
+      <div class="s01-app">
+        <div class="s01-icon" style="background:linear-gradient(135deg,#007aff,#5856d6)">🌤</div>
+        <span class="s01-label">Počasí</span>
+      </div>
+      <div class="s01-app">
+        <div class="s01-icon" style="background:#1a1a1a">📈</div>
+        <span class="s01-label">Akcie</span>
+      </div>
+      <div class="s01-app">
+        <div class="s01-icon" style="background:linear-gradient(135deg,#34c759,#2ca348)">📍</div>
+        <span class="s01-label">Najít</span>
+      </div>
+      <div class="s01-app">
+        <div class="s01-icon" style="background:linear-gradient(135deg,#ff9500,#ff6b00)">🏠</div>
+        <span class="s01-label">Domov</span>
+      </div>
+    </div>
+    <div style="flex:1"></div>
+    <div class="s01-dock">
+      <div class="dock-app"><div class="dock-icon" style="background:linear-gradient(135deg,#34c759,#30b055)">📞</div></div>
+      <div class="dock-app"><div class="dock-icon" style="background:linear-gradient(135deg,#007aff,#0056cc)">🧭</div></div>
+      <div class="dock-app"><div class="dock-icon" style="background:linear-gradient(135deg,#34c759,#30b055)">💬</div></div>
+      <div class="dock-app"><div class="dock-icon" style="background:linear-gradient(135deg,#ff2d55,#cc2244)">🎵</div></div>
+    </div>
+  </div>
+
+  <!-- ══ S02: Splash ══ -->
+  <div id="s02" class="screen"></div>
+
+  <!-- ══ S03: PIN Login ══ -->
+  <div id="s03" class="screen" style="background:#F5F5F7;">
+    <div class="pin-screen-header anim-fadein">
+      <div class="pin-title">Zadejte PIN</div>
+      <div class="pin-dots" id="pin-dots">
+        <div class="pin-dot" id="d0"></div>
+        <div class="pin-dot" id="d1"></div>
+        <div class="pin-dot" id="d2"></div>
+        <div class="pin-dot" id="d3"></div>
+      </div>
+      <div class="pin-error" id="pin-error"></div>
+    </div>
+    <div style="flex:1"></div>
+    <div class="pin-keypad anim-slideup" id="pin-pad-login">
+      <button class="pin-key" onclick="pinPress('login',1)">1</button>
+      <button class="pin-key" onclick="pinPress('login',2)">2</button>
+      <button class="pin-key" onclick="pinPress('login',3)">3</button>
+      <button class="pin-key" onclick="pinPress('login',4)">4</button>
+      <button class="pin-key" onclick="pinPress('login',5)">5</button>
+      <button class="pin-key" onclick="pinPress('login',6)">6</button>
+      <button class="pin-key" onclick="pinPress('login',7)">7</button>
+      <button class="pin-key" onclick="pinPress('login',8)">8</button>
+      <button class="pin-key" onclick="pinPress('login',9)">9</button>
+      <button class="pin-key empty"></button>
+      <button class="pin-key" onclick="pinPress('login',0)">0</button>
+      <button class="pin-key delete" onclick="pinDelete('login')">⌫</button>
+    </div>
+    <div style="height:40px"></div>
+  </div>
+
+  <!-- ══ S04: Home ══ -->
+  <div id="s04" class="screen">
+    <div class="s04-topbar">
+      <div class="topbar-icon">🔑</div>
+      <div style="flex:1"></div>
+      <div class="topbar-icon" style="position:relative;">
+        🏛
+        <div class="notif-badge">1</div>
+      </div>
+      <div class="topbar-avatar">FK</div>
+    </div>
+    <div class="s04-tabs">
+      <div class="s04-tab active">Přehled</div>
+      <div class="s04-tab">Extra</div>
+      <div class="s04-tab">Karty</div>
+      <div class="s04-tab">Půjčky</div>
+      <div class="s04-tab">Spoření</div>
+    </div>
+    <div class="screen-scroll">
+    <div class="s04-cards anim-slideup">
+      <!-- Tarif + Běžný účet (propojený blok) -->
+      <div class="account-group">
+        <div class="account-group-header">
+          <span>Tarif Komfort</span>
+          <span class="card-chevron">›</span>
+        </div>
+        <div class="account-group-body" onclick="goTo('s11')">
+          <div class="account-row">
+            <div class="card-title-row">
+              <span class="card-title">Běžný účet</span>
+              <span class="card-num">122000/0100</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;">
+              <div class="card-amount" id="dashboard-balance">125 063<span>,38 Kč</span></div>
+              <span class="card-chevron">›</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Spoření -->
+      <div class="s04-card" onclick="goTo('s12')" style="cursor:pointer;">
+        <div class="card-title-row">
+          <span class="card-title">Spoření</span>
+          <span class="card-num">326683764/0100</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:center;">
+          <div class="card-amount">247 850<span>,00 Kč</span></div>
+          <span class="card-chevron">›</span>
+        </div>
+      </div>
+      <!-- Souhrn -->
+      <div class="s04-card summary-card">
+        <div style="display:flex;justify-content:space-between;align-items:center;">
+          <div>
+            <div class="summary-title">Souhrn za červen</div>
+            <div class="summary-sub">Běžný účet</div>
+          </div>
+          <span class="card-chevron">›</span>
+        </div>
+        <div class="progress-bar"><div class="progress-fill" style="width:50%;background:#333;"></div></div>
+        <div class="summary-row">
+          <div class="summary-label">→ Výdaje</div>
+          <div class="summary-val">-10 000,00 Kč</div>
+        </div>
+        <div class="progress-bar"><div class="progress-fill" style="width:100%;background:#2E7D32;"></div></div>
+        <div class="summary-row">
+          <div class="summary-label">← Příjmy</div>
+          <div class="summary-val income">20 000,00 Kč</div>
+        </div>
+        <hr class="summary-divider">
+        <div class="summary-row">
+          <div class="summary-label">Rozdíl</div>
+          <div class="summary-val">10 000,00 Kč</div>
+        </div>
+      </div>
+    </div>
+    </div><!-- /screen-scroll -->
+    <div class="s04-bottom-bar">
+      <div class="bottom-btn" onclick="openNewPayment('s04')">
+        <div class="bottom-btn-icon">≡◯</div>
+        <div class="bottom-btn-label">Nová platba</div>
+      </div>
+      <div class="bottom-btn" onclick="openQR()">
+        <div class="bottom-btn-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+            <rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/>
+            <rect x="3" y="14" width="7" height="7" rx="1"/>
+            <rect x="5" y="5" width="3" height="3" fill="white" stroke="none"/>
+            <rect x="16" y="5" width="3" height="3" fill="white" stroke="none"/>
+            <rect x="5" y="16" width="3" height="3" fill="white" stroke="none"/>
+            <line x1="14" y1="14" x2="14" y2="14.01"/><line x1="17" y1="14" x2="17" y2="14.01"/>
+            <line x1="20" y1="14" x2="20" y2="14.01"/><line x1="14" y1="17" x2="14" y2="17.01"/>
+            <line x1="17" y1="17" x2="20" y2="17"/><line x1="20" y1="20" x2="20" y2="20.01"/>
+            <line x1="17" y1="20" x2="17" y2="20.01"/><line x1="14" y1="20" x2="14" y2="20.01"/>
+          </svg>
+        </div>
+        <div class="bottom-btn-label">QR platba</div>
+      </div>
+      <div class="bottom-btn" onclick="openPayMe()">
+        <div class="bottom-btn-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M18 11V7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v1a2 2 0 0 0-2-2 2 2 0 0 0-2 2v1a2 2 0 0 0-2-2 2 2 0 0 0-2 2v5c0 2.8 2.2 5 5 5h2a5 5 0 0 0 5-5v-2z"/>
+          </svg>
+        </div>
+        <div class="bottom-btn-label">Zaplať mi</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ S05: Nová platba krok 1 ══ -->
+  <div id="s05" class="screen form-screen">
+    <div class="nav-bar">
+      <span class="nav-back" onclick="closeNewPayment()">✕ Zavřít</span>
+      <span class="nav-title">Nová platba</span>
+      <span class="nav-action">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/>
+          <rect x="3" y="14" width="7" height="7" rx="1"/>
+          <rect x="5" y="5" width="3" height="3" fill="currentColor" stroke="none"/>
+          <rect x="16" y="5" width="3" height="3" fill="currentColor" stroke="none"/>
+          <rect x="5" y="16" width="3" height="3" fill="currentColor" stroke="none"/>
+          <line x1="14" y1="14" x2="14" y2="14.01"/><line x1="17" y1="14" x2="17" y2="14.01"/>
+          <line x1="20" y1="14" x2="20" y2="14.01"/><line x1="14" y1="17" x2="14" y2="17.01"/>
+          <line x1="17" y1="17" x2="20" y2="17"/><line x1="20" y1="20" x2="20" y2="20.01"/>
+          <line x1="17" y1="20" x2="17" y2="20.01"/><line x1="14" y1="20" x2="14" y2="20.01"/>
+        </svg>
+      </span>
+    </div>
+    <div class="screen-scroll">
+    <div class="form-body anim-slideright">
+      <div class="form-card" style="cursor:default;">
+        <div>
+          <div class="form-card-title">Běžný účet</div>
+          <div class="form-card-sub">122000/0100</div>
+        </div>
+        <span class="card-chevron">›</span>
+      </div>
+      <div class="input-group">
+        <div class="input-label">Komu</div>
+        <div class="input-wrap" id="iban-wrap">
+          <input type="text" id="iban-input" placeholder="IBAN nebo číslo účtu" maxlength="34"
+            oninput="validateIBAN()" value="">
+        </div>
+        <div class="input-hint error" id="iban-error" style="display:none">Číslo protiúčtu je povinný údaj.</div>
+      </div>
+      <div class="contact-row" style="background:transparent;box-shadow:none;padding-left:0;padding-right:0;">
+        <div class="contact-icon-wrap">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--kb-red)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="9" cy="7" r="4"/><path d="M3 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2"/>
+            <path d="M16 3.13a4 4 0 0 1 0 7.75"/><path d="M21 21v-2a4 4 0 0 0-3-3.87"/>
+          </svg>
+        </div>
+        <span class="contact-text">Platba na kontakt</span>
+        <span class="contact-chevron">›</span>
+      </div>
+      <div class="amount-row">
+        <div class="input-group" style="flex:1;margin-bottom:0;">
+          <div class="input-label">Částka</div>
+          <div class="input-wrap" id="amount-wrap">
+            <input type="number" id="amount-input" placeholder="" min="1" oninput="updateAmount()">
+          </div>
+        </div>
+        <div class="currency-group">
+          <div class="input-label">Měna</div>
+          <div class="input-wrap" onclick="openCurrencySheet()" style="cursor:pointer;">
+            <span id="currency-display" style="font-weight:600;font-size:15px;width:100%;display:flex;align-items:center;gap:6px;">
+              <span id="currency-flag">🇨🇿</span>
+              <span id="currency-code">Kč</span>
+            </span>
+            <span style="color:var(--text-hint);">⌄</span>
+          </div>
+        </div>
+      </div>
+      <div class="input-hint error" id="amount-error" style="display:none;margin-top:-8px;margin-bottom:8px;">Částka je povinný údaj.</div>
+      <div class="balance-hint" id="balance-hint">Na účtu vám zůstane 125 063,38 Kč.</div>
+    </div>
+    </div><!-- /screen-scroll -->
+    <div class="cta-wrap">
+      <button class="cta-btn" id="s05-btn" onclick="goToS06()">Pokračovat</button>
+    </div>
+  </div>
+
+  <!-- ══ S06/S07: SEPA platba ══ -->
+  <div id="s06" class="screen form-screen">
+    <div class="nav-bar" style="justify-content:center;position:relative;">
+      <span class="nav-back" style="position:absolute;left:20px;" onclick="goTo('s05')">‹ Zpět</span>
+      <span class="nav-title">SEPA platba</span>
+    </div>
+    <div class="screen-scroll">
+    <div class="form-body anim-slideright" style="overflow-y:auto;">
+      <div class="info-banner" id="sepa-banner">
+        Odesíláte přibližně <strong id="sepa-czk">–</strong> dle aktuálního kurzu.
+        Částka obsahuje i kurzovou marži <strong id="sepa-margin">–</strong>.
+      </div>
+      <div class="input-group">
+        <div class="input-label">Přesný název příjemce</div>
+        <div class="input-wrap" id="name-wrap">
+          <input type="text" id="recipient-name" placeholder=""
+            oninput="validateRecipient()" onblur="scheduleCheckRecipient()">
+          <span id="name-status-icon" class="info-icon" onclick="openVerifySheet()" style="cursor:pointer;display:flex;align-items:center;"></span>
+        </div>
+        <div class="input-hint" id="name-hint"></div>
+      </div>
+      <div id="name-suggestion" style="display:none;" class="form-card" onclick="acceptSuggestion()">
+        <span style="font-size:15px;font-weight:500;">Mysleli jste Alpenpanorama Gasstehaus?</span>
+        <span class="card-chevron">›</span>
+      </div>
+      <div class="section-title">Doplňující informace</div>
+      <div class="input-group">
+        <div class="input-label">Zpráva pro příjemce</div>
+        <div class="input-wrap">
+          <input type="text" id="msg-input" placeholder="">
+        </div>
+      </div>
+      <div class="input-group">
+        <div class="input-label">Reference platby</div>
+        <div class="input-wrap">
+          <input type="text" id="ref-input" placeholder="">
+        </div>
+      </div>
+      <div class="input-group">
+        <div class="input-label">Popis pro mě</div>
+        <div class="input-wrap">
+          <input type="text" id="desc-input" placeholder="">
+        </div>
+      </div>
+      <div style="font-size:13px;color:var(--text-secondary);margin-bottom:8px;font-weight:500;">Odeslat platbu</div>
+      <div class="segment-row" id="timing-seg">
+        <button class="segment-btn active" onclick="selectSegment(0)">Co nejdříve</button>
+        <button class="segment-btn" onclick="selectSegment(1)">Později</button>
+      </div>
+      <div id="date-wrap" style="display:none;margin-bottom:12px;">
+        <div style="font-size:12px;color:var(--text-secondary);margin-bottom:4px;font-weight:500;padding-left:2px;">Datum platby</div>
+        <div class="input-wrap">
+          <input type="text" id="payment-date" placeholder="D. M. RRRR" style="width:100%;border:none;outline:none;background:transparent;font-family:var(--font);color:var(--text-primary);font-size:16px;">
+        </div>
+      </div>
+      <div class="toggle-row" id="instant-row">
+        <div>
+          <span class="toggle-label">Okamžitá platba</span>
+          <div id="instant-hint" style="display:none;font-size:13px;color:var(--text-secondary);margin-top:4px;max-width:240px;line-height:1.4;">Platba bude připsána okamžitě, při nedostupnosti ji nerealizujeme.</div>
+        </div>
+        <div class="toggle-switch" id="instant-toggle" onclick="toggleInstant()"></div>
+      </div>
+      <div style="height:20px;"></div>
+    </div>
+    </div><!-- /screen-scroll -->
+    <div class="cta-wrap">
+      <button class="cta-btn" id="s06-btn" onclick="goToS08()">Pokračovat</button>
+    </div>
+  </div>
+
+  <!-- ══ S08: Souhrn ══ -->
+  <div id="s08" class="screen summary-screen">
+    <div class="nav-bar">
+      <span class="nav-back" onclick="track('summary_back_tapped'); goTo('s06')">‹ Zpět</span>
+    </div>
+    <div class="screen-scroll">
+    <div class="summary-big-title anim-fadein">Souhrn</div>
+    <div class="summary-detail-card anim-slideup">
+      <div class="sd-row">
+        <div class="sd-label">Z účtu</div>
+        <div class="sd-value">FRANTIŠEK KOUDELKA<br><span style="font-size:14px;color:#666;">122000/0100</span></div>
+      </div>
+      <div class="sd-row">
+        <div class="sd-label">Na účet</div>
+        <div class="sd-value" id="sum-iban">–</div>
+      </div>
+      <div class="sd-row">
+        <div class="sd-label">Částka</div>
+        <div class="sd-value" id="sum-amount">–</div>
+      </div>
+      <div class="sd-row">
+        <div class="sd-label">Poplatek</div>
+        <div class="sd-value">Zdarma</div>
+      </div>
+      <div class="sd-row">
+        <div class="sd-label">Přesný název příjemce</div>
+        <div class="sd-value" id="sum-name">–</div>
+        <div class="sd-sub" id="sum-verify">–</div>
+      </div>
+      <div class="sd-row">
+        <div class="sd-label">Datum platby</div>
+        <div class="sd-value" id="sum-date">–</div>
+      </div>
+    </div>
+    </div><!-- /screen-scroll -->
+    <div class="cta-wrap">
+      <button class="cta-btn" onclick="showAuth()">Potvrdit platbu</button>
+    </div>
+  </div>
+
+  <!-- ══ S09: Auth overlay (shown over s08) ══ -->
+  <div id="s09" class="screen" style="background:transparent; display:none; position:absolute; inset:0; z-index:100;">
+    <div class="auth-overlay">
+      <div class="auth-sheet" style="position:relative;">
+        <button class="sheet-close" onclick="hideAuth()">✕</button>
+        <span class="sheet-handle"></span>
+        <div class="sheet-title">Potvrzení platby</div>
+        <div class="sheet-sub">Potvrďte ji PIN kódem.</div>
+        <div class="pin-dots" id="auth-pin-dots" style="margin-bottom:20px;">
+          <div class="pin-dot" id="ap0"></div>
+          <div class="pin-dot" id="ap1"></div>
+          <div class="pin-dot" id="ap2"></div>
+          <div class="pin-dot" id="ap3"></div>
+        </div>
+        <div class="pin-keypad" style="padding:0 10px;">
+          <button class="pin-key" onclick="pinPress('auth',1)">1</button>
+          <button class="pin-key" onclick="pinPress('auth',2)">2</button>
+          <button class="pin-key" onclick="pinPress('auth',3)">3</button>
+          <button class="pin-key" onclick="pinPress('auth',4)">4</button>
+          <button class="pin-key" onclick="pinPress('auth',5)">5</button>
+          <button class="pin-key" onclick="pinPress('auth',6)">6</button>
+          <button class="pin-key" onclick="pinPress('auth',7)">7</button>
+          <button class="pin-key" onclick="pinPress('auth',8)">8</button>
+          <button class="pin-key" onclick="pinPress('auth',9)">9</button>
+          <button class="pin-key empty"></button>
+          <button class="pin-key" onclick="pinPress('auth',0)">0</button>
+          <button class="pin-key delete" onclick="pinDelete('auth')">⌫</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ S10: Success ══ -->
+  <div id="s10" class="screen">
+    <div class="nav-bar">
+      <span class="nav-back" onclick="finishTask()" style="color:var(--text-primary);">Zavřít</span>
+    </div>
+    <div class="success-icon-wrap">
+      <div class="success-checkmark">✓</div>
+    </div>
+    <div class="success-title">Zadali jste platbu</div>
+    <div class="template-row" onclick="finishTask()">
+      <div class="template-left">
+        <span class="template-icon">📁</span>
+        <span class="template-text">Uložit šablonu</span>
+      </div>
+      <span class="card-chevron">›</span>
+    </div>
+    <div class="cta-wrap" style="margin-top:auto;">
+      <button class="cta-btn" onclick="finishTask()">Zadat další</button>
+      <button class="cta-btn outline" onclick="finishTask()">Zavřít</button>
+    </div>
+  </div>
+
+  <!-- ══ S11: Detail běžného účtu ══ -->
+  <div id="s11" class="screen detail-screen">
+    <div class="nav-bar">
+      <span class="nav-back" onclick="goTo('s04')">‹ Zpět</span>
+    </div>
+    <div class="screen-scroll">
+      <div class="detail-head">
+        <div class="detail-acct-row">
+          <span class="detail-acct-name">Běžný účet</span>
+          <span class="detail-acct-num">122000/0100</span>
+        </div>
+        <div class="detail-balance">125 063<span>,38 Kč</span></div>
+      </div>
+      <div style="height:8px"></div>
+      <div class="detail-list-card" onclick="openSheet('mgmtbezny')">
+        <div class="detail-list-left">
+          <span class="detail-list-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+              <rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/>
+              <rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/>
+            </svg>
+          </span>
+          <span class="detail-list-title">Detail a správa účtu</span>
+        </div>
+        <span class="card-chevron">›</span>
+      </div>
+      <div class="detail-list-card">
+        <div class="detail-list-left">
+          <span class="detail-list-title">Filtr</span>
+        </div>
+        <span class="detail-list-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+            <line x1="4" y1="7" x2="20" y2="7"/><circle cx="9" cy="7" r="2.5" fill="#fff"/>
+            <line x1="4" y1="14" x2="20" y2="14"/><circle cx="16" cy="14" r="2.5" fill="#fff"/>
+          </svg>
+        </span>
+      </div>
+      <div id="tx-list-bezny"></div>
+      <div style="height:16px"></div>
+    </div>
+    <div class="s04-bottom-bar">
+      <div class="bottom-btn" onclick="openNewPayment('s11')">
+        <div class="bottom-btn-icon">≡◯</div>
+        <div class="bottom-btn-label">Nová platba</div>
+      </div>
+      <div class="bottom-btn" onclick="openQR()">
+        <div class="bottom-btn-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+            <rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/>
+            <rect x="3" y="14" width="7" height="7" rx="1"/>
+            <rect x="5" y="5" width="3" height="3" fill="white" stroke="none"/>
+            <rect x="16" y="5" width="3" height="3" fill="white" stroke="none"/>
+            <rect x="5" y="16" width="3" height="3" fill="white" stroke="none"/>
+            <line x1="14" y1="14" x2="14" y2="14.01"/><line x1="17" y1="14" x2="17" y2="14.01"/>
+            <line x1="20" y1="14" x2="20" y2="14.01"/><line x1="14" y1="17" x2="14" y2="17.01"/>
+            <line x1="17" y1="17" x2="20" y2="17"/><line x1="20" y1="20" x2="20" y2="20.01"/>
+            <line x1="17" y1="20" x2="17" y2="20.01"/><line x1="14" y1="20" x2="14" y2="20.01"/>
+          </svg>
+        </div>
+        <div class="bottom-btn-label">QR platba</div>
+      </div>
+      <div class="bottom-btn" onclick="openPayMe()">
+        <div class="bottom-btn-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M18 11V7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v1a2 2 0 0 0-2-2 2 2 0 0 0-2 2v1a2 2 0 0 0-2-2 2 2 0 0 0-2 2v5c0 2.8 2.2 5 5 5h2a5 5 0 0 0 5-5v-2z"/>
+          </svg>
+        </div>
+        <div class="bottom-btn-label">Zaplať mi</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ S12: Detail spořicího účtu (obálky) ══ -->
+  <div id="s12" class="screen detail-screen">
+    <div class="nav-bar">
+      <span class="nav-back" onclick="goTo('s04')">‹ Přehled</span>
+    </div>
+    <div class="screen-scroll">
+      <div class="detail-head">
+        <div class="detail-acct-row">
+          <span class="detail-acct-name">Můj spořicí účet</span>
+          <span class="detail-acct-num">326683764/0100</span>
+        </div>
+        <div class="detail-balance">247 850<span>,00 Kč</span></div>
+        <div class="sav-rate">Úroková sazba 3,5 % p. a.</div>
+      </div>
+      <div style="height:18px"></div>
+      <div class="detail-list-card" onclick="openSheet('accountmgmt')">
+        <div class="detail-list-left">
+          <span class="detail-list-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+              <rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/>
+              <rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/>
+            </svg>
+          </span>
+          <span class="detail-list-title">Detail a správa účtu</span>
+        </div>
+        <span class="card-chevron">›</span>
+      </div>
+      <div class="sav-sub-card">
+        <div>
+          <div class="sav-sub-title">Nezatříděné peníze</div>
+          <div class="sav-sub-amount">172 850,00 Kč</div>
+        </div>
+        <span class="card-chevron">›</span>
+      </div>
+      <div class="env-card">
+        <div class="env-card-title">Obálky</div>
+        <div class="env-row">
+          <div class="env-row-top">
+            <span class="env-name">Rekonstrukce</span>
+            <span class="card-chevron">›</span>
+          </div>
+          <div class="env-amount">45 000,00 Kč</div>
+          <div class="env-bar"><div class="env-bar-fill" style="width:75%"></div></div>
+          <div class="env-goal">Cíl 60 000 Kč</div>
+        </div>
+        <div class="env-row">
+          <div class="env-row-top">
+            <span class="env-name">Železná rezerva</span>
+            <span class="card-chevron">›</span>
+          </div>
+          <div class="env-amount">30 000,00 Kč</div>
+          <div class="env-bar"><div class="env-bar-fill" style="width:60%"></div></div>
+          <div class="env-goal">Cíl 50 000 Kč</div>
+        </div>
+      </div>
+      <button class="new-env-btn">＋ Nová obálka</button>
+    </div>
+    <div class="s04-bottom-bar">
+      <div class="bottom-btn">
+        <div class="bottom-btn-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 11a6 6 0 0 1 6-6h3a6 6 0 0 1 6 6v1a4 4 0 0 1-1.5 3.1V18h-2v-1.5h-4V18H8v-2.5A6 6 0 0 1 3 11z"/>
+            <line x1="20" y1="10" x2="22" y2="9"/><circle cx="9" cy="10" r="0.6" fill="white"/>
+          </svg>
+        </div>
+        <div class="bottom-btn-label">Vložit</div>
+      </div>
+      <div class="bottom-btn">
+        <div class="bottom-btn-icon">≡◯</div>
+        <div class="bottom-btn-label">Vybrat</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ S13: Všechny platby ══ -->
+  <div id="s13" class="screen detail-screen">
+    <div class="nav-bar" style="flex-direction:column;align-items:flex-start;gap:6px;padding-bottom:6px;">
+      <span class="nav-back" onclick="goTo('s12')">‹ Zpět</span>
+      <span style="font-size:28px;font-weight:700;color:var(--text-primary);letter-spacing:-0.4px;">Všechny platby</span>
+    </div>
+    <div class="month-chips" id="month-chips"></div>
+    <div class="screen-scroll">
+      <div class="detail-list-card" style="margin-top:0;">
+        <div class="detail-list-left"><span class="detail-list-title">Filtr</span></div>
+        <span class="detail-list-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+            <line x1="4" y1="7" x2="20" y2="7"/><circle cx="9" cy="7" r="2.5" fill="#fff"/>
+            <line x1="4" y1="14" x2="20" y2="14"/><circle cx="16" cy="14" r="2.5" fill="#fff"/>
+          </svg>
+        </span>
+      </div>
+      <div id="tx-list-all"></div>
+      <button class="load-more-btn">Načíst další</button>
+    </div>
+  </div>
+
+  <!-- ══ Detail a správa účtu bottom sheet ══ -->
+  <div id="accountmgmt-overlay" onclick="closeSheet('accountmgmt')" style="display:none;position:absolute;inset:0;background:rgba(0,0,0,0.5);z-index:200;"></div>
+  <div id="accountmgmt-sheet" style="display:none;position:absolute;bottom:0;left:0;right:0;background:#F2F2F7;border-radius:24px 24px 0 0;z-index:201;flex-direction:column;">
+    <div style="display:flex;align-items:center;justify-content:flex-end;padding:12px 16px 8px;">
+      <span style="position:absolute;left:50%;top:14px;transform:translateX(-50%);width:40px;height:5px;border-radius:3px;background:#ccc;"></span>
+      <button onclick="closeSheet('accountmgmt')" style="width:30px;height:30px;border-radius:50%;background:#cfcfcf;border:none;cursor:pointer;font-size:15px;color:#fff;display:flex;align-items:center;justify-content:center;">✕</button>
+    </div>
+    <div class="mgmt-row">
+      <span class="mgmt-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9.5"/><line x1="12" y1="11" x2="12" y2="16.5"/><circle cx="12" cy="7.8" r="0.9" fill="currentColor"/></svg></span>
+      <span class="mgmt-label">O účtu</span>
+      <span class="mgmt-chevron">›</span>
+    </div>
+    <div class="mgmt-row">
+      <span class="mgmt-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="8" cy="8" r="3"/><circle cx="16" cy="8" r="3"/><path d="M2 19a6 6 0 0 1 12 0"/><path d="M14 14.5a6 6 0 0 1 8 4.5"/></svg></span>
+      <span class="mgmt-label">Úročení</span>
+      <span class="mgmt-chevron">›</span>
+    </div>
+    <div class="mgmt-row" onclick="goTo('s13')">
+      <span class="mgmt-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h9l3 3v15H6z"/><line x1="9" y1="9" x2="15" y2="9"/><line x1="9" y1="13" x2="15" y2="13"/><line x1="9" y1="17" x2="13" y2="17"/></svg></span>
+      <span class="mgmt-label">Přehled plateb</span>
+      <span class="mgmt-chevron">›</span>
+    </div>
+    <div class="mgmt-row">
+      <span class="mgmt-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h9l3 3v15H6z"/><text x="12" y="16" text-anchor="middle" font-size="6" font-weight="700" fill="currentColor" font-family="sans-serif">PDF</text></svg></span>
+      <span class="mgmt-label">Výpisy a potvrzení</span>
+      <span class="mgmt-chevron">›</span>
+    </div>
+    <div class="mgmt-row" style="border-bottom:none;">
+      <span class="mgmt-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="8" r="3.5"/><path d="M5 20v-1a5 5 0 0 1 5-5h4a5 5 0 0 1 5 5v1"/></svg></span>
+      <span class="mgmt-label">Oprávnění k účtu</span>
+      <span class="mgmt-chevron">›</span>
+    </div>
+    <div style="height:32px;"></div>
+  </div>
+
+  <!-- ══ S14: QR platba (skener) ══ -->
+  <div id="s14" class="screen">
+    <div class="qr-head">
+      <span class="qr-close" onclick="closeQR()">Zavřít</span>
+      <div class="qr-instr">Namiřte fotoaparát na QR kód, vyfotí se automaticky</div>
+    </div>
+    <div class="qr-camera">
+      <button class="qr-flash" aria-label="Blesk">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M13 2 4 14h6l-1 8 9-12h-6z"/><line x1="3" y1="3" x2="21" y2="21"/>
+        </svg>
+      </button>
+      <div class="qr-frame">
+        <span class="qr-corner tl"></span><span class="qr-corner tr"></span>
+        <span class="qr-corner bl"></span><span class="qr-corner br"></span>
+      </div>
+    </div>
+    <div class="qr-footer">
+      <button class="qr-load-link">Načíst z fotek nebo souboru</button>
+    </div>
+  </div>
+
+  <!-- ══ S15: Zaplať mi ══ -->
+  <div id="s15" class="screen">
+    <div class="pm-topbar">
+      <span class="pm-icon" onclick="closePayMe()">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg>
+      </span>
+      <span class="pm-icon">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8a2 2 0 0 1 2-2h2l1.5-2h4L16 6h1a2 2 0 0 1 2 2v3"/><path d="M21 15v6m3-3h-6" /><circle cx="11" cy="13" r="3.2"/></svg>
+      </span>
+    </div>
+    <div class="pm-title">Zaplať mi</div>
+    <div class="pm-sub">QR kód můžete poslat nebo ukázat tomu, kdo vám má zaplatit</div>
+    <div class="screen-scroll">
+      <div class="pm-qr-wrap">
+        <div class="pm-qr-grid" id="pm-qr-grid"></div>
+        <div class="pm-qr-logo"></div>
+        <span class="pm-qr-label">QR platba</span>
+      </div>
+      <div class="pm-acct">
+        <div>
+          <div class="pm-acct-name">Běžný účet</div>
+          <div class="pm-acct-sub">123456–4835477/0100<br>František Koudelka</div>
+        </div>
+        <span class="card-chevron">›</span>
+      </div>
+      <div class="pm-field">
+        <div class="pm-field-label">Částka</div>
+        <div class="pm-field-row">
+          <input type="number" id="pm-amount" placeholder="">
+          <span class="pm-suffix">Kč</span>
+        </div>
+      </div>
+      <div class="pm-field">
+        <div class="pm-field-label">Za co vám má zaplatit</div>
+        <div class="pm-field-row"><input type="text" id="pm-desc" placeholder=""></div>
+      </div>
+      <div class="pm-field">
+        <div class="pm-field-label">Variabilní symbol</div>
+        <div class="pm-field-row"><input type="text" id="pm-vs" placeholder=""></div>
+      </div>
+      <div class="pm-how">
+        <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><circle cx="11" cy="11" r="9.5" stroke="#1A1A1A" stroke-width="1.6"/><line x1="11" y1="10" x2="11" y2="15.5" stroke="#1A1A1A" stroke-width="1.8" stroke-linecap="round"/><circle cx="11" cy="6.8" r="0.9" fill="#1A1A1A"/></svg>
+        <span>Jak to funguje</span>
+      </div>
+      <div style="height:12px"></div>
+    </div>
+    <div class="cta-wrap">
+      <button class="cta-btn">Odeslat QR kód</button>
+    </div>
+  </div>
+
+  <!-- ══ S16: Úkol dokončen (konec testu) ══ -->
+  <div id="s16" class="screen" style="background:var(--bg-screen);">
+    <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:24px;">
+      <div class="success-icon-wrap">
+        <div class="success-checkmark">✓</div>
+      </div>
+      <div class="success-title" style="margin-top:8px;">Úspěšně jste dokončili úkol</div>
+      <p style="margin-top:16px;max-width:300px;font-size:16px;line-height:1.5;color:var(--text-secondary);">
+        Nyní se můžete vrátit zpět do dotazníku Echonity a pokračovat v dalších úkolech. Děkujeme.
+      </p>
+    </div>
+  </div>
+
+  <!-- ══ Detail a správa běžného účtu bottom sheet ══ -->
+  <div id="mgmtbezny-overlay" onclick="closeSheet('mgmtbezny')" style="display:none;position:absolute;inset:0;background:rgba(0,0,0,0.5);z-index:200;"></div>
+  <div id="mgmtbezny-sheet" style="display:none;position:absolute;bottom:0;left:0;right:0;background:#F2F2F7;border-radius:24px 24px 0 0;z-index:201;flex-direction:column;max-height:88%;">
+    <div style="position:relative;padding:12px 16px 8px;flex-shrink:0;">
+      <span style="position:absolute;left:50%;top:14px;transform:translateX(-50%);width:40px;height:5px;border-radius:3px;background:#ccc;"></span>
+      <div style="display:flex;justify-content:flex-end;">
+        <button onclick="closeSheet('mgmtbezny')" style="width:30px;height:30px;border-radius:50%;background:#cfcfcf;border:none;cursor:pointer;font-size:15px;color:#fff;display:flex;align-items:center;justify-content:center;">✕</button>
+      </div>
+    </div>
+    <div style="overflow-y:auto;-webkit-overflow-scrolling:touch;padding-bottom:24px;">
+      <div class="mgmt-row">
+        <span class="mgmt-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-3-6.7"/><polyline points="21 4 21 8 17 8"/><polyline points="12 8 12 12 15 13"/></svg></span>
+        <span class="mgmt-label">Trvalé příkazy a Inkasa</span><span class="mgmt-chevron">›</span>
+      </div>
+      <div class="mgmt-row">
+        <span class="mgmt-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/><polyline points="9.5 15.5 11 17 14.5 13.5"/></svg></span>
+        <span class="mgmt-label">Autorizace</span><span class="mgmt-chevron">›</span>
+      </div>
+      <div class="mgmt-row">
+        <span class="mgmt-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9.5"/><line x1="12" y1="11" x2="12" y2="16.5"/><circle cx="12" cy="7.8" r="0.9" fill="currentColor"/></svg></span>
+        <span class="mgmt-label">O účtu</span><span class="mgmt-chevron">›</span>
+      </div>
+      <div class="mgmt-row">
+        <span class="mgmt-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><line x1="6" y1="20" x2="6" y2="13"/><line x1="12" y1="20" x2="12" y2="8"/><line x1="18" y1="20" x2="18" y2="11"/></svg></span>
+        <span class="mgmt-label">Měsíční souhrny</span><span class="mgmt-chevron">›</span>
+      </div>
+      <div class="mgmt-row">
+        <span class="mgmt-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><ellipse cx="12" cy="6" rx="7" ry="3"/><path d="M5 6v6c0 1.7 3.1 3 7 3s7-1.3 7-3V6"/><path d="M5 12v6c0 1.7 3.1 3 7 3s7-1.3 7-3v-6"/></svg></span>
+        <span class="mgmt-label">Volné prostředky</span><span class="mgmt-chevron">›</span>
+      </div>
+      <div class="mgmt-row">
+        <span class="mgmt-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="9.5"/><path d="M15.5 8.5a4.5 4.5 0 1 0 0 7"/><line x1="6.5" y1="11" x2="13" y2="11"/><line x1="6.5" y1="13.5" x2="12.5" y2="13.5"/></svg></span>
+        <span class="mgmt-label">Měny na účtu</span><span class="mgmt-chevron">›</span>
+      </div>
+      <div class="mgmt-row">
+        <span class="mgmt-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="6" width="18" height="13" rx="2"/><line x1="3" y1="10" x2="21" y2="10"/></svg></span>
+        <span class="mgmt-label">Karty</span><span class="mgmt-chevron">›</span>
+      </div>
+      <div class="mgmt-row">
+        <span class="mgmt-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h9l3 3v15H6z"/><text x="12" y="16" text-anchor="middle" font-size="6" font-weight="700" fill="currentColor" font-family="sans-serif">PDF</text></svg></span>
+        <span class="mgmt-label">Výpisy a potvrzení</span><span class="mgmt-chevron">›</span>
+      </div>
+      <div class="mgmt-row">
+        <span class="mgmt-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><ellipse cx="12" cy="7" rx="7" ry="3"/><path d="M5 7v10c0 1.7 3.1 3 7 3s7-1.3 7-3V7"/><polyline points="9.5 5 12 2.5 14.5 5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        <span class="mgmt-label">Kontokorent k účtu</span><span class="mgmt-chevron">›</span>
+      </div>
+      <div class="mgmt-row">
+        <span class="mgmt-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="3" width="9" height="18" rx="2"/><circle cx="18" cy="13" r="3"/><path d="M16.7 11.7 19.3 14.3"/></svg></span>
+        <span class="mgmt-label">Dobití kreditu</span><span class="mgmt-chevron">›</span>
+      </div>
+      <div class="mgmt-row">
+        <span class="mgmt-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="8" r="3.5"/><path d="M5 20v-1a5 5 0 0 1 5-5h4a5 5 0 0 1 5 5v1"/></svg></span>
+        <span class="mgmt-label">Oprávnění k účtu</span><span class="mgmt-chevron">›</span>
+      </div>
+      <div class="mgmt-row" style="border-bottom:none;">
+        <span class="mgmt-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="13" height="9" rx="2"/><circle cx="19" cy="16" r="3"/><circle cx="14" cy="16" r="3"/></svg></span>
+        <span class="mgmt-label">Hotovostní služby</span><span class="mgmt-chevron">›</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ Currency bottom sheet ══ -->
+  <div id="currency-overlay" onclick="closeCurrencySheet()" style="display:none;position:absolute;inset:0;background:rgba(0,0,0,0.5);z-index:200;"></div>
+  <div id="currency-sheet" style="display:none;position:absolute;bottom:0;left:0;right:0;background:#F2F2F7;border-radius:24px 24px 0 0;z-index:201;max-height:80%;flex-direction:column;">
+    <div style="display:flex;align-items:center;justify-content:space-between;padding:18px 20px 12px;">
+      <span style="font-size:17px;font-weight:600;">Vyberte měnu</span>
+      <button onclick="closeCurrencySheet()" style="width:30px;height:30px;border-radius:50%;background:#e0e0e0;border:none;cursor:pointer;font-size:16px;color:#666;display:flex;align-items:center;justify-content:center;">✕</button>
+    </div>
+    <div style="overflow-y:auto;-webkit-overflow-scrolling:touch;" id="currency-list"></div>
+  </div>
+  <!-- ══ Partial match bottom sheet ══ -->
+  <div id="partial-overlay" onclick="closePartialSheet()" style="display:none;position:absolute;inset:0;background:rgba(0,0,0,0.5);z-index:200;"></div>
+  <div id="partial-sheet" style="display:none;position:absolute;bottom:0;left:0;right:0;background:#F2F2F7;border-radius:24px 24px 0 0;z-index:201;padding:20px 20px 40px;">
+    <span style="width:40px;height:5px;border-radius:3px;background:#ccc;display:block;margin:0 auto 16px;"></span>
+    <button onclick="closePartialSheet()" style="position:absolute;top:16px;right:16px;width:32px;height:32px;border-radius:50%;background:#e0e0e0;border:none;cursor:pointer;font-size:15px;color:#666;display:flex;align-items:center;justify-content:center;">✕</button>
+    <div style="font-size:20px;font-weight:700;margin-bottom:20px;">Vyberte název příjemce</div>
+    <div style="background:#fff;border-radius:14px;overflow:hidden;">
+      <div onclick="choosePartialSuggested()" style="padding:16px 18px;border-bottom:1px solid #f0f0f0;display:flex;justify-content:space-between;align-items:center;cursor:pointer;">
+        <div>
+          <div style="font-size:17px;font-weight:600;color:#1A1A1A;" id="partial-suggested-name">Alpenpanorama Gasstehaus</div>
+          <div style="font-size:14px;color:#6B6B6B;margin-top:3px;">Navržený název</div>
+        </div>
+        <span style="color:#ABABAB;font-size:18px;">›</span>
+      </div>
+      <div onclick="choosePartialUser()" style="padding:16px 18px;display:flex;justify-content:space-between;align-items:center;cursor:pointer;">
+        <div>
+          <div style="font-size:17px;font-weight:600;color:#1A1A1A;" id="partial-user-name">–</div>
+          <div style="font-size:14px;color:#6B6B6B;margin-top:3px;">Vámi zadaný název</div>
+        </div>
+        <span style="color:#ABABAB;font-size:18px;">›</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ No-match bottom sheet ══ -->
+  <div id="nomatch-overlay" onclick="closeNomatchSheet()" style="display:none;position:absolute;inset:0;background:rgba(0,0,0,0.5);z-index:200;"></div>
+  <div id="nomatch-sheet" style="display:none;position:absolute;bottom:0;left:0;right:0;background:#F2F2F7;border-radius:24px 24px 0 0;z-index:201;padding:20px 20px 40px;">
+    <span style="width:40px;height:5px;border-radius:3px;background:#ccc;display:block;margin:0 auto 16px;"></span>
+    <button onclick="closeNomatchSheet()" style="position:absolute;top:16px;right:16px;width:32px;height:32px;border-radius:50%;background:#e0e0e0;border:none;cursor:pointer;font-size:15px;color:#666;display:flex;align-items:center;justify-content:center;">✕</button>
+    <div style="font-size:22px;font-weight:700;margin-bottom:14px;line-height:1.25;">Opravdu chcete pokračovat?</div>
+    <p style="font-size:16px;color:#1A1A1A;line-height:1.5;margin-bottom:14px;">Název příjemce neodpovídá číslu účtu.</p>
+    <p style="font-size:16px;color:#1A1A1A;line-height:1.5;margin-bottom:28px;">Může dojít k převodu peněz na účet, který nepatří vámi zadanému příjemci.</p>
+    <button class="cta-btn" onclick="confirmNomatch()">Pokračovat</button>
+    <button class="cta-btn outline" onclick="closeNomatchSheet()" style="margin-top:12px;">Zavřít</button>
+  </div>
+
+  <!-- ══ Unverifiable bottom sheet ══ -->
+  <div id="unverifiable-overlay" onclick="closeUnverifiableSheet()" style="display:none;position:absolute;inset:0;background:rgba(0,0,0,0.5);z-index:200;"></div>
+  <div id="unverifiable-sheet" style="display:none;position:absolute;bottom:0;left:0;right:0;background:#F2F2F7;border-radius:24px 24px 0 0;z-index:201;padding:20px 20px 40px;">
+    <span style="width:40px;height:5px;border-radius:3px;background:#ccc;display:block;margin:0 auto 16px;"></span>
+    <button onclick="closeUnverifiableSheet()" style="position:absolute;top:16px;right:16px;width:32px;height:32px;border-radius:50%;background:#e0e0e0;border:none;cursor:pointer;font-size:15px;color:#666;display:flex;align-items:center;justify-content:center;">✕</button>
+    <div style="font-size:22px;font-weight:700;margin-bottom:14px;line-height:1.25;">Opravdu chcete pokračovat?</div>
+    <p style="font-size:16px;color:#1A1A1A;line-height:1.5;margin-bottom:14px;">Název příjemce nelze ověřit.</p>
+    <p style="font-size:16px;color:#1A1A1A;line-height:1.5;margin-bottom:28px;">Může dojít k převodu peněz na účet, který nepatří vámi zadanému příjemci.</p>
+    <button class="cta-btn" onclick="confirmUnverifiable()">Pokračovat</button>
+    <button class="cta-btn outline" onclick="closeUnverifiableSheet()" style="margin-top:12px;">Zavřít</button>
+  </div>
+
+  <!-- ══ Verify info bottom sheet ══ -->
+  <div id="verify-overlay" onclick="closeVerifySheet()" style="display:none;position:absolute;inset:0;background:rgba(0,0,0,0.5);z-index:200;"></div>
+  <div id="verify-sheet" style="display:none;position:absolute;bottom:0;left:0;right:0;background:#F2F2F7;border-radius:24px 24px 0 0;z-index:201;padding:16px 20px 40px;">
+    <div style="display:flex;justify-content:flex-end;margin-bottom:8px;">
+      <button onclick="closeVerifySheet()" style="width:30px;height:30px;border-radius:50%;background:#e0e0e0;border:none;cursor:pointer;font-size:14px;color:#666;">✕</button>
+    </div>
+    <span style="width:40px;height:5px;border-radius:3px;background:#ccc;display:block;margin:0 auto 20px;"></span>
+    <div style="font-size:22px;font-weight:700;margin-bottom:10px;">Ověření příjemce</div>
+    <div style="font-size:15px;color:var(--text-secondary);margin-bottom:20px;line-height:1.5;">Před odesláním platby ověříme, komu účet skutečně patří.</div>
+    <div style="background:#fff;border-radius:14px;overflow:hidden;">
+      <div style="padding:16px 18px;border-bottom:1px solid #f0f0f0;display:flex;gap:14px;align-items:flex-start;">
+        <span style="flex-shrink:0;margin-top:2px;" id="vs-icon-match"></span>
+        <div>
+          <div style="font-size:15px;font-weight:700;margin-bottom:4px;">Název odpovídá číslu účtu</div>
+          <div style="font-size:13px;color:var(--text-secondary);">Vše je v pořádku.</div>
+        </div>
+      </div>
+      <div style="padding:16px 18px;border-bottom:1px solid #f0f0f0;display:flex;gap:14px;align-items:flex-start;">
+        <span style="flex-shrink:0;margin-top:2px;" id="vs-icon-partial"></span>
+        <div>
+          <div style="font-size:15px;font-weight:700;margin-bottom:4px;">Název částečně odpovídá číslu účtu</div>
+          <div style="font-size:13px;color:var(--text-secondary);">Drobný rozdíl v názvu, doporučujeme převzít jméno z návrhu.</div>
+        </div>
+      </div>
+      <div style="padding:16px 18px;border-bottom:1px solid #f0f0f0;display:flex;gap:14px;align-items:flex-start;">
+        <span style="flex-shrink:0;margin-top:2px;" id="vs-icon-nomatch"></span>
+        <div>
+          <div style="font-size:15px;font-weight:700;margin-bottom:4px;">Název neodpovídá číslu účtu</div>
+          <div style="font-size:13px;color:var(--text-secondary);">Může dojít k převodu peněz na účet, který nepatří vámi zadanému příjemci.</div>
+        </div>
+      </div>
+      <div style="padding:16px 18px;display:flex;gap:14px;align-items:flex-start;">
+        <span style="flex-shrink:0;margin-top:2px;" id="vs-icon-unverifiable"></span>
+        <div>
+          <div style="font-size:15px;font-weight:700;margin-bottom:4px;">Název nelze ověřit</div>
+          <div style="font-size:13px;color:var(--text-secondary);">V daný moment není možné provést ověření. Může dojít k převodu peněz na účet, který nepatří vámi zadanému příjemci.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ Verify loader overlay ══ -->
+  <div id="verify-loader">
+    <div class="verify-loader-shape"></div>
+  </div>
+
 </div><!-- /app-shell -->
 
-<script>window.PAGE_SHEETS=[];</script>
-<script src="core.js?v=1"></script>
+
+<script src="app.js?v=3"></script>
 </body>
 </html>
