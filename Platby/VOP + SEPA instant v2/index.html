@@ -1915,11 +1915,23 @@ const SHEET_CONFIG = {
 };
 const SHEET_NAMES = Object.keys(SHEET_CONFIG);
 
+const SCREEN_SLUG = {
+  s00:'00-souhlas', s00b:'01-ukol', s01:'02-telefon-plocha', s02:'03-splash',
+  s03:'04-prihlaseni', s04:'05-prehled', s05:'06-nova-platba', s06:'07-sepa-platba',
+  s08:'08-souhrn', s10:'09-hotovo', s11:'10-detail-bezneho-uctu',
+  s12:'11-detail-sporiciho-uctu', s13:'12-vsechny-platby', s14:'13-qr-platba',
+  s15:'14-zaplat-mi', s16:'15-konec'
+};
+const SLUG_SCREEN = Object.fromEntries(Object.entries(SCREEN_SLUG).map(([k,v])=>[v,k]));
+function slugOf(id){ return SCREEN_SLUG[id] || id; }
+
 function parseHash() {
   const h = (window.location.hash || '').replace('#', '');
   if (!h) return { screen: null, sheet: null };
   const parts = h.split('/');
-  return { screen: parts[0] || null, sheet: parts[1] || null };
+  const slug = parts[0] || null;
+  const screen = slug ? (SLUG_SCREEN[slug] || (document.getElementById(slug) ? slug : null)) : null;
+  return { screen, sheet: parts[1] || null };
 }
 
 function showSheetDOM(name) {
@@ -1962,11 +1974,11 @@ function openSheet(name) {
   const cfg = SHEET_CONFIG[name];
   if (!cfg) return;
   showSheetDOM(name);
-  const hash = '#' + cfg.parent + '/' + name;
+  const hash = '#' + slugOf(cfg.parent) + '/' + name;
   if (window.location.hash !== hash) {
     history.pushState({ screen: cfg.parent, sheet: name }, '', hash);
   }
-  trackPageView(cfg.parent + '/' + name);
+  trackPageView(slugOf(cfg.parent) + '/' + name);
 }
 
 function closeSheet(name, opts) {
@@ -1974,11 +1986,11 @@ function closeSheet(name, opts) {
   hideSheetDOM(name);
   const cfg = SHEET_CONFIG[name];
   if (!cfg) return;
-  const hash = '#' + cfg.parent;
+  const hash = '#' + slugOf(cfg.parent);
   if (window.location.hash !== hash) {
     history.replaceState({ screen: cfg.parent }, '', hash);
   }
-  if (!opts.skipTrack) trackPageView(cfg.parent);
+  if (!opts.skipTrack) trackPageView(slugOf(cfg.parent));
 }
 
 // ── Navigation ──
@@ -1987,11 +1999,11 @@ function goTo(id) {
   const target = document.getElementById(id);
   target.classList.add('active');
   if (isAnySheetOpen()) hideAllSheets();
-  const hash = '#' + id;
+  const hash = '#' + slugOf(id);
   if (window.location.hash !== hash) {
     history.pushState({ screen: id }, '', hash);
   }
-  trackPageView(id);
+  trackPageView(slugOf(id));
   // hide auth overlay if navigating away
   if (id !== 's08') {
     const auth = document.getElementById('s09');
@@ -2905,11 +2917,11 @@ document.addEventListener('DOMContentLoaded', () => {
     if (sheet && SHEET_CONFIG[sheet]) {
       hideAllSheets();
       showSheetDOM(sheet);
-      trackPageView(screen + '/' + sheet);
+      trackPageView(slugOf(screen) + '/' + sheet);
     } else {
       const wasSheetOpen = isAnySheetOpen();
       if (wasSheetOpen) hideAllSheets();
-      if (screenChanged || wasSheetOpen) trackPageView(screen);
+      if (screenChanged || wasSheetOpen) trackPageView(slugOf(screen));
     }
   });
   window._origGoTo = origGoTo;
@@ -2920,15 +2932,15 @@ document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
     document.getElementById(initialScreen).classList.add('active');
     const restoredHash = initialSheet && SHEET_CONFIG[initialSheet]
-      ? '#' + initialScreen + '/' + initialSheet
-      : '#' + initialScreen;
+      ? '#' + slugOf(initialScreen) + '/' + initialSheet
+      : '#' + slugOf(initialScreen);
     history.replaceState({ screen: initialScreen, sheet: initialSheet || null }, '', restoredHash);
     if (initialSheet && SHEET_CONFIG[initialSheet]) showSheetDOM(initialSheet);
   } else {
     // Žádný hash → start na s00b (Vyčkejte na instrukce); obrazovka souhlasu s00 se přeskakuje
     document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
     document.getElementById('s00b').classList.add('active');
-    history.replaceState({ screen: 's00b' }, '', '#s00b');
+    history.replaceState({ screen: 's00b' }, '', '#' + slugOf('s00b'));
   }
 });
 
