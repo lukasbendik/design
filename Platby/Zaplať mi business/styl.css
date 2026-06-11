@@ -173,12 +173,7 @@ body{
 
 /* ===== KEYPAD ===== */
 .keypad-screen{flex:1;display:flex;flex-direction:column;padding:0 16px;}
-.kp-counter{
-  align-self:center;margin-top:14px;
-  background:#fff;border:1px solid var(--line);border-radius:20px;
-  padding:6px 14px;font-size:13px;font-weight:600;color:var(--text-2);
-}
-.kp-label{text-align:center;color:var(--text-2);font-size:14px;margin-top:22px;}
+.kp-label{text-align:center;color:var(--text-2);font-size:14px;margin-top:28px;}
 .kp-amount{
   text-align:center;font-size:48px;font-weight:700;letter-spacing:-1px;
   margin:10px 0 auto;display:flex;align-items:baseline;justify-content:center;gap:8px;

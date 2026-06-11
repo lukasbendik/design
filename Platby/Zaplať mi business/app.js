@@ -95,35 +95,6 @@ function amountForQR(c){ return (c/100).toFixed(2); }              // SPAYD AM
 function amountDisplay(c){ return formatCents(c) + ' Kč'; }
 
 /* ============================================================
-   POČÍTADLO PLATEB (dnes)
-   ============================================================ */
-function todayKey(){
-  var d = new Date();
-  return d.getFullYear() + '-' + (d.getMonth()+1) + '-' + d.getDate();
-}
-function getCount(){
-  if(lsGet(STORE+'countDate') !== todayKey()) return 0;
-  return parseInt(lsGet(STORE+'count') || '0', 10);
-}
-function incCount(){
-  var n = getCount() + 1;
-  lsSet(STORE+'countDate', todayKey());
-  lsSet(STORE+'count', String(n));
-  return n;
-}
-function updateCounter(){
-  var el = document.getElementById('kp-counter');
-  if(!el) return;
-  var n = getCount();
-  el.textContent = 'Dnes přijato: ' + n + ' ' + plural(n, 'platba','platby','plateb');
-}
-function plural(n, one, few, many){
-  if(n === 1) return one;
-  if(n >= 2 && n <= 4) return few;
-  return many;
-}
-
-/* ============================================================
    RYCHLÉ PŘEDVOLBY
    ============================================================ */
 function renderPresets(){
@@ -167,7 +138,6 @@ function updateKeypad(){
   disp.textContent = formatCents(cents);
   box.classList.toggle('empty', cents === 0);
   payBtn.disabled = cents <= 0;
-  updateCounter();
 }
 
 function pressKey(k){
@@ -253,7 +223,6 @@ document.addEventListener('DOMContentLoaded', function(){
     if(cents <= 0) return;
     newPaymentId();
     lsSet(STORE+'lastCents', String(cents));
-    incCount();
     renderPresets();
     showScreen('screen-qr');
     renderQR();
