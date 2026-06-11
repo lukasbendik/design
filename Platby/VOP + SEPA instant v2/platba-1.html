@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="robots" content="noindex, nofollow">
+<title>VOP + SEPA instant – Nová platba</title>
+
+<!-- Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-F1YV23DTKQ"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-F1YV23DTKQ');
+</script>
+
+<!-- Microsoft Clarity -->
+<script type="text/javascript">
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "w8hlprz19n");
+</script>
+
+<!-- UXtweak -->
+<script type="text/javascript">(function(u,x,t,w,e,a,k,s){a=function(v){try{u.setItem(t+e,v)}catch(e){}v=JSON.parse(v);for(k=0;k<v.length;k++){s=x.createElement("script");s.text="(function(u,x,t,w,e,a,k){a=u[e]=function(){a.q.push(arguments)};a.q=[];a.t=+new Date;a.c=w;k=x.createElement('script');k.async=1;k.src=t;x.getElementsByTagName('head')[0].appendChild(k)})(window,document,'"+v[k].u+"',"+JSON.stringify(v[k].c)+",'"+v[k].g+"')";x.getElementsByTagName("head")[0].appendChild(s)}};try{k=u.getItem(t+e)}catch(e){}if(k){return a(k)}k=new XMLHttpRequest;k.onreadystatechange=function(){if(k.readyState==4&&k.status==200)a(k.responseText)};k.open("POST",w+e);k.send(x.URL)})(sessionStorage,document,"uxt:","https://api.uxtweak.com/snippet/","f59aa41b-c6cb-44d3-aff0-690a99cda7d0");</script>
+</script>
+
+<link rel="stylesheet" href="styl.css?v=2">
+</head>
+<body data-page="s05">
+
+<div id="app-shell" data-clarity-unmask="true">
+
+<!-- ══ S05: Nová platba krok 1 ══ -->
+  <div id="s05" class="screen active form-screen">
+    <div class="nav-bar">
+      <span class="nav-back" onclick="closeNewPayment()">✕ Zavřít</span>
+      <span class="nav-title">Nová platba</span>
+      <span class="nav-action">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/>
+          <rect x="3" y="14" width="7" height="7" rx="1"/>
+          <rect x="5" y="5" width="3" height="3" fill="currentColor" stroke="none"/>
+          <rect x="16" y="5" width="3" height="3" fill="currentColor" stroke="none"/>
+          <rect x="5" y="16" width="3" height="3" fill="currentColor" stroke="none"/>
+          <line x1="14" y1="14" x2="14" y2="14.01"/><line x1="17" y1="14" x2="17" y2="14.01"/>
+          <line x1="20" y1="14" x2="20" y2="14.01"/><line x1="14" y1="17" x2="14" y2="17.01"/>
+          <line x1="17" y1="17" x2="20" y2="17"/><line x1="20" y1="20" x2="20" y2="20.01"/>
+          <line x1="17" y1="20" x2="17" y2="20.01"/><line x1="14" y1="20" x2="14" y2="20.01"/>
+        </svg>
+      </span>
+    </div>
+    <div class="screen-scroll">
+    <div class="form-body anim-slideright">
+      <div class="form-card" style="cursor:default;">
+        <div>
+          <div class="form-card-title">Běžný účet</div>
+          <div class="form-card-sub">122000/0100</div>
+        </div>
+        <span class="card-chevron">›</span>
+      </div>
+      <div class="input-group">
+        <div class="input-label">Komu</div>
+        <div class="input-wrap" id="iban-wrap">
+          <input type="text" id="iban-input" placeholder="IBAN nebo číslo účtu" maxlength="34"
+            oninput="validateIBAN()" value="">
+        </div>
+        <div class="input-hint error" id="iban-error" style="display:none">Číslo protiúčtu je povinný údaj.</div>
+      </div>
+      <div class="contact-row" style="background:transparent;box-shadow:none;padding-left:0;padding-right:0;">
+        <div class="contact-icon-wrap">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--kb-red)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="9" cy="7" r="4"/><path d="M3 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2"/>
+            <path d="M16 3.13a4 4 0 0 1 0 7.75"/><path d="M21 21v-2a4 4 0 0 0-3-3.87"/>
+          </svg>
+        </div>
+        <span class="contact-text">Platba na kontakt</span>
+        <span class="contact-chevron">›</span>
+      </div>
+      <div class="amount-row">
+        <div class="input-group" style="flex:1;margin-bottom:0;">
+          <div class="input-label">Částka</div>
+          <div class="input-wrap" id="amount-wrap">
+            <input type="number" id="amount-input" placeholder="" min="1" oninput="updateAmount()">
+          </div>
+        </div>
+        <div class="currency-group">
+          <div class="input-label">Měna</div>
+          <div class="input-wrap" onclick="openCurrencySheet()" style="cursor:pointer;">
+            <span id="currency-display" style="font-weight:600;font-size:15px;width:100%;display:flex;align-items:center;gap:6px;">
+              <span id="currency-flag">🇨🇿</span>
+              <span id="currency-code">Kč</span>
+            </span>
+            <span style="color:var(--text-hint);">⌄</span>
+          </div>
+        </div>
+      </div>
+      <div class="input-hint error" id="amount-error" style="display:none;margin-top:-8px;margin-bottom:8px;">Částka je povinný údaj.</div>
+      <div class="balance-hint" id="balance-hint">Na účtu vám zůstane 125 063,38 Kč.</div>
+    </div>
+    </div><!-- /screen-scroll -->
+    <div class="cta-wrap">
+      <button class="cta-btn" id="s05-btn" onclick="goToS06()">Pokračovat</button>
+    </div>
+  </div>
+
+<!-- ══ Currency bottom sheet ══ -->
+  <div id="currency-overlay" onclick="closeCurrencySheet()" style="display:none;position:absolute;inset:0;background:rgba(0,0,0,0.5);z-index:200;"></div>
+  <div id="currency-sheet" style="display:none;position:absolute;bottom:0;left:0;right:0;background:#F2F2F7;border-radius:24px 24px 0 0;z-index:201;max-height:80%;flex-direction:column;">
+    <div style="display:flex;align-items:center;justify-content:space-between;padding:18px 20px 12px;">
+      <span style="font-size:17px;font-weight:600;">Vyberte měnu</span>
+      <button onclick="closeCurrencySheet()" style="width:30px;height:30px;border-radius:50%;background:#e0e0e0;border:none;cursor:pointer;font-size:16px;color:#666;display:flex;align-items:center;justify-content:center;">✕</button>
+    </div>
+    <div style="overflow-y:auto;-webkit-overflow-scrolling:touch;" id="currency-list"></div>
+  </div>
+
+</div><!-- /app-shell -->
+
+<script>window.PAGE_SHEETS=["currency"];</script>
+<script src="core.js?v=1"></script>
+</body>
+</html>

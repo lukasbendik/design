@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="robots" content="noindex, nofollow">
+<title>VOP + SEPA instant – Souhrn</title>
+
+<!-- Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-F1YV23DTKQ"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-F1YV23DTKQ');
+</script>
+
+<!-- Microsoft Clarity -->
+<script type="text/javascript">
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "w8hlprz19n");
+</script>
+
+<!-- UXtweak -->
+<script type="text/javascript">(function(u,x,t,w,e,a,k,s){a=function(v){try{u.setItem(t+e,v)}catch(e){}v=JSON.parse(v);for(k=0;k<v.length;k++){s=x.createElement("script");s.text="(function(u,x,t,w,e,a,k){a=u[e]=function(){a.q.push(arguments)};a.q=[];a.t=+new Date;a.c=w;k=x.createElement('script');k.async=1;k.src=t;x.getElementsByTagName('head')[0].appendChild(k)})(window,document,'"+v[k].u+"',"+JSON.stringify(v[k].c)+",'"+v[k].g+"')";x.getElementsByTagName("head")[0].appendChild(s)}};try{k=u.getItem(t+e)}catch(e){}if(k){return a(k)}k=new XMLHttpRequest;k.onreadystatechange=function(){if(k.readyState==4&&k.status==200)a(k.responseText)};k.open("POST",w+e);k.send(x.URL)})(sessionStorage,document,"uxt:","https://api.uxtweak.com/snippet/","f59aa41b-c6cb-44d3-aff0-690a99cda7d0");</script>
+</script>
+
+<link rel="stylesheet" href="styl.css?v=2">
+</head>
+<body data-page="s08">
+
+<div id="app-shell" data-clarity-unmask="true">
+
+<!-- ══ S08: Souhrn ══ -->
+  <div id="s08" class="screen active summary-screen">
+    <div class="nav-bar">
+      <span class="nav-back" onclick="track('summary_back_tapped'); goTo('s06')">‹ Zpět</span>
+    </div>
+    <div class="screen-scroll">
+    <div class="summary-big-title anim-fadein">Souhrn</div>
+    <div class="summary-detail-card anim-slideup">
+      <div class="sd-row">
+        <div class="sd-label">Z účtu</div>
+        <div class="sd-value">FRANTIŠEK KOUDELKA<br><span style="font-size:14px;color:#666;">122000/0100</span></div>
+      </div>
+      <div class="sd-row">
+        <div class="sd-label">Na účet</div>
+        <div class="sd-value" id="sum-iban">–</div>
+      </div>
+      <div class="sd-row">
+        <div class="sd-label">Částka</div>
+        <div class="sd-value" id="sum-amount">–</div>
+      </div>
+      <div class="sd-row">
+        <div class="sd-label">Poplatek</div>
+        <div class="sd-value">Zdarma</div>
+      </div>
+      <div class="sd-row">
+        <div class="sd-label">Přesný název příjemce</div>
+        <div class="sd-value" id="sum-name">–</div>
+        <div class="sd-sub" id="sum-verify">–</div>
+      </div>
+      <div class="sd-row">
+        <div class="sd-label">Datum platby</div>
+        <div class="sd-value" id="sum-date">–</div>
+      </div>
+    </div>
+    </div><!-- /screen-scroll -->
+    <div class="cta-wrap">
+      <button class="cta-btn" onclick="showAuth()">Potvrdit platbu</button>
+    </div>
+  </div>
+
+<!-- ══ S09: Auth overlay (shown over s08) ══ -->
+  <div id="s09" class="screen" style="background:transparent; display:none; position:absolute; inset:0; z-index:100;">
+    <div class="auth-overlay">
+      <div class="auth-sheet" style="position:relative;">
+        <button class="sheet-close" onclick="hideAuth()">✕</button>
+        <span class="sheet-handle"></span>
+        <div class="sheet-title">Potvrzení platby</div>
+        <div class="sheet-sub">Potvrďte ji PIN kódem.</div>
+        <div class="pin-dots" id="auth-pin-dots" style="margin-bottom:20px;">
+          <div class="pin-dot" id="ap0"></div>
+          <div class="pin-dot" id="ap1"></div>
+          <div class="pin-dot" id="ap2"></div>
+          <div class="pin-dot" id="ap3"></div>
+        </div>
+        <div class="pin-keypad" style="padding:0 10px;">
+          <button class="pin-key" onclick="pinPress('auth',1)">1</button>
+          <button class="pin-key" onclick="pinPress('auth',2)">2</button>
+          <button class="pin-key" onclick="pinPress('auth',3)">3</button>
+          <button class="pin-key" onclick="pinPress('auth',4)">4</button>
+          <button class="pin-key" onclick="pinPress('auth',5)">5</button>
+          <button class="pin-key" onclick="pinPress('auth',6)">6</button>
+          <button class="pin-key" onclick="pinPress('auth',7)">7</button>
+          <button class="pin-key" onclick="pinPress('auth',8)">8</button>
+          <button class="pin-key" onclick="pinPress('auth',9)">9</button>
+          <button class="pin-key empty"></button>
+          <button class="pin-key" onclick="pinPress('auth',0)">0</button>
+          <button class="pin-key delete" onclick="pinDelete('auth')">⌫</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /app-shell -->
+
+<script>window.PAGE_SHEETS=[];</script>
+<script src="core.js?v=1"></script>
+</body>
+</html>
