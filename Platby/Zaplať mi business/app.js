@@ -131,18 +131,21 @@ function renderPresets(){
   if(!wrap) return;
   wrap.innerHTML = '';
 
-  // "Naposledy" chip (pokud existuje a liší se od fixních presetů)
-  var lastCents = parseInt(lsGet(STORE+'lastCents') || '0', 10);
-  if(lastCents > 0 && PRESETS.indexOf(lastCents/100) === -1){
-    addPreset(wrap, lastCents, '↻ ' + formatCents(lastCents));
-  }
   PRESETS.forEach(function(kc){
     addPreset(wrap, kc*100, kc + ' Kč');
   });
+  // "Naposledy" chip jako poslední na novém řádku (pokud existuje a liší se od presetů)
+  var lastCents = parseInt(lsGet(STORE+'lastCents') || '0', 10);
+  if(lastCents > 0 && PRESETS.indexOf(lastCents/100) === -1){
+    var brk = document.createElement('span');
+    brk.className = 'kp-presets-break';
+    wrap.appendChild(brk);
+    addPreset(wrap, lastCents, 'Naposledy ' + formatCents(lastCents), true);
+  }
 }
-function addPreset(wrap, c, label){
+function addPreset(wrap, c, label, isLast){
   var b = document.createElement('button');
-  b.className = 'kp-preset';
+  b.className = 'kp-preset' + (isLast ? ' kp-preset-last' : '');
   b.type = 'button';
   b.textContent = label;
   b.addEventListener('click', function(){

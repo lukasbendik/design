@@ -199,6 +199,8 @@ body{
   padding:9px 16px;border-radius:22px;cursor:pointer;white-space:nowrap;
 }
 .kp-preset:active{background:var(--line);}
+.kp-presets-break{flex-basis:100%;height:0;}
+.kp-preset-last{border-color:var(--kb-red);color:var(--kb-red);}
 
 .keypad{
   display:grid;grid-template-columns:repeat(3,1fr);gap:10px;
