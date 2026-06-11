@@ -181,17 +181,17 @@ body{
 .kp-label{text-align:center;color:var(--text-2);font-size:14px;margin-top:22px;}
 .kp-amount{
   text-align:center;font-size:48px;font-weight:700;letter-spacing:-1px;
-  margin:10px 0 16px;display:flex;align-items:baseline;justify-content:center;gap:8px;
+  margin:10px 0 auto;display:flex;align-items:baseline;justify-content:center;gap:8px;
   min-height:58px;
 }
 .kp-amount .kp-cur{font-size:24px;font-weight:600;color:var(--text-2);}
 #kp-display{color:var(--text-1);}
 .kp-amount.empty #kp-display{color:var(--text-3);}
 
-/* rychlé předvolby */
+/* rychlé předvolby — těsně nad klávesnicí */
 .kp-presets{
   display:flex;flex-wrap:wrap;justify-content:center;gap:8px;
-  padding:0 2px 4px;margin:0 0 auto;
+  padding:0 2px;margin:0 0 12px;
 }
 .kp-preset{
   flex:0 0 auto;border:1.5px solid var(--line);background:#fff;
@@ -200,7 +200,7 @@ body{
 }
 .kp-preset:active{background:var(--line);}
 .kp-presets-break{flex-basis:100%;height:0;}
-.kp-preset-last{border-color:var(--kb-red);color:var(--kb-red);}
+.kp-preset-last{border-color:var(--text-1);border-width:2px;color:var(--text-1);}
 
 .keypad{
   display:grid;grid-template-columns:repeat(3,1fr);gap:10px;
