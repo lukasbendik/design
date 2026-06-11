@@ -1134,7 +1134,9 @@ document.addEventListener('DOMContentLoaded', () => {
     history.replaceState({ screen: initialScreen, sheet: initialSheet || null }, '', restoredHash);
     if (initialSheet && SHEET_CONFIG[initialSheet]) showSheetDOM(initialSheet);
   } else {
-    // Žádný hash → zapsat počáteční stav s00, aby prohlížečové zpět fungovalo správně
-    history.replaceState({ screen: 's00' }, '', '#s00');
+    // Žádný hash → start na s00b (Vyčkejte na instrukce); obrazovka souhlasu s00 se přeskakuje
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    document.getElementById('s00b').classList.add('active');
+    history.replaceState({ screen: 's00b' }, '', '#s00b');
   }
 });
