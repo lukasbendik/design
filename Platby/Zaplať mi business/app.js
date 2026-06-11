@@ -167,9 +167,6 @@ function renderQR(){
 
   document.getElementById('qr-amount').textContent = amountDisplay(amount);
   document.getElementById('qr-id-val').textContent = pid;
-  document.getElementById('qr-account').textContent = ACCOUNT;
-  document.getElementById('qr-iban').textContent = IBAN_FMT;
-  document.getElementById('qr-vs').textContent = vs || '—';
 
   // SPAYD — český QR formát platby
   var spayd = 'SPD*1.0*ACC:' + IBAN_RAW + '*AM:' + amtFixed + '*CC:CZK*X-VS:' + vs + '*MSG:POKLADNA';
