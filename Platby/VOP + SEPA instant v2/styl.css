@@ -787,23 +787,7 @@
   /* ══════════════════════════
      MULTIPAGE (rozdělené obrazovky) – přechody mezi stránkami
   ══════════════════════════ */
-  /* fadeIn keyframe (používá .anim-fadein) */
-  @keyframes fadeIn { from { opacity: 0 } to { opacity: 1 } }
-
-  /* Cross-document View Transitions – plynulý přechod mezi HTML stránkami.
-     Podporováno v Chrome/Edge 126+. V Safari/FF zatím bez animace (instant),
-     fallback obstarají vstupní animace .anim-* na obsahu každé stránky. */
-  @view-transition { navigation: auto; }
-
-  @keyframes vt-slide-in  { from { opacity: 0; transform: translateX(24px) } to { opacity: 1; transform: none } }
-  @keyframes vt-slide-out { from { opacity: 1; transform: none } to { opacity: 0; transform: translateX(-18px) } }
-
-  ::view-transition-old(root) {
-    animation: vt-slide-out 0.22s cubic-bezier(0.4,0,0.2,1) both;
-  }
-  ::view-transition-new(root) {
-    animation: vt-slide-in 0.26s cubic-bezier(0.25,0.46,0.45,0.94) both;
-  }
-  @media (prefers-reduced-motion: reduce) {
-    ::view-transition-old(root), ::view-transition-new(root) { animation: none; }
-  }
+  /* Animace přechodů mezi stránkami i vstupní animace obsahu vypnuté –
+     na PC při cross-document navigaci blikaly. Jediná ponechaná animace je
+     slideUpSheet u bottom sheetů (řídí ji showSheetDOM v core.js). */
+  .anim-fadein, .anim-slideup, .anim-slideright { animation: none !important; }
