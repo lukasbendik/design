@@ -202,7 +202,7 @@ body{
   background:#fff;border-top:1px solid var(--line);
   display:flex;gap:10px;
 }
-.qr-actions{padding-top:12px;}
+.qr-actions{padding-top:12px;flex-direction:column;}
 .primary-btn{
   flex:1;height:54px;border:none;border-radius:14px;cursor:pointer;
   background:var(--kb-red);color:#fff;font-size:16px;font-weight:700;
@@ -237,10 +237,3 @@ body{
 .qr-row:last-child{border-bottom:none;}
 .qr-lbl{font-size:14px;color:var(--text-2);}
 .qr-val{font-size:14px;font-weight:600;color:var(--text-1);text-align:right;}
-
-.qr-hint{
-  display:flex;gap:8px;align-items:flex-start;text-align:left;
-  background:#EAF4FF;color:#1F5C99;border-radius:12px;
-  padding:12px 14px;margin-top:14px;font-size:13px;line-height:1.4;
-}
-.qr-hint svg{flex:0 0 auto;margin-top:1px;}
