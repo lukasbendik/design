@@ -223,13 +223,6 @@ document.addEventListener('DOMContentLoaded', function(){
     updateKeypad();
   });
 
-  // QR — Zavřít → domů (reset částky)
-  document.getElementById('btn-qr-close').addEventListener('click', function(){
-    amount = '';
-    lsSet(STORE+'amount', '');
-    showScreen('screen-home');
-  });
-
   // QR — Zadat další → klávesnice (reset částky)
   document.getElementById('btn-qr-another').addEventListener('click', function(){
     amount = '';
