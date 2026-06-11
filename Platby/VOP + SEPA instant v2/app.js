@@ -110,28 +110,9 @@ function updateDashboardBalance() {
   el.innerHTML = whole + '<span>' + decimal + ' Kč</span>';
 }
 
-// ── URL routing (query param místo hashe) ──
-// Každá obrazovka má vlastní URL ?screen=<slug>, aby Clarity dělala heatmapy
-// per obrazovka. Měníme jen URL přes history (žádné nové načtení dokumentu),
-// takže Clarity nahrává celý průchod jako JEDNU nahrávku. Parametr je na
-// reálném souboru index.html, takže refresh na GitHub Pages nedělá 404.
-const SCREEN_SLUG = {
-  s00:'souhlas', s00b:'ukol', s01:'telefon', s02:'splash', s03:'prihlaseni',
-  s04:'prehled', s05:'platba-1', s06:'platba-2', s08:'souhrn', s10:'hotovo',
-  s11:'ucet-bezny', s12:'ucet-sporici', s13:'vsechny-platby', s14:'qr-platba',
-  s15:'zaplat-mi', s16:'konec'
-};
-const SLUG_SCREEN = Object.fromEntries(Object.entries(SCREEN_SLUG).map(([k, v]) => [v, k]));
-function slugOf(id) { return SCREEN_SLUG[id] || id; }
-function screenUrl(id, sheet) {
-  let q = '?screen=' + slugOf(id);
-  if (sheet) q += '&sheet=' + sheet;
-  return window.location.pathname + q;
-}
-
 // ── Sheet registry ──
-// Každý sheet má parent obrazovku → URL je '?screen=<parent>&sheet=<sheet>',
-// aby šel sheet trackovat v GA jako vlastní page_view i obnovit po refreshi.
+// Každý sheet má parent obrazovku → hash je '#<parent>/<sheet>', aby šel sheet
+// trackovat v GA jako vlastní page_view i obnovit po refreshi.
 const SHEET_CONFIG = {
   partial:      { parent: 's06', display: 'block' },
   nomatch:      { parent: 's06', display: 'block' },
@@ -143,13 +124,11 @@ const SHEET_CONFIG = {
 };
 const SHEET_NAMES = Object.keys(SHEET_CONFIG);
 
-function parseLoc() {
-  const p = new URLSearchParams(window.location.search);
-  const slug = p.get('screen');
-  const sheet = p.get('sheet');
-  let screen = null;
-  if (slug) screen = SLUG_SCREEN[slug] || (document.getElementById(slug) ? slug : null);
-  return { screen, sheet: sheet || null };
+function parseHash() {
+  const h = (window.location.hash || '').replace('#', '');
+  if (!h) return { screen: null, sheet: null };
+  const parts = h.split('/');
+  return { screen: parts[0] || null, sheet: parts[1] || null };
 }
 
 function showSheetDOM(name) {
@@ -192,11 +171,11 @@ function openSheet(name) {
   const cfg = SHEET_CONFIG[name];
   if (!cfg) return;
   showSheetDOM(name);
-  const url = screenUrl(cfg.parent, name);
-  if (window.location.search !== '?screen=' + slugOf(cfg.parent) + '&sheet=' + name) {
-    history.pushState({ screen: cfg.parent, sheet: name }, '', url);
+  const hash = '#' + cfg.parent + '/' + name;
+  if (window.location.hash !== hash) {
+    history.pushState({ screen: cfg.parent, sheet: name }, '', hash);
   }
-  trackPageView(slugOf(cfg.parent) + '/' + name);
+  trackPageView(cfg.parent + '/' + name);
 }
 
 function closeSheet(name, opts) {
@@ -204,11 +183,11 @@ function closeSheet(name, opts) {
   hideSheetDOM(name);
   const cfg = SHEET_CONFIG[name];
   if (!cfg) return;
-  const url = screenUrl(cfg.parent);
-  if (window.location.search !== '?screen=' + slugOf(cfg.parent)) {
-    history.replaceState({ screen: cfg.parent }, '', url);
+  const hash = '#' + cfg.parent;
+  if (window.location.hash !== hash) {
+    history.replaceState({ screen: cfg.parent }, '', hash);
   }
-  if (!opts.skipTrack) trackPageView(slugOf(cfg.parent));
+  if (!opts.skipTrack) trackPageView(cfg.parent);
 }
 
 // ── Navigation ──
@@ -217,11 +196,11 @@ function goTo(id) {
   const target = document.getElementById(id);
   target.classList.add('active');
   if (isAnySheetOpen()) hideAllSheets();
-  const url = screenUrl(id);
-  if (window.location.search !== '?screen=' + slugOf(id)) {
-    history.pushState({ screen: id }, '', url);
+  const hash = '#' + id;
+  if (window.location.hash !== hash) {
+    history.pushState({ screen: id }, '', hash);
   }
-  trackPageView(slugOf(id));
+  trackPageView(id);
   // hide auth overlay if navigating away
   if (id !== 's08') {
     const auth = document.getElementById('s09');
@@ -1120,44 +1099,44 @@ document.addEventListener('DOMContentLoaded', () => {
     if (id === 's02') startSplash();
   };
 
-  // Browser/Android back/forward — sync obrazovky + sheetu z URL parametru.
-  // goTo/openSheet/closeSheet používají pushState/replaceState (mění query),
-  // takže back/forward emituje popstate (ne hashchange).
-  window.addEventListener('popstate', () => {
-    const { screen, sheet } = parseLoc();
-    const targetScreen = screen || 's00b';
-    if (!document.getElementById(targetScreen)) return;
+  // Handle browser/Android back gesture — sync screen + sheet to URL hash.
+  // pushState/replaceState v goTo a openSheet/closeSheet hashchange neemitují,
+  // takže tento listener reaguje jen na browser back/forward.
+  window.addEventListener('hashchange', () => {
+    const { screen, sheet } = parseHash();
+    if (!screen || !document.getElementById(screen)) return;
     const activeScreen = document.querySelector('.screen.active');
-    const screenChanged = !activeScreen || activeScreen.id !== targetScreen;
+    const screenChanged = !activeScreen || activeScreen.id !== screen;
     if (screenChanged) {
       document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-      document.getElementById(targetScreen).classList.add('active');
+      document.getElementById(screen).classList.add('active');
     }
     if (sheet && SHEET_CONFIG[sheet]) {
       hideAllSheets();
       showSheetDOM(sheet);
-      trackPageView(slugOf(targetScreen) + '/' + sheet);
+      trackPageView(screen + '/' + sheet);
     } else {
       const wasSheetOpen = isAnySheetOpen();
       if (wasSheetOpen) hideAllSheets();
-      if (screenChanged || wasSheetOpen) trackPageView(slugOf(targetScreen));
+      if (screenChanged || wasSheetOpen) trackPageView(screen);
     }
   });
   window._origGoTo = origGoTo;
 
-  // Obnova obrazovky (a případného sheetu) z URL parametru při refresh.
-  const { screen: initialScreen, sheet: initialSheet } = parseLoc();
+  // Obnova obrazovky (a případného sheetu) z URL hash při refresh.
+  const { screen: initialScreen, sheet: initialSheet } = parseHash();
   if (initialScreen && document.getElementById(initialScreen)) {
     document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
     document.getElementById(initialScreen).classList.add('active');
-    history.replaceState({ screen: initialScreen, sheet: initialSheet || null }, '', screenUrl(initialScreen, initialSheet && SHEET_CONFIG[initialSheet] ? initialSheet : null));
+    const restoredHash = initialSheet && SHEET_CONFIG[initialSheet]
+      ? '#' + initialScreen + '/' + initialSheet
+      : '#' + initialScreen;
+    history.replaceState({ screen: initialScreen, sheet: initialSheet || null }, '', restoredHash);
     if (initialSheet && SHEET_CONFIG[initialSheet]) showSheetDOM(initialSheet);
-    else trackPageView(slugOf(initialScreen));
   } else {
-    // Žádný parametr → start na s00b (Úkol); obrazovka souhlasu s00 se přeskakuje
+    // Žádný hash → start na s00b (Vyčkejte na instrukce); obrazovka souhlasu s00 se přeskakuje
     document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
     document.getElementById('s00b').classList.add('active');
-    history.replaceState({ screen: 's00b' }, '', screenUrl('s00b'));
-    trackPageView('ukol');
+    history.replaceState({ screen: 's00b' }, '', '#s00b');
   }
 });
