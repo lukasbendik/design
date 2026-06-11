@@ -190,10 +190,9 @@ body{
 
 /* rychlé předvolby */
 .kp-presets{
-  display:flex;gap:8px;overflow-x:auto;padding:0 2px 4px;margin:0 -2px auto;
-  -webkit-overflow-scrolling:touch;
+  display:flex;flex-wrap:wrap;justify-content:center;gap:8px;
+  padding:0 2px 4px;margin:0 0 auto;
 }
-.kp-presets::-webkit-scrollbar{display:none;}
 .kp-preset{
   flex:0 0 auto;border:1.5px solid var(--line);background:#fff;
   color:var(--text-1);font-size:14px;font-weight:700;
