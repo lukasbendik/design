@@ -7,5 +7,5 @@
   - [x] Interaktivní PIN klávesnici (Face ID, Backspace)
   - [x] Odečet schválené částky (2 300 Kč) ze zůstatku Běžného účtu 2 po autorizaci
   - [x] Hash-routing, history state a data persistence v localStorage
-- [/] Spustit generátor index.html (`node generate.js`)
-- [ ] Nahrát změny na GitHub a ověřit deployment
+- [x] Spustit generátor index.html (`node generate.js`)
+- [x] Nahrát změny na GitHub a ověřit deployment
