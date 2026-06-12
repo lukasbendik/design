@@ -10,7 +10,7 @@
 <meta http-equiv="Expires" content="0">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="noindex, nofollow">
-<title>Vícenásobná autorizace inkas · Prototyp</title>
+<title>Vícenásobná autorizace inkas</title>
 
 <!-- Google Analytics 4 -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXX"></script>
@@ -34,24 +34,21 @@
 * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
 :root {
   --red: #E2001A;
-  --red-dark: #B8000C;
-  --bg: #F4F4F4;
+  --red-hover: #C90014;
+  --bg: #F4F5F7;
   --card: #FFFFFF;
   --text: #1A1A1A;
-  --text-2: #6A6A6A;
-  --text-3: #9A9A9A;
-  --border: #E5E5E5;
-  --border-focus: #1A1A1A;
-  --green: #0E8A4F;
-  --green-bg: #EAF6EF;
-  --orange: #D97706;
-  --orange-bg: #FEF3C7;
-  --shadow: 0 1px 3px rgba(0,0,0,0.07);
-  --shadow-md: 0 4px 16px rgba(0,0,0,0.10);
+  --text-secondary: #5E6977;
+  --text-muted: #9AA6B5;
+  --border: #E8ECEF;
+  --green: #10B981;
+  --green-bg: #D1FAE5;
+  --gray-pill: #F0F2F5;
+  --shadow: 0 1px 3px rgba(0,0,0,0.05);
 }
 
 html, body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   background: #2a2a2a;
   color: var(--text);
   min-height: 100vh;
@@ -91,43 +88,9 @@ h1.proto-title {
   display: none;
   flex-direction: column;
   background: var(--bg);
-  transition: opacity 0.2s;
   height: 100%;
 }
 .screen.active { display: flex; }
-
-/* ====== TOP BAR ====== */
-.topbar {
-  height: 52px;
-  display: flex;
-  align-items: center;
-  padding: 0 16px;
-  background: #fff;
-  flex-shrink: 0;
-  position: relative;
-  border-bottom: 1px solid var(--border);
-}
-.topbar-title {
-  position: absolute; left: 0; right: 0;
-  text-align: center;
-  font-size: 17px; font-weight: 600;
-  pointer-events: none;
-}
-.back-btn {
-  display: flex; align-items: center; gap: 4px;
-  background: none; border: none; cursor: pointer;
-  font-size: 16px; color: var(--text);
-  padding: 8px 0; border-radius: 8px; z-index: 1;
-  font-weight: 500;
-}
-.close-btn {
-  margin-left: auto;
-  background: none; border: none; cursor: pointer;
-  width: 32px; height: 32px; border-radius: 50%;
-  display: flex; align-items: center; justify-content: center;
-  color: var(--text-2); z-index: 1;
-}
-.close-btn:active, .back-btn:active { opacity: 0.6; }
 
 /* ====== SCROLLABLE AREA ====== */
 .scroll {
@@ -138,187 +101,337 @@ h1.proto-title {
 }
 .scroll::-webkit-scrollbar { display: none; }
 
-/* ====== CARDS ====== */
-.card-group {
-  background: #fff;
-  border-radius: 16px;
-  box-shadow: var(--shadow);
-  margin-bottom: 14px;
-  overflow: hidden;
-}
-.card-title {
-  font-size: 13px;
-  font-weight: 600;
-  color: var(--text-3);
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  margin: 16px 0 8px 4px;
-}
-
-/* ====== HOME SCREEN SPECIFICS ====== */
-.home-header {
+/* ====== GENERAL HEADER (TOPBAR) ====== */
+.topbar {
+  height: 56px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 12px 14px 8px;
-  background: #fff;
-}
-.header-actions {
-  display: flex;
-  gap: 12px;
-  align-items: center;
-}
-.avatar-btn {
-  width: 36px; height: 36px;
-  border-radius: 50%;
-  background: #E5E7EB;
-  display: flex; align-items: center; justify-content: center;
-  font-weight: 600; font-size: 14px; color: var(--text-2);
-  border: 1.5px solid #fff;
-  box-shadow: var(--shadow);
-  cursor: pointer;
-}
-.icon-btn {
-  width: 36px; height: 36px;
-  border-radius: 50%;
-  display: flex; align-items: center; justify-content: center;
-  color: var(--text);
-  cursor: pointer;
-  background: #F3F4F6;
-}
-
-.banner-card {
-  background: #FFF5F5;
-  border-left: 4px solid var(--red);
-  padding: 14px;
-  border-radius: 12px;
-  margin-bottom: 16px;
-  box-shadow: var(--shadow);
-}
-.banner-title {
-  font-size: 14px; font-weight: 600; color: #9B1C1C;
-  margin-bottom: 4px; display: flex; align-items: center; gap: 6px;
-}
-.banner-desc {
-  font-size: 12px; color: #C05621; line-height: 1.4;
-  margin-bottom: 10px;
-}
-.banner-actions {
-  display: flex; gap: 8px;
-}
-.banner-btn {
-  padding: 6px 12px; font-size: 12px; font-weight: 600;
-  border-radius: 8px; border: none; cursor: pointer;
-}
-.banner-btn.primary {
-  background: var(--red); color: white;
-}
-.banner-btn.secondary {
-  background: #F3F4F6; color: var(--text-2);
-}
-
-.account-item {
-  display: flex;
-  align-items: center;
-  padding: 16px;
-  border-bottom: 1px solid var(--border);
-  cursor: pointer;
-  transition: background 0.15s;
-}
-.account-item:last-child { border-bottom: none; }
-.account-item:active { background: #F9FAFB; }
-.account-icon {
-  width: 40px; height: 40px;
-  border-radius: 10px;
-  background: #FFF1F2;
-  color: var(--red);
-  display: flex; align-items: center; justify-content: center;
-  margin-right: 12px;
+  padding: 0 16px;
+  background: var(--bg);
   flex-shrink: 0;
+  border-bottom: 1px solid transparent;
 }
-.account-info {
-  flex: 1;
+.topbar-center {
+  position: absolute; left: 0; right: 0;
+  text-align: center;
+  font-size: 20px; font-weight: 700;
+  pointer-events: none;
+  color: var(--text);
 }
-.account-label {
-  font-size: 14px; font-weight: 600; color: var(--text);
-  margin-bottom: 2px;
+.topbar-right-text {
+  font-size: 13px; color: var(--text-secondary);
 }
-.account-sub {
-  font-size: 12px; color: var(--text-3);
-}
-.account-val {
-  font-size: 15px; font-weight: 700; color: var(--text);
-  text-align: right;
+.back-link {
+  display: flex; align-items: center; gap: 4px;
+  font-size: 16px; color: var(--text);
+  font-weight: 500; text-decoration: none;
+  cursor: pointer; background: none; border: none;
+  z-index: 2;
 }
 
-/* ====== ACCOUNT SCREEN ====== */
-.balance-card {
-  background: #fff;
-  border-radius: 20px;
-  padding: 24px 20px;
-  text-align: center;
-  margin-bottom: 20px;
+/* ====== CARDS ====== */
+.card {
+  background: var(--card);
+  border-radius: 16px;
   box-shadow: var(--shadow);
+  padding: 16px;
+  margin-bottom: 12px;
 }
-.balance-card .acc-num {
-  font-size: 13px; color: var(--text-3); margin-bottom: 8px;
-}
-.balance-card .acc-val {
-  font-size: 32px; font-weight: 800; color: var(--text); letter-spacing: -0.5px;
-  margin-bottom: 4px;
-}
-.balance-card .acc-label {
-  font-size: 12px; color: var(--text-2); font-weight: 500;
-  margin-bottom: 20px;
-}
-.action-grid {
-  display: flex;
-  gap: 12px;
-  justify-content: center;
-}
-.action-pill {
-  flex: 1;
-  padding: 12px 8px;
-  background: #F3F4F6;
-  border: none; border-radius: 12px;
-  font-size: 13px; font-weight: 600; color: var(--text);
-  cursor: pointer;
-  display: flex; flex-direction: column; align-items: center; gap: 6px;
-  transition: all 0.15s;
-}
-.action-pill.active {
+
+/* ====== BUTTONS ====== */
+.primary-btn {
+  width: 100%;
+  padding: 15px;
   background: var(--red);
   color: #fff;
-  box-shadow: 0 4px 12px rgba(226,0,26,0.25);
+  border: none; border-radius: 12px;
+  font-size: 16px; font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s, opacity 0.15s;
+  text-align: center;
 }
-.action-pill:active { transform: scale(0.97); }
+.primary-btn:active { background: var(--red-hover); }
+.primary-btn:disabled {
+  background: #E5E7EB; color: #9CA3AF; cursor: not-allowed;
+}
 
-.tx-item {
+.secondary-btn {
+  width: 100%;
+  padding: 15px;
+  background: var(--card);
+  color: var(--text);
+  border: 1px solid #D1D5DB; border-radius: 12px;
+  font-size: 16px; font-weight: 600;
+  cursor: pointer;
+  text-align: center;
+  transition: background 0.15s;
+}
+.secondary-btn:active { background: #F9FAFB; }
+
+/* ====== FOOTER (BOTTOM STICKY BAR) ====== */
+.sticky-footer {
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  padding: 16px 16px 24px;
+  background: #F8F9FA;
+  border-top: 1px solid #E5E7EB;
+  z-index: 10;
   display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.footer-text-group {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.footer-amount-label {
+  font-size: 16px; font-weight: 700; color: var(--text);
+}
+.footer-subtitle {
+  font-size: 13px; color: var(--text-secondary);
+}
+
+/* ====== FLAGS ====== */
+.flag-pill {
+  display: inline-flex;
   align-items: center;
-  padding: 14px 16px;
+  gap: 6px;
+  padding: 6px 12px;
+  background: var(--gray-pill);
+  border-radius: 8px;
+  font-size: 13px; font-weight: 600; color: var(--text);
+  border: 1px solid var(--border);
+  cursor: pointer;
+}
+.flag-svg {
+  width: 18px; height: 12px;
+  border-radius: 2px;
+  box-shadow: 0 0 1px rgba(0,0,0,0.2);
+}
+
+/* ================================================================== */
+/* SCREEN 1: DOMŮ (PREHLED)                                           */
+/* ================================================================== */
+.home-top {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 12px 16px 8px;
+  gap: 16px;
+}
+.home-avatar {
+  width: 38px; height: 38px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  cursor: pointer;
+}
+.home-avatar img {
+  width: 100%; height: 100%; object-fit: cover;
+}
+.home-top-icon {
+  width: 24px; height: 24px; color: var(--text); cursor: pointer;
+}
+.home-top-icon-wrapper {
+  position: relative;
+}
+.home-top-icon-badge {
+  position: absolute; top: -4px; right: -4px;
+  background: var(--red); color: white;
+  width: 14px; height: 14px; border-radius: 50%;
+  font-size: 9px; font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+}
+
+.segment-pills {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding: 4px 16px 12px;
+}
+.segment-pills::-webkit-scrollbar { display: none; }
+.segment-pill {
+  padding: 8px 16px;
+  border-radius: 20px;
+  background: #FFF;
+  color: var(--text);
+  font-size: 14px; font-weight: 600;
+  border: none; cursor: pointer;
+  white-space: nowrap;
+}
+.segment-pill.active {
+  background: var(--red);
+  color: #FFF;
+}
+
+.home-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 14px; font-weight: 600; color: var(--text-secondary);
+  margin-bottom: 14px;
+  cursor: pointer;
+}
+.acc-row {
+  display: flex;
+  flex-direction: column;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border);
+  cursor: pointer;
+}
+.acc-row:last-child { border-bottom: none; }
+.acc-row-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.acc-name-label {
+  font-size: 14px; font-weight: 600; color: var(--text-secondary);
+}
+.acc-number-label {
+  font-size: 13px; color: var(--text-muted);
+}
+.acc-balance-label {
+  font-size: 20px; font-weight: 700; color: var(--text);
+}
+.acc-row-bottom {
+  display: flex;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+/* June Summary Card */
+.summary-progress-bar {
+  height: 6px; background: #E5E7EB; border-radius: 3px;
+  overflow: hidden; margin: 12px 0;
+}
+.summary-progress-fill {
+  width: 48%; height: 100%; background: #374151;
+}
+.summary-info-row {
+  display: flex; justify-content: space-between; align-items: center; font-size: 13px;
+  margin-bottom: 8px;
+}
+.summary-info-row:last-child { margin-bottom: 0; }
+.green-line {
+  height: 4px; background: var(--green); margin-bottom: 6px; border-radius: 2px;
+}
+
+/* Floating Red Bottom Bar */
+.floating-bar {
+  position: absolute;
+  bottom: 24px; left: calc(50% - 165px);
+  width: 330px; height: 64px;
+  background: var(--red);
+  border-radius: 24px;
+  display: flex; justify-content: space-around; align-items: center;
+  box-shadow: 0 8px 24px rgba(226,0,26,0.3);
+  z-index: 100;
+  padding: 0 8px;
+}
+.floating-item {
+  display: flex; flex-direction: column; align-items: center; gap: 4px;
+  color: white; text-decoration: none; cursor: pointer;
+  flex: 1;
+}
+.floating-item-icon {
+  width: 20px; height: 20px;
+}
+.floating-item-label {
+  font-size: 11px; font-weight: 600;
+}
+
+/* ================================================================== */
+/* SCREEN 2: DETAIL ÚČTU (BĚŽNÝ ÚČET 2)                               */
+/* ================================================================== */
+.detail-balance-box {
+  text-align: left; padding: 12px 0 16px;
+}
+.detail-balance-val {
+  font-size: 34px; font-weight: 800; color: var(--text); letter-spacing: -0.5px;
+  margin-bottom: 12px;
+}
+.detail-balance-pills {
+  display: flex; gap: 8px; margin-bottom: 4px;
+}
+.detail-pills-scroll {
+  display: flex; gap: 8px; overflow-x: auto; margin-bottom: 14px;
+}
+.detail-pills-scroll::-webkit-scrollbar { display: none; }
+.detail-tab-pill {
+  padding: 8px 16px; border-radius: 12px; border: none; font-size: 13px; font-weight: 600; cursor: pointer;
+}
+.detail-tab-pill.active {
+  background: var(--red); color: white;
+}
+.detail-tab-pill.inactive {
+  background: var(--gray-pill); color: var(--text);
+}
+
+.manage-btn {
+  display: flex; justify-content: space-between; align-items: center;
+  background: #FFF; border-radius: 16px; padding: 16px;
+  box-shadow: var(--shadow); margin-bottom: 12px;
+  font-size: 14px; font-weight: 600; cursor: pointer;
+  border: none; width: 100%; text-align: left;
+}
+.manage-btn:active { background: #FAFAFA; }
+.manage-btn-left { display: flex; align-items: center; gap: 12px; }
+.manage-btn-icon { width: 22px; height: 22px; color: var(--red); }
+
+.filter-bar {
+  display: flex; justify-content: space-between; align-items: center;
+  background: #FFF; border-radius: 16px; padding: 14px 16px;
+  box-shadow: var(--shadow); margin-bottom: 12px;
+  font-size: 14px; font-weight: 600; color: var(--text-secondary);
+}
+
+.date-section-title {
+  font-size: 15px; font-weight: 700; color: var(--text); margin: 16px 0 8px 4px;
+}
+
+.tx-row {
+  display: flex; align-items: center; padding: 14px 0;
   border-bottom: 1px solid var(--border);
 }
-.tx-item:last-child { border-bottom: none; }
-.tx-icon {
-  width: 36px; height: 36px;
-  border-radius: 50%;
-  background: #F3F4F6;
-  color: var(--text-2);
-  display: flex; align-items: center; justify-content: center;
-  margin-right: 12px;
-  font-size: 18px;
+.tx-row:last-child { border-bottom: none; }
+.tx-avatar-container {
+  position: relative; margin-right: 12px; flex-shrink: 0;
 }
-.tx-info { flex: 1; }
-.tx-title { font-size: 14px; font-weight: 600; color: var(--text); }
-.tx-date { font-size: 11px; color: var(--text-3); margin-top: 1px; }
-.tx-amount { font-size: 14px; font-weight: 700; color: var(--text); text-align: right; }
-.tx-amount.neg { color: #111827; }
+.tx-avatar {
+  width: 40px; height: 40px; border-radius: 50%;
+  background: #F0F2F5; display: flex; align-items: center; justify-content: center;
+  color: var(--text-secondary); font-size: 18px;
+}
+.tx-badge {
+  position: absolute; bottom: -2px; right: -2px;
+  width: 16px; height: 16px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  border: 1.5px solid white;
+}
+.tx-badge.out { background: #E5E7EB; color: #111827; }
+.tx-badge.in { background: var(--green); color: white; }
+.tx-badge.fail { background: var(--red); color: white; }
+
+.tx-content { flex: 1; min-width: 0; }
+.tx-name { font-size: 14px; font-weight: 700; color: var(--text); margin-bottom: 2px; }
+.tx-desc { font-size: 12px; color: var(--text-secondary); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.tx-desc.red-msg { color: var(--red); font-weight: 500; }
+
+.tx-value {
+  text-align: right; flex-shrink: 0;
+}
+.tx-amount { font-size: 14px; font-weight: 700; }
+.tx-amount.neg { color: var(--text); }
 .tx-amount.pos { color: var(--green); }
 
-/* ====== DRAWER (BOTTOM MENU) ====== */
+/* ================================================================== */
+/* BOTTOM DRAWER MENU (PLATBY)                                       */
+/* ================================================================== */
 .drawer-overlay {
-  position: absolute; inset: 0; z-index: 100;
+  position: absolute; inset: 0; z-index: 150;
   background: rgba(0,0,0,0.4);
   opacity: 0; pointer-events: none;
   transition: opacity 0.25s ease;
@@ -327,9 +440,9 @@ h1.proto-title {
 .drawer {
   position: absolute;
   bottom: 0; left: 0; right: 0;
-  background: #fff;
+  background: #FFF;
   border-radius: 24px 24px 0 0;
-  z-index: 101;
+  z-index: 151;
   transform: translateY(100%);
   transition: transform 0.3s cubic-bezier(0.32, 0.72, 0, 1);
   max-height: 85%;
@@ -338,259 +451,220 @@ h1.proto-title {
 }
 .drawer.open { transform: translateY(0); }
 .drawer-handle {
-  width: 40px; height: 4px;
+  width: 36px; height: 4px;
   background: #E5E7EB; border-radius: 2px;
   margin: 10px auto 4px;
 }
-.drawer-header {
-  padding: 12px 20px;
-  font-size: 18px; font-weight: 700; color: var(--text);
-  border-bottom: 1px solid var(--border);
-  display: flex; justify-content: space-between; align-items: center;
+.drawer-close-btn {
+  background: #E5E7EB; border: none; cursor: pointer;
+  width: 30px; height: 30px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--text-secondary);
+  position: absolute; right: 16px; top: 12px;
 }
 .drawer-list {
   overflow-y: auto;
-  padding: 8px 0 32px;
+  padding: 16px 0 32px;
 }
 .drawer-item {
   display: flex; align-items: center;
   padding: 14px 20px;
   cursor: pointer;
   transition: background 0.15s;
-}
-.drawer-item:active { background: #F3F4F6; }
-.drawer-item-icon {
-  width: 32px; height: 32px;
-  border-radius: 8px;
-  background: #FFF1F2;
-  color: var(--red);
-  display: flex; align-items: center; justify-content: center;
-  margin-right: 12px;
-}
-.drawer-item-text { font-size: 14px; font-weight: 600; color: var(--text); flex: 1; }
-.drawer-item-arrow { color: var(--text-3); font-size: 16px; }
-
-/* ====== SEGMENTED TABS ====== */
-.tabs {
-  display: flex;
   border-bottom: 1px solid var(--border);
-  background: #fff;
+}
+.drawer-item:last-child { border-bottom: none; }
+.drawer-item:active { background: #F8F9FA; }
+.drawer-item-icon {
+  width: 24px; height: 24px;
+  color: var(--red);
+  margin-right: 14px;
+  display: flex; align-items: center; justify-content: center;
+}
+.drawer-item-text { font-size: 15px; font-weight: 600; color: var(--text); flex: 1; }
+.drawer-item-arrow { color: var(--text-muted); font-size: 16px; }
+
+/* ================================================================== */
+/* SCREEN 3: AUTORIZACE SCREEN (LIST)                                 */
+/* ================================================================== */
+.auth-limit-card {
+  background: #F8F9FA;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 14px;
   margin-bottom: 14px;
 }
-.tab {
-  flex: 1;
-  padding: 14px 0;
-  text-align: center;
-  font-size: 14px; font-weight: 600;
-  color: var(--text-3);
-  background: none; border: none;
-  cursor: pointer;
-  position: relative;
-  transition: color 0.15s;
+.auth-limit-title {
+  font-size: 14px; font-weight: 700; color: var(--text); margin-bottom: 6px;
 }
-.tab.active {
-  color: var(--red);
-}
-.tab.active::after {
-  content: '';
-  position: absolute;
-  bottom: 0; left: 20%; right: 20%;
-  height: 3px; background: var(--red);
-  border-radius: 2px 2px 0 0;
+.auth-limit-desc {
+  font-size: 12px; color: var(--text-secondary); line-height: 1.4;
 }
 
-/* ====== DETAIL ROWS ====== */
-.detail-row {
+/* Tab segments for auth */
+.auth-tabs {
   display: flex;
-  justify-content: space-between;
-  padding: 14px 16px;
-  border-bottom: 1px solid var(--border);
-  background: #fff;
-}
-.detail-row:last-child { border-bottom: none; }
-.detail-label {
-  font-size: 13px; color: var(--text-2); font-weight: 500;
-}
-.detail-value {
-  font-size: 14px; color: var(--text); font-weight: 600;
-  text-align: right; max-width: 65%;
-  word-break: break-word;
-}
-.detail-value.editable {
-  color: var(--red);
-  cursor: pointer;
-}
-
-/* ====== INPUT MODAL ====== */
-.edit-modal-overlay {
-  position: absolute; inset: 0; z-index: 150;
-  background: rgba(0,0,0,0.5);
-  display: none; align-items: center; justify-content: center;
-  padding: 20px;
-}
-.edit-modal {
-  background: #fff;
-  border-radius: 16px;
-  width: 100%;
-  padding: 20px;
-  box-shadow: var(--shadow-md);
-  display: flex; flex-direction: column; gap: 14px;
-}
-.edit-modal h3 { font-size: 16px; font-weight: 700; }
-.edit-input {
-  width: 100%;
-  padding: 12px;
-  border: 1.5px solid var(--border);
+  background: #E5E7EB;
   border-radius: 8px;
-  font-size: 15px;
-  outline: none;
+  padding: 2px;
+  margin-bottom: 18px;
 }
-.edit-input:focus {
-  border-color: var(--red);
+.auth-tab {
+  flex: 1; padding: 8px 0; text-align: center; font-size: 13px; font-weight: 600;
+  border: none; border-radius: 6px; cursor: pointer; color: var(--text-secondary);
+  background: transparent;
 }
-.edit-modal-buttons {
-  display: flex; gap: 8px; justify-content: flex-end;
+.auth-tab.active {
+  background: #FFF; color: var(--text);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
 }
-.edit-btn {
-  padding: 8px 16px; font-size: 13px; font-weight: 600; border-radius: 8px; border: none; cursor: pointer;
-}
-.edit-btn.save { background: var(--red); color: white; }
-.edit-btn.cancel { background: #E5E7EB; color: var(--text-2); }
 
-/* ====== BOTTOM BAR ====== */
-.bottom-bar {
-  position: absolute;
-  left: 0; right: 0; bottom: 0;
-  padding: 16px 16px 24px;
-  background: linear-gradient(to top, var(--bg) 80%, rgba(244,244,244,0));
-  z-index: 10;
+/* Bulk actions row */
+.bulk-row {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 4px 6px 12px; font-size: 14px; font-weight: 600;
 }
-.primary-btn {
-  width: 100%;
-  padding: 16px;
-  background: var(--red);
-  color: #fff;
-  border: none; border-radius: 16px;
-  font-size: 16px; font-weight: 700;
+.checkbox-label {
+  display: flex; align-items: center; gap: 8px; cursor: pointer;
+}
+.custom-checkbox {
+  width: 20px; height: 20px; border-radius: 4px;
+  border: 2px solid var(--text-muted);
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.1s;
+}
+.custom-checkbox.checked {
+  border-color: var(--red); background: var(--red);
+}
+.custom-checkbox svg {
+  display: none; width: 12px; height: 12px; color: white;
+}
+.custom-checkbox.checked svg {
+  display: block;
+}
+
+.delete-link {
+  color: var(--text); text-decoration: underline; cursor: pointer;
+}
+
+/* Debits items list */
+.debit-card {
+  display: flex; align-items: center; padding: 16px;
+  border-bottom: 1px solid var(--border);
   cursor: pointer;
-  box-shadow: 0 4px 16px rgba(226,0,26,0.30);
-  transition: all 0.15s;
-  display: flex; align-items: center; justify-content: center; gap: 8px;
 }
-.primary-btn:active {
-  transform: scale(0.98);
-  box-shadow: 0 2px 8px rgba(226,0,26,0.15);
+.debit-card:last-child { border-bottom: none; }
+.debit-card:active { background: #FAFAFA; }
+.debit-checkbox {
+  margin-right: 12px; flex-shrink: 0;
+}
+.debit-info { flex: 1; min-width: 0; }
+.debit-name { font-size: 14px; font-weight: 700; color: var(--text); margin-bottom: 4px; }
+.debit-period { font-size: 12px; color: var(--text-secondary); }
+.debit-right { text-align: right; }
+.debit-amount { font-size: 14px; font-weight: 700; color: var(--text); margin-bottom: 4px; }
+.debit-date { font-size: 12px; color: var(--text-secondary); }
+
+/* Empty state card */
+.empty-card {
+  background: white; border-radius: 16px; padding: 32px 16px; text-align: center;
+  display: flex; flex-direction: column; align-items: center; gap: 16px;
+  box-shadow: var(--shadow);
+}
+.empty-card-text {
+  font-size: 14px; color: var(--text-secondary); font-weight: 500;
 }
 
-/* ====== PIN SCREEN/MODAL ====== */
+/* ================================================================== */
+/* SCREEN 6: SOUHRN                                                   */
+/* ================================================================== */
+.summary-block-title {
+  font-size: 13px; font-weight: 700; color: var(--text-secondary); margin-bottom: 4px;
+}
+.summary-block-text {
+  font-size: 15px; font-weight: 700; color: var(--text);
+}
+.summary-block-sub {
+  font-size: 13px; color: var(--text-secondary); margin-top: 2px;
+}
+.summary-split {
+  display: flex; justify-content: space-between; align-items: center;
+}
+
+/* ================================================================== */
+/* SCREEN 7: PIN CONFIRMATION BOTTOM SHEET                            */
+/* ================================================================== */
 .pin-overlay {
   position: absolute; inset: 0; z-index: 200;
-  background: rgba(0,0,0,0.5);
+  background: rgba(0,0,0,0.4);
   opacity: 0; pointer-events: none;
   transition: opacity 0.25s ease;
   display: flex; align-items: flex-end;
 }
 .pin-overlay.open { opacity: 1; pointer-events: all; }
-
 .pin-sheet {
-  background: #fff;
-  width: 100%;
-  border-radius: 24px 24px 0 0;
-  padding: 16px 20px 24px;
+  background: #FFF; width: 100%; border-radius: 24px 24px 0 0;
+  padding: 16px 24px 32px;
   transform: translateY(100%);
   transition: transform 0.3s cubic-bezier(0.32, 0.72, 0, 1);
   display: flex; flex-direction: column; align-items: center;
 }
 .pin-overlay.open .pin-sheet { transform: translateY(0); }
-
-.pin-title { font-size: 18px; font-weight: 700; margin-bottom: 4px; }
-.pin-sub { font-size: 13px; color: var(--text-2); margin-bottom: 24px; }
+.pin-sheet-title { font-size: 17px; font-weight: 700; margin-bottom: 4px; }
+.pin-sheet-sub { font-size: 13px; color: var(--text-secondary); margin-bottom: 28px; }
 
 .pin-dots {
-  display: flex; gap: 14px; margin-bottom: 28px;
+  display: flex; gap: 16px; margin-bottom: 36px;
 }
 .pin-dot {
-  width: 16px; height: 16px;
-  border-radius: 50%;
-  border: 2px solid var(--border);
-  transition: all 0.15s;
+  width: 14px; height: 14px; border-radius: 50%;
+  border: 1.5px solid var(--text-secondary);
+  background: transparent; transition: all 0.15s;
 }
 .pin-dot.filled {
-  background: var(--red);
-  border-color: var(--red);
+  background: var(--text); border-color: var(--text);
   transform: scale(1.1);
 }
 
-/* Numeric Keypad */
-.keypad {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 12px;
-  width: 100%;
-  max-width: 280px;
+.pin-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 16px; width: 100%; max-width: 300px;
 }
-.key {
-  height: 60px;
-  border-radius: 50%;
-  border: none;
-  background: #F3F4F6;
-  font-size: 22px; font-weight: 600; color: var(--text);
-  cursor: pointer;
-  display: flex; align-items: center; justify-content: center;
+.pin-key {
+  height: 64px; border-radius: 50%; border: 1px solid #D1D5DB;
+  background: #FFF; font-size: 24px; font-weight: 500; color: var(--text);
+  cursor: pointer; display: flex; align-items: center; justify-content: center;
   transition: background 0.1s;
 }
-.key:active { background: #E5E7EB; }
-.key.empty { background: transparent; cursor: default; }
-.key.icon { font-size: 18px; color: var(--text-2); }
+.pin-key:active { background: #F3F4F6; }
+.pin-key.empty { border: none; background: transparent; cursor: default; }
+.pin-key-icon { width: 24px; height: 24px; color: var(--text); }
 
-/* ====== SUCCESS SCREEN ====== */
-.success-screen {
-  background: #fff;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  padding: 30px;
+/* ================================================================== */
+/* SCREEN 8: VÝSLEDEK AUTORIZACE                                      */
+/* ================================================================== */
+.success-header-btn {
+  font-size: 16px; font-weight: 600; color: var(--text); cursor: pointer;
+  background: none; border: none; padding: 12px; margin-left: 4px;
 }
-.success-icon-wrapper {
-  width: 80px; height: 80px;
-  border-radius: 50%;
-  background: var(--green-bg);
-  color: var(--green);
-  display: flex; align-items: center; justify-content: center;
-  margin-bottom: 20px;
-  font-size: 40px;
+.success-center {
+  display: flex; flex-direction: column; align-items: center; text-align: center;
+  padding: 16px 0 20px;
 }
-.success-title {
-  font-size: 20px; font-weight: 700; margin-bottom: 8px; color: var(--text);
+.success-3d-token {
+  width: 120px; height: 120px; margin-bottom: 24px;
 }
-.success-desc {
-  font-size: 14px; color: var(--text-2); line-height: 1.5; margin-bottom: 30px;
-}
-.success-type-label {
-  font-size: 13px; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 16px;
-}
-.success-link {
-  color: var(--red); font-size: 14px; font-weight: 600; text-decoration: none;
-  margin-bottom: 20px; display: inline-block; cursor: pointer;
-}
-.success-link:hover { text-decoration: underline; }
+.success-title { font-size: 26px; font-weight: 800; color: var(--text); margin-bottom: 12px; }
 
-/* ====== OVERVIEW SCREEN ====== */
-.empty-state {
-  text-align: center;
-  padding: 48px 20px;
-  display: flex; flex-direction: column; align-items: center; gap: 16px;
+.success-item-row {
+  display: flex; align-items: center; padding: 14px 0; border-bottom: 1px solid var(--border);
 }
-.empty-icon {
-  width: 64px; height: 64px;
-  border-radius: 50%;
-  background: #F3F4F6;
-  color: var(--text-3);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 28px;
-}
-.empty-title { font-size: 16px; font-weight: 700; color: var(--text); }
-.empty-desc { font-size: 13px; color: var(--text-3); line-height: 1.4; max-width: 240px; }
+.success-item-row:last-child { border-bottom: none; }
+.success-item-label { font-size: 14px; font-weight: 700; color: var(--text); margin-bottom: 2px; }
+.success-item-sub { font-size: 12px; color: var(--text-secondary); }
+.success-item-right { text-align: right; }
+.success-item-val { font-size: 14px; font-weight: 700; color: var(--text); margin-bottom: 2px; }
+.success-item-status { font-size: 12px; color: var(--text-secondary); }
 
 /* ====== TEST ACTIONS (DESKTOP PANEL) ====== */
 .test-panel {
@@ -614,442 +688,601 @@ h1.proto-title {
 <body>
 
 <h1 class="proto-title">Prototyp: Vícenásobná autorizace inkas</h1>
-<p class="subtitle">Interaktivní verze vytvořená podle grafického návrhu. Kliknutím na Běžný účet (18 003 Kč) zahájíte průchod. Na desktopu je pod telefonem testovací panel.</p>
+<p class="subtitle">Interaktivní verze věrně zkopírovaná z mobilního bankovnictví KB. Kliknutím na Běžný účet 2 (48 490,20 Kč) začněte průchod.</p>
 
 <div class="stage">
   
   <!-- SCREEN 0: SPLASH SCREEN -->
   <div id="screen-splash" class="screen" style="background: #E2001A url('../../assets/splash.png') center center / cover no-repeat;">
-    <!-- Splash screen runs strictly background image -->
   </div>
 
-  <!-- SCREEN 1: HOME (STAV) -->
+  <!-- SCREEN 1: DOMŮ (PŘEHLED) -->
   <div id="screen-home" class="screen">
-    <div class="home-header">
-      <div class="avatar-btn">LB</div>
-      <div class="header-actions">
-        <div class="icon-btn">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+    <div class="home-top">
+      <!-- Search -->
+      <svg class="home-top-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+      <!-- Bell with red badge 1 -->
+      <div class="home-top-icon-wrapper" onclick="showScreen('screen-auth-list')">
+        <svg class="home-top-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+        <div class="home-top-icon-badge">1</div>
+      </div>
+      <!-- Profile avatar -->
+      <div class="home-avatar" onclick="alert('Profil uživatele Lukas Bendik.')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="background:#ddd; width:100%; height:100%; color:#555; padding:4px;"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+      </div>
+    </div>
+
+    <!-- Scrollable content -->
+    <div class="scroll">
+      <!-- Horizontal Pills -->
+      <div class="segment-pills" style="margin: 0 -14px 12px; padding-left: 14px;">
+        <button class="segment-pill active">Přehled</button>
+        <button class="segment-pill">Extra</button>
+        <button class="segment-pill">Karty</button>
+        <button class="segment-pill">Půjčky</button>
+        <button class="segment-pill">Spoření</button>
+      </div>
+
+      <!-- Card: Tarif Komfort -->
+      <div class="card" style="padding: 12px 16px;">
+        <div class="home-card-header">
+          <span>Tarif Komfort</span>
+          <span style="font-size:16px;">➔</span>
         </div>
-        <div class="icon-btn">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+        
+        <!-- Běžný účet 1 -->
+        <div class="acc-row" onclick="alert('Tento účet není v prototypu aktivní. Vyberte Běžný účet 2.')">
+          <div class="acc-row-top">
+            <div>
+              <div class="acc-name-label">Běžný účet</div>
+              <div class="acc-number-label">122000/0100</div>
+            </div>
+            <div class="acc-balance-label">18 063,38 Kč</div>
+          </div>
+        </div>
+
+        <!-- Běžný účet 2 -->
+        <div class="acc-row" onclick="selectAccount('Běžný účet 2')">
+          <div class="acc-row-top">
+            <div>
+              <div class="acc-name-label">Běžný účet 2</div>
+              <div class="acc-number-label">326683762/0100</div>
+            </div>
+            <div class="acc-balance-label" id="home-val-main">48 490,20 Kč</div>
+          </div>
+          <div class="acc-row-bottom">
+            <!-- CZ flag pill -->
+            <div class="flag-pill">
+              <svg class="flag-svg" viewBox="0 0 3 2">
+                <rect width="3" height="1" fill="#fff"/>
+                <rect y="1" width="3" height="1" fill="#d7141a"/>
+                <polygon points="0,0 1.5,1 0,2" fill="#11457e"/>
+              </svg>
+              <span id="home-pill-czk">40 000,00 Kč</span>
+            </div>
+            <!-- EU flag pill -->
+            <div class="flag-pill">
+              <svg class="flag-svg" viewBox="0 0 3 2">
+                <rect width="3" height="2" fill="#003399"/>
+                <!-- Simplification of EU stars circle -->
+                <circle cx="1.5" cy="1" r="0.5" fill="none" stroke="#ffcc00" stroke-width="0.1" stroke-dasharray="0.05 0.1"/>
+              </svg>
+              <span>334,26 EUR</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card: Spoření -->
+      <div class="card" style="padding: 12px 16px;">
+        <div class="acc-row" style="border:none; padding: 4px 0;" onclick="alert('Účet spoření není v prototypu aktivní.')">
+          <div class="acc-row-top">
+            <div>
+              <div class="acc-name-label">Spoření</div>
+              <div class="acc-number-label">326683764/0100</div>
+            </div>
+            <div class="acc-balance-label">11 490,20 Kč</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card: Souhrn za červen -->
+      <div class="card" style="padding: 16px;">
+        <div class="home-card-header">
+          <span>Souhrn za červen</span>
+          <span style="font-size:16px;">➔</span>
+        </div>
+        <!-- Progress bar -->
+        <div class="summary-progress-bar">
+          <div class="summary-progress-fill"></div>
+        </div>
+        <!-- Rows -->
+        <div class="summary-info-row">
+          <span style="display:flex; align-items:center; gap:6px; font-weight:600;"><span style="font-size:16px;">➔</span> Výdaje</span>
+          <span style="font-weight:700;">-10 000,00 Kč</span>
+        </div>
+        <div class="green-line"></div>
+        <div class="summary-info-row">
+          <span style="display:flex; align-items:center; gap:6px; font-weight:600; color:var(--green);"><span style="font-size:16px;">➔</span> Příjmy</span>
+          <span style="font-weight:700; color:var(--green);">20 000,00 Kč</span>
+        </div>
+        <div class="summary-info-row" style="margin-top:12px; border-top: 1px solid var(--border); padding-top:10px;">
+          <span style="color:var(--text-secondary); font-weight:600;">Rozdíl</span>
+          <span style="font-weight:800;">10 000,00 Kč</span>
         </div>
       </div>
     </div>
-    
-    <div class="scroll">
-      <!-- Shield / Key Active banner -->
-      <div class="banner-card">
-        <div class="banner-title">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="color:var(--red);"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
-          Klíč aktivní
-        </div>
-        <div class="banner-desc">Na tomto zařízení máte aktivní klíč. Chcete povolit push oznámení pro rychlé potvrzení?</div>
-        <div class="banner-actions">
-          <button class="banner-btn primary">Povolit</button>
-          <button class="banner-btn secondary">Později</button>
-        </div>
+
+    <!-- Floating Red Bottom Bar -->
+    <div class="floating-bar">
+      <div class="floating-item" onclick="alert('Nová platba není v prototypu simulována.')">
+        <svg class="floating-item-icon" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M12 19l7-7-7-7M5 12h14"></path></svg>
+        <div class="floating-item-label">Nová platba</div>
       </div>
-
-      <div class="card-title">Moje Produkty</div>
-      <div class="card-group">
-        <!-- Běžný účet -->
-        <div class="account-item" onclick="selectAccount('Běžný účet', '18 003 Kč', '123456789/0800')">
-          <div class="account-icon">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2" ry="2"></rect><line x1="2" y1="10" x2="22" y2="10"></line></svg>
-          </div>
-          <div class="account-info">
-            <div class="account-label">Běžný účet</div>
-            <div class="account-sub">123456789/0800</div>
-          </div>
-          <div class="account-val" id="home-val-main">18 003 Kč</div>
-        </div>
-
-        <!-- Spořicí účet -->
-        <div class="account-item" onclick="selectAccount('Spořicí účet', '-41 720 Kč', '987654321/0800')">
-          <div class="account-icon">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
-          </div>
-          <div class="account-info">
-            <div class="account-label">Spořicí účet</div>
-            <div class="account-sub">987654321/0800</div>
-          </div>
-          <div class="account-val" id="home-val-savings">-41 720 Kč</div>
-        </div>
-
-        <!-- Kreditní Karta -->
-        <div class="account-item" onclick="selectAccount('Karta', '11 893 Kč', '*1234')">
-          <div class="account-icon">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect><line x1="1" y1="10" x2="23" y2="10"></line></svg>
-          </div>
-          <div class="account-info">
-            <div class="account-label">Kreditní karta</div>
-            <div class="account-sub">*1234</div>
-          </div>
-          <div class="account-val" id="home-val-card">11 893 Kč</div>
-        </div>
+      <div class="floating-item" onclick="alert('QR platba není v prototypu simulována.')">
+        <svg class="floating-item-icon" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><rect x="7" y="7" width="3" height="3"></rect><rect x="14" y="7" width="3" height="3"></rect><rect x="7" y="14" width="3" height="3"></rect></svg>
+        <div class="floating-item-label">QR platba</div>
+      </div>
+      <div class="floating-item" onclick="alert('Zaplať mi není v prototypu simulována.')">
+        <svg class="floating-item-icon" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+        <div class="floating-item-label">Zaplať mi</div>
       </div>
     </div>
   </div>
 
-  <!-- SCREEN 2: ACCOUNT (DETAIL ÚČTU) -->
+  <!-- SCREEN 2: DETAIL ÚČTU (BĚŽNÝ ÚČET 2) -->
   <div id="screen-account" class="screen">
     <div class="topbar">
-      <button class="back-btn" onclick="showScreen('screen-home')">
+      <button class="back-link" onclick="showScreen('screen-home')">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"></polyline></svg>
         Zpět
       </button>
-      <div class="topbar-title" id="account-header-title">Běžný účet</div>
-      <button class="close-btn" onclick="showScreen('screen-home')">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-      </button>
+      <div style="text-align:right; z-index:2;">
+        <div style="font-size:14px; font-weight:700;" id="account-name-header">Běžný účet 2</div>
+        <div style="font-size:11px; color:var(--text-secondary);" id="account-number-header">326683762/0100</div>
+      </div>
     </div>
 
     <div class="scroll">
-      <div class="balance-card">
-        <div class="acc-num" id="account-detail-num">123456789/0800</div>
-        <div class="acc-val" id="account-detail-balance">48 490 Kč</div>
-        <div class="acc-label">Dostupný zůstatek</div>
-        
-        <div class="action-grid">
-          <button class="action-pill active" onclick="openDrawer()">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-            Tuzemská platba
+      <!-- Balance box -->
+      <div class="detail-balance-box">
+        <div class="detail-balance-val" id="account-balance-val">48 490,20 Kč</div>
+        <div class="detail-pills-scroll" style="margin:0 -14px 14px; padding-left:14px;">
+          <button class="detail-tab-pill active">Vše</button>
+          <button class="detail-tab-pill inactive" style="display:flex; align-items:center; gap:6px;">
+            <svg class="flag-svg" viewBox="0 0 3 2">
+              <rect width="3" height="1" fill="#fff"/>
+              <rect y="1" width="3" height="1" fill="#d7141a"/>
+              <polygon points="0,0 1.5,1 0,2" fill="#11457e"/>
+            </svg>
+            <span id="account-tab-czk">40 000,00 Kč</span>
           </button>
-          <button class="action-pill" onclick="alert('Funkce QR platba není v tomto prototypu aktivní.')">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><rect x="7" y="7" width="3" height="3"></rect><rect x="14" y="7" width="3" height="3"></rect><rect x="7" y="14" width="3" height="3"></rect><path d="M14 14h3v3h-3z"></path></svg>
-            QR platba
+          <button class="detail-tab-pill inactive" style="display:flex; align-items:center; gap:6px;">
+            <svg class="flag-svg" viewBox="0 0 3 2">
+              <rect width="3" height="2" fill="#003399"/>
+              <circle cx="1.5" cy="1" r="0.5" fill="none" stroke="#ffcc00" stroke-width="0.1" stroke-dasharray="0.05 0.1"/>
+            </svg>
+            <span>334,26 EUR</span>
           </button>
         </div>
       </div>
 
-      <div class="card-title">Historie transakcí</div>
-      <div class="card-group">
-        <!-- TX 1 -->
-        <div class="tx-item">
-          <div class="tx-icon">🛒</div>
-          <div class="tx-info">
-            <div class="tx-title">Alza.cz</div>
-            <div class="tx-date">Dnes, 14:32</div>
-          </div>
-          <div class="tx-amount neg">-2 590 Kč</div>
+      <!-- Detail a správa účtu -->
+      <button class="manage-btn" onclick="openDrawer()">
+        <div class="manage-btn-left">
+          <svg class="manage-btn-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+          <span>Detail a správa účtu</span>
         </div>
-        <!-- TX 2 -->
-        <div class="tx-item">
-          <div class="tx-icon">🍿</div>
-          <div class="tx-info">
-            <div class="tx-title">Netflix</div>
-            <div class="tx-date">Dnes, 08:15</div>
+        <span>➔</span>
+      </button>
+
+      <!-- Filtr -->
+      <div class="filter-bar">
+        <span>Filtr</span>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="4" y1="21" x2="4" y2="14"></line><line x1="4" y1="10" x2="4" y2="3"></line><line x1="12" y1="21" x2="12" y2="12"></line><line x1="12" y1="8" x2="12" y2="3"></line><line x1="20" y1="21" x2="20" y2="16"></line><line x1="20" y1="12" x2="20" y2="3"></line><line x1="1" y1="14" x2="7" y2="14"></line><line x1="9" y1="8" x2="15" y2="8"></line><line x1="17" y1="16" x2="23" y2="16"></line></svg>
+      </div>
+
+      <!-- History -->
+      <div class="date-section-title">Dnes</div>
+      <div class="card" style="padding:0 16px;">
+        <!-- Tesco -->
+        <div class="tx-row">
+          <div class="tx-avatar-container">
+            <div class="tx-avatar">T</div>
+            <div class="tx-badge out">➔</div>
           </div>
-          <div class="tx-amount neg">-199 Kč</div>
+          <div class="tx-content">
+            <div class="tx-name">Tesco</div>
+            <div class="tx-desc">Vršovická 3827/11, P...</div>
+          </div>
+          <div class="tx-value">
+            <div class="tx-amount neg">-2 430,30 Kč</div>
+          </div>
         </div>
-        <!-- TX 3 -->
-        <div class="tx-item">
-          <div class="tx-icon">🍏</div>
-          <div class="tx-info">
-            <div class="tx-title">Supermarket</div>
-            <div class="tx-date">Včera</div>
+
+        <!-- Karel Kropáček -->
+        <div class="tx-row">
+          <div class="tx-avatar-container">
+            <div class="tx-avatar">KK</div>
+            <div class="tx-badge in">←</div>
           </div>
-          <div class="tx-amount neg">-640 Kč</div>
+          <div class="tx-content">
+            <div class="tx-name">Karel Kropáček</div>
+            <div class="tx-desc">Příspěvek na chatu</div>
+          </div>
+          <div class="tx-value">
+            <div class="tx-amount pos">2 000,00 Kč</div>
+          </div>
+        </div>
+
+        <!-- Josef Pokorný -->
+        <div class="tx-row">
+          <div class="tx-avatar-container">
+            <div class="tx-avatar">JP</div>
+            <div class="tx-badge fail">×</div>
+          </div>
+          <div class="tx-content">
+            <div class="tx-name">Josef Pokorný</div>
+            <div class="tx-desc red-msg">Nájem srpen 2022<br><span style="font-weight:400; font-size:11px;">Platba neodešla</span></div>
+          </div>
+          <div class="tx-value">
+            <div class="tx-amount neg" style="color:var(--text-secondary);">-12 000,00 Kč</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Včera -->
+      <div class="date-section-title">Včera</div>
+      <div class="card" style="padding:0 16px;">
+        <div class="tx-row">
+          <div class="tx-avatar-container">
+            <div class="tx-avatar">L</div>
+            <div class="tx-badge out">➔</div>
+          </div>
+          <div class="tx-content">
+            <div class="tx-name">Lidl</div>
+            <div class="tx-desc">Praha Vršovice</div>
+          </div>
+          <div class="tx-value">
+            <div class="tx-amount neg">-430,00 Kč</div>
+          </div>
         </div>
       </div>
     </div>
 
-    <!-- SCREEN 3: BOTTOM DRAWER MENU (PLATBY) -->
+    <!-- Floating Red Bottom Bar -->
+    <div class="floating-bar">
+      <div class="floating-item" onclick="alert('Nová platba není v prototypu simulována.')">
+        <svg class="floating-item-icon" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M12 19l7-7-7-7M5 12h14"></path></svg>
+        <div class="floating-item-label">Nová platba</div>
+      </div>
+      <div class="floating-item" onclick="alert('QR platba není v prototypu simulována.')">
+        <svg class="floating-item-icon" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><rect x="7" y="7" width="3" height="3"></rect><rect x="14" y="7" width="3" height="3"></rect><rect x="7" y="14" width="3" height="3"></rect></svg>
+        <div class="floating-item-label">QR platba</div>
+      </div>
+      <div class="floating-item" onclick="alert('Zaplať mi není v prototypu simulována.')">
+        <svg class="floating-item-icon" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+        <div class="floating-item-label">Zaplať mi</div>
+      </div>
+    </div>
+
+    <!-- BOTTOM DRAWER MENU (DETAIL A SPRÁVA ÚČTU) -->
     <div class="drawer-overlay" id="drawer-overlay" onclick="closeDrawer()"></div>
     <div class="drawer" id="drawer">
       <div class="drawer-handle"></div>
-      <div class="drawer-header">
-        <span>Platby a převody</span>
-        <button class="close-btn" style="margin-left:0;" onclick="closeDrawer()">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-        </button>
-      </div>
+      <button class="drawer-close-btn" onclick="closeDrawer()">×</button>
       <div class="drawer-list">
-        <div class="drawer-item" onclick="startPaymentFlow()">
+        <div class="drawer-item" onclick="alert('Trvalé příkazy a inkasa nejsou v prototypu aktivní.')">
           <div class="drawer-item-icon">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+            <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
           </div>
-          <div class="drawer-item-text">Tuzemská platba</div>
+          <div class="drawer-item-text">Trvalé příkazy a Inkasa</div>
           <div class="drawer-item-arrow">➔</div>
         </div>
-        <div class="drawer-item" onclick="alert('Funkce QR platba není aktivní.')">
-          <div class="drawer-item-icon">⚡</div>
-          <div class="drawer-item-text">QR platba</div>
+
+        <div class="drawer-item" onclick="goToAuthList()">
+          <div class="drawer-item-icon">
+            <!-- Red shield/lock icon -->
+            <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
+          </div>
+          <div class="drawer-item-text">Autorizace</div>
           <div class="drawer-item-arrow">➔</div>
         </div>
-        <div class="drawer-item" onclick="alert('Funkce není v prototypu simulována.')">
+
+        <div class="drawer-item" onclick="alert('Funkce O účtu není simulována.')">
+          <div class="drawer-item-icon">ℹ</div>
+          <div class="drawer-item-text">O účtu</div>
+          <div class="drawer-item-arrow">➔</div>
+        </div>
+        <div class="drawer-item" onclick="alert('Funkce Měsíční souhrny není simulována.')">
+          <div class="drawer-item-icon">📊</div>
+          <div class="drawer-item-text">Měsíční souhrny</div>
+          <div class="drawer-item-arrow">➔</div>
+        </div>
+        <div class="drawer-item" onclick="alert('Funkce Volné prostředky není simulována.')">
+          <div class="drawer-item-icon">💰</div>
+          <div class="drawer-item-text">Volné prostředky</div>
+          <div class="drawer-item-arrow">➔</div>
+        </div>
+        <div class="drawer-item" onclick="alert('Funkce Měny na účtu není simulována.')">
+          <div class="drawer-item-icon">€</div>
+          <div class="drawer-item-text">Měny na účtu</div>
+          <div class="drawer-item-arrow">➔</div>
+        </div>
+        <div class="drawer-item" onclick="alert('Funkce Karty není simulována.')">
           <div class="drawer-item-icon">💳</div>
-          <div class="drawer-item-text">Splátka kreditky</div>
-          <div class="drawer-item-arrow">➔</div>
-        </div>
-        <div class="drawer-item" onclick="alert('Funkce není v prototypu simulována.')">
-          <div class="drawer-item-icon">⇄</div>
-          <div class="drawer-item-text">Převod mezi účty</div>
-          <div class="drawer-item-arrow">➔</div>
-        </div>
-        <div class="drawer-item" onclick="alert('Funkce není v prototypu simulována.')">
-          <div class="drawer-item-icon">⏳</div>
-          <div class="drawer-item-text">Trvalý příkaz</div>
-          <div class="drawer-item-arrow">➔</div>
-        </div>
-        <div class="drawer-item" onclick="alert('Funkce není v prototypu simulována.')">
-          <div class="drawer-item-icon">⟳</div>
-          <div class="drawer-item-text">Inkaso</div>
+          <div class="drawer-item-text">Karty</div>
           <div class="drawer-item-arrow">➔</div>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- SCREEN 4: AUTHORIZATION (TAB: PLATBA) -->
-  <div id="screen-auth-p1" class="screen">
+  <!-- SCREEN 3: AUTORIZACE SCREEN (LIST) -->
+  <div id="screen-auth-list" class="screen">
     <div class="topbar">
-      <button class="back-btn" onclick="showScreen('screen-account')">
+      <button class="back-link" onclick="showScreen('screen-account')">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"></polyline></svg>
         Zpět
       </button>
-      <div class="topbar-title">Autorizace</div>
-      <button class="close-btn" onclick="showScreen('screen-account')">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-      </button>
-    </div>
-
-    <div class="tabs">
-      <button class="tab active" onclick="showScreen('screen-auth-p1')">Platba</button>
-      <button class="tab" onclick="alert('Tato záložka není aktivní. Zkuste záložku Detaily.')">Příjemce</button>
-      <button class="tab" onclick="showScreen('screen-auth-p2')">Detaily</button>
+      <div class="topbar-center">Autorizace</div>
+      <div class="topbar-right-text"></div>
     </div>
 
     <div class="scroll">
-      <div class="card-title">K odeslání</div>
-      <div class="card-group">
-        <div class="detail-row">
-          <div class="detail-label">Plátce</div>
-          <div class="detail-value" id="auth1-payer">Běžný účet (18 003 Kč)</div>
-        </div>
-        <div class="detail-row">
-          <div class="detail-label">Příjemce</div>
-          <div class="detail-value editable" onclick="editField('recipientName', 'Jméno příjemce')" id="auth1-recipient">Jan Novák</div>
-        </div>
-        <div class="detail-row">
-          <div class="detail-label">Účet příjemce</div>
-          <div class="detail-value editable" onclick="editField('recipientAccountNum', 'Číslo účtu příjemce')" id="auth1-recipient-acc">123456789/0800</div>
-        </div>
-        <div class="detail-row">
-          <div class="detail-label">Částka</div>
-          <div class="detail-value editable" onclick="editField('amount', 'Částka')" id="auth1-amount">1 500 Kč</div>
+      <!-- Card: K dispozici -->
+      <div class="auth-limit-card">
+        <div class="auth-limit-title">K dispozici</div>
+        <div class="auth-limit-desc">
+          Z limitu disponenta k účtu: 158 000,00 Kč<br>
+          Z vlastního limitu subjektu: 258 000,00 Kč
         </div>
       </div>
-      
-      <div style="text-align: center; margin-top: 20px;">
-        <span style="color:var(--text-3); font-size:13px; cursor:pointer;" onclick="showScreen('screen-auth-p2')">Zobrazit detaily autorizace ➔</span>
+
+      <!-- Segment Tabs -->
+      <div class="auth-tabs">
+        <button class="auth-tab" onclick="alert('Záložka Platby není v tomto scénáři aktivní.')">Platby</button>
+        <button class="auth-tab" onclick="alert('Záložka Trvalé příkazy není v tomto scénáři aktivní.')">Trvalé příkazy</button>
+        <button class="auth-tab active">Inkasa</button>
+      </div>
+
+      <!-- List items when NOT authorized yet -->
+      <div id="auth-list-nonempty">
+        <!-- Checkbox bulk bar -->
+        <div class="bulk-row">
+          <div class="checkbox-label" onclick="toggleSelectAll()">
+            <div class="custom-checkbox" id="chk-select-all">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            </div>
+            <span>Označit vše</span>
+          </div>
+          <span class="delete-link" onclick="alert('Odstranění položek ze seznamu k autorizaci.')">Smazat vybrané</span>
+        </div>
+
+        <div class="card" style="padding:0 16px;">
+          <!-- Item 1: ČEZ -->
+          <div class="debit-card" onclick="toggleDebitItem('cez')">
+            <div class="debit-checkbox">
+              <div class="custom-checkbox" id="chk-cez">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              </div>
+            </div>
+            <div class="debit-info">
+              <div class="debit-name">ČEZ elektřina</div>
+              <div class="debit-period">Měsíčně</div>
+            </div>
+            <div class="debit-right">
+              <div class="debit-amount">1 300,00 Kč</div>
+              <div class="debit-date">12. 3. 2025</div>
+            </div>
+          </div>
+
+          <!-- Item 2: Obědy -->
+          <div class="debit-card" onclick="toggleDebitItem('obedy')">
+            <div class="debit-checkbox">
+              <div class="custom-checkbox" id="chk-obedy">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              </div>
+            </div>
+            <div class="debit-info">
+              <div class="debit-name">Obědy</div>
+              <div class="debit-period">Měsíčně</div>
+            </div>
+            <div class="debit-right">
+              <div class="debit-amount">1 000,00 Kč</div>
+              <div class="debit-date">15. 3. 2025</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Empty state layout (hidden by default) -->
+      <div id="auth-list-empty" style="display:none;">
+        <!-- Checkbox bulk bar (disabled) -->
+        <div class="bulk-row" style="opacity: 0.5; pointer-events: none;">
+          <div class="checkbox-label">
+            <div class="custom-checkbox"></div>
+            <span>Označit vše</span>
+          </div>
+          <span class="delete-link">Smazat vybrané</span>
+        </div>
+
+        <div class="empty-card">
+          <!-- SVG empty illustration -->
+          <svg width="100" height="74" viewBox="0 0 100 74" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="18" y="6" width="64" height="48" rx="8" fill="#F3F4F6" stroke="#D1D5DB" stroke-width="2"/>
+            <line x1="30" y1="22" x2="70" y2="22" stroke="#9CA3AF" stroke-width="2" stroke-linecap="round"/>
+            <line x1="30" y1="34" x2="56" y2="34" stroke="#9CA3AF" stroke-width="2" stroke-linecap="round"/>
+            <!-- 3D key badge sketch -->
+            <rect x="62" y="38" width="28" height="28" rx="6" fill="#E5E7EB" stroke="#9CA3AF" stroke-width="2"/>
+            <line x1="71" y1="52" x2="81" y2="52" stroke="#4B5563" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+          <div class="empty-card-text">Nemáte žádná inkasa k autorizaci.</div>
+        </div>
       </div>
     </div>
 
-    <div class="bottom-bar">
-      <button class="primary-btn" onclick="showScreen('screen-auth-p2')">POTVRDIT</button>
+    <!-- Sticky footer -->
+    <div class="sticky-footer">
+      <div class="footer-text-group">
+        <div class="footer-amount-label" id="footer-amount-txt">Částka k autorizaci: 0,00 Kč</div>
+        <div class="footer-subtitle" id="footer-count-txt">0 z 2 položek</div>
+      </div>
+      <button class="primary-btn" id="btn-submit-auth" disabled onclick="submitAuthList()">K autorizaci</button>
     </div>
   </div>
 
-  <!-- SCREEN 5: AUTHORIZATION (TAB: DETAILY) -->
-  <div id="screen-auth-p2" class="screen">
-    <div class="topbar">
-      <button class="back-btn" onclick="showScreen('screen-auth-p1')">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"></polyline></svg>
-        Zpět
-      </button>
-      <div class="topbar-title">Autorizace</div>
-      <button class="close-btn" onclick="showScreen('screen-account')">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-      </button>
-    </div>
-
-    <div class="tabs">
-      <button class="tab" onclick="showScreen('screen-auth-p1')">Platba</button>
-      <button class="tab" onclick="alert('Tato záložka není aktivní. Zkuste záložku Platba.')">Příjemce</button>
-      <button class="tab active" onclick="showScreen('screen-auth-p2')">Detaily</button>
-    </div>
-
-    <div class="scroll">
-      <div class="card-title">Detail transakce</div>
-      <div class="card-group">
-        <div class="detail-row">
-          <div class="detail-label">Plátce</div>
-          <div class="detail-value" id="auth2-payer">Běžný účet (18 003 Kč)</div>
-        </div>
-        <div class="detail-row">
-          <div class="detail-label">Příjemce</div>
-          <div class="detail-value" id="auth2-recipient">Jan Novák</div>
-        </div>
-        <div class="detail-row">
-          <div class="detail-label">Účet příjemce</div>
-          <div class="detail-value" id="auth2-recipient-acc">123456789/0800</div>
-        </div>
-        <div class="detail-row">
-          <div class="detail-label">Částka</div>
-          <div class="detail-value" id="auth2-amount">1 500 Kč</div>
-        </div>
-        <div class="detail-row">
-          <div class="detail-label">Datum splatnosti</div>
-          <div class="detail-value editable" onclick="editField('dueDate', 'Datum splatnosti')" id="auth2-date">12. 06. 2026</div>
-        </div>
-        <div class="detail-row">
-          <div class="detail-label">Zpráva pro příjemce</div>
-          <div class="detail-value editable" onclick="editField('message', 'Zpráva pro příjemce')" id="auth2-message">Dárek k narozeninám</div>
-        </div>
-        <div class="detail-row">
-          <div class="detail-label">Typ platby</div>
-          <div class="detail-value" id="auth2-type">Tuzemská platba</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="bottom-bar">
-      <button class="primary-btn" onclick="showScreen('screen-summary')">POTVRDIT</button>
-    </div>
-  </div>
-
-  <!-- SCREEN 6: SUMMARY (SOUHRN) -->
+  <!-- SCREEN 6: SOUHRN -->
   <div id="screen-summary" class="screen">
     <div class="topbar">
-      <button class="back-btn" onclick="showScreen('screen-auth-p2')">
+      <button class="back-link" onclick="showScreen('screen-auth-list')">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"></polyline></svg>
         Zpět
       </button>
-      <div class="topbar-title">Souhrn</div>
-      <button class="close-btn" onclick="showScreen('screen-account')">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-      </button>
+      <div class="topbar-center">Souhrn</div>
     </div>
 
     <div class="scroll">
-      <div class="card-title">Rekapitulace autorizace</div>
-      <div class="card-group">
-        <div class="detail-row">
-          <div class="detail-label">Typ požadavku</div>
-          <div class="detail-value">Autorizace platby</div>
-        </div>
-        <div class="detail-row">
-          <div class="detail-label">Příjemce</div>
-          <div class="detail-value" id="summary-recipient">Jan Novák</div>
-        </div>
-        <div class="detail-row">
-          <div class="detail-label">Částka</div>
-          <div class="detail-value" id="summary-amount" style="font-size: 16px; color: var(--red); font-weight: 700;">1 500 Kč</div>
-        </div>
-        <div class="detail-row">
-          <div class="detail-label">Zabezpečení</div>
-          <div class="detail-value">Mobilní klíč KB</div>
+      <!-- Card: Z účtu -->
+      <div class="card">
+        <div class="summary-block-title">Z účtu</div>
+        <div class="summary-block-text" id="summary-payer-name">Běžný účet 2</div>
+        <div class="summary-block-sub" id="summary-payer-acc">326683762/0100</div>
+      </div>
+
+      <!-- Card: Inkas -->
+      <div class="card">
+        <div class="summary-split">
+          <div class="summary-block-text">2 inkasa</div>
+          <div class="summary-block-text" style="font-size:16px;">2 300,00 Kč</div>
         </div>
       </div>
     </div>
 
-    <div class="bottom-bar">
-      <button class="primary-btn" onclick="openPinModal()">AUTORIZOVAT</button>
+    <!-- Sticky footer -->
+    <div class="sticky-footer">
+      <div class="footer-text-group">
+        <div class="footer-amount-label">Částka k autorizaci: 2 300,00 Kč</div>
+        <div class="footer-subtitle">Celkem 2 položky</div>
+      </div>
+      <button class="primary-btn" onclick="openPinModal()">Autorizovat inkasa</button>
     </div>
 
     <!-- SCREEN 7: PIN CONFIRMATION BOTTOM SHEET -->
     <div class="pin-overlay" id="pin-overlay">
       <div class="pin-sheet">
         <div class="drawer-handle"></div>
-        <div class="pin-title">Potvrzení PINem</div>
-        <div class="pin-sub">Zadejte váš 6místný PIN kód</div>
+        <button class="drawer-close-btn" onclick="closePinModal()">×</button>
+        <div class="pin-sheet-title">Potvrzení inkas</div>
+        <div class="pin-sheet-sub">Potvrďte je PIN kódem.</div>
 
         <div class="pin-dots">
-          <div class="pin-dot" id="dot-1"></div>
-          <div class="pin-dot" id="dot-2"></div>
-          <div class="pin-dot" id="dot-3"></div>
-          <div class="pin-dot" id="dot-4"></div>
-          <div class="pin-dot" id="dot-5"></div>
-          <div class="pin-dot" id="dot-6"></div>
+          <div class="pin-dot" id="pdot-1"></div>
+          <div class="pin-dot" id="pdot-2"></div>
+          <div class="pin-dot" id="pdot-3"></div>
+          <div class="pin-dot" id="pdot-4"></div>
+          <div class="pin-dot" id="pdot-5"></div>
+          <div class="pin-dot" id="pdot-6"></div>
         </div>
 
-        <div class="keypad">
-          <button class="key" onclick="pressPin('1')">1</button>
-          <button class="key" onclick="pressPin('2')">2</button>
-          <button class="key" onclick="pressPin('3')">3</button>
-          <button class="key" onclick="pressPin('4')">4</button>
-          <button class="key" onclick="pressPin('5')">5</button>
-          <button class="key" onclick="pressPin('6')">6</button>
-          <button class="key" onclick="pressPin('7')">7</button>
-          <button class="key" onclick="pressPin('8')">8</button>
-          <button class="key" onclick="pressPin('9')">9</button>
-          <button class="key icon" onclick="closePinModal()">Zrušit</button>
-          <button class="key" onclick="pressPin('0')">0</button>
-          <button class="key icon" onclick="backspacePin()">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 4H8l-7 8 7 8h13a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2z"></path><line x1="18" y1="9" x2="12" y2="15"></line><line x1="12" y1="9" x2="18" y2="15"></line></svg>
+        <!-- Numeric keypad circle grid -->
+        <div class="pin-grid">
+          <button class="pin-key" onclick="pressPinKey('1')">1</button>
+          <button class="pin-key" onclick="pressPinKey('2')">2</button>
+          <button class="pin-key" onclick="pressPinKey('3')">3</button>
+          <button class="pin-key" onclick="pressPinKey('4')">4</button>
+          <button class="pin-key" onclick="pressPinKey('5')">5</button>
+          <button class="pin-key" onclick="pressPinKey('6')">6</button>
+          <button class="pin-key" onclick="pressPinKey('7')">7</button>
+          <button class="pin-key" onclick="pressPinKey('8')">8</button>
+          <button class="pin-key" onclick="pressPinKey('9')">9</button>
+          <!-- Biometric Face ID icon left -->
+          <button class="pin-key" style="border:none; background:transparent;" onclick="triggerBiometrics()">
+            <svg class="pin-key-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path><path d="M8 12a4 4 0 0 1 8 0v2a4 4 0 0 1-8 0v-2z"></path><path d="M10 14v1c0 .55-.45 1-1 1s-1-.45-1-1v-1"></path><path d="M16 14v1c0 .55-.45 1-1 1s-1-.45-1-1v-1"></path></svg>
+          </button>
+          <button class="pin-key" onclick="pressPinKey('0')">0</button>
+          <!-- Backspace right -->
+          <button class="pin-key" style="border:none; background:transparent;" onclick="backspacePinKey()">
+            <svg class="pin-key-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 19l-7-7 7-7M5 12h14"></path></svg>
           </button>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- SCREEN 8: RESULT (VÝSLEDEK AUTORIZACE) -->
-  <div id="screen-result" class="screen success-screen">
-    <div class="success-icon-wrapper">
-      <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-    </div>
-    <div class="success-type-label">VÝSLEDEK AUTORIZACE</div>
-    <div class="success-title">Autorizace proběhla úspěšně</div>
-    <div class="success-desc">
-      Platba pro <strong id="result-recipient">Jan Novák</strong> ve výši <strong id="result-amount">1 500 Kč</strong> byla schválena k odeslání.
-    </div>
-    
-    <div>
-      <span class="success-link" onclick="showScreen('screen-overview')">Přejít na přehled autorizací ➔</span>
-    </div>
-
-    <div class="bottom-bar">
-      <button class="primary-btn" onclick="finishPaymentFlow()">HOTOVO</button>
-    </div>
-  </div>
-
-  <!-- SCREEN 9: OVERVIEW (PŘEHLED AUTORIZACÍ) -->
-  <div id="screen-overview" class="screen">
-    <div class="topbar">
-      <button class="back-btn" onclick="showScreen('screen-result')">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"></polyline></svg>
-        Zpět
-      </button>
-      <div class="topbar-title">Autorizace</div>
-      <button class="close-btn" onclick="finishPaymentFlow()">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-      </button>
-    </div>
-
-    <div class="tabs">
-      <button class="tab active" onclick="alert('Filtr Čekající je aktivní.')">Čekající (0)</button>
-      <button class="tab" onclick="alert('Funkce Historie není v prototypu.')">Historie</button>
+  <!-- SCREEN 8: VÝSLEDEK AUTORIZACE -->
+  <div id="screen-success" class="screen">
+    <div style="height:56px; display:flex; align-items:center; flex-shrink:0;">
+      <button class="success-header-btn" onclick="goToAuthEmpty()">Zavřít</button>
     </div>
 
     <div class="scroll">
-      <div class="empty-state">
-        <div class="empty-icon">
-          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+      <div class="success-center">
+        <!-- 3D Red Token Device SVG -->
+        <svg class="success-3d-token" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="cardGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#FFFFFF" />
+              <stop offset="100%" stop-color="#E5E7EB" />
+            </linearGradient>
+            <filter id="shadow3d" x="-10%" y="-10%" width="130%" height="130%">
+              <feDropShadow dx="2" dy="8" stdDeviation="6" flood-opacity="0.15" />
+            </filter>
+          </defs>
+          <!-- Base Key shape -->
+          <rect x="25" y="15" width="70" height="90" rx="14" fill="url(#cardGrad)" filter="url(#shadow3d)" />
+          <!-- Screen cutout -->
+          <rect x="35" y="28" width="50" height="12" rx="3" fill="#374151" />
+          <!-- Red slot indicator -->
+          <rect x="40" y="55" width="40" height="10" rx="2" fill="#E2001A" />
+          <rect x="70" y="55" width="10" height="10" fill="#E5E7EB" />
+        </svg>
+
+        <div class="success-title">Výsledek autorizace</div>
+      </div>
+
+      <div class="card" style="padding:0 16px;">
+        <!-- Success item 1 -->
+        <div class="success-item-row">
+          <div class="tx-avatar-container">
+            <div class="tx-avatar">Č</div>
+            <div class="tx-badge in" style="background:var(--green);">✓</div>
+          </div>
+          <div class="tx-content">
+            <div class="success-item-label">ČEZ elektřina</div>
+            <div class="success-item-sub">Měsíčně</div>
+          </div>
+          <div class="success-item-right">
+            <div class="success-item-val">1 300,00 Kč</div>
+            <div class="success-item-status" style="color:var(--green); font-weight:600;">Autorizováno</div>
+          </div>
         </div>
-        <div class="empty-title">Všechny autorizace dokončeny</div>
-        <div class="empty-desc">Nemáte žádné další platby nebo operace vyžadující potvrzení klíčem.</div>
+
+        <!-- Success item 2 -->
+        <div class="success-item-row">
+          <div class="tx-avatar-container">
+            <div class="tx-avatar">O</div>
+            <div class="tx-badge in" style="background:var(--green);">✓</div>
+          </div>
+          <div class="tx-content">
+            <div class="success-item-label">Obědy</div>
+            <div class="success-item-sub">Měsíčně</div>
+          </div>
+          <div class="success-item-right">
+            <div class="success-item-val">1 000,00 Kč</div>
+            <div class="success-item-status" style="color:var(--green); font-weight:600;">Autorizováno</div>
+          </div>
+        </div>
       </div>
     </div>
 
-    <div class="bottom-bar">
-      <button class="primary-btn" onclick="finishPaymentFlow()">ZAVŘÍT</button>
+    <!-- Bottom buttons sticky -->
+    <div class="sticky-footer" style="background:#FFF; border-top:none;">
+      <button class="primary-btn" onclick="goToAuthEmpty()">Pokračovat v autorizacích</button>
+      <button class="secondary-btn" onclick="finishSuccessFlow()">Zavřít</button>
     </div>
   </div>
 
-</div>
-
-<!-- IN-LINE VALUE EDITOR MODAL -->
-<div class="edit-modal-overlay" id="edit-modal">
-  <div class="edit-modal">
-    <h3 id="edit-title">Upravit pole</h3>
-    <input type="text" class="edit-input" id="edit-field-value">
-    <div class="edit-modal-buttons">
-      <button class="edit-btn cancel" onclick="closeEditModal()">Zrušit</button>
-      <button class="edit-btn save" onclick="saveEditedField()">Uložit</button>
-    </div>
-  </div>
 </div>
 
 <!-- TEST CONSOLE FOR DESKTOP -->
@@ -1057,136 +1290,189 @@ h1.proto-title {
   <div class="test-title">Simulační panel (pouze pro testování)</div>
   <div style="display:flex; gap:8px; flex-wrap:wrap;">
     <button class="test-btn" onclick="resetPrototypeData()">Vymazat data a reset</button>
-    <button class="test-btn" onclick="simulateFailedPin()">Simulovat špatný PIN</button>
+    <button class="test-btn" onclick="triggerBiometricsInstant()">Simulovat rychlé Face ID</button>
   </div>
 </div>
 
 <script>
-// STATE DEFINITION
+// SCREEN TITLES FOR BROWSER TITLE
 const SCREEN_TITLES = {
-  'screen-home': 'Stav · Bankovnictví',
-  'screen-account': 'Detail účtu · Bankovnictví',
-  'screen-auth-p1': 'Autorizace platby',
-  'screen-auth-p2': 'Detaily platby',
+  'screen-home': 'Přehled · Komerční banka',
+  'screen-account': 'Běžný účet 2 · Detail',
+  'screen-auth-list': 'Autorizace inkas',
   'screen-summary': 'Souhrn autorizace',
-  'screen-result': 'Výsledek autorizace',
-  'screen-overview': 'Přehled autorizací'
+  'screen-success': 'Výsledek autorizace'
 };
 
 const DEFAULT_STATE = {
-  payerAccount: 'Běžný účet',
-  payerAccountNum: '123456789/0800',
-  payerBalance: '18 003 Kč',
-  recipientName: 'Jan Novák',
-  recipientAccountNum: '123456789/0800',
-  amount: '1 500 Kč',
-  dueDate: '12. 06. 2026',
-  message: 'Dárek k narozeninám',
-  paymentType: 'Tuzemská platba',
+  payerName: 'Běžný účet 2',
+  payerAccNum: '326683762/0100',
+  totalBalance: '48 490,20 Kč',
+  czkBalance: '40 000,00 Kč',
   
-  // Custom states
-  homeBalanceMain: '18 003 Kč',
-  accountBalance: '48 490 Kč'
+  // Scenarios
+  debitCezChecked: false,
+  debitObedyChecked: false,
+  isAuthorized: false // becomes true after successful PIN entry
 };
 
 let currentPin = '';
-let activeFieldKey = '';
 
-// LOAD STATE FROM LOCALSTORAGE
+// LOAD STATE FROM LOCAL STORAGE
 function loadState() {
   const state = {};
   for (const key in DEFAULT_STATE) {
-    state[key] = localStorage.getItem('kb_proto_' + key) || DEFAULT_STATE[key];
+    const stored = localStorage.getItem('kb_debits_' + key);
+    if (stored !== null) {
+      // Parse boolean values correctly
+      if (stored === 'true') state[key] = true;
+      else if (stored === 'false') state[key] = false;
+      else state[key] = stored;
+    } else {
+      state[key] = DEFAULT_STATE[key];
+    }
   }
   return state;
 }
 
-// SAVE STATE TO LOCALSTORAGE
+// SAVE STATE VALUE
 function saveStateValue(key, val) {
-  localStorage.setItem('kb_proto_' + key, val);
+  localStorage.setItem('kb_debits_' + key, val);
   syncUI();
 }
 
-// SYNC DATA WITH UI ELEMENTS
+// SYNC UI VALUES
 function syncUI() {
   const state = loadState();
   
-  // Home values
-  document.getElementById('home-val-main').innerText = state.homeBalanceMain;
-  
-  // Account Detail values
-  document.getElementById('account-header-title').innerText = state.payerAccount;
-  document.getElementById('account-detail-num').innerText = state.payerAccountNum;
-  document.getElementById('account-detail-balance').innerText = state.accountBalance;
-  
-  // Auth step 1
-  document.getElementById('auth1-payer').innerText = `${state.payerAccount} (${state.homeBalanceMain})`;
-  document.getElementById('auth1-recipient').innerText = state.recipientName;
-  document.getElementById('auth1-recipient-acc').innerText = state.recipientAccountNum;
-  document.getElementById('auth1-amount').innerText = state.amount;
-  
-  // Auth step 2
-  document.getElementById('auth2-payer').innerText = `${state.payerAccount} (${state.homeBalanceMain})`;
-  document.getElementById('auth2-recipient').innerText = state.recipientName;
-  document.getElementById('auth2-recipient-acc').innerText = state.recipientAccountNum;
-  document.getElementById('auth2-amount').innerText = state.amount;
-  document.getElementById('auth2-date').innerText = state.dueDate;
-  document.getElementById('auth2-message').innerText = state.message;
-  document.getElementById('auth2-type').innerText = state.paymentType;
-  
-  // Summary
-  document.getElementById('summary-recipient').innerText = state.recipientName;
-  document.getElementById('summary-amount').innerText = state.amount;
-  
-  // Result
-  document.getElementById('result-recipient').innerText = state.recipientName;
-  document.getElementById('result-amount').innerText = state.amount;
+  // Home Screen
+  document.getElementById('home-val-main').innerText = state.totalBalance;
+  document.getElementById('home-pill-czk').innerText = state.czkBalance;
+
+  // Account Detail Screen
+  document.getElementById('account-name-header').innerText = state.payerName;
+  document.getElementById('account-number-header').innerText = state.payerAccNum;
+  document.getElementById('account-balance-val').innerText = state.totalBalance;
+  document.getElementById('account-tab-czk').innerText = state.czkBalance;
+
+  // Summary Screen
+  document.getElementById('summary-payer-name').innerText = state.payerName;
+  document.getElementById('summary-payer-acc').innerText = state.payerAccNum;
+
+  // Checkbox bindings
+  updateCheckboxUI('chk-cez', state.debitCezChecked);
+  updateCheckboxUI('chk-obedy', state.debitObedyChecked);
+
+  // Recalculate totals in footer
+  recalculateFooter(state);
+
+  // Toggle list emptiness view
+  if (state.isAuthorized) {
+    document.getElementById('auth-list-nonempty').style.display = 'none';
+    document.getElementById('auth-list-empty').style.display = 'block';
+  } else {
+    document.getElementById('auth-list-nonempty').style.display = 'block';
+    document.getElementById('auth-list-empty').style.display = 'none';
+  }
 }
 
-// SCREEN TRANSITIONS
+// UPDATE CUSTOM CHECKBOX CLASS
+function updateCheckboxUI(id, isChecked) {
+  const el = document.getElementById(id);
+  if (el) {
+    if (isChecked) el.classList.add('checked');
+    else el.classList.remove('checked');
+  }
+}
+
+// RECALCULATE TOTAL AMOUNT
+function recalculateFooter(state) {
+  let selectedCount = 0;
+  let totalSum = 0;
+
+  if (!state.isAuthorized) {
+    if (state.debitCezChecked) {
+      selectedCount++;
+      totalSum += 1300;
+    }
+    if (state.debitObedyChecked) {
+      selectedCount++;
+      totalSum += 1000;
+    }
+  }
+
+  // Update check-all checkbox state
+  const chkAll = document.getElementById('chk-select-all');
+  if (chkAll) {
+    if (selectedCount === 2 && !state.isAuthorized) {
+      chkAll.classList.add('checked');
+    } else {
+      chkAll.classList.remove('checked');
+    }
+  }
+
+  // Footer UI
+  const formatVal = totalSum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") + ',00 Kč';
+  const amountTxt = document.getElementById('footer-amount-txt');
+  const countTxt = document.getElementById('footer-count-txt');
+  const btnSubmit = document.getElementById('btn-submit-auth');
+
+  if (amountTxt) amountTxt.innerText = 'Částka k autorizaci: ' + formatVal;
+  if (countTxt) countTxt.innerText = selectedCount + ' z 2 položek';
+
+  if (btnSubmit) {
+    if (selectedCount > 0 && !state.isAuthorized) {
+      btnSubmit.removeAttribute('disabled');
+    } else {
+      btnSubmit.setAttribute('disabled', 'true');
+    }
+  }
+}
+
+// NAVIGATION
 function showScreen(id, options = {}) {
-  // Hide all screens
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
   
-  // Show active screen
-  const screenEl = document.getElementById(id);
-  if (screenEl) {
-    screenEl.classList.add('active');
+  const target = document.getElementById(id);
+  if (target) {
+    target.classList.add('active');
   }
-  
-  // Track Page
-  trackPage('autorizace_inkas_' + id.replace('screen-', ''));
-  
-  // Update History & Title
+
+  // Track event
+  trackPage('vicenasobna_autorizace_' + id.replace('screen-', ''));
+
+  // Hash management
   if (!options.skipHistory) {
     const url = '#' + id.replace('screen-', '');
     history.pushState({ screen: id }, SCREEN_TITLES[id] || '', url);
-    document.title = (SCREEN_TITLES[id] || 'Prototyp') + ' · Vícenásobná autorizace inkas';
-  }
-  
-  // If moving away from summary, make sure PIN modal is closed
-  if (id !== 'screen-summary') {
-    closePinModal();
+    document.title = (SCREEN_TITLES[id] || 'Prototyp') + ' · Komerční banka';
   }
 }
 
-// TRACKING HELPERS (Clarity + GA)
+// TRACKING
 function trackPage(name) {
   if (typeof gtag === 'function') {
-    gtag('event', 'page_view', { page_title: name, prototype: 'vicenasobna_autorizace_inkas' });
+    gtag('event', 'page_view', { page_title: name, prototype: 'vicenasobna_autorizace' });
   }
   if (typeof window.clarity === 'function') {
     window.clarity('set', 'screen', name);
   }
 }
 
-// BROWSER BACK/FORWARD NAVIGATION
+// BROWSER BACK BUTTON
 window.addEventListener('popstate', (e) => {
   const id = (e.state && e.state.screen) || 'screen-home';
   showScreen(id, { skipHistory: true });
 });
 
-// DRAWER ACTIONS
+// HOME -> ACCOUNT DETAIL
+function selectAccount(name) {
+  if (name === 'Běžný účet 2') {
+    showScreen('screen-account');
+  }
+}
+
+// BOTTOM MENU ACTIONS
 function openDrawer() {
   document.getElementById('drawer-overlay').classList.add('open');
   document.getElementById('drawer').classList.add('open');
@@ -1195,42 +1481,44 @@ function closeDrawer() {
   document.getElementById('drawer-overlay').classList.remove('open');
   document.getElementById('drawer').classList.remove('open');
 }
-function startPaymentFlow() {
+function goToAuthList() {
   closeDrawer();
-  showScreen('screen-auth-p1');
+  showScreen('screen-auth-list');
 }
 
-// SELECT ACCOUNT ON HOME
-function selectAccount(name, balance, number) {
-  saveStateValue('payerAccount', name);
-  saveStateValue('payerAccountNum', number);
-  if (name === 'Běžný účet') {
-    saveStateValue('accountBalance', '48 490 Kč'); // As per figma
-  } else {
-    saveStateValue('accountBalance', balance);
-  }
-  saveStateValue('homeBalanceMain', balance);
-  showScreen('screen-account');
-}
-
-// INLINE EDITOR FUNCTIONS
-function editField(key, label) {
-  activeFieldKey = key;
+// DEBIT ITEM SELECTION
+function toggleDebitItem(item) {
   const state = loadState();
-  document.getElementById('edit-title').innerText = 'Upravit ' + label;
-  document.getElementById('edit-field-value').value = state[key];
-  document.getElementById('edit-modal').style.display = 'flex';
-}
-function closeEditModal() {
-  document.getElementById('edit-modal').style.display = 'none';
-}
-function saveEditedField() {
-  const newVal = document.getElementById('edit-field-value').value;
-  saveStateValue(activeFieldKey, newVal);
-  closeEditModal();
+  if (state.isAuthorized) return; // ignore if already completed
+
+  if (item === 'cez') {
+    saveStateValue('debitCezChecked', !state.debitCezChecked);
+  } else if (item === 'obedy') {
+    saveStateValue('debitObedyChecked', !state.debitObedyChecked);
+  }
 }
 
-// PIN MODAL FUNCTIONS
+// SELECT ALL ACTION
+function toggleSelectAll() {
+  const state = loadState();
+  if (state.isAuthorized) return;
+
+  const currentAll = (state.debitCezChecked && state.debitObedyChecked);
+  saveStateValue('debitCezChecked', !currentAll);
+  saveStateValue('debitObedyChecked', !currentAll);
+}
+
+// SUBMIT LIST -> SUMMARY
+function submitAuthList() {
+  const state = loadState();
+  if (state.debitCezChecked && state.debitObedyChecked) {
+    showScreen('screen-summary');
+  } else {
+    alert('Zaškrtněte prosím obě položky inkasa k autorizaci.');
+  }
+}
+
+// PIN MODAL OPEN/CLOSE
 function openPinModal() {
   currentPin = '';
   updatePinDots();
@@ -1239,22 +1527,19 @@ function openPinModal() {
 function closePinModal() {
   document.getElementById('pin-overlay').classList.remove('open');
 }
-function pressPin(digit) {
+function pressPinKey(digit) {
   if (currentPin.length < 6) {
     currentPin += digit;
     updatePinDots();
-    
+
     if (currentPin.length === 6) {
-      // Automatic verify delay
       setTimeout(() => {
-        closePinModal();
-        showScreen('screen-result');
-        deductSimulatedBalance();
+        executeSuccessFlow();
       }, 400);
     }
   }
 }
-function backspacePin() {
+function backspacePinKey() {
   if (currentPin.length > 0) {
     currentPin = currentPin.slice(0, -1);
     updatePinDots();
@@ -1262,7 +1547,7 @@ function backspacePin() {
 }
 function updatePinDots() {
   for (let i = 1; i <= 6; i++) {
-    const dot = document.getElementById('dot-' + i);
+    const dot = document.getElementById('pdot-' + i);
     if (i <= currentPin.length) {
       dot.classList.add('filled');
     } else {
@@ -1271,61 +1556,78 @@ function updatePinDots() {
   }
 }
 
-// DEDUCT BALANCE AFTER SUCCESSFUL TRANSACTION
-function deductSimulatedBalance() {
-  const state = loadState();
-  // Clean values to integers, subtract, format back
-  const amtClean = parseInt(state.amount.replace(/[^0-9]/g, '')) || 0;
-  const balanceClean = parseInt(state.accountBalance.replace(/[^0-9]/g, '')) || 0;
-  
-  if (balanceClean >= amtClean) {
-    const newBal = balanceClean - amtClean;
-    saveStateValue('accountBalance', formatKcz(newBal));
-    
-    // Also deduct home balance if active account is Běžný účet
-    if (state.payerAccount === 'Běžný účet') {
-      const homeBalClean = parseInt(state.homeBalanceMain.replace(/[^0-9]/g, '')) || 0;
-      if (homeBalClean >= amtClean) {
-        saveStateValue('homeBalanceMain', formatKcz(homeBalClean - amtClean));
+// BIOMETRICS (FACE ID SIMULATION)
+function triggerBiometrics() {
+  // Simulate rapid verification
+  for (let i = 1; i <= 6; i++) {
+    setTimeout(() => {
+      currentPin += i;
+      updatePinDots();
+      if (i === 6) {
+        setTimeout(() => {
+          executeSuccessFlow();
+        }, 300);
       }
-    }
+    }, i * 80);
   }
 }
-function formatKcz(val) {
-  return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") + ' Kč';
+
+// EXECUTE SUCCESSFUL AUTHORIZATION
+function executeSuccessFlow() {
+  closePinModal();
+  
+  // Deduct money logic
+  const state = loadState();
+  if (!state.isAuthorized) {
+    // subtract 2300 CZK
+    const totalNew = 48490.20 - 2300; // 46 190,20 Kč
+    const czkNew = 40000.00 - 2300;    // 37 700,00 Kč
+
+    saveStateValue('totalBalance', formatKcz(totalNew));
+    saveStateValue('czkBalance', formatKcz(czkNew));
+    saveStateValue('isAuthorized', true);
+  }
+  
+  showScreen('screen-success');
 }
 
-// FINISH FLOW
-function finishPaymentFlow() {
+function formatKcz(val) {
+  // format number to Czech standard: 46 190,20 Kč
+  const parts = val.toFixed(2).split('.');
+  parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+  return parts.join(',') + ' Kč';
+}
+
+// FLOW FINALIZATION
+function finishSuccessFlow() {
   showScreen('screen-account');
 }
+function goToAuthEmpty() {
+  showScreen('screen-auth-list');
+}
 
-// TEST PANEL FUNCTIONS
+// TEST PANEL SCRIPTS
 function resetPrototypeData() {
   localStorage.clear();
   syncUI();
   showScreen('screen-home');
 }
-function simulateFailedPin() {
-  alert('V reálné verzi by došlo k zamítnutí klíče. V prototypu pokračujeme jako úspěšná autorizace.');
-  closePinModal();
-  showScreen('screen-result');
+function triggerBiometricsInstant() {
+  executeSuccessFlow();
 }
 
 // INITIALIZATION
 document.addEventListener('DOMContentLoaded', () => {
   syncUI();
 
-  // Run Splash animation only on initial loading (if there is no hash)
+  // Splash animation if no hash
   const hash = window.location.hash.replace('#', '');
   if (!hash) {
-    // Show splash for 1.2s, then show home
     showScreen('screen-splash', { skipHistory: true });
     setTimeout(() => {
       showScreen('screen-home');
     }, 1200);
   } else {
-    // Restore screen from hash directly
     const screenId = 'screen-' + hash;
     if (document.getElementById(screenId)) {
       showScreen(screenId, { skipHistory: true });
@@ -1337,7 +1639,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Setup history state for back button navigation
 if (!window.location.hash || window.location.hash === '#home') {
-  history.replaceState({ screen: 'screen-home' }, 'Stav · Bankovnictví', '#home');
+  history.replaceState({ screen: 'screen-home' }, 'Přehled · Komerční banka', '#home');
 }
 </script>
 </body>

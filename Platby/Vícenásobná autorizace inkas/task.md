@@ -1,22 +1,11 @@
-- [x] Vytvořit adresář a soubor `ux/Platby/Vícenásobná autorizace inkas/index.html`
-- [x] Implementovat základní strukturu HTML (Head, Auth Guard, GA, Clarity)
-- [x] Vytvořit CSS design systém (simulace mobilního telefonu, barevné schéma KB, stíny, animace)
-- [x] Vytvořit HTML strukturu pro všech 9 stavů prototypu:
-  - [x] Obrazovka 1: Domů (Stav)
-  - [x] Obrazovka 2: Detail účtu (Účet)
-  - [x] Obrazovka 3: Spodní menu (Platby)
-  - [x] Obrazovka 4: Autorizace (Platba tab)
-  - [x] Obrazovka 5: Autorizace (Detaily tab)
-  - [x] Obrazovka 6: Souhrn (Souhrn)
-  - [x] Obrazovka 7: PIN klávesnice (Modální okno)
-  - [x] Obrazovka 8: Výsledek autorizace
-  - [x] Obrazovka 9: Přehled autorizací
-- [x] Implementovat JavaScript chování:
-  - [x] Navigace mezi obrazovkami a integrace s URL hashem
-  - [x] Ošetření tlačítka Zpět v prohlížeči (popstate)
-  - [x] Obnova stavu při obnovení stránky (refresh)
-  - [x] Ukládání a načítání dat z `localStorage`
-  - [x] Logika PIN klávesnice (zadávání, odebírání, validace, automatické odeslání)
-  - [x] Tracking událostí (Clarity & Google Analytics)
-- [x] Spustit generátor rozcestníku (`node generate.js`)
-- [x] Ověřit funkčnost a publikovat na GitHub
+- [x] Vytvořit novou strukturu HTML pro KB-specifické rozhraní (9 stavů)
+- [x] Implementovat nový CSS design (bílé zaoblené karty, červený plovoucí spodní panel, přesná typografie)
+- [x] Vytvořit inline SVG ilustrace pro KB Klíč a ikony transakcí
+- [x] Implementovat JS logiku pro:
+  - [x] Zaškrtávání položek a přepínání "Označit vše"
+  - [x] Dynamický přepočet částek v patičce autorizace
+  - [x] Interaktivní PIN klávesnici (Face ID, Backspace)
+  - [x] Odečet schválené částky (2 300 Kč) ze zůstatku Běžného účtu 2 po autorizaci
+  - [x] Hash-routing, history state a data persistence v localStorage
+- [/] Spustit generátor index.html (`node generate.js`)
+- [ ] Nahrát změny na GitHub a ověřit deployment
