@@ -1,38 +1,42 @@
-# Walkthrough: Prototyp VOP Antigravity
+# Průvodce: Prototyp VOP Antigravity (Věrná replika z Figma podkladů)
 
-Vytvořil jsem interaktivní prototyp **VOP Antigravity** v sekci **Platby** a upravil pravidla projektu podle vašich pokynů.
+Tento prototyp byl kompletně přepracován a postaven přímo na základě vyexportovaných Figma pláten a screenů z adresáře `Podklady`. Nahradil starší zkopírované šablony a implementuje věrný vzhled, textace a chování.
 
-## Provedené změny
+## Nově implementované obrazovky a funkce
 
-### 1. Aktualizace instrukcí projektu
-* Upravil jsem soubor [CLAUDE.md](file:///Users/lukasbendik/Documents/Claude/UX/CLAUDE.md):
-  * Každý nový prototyp se nyní vytváří do **vlastního podadresáře** (`Sekce/Název prototypu/`) s hlavním souborem `index.html`.
-  * Při zahájení práce se na začátku zeptám na **Sekci** (cílovou složku) a **Název prototypu** (název podsložky).
+1. **Detail účtu (s04b):**
+   - Zpřístupněn klepnutím na `Běžný účet 2` (48 490,20 Kč) na hlavní obrazovce.
+   - Obsahuje sub-klientské filtry a záložky (`Vše`, `40 000,00 Kč`, `334,26 EUR`).
+   - Zobrazuje transakční historii odpovídající podkladovému obrázku:
+     - **Tesco** (`-2 430,30 Kč`)
+     - **Karel Kropáček** (`+2 000,00 Kč`)
+     - **Josef Pokorný** (`-12 000,00 Kč`) s jasným označením červeného stavu **Platba neodešla**.
 
-### 2. Implementace prototypu VOP Antigravity
-Přesunul a přejmenoval jsem soubor na [Platby/VOP Antigravity/index.html](file:///Users/lukasbendik/Documents/Claude/UX/ux/Platby/VOP%20Antigravity/index.html). HTML kód obsahuje 4 interaktivní varianty odsouhlasení Všeobecných obchodních podmínek (VOP) a testovací nástroje:
+2. **Nová platba - Krok 2 (s06):**
+   - Nový mezikrok platebního formuláře.
+   - Umožňuje zadat detaily: `Zpráva pro příjemce`, `Variabilní symbol`, `Popis pro mě`, `Konstantní symbol`, `Specifický symbol`.
+   - Obsahuje přepínač rychlosti zpracování/odeslání platby (`Co nejdříve` / `Později`).
 
-* **Zabezpečení:** Na začátek hlavičky `<head>` byl vložen bezpečnostní auth guard s relativním přesměrováním `location.replace('../../')` (o dvě úrovně výš).
-* **Varianta A: Inline checkbox v rekapitulaci (krok 2)**
-  * V souhrnu platby se zobrazí dashed-border box s informací o nových VOP a checkboxem. Tlačítko *Potvrdit platbu* je zablokované, dokud uživatel checkbox nezaškrtne.
-* **Varianta B: Bottom sheet po kliknutí na Potvrdit**
-  * Uživatel klikne na *Potvrdit platbu* a zdola se vysune přehledný modal s informací o změnách a tlačítky *Souhlasím a odeslat* a *Nesouhlasím*.
-* **Varianta C: Celostránkový mezikrok před PINem**
-  * Uživatel klikne na *Potvrdit platbu* a je přesměrován na samostatnou obrazovku s plným textem VOP. Box s textem vyžaduje dorolování až na konec, čímž se teprve odblokuje souhlasový checkbox a tlačítko *Odsouhlasit a pokračovat*.
-* **Varianta D: Inline upozornění v 1. kroku platby**
-  * Hned v 1. kroku se nahoře zobrazí výrazný žlutý alert. Kliknutím se přejde na plné znění VOP (s nutností scrollu). Po schválení se uživatel vrátí zpět a banner zmizí. Pokud se pokusí pokračovat bez schválení, banner se roztřese.
-* **Obrazovka stornování platby**
-  * Pokud uživatel odmítne souhlasit s VOP, přejde na obrazovku stornované platby s možnostmi *Zpět na přehled* nebo *Zkusit znovu*.
+3. **Vizuální design systému KB+:**
+   - Červená barva KB (`#E2001A`), zakulacené rohy (`16px`), moderní písmo `Outfit`.
+   - **Solidní červený spodní tab bar** s bílými ikonami (místo původního šedobílého).
+   - Čisté vstupní formulářové bloky (např. ohraničený box `Komu` s integrovaným popiskem).
 
-### 3. Testovací nástroje pro výzkumníky
-* **Desktopový panel:** Na stolním počítači se vedle telefonu zobrazuje tmavý ovládací panel pro přepínání variant, sledování stavu schválení a resetování stavu.
-* **Mobilní nastavení:** Na reálném mobilním telefonu se v pravém dolním rohu zobrazuje plovoucí ikona ozubeného kolečka ⚙️, která otevírá spodní šuplík se shodnými testovacími funkcemi.
+4. **Duální scénáře plateb (Tuzemská CZK vs. SEPA EUR):**
+   Prototyp automaticky přizpůsobuje zobrazení v rekapitulaci (`s08`) a detailu autorizace (`s09`) na základě toho, co uživatel zadá jako příjemce:
+   - **Tuzemský scénář (30 000 Kč):** Pokud je zadáno tuzemské číslo (např. `129000/0100`), zobrazí se rekapitulace s detaily (VS, KS, SS, zpráva). Detail k autorizaci pak přesně odpovídá souboru `Detail platby k autorizaci.png`.
+   - **SEPA scénář (100 EUR):** Pokud je zadán německý IBAN (např. `DE89...`) nebo zvoleno EUR, rekapitulace odpovídá souboru `Souhrn platby.png` včetně **Přesného názvu příjemce** (`Jan Novak`) a stavu **Ověření názvu** (`✓ Název odpovídá číslu účtu`).
+
+5. **Rychlé scénáře v testovacím panelu:**
+   Do desktopového panelu i mobilního ozubeného kolečka (⚙️) byly přidány tlačítka pro předvyplnění obou testovacích scénářů jedním kliknutím. Výzkumník tak může uživateli okamžitě spustit test tuzemské nebo SEPA platby.
 
 ---
 
-## Nasazení na GitHub Pages
+## Verifikace a spuštění
 
-Změny byly úspěšně commitnuty a pushnuty do repozitáře.
+Tento prototyp je nasazen a k dispozici.
+
+- Rozcestník: `https://lukasbendik.github.io/design/`
 
 > [!NOTE]
-> GitHub Actions spustí build a aktualizaci rozcestníku. Změny se na odkazu projeví přibližně do 1 minuty.
+> Změny se na odkazu projeví do 1 minuty od pushnutí změn.
