@@ -1395,6 +1395,25 @@
     outline: 2px dashed var(--ocr-warn);
     background: var(--ocr-warn-bg) !important;
   }
+  /* Zelené označení účtu (success – vždy vidět) */
+  .stmt-tr.highlight-acc {
+    background: var(--ocr-ok-bg);
+    outline: 1px dashed var(--ocr-ok);
+  }
+  /* Loading: sekce v náhledu se označí AŽ při vyčtení hodnoty */
+  #screen-ocr-loading .stmt-tr.highlight-amount,
+  #screen-ocr-loading .stmt-tr.highlight-vs {
+    background: transparent;
+    outline: none;
+  }
+  #screen-ocr-loading .stmt-tr.highlight-amount.active-highlight {
+    outline: 2px dashed var(--ocr-ok);
+    background: var(--ocr-ok-bg) !important;
+  }
+  #screen-ocr-loading .stmt-tr.highlight-vs.active-highlight {
+    outline: 2px dashed var(--ocr-warn);
+    background: var(--ocr-warn-bg) !important;
+  }
   
   .falling-value {
     position: absolute;
@@ -2071,7 +2090,7 @@
     </div>
     
     <!-- Dark viewport containing the statement with warning badge -->
-    <div class="ocr-loading-body" style="height: 490px; flex: none;">
+    <div class="ocr-loading-body" style="flex: 1; min-height: 0;">
       <!-- Warning badge at the top -->
       <div class="warning-badge">
         <svg class="warning-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#FF9500" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
@@ -2083,14 +2102,14 @@
       </div>
       
       <!-- Náhled zprávy z Messengeru -->
-      <div class="sim-msg" style="transform: scale(1.15); margin-top: 40px;">
+      <div class="sim-msg" style="transform: scale(1.05);">
         <div class="sim-msg-head">
           <span class="sim-msg-avatar">P</span>
           <span class="sim-msg-name">Petr Novák</span>
         </div>
         <div class="sim-msg-bubble">
           <div class="sim-msg-text">Ahoj, pošli mi prosím za lístky 🙏</div>
-          <div class="stmt-tr msg-row"><span>Č. účtu</span><strong>123456789/0100</strong></div>
+          <div class="stmt-tr msg-row highlight-acc"><span>Č. účtu</span><strong>123456789/0100</strong></div>
           <div class="stmt-tr msg-row highlight-amount"><span>Částka</span><strong>100 Kč</strong></div>
           <div class="stmt-tr msg-row highlight-vs"><span>VS</span><strong>987564566778</strong></div>
         </div>
@@ -2098,7 +2117,7 @@
       </div>
     </div>
     
-    <div class="scroll" style="background: #F4F4F4; padding: 14px 20px 0; overflow-y: auto; flex: 1; display: flex; flex-direction: column; gap: 8px;">
+    <div class="scroll" style="background: #F4F4F4; padding: 14px 20px 0; overflow: visible; flex: none; display: flex; flex-direction: column; gap: 8px;">
       <!-- Results text blocks on gray background - Stacked vertically at the top -->
       <div>
         <div style="font-size: 11px; color: #8E8E93; font-weight: 500; text-transform: uppercase; letter-spacing: 0.5px;">Z účtu</div>
@@ -2779,17 +2798,15 @@ let noQrModalShown = lsGet('no_qr_modal_shown') === '1';
     document.getElementById('loading-field-amt').classList.remove('active');
     document.getElementById('loading-field-vs').classList.remove('active');
     
-    // Add blue dashed highlight border to the account on the statement card
-    const accTr = document.querySelector('.sim-msg .stmt-tr strong');
-    if (accTr && accTr.parentElement) {
-      accTr.parentElement.style.outline = '2px dashed #0E8A4F';
-      accTr.parentElement.style.background = 'rgba(14, 138, 79, 0.15)';
-      accTr.parentElement.style.borderRadius = '2px';
-      accTr.parentElement.style.padding = '2px';
-    }
-
-    // Timer 0.5s: Trigger falling animation for Z účtu
+    // Timer 0.5s: označ účet v náhledu AŽ ve chvíli vyčtení + spusť pád hodnoty
     ocrTimers.push(setTimeout(() => {
+      const accTr = document.querySelector('#screen-ocr-loading .sim-msg .stmt-tr strong');
+      if (accTr && accTr.parentElement) {
+        accTr.parentElement.style.outline = '2px dashed #0E8A4F';
+        accTr.parentElement.style.background = 'rgba(14, 138, 79, 0.15)';
+        accTr.parentElement.style.borderRadius = '2px';
+        accTr.parentElement.style.padding = '2px';
+      }
       const fallingAcc = document.createElement('div');
       fallingAcc.className = 'falling-value animate-acc';
       fallingAcc.textContent = fromAcc;
