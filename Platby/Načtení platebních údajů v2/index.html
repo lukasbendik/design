@@ -117,6 +117,24 @@
   .balance .dec { font-size: 18px; color: var(--text); }
   .chev { color: #999; }
 
+  /* Tarif Komfort – spojeno s běžnými účty */
+  .tarif-card { padding: 0; overflow: hidden; }
+  .tarif-header {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 11px 14px;
+    background: #FCEBEC;
+    border-bottom: 1px solid #F3D7D9;
+    cursor: pointer;
+  }
+  .tarif-title {
+    font-size: 12px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.6px;
+    color: #E3000F;
+  }
+  .tarif-acc { padding: 12px 14px; cursor: pointer; }
+  .tarif-acc:active { background: #FAFAFA; }
+  .tarif-divider { height: 1px; background: var(--border); margin: 0 14px; }
+
   /* Bottom floating action */
   .fab {
     position: absolute;
@@ -803,6 +821,19 @@
     color: rgba(255, 255, 255, 0.8);
     line-height: 1.4;
   }
+  /* Terciální tlačítko Zavřít v tooltipu */
+  .ctx-tt-close {
+    margin-top: 10px;
+    background: transparent;
+    border: none;
+    padding: 2px 0;
+    font-size: 13px;
+    font-weight: 600;
+    color: #fff;
+    cursor: pointer;
+    font-family: inherit;
+  }
+  #ctx-tooltip-scan .ctx-tt-close { color: #E3000F; }
 
   /* Toast notifikace */
   .toast {
@@ -1570,28 +1601,32 @@
       <div class="tab">Spoření</div>
     </div>
     <div class="scroll">
-      <div class="card">
-        <div class="row"><div class="acc-label">Tarif Komfort</div><div class="chev">›</div></div>
-      </div>
-      <div class="card" onclick="showAccountDetail('acc-1')" style="cursor:pointer;">
-        <div class="row" style="display:flex; justify-content:space-between; align-items:center;">
-          <div>
-            <div class="acc-label">Běžný účet</div>
-            <div class="acc-num">122000/0100</div>
-          </div>
-          <div class="chev" style="font-size:18px;">›</div>
+      <div class="card tarif-card">
+        <div class="tarif-header" onclick="showToast('Detail tarifu – mimo rozsah prototypu')">
+          <span class="tarif-title">Tarif Komfort</span>
+          <span class="chev" style="font-size:18px;">›</span>
         </div>
-        <div class="balance" style="margin-top:2px;">18 063<span class="dec">,38 Kč</span></div>
-      </div>
-      <div class="card" onclick="showAccountDetail('acc-2')" style="cursor:pointer;">
-        <div class="row" style="display:flex; justify-content:space-between; align-items:center;">
-          <div>
-            <div class="acc-label">Běžný účet 2</div>
-            <div class="acc-num">326683762/0100</div>
+        <div class="tarif-acc" onclick="showAccountDetail('acc-1')">
+          <div class="row" style="display:flex; justify-content:space-between; align-items:center;">
+            <div>
+              <div class="acc-label">Běžný účet</div>
+              <div class="acc-num">122000/0100</div>
+            </div>
+            <div class="chev" style="font-size:18px;">›</div>
           </div>
-          <div class="chev" style="font-size:18px;">›</div>
+          <div class="balance" style="margin-top:2px;">18 063<span class="dec">,38 Kč</span></div>
         </div>
-        <div class="balance" style="margin-top:2px;">48 490<span class="dec">,20 Kč</span></div>
+        <div class="tarif-divider"></div>
+        <div class="tarif-acc" onclick="showAccountDetail('acc-2')">
+          <div class="row" style="display:flex; justify-content:space-between; align-items:center;">
+            <div>
+              <div class="acc-label">Běžný účet 2</div>
+              <div class="acc-num">326683762/0100</div>
+            </div>
+            <div class="chev" style="font-size:18px;">›</div>
+          </div>
+          <div class="balance" style="margin-top:2px;">48 490<span class="dec">,20 Kč</span></div>
+        </div>
       </div>
       <div class="card" onclick="showAccountDetail('acc-sav')" style="cursor:pointer;">
         <div class="row" style="display:flex; justify-content:space-between; align-items:center;">
@@ -1753,6 +1788,7 @@
     <div class="ctx-tooltip" id="ctx-tooltip-qr" onclick="dismissTooltip()">
       <div class="ctx-tt-title">Nově umíme načítat platební údaje</div>
       <div class="ctx-tt-text">Stačí vyfotit SMS nebo fakturu a platební údaje načteme sami.</div>
+      <button class="ctx-tt-close" onclick="event.stopPropagation(); dismissTooltip()">Zavřít</button>
     </div>
     <div class="scroll" style="padding:14px;">
       <div class="field">
@@ -1842,6 +1878,7 @@
     <div class="ctx-tooltip" id="ctx-tooltip-scan" onclick="dismissScanTooltip()">
       <div class="ctx-tt-title">Nově umíme načítat platební údaje</div>
       <div class="ctx-tt-text">Stačí vyfotit SMS nebo fakturu a platební údaje načteme sami.</div>
+      <button class="ctx-tt-close" onclick="event.stopPropagation(); dismissScanTooltip()">Zavřít</button>
     </div>
 
     <!-- Sheet for gallery -->
