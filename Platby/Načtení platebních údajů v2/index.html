@@ -1791,7 +1791,7 @@
       </div>
     </div>
     <div class="fab">
-      <button onclick="flowOrigin='screen-dashboard'; go('screen-newpayment')">
+      <button onclick="flowOrigin='screen-dashboard'; clearPaymentEntry(); go('screen-newpayment')">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 8h9M3 12h13M3 16h7"/><circle cx="18" cy="9" r="3"/></svg>
         Nová platba
       </button>
@@ -2477,7 +2477,7 @@
     </div>
     
     <div class="bottom-bar" style="background: #F4F4F4; border-top: 1px solid #E5E5EA; padding: 16px 20px 24px; display: flex; flex-direction: column; gap: 10px;">
-      <button class="primary-btn red" onclick="flowOrigin='screen-dashboard'; go('screen-newpayment');" style="background: #E3000F; color: #FFF; font-weight: 600;">Zadat další</button>
+      <button class="primary-btn red" onclick="flowOrigin='screen-dashboard'; clearPaymentEntry(); go('screen-newpayment');" style="background: #E3000F; color: #FFF; font-weight: 600;">Zadat další</button>
       <button class="secondary-btn-outline" style="background: #FFF; border: 1px solid #1C1C1E; color: #1C1C1E; font-weight: 500;" onclick="closeFlow()">Zavřít</button>
     </div>
   </section>
@@ -3033,6 +3033,7 @@ let noQrModalShown = lsGet('no_qr_modal_shown') === '1';
   }
   function goToManualPayment() {
     closeOCRFailAlert();
+    clearPaymentEntry();
     go('screen-newpayment');
   }
 
@@ -3176,6 +3177,14 @@ let noQrModalShown = lsGet('no_qr_modal_shown') === '1';
     document.getElementById(containerId).innerHTML = html;
   }
 
+  // Nová platba začíná vždy s prázdnými poli – smaž dříve vyplněné údaje
+  function clearPaymentEntry() {
+    ['payment_to_acc','payment_amount','payment_currency','payment_vs',
+     'payment_msg','payment_desc','payment_ks','payment_ss','payment_date',
+     'payment_send_option']
+      .forEach(k => { try { localStorage.removeItem(k); } catch(e) {} });
+  }
+
   function triggerDtlPayment() {
     if (!currentAccountId) return;
     const acc = ACCOUNTS_DATA[currentAccountId];
@@ -3199,6 +3208,7 @@ let noQrModalShown = lsGet('no_qr_modal_shown') === '1';
     if (editNumEl) editNumEl.textContent = acc.number;
     if (editBalEl) editBalEl.textContent = 'Na účtu máte ' + acc.balance + acc.decimal + '.';
 
+    clearPaymentEntry();
     flowOrigin = 'screen-account-detail';
     go('screen-newpayment');
   }
