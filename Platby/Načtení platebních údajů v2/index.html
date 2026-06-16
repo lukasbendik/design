@@ -1088,7 +1088,10 @@
     overflow: hidden;
   }
   .loading-badge {
-    margin-bottom: 18px;
+    position: absolute;
+    bottom: 16px;
+    left: 50%;
+    transform: translateX(-50%);
     background: rgba(45,45,45,0.9);
     color: #FFF;
     padding: 8px 16px;
@@ -1110,7 +1113,9 @@
     animation: loading-spin 0.8s infinite linear;
   }
   .warning-badge {
-    margin: 0 auto 18px;
+    position: absolute;
+    bottom: 16px;
+    left: 16px;
     width: calc(100% - 32px);
     background: rgba(45, 45, 45, 0.95);
     color: #FFF;
@@ -2430,7 +2435,7 @@
     </div>
     
     <div class="bottom-bar" style="background: #F4F4F4; border-top: 1px solid #E5E5EA; padding: 16px 20px 24px; display: flex; flex-direction: column; gap: 10px;">
-      <button class="primary-btn red" onclick="go('screen-scan'); setMode('inv');" style="background: #E3000F; color: #FFF; font-weight: 600;">Zadat další</button>
+      <button class="primary-btn red" onclick="flowOrigin='screen-dashboard'; go('screen-newpayment');" style="background: #E3000F; color: #FFF; font-weight: 600;">Zadat další</button>
       <button class="secondary-btn-outline" style="background: #FFF; border: 1px solid #1C1C1E; color: #1C1C1E; font-weight: 500;" onclick="closeFlow()">Zavřít</button>
     </div>
   </section>
