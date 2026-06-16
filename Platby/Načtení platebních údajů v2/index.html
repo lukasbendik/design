@@ -2779,14 +2779,14 @@ let noQrModalShown = lsGet('no_qr_modal_shown') === '1';
     const simPlain = document.getElementById('sim-plain');
     
     if (m === 'qr') {
-      if (hint) hint.textContent = 'Namiřte fotoaparát na QR kód, vyfotí se automaticky.';
+      if (hint) { hint.textContent = 'Namiřte fotoaparát na QR kód, vyfotí se automaticky.'; hint.style.bottom = '104px'; }
       if (scanFrame) scanFrame.style.display = 'block';
       if (shutter) shutter.style.display = 'none';
       if (simQR) simQR.classList.add('show');
       if (simPlain) simPlain.classList.remove('show');
       startNoQRAlertTimer();
     } else {
-      if (hint) hint.textContent = 'Stačí vyfotit SMS nebo fakturu a platební údaje načteme sami.';
+      if (hint) { hint.textContent = 'Stačí vyfotit SMS nebo fakturu a platební údaje načteme sami.'; hint.style.bottom = '20px'; }
       if (scanFrame) scanFrame.style.display = 'none';
       if (shutter) shutter.style.display = 'flex';
       if (simQR) simQR.classList.remove('show');
