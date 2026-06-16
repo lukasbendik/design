@@ -1428,6 +1428,126 @@
     font-weight: 700;
     margin-top: 2px;
   }
+
+  /* ══════════════════════════
+     DETAIL ÚČTU (screen-account-detail)
+     ══════════════════════════ */
+  .detail-screen { background: var(--bg); }
+  .detail-head { padding: 6px 20px 0; }
+  .detail-acct-row {
+    display: flex; justify-content: space-between; align-items: baseline;
+    margin-top: 18px;
+  }
+  .detail-acct-name { font-size: 17px; font-weight: 600; color: var(--text); }
+  .detail-acct-num { font-size: 17px; color: var(--text-2); }
+  .detail-balance {
+    font-size: 34px; font-weight: 700; color: var(--text);
+    letter-spacing: -0.5px; margin-top: 6px;
+  }
+  .detail-balance span { font-size: 20px; font-weight: 400; }
+  .detail-list-card {
+    background: #FFF; border-radius: 12px;
+    margin: 0 16px 12px; box-shadow: 0 1px 6px rgba(0,0,0,0.06);
+    cursor: pointer; display: flex; align-items: center; justify-content: space-between;
+    padding: 16px 18px;
+  }
+  .detail-list-left { display: flex; align-items: center; gap: 14px; }
+  .detail-list-icon { color: var(--red); display: flex; }
+  .detail-list-title { font-size: 17px; font-weight: 600; color: var(--text); }
+  .card-chevron { color: #999; font-size: 18px; }
+  .tx-group { margin: 0 16px 12px; }
+  .tx-card {
+    background: #FFF; border-radius: 12px;
+    box-shadow: 0 1px 6px rgba(0,0,0,0.06); overflow: hidden;
+  }
+  .tx-group-title { font-size: 22px; font-weight: 700; color: var(--text); padding: 18px 18px 10px; }
+  .tx-row {
+    display: flex; align-items: center; gap: 14px;
+    padding: 14px 18px; border-top: 1px solid #f0f0f0; cursor: pointer;
+  }
+  .tx-row:first-of-type { border-top: none; }
+  .tx-avatar {
+    position: relative; flex-shrink: 0;
+    width: 44px; height: 44px; border-radius: 10px;
+    background: #ECECEC; display: flex; align-items: center; justify-content: center;
+    color: #9A9A9A;
+  }
+  .tx-badge {
+    position: absolute; bottom: -3px; right: -3px;
+    width: 20px; height: 20px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    border: 2px solid #fff; color: #fff; font-size: 11px;
+  }
+  .tx-badge.out { background: #1A1A1A; }
+  .tx-badge.in { background: var(--green); }
+  .tx-badge.fail { background: var(--red); }
+  .tx-main { flex: 1; min-width: 0; }
+  .tx-name { font-size: 17px; font-weight: 600; color: var(--text); }
+  .tx-note {
+    font-size: 14px; color: var(--text-2); margin-top: 2px;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .tx-amount { font-size: 17px; font-weight: 600; color: var(--text); white-space: nowrap; flex-shrink: 0; }
+  .tx-amount.in { color: var(--green); }
+
+  /* Spořicí – obálky */
+  .sav-rate { font-size: 15px; color: var(--text-2); margin-top: 4px; }
+  .sav-sub-card {
+    background: #FFF; border-radius: 12px;
+    margin: 0 16px 12px; box-shadow: 0 1px 6px rgba(0,0,0,0.06);
+    padding: 16px 18px; cursor: pointer;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .sav-sub-card .sav-sub-title { font-size: 17px; font-weight: 600; color: var(--text); }
+  .sav-sub-card .sav-sub-amount { font-size: 15px; color: var(--text-2); margin-top: 2px; }
+  .env-card {
+    background: #FFF; border-radius: 12px;
+    margin: 0 16px 12px; box-shadow: 0 1px 6px rgba(0,0,0,0.06);
+    overflow: hidden;
+  }
+  .env-card-title { font-size: 22px; font-weight: 700; padding: 18px 18px 6px; }
+  .env-row { padding: 14px 18px; border-top: 1px solid #f0f0f0; cursor: pointer; }
+  .env-row-top { display: flex; justify-content: space-between; align-items: center; }
+  .env-name { font-size: 17px; font-weight: 600; color: var(--text); }
+  .env-amount { font-size: 15px; color: var(--text-2); margin-top: 2px; }
+  .env-bar { height: 7px; border-radius: 4px; background: #d8d8d8; margin: 10px 0 6px; overflow: hidden; }
+  .env-bar-fill { height: 100%; background: #1A1A1A; border-radius: 4px; }
+  .env-goal { font-size: 14px; color: var(--text-2); text-align: right; }
+
+  /* Bottom bar in account detail */
+  .detail-bottom-bar {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 8px 12px 20px;
+    background: #FFF;
+    border-top: 1px solid var(--border);
+  }
+  .detail-bottom-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    cursor: pointer;
+    flex: 1;
+    color: var(--text-2);
+  }
+  .detail-bottom-btn-icon {
+    width: 32px;
+    height: 32px;
+    background: var(--red);
+    color: #FFF;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    box-shadow: 0 2px 8px rgba(227,0,15,0.3);
+  }
+  .detail-bottom-btn-label {
+    font-size: 11px;
+    font-weight: 500;
+  }
 </style>
 </head>
 <body>
@@ -1455,16 +1575,35 @@
       <div class="card">
         <div class="row"><div class="acc-label">Tarif Komfort</div><div class="chev">›</div></div>
       </div>
-      <div class="card">
-        <div class="row"><div class="acc-label">Běžný účet</div><div class="acc-num">122000/0100</div></div>
-        <div class="balance">18 063<span class="dec">,38 Kč</span></div>
-        <hr style="border:none;border-top:1px solid var(--border);margin:10px 0;">
-        <div class="row"><div class="acc-label">Běžný účet 2</div><div class="acc-num">326683762/0100</div></div>
-        <div class="balance">48 490<span class="dec">,20 Kč</span></div>
+      <div class="card" onclick="showAccountDetail('acc-1')" style="cursor:pointer;">
+        <div class="row" style="display:flex; justify-content:space-between; align-items:center;">
+          <div>
+            <div class="acc-label">Běžný účet</div>
+            <div class="acc-num">122000/0100</div>
+          </div>
+          <div class="chev" style="font-size:18px;">›</div>
+        </div>
+        <div class="balance" style="margin-top:2px;">18 063<span class="dec">,38 Kč</span></div>
       </div>
-      <div class="card">
-        <div class="row"><div class="acc-label">Spoření</div><div class="acc-num">326683764/0100</div></div>
-        <div class="balance">11 490<span class="dec">,20 Kč</span></div>
+      <div class="card" onclick="showAccountDetail('acc-2')" style="cursor:pointer;">
+        <div class="row" style="display:flex; justify-content:space-between; align-items:center;">
+          <div>
+            <div class="acc-label">Běžný účet 2</div>
+            <div class="acc-num">326683762/0100</div>
+          </div>
+          <div class="chev" style="font-size:18px;">›</div>
+        </div>
+        <div class="balance" style="margin-top:2px;">48 490<span class="dec">,20 Kč</span></div>
+      </div>
+      <div class="card" onclick="showAccountDetail('acc-sav')" style="cursor:pointer;">
+        <div class="row" style="display:flex; justify-content:space-between; align-items:center;">
+          <div>
+            <div class="acc-label">Spoření</div>
+            <div class="acc-num">326683764/0100</div>
+          </div>
+          <div class="chev" style="font-size:18px;">›</div>
+        </div>
+        <div class="balance" style="margin-top:2px;">11 490<span class="dec">,20 Kč</span></div>
       </div>
       <div class="card">
         <div class="acc-label">Souhrn za červen</div>
@@ -1493,6 +1632,122 @@
     </div>
   </section>
 
+  <!-- SCREEN 1a: Account Detail -->
+  <section class="screen detail-screen" id="screen-account-detail">
+    <div class="topbar white">
+      <button class="back-txt-btn" onclick="go('screen-dashboard')"><span style="font-size: 20px; line-height: 1; font-weight: 300;">‹</span> Přehled</button>
+    </div>
+    
+    <div class="scroll" style="padding: 0; flex: 1;">
+      <!-- Detail Head -->
+      <div class="detail-head">
+        <div class="detail-acct-row">
+          <span class="detail-acct-name" id="dtl-acct-name">Běžný účet</span>
+          <span class="detail-acct-num" id="dtl-acct-num">122000/0100</span>
+        </div>
+        <div class="detail-balance" id="dtl-acct-balance">18 063<span>,38 Kč</span></div>
+        <div class="sav-rate" id="dtl-sav-rate" style="display: none;">Úroková sazba 3,5 % p. a.</div>
+      </div>
+      
+      <div style="height: 12px;"></div>
+      
+      <!-- Management Card -->
+      <div class="detail-list-card" onclick="showToast('Správa účtu – mimo rozsah prototypu')">
+        <div class="detail-list-left">
+          <span class="detail-list-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/>
+              <rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/>
+            </svg>
+          </span>
+          <span class="detail-list-title">Detail a správa účtu</span>
+        </div>
+        <span class="card-chevron">›</span>
+      </div>
+      
+      <!-- Spořicí Envelopes (Visible only for Spoření) -->
+      <div id="dtl-savings-envelopes" style="display: none;">
+        <div class="sav-sub-card" onclick="showToast('Nezatříděné peníze')">
+          <div>
+            <div class="sav-sub-title">Nezatříděné peníze</div>
+            <div class="sav-sub-amount" id="dtl-sav-sub-amount">11 490,20 Kč</div>
+          </div>
+          <span class="card-chevron">›</span>
+        </div>
+        <div class="env-card">
+          <div class="env-card-title">Obálky</div>
+          <!-- Envelope 1 -->
+          <div class="env-row" onclick="showToast('Obálka Rekonstrukce')">
+            <div class="env-row-top">
+              <span class="env-name">Rekonstrukce</span>
+              <span class="card-chevron">›</span>
+            </div>
+            <div class="env-amount">45 000,00 Kč</div>
+            <div class="env-bar"><div class="env-bar-fill" style="width:75%"></div></div>
+            <div class="env-goal">Cíl 60 000 Kč</div>
+          </div>
+          <!-- Envelope 2 -->
+          <div class="env-row" onclick="showToast('Obálka Dovolená')">
+            <div class="env-row-top">
+              <span class="env-name">Dovolená</span>
+              <span class="card-chevron">›</span>
+            </div>
+            <div class="env-amount">15 000,00 Kč</div>
+            <div class="env-bar"><div class="env-bar-fill" style="width:50%"></div></div>
+            <div class="env-goal">Cíl 30 000 Kč</div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Filter Card -->
+      <div class="detail-list-card" onclick="showToast('Filtrace transakcí')">
+        <div class="detail-list-left">
+          <span class="detail-list-title">Filtr</span>
+        </div>
+        <span class="detail-list-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="4" y1="7" x2="20" y2="7"/><circle cx="9" cy="7" r="2.5" fill="#fff"/>
+            <line x1="4" y1="14" x2="20" y2="14"/><circle cx="16" cy="14" r="2.5" fill="#fff"/>
+          </svg>
+        </span>
+      </div>
+      
+      <!-- Transactions List (Dynamic) -->
+      <div id="dtl-tx-list"></div>
+      <div style="height: 16px;"></div>
+    </div>
+    
+    <!-- Bottom Bar -->
+    <div class="detail-bottom-bar">
+      <div class="detail-bottom-btn" id="dtl-btn-payment" onclick="triggerDtlPayment()">
+        <div class="detail-bottom-btn-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="12" y1="5" x2="12" y2="19"></line>
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+          </svg>
+        </div>
+        <div class="detail-bottom-btn-label">Nová platba</div>
+      </div>
+      <div class="detail-bottom-btn" id="dtl-btn-scan" onclick="triggerDtlScan()">
+        <div class="detail-bottom-btn-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/>
+            <rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="3" height="3"/>
+          </svg>
+        </div>
+        <div class="detail-bottom-btn-label">Skenovat</div>
+      </div>
+      <div class="detail-bottom-btn" onclick="showToast('Funkce Zaplať mi – mimo rozsah prototypu')">
+        <div class="detail-bottom-btn-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M18 11V7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v1a2 2 0 0 0-2-2 2 2 0 0 0-2 2v1a2 2 0 0 0-2-2 2 2 0 0 0-2 2v5c0 2.8 2.2 5 5 5h2a5 5 0 0 0 5-5v-2z"/>
+          </svg>
+        </div>
+        <div class="detail-bottom-btn-label">Zaplať mi</div>
+      </div>
+    </div>
+  </section>
+
   <!-- SCREEN 2: New payment (entry) -->
   <section class="screen" id="screen-newpayment">
     <div class="topbar white">
@@ -1514,17 +1769,16 @@
     <div class="scroll" style="padding:14px;">
       <div class="field">
         <div class="label">Z účtu</div>
-        <div class="value">Běžný účet</div>
-        <div style="font-size:13px;color:var(--text-2);">123456−4835477/0100</div>
+        <div class="value" id="lbl-newpayment-from-acc-name">Běžný účet</div>
+        <div style="font-size:13px;color:var(--text-2);" id="lbl-newpayment-from-acc-num">123456−4835477/0100</div>
       </div>
       <div class="field">
         <div class="label">Komu</div>
         <div class="value" style="color:#999;">Číslo účtu, IBAN, šablona nebo příjemce</div>
       </div>
-      <div style="background:#fff;padding:14px;border-radius:12px;border:1px solid var(--border);margin-bottom:10px;display:flex;align-items:center;gap:10px;">
-        <span style="color:var(--red);font-size:20px;">●●●</span>
-        <strong>Platba na kontakt</strong>
-        <span style="margin-left:auto;">›</span>
+      <div style="background:#fff;padding:14px;border-radius:12px;border:1px solid var(--border);margin-bottom:10px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;">
+        <strong style="font-weight:600;">Platba na kontakt</strong>
+        <span>›</span>
       </div>
       <div class="row2">
         <div class="field"><div class="label">Částka</div><div class="value">0</div></div>
@@ -1771,7 +2025,7 @@
     </div>
     
     <!-- Dark viewport containing the statement with warning badge -->
-    <div class="ocr-loading-body" style="height: 380px; flex: none;">
+    <div class="ocr-loading-body" style="height: 400px; flex: none;">
       <!-- Warning badge at the top -->
       <div class="warning-badge">
         <svg class="warning-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#FF9500" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
@@ -1783,7 +2037,7 @@
       </div>
       
       <!-- Simulated Statement Card -->
-      <div class="sim-kb-statement" style="transform: scale(0.95); margin-top: 36px;">
+      <div class="sim-kb-statement" style="transform: scale(0.98); margin-top: 36px;">
         <div class="stmt-header">
           <div class="stmt-logo">
             <div class="stmt-logo-sq">KB</div>
@@ -1827,21 +2081,19 @@
       </div>
     </div>
     
-    <div class="scroll" style="background: #F4F4F4; padding: 12px 20px; overflow: hidden; flex: 1;">
-      <!-- Results text blocks on gray background - Compact grid -->
-      <div style="margin-bottom: 8px;">
+    <div class="scroll" style="background: #F4F4F4; padding: 12px 20px; overflow: hidden; flex: 1; display: flex; flex-direction: column; justify-content: flex-end; gap: 8px;">
+      <!-- Results text blocks on gray background - Stacked vertically at the bottom -->
+      <div>
         <div style="font-size: 11px; color: #8E8E93; font-weight: 500; text-transform: uppercase; letter-spacing: 0.5px;">Z účtu</div>
         <div style="font-size: 16px; color: #1C1C1E; font-weight: 700; margin-top: 2px;" id="ocr-success-from-acc">123456789/0100</div>
       </div>
-      <div style="display: flex; gap: 20px;">
-        <div style="flex: 1;">
-          <div style="font-size: 11px; color: #8E8E93; font-weight: 500; text-transform: uppercase; letter-spacing: 0.5px;">Částka</div>
-          <div style="font-size: 16px; color: #1C1C1E; font-weight: 700; margin-top: 2px;" id="ocr-success-amount">100 Kč</div>
-        </div>
-        <div style="flex: 1.2;">
-          <div style="font-size: 11px; color: #8E8E93; font-weight: 500; text-transform: uppercase; letter-spacing: 0.5px;">Variabilní symbol</div>
-          <div style="font-size: 16px; color: #1C1C1E; font-weight: 700; margin-top: 2px;" id="ocr-success-vs">987564566778</div>
-        </div>
+      <div>
+        <div style="font-size: 11px; color: #8E8E93; font-weight: 500; text-transform: uppercase; letter-spacing: 0.5px;">Částka</div>
+        <div style="font-size: 16px; color: #1C1C1E; font-weight: 700; margin-top: 2px;" id="ocr-success-amount">100 Kč</div>
+      </div>
+      <div>
+        <div style="font-size: 11px; color: #8E8E93; font-weight: 500; text-transform: uppercase; letter-spacing: 0.5px;">Variabilní symbol</div>
+        <div style="font-size: 16px; color: #1C1C1E; font-weight: 700; margin-top: 2px;" id="ocr-success-vs">987564566778</div>
       </div>
     </div>
     
@@ -1881,13 +2133,9 @@
       </div>
       
       <!-- Platba na kontakt bar -->
-      <div style="background:#fff; padding:14px; border-radius:12px; border:1px solid #E5E5EA; margin-bottom:12px; display:flex; align-items:center; gap:10px; box-shadow: var(--shadow);">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#E3000F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;">
-          <circle cx="12" cy="12" r="10"></circle>
-          <circle cx="12" cy="12" r="4"></circle>
-        </svg>
+      <div style="background:#fff; padding:14px; border-radius:12px; border:1px solid #E5E5EA; margin-bottom:12px; display:flex; align-items:center; justify-content:space-between; cursor:pointer; box-shadow: var(--shadow);">
         <strong style="font-size: 15px; font-weight: 600;">Platba na kontakt</strong>
-        <span style="margin-left:auto; color: #8E8E93; font-size: 18px;">›</span>
+        <span style="color: #8E8E93; font-size: 18px;">›</span>
       </div>
       
       <!-- Amount and Currency row -->
@@ -2493,6 +2741,9 @@ let noQrModalShown = lsGet('no_qr_modal_shown') === '1';
     
     // Set initial values
     let fromAcc = lsGet('payment_from_acc') || '123456789/0100';
+    if (fromAcc.includes('<br>')) {
+      fromAcc = fromAcc.split('<br>')[1];
+    }
     const accBox = document.querySelector('#loading-field-acc .loading-detected-box');
     if (accBox) accBox.textContent = fromAcc;
     
@@ -2514,7 +2765,7 @@ let noQrModalShown = lsGet('no_qr_modal_shown') === '1';
     ocrTimers.push(setTimeout(() => {
       const fallingAcc = document.createElement('div');
       fallingAcc.className = 'falling-value animate-acc';
-      fallingAcc.textContent = '123456789/0100';
+      fallingAcc.textContent = fromAcc;
       fallingAcc.style.left = '35%';
       fallingAcc.style.top = '190px';
       document.querySelector('.ocr-loading-body').appendChild(fallingAcc);
@@ -2602,13 +2853,206 @@ let noQrModalShown = lsGet('no_qr_modal_shown') === '1';
     go('screen-newpayment');
   }
 
+  // Data pro detaily účtů
+  const TX_OUT = [
+    ['Perfect jídlo', 'Nákup u obchodníka'], ['O2', 'Dobití kreditu'],
+    ['Česká pošta', 'Byt Novodvorská', 'SIPO'], ['O2', 'O2 – Internet měsíčně', 'Trvalý příkaz'],
+    ['Tesco', 'Nákup potravin'], ['Shell', 'Tankování'], ['Albert', 'Platba kartou'],
+    ['Alza.cz', 'Online objednávka'], ['Lidl', 'Nákup'], ['IKEA', 'Nákup'],
+    ['Spotify', 'Předplatné', 'Trvalý příkaz'], ['Netflix', 'Předplatné', 'Trvalý příkaz'],
+    ['ČEZ Prodej', 'Záloha elektřina', 'SIPO'], ['DPP', 'Jízdné'], ['Dr. Max', 'Lékárna']
+  ];
+  const TX_IN = [
+    ['Joshua Stilton', 'Thanks for all'], ['3827897080/0100', 'Splátka za kolo'],
+    ['Karel Kropáček', 'Příspěvek na chatu'], ['Mzda – Acme s.r.o.', 'Výplata'],
+    ['Jana Nováková', 'Vrácení peněz'], ['Helmut Schwarz', 'Směna peněz', 'SEPA platba poplatek']
+  ];
+  const BADGE = {
+    out:  '<span class="tx-badge out">→</span>',
+    in:   '<span class="tx-badge in">←</span>',
+    fail: '<span class="tx-badge fail">✕</span>'
+  };
+  const TX_PERSON_ICON = '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="3.5"/><path d="M5 20v-1a5 5 0 0 1 5-5h4a5 5 0 0 1 5 5v1"/></svg>';
+
+  function pick(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
+
+  function genTransactions(seed) {
+    let s = seed;
+    const rng = () => { s = (s * 9301 + 49297) % 233280; return s / 233280; };
+    const r = (min, max) => rng() * (max - min) + min;
+    const p = arr => arr[Math.floor(rng() * arr.length)];
+
+    const count = Math.floor(r(10, 20));
+    const txs = [];
+    for (let i = 0; i < count; i++) {
+      const roll = rng();
+      let type, src, amount;
+      if (roll < 0.62) { type = 'out'; src = p(TX_OUT); amount = -r(80, 6000); }
+      else if (roll < 0.90) { type = 'in'; src = p(TX_IN); amount = (src[1] === 'Výplata') ? r(79000, 81000) : r(200, 25000); }
+      else { type = 'fail'; src = p(TX_OUT); amount = -r(500, 14000); }
+      const daysAgo = Math.floor(r(0, 30) * r(0, 1));
+      const d = new Date();
+      d.setDate(d.getDate() - daysAgo);
+      txs.push({ type, name: src[0], note: type === 'fail' ? 'Platba neodešla' : src[1], amount, date: d });
+    }
+    txs.sort((a, b) => b.date - a.date);
+    return txs;
+  }
+
+  function dayLabel(d) {
+    const t = new Date(); const y = new Date(); y.setDate(y.getDate() - 1);
+    const same = (a, b) => a.toDateString() === b.toDateString();
+    if (same(d, t)) return 'Dnes';
+    if (same(d, y)) return 'Včera';
+    return d.getDate() + '. ' + (d.getMonth() + 1) + '. ' + d.getFullYear();
+  }
+
+  function fmtCZK(val) {
+    return Number(val).toLocaleString('cs-CZ', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' Kč';
+  }
+
+  const ACCOUNTS_DATA = {
+    'acc-1': {
+      name: 'Běžný účet',
+      number: '123456-4835477/0100',
+      balance: '18 063',
+      decimal: ',38 Kč',
+      seed: 12345
+    },
+    'acc-2': {
+      name: 'Běžný účet 2',
+      number: '326683762/0100',
+      balance: '48 490',
+      decimal: ',20 Kč',
+      seed: 54321
+    },
+    'acc-sav': {
+      name: 'Spoření',
+      number: '326683764/0100',
+      balance: '11 490',
+      decimal: ',20 Kč',
+      seed: 98765,
+      isSavings: true,
+      rate: 'Úroková sazba 3,5 % p. a.'
+    }
+  };
+
+  let currentAccountId = 'acc-1';
+
+  function showAccountDetail(accId) {
+    const acc = ACCOUNTS_DATA[accId];
+    if (!acc) return;
+    currentAccountId = accId;
+
+    document.getElementById('dtl-acct-name').textContent = acc.name;
+    document.getElementById('dtl-acct-num').textContent = acc.number;
+    document.getElementById('dtl-acct-balance').innerHTML = acc.balance + '<span>' + acc.decimal + '</span>';
+
+    const rateEl = document.getElementById('dtl-sav-rate');
+    const envEl = document.getElementById('dtl-savings-envelopes');
+
+    if (acc.isSavings) {
+      if (rateEl) {
+        rateEl.textContent = acc.rate;
+        rateEl.style.display = 'block';
+      }
+      if (envEl) {
+        envEl.style.display = 'block';
+        document.getElementById('dtl-sav-sub-amount').textContent = acc.balance + acc.decimal;
+      }
+    } else {
+      if (rateEl) rateEl.style.display = 'none';
+      if (envEl) envEl.style.display = 'none';
+    }
+
+    renderTransactions('dtl-tx-list', acc.seed);
+    go('screen-account-detail');
+  }
+
+  function renderTransactions(containerId, seed) {
+    const txs = genTransactions(seed);
+    let html = '';
+    let lastLabel = null;
+    txs.forEach((tx, idx) => {
+      const label = dayLabel(tx.date);
+      if (label !== lastLabel) {
+        if (lastLabel !== null) html += '</div></div>';
+        html += '<div class="tx-group"><div class="tx-card"><div class="tx-group-title">' + label + '</div>';
+        lastLabel = label;
+      }
+      const amtCls = tx.type === 'in' ? 'tx-amount in' : 'tx-amount';
+      const amtStr = (tx.amount < 0 ? '-' : '') + fmtCZK(Math.abs(tx.amount));
+      const noteCls = tx.type === 'fail' ? 'tx-note fail' : 'tx-note';
+      html += '<div class="tx-row" onclick="showToast(\'Detail transakce – mimo rozsah prototypu\')">'
+        + '<div class="tx-avatar">' + TX_PERSON_ICON + BADGE[tx.type] + '</div>'
+        + '<div class="tx-main"><div class="tx-name">' + tx.name + '</div>'
+        + '<div class="' + noteCls + '">' + tx.note + '</div></div>'
+        + '<div class="' + amtCls + '">' + amtStr + '</div></div>';
+    });
+    if (lastLabel !== null) html += '</div></div>';
+    document.getElementById(containerId).innerHTML = html;
+  }
+
+  function triggerDtlPayment() {
+    if (!currentAccountId) return;
+    const acc = ACCOUNTS_DATA[currentAccountId];
+    if (!acc) return;
+    
+    lsSet('payment_from_acc_name', acc.name);
+    lsSet('payment_from_acc', acc.name + '<br>' + acc.number);
+    lsSet('payment_from_acc_balance', acc.balance + acc.decimal);
+    
+    // Update newpayment screen UI
+    const nameEl = document.getElementById('lbl-newpayment-from-acc-name');
+    const numEl = document.getElementById('lbl-newpayment-from-acc-num');
+    if (nameEl) nameEl.textContent = acc.name;
+    if (numEl) numEl.textContent = acc.number;
+    
+    // Update edit screen source account selection UI so they match!
+    const editNameEl = document.getElementById('lbl-primary-from-acc-name');
+    const editNumEl = document.getElementById('lbl-primary-from-acc-num');
+    const editBalEl = document.getElementById('lbl-primary-from-acc-balance');
+    if (editNameEl) editNameEl.textContent = acc.name;
+    if (editNumEl) editNumEl.textContent = acc.number;
+    if (editBalEl) editBalEl.textContent = 'Na účtu máte ' + acc.balance + acc.decimal + '.';
+    
+    go('screen-newpayment');
+  }
+
+  function triggerDtlScan() {
+    if (!currentAccountId) return;
+    const acc = ACCOUNTS_DATA[currentAccountId];
+    if (!acc) return;
+    
+    lsSet('payment_from_acc_name', acc.name);
+    lsSet('payment_from_acc', acc.name + '<br>' + acc.number);
+    lsSet('payment_from_acc_balance', acc.balance + acc.decimal);
+    
+    // Update edit screen source account selection UI
+    const editNameEl = document.getElementById('lbl-primary-from-acc-name');
+    const editNumEl = document.getElementById('lbl-primary-from-acc-num');
+    const editBalEl = document.getElementById('lbl-primary-from-acc-balance');
+    if (editNameEl) editNameEl.textContent = acc.name;
+    if (editNumEl) editNumEl.textContent = acc.number;
+    if (editBalEl) editBalEl.textContent = 'Na účtu máte ' + acc.balance + acc.decimal + '.';
+    
+    go('screen-scan');
+    setMode('qr');
+  }
+
   // Zobrazování dat z OCR
   function updateOCRSuccessUI() {
     const fromAccEl = document.getElementById('ocr-success-from-acc');
     const amtEl = document.getElementById('ocr-success-amount');
     const vsEl = document.getElementById('ocr-success-vs');
     
-    if (fromAccEl) fromAccEl.textContent = lsGet('payment_from_acc') || '123456789/0100';
+    if (fromAccEl) {
+      let val = lsGet('payment_from_acc') || '123456789/0100';
+      if (val.includes('<br>')) {
+        val = val.split('<br>')[1];
+      }
+      fromAccEl.textContent = val;
+    }
     if (amtEl) amtEl.textContent = lsGet('payment_amount') || '100 Kč';
     if (vsEl) vsEl.textContent = lsGet('payment_vs') || '987564566778';
   }
