@@ -1884,13 +1884,61 @@
   </section>
 
   <!-- SCREEN 7: Success -->
-  <section class="screen" id="screen-success">
-    <div class="topbar white"><div class="title" style="text-align:center;">Platba odeslána</div></div>
-    <div class="confirm-wrap">
-      <div class="check">✓</div>
-      <h2 style="font-size:20px;margin-bottom:8px;" id="success-amount-title">100 Kč odesláno</h2>
-      <p style="color:var(--text-2);font-size:14px;" id="success-amount-desc">Petra Zachovalá · VS 987564566778</p>
-      <button class="primary-btn red" style="margin-top:28px;max-width:260px;" onclick="go('screen-dashboard')">Hotovo</button>
+  <section class="screen" id="screen-success" style="background: #F4F4F4; display: none; flex-direction: column; height: 100%;">
+    <div class="topbar white" style="background: #F4F4F4; border-bottom: none; display: flex; justify-content: flex-start; padding: 0 16px; height: 56px; align-items: center;">
+      <button class="cam-close-txt" style="color: var(--text); font-size: 15px; font-weight: 500;" onclick="go('screen-dashboard')">Zavřít</button>
+    </div>
+    
+    <div class="scroll" style="flex: 1; overflow-y: auto; padding: 0; background: #F4F4F4;">
+      <div style="display: flex; justify-content: center; align-items: center; padding: 20px 0 10px;">
+        <svg viewBox="0 0 200 200" width="160" height="160" style="display: block;">
+          <!-- Perspective Shadow -->
+          <ellipse cx="100" cy="142" rx="55" ry="10" fill="rgba(0,0,0,0.06)" />
+          <!-- Platform thickness/depth -->
+          <path d="M45 115 L45 121 L100 149 L155 121 L155 115 L100 143 Z" fill="#D1D1D6" />
+          <!-- Platform (white rotated tile) -->
+          <path d="M100 87 L155 115 L100 143 L45 115 Z" fill="#FFFFFF" stroke="#E5E5EA" stroke-width="0.5" />
+          <!-- Red Checkmark with 3D depth -->
+          <!-- shadow of the checkmark -->
+          <path d="M78 112 L96 130 L135 78 L128 72 L96 118 L84 106 Z" fill="rgba(227,0,15,0.12)" transform="translate(1, 3)" />
+          <!-- left/dark side -->
+          <path d="M78 108 L96 126 L96 114 L84 102 Z" fill="#B8000C" />
+          <!-- front/red side -->
+          <path d="M78 108 L96 126 L135 74 L127 68 L96 114 L84 102 Z" fill="#E3000F" />
+        </svg>
+      </div>
+
+      <h2 style="font-size: 26px; font-weight: 700; color: #1C1C1E; margin-bottom: 24px; text-align: left; padding: 0 20px; letter-spacing: -0.5px;">Zadali jste platbu</h2>
+
+      <div style="background: #FFF; border-top: 1px solid #E5E5EA; border-bottom: 1px solid #E5E5EA; margin-bottom: 20px; padding: 0 20px;">
+        <!-- Row 1: Uložit šablonu -->
+        <div style="display: flex; align-items: center; justify-content: space-between; padding: 14px 0; border-bottom: 1px solid #E5E5EA; cursor: pointer;" onclick="showToast('Šablona byla uložena')">
+          <div style="display: flex; align-items: center; gap: 12px;">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#E3000F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;">
+              <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/>
+            </svg>
+            <span style="font-size: 15px; font-weight: 500; color: #1C1C1E;">Uložit šablonu</span>
+          </div>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#8E8E93" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+        </div>
+        
+        <!-- Row 2: Založit trvalý příkaz -->
+        <div style="display: flex; align-items: center; justify-content: space-between; padding: 14px 0; cursor: pointer;" onclick="showToast('Trvalý příkaz byl nastaven')">
+          <div style="display: flex; align-items: center; gap: 12px;">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#E3000F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;">
+              <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
+              <path d="M3 3v5h5M12 7v5l4 2"/>
+            </svg>
+            <span style="font-size: 15px; font-weight: 500; color: #1C1C1E;">Založit trvalý příkaz</span>
+          </div>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#8E8E93" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+        </div>
+      </div>
+    </div>
+    
+    <div class="bottom-bar" style="background: #F4F4F4; border-top: 1px solid #E5E5EA; padding: 16px 20px 24px; display: flex; flex-direction: column; gap: 10px;">
+      <button class="primary-btn red" onclick="go('screen-scan'); setMode('inv');" style="background: #E3000F; color: #FFF; font-weight: 600;">Zadat další</button>
+      <button class="secondary-btn-outline" style="background: #FFF; border: 1px solid #1C1C1E; color: #1C1C1E; font-weight: 500;" onclick="go('screen-dashboard')">Zavřít</button>
     </div>
   </section>
 
@@ -2470,8 +2518,10 @@ let historySupported = true;
     let vs = lsGet('payment_vs') || '123456789';
     let label = 'Petra Zachovalá';
     
-    document.getElementById('success-amount-title').textContent = amt + ' odesláno';
-    document.getElementById('success-amount-desc').textContent = label + ' · VS ' + vs;
+    const titleEl = document.getElementById('success-amount-title');
+    const descEl = document.getElementById('success-amount-desc');
+    if (titleEl) titleEl.textContent = amt + ' odesláno';
+    if (descEl) descEl.textContent = label + ' · VS ' + vs;
     
     go('screen-success');
   }
@@ -2484,8 +2534,10 @@ let historySupported = true;
     let vs = '987564566778';
     let label = 'ABC s.r.o.';
     
-    document.getElementById('success-amount-title').textContent = amt + ' odesláno';
-    document.getElementById('success-amount-desc').textContent = label + ' · VS ' + vs;
+    const titleEl = document.getElementById('success-amount-title');
+    const descEl = document.getElementById('success-amount-desc');
+    if (titleEl) titleEl.textContent = amt + ' odesláno';
+    if (descEl) descEl.textContent = label + ' · VS ' + vs;
     
     go('screen-success');
   }
