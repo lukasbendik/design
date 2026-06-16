@@ -127,14 +127,14 @@
   .tarif-header {
     display: flex; align-items: center; justify-content: space-between;
     padding: 11px 14px;
-    background: #FCEBEC;
-    border-bottom: 1px solid #F3D7D9;
+    background: #F2F2F2;
+    border-bottom: 1px solid var(--border);
     cursor: pointer;
   }
   .tarif-title {
     font-size: 12px; font-weight: 700;
     text-transform: uppercase; letter-spacing: 0.6px;
-    color: #E3000F;
+    color: var(--text-2);
   }
   .tarif-acc { padding: 12px 14px; cursor: pointer; }
   .tarif-acc:active { background: #FAFAFA; }
@@ -292,6 +292,28 @@
     font-size: 9.5px; line-height: 1.55; max-width: 180px;
   }
   .sim-chat .chat-time { font-size: 8px; color: #999; margin-top: 5px; margin-left: 4px; }
+
+  /* Messenger náhled na OCR obrazovkách */
+  .sim-msg {
+    width: 230px;
+    background: #fff;
+    border-radius: 16px;
+    padding: 12px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    color: #000;
+    z-index: 2;
+  }
+  .sim-msg-head { display: flex; align-items: center; gap: 6px; margin-bottom: 8px; }
+  .sim-msg-avatar {
+    width: 20px; height: 20px; border-radius: 50%;
+    background: #0084FF; color: #fff; font-size: 10px; font-weight: 700;
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  }
+  .sim-msg-name { font-size: 11px; font-weight: 600; color: #222; }
+  .sim-msg-bubble { background: #E9E9EB; border-radius: 14px 14px 14px 4px; padding: 8px 10px; }
+  .sim-msg-text { font-size: 11px; color: #000; line-height: 1.45; margin-bottom: 6px; }
+  .sim-msg .stmt-tr.msg-row { font-size: 11px; border-bottom: none; padding: 2px 0; }
+  .sim-msg-time { font-size: 8px; color: #999; margin-top: 5px; margin-left: 4px; }
 
   .scan-frame {
     position: absolute;
@@ -816,7 +838,7 @@
   }
   /* Scan tooltip – bílá varianta, šipka míří na záložku Faktura */
   #ctx-tooltip-scan {
-    top: 58px;
+    top: 104px;
     background: #fff;
     box-shadow: 0 8px 24px rgba(0,0,0,0.22);
   }
@@ -860,7 +882,7 @@
     cursor: pointer;
     font-family: inherit;
   }
-  #ctx-tooltip-scan .ctx-tt-close { color: #E3000F; }
+  #ctx-tooltip-scan .ctx-tt-close { color: #1A1A1A; }
 
   /* Toast notifikace */
   .toast {
@@ -1887,9 +1909,9 @@
           </div>
           <div class="chat-bubble">
             Ahoj, pošli mi prosím za lístky 🙏<br>
-            Č. účtu: 2601234567/2010<br>
-            Částka: 1 450 Kč<br>
-            VS: 20260042
+            Č. účtu: 123456789/0100<br>
+            Částka: 100 Kč<br>
+            VS: 987564566778
           </div>
           <div class="chat-time">9:41</div>
         </div>
@@ -1985,48 +2007,19 @@
       <!-- Loading badge at the top of the dark viewport -->
       <div class="loading-badge">Hledáme platební údaje</div>
       
-      <!-- Simulated Statement Card -->
-      <div class="sim-kb-statement" style="transform: scale(0.7); margin-top: -30px;">
-        <div class="stmt-header">
-          <div class="stmt-logo">
-            <div class="stmt-logo-sq">KB</div>
-            <span class="stmt-logo-text">Výpis z účtu</span>
-          </div>
-          <div class="stmt-meta">
-            Datum výpisu<br>
-            <strong>18.2.2022</strong>
-          </div>
+      <!-- Náhled zprávy z Messengeru -->
+      <div class="sim-msg" style="transform: scale(0.95); margin-top: 0;">
+        <div class="sim-msg-head">
+          <span class="sim-msg-avatar">P</span>
+          <span class="sim-msg-name">Petr Novák</span>
         </div>
-        <div class="stmt-title">Výpis z účtu</div>
-        <div class="stmt-holder">
-          <span style="font-size: 6px; color:#6A6A6A;">Majitel účtu</span><br>
-          <span class="stmt-holder-name">PETRA ZACHOVALÁ</span><br>
-          <span style="font-size: 6px; color:#6A6A6A;">Číslo účtu / IBAN</span><br>
-          <strong>123456789/0100</strong>
+        <div class="sim-msg-bubble">
+          <div class="sim-msg-text">Ahoj, pošli mi prosím za lístky 🙏</div>
+          <div class="stmt-tr msg-row"><span>Č. účtu</span><strong>123456789/0100</strong></div>
+          <div class="stmt-tr msg-row highlight-amount"><span>Částka</span><strong>100 Kč</strong></div>
+          <div class="stmt-tr msg-row highlight-vs"><span>VS</span><strong>987564566778</strong></div>
         </div>
-        <div style="font-size: 7px; font-weight: 700; border-top: 1.5px solid #1A1A1A; padding-top: 4px; margin-top: 6px;">
-          Transakce
-        </div>
-        <div class="stmt-tr">
-          <span>28.1.2022 MILAN 000000-0006060398/0100</span>
-          <strong>1,87 Kč</strong>
-        </div>
-        <div class="stmt-tr">
-          <span>28.1.2022 MILAN 000000-0006060398/0100</span>
-          <strong>-1,30 Kč</strong>
-        </div>
-        <div class="stmt-tr highlight-amount">
-          <span>28.1.2022 MILAN 000000-0006060398/0100</span>
-          <strong>100 Kč</strong>
-        </div>
-        <div class="stmt-tr highlight-vs">
-          <span>Variabilní symbol: 987564566778</span>
-          <strong>Zpráva</strong>
-        </div>
-        <div class="stmt-tr">
-          <span>5.1.2022 SEGI 000000-0000107271/0100</span>
-          <strong>0,10 Kč</strong>
-        </div>
+        <div class="sim-msg-time">9:41</div>
       </div>
     </div>
     
@@ -2089,48 +2082,19 @@
         Načtené údaje nemusí být správné. Věnujte pozornost kontrole.
       </div>
       
-      <!-- Simulated Statement Card -->
-      <div class="sim-kb-statement" style="transform: scale(1.15); margin-top: 54px;">
-        <div class="stmt-header">
-          <div class="stmt-logo">
-            <div class="stmt-logo-sq">KB</div>
-            <span class="stmt-logo-text">Výpis z účtu</span>
-          </div>
-          <div class="stmt-meta">
-            Datum výpisu<br>
-            <strong>18.2.2022</strong>
-          </div>
+      <!-- Náhled zprávy z Messengeru -->
+      <div class="sim-msg" style="transform: scale(1.15); margin-top: 40px;">
+        <div class="sim-msg-head">
+          <span class="sim-msg-avatar">P</span>
+          <span class="sim-msg-name">Petr Novák</span>
         </div>
-        <div class="stmt-title">Výpis z účtu</div>
-        <div class="stmt-holder">
-          <span style="font-size: 6px; color:#6A6A6A;">Majitel účtu</span><br>
-          <span class="stmt-holder-name">PETRA ZACHOVALÁ</span><br>
-          <span style="font-size: 6px; color:#6A6A6A;">Číslo účtu / IBAN</span><br>
-          <strong>123456789/0100</strong>
+        <div class="sim-msg-bubble">
+          <div class="sim-msg-text">Ahoj, pošli mi prosím za lístky 🙏</div>
+          <div class="stmt-tr msg-row"><span>Č. účtu</span><strong>123456789/0100</strong></div>
+          <div class="stmt-tr msg-row highlight-amount"><span>Částka</span><strong>100 Kč</strong></div>
+          <div class="stmt-tr msg-row highlight-vs"><span>VS</span><strong>987564566778</strong></div>
         </div>
-        <div style="font-size: 7px; font-weight: 700; border-top: 1.5px solid #1A1A1A; padding-top: 4px; margin-top: 6px;">
-          Transakce
-        </div>
-        <div class="stmt-tr">
-          <span>28.1.2022 MILAN 000000-0006060398/0100</span>
-          <strong>1,87 Kč</strong>
-        </div>
-        <div class="stmt-tr">
-          <span>28.1.2022 MILAN 000000-0006060398/0100</span>
-          <strong>-1,30 Kč</strong>
-        </div>
-        <div class="stmt-tr highlight-amount">
-          <span>28.1.2022 MILAN 000000-0006060398/0100</span>
-          <strong>100 Kč</strong>
-        </div>
-        <div class="stmt-tr highlight-vs">
-          <span>Variabilní symbol: 987564566778</span>
-          <strong>Zpráva</strong>
-        </div>
-        <div class="stmt-tr">
-          <span>5.1.2022 SEGI 000000-0000107271/0100</span>
-          <strong>0,10 Kč</strong>
-        </div>
+        <div class="sim-msg-time">9:41</div>
       </div>
     </div>
     
@@ -2562,7 +2526,7 @@ let noQrModalShown = lsGet('no_qr_modal_shown') === '1';
     document.querySelectorAll('.falling-value').forEach(el => el.remove());
     
     // Reset any manual inline style updates
-    const accTr = document.querySelector('.sim-kb-statement strong');
+    const accTr = document.querySelector('.sim-msg .stmt-tr strong');
     if (accTr && accTr.parentElement) {
       accTr.parentElement.style.outline = '';
       accTr.parentElement.style.background = '';
@@ -2816,7 +2780,7 @@ let noQrModalShown = lsGet('no_qr_modal_shown') === '1';
     document.getElementById('loading-field-vs').classList.remove('active');
     
     // Add blue dashed highlight border to the account on the statement card
-    const accTr = document.querySelector('.sim-kb-statement strong');
+    const accTr = document.querySelector('.sim-msg .stmt-tr strong');
     if (accTr && accTr.parentElement) {
       accTr.parentElement.style.outline = '2px dashed #0E8A4F';
       accTr.parentElement.style.background = 'rgba(14, 138, 79, 0.15)';
