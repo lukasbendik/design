@@ -677,7 +677,8 @@
     right: 68px;
     background: #fff;
   }
-  #ctx-tooltip-scan .ctx-tt-text {
+  #ctx-tooltip-scan .ctx-tt-text,
+  #ctx-tooltip-scan .ctx-tt-title {
     color: #1A1A1A;
   }
   #ctx-tooltip-scan .ctx-tt-close {
@@ -866,7 +867,8 @@
 
     <!-- Contextual tooltip for QR/faktura scan -->
     <div class="ctx-tooltip" id="ctx-tooltip-qr">
-      <div class="ctx-tt-text">Fakturu nově naskenujeme i bez QR kódu. Načteme si údaje přímo z faktury.</div>
+      <div class="ctx-tt-title" style="font-weight: 600; margin-bottom: 4px; font-size: 14px;">Nově umíme načítat platební údaje</div>
+      <div class="ctx-tt-text">Stačí vyfotit SMS nebo fakturu a platební údaje načteme sami.</div>
       <button class="ctx-tt-close" onclick="dismissTooltip()" aria-label="Zavřít">✕</button>
     </div>
     <div class="scroll" style="padding:14px;">
@@ -964,7 +966,8 @@
 
     <!-- Contextual tooltip pro scan (zobrazí se jen při příchodu přímo z dashboardu) -->
     <div class="ctx-tooltip" id="ctx-tooltip-scan">
-      <div class="ctx-tt-text">Fakturu nově naskenujeme i bez QR kódu. Načteme si údaje přímo z faktury.</div>
+      <div class="ctx-tt-title" style="font-weight: 600; margin-bottom: 4px; font-size: 14px;">Nově umíme načítat platební údaje</div>
+      <div class="ctx-tt-text">Stačí vyfotit SMS nebo fakturu a platební údaje načteme sami.</div>
       <button class="ctx-tt-close" onclick="dismissScanTooltip()" aria-label="Zavřít">✕</button>
     </div>
 
