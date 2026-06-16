@@ -25,6 +25,11 @@
     --text-2: #6A6A6A;
     --border: #E5E5E5;
     --green: #0E8A4F;
+    /* Semafor spolehlivosti vyčtených údajů */
+    --ocr-ok: #0E8A4F;
+    --ocr-ok-bg: rgba(14, 138, 79, 0.12);
+    --ocr-warn: #E8820C;
+    --ocr-warn-bg: rgba(232, 130, 12, 0.14);
     --shadow: 0 1px 3px rgba(0,0,0,0.06);
   }
   html, body {
@@ -996,12 +1001,12 @@
     border-bottom: none;
   }
   .stmt-tr.highlight-amount {
-    background: rgba(227, 0, 15, 0.06);
-    outline: 1px dashed var(--red);
+    background: var(--ocr-ok-bg);
+    outline: 1px dashed var(--ocr-ok);
   }
   .stmt-tr.highlight-vs {
-    background: rgba(0, 102, 255, 0.06);
-    outline: 1px dashed #007AFF;
+    background: var(--ocr-warn-bg);
+    outline: 1px dashed var(--ocr-warn);
   }
 
   /* ===== Loading Screen overlay & label styling ===== */
@@ -1358,15 +1363,15 @@
     transition: all 0.4s ease;
   }
   .stmt-tr.highlight-amount.active-highlight {
-    outline: 2px dashed #007AFF;
-    background: rgba(0, 102, 255, 0.15) !important;
+    outline: 2px dashed var(--ocr-ok);
+    background: var(--ocr-ok-bg) !important;
   }
   .stmt-tr.highlight-vs {
     transition: all 0.4s ease;
   }
   .stmt-tr.highlight-vs.active-highlight {
-    outline: 2px dashed #007AFF;
-    background: rgba(0, 102, 255, 0.15) !important;
+    outline: 2px dashed var(--ocr-warn);
+    background: var(--ocr-warn-bg) !important;
   }
   
   .falling-value {
@@ -1375,7 +1380,7 @@
     font-size: 14px;
     font-weight: 700;
     padding: 6px 12px;
-    background: #007AFF;
+    background: var(--ocr-ok);
     border-radius: 6px;
     box-shadow: 0 4px 12px rgba(0,0,0,0.3);
     z-index: 100;
@@ -1461,6 +1466,7 @@
   }
   .falling-value.animate-vs {
     animation: fall-down-vs 1.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    background: var(--ocr-warn);
   }
 
   .loading-footer-field {
@@ -1504,13 +1510,17 @@
   .loading-detected-box {
     display: inline-block;
     padding: 4px 8px;
-    border: 1px dashed #007AFF;
+    border: 1px dashed var(--ocr-ok);
     border-radius: 4px;
-    background: rgba(0, 122, 255, 0.05);
+    background: var(--ocr-ok-bg);
     color: #1C1C1E;
     font-size: 18px;
     font-weight: 700;
     margin-top: 2px;
+  }
+  .loading-detected-box.warn {
+    border-color: var(--ocr-warn);
+    background: var(--ocr-warn-bg);
   }
 
   /* ══════════════════════════
@@ -2053,7 +2063,7 @@
         </div>
         <div class="real-content" style="display: none;">
           <div style="font-size: 12px; color: #8E8E93; font-weight: 500;">Variabilní symbol</div>
-          <div class="loading-detected-box">987564566778</div>
+          <div class="loading-detected-box warn">987564566778</div>
         </div>
       </div>
     </div>
@@ -2808,8 +2818,8 @@ let noQrModalShown = lsGet('no_qr_modal_shown') === '1';
     // Add blue dashed highlight border to the account on the statement card
     const accTr = document.querySelector('.sim-kb-statement strong');
     if (accTr && accTr.parentElement) {
-      accTr.parentElement.style.outline = '2px dashed #007AFF';
-      accTr.parentElement.style.background = 'rgba(0, 102, 255, 0.15)';
+      accTr.parentElement.style.outline = '2px dashed #0E8A4F';
+      accTr.parentElement.style.background = 'rgba(14, 138, 79, 0.15)';
       accTr.parentElement.style.borderRadius = '2px';
       accTr.parentElement.style.padding = '2px';
     }
