@@ -1367,6 +1367,25 @@
     background: rgba(0,0,0,0.05);
   }
 
+  /* ===== Currency picker (bottom sheet items) ===== */
+  .currency-item {
+    display: flex; align-items: center; gap: 14px;
+    padding: 14px 4px; cursor: pointer;
+    border-bottom: 1px solid var(--border);
+    background: #fff; transition: background 0.15s;
+  }
+  .currency-item:last-child { border-bottom: none; }
+  .currency-item:active { background: #f5f5f5; }
+  .currency-item.selected { background: #fff8f8; }
+  .currency-item-flag { font-size: 24px; width: 30px; text-align: center; }
+  .currency-item-label { flex: 1; font-size: 15px; color: var(--text); }
+  .currency-item-check { color: var(--red); font-size: 17px; font-weight: 600; }
+  .currency-trigger {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-top: 4px; cursor: pointer;
+  }
+  #currency-list { max-height: 360px; overflow-y: auto; -webkit-overflow-scrolling: touch; }
+
   /* ===== Results Layout ===== */
   .ocr-results {
     background: #FFF;
@@ -1917,14 +1936,19 @@
       <button class="ctx-tt-close" onclick="event.stopPropagation(); dismissTooltip()">Zavřít</button>
     </div>
     <div class="scroll" style="padding:14px;">
-      <div class="field">
-        <div class="label">Z účtu</div>
-        <div class="value" id="lbl-newpayment-from-acc-name">Běžný účet</div>
-        <div style="font-size:13px;color:var(--text-2);" id="lbl-newpayment-from-acc-num">123456−4835477/0100</div>
+      <!-- Z účtu (výběr účtu) -->
+      <div class="field" onclick="openSourceAccSheet()" style="display:flex;align-items:center;justify-content:space-between;cursor:pointer;">
+        <div>
+          <div class="label">Z účtu</div>
+          <div class="value" id="lbl-newpayment-from-acc-name">Běžný účet</div>
+          <div style="font-size:13px;color:var(--text-2);" id="lbl-newpayment-from-acc-num">123456−4835477/0100</div>
+        </div>
+        <span style="color:#8E8E93;font-size:18px;">›</span>
       </div>
+      <!-- Komu (editovatelné) -->
       <div class="field">
         <div class="label">Komu</div>
-        <div class="value" style="color:#999;">Číslo účtu, IBAN, šablona nebo příjemce</div>
+        <input type="text" class="field-input-text" id="inp-np-to-acc" placeholder="Číslo účtu, IBAN nebo příjemce" style="width:100%;border:none;outline:none;font-size:16px;font-weight:500;color:#1C1C1E;background:transparent;margin-top:2px;font-family:inherit;">
       </div>
       <div class="contact-row" onclick="showToast('Platba na kontakt — mimo tento prototyp')">
         <span class="ic-contact">
@@ -1933,15 +1957,25 @@
         <strong>Platba na kontakt</strong>
         <span class="chev">›</span>
       </div>
+      <!-- Částka + Měna (editovatelné) -->
       <div class="row2">
-        <div class="field"><div class="label">Částka</div><div class="value">0</div></div>
-        <div class="field"><div class="label">Měna</div><div class="value">Kč ▾</div></div>
+        <div class="field" style="flex:3;">
+          <div class="label">Částka</div>
+          <input type="text" inputmode="decimal" class="field-input-text" id="inp-np-amount" placeholder="0" style="width:100%;border:none;outline:none;font-size:16px;font-weight:500;color:#1C1C1E;background:transparent;margin-top:2px;font-family:inherit;">
+        </div>
+        <div class="field" style="flex:1.4;" onclick="openCurrencySheet()">
+          <div class="label">Měna</div>
+          <div class="currency-trigger">
+            <span style="font-size:16px;font-weight:500;color:#1C1C1E;" id="np-currency-code">Kč</span>
+            <span style="font-size:10px;color:#8E8E93;">▼</span>
+          </div>
+        </div>
       </div>
-      <div style="font-size:12px;color:var(--text-2);margin-top:4px;">Na účtu máte 18 063,38 Kč.</div>
+      <div style="font-size:12px;color:var(--text-2);margin-top:4px;" id="lbl-newpayment-balance">Na účtu máte 18 063,38 Kč.</div>
 
     </div>
     <div class="bottom-bar">
-      <button class="primary-btn" style="opacity:0.5;">Pokračovat</button>
+      <button class="primary-btn red" onclick="submitNewPaymentEntry()">Pokračovat</button>
     </div>
   </section>
 
@@ -2236,10 +2270,10 @@
           <div class="label" style="font-size: 11px; color: #8E8E93; font-weight: 500;">Částka</div>
           <input type="text" class="field-input-text" id="inp-primary-amount" value="3500" style="width: 100%; border: none; outline: none; font-size: 16px; font-weight: 500; color: #1C1C1E; background: transparent; margin-top: 4px; font-family: inherit;">
         </div>
-        <div class="field" style="flex: 1.2; background: #FFF; border-radius: 12px; border: 1px solid #C7C7CC; padding: 10px 14px; display: flex; flex-direction: column; justify-content: center; position: relative;">
+        <div class="field" style="flex: 1.2; background: #FFF; border-radius: 12px; border: 1px solid #C7C7CC; padding: 10px 14px; display: flex; flex-direction: column; justify-content: center; position: relative; cursor: pointer;" onclick="openCurrencySheet()">
           <div class="label" style="font-size: 11px; color: #8E8E93; font-weight: 500;">Měna</div>
           <div style="display: flex; align-items: center; justify-content: space-between; margin-top: 4px;">
-            <span style="font-size: 16px; font-weight: 500; color: #1C1C1E;">Kč</span>
+            <span style="font-size: 16px; font-weight: 500; color: #1C1C1E;" id="primary-currency-code">Kč</span>
             <span style="font-size: 10px; color: #8E8E93;">▼</span>
           </div>
         </div>
@@ -2528,6 +2562,16 @@
     </div>
   </div>
 
+  <!-- 5. Bottom Sheet: Výběr měny (převzato z VOP + SEPA instant v2) -->
+  <div class="sheet-overlay" id="sheet-currency">
+    <div class="bottom-sheet">
+      <div class="sheet-handle"></div>
+      <button class="sheet-close-btn" onclick="closeCurrencySheet()">✕</button>
+      <h3 class="sheet-title">Vyberte měnu</h3>
+      <div id="currency-list"></div>
+    </div>
+  </div>
+
   <div class="toast" id="toast"></div>
 </div>
 
@@ -2672,6 +2716,7 @@ let noQrModalShown = lsGet('no_qr_modal_shown') === '1';
       closeOCRFailAlert();
       closeConsentSheet();
       closeSourceAccSheet();
+      closeCurrencySheet();
     }
     
     if (id === 'screen-ocr-success') {
@@ -2691,6 +2736,7 @@ let noQrModalShown = lsGet('no_qr_modal_shown') === '1';
     }
     
     if (id === 'screen-newpayment') {
+      populateNewPaymentEntry();
       setTimeout(showTooltip, 400);
     } else {
       hideTooltipImmediate();
@@ -3225,15 +3271,125 @@ let noQrModalShown = lsGet('no_qr_modal_shown') === '1';
       balance = '11 490,20 Kč';
     }
     
-    document.getElementById('lbl-primary-from-acc-name').textContent = name;
-    document.getElementById('lbl-primary-from-acc-num').textContent = num;
-    document.getElementById('lbl-primary-from-acc-balance').textContent = 'Na účtu máte ' + balance + '.';
-    
+    const pName = document.getElementById('lbl-primary-from-acc-name');
+    const pNum = document.getElementById('lbl-primary-from-acc-num');
+    const pBal = document.getElementById('lbl-primary-from-acc-balance');
+    if (pName) pName.textContent = name;
+    if (pNum) pNum.textContent = num;
+    if (pBal) pBal.textContent = 'Na účtu máte ' + balance + '.';
+
+    // Entry obrazovka (screen-newpayment) – stejné účty
+    const eName = document.getElementById('lbl-newpayment-from-acc-name');
+    const eNum = document.getElementById('lbl-newpayment-from-acc-num');
+    const eBal = document.getElementById('lbl-newpayment-balance');
+    if (eName) eName.textContent = name;
+    if (eNum) eNum.textContent = num;
+    if (eBal) eBal.textContent = 'Na účtu máte ' + balance + '.';
+
     lsSet('payment_from_acc_name', name);
     lsSet('payment_from_acc', name + '<br>' + num);
     lsSet('payment_from_acc_balance', balance);
-    
+
     closeSourceAccSheet();
+  }
+
+  // ===== Výběr měny (bottom sheet, převzato z VOP + SEPA instant v2) =====
+  const CURRENCIES = [
+    { code: 'CZK', label: 'Kč, česká koruna',      flag: '🇨🇿' },
+    { code: 'EUR', label: 'EUR, euro',             flag: '🇪🇺' },
+    { code: 'USD', label: 'USD, americký dolar',   flag: '🇺🇸' },
+    { code: 'AUD', label: 'AUD, australský dolar', flag: '🇦🇺' },
+    { code: 'BGN', label: 'BGN, bulharský lev',    flag: '🇧🇬' },
+    { code: 'CAD', label: 'CAD, kanadský dolar',   flag: '🇨🇦' },
+    { code: 'DKK', label: 'DKK, dánská koruna',    flag: '🇩🇰' },
+    { code: 'GBP', label: 'GBP, anglická libra',   flag: '🇬🇧' },
+    { code: 'HUF', label: 'HUF, maďarský forint',  flag: '🇭🇺' },
+    { code: 'JPY', label: 'JPY, japonský jen',     flag: '🇯🇵' },
+    { code: 'NOK', label: 'NOK, norská koruna',    flag: '🇳🇴' },
+    { code: 'PLN', label: 'PLN, polský zlotý',     flag: '🇵🇱' },
+    { code: 'RON', label: 'RON, rumunský lei',     flag: '🇷🇴' },
+    { code: 'SEK', label: 'SEK, švédská koruna',   flag: '🇸🇪' },
+  ];
+
+  function currencySymbol(code) { return code === 'CZK' ? 'Kč' : code; }
+  function getCurrency() { return lsGet('payment_currency') || 'CZK'; }
+
+  function reflectCurrency() {
+    const sym = currencySymbol(getCurrency());
+    ['np-currency-code', 'primary-currency-code'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.textContent = sym;
+    });
+  }
+
+  function renderCurrencyList() {
+    const list = document.getElementById('currency-list');
+    if (!list) return;
+    const cur = getCurrency();
+    list.innerHTML = CURRENCIES.map(c => `
+      <div class="currency-item${cur === c.code ? ' selected' : ''}" onclick="selectCurrency('${c.code}')">
+        <span class="currency-item-flag">${c.flag}</span>
+        <span class="currency-item-label">${c.label}</span>
+        ${cur === c.code ? '<span class="currency-item-check">✓</span>' : '<span style="color:#C7C7CC;">›</span>'}
+      </div>`).join('');
+  }
+
+  function openCurrencySheet() {
+    renderCurrencyList();
+    document.getElementById('sheet-currency').classList.add('show');
+  }
+  function closeCurrencySheet() {
+    const el = document.getElementById('sheet-currency');
+    if (el) el.classList.remove('show');
+  }
+  function selectCurrency(code) {
+    lsSet('payment_currency', code);
+    reflectCurrency();
+    closeCurrencySheet();
+  }
+
+  // Entry obrazovka (screen-newpayment) – obnova editovatelných polí
+  function populateNewPaymentEntry() {
+    let fromAccName = lsGet('payment_from_acc_name') || 'Běžný účet';
+    let fromAccNum = lsGet('payment_from_acc') || '123456−4835477/0100';
+    let fromAccBal = lsGet('payment_from_acc_balance') || '18 063,38 Kč';
+    if (fromAccNum.includes('<br>')) {
+      const parts = fromAccNum.split('<br>');
+      fromAccName = parts[0];
+      fromAccNum = parts[1];
+    }
+    const nName = document.getElementById('lbl-newpayment-from-acc-name');
+    const nNum = document.getElementById('lbl-newpayment-from-acc-num');
+    const nBal = document.getElementById('lbl-newpayment-balance');
+    if (nName) nName.textContent = fromAccName;
+    if (nNum) nNum.textContent = fromAccNum;
+    if (nBal) nBal.textContent = 'Na účtu máte ' + fromAccBal + '.';
+
+    const toEl = document.getElementById('inp-np-to-acc');
+    if (toEl) toEl.value = lsGet('payment_to_acc') || '';
+    const amtEl = document.getElementById('inp-np-amount');
+    if (amtEl) {
+      let amt = lsGet('payment_amount') || '';
+      amt = amt.replace(/[^\d.,]/g, '').replace(',00', '').trim();
+      amtEl.value = amt;
+    }
+    reflectCurrency();
+  }
+
+  function submitNewPaymentEntry() {
+    const toAcc = document.getElementById('inp-np-to-acc').value.trim();
+    const amt = document.getElementById('inp-np-amount').value.trim();
+    if (!toAcc) { showToast('Zadejte číslo účtu příjemce.'); return; }
+    if (!amt || parseFloat(amt.replace(',', '.')) <= 0) { showToast('Zadejte částku.'); return; }
+
+    const fromAccName = document.getElementById('lbl-newpayment-from-acc-name').textContent;
+    const fromAccNum = document.getElementById('lbl-newpayment-from-acc-num').textContent;
+    lsSet('payment_from_acc_name', fromAccName);
+    lsSet('payment_from_acc', fromAccName + '<br>' + fromAccNum);
+    lsSet('payment_to_acc', toAcc);
+    lsSet('payment_amount', amt + ' ' + currencySymbol(getCurrency()));
+
+    go('screen-newpayment-edit');
   }
 
   function populatePrimaryEditFields() {
@@ -3259,8 +3415,10 @@ let noQrModalShown = lsGet('no_qr_modal_shown') === '1';
     document.getElementById('inp-primary-to-acc').value = toAcc;
     
     let amt = lsGet('payment_amount') || '3 500 Kč';
-    amt = amt.replace(' Kč', '').replace(',00', '').trim();
+    amt = amt.replace(/[^\d.,]/g, '').replace(',00', '').trim();
     document.getElementById('inp-primary-amount').value = amt;
+
+    reflectCurrency();
   }
 
   function submitPrimaryEditPayment() {
@@ -3272,8 +3430,8 @@ let noQrModalShown = lsGet('no_qr_modal_shown') === '1';
     lsSet('payment_from_acc_name', fromAccName);
     lsSet('payment_from_acc', fromAccName + '<br>' + fromAccNum);
     lsSet('payment_to_acc', toAcc);
-    lsSet('payment_amount', amt + ' Kč');
-    
+    lsSet('payment_amount', amt + ' ' + currencySymbol(getCurrency()));
+
     go('screen-newpayment-edit');
   }
 
