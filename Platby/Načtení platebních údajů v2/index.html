@@ -2018,6 +2018,7 @@ let qrTimeout = null;
 let ocrTimers = [];
 let screenStack = [];
 let historySupported = true;
+let noQrModalShown = lsGet('no_qr_modal_shown') === '1';
 
   // ===== Contextual tooltip logic =====
   const TOOLTIP_KEY = 'tooltip_qr_noqr_dismissed';
@@ -2187,10 +2188,18 @@ let historySupported = true;
 
   function startNoQRAlertTimer() {
     clearTimeout(qrTimeout);
-    if (mode === 'qr') {
+    if (noQrModalShown) return; // Only show once!
+    
+    // Check if we are currently on screen-scan and mode is qr
+    const activeScreen = document.querySelector('.screen.active');
+    if (activeScreen && activeScreen.id === 'screen-scan' && mode === 'qr') {
       qrTimeout = setTimeout(() => {
-        openNoQRAlert();
-      }, 4000);
+        // Double check active screen and mode before showing
+        const currentActive = document.querySelector('.screen.active');
+        if (!noQrModalShown && currentActive && currentActive.id === 'screen-scan' && mode === 'qr') {
+          openNoQRAlert();
+        }
+      }, 7000); // Show after 7 seconds
     }
   }
 
@@ -2204,11 +2213,16 @@ let historySupported = true;
 
   function closeNoQRAlert() {
     document.getElementById('alert-no-qr').classList.remove('show');
-    startNoQRAlertTimer();
+    // Dismiss permanently once seen/interacted with
+    lsSet('no_qr_modal_shown', '1');
+    noQrModalShown = true;
   }
 
   function switchToOCR() {
     document.getElementById('alert-no-qr').classList.remove('show');
+    // Dismiss permanently once seen/interacted with
+    lsSet('no_qr_modal_shown', '1');
+    noQrModalShown = true;
     setMode('inv');
   }
 
@@ -2553,6 +2567,8 @@ let historySupported = true;
   function resetTooltips() {
     lsRemove(TOOLTIP_KEY);
     lsRemove('ocr_consent_approved');
+    lsRemove('no_qr_modal_shown');
+    noQrModalShown = false;
     tooltipSeenOnPayment = false;
     hideTooltipImmediate();
     hideScanTooltipImmediate();
