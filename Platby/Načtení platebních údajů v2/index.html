@@ -1,0 +1,2543 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<script>
+(function(){var H='4c129f69f551195cbc5e8b57cc5a0975b6efa1e8510573524d11df03c7d010c6',K='rozcestnik__auth';try{var p=new URLSearchParams(location.search);if(p.get('k')===H){localStorage.setItem(K,'1');p.delete('k');var q=p.toString();history.replaceState(history.state,'',location.pathname+(q?'?'+q:'')+location.hash);}if(localStorage.getItem(K)!=='1')location.replace('../../');}catch(e){}})();
+</script>
+<meta charset="UTF-8">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<title>Prototyp: Skenování platby (QR + faktura)</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+  :root {
+    --red: #E3000F;
+    --red-dark: #B8000C;
+    --bg: #F4F4F4;
+    --card: #FFFFFF;
+    --text: #1A1A1A;
+    --text-2: #6A6A6A;
+    --border: #E5E5E5;
+    --green: #0E8A4F;
+    --shadow: 0 1px 3px rgba(0,0,0,0.06);
+  }
+  html, body {
+    font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+    background: #2a2a2a;
+    color: var(--text);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 24px 12px;
+    gap: 16px;
+  }
+  h1 { font-size: 18px; color: #fff; font-weight: 600; }
+  .subtitle { color: #bdbdbd; font-size: 13px; text-align: center; max-width: 720px; line-height: 1.5; }
+
+  .stage {
+    position: relative;
+    width: 390px;
+    height: 780px;
+    background: var(--bg);
+    border-radius: 40px;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+    border: 8px solid #111;
+  }
+  .screen {
+    position: absolute;
+    inset: 0;
+    display: none;
+    flex-direction: column;
+    background: var(--bg);
+  }
+  .screen.active { display: flex; }
+
+  /* Top bar */
+  .topbar {
+    height: 56px;
+    display: flex;
+    align-items: center;
+    padding: 0 16px;
+    gap: 12px;
+    background: var(--bg);
+  }
+  .topbar.white { background: #fff; border-bottom: 1px solid var(--border); }
+  .topbar .title { font-size: 17px; font-weight: 600; flex: 1; }
+  .iconbtn {
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer;
+    border: none;
+    background: transparent;
+  }
+  .iconbtn:active { background: rgba(0,0,0,0.05); }
+
+  /* Tabs (dashboard) */
+  .tabs {
+    display: flex; gap: 8px; overflow-x: auto; padding: 0 16px 12px;
+    background: var(--bg);
+  }
+  .tab {
+    padding: 8px 16px;
+    border: 1px solid var(--border);
+    border-radius: 24px;
+    background: #fff;
+    font-size: 14px;
+    white-space: nowrap;
+    color: var(--text);
+  }
+  .tab.active { background: var(--red); color: #fff; border-color: var(--red); }
+
+  .scroll {
+    flex: 1;
+    overflow-y: auto;
+    padding: 4px 12px 120px;
+  }
+
+  .card {
+    background: #fff;
+    border-radius: 12px;
+    padding: 14px 14px;
+    margin-bottom: 10px;
+    box-shadow: var(--shadow);
+  }
+  .card .row { display: flex; align-items: center; justify-content: space-between; }
+  .acc-label { font-size: 14px; color: var(--text); }
+  .acc-num { font-size: 13px; color: var(--text-2); }
+  .balance { font-size: 28px; font-weight: 400; letter-spacing: -0.5px; margin-top: 2px; }
+  .balance .dec { font-size: 18px; color: var(--text); }
+  .chev { color: #999; }
+
+  /* Bottom floating action */
+  .fab {
+    position: absolute;
+    left: 12px; right: 12px;
+    bottom: 16px;
+    background: var(--red);
+    color: #fff;
+    border-radius: 32px;
+    display: flex;
+    justify-content: space-around;
+    padding: 10px 8px;
+    box-shadow: 0 6px 20px rgba(227,0,15,0.35);
+  }
+  .fab button {
+    background: transparent; color: #fff; border: none;
+    display: flex; flex-direction: column; align-items: center; gap: 4px;
+    padding: 8px 12px;
+    font-size: 12px;
+    cursor: pointer;
+    border-radius: 16px;
+  }
+  .fab button:active { background: rgba(255,255,255,0.15); }
+  .fab svg { width: 24px; height: 24px; }  /* Camera screen */
+  .camera {
+    flex: 1;
+    background: #111;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    color: var(--text);
+  }
+  .cam-top {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    padding: 12px 16px 14px;
+    gap: 10px;
+    background: #FFF;
+    border-bottom: 1px solid var(--border);
+    position: relative; z-index: 10;
+  }
+  .cam-close-txt {
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--text);
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    font-family: inherit;
+    text-align: left;
+    align-self: flex-start;
+  }
+  .mode-segment {
+    display: flex;
+    background: #E5E5EA;
+    border-radius: 9px;
+    padding: 2px;
+    width: 260px;
+    margin: 0 auto;
+  }
+  .mode-segment button {
+    flex: 1;
+    border: none;
+    background: transparent;
+    color: var(--text-2);
+    padding: 6px 0;
+    font-size: 13px;
+    font-weight: 500;
+    border-radius: 7px;
+    cursor: pointer;
+    text-align: center;
+    transition: background 0.15s, color 0.15s;
+    font-family: inherit;
+  }
+  .mode-segment button.active {
+    background: #FFF;
+    color: var(--text);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.06);
+  }
+
+  .cam-viewport {
+    flex: 1;
+    background: #D5D6D8;
+    position: relative;
+    display: flex; justify-content: center; align-items: center;
+    overflow: hidden;
+  }
+  .cam-flash-btn {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: rgba(0,0,0,0.5);
+    border: none;
+    color: #FFF;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 5;
+  }
+  /* Simulated invoice in camera view */
+  .sim-invoice {
+    width: 220px;
+    background: #fff;
+    color: #000;
+    padding: 12px;
+    border-radius: 4px;
+    font-size: 9px;
+    line-height: 1.4;
+    transform: rotate(-3deg);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    display: none;
+    z-index: 2;
+  }
+  .sim-invoice.show { display: block; }
+  .sim-invoice h4 { font-size: 11px; margin-bottom: 4px; }
+  .sim-invoice .qrbox {
+    width: 60px; height: 60px;
+    background:
+      linear-gradient(45deg, #000 25%, transparent 25%, transparent 75%, #000 75%) 0 0 / 8px 8px,
+      linear-gradient(45deg, #000 25%, transparent 25%, transparent 75%, #000 75%) 4px 4px / 8px 8px,
+      #fff;
+    margin: 6px 0;
+    display: none;
+  }
+  .sim-invoice.with-qr .qrbox { display: block; }
+
+  .scan-frame {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 240px; height: 240px;
+    border-radius: 12px;
+    box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.55);
+    pointer-events: none;
+    z-index: 1;
+  }
+  .scan-frame::before, .scan-frame::after,
+  .scan-frame > span::before, .scan-frame > span::after {
+    content: '';
+    position: absolute;
+    width: 28px; height: 28px;
+    border: 3.5px solid #fff;
+    border-radius: 2.5px;
+  }
+  .scan-frame::before { top: 0; left: 0; border-right: none; border-bottom: none; }
+  .scan-frame::after { top: 0; right: 0; border-left: none; border-bottom: none; }
+  .scan-frame > span::before { bottom: 0; left: 0; border-right: none; border-top: none; }
+  .scan-frame > span::after { bottom: 0; right: 0; border-left: none; border-top: none; }
+
+  .scan-hint {
+    position: absolute;
+    top: 76px;
+    left: 16px;
+    right: 16px;
+    font-size: 13px;
+    line-height: 1.4;
+    background: rgba(45,45,45,0.95);
+    color: #FFF;
+    padding: 10px 16px;
+    border-radius: 8px;
+    z-index: 5;
+    pointer-events: none;
+    text-align: center;
+  }
+
+  .cam-bottom {
+    padding: 20px 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    background: #FFF;
+    border-top: 1px solid #E5E5E5;
+    position: relative; z-index: 10;
+  }
+  .shutter {
+    width: 68px; height: 68px;
+    border-radius: 50%;
+    border: 4px solid #1A1A1A;
+    background: #FFF;
+    padding: 4px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .shutter::after {
+    content: '';
+    display: block;
+    width: 100%; height: 100%;
+    border-radius: 50%;
+    background: #1A1A1A;
+    transition: transform 0.15s;
+  }
+  .shutter:active::after {
+    transform: scale(0.9);
+  }
+  .gallery-link {
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--text);
+    text-decoration: underline;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-family: inherit;
+  }
+
+  .back-txt-btn {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--text);
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    font-family: inherit;
+  }
+  .back-txt-btn:active {
+    opacity: 0.7;
+  }
+
+  /* Payment form */
+  .field {
+    background: #fff;
+    border-radius: 12px;
+    padding: 10px 14px;
+    margin: 0 0 10px;
+    border: 1px solid var(--border);
+  }
+  .field .label { font-size: 12px; color: var(--text-2); }
+  .field .value { font-size: 16px; color: var(--text); margin-top: 2px; }
+  .field.highlight { border-color: var(--green); background: #F1FAF5; }
+  .row2 { display: flex; gap: 10px; }
+  .row2 > .field { flex: 1; }
+
+  .source-chip {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 6px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+    margin-bottom: 12px;
+  }
+  .source-chip.qr { background: #E8F5EE; color: var(--green); }
+  .source-chip.ocr { background: #FFF4E5; color: #8a5a00; }
+  .source-chip svg { width: 14px; height: 14px; }
+
+  .primary-btn {
+    width: 100%;
+    background: var(--red);
+    color: #fff;
+    border: none;
+    padding: 14px;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  .primary-btn:active { background: var(--red-dark); }
+  .secondary-btn {
+    width: 100%;
+    background: transparent;
+    color: var(--red);
+    border: none;
+    padding: 12px;
+    font-size: 14px;
+    cursor: pointer;
+    margin-top: 4px;
+  }
+
+  .bottom-bar {
+    padding: 12px;
+    background: #fff;
+    border-top: 1px solid var(--border);
+  }
+
+  /* === OCR VERIFY SCREEN === */
+  .verify-top {
+    padding: 12px 16px 8px;
+    background: #fff;
+    border-bottom: 1px solid var(--border);
+  }
+  .verify-top .back {
+    display: flex; align-items: center; gap: 4px;
+    background: none; border: none; color: var(--text);
+    font-size: 15px; padding: 4px 0;
+    cursor: pointer;
+  }
+  .verify-top h2 {
+    font-size: 26px;
+    font-weight: 700;
+    margin-top: 6px;
+    letter-spacing: -0.5px;
+  }
+  .verify-top .hint {
+    font-size: 12px;
+    color: var(--text-2);
+    margin-top: 2px;
+  }
+  .img-viewer {
+    height: 260px;
+    background: #e9e9e9;
+    position: relative;
+    overflow: hidden;
+    touch-action: none;
+  }
+  .img-pan {
+    width: 100%; height: 100%;
+    display: flex; align-items: center; justify-content: center;
+    transform-origin: center center;
+    transition: transform 0.15s ease-out;
+    cursor: grab;
+  }
+  .img-pan:active { cursor: grabbing; }
+  .img-pan svg {
+    width: 92%;
+    max-height: 94%;
+    background: #fff;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.12);
+    border-radius: 2px;
+  }
+  .zoom-controls {
+    position: absolute;
+    right: 10px; bottom: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    z-index: 2;
+  }
+  .zoom-controls button {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.95);
+    border: 1px solid var(--border);
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--text);
+    cursor: pointer;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  }
+  .zoom-controls button:active { background: #eee; }
+  .zoom-hint {
+    position: absolute;
+    left: 10px; top: 10px;
+    background: rgba(0,0,0,0.55);
+    color: #fff;
+    font-size: 11px;
+    padding: 4px 8px;
+    border-radius: 12px;
+    z-index: 2;
+    pointer-events: none;
+  }
+  .verify-fields {
+    flex: 1;
+    overflow-y: auto;
+    background: #F7F7F7;
+  }
+  .v-field {
+    padding: 12px 16px;
+    background: #F7F7F7;
+    border-bottom: 1px solid #E5E5E5;
+  }
+  .v-field:last-child { border-bottom: none; }
+  .v-field .v-label {
+    font-size: 15px;
+    color: var(--text);
+    margin-bottom: 2px;
+  }
+  .v-field .v-value {
+    font-size: 22px;
+    color: var(--text);
+    font-weight: 400;
+    letter-spacing: -0.3px;
+  }
+  .v-field .v-value.empty { color: #999; font-size: 16px; }
+  .sticky-cta {
+    padding: 10px 12px 14px;
+    background: #fff;
+    border-top: 1px solid var(--border);
+  }
+  .sticky-cta .primary-btn { border-radius: 32px; padding: 16px; }
+
+  /* Loading overlay */
+  .loader {
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.7);
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    z-index: 10;
+  }
+  .loader.show { display: flex; }
+  .spinner {
+    width: 52px; height: 52px;
+    border: 4px solid rgba(255,255,255,0.2);
+    border-top-color: #fff;
+    border-radius: 50%;
+    animation: spin 0.9s linear infinite;
+    margin-bottom: 16px;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* OCR Verify screen — split view */
+  .verify-photo {
+    height: 280px;
+    background: #2b2b2b;
+    position: relative;
+    overflow: hidden;
+    flex-shrink: 0;
+    touch-action: none;
+  }
+  .verify-photo .photo-inner {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%) scale(1);
+    transform-origin: center;
+    transition: transform 0.2s ease;
+    cursor: grab;
+  }
+  .fake-invoice {
+    width: 240px;
+    background: #fff;
+    color: #000;
+    padding: 16px;
+    font-size: 10px;
+    line-height: 1.5;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+    font-family: 'Courier New', monospace;
+  }
+  .fake-invoice h4 { font-size: 12px; margin-bottom: 6px; }
+  .fake-invoice .fi-row { display: flex; justify-content: space-between; padding: 2px 0; }
+  .fake-invoice .fi-row strong { font-weight: 700; }
+  .fake-invoice hr { border: none; border-top: 1px dashed #bbb; margin: 6px 0; }
+  .zoom-controls {
+    position: absolute;
+    right: 10px; bottom: 10px;
+    display: flex; flex-direction: column; gap: 6px;
+  }
+  .zoom-controls button {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    background: rgba(0,0,0,0.6);
+    color: #fff;
+    border: none;
+    font-size: 18px;
+    font-weight: 600;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .photo-hint {
+    position: absolute;
+    top: 10px; left: 10px;
+    background: rgba(0,0,0,0.55);
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 14px;
+    font-size: 11px;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .source-strip {
+    padding: 8px 14px;
+    background: #FFF4E5;
+    color: #8a5a00;
+    font-size: 12px;
+    display: flex; align-items: center; gap: 8px;
+    border-bottom: 1px solid #f0e0c0;
+    flex-shrink: 0;
+  }
+  .source-strip svg { width: 14px; height: 14px; flex-shrink: 0; }
+
+  .verify-fields {
+    flex: 1;
+    overflow-y: auto;
+    padding: 10px 12px 12px;
+    background: var(--bg);
+  }
+  .vrow {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 8px 12px;
+    margin-bottom: 8px;
+    display: flex; align-items: center; gap: 10px;
+    min-height: 52px;
+  }
+  .vrow .content { flex: 1; min-width: 0; }
+  .vrow .lab { font-size: 11px; color: var(--text-2); line-height: 1.2; }
+  .vrow .val {
+    font-size: 15px;
+    color: var(--text);
+    font-weight: 500;
+    line-height: 1.3;
+    margin-top: 1px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .vrow .edit {
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    border: none;
+    background: #f0f0f0;
+    color: var(--text-2);
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .vrow .edit svg { width: 14px; height: 14px; }
+  .vrow.edited { border-color: #b8e0c8; background: #F1FAF5; }
+  .vrow.edited .edit { background: var(--green); color: #fff; }
+  .vrow.missing { border-style: dashed; }
+  .vrow.missing .val { color: #bbb; font-style: italic; font-weight: 400; }
+
+  .vrow2 { display: flex; gap: 8px; margin-bottom: 8px; }
+  .vrow2 .vrow { flex: 1; margin-bottom: 0; }
+
+  /* Confirmation */
+  .confirm-wrap {
+    flex: 1;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    text-align: center;
+    padding: 32px;
+  }
+  .check {
+    width: 84px; height: 84px;
+    border-radius: 50%;
+    background: var(--green);
+    color: #fff;
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 20px;
+    font-size: 44px;
+  }
+
+  /* Gallery sheet */
+  .sheet {
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    display: none;
+    align-items: flex-end;
+    z-index: 20;
+  }
+  .sheet.show { display: flex; }
+  .sheet-inner {
+    background: #fff;
+    border-radius: 20px 20px 0 0;
+    width: 100%;
+    padding: 16px;
+  }
+  .sheet-inner h3 { font-size: 16px; margin-bottom: 12px; }
+  .sheet-item {
+    display: flex; align-items: center; gap: 12px;
+    padding: 14px 8px;
+    border-bottom: 1px solid var(--border);
+    cursor: pointer;
+  }
+  .sheet-item:last-child { border-bottom: none; }
+  .sheet-item svg { width: 22px; height: 22px; color: var(--red); }
+
+  /* Controls */
+  .controls {
+    color: #fff;
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    justify-content: center;
+    max-width: 720px;
+  }
+  .controls button {
+    background: #444; color: #fff; border: none;
+    padding: 8px 14px; border-radius: 20px; font-size: 12px;
+    cursor: pointer;
+  }
+  .controls button:hover { background: #555; }
+  .controls .active { background: #E3000F; }
+
+  .legend {
+    color: #aaa;
+    font-size: 11px;
+    text-align: center;
+    max-width: 720px;
+    line-height: 1.5;
+  }
+
+  /* ===== Contextual tooltip ===== */
+  .ctx-tooltip {
+    position: absolute;
+    top: 60px;
+    right: 10px;
+    width: 280px;
+    background: #2D2D2D;
+    border-radius: 12px;
+    padding: 12px 16px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.28);
+    z-index: 100;
+    display: none;
+    opacity: 0;
+    transform: translateY(-8px) scale(0.97);
+    transition: opacity 0.26s cubic-bezier(.22,.8,.46,1), transform 0.26s cubic-bezier(.22,.8,.46,1);
+    cursor: pointer;
+  }
+  .ctx-tooltip.show { display: block; }
+  .ctx-tooltip.visible { opacity: 1; transform: translateY(0) scale(1); }
+  .ctx-tooltip::before {
+    content: '';
+    position: absolute;
+    top: -7px;
+    right: 20px;
+    width: 14px; height: 8px;
+    background: #2D2D2D;
+    clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+  }
+  /* Scan tooltip – bílá varianta, šipka míří na záložku Faktura */
+  #ctx-tooltip-scan {
+    top: 58px;
+    background: #fff;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.22);
+  }
+  #ctx-tooltip-scan::before {
+    right: 68px;
+    background: #fff;
+  }
+  #ctx-tooltip-scan .ctx-tt-text,
+  #ctx-tooltip-scan .ctx-tt-title {
+    color: #1A1A1A;
+  }
+  .ctx-tt-label {
+    font-size: 11px;
+    font-weight: 700;
+    color: #E3000F;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    margin-bottom: 4px;
+  }
+  .ctx-tt-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: #fff;
+    margin-bottom: 4px;
+    line-height: 1.35;
+  }
+  .ctx-tt-text {
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.8);
+    line-height: 1.4;
+  }
+
+  /* Toast notifikace */
+  .toast {
+    position: absolute;
+    bottom: 80px;
+    left: 50%;
+    transform: translateX(-50%) translateY(12px);
+    background: #1A1A1A;
+    color: #fff;
+    font-size: 14px;
+    padding: 10px 18px;
+    border-radius: 24px;
+    white-space: nowrap;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.25);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.22s ease, transform 0.22s ease;
+    z-index: 200;
+  }
+  .toast.show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+
+  /* Mobile: skryj okolní prvky a roztáhni prototyp na celou obrazovku */
+  @media (max-width: 640px) {
+    html, body {
+      padding: 0 !important;
+      margin: 0 !important;
+      background: var(--bg) !important;
+      width: 100vw;
+      height: 100vh;
+      height: 100dvh;
+      min-height: 0 !important;
+      display: block !important;
+      overflow: hidden;
+    }
+    h1, .subtitle, .controls, .legend {
+      display: none !important;
+    }
+    .stage {
+      position: fixed !important;
+      inset: 0 !important;
+      width: 100vw !important;
+      height: 100vh !important;
+      height: 100dvh !important;
+      max-width: none !important;
+      max-height: none !important;
+      border-radius: 0 !important;
+      border: none !important;
+      box-shadow: none !important;
+    }
+    /* Bezpečné zóny pro telefony s notchem */
+    .topbar {
+      padding-top: calc(env(safe-area-inset-top, 0px));
+      height: calc(56px + env(safe-area-inset-top, 0px));
+    }
+    .fab {
+      bottom: calc(16px + env(safe-area-inset-bottom, 0px));
+    }
+    .bottom-bar {
+      padding-bottom: calc(12px + env(safe-area-inset-bottom, 0px));
+    }
+    .cam-top {
+      padding-top: calc(10px + env(safe-area-inset-top, 0px));
+    }
+    .cam-bottom {
+      padding-bottom: calc(16px + env(safe-area-inset-bottom, 0px));
+    }
+  }
+
+  /* ===== Reusable KB Statement Mockup ===== */
+  .sim-kb-statement {
+    background: #FFF;
+    border-radius: 12px;
+    width: 220px;
+    height: 290px;
+    padding: 14px;
+    color: #1A1A1A;
+    font-size: 7.5px;
+    line-height: 1.35;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+    position: relative;
+    border: 1px solid var(--border);
+  }
+  .stmt-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    border-bottom: 1px solid #E5E5E5;
+    padding-bottom: 6px;
+    margin-bottom: 6px;
+  }
+  .stmt-logo {
+    display: flex;
+    align-items: center;
+    gap: 3px;
+  }
+  .stmt-logo-sq {
+    width: 12px; height: 12px;
+    background: #E3000F;
+    color: #FFF;
+    font-size: 6px;
+    font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .stmt-logo-text {
+    font-weight: 800;
+    font-size: 9px;
+  }
+  .stmt-meta {
+    text-align: right;
+    font-size: 6.5px;
+    color: #6A6A6A;
+  }
+  .stmt-holder {
+    margin-bottom: 10px;
+  }
+  .stmt-holder-name {
+    font-size: 8px;
+    font-weight: 700;
+  }
+  .stmt-title {
+    font-size: 9px;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+  }
+  .stmt-tr {
+    display: flex;
+    justify-content: space-between;
+    padding: 5px 0;
+    border-bottom: 0.5px solid #EEE;
+  }
+  .stmt-tr:last-child {
+    border-bottom: none;
+  }
+  .stmt-tr.highlight-amount {
+    background: rgba(227, 0, 15, 0.06);
+    outline: 1px dashed var(--red);
+  }
+  .stmt-tr.highlight-vs {
+    background: rgba(0, 102, 255, 0.06);
+    outline: 1px dashed #007AFF;
+  }
+
+  /* ===== Loading Screen overlay & label styling ===== */
+  .ocr-loading-body {
+    flex: 1;
+    background: #1C1C1E;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+  .loading-badge {
+    position: absolute;
+    top: 16px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(45,45,45,0.9);
+    color: #FFF;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 500;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .loading-badge::after {
+    content: '';
+    width: 10px; height: 10px;
+    border: 2px solid #FFF;
+    border-top-color: transparent;
+    border-radius: 50%;
+    animation: loading-spin 0.8s infinite linear;
+  }
+  @keyframes loading-spin {
+    to { transform: rotate(360deg); }
+  }
+  .floating-label {
+    position: absolute;
+    color: #FFF;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    z-index: 5;
+  }
+  .floating-label .label-title {
+    font-size: 11px;
+    opacity: 0.8;
+  }
+  .floating-label .label-val {
+    font-size: 14px;
+    font-weight: 700;
+    margin-top: 1px;
+  }
+  .floating-label .label-arrow {
+    margin-top: 4px;
+    font-size: 18px;
+    animation: arrow-bounce 1.5s infinite ease-in-out;
+  }
+  @keyframes arrow-bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(4px); }
+  }
+
+  .loading-footer {
+    padding: 16px 20px 24px;
+    background: #E5E5EA;
+    border-top: 1px solid var(--border);
+  }
+  .skeleton-line {
+    height: 12px;
+    background: #D1D1D6;
+    border-radius: 6px;
+    margin-top: 10px;
+    animation: skeleton-pulse 1.5s infinite ease-in-out;
+  }
+  @keyframes skeleton-pulse {
+    0% { opacity: 0.6; }
+    50% { opacity: 1; }
+    100% { opacity: 0.6; }
+  }
+
+  /* ===== Alert Modals (iOS style) ===== */
+  .alert-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s ease;
+    z-index: 150;
+  }
+  .alert-overlay.show {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  .alert-box {
+    width: 270px;
+    background: #FFF;
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    transform: scale(0.9);
+    transition: transform 0.25s cubic-bezier(.22,.8,.46,1);
+  }
+  .alert-overlay.show .alert-box {
+    transform: scale(1);
+  }
+  .alert-content {
+    padding: 20px 16px;
+    text-align: center;
+  }
+  .alert-title {
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 6px;
+  }
+  .alert-text {
+    font-size: 13px;
+    color: var(--text-2);
+    line-height: 1.45;
+  }
+  .alert-buttons {
+    display: flex;
+    border-top: 1px solid var(--border);
+  }
+  .alert-btn {
+    flex: 1;
+    border: none;
+    background: transparent;
+    padding: 12px 0;
+    font-size: 16px;
+    color: #007AFF;
+    cursor: pointer;
+    text-align: center;
+    font-family: inherit;
+  }
+  .alert-btn:active {
+    background: rgba(0,0,0,0.05);
+  }
+  .alert-btn:first-child {
+    border-right: 1px solid var(--border);
+  }
+  .alert-btn.bold {
+    font-weight: 600;
+  }
+
+  /* ===== Bottom Sheet (iOS style) ===== */
+  .sheet-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    display: flex;
+    align-items: flex-end;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.28s ease;
+    z-index: 140;
+  }
+  .sheet-overlay.show {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  .bottom-sheet {
+    width: 100%;
+    background: #FFF;
+    border-radius: 16px 16px 0 0;
+    padding: 16px 20px 24px;
+    transform: translateY(100%);
+    transition: transform 0.28s cubic-bezier(.22,.8,.46,1);
+    position: relative;
+  }
+  .sheet-overlay.show .bottom-sheet {
+    transform: translateY(0);
+  }
+  .sheet-handle {
+    width: 36px; height: 5px;
+    background: #E5E5EA;
+    border-radius: 3px;
+    margin: 0 auto 12px;
+  }
+  .sheet-close-btn {
+    position: absolute;
+    top: 12px; right: 16px;
+    width: 24px; height: 24px;
+    border-radius: 50%;
+    background: #F2F2F7;
+    border: none;
+    font-size: 10px;
+    color: #8E8E93;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .sheet-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 12px;
+  }
+  .sheet-scroll-content {
+    max-height: 200px;
+    overflow-y: auto;
+    margin-bottom: 20px;
+  }
+  .sheet-text {
+    font-size: 14px;
+    color: var(--text-2);
+    line-height: 1.5;
+  }
+  .sheet-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .primary-btn {
+    width: 100%;
+    border-radius: 12px;
+    padding: 14px 0;
+    font-size: 15px;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    text-align: center;
+    font-family: inherit;
+    transition: opacity 0.15s;
+  }
+  .primary-btn:active {
+    opacity: 0.8;
+  }
+  .primary-btn.red {
+    background: #E3000F;
+    color: #FFF;
+  }
+  .secondary-btn-outline {
+    width: 100%;
+    border-radius: 12px;
+    padding: 14px 0;
+    font-size: 15px;
+    font-weight: 500;
+    background: transparent;
+    color: var(--text);
+    border: 1px solid var(--text);
+    cursor: pointer;
+    text-align: center;
+    font-family: inherit;
+  }
+  .secondary-btn-outline:active {
+    background: rgba(0,0,0,0.05);
+  }
+
+  /* ===== Results Layout ===== */
+  .ocr-results {
+    background: #FFF;
+    border-radius: 12px;
+    padding: 8px 16px;
+    margin-bottom: 12px;
+    border: 1px solid var(--border);
+  }
+  .ocr-result-item {
+    padding: 10px 0;
+    border-bottom: 0.5px solid var(--border);
+  }
+  .ocr-result-item:last-child {
+    border-bottom: none;
+  }
+  .ocr-res-label {
+    font-size: 12px;
+    color: var(--text-2);
+    margin-bottom: 3px;
+  }
+  .ocr-res-val {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text);
+  }
+
+  /* ===== Input fields inside field block ===== */
+  .field-input-text {
+    width: 100%;
+    border: none;
+    outline: none;
+    font-size: 16px;
+    color: var(--text);
+    background: transparent;
+    margin-top: 2px;
+    font-family: inherit;
+  }
+
+  /* ===== Summary Details layout ===== */
+  .summary-card {
+    background: #FFF;
+    border-radius: 16px;
+    border: 1px solid #E5E5EA;
+    padding: 0;
+    margin-bottom: 12px;
+  }
+  .summary-item {
+    padding: 14px 16px;
+    border-bottom: 1px solid #E5E5EA;
+  }
+  .summary-item:last-child {
+    border-bottom: none;
+  }
+  .summary-label {
+    font-size: 11px;
+    color: #8E8E93;
+    font-weight: 500;
+    margin-bottom: 4px;
+  }
+  .summary-val {
+    font-size: 14px;
+    color: #1C1C1E;
+    font-weight: 600;
+    line-height: 1.4;
+  }
+
+  /* ===== OCR loading dynamic fields & animation styles ===== */
+  .stmt-tr.highlight-amount {
+    transition: all 0.4s ease;
+  }
+  .stmt-tr.highlight-amount.active-highlight {
+    outline: 2px dashed #007AFF;
+    background: rgba(0, 102, 255, 0.15) !important;
+  }
+  .stmt-tr.highlight-vs {
+    transition: all 0.4s ease;
+  }
+  .stmt-tr.highlight-vs.active-highlight {
+    outline: 2px dashed #007AFF;
+    background: rgba(0, 102, 255, 0.15) !important;
+  }
+  
+  .falling-value {
+    position: absolute;
+    color: #FFF;
+    font-size: 14px;
+    font-weight: 700;
+    padding: 6px 12px;
+    background: #007AFF;
+    border-radius: 6px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    z-index: 100;
+    pointer-events: none;
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.8);
+  }
+  
+  @keyframes fall-down-amt {
+    0% {
+      opacity: 0;
+      transform: translate(-50%, -50%) scale(0.8);
+    }
+    15% {
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1.05);
+    }
+    30% {
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1);
+    }
+    85% {
+      opacity: 1;
+      transform: translate(-50%, calc(-50% + 220px)) scale(0.95);
+    }
+    100% {
+      opacity: 0;
+      transform: translate(-50%, calc(-50% + 265px)) scale(0.85);
+    }
+  }
+
+  @keyframes fall-down-vs {
+    0% {
+      opacity: 0;
+      transform: translate(-50%, -50%) scale(0.8);
+    }
+    15% {
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1.05);
+    }
+    30% {
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1);
+    }
+    85% {
+      opacity: 1;
+      transform: translate(-50%, calc(-50% + 180px)) scale(0.95);
+    }
+    100% {
+      opacity: 0;
+      transform: translate(-50%, calc(-50% + 225px)) scale(0.85);
+    }
+  }
+  
+  .falling-value.animate-amt {
+    animation: fall-down-amt 1.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  }
+  .falling-value.animate-vs {
+    animation: fall-down-vs 1.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  }
+
+  .loading-footer-field {
+    opacity: 1;
+    transition: opacity 0.3s ease;
+  }
+  .loading-footer-field .skeleton-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+  .loading-footer-field .skeleton-label {
+    width: 55px;
+    height: 10px;
+    margin-top: 4px;
+  }
+  .loading-footer-field .skeleton-val {
+    width: 150px;
+    height: 18px;
+    margin-top: 8px;
+  }
+  .loading-footer-field.active .skeleton-group {
+    display: none;
+  }
+  .loading-footer-field.active .real-content {
+    display: block !important;
+    animation: field-pop 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) both;
+  }
+  
+  @keyframes field-pop {
+    0% {
+      transform: scale(0.96) translateY(4px);
+      opacity: 0;
+    }
+    100% {
+      transform: scale(1) translateY(0);
+      opacity: 1;
+    }
+  }
+
+  .loading-detected-box {
+    display: inline-block;
+    padding: 4px 8px;
+    border: 1px dashed #007AFF;
+    border-radius: 4px;
+    background: rgba(0, 122, 255, 0.05);
+    color: #1C1C1E;
+    font-size: 18px;
+    font-weight: 700;
+    margin-top: 2px;
+  }
+</style>
+</head>
+<body>
+<h1>Prototyp — Skenování platby (QR kód + vyčítání faktury)</h1>
+<p class="subtitle">Doporučené řešení: <strong>jedna sjednocená funkce "Skenovat"</strong> s automatickým rozpoznáním režimu (QR vs. faktura). Níže si projdi flow kliknutím na tlačítka v mockupu.</p>
+
+<div class="stage" id="stage">
+
+  <!-- SCREEN 1: Dashboard -->
+  <section class="screen active" id="screen-dashboard">
+    <div class="topbar">
+      <div style="flex:1;"></div>
+      <button class="iconbtn">🔑</button>
+      <button class="iconbtn" style="position:relative;">🏦<span style="position:absolute;top:4px;right:4px;width:16px;height:16px;background:#E3000F;color:#fff;border-radius:50%;font-size:10px;display:flex;align-items:center;justify-content:center;">1</span></button>
+      <button class="iconbtn" style="background:#ddd;">👤</button>
+    </div>
+    <div class="tabs">
+      <div class="tab active">Přehled</div>
+      <div class="tab">Extra</div>
+      <div class="tab">Karty</div>
+      <div class="tab">Půjčky</div>
+      <div class="tab">Spoření</div>
+    </div>
+    <div class="scroll">
+      <div class="card">
+        <div class="row"><div class="acc-label">Tarif Komfort</div><div class="chev">›</div></div>
+      </div>
+      <div class="card">
+        <div class="row"><div class="acc-label">Běžný účet</div><div class="acc-num">122000/0100</div></div>
+        <div class="balance">18 063<span class="dec">,38 Kč</span></div>
+        <hr style="border:none;border-top:1px solid var(--border);margin:10px 0;">
+        <div class="row"><div class="acc-label">Běžný účet 2</div><div class="acc-num">326683762/0100</div></div>
+        <div class="balance">48 490<span class="dec">,20 Kč</span></div>
+      </div>
+      <div class="card">
+        <div class="row"><div class="acc-label">Spoření</div><div class="acc-num">326683764/0100</div></div>
+        <div class="balance">11 490<span class="dec">,20 Kč</span></div>
+      </div>
+      <div class="card">
+        <div class="acc-label">Souhrn za červen</div>
+        <div style="font-size:12px;color:var(--text-2);margin-top:2px;">Běžný účet</div>
+        <div style="margin-top:10px;display:flex;justify-content:space-between;font-size:14px;"><span>→ Výdaje</span><span>−10 000,00 Kč</span></div>
+        <div style="margin-top:6px;display:flex;justify-content:space-between;font-size:14px;color:var(--green);"><span>← Příjmy</span><span>20 000,00 Kč</span></div>
+      </div>
+    </div>
+    <div class="fab">
+      <button onclick="go('screen-newpayment')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+        Nová platba
+      </button>
+      <button onclick="go('screen-scan'); setMode('qr');">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/>
+          <rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="3" height="3"/>
+          <rect x="18" y="18" width="3" height="3"/>
+        </svg>
+        Skenovat
+      </button>
+      <button>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M5 9l7-7 7 7"/></svg>
+        Zaplať mi
+      </button>
+    </div>
+  </section>
+
+  <!-- SCREEN 2: New payment (entry) -->
+  <section class="screen" id="screen-newpayment">
+    <div class="topbar white">
+      <button class="iconbtn" onclick="go('screen-dashboard')">✕</button>
+      <div class="title">Nová platba</div>
+      <button class="iconbtn" id="btn-qr-scan" onclick="go('screen-scan'); setMode('qr');" title="Skenovat">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/>
+          <rect x="3" y="14" width="7" height="7"/><path d="M14 14h7v3M14 18v3h7"/>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Contextual tooltip for QR/faktura scan -->
+    <div class="ctx-tooltip" id="ctx-tooltip-qr" onclick="dismissTooltip()">
+      <div class="ctx-tt-title">Nově umíme načítat platební údaje</div>
+      <div class="ctx-tt-text">Stačí vyfotit SMS nebo fakturu a platební údaje načteme sami.</div>
+    </div>
+    <div class="scroll" style="padding:14px;">
+      <div class="field">
+        <div class="label">Z účtu</div>
+        <div class="value">Běžný účet</div>
+        <div style="font-size:13px;color:var(--text-2);">123456−4835477/0100</div>
+      </div>
+      <div class="field">
+        <div class="label">Komu</div>
+        <div class="value" style="color:#999;">Číslo účtu, IBAN, šablona nebo příjemce</div>
+      </div>
+      <div style="background:#fff;padding:14px;border-radius:12px;border:1px solid var(--border);margin-bottom:10px;display:flex;align-items:center;gap:10px;">
+        <span style="color:var(--red);font-size:20px;">●●●</span>
+        <strong>Platba na kontakt</strong>
+        <span style="margin-left:auto;">›</span>
+      </div>
+      <div class="row2">
+        <div class="field"><div class="label">Částka</div><div class="value">0</div></div>
+        <div class="field"><div class="label">Měna</div><div class="value">Kč ▾</div></div>
+      </div>
+      <div style="font-size:12px;color:var(--text-2);margin-top:4px;">Na účtu máte 18 063,38 Kč.</div>
+
+      <!-- NEW: prominent scan shortcut -->
+      <div style="margin-top:16px;padding:14px;border:1px dashed #bbb;border-radius:12px;background:#fff;">
+        <div style="font-size:13px;color:var(--text-2);margin-bottom:8px;">Rychlé vyplnění platby</div>
+        <button onclick="go('screen-scan'); setMode('qr');" style="width:100%;background:#fff;border:1px solid var(--red);color:var(--red);padding:12px;border-radius:10px;font-weight:600;display:flex;align-items:center;justify-content:center;gap:8px;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/>
+            <rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="3" height="3"/>
+          </svg>
+          Skenovat QR kód nebo fakturu
+        </button>
+      </div>
+    </div>
+    <div class="bottom-bar">
+      <button class="primary-btn" style="opacity:0.5;">Pokračovat</button>
+    </div>
+  </section>
+
+  <!-- SCREEN 3: Unified Scanner -->
+  <section class="screen" id="screen-scan">
+    <div class="camera">
+      <div class="cam-top">
+        <div style="display: flex; width: 100%; justify-content: flex-start;">
+          <button class="cam-close-txt" onclick="go('screen-dashboard')">Zavřít</button>
+        </div>
+        <div class="mode-segment">
+          <button id="mode-qr" class="active" onclick="setMode('qr')">QR kód</button>
+          <button id="mode-inv" onclick="setMode('inv')">Platební údaje</button>
+        </div>
+      </div>
+
+      <div class="cam-viewport">
+        <!-- Flash button inside viewport -->
+        <button class="cam-flash-btn" onclick="toggleFlash()" title="Svítilna">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M13 2L3 14h9l-1 8 10-12h-9z"/>
+            <line x1="1" y1="1" x2="23" y2="23" id="flash-slash"/>
+          </svg>
+        </button>
+
+        <div class="sim-invoice with-qr" id="sim-qr">
+          <h4>Faktura č. 2026042</h4>
+          <div>Částka: 1 450 Kč</div>
+          <div>VS: 20260042</div>
+          <div class="qrbox"></div>
+          <div style="font-size:8px;">Naskenujte pro rychlou platbu</div>
+        </div>
+        <div class="sim-invoice" id="sim-plain">
+          <h4>Faktura č. 2026042</h4>
+          <div>Dodavatel: ABC s.r.o.</div>
+          <div>Č. účtu: 2601234567/2010</div>
+          <div>Částka: 1 450,00 Kč</div>
+          <div>VS: 20260042</div>
+          <div>KS: 0308</div>
+          <div>Splatnost: 30.04.2026</div>
+        </div>
+
+        <div class="scan-frame"><span></span></div>
+        <div class="scan-hint" id="hint">Namiřte fotoaparát na QR kód, vyfotí se automaticky.</div>
+      </div>
+
+      <div class="cam-bottom">
+        <button class="shutter" id="shutter" onclick="capture()"></button>
+        <button class="gallery-link" onclick="openSheet()">Načíst z fotek nebo souboru</button>
+      </div>
+
+      <!-- Loader -->
+      <div class="loader" id="loader">
+        <div class="spinner"></div>
+        <div id="loader-text">Rozpoznávám QR kód…</div>
+      </div>
+    </div>
+
+    <!-- Contextual tooltip pro scan (zobrazí se jen při příchodu přímo z dashboardu) -->
+    <div class="ctx-tooltip" id="ctx-tooltip-scan" onclick="dismissScanTooltip()">
+      <div class="ctx-tt-title">Nově umíme načítat platební údaje</div>
+      <div class="ctx-tt-text">Stačí vyfotit SMS nebo fakturu a platební údaje načteme sami.</div>
+    </div>
+
+    <!-- Sheet for gallery -->
+    <div class="sheet" id="sheet">
+      <div class="sheet-inner">
+        <h3>Přidat fakturu</h3>
+        <div class="sheet-item" onclick="closeSheet(); capture();">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="M21 15l-5-5L5 21"/></svg>
+          Z galerie fotek
+        </div>
+        <div class="sheet-item" onclick="closeSheet(); capture();">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6"/></svg>
+          PDF soubor
+        </div>
+        <div class="sheet-item" onclick="closeSheet()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 18L18 6M6 6l12 12"/></svg>
+          Zrušit
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SCREEN 4a: Review (QR success) -->
+  <section class="screen" id="screen-review-qr">
+    <div class="topbar white">
+      <button class="iconbtn" onclick="go('screen-scan')">‹</button>
+      <div class="title">Zkontrolujte platbu</div>
+    </div>
+    <div class="scroll" style="padding:14px;">
+      <div class="source-chip qr">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
+        Načteno z QR kódu · všechny údaje ověřeny
+      </div>
+      <div class="field highlight">
+        <div class="label">Komu (číslo účtu)</div>
+        <div class="value">2601234567/2010</div>
+      </div>
+      <div class="field highlight">
+        <div class="label">Příjemce</div>
+        <div class="value">ABC s.r.o.</div>
+      </div>
+      <div class="row2">
+        <div class="field highlight"><div class="label">Částka</div><div class="value">100,00 Kč</div></div>
+        <div class="field highlight"><div class="label">VS</div><div class="value">987564566778</div></div>
+      </div>
+      <div class="row2">
+        <div class="field"><div class="label">KS</div><div class="value" style="color:#999;">—</div></div>
+        <div class="field"><div class="label">SS</div><div class="value" style="color:#999;">—</div></div>
+      </div>
+      <div class="field">
+        <div class="label">Zpráva pro příjemce</div>
+        <div class="value" style="color:#999;">Volitelné</div>
+      </div>
+    </div>
+    <div class="bottom-bar">
+      <button class="primary-btn red" onclick="go('screen-success')">Zaplatit 100,00 Kč</button>
+    </div>
+  </section>
+
+  <!-- SCREEN 4: OCR Loading (simulated reading of the statement) -->
+  <section class="screen" id="screen-ocr-loading">
+    <div class="topbar white">
+      <button class="back-txt-btn" onclick="go('screen-scan')"><span style="font-size: 20px; line-height: 1; font-weight: 300;">‹</span> Zpět</button>
+      <div class="title" style="margin-left: 12px;">Načtené údaje</div>
+    </div>
+    
+    <div class="ocr-loading-body">
+      <!-- Loading badge at the top of the dark viewport -->
+      <div class="loading-badge">Hledáme platební údaje</div>
+      
+      <!-- Simulated Statement Card -->
+      <div class="sim-kb-statement" style="transform: scale(0.7); margin-top: -30px;">
+        <div class="stmt-header">
+          <div class="stmt-logo">
+            <div class="stmt-logo-sq">KB</div>
+            <span class="stmt-logo-text">Výpis z účtu</span>
+          </div>
+          <div class="stmt-meta">
+            Datum výpisu<br>
+            <strong>18.2.2022</strong>
+          </div>
+        </div>
+        <div class="stmt-title">Výpis z účtu</div>
+        <div class="stmt-holder">
+          <span style="font-size: 6px; color:#6A6A6A;">Majitel účtu</span><br>
+          <span class="stmt-holder-name">PETRA ZACHOVALÁ</span><br>
+          <span style="font-size: 6px; color:#6A6A6A;">Číslo účtu / IBAN</span><br>
+          <strong>123456789/0100</strong>
+        </div>
+        <div style="font-size: 7px; font-weight: 700; border-top: 1.5px solid #1A1A1A; padding-top: 4px; margin-top: 6px;">
+          Transakce
+        </div>
+        <div class="stmt-tr">
+          <span>28.1.2022 MILAN 000000-0006060398/0100</span>
+          <strong>1,87 Kč</strong>
+        </div>
+        <div class="stmt-tr">
+          <span>28.1.2022 MILAN 000000-0006060398/0100</span>
+          <strong>-1,30 Kč</strong>
+        </div>
+        <div class="stmt-tr highlight-amount">
+          <span>28.1.2022 MILAN 000000-0006060398/0100</span>
+          <strong>100 Kč</strong>
+        </div>
+        <div class="stmt-tr highlight-vs">
+          <span>Variabilní symbol: 987564566778</span>
+          <strong>Zpráva</strong>
+        </div>
+        <div class="stmt-tr">
+          <span>5.1.2022 SEGI 000000-0000107271/0100</span>
+          <strong>0,10 Kč</strong>
+        </div>
+      </div>
+    </div>
+    
+    <div class="loading-footer" style="background: #F4F4F4; border-top: none; padding: 16px 20px 24px; display: flex; flex-direction: column; gap: 14px;">
+      <!-- Field 1: Z účtu (active from start) -->
+      <div id="loading-field-acc" class="loading-footer-field active">
+        <div style="font-size: 12px; color: #8E8E93; font-weight: 500;">Z účtu</div>
+        <div class="loading-detected-box">123456789/0100</div>
+      </div>
+      
+      <!-- Field 2: Částka (skeleton initially, then active) -->
+      <div id="loading-field-amt" class="loading-footer-field">
+        <div class="skeleton-group">
+          <div class="skeleton-line skeleton-label" style="margin-top: 2px;"></div>
+          <div class="skeleton-line skeleton-val" style="margin-top: 6px;"></div>
+        </div>
+        <div class="real-content" style="display: none;">
+          <div style="font-size: 12px; color: #8E8E93; font-weight: 500;">Částka</div>
+          <div class="loading-detected-box">100 Kč</div>
+        </div>
+      </div>
+
+      <!-- Field 3: Variabilní symbol (skeleton initially, then active) -->
+      <div id="loading-field-vs" class="loading-footer-field">
+        <div class="skeleton-group">
+          <div class="skeleton-line skeleton-label" style="margin-top: 2px;"></div>
+          <div class="skeleton-line skeleton-val" style="margin-top: 6px;"></div>
+        </div>
+        <div class="real-content" style="display: none;">
+          <div style="font-size: 12px; color: #8E8E93; font-weight: 500;">Variabilní symbol</div>
+          <div class="loading-detected-box">987564566778</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SCREEN 4b: OCR Success (verified statement and extracted fields) -->
+  <section class="screen" id="screen-ocr-success">
+    <div class="topbar white">
+      <button class="back-txt-btn" onclick="go('screen-scan')"><span style="font-size: 20px; line-height: 1; font-weight: 300;">‹</span> Zpět</button>
+      <div class="title" style="margin-left: 12px;">Načtené údaje</div>
+      <div style="width: 44px;"></div>
+    </div>
+    
+    <!-- Dark viewport containing the statement with warning badge -->
+    <div class="ocr-loading-body" style="height: 330px; flex: none;">
+      <!-- Warning badge at the top -->
+      <div class="loading-badge" style="background: rgba(45, 45, 45, 0.95); width: calc(100% - 32px); font-size: 12px; border-radius: 8px; text-align: center; padding: 10px 12px; line-height: 1.35; position: absolute; top: 16px; left: 16px; transform: none; display: flex; align-items: center; justify-content: center; color: #FFF; font-weight: 500;">
+        Načtené údaje nemusí být správné. Věnujte pozornost kontrole.
+      </div>
+      
+      <!-- Simulated Statement Card -->
+      <div class="sim-kb-statement" style="transform: scale(0.85); margin-top: 30px;">
+        <div class="stmt-header">
+          <div class="stmt-logo">
+            <div class="stmt-logo-sq">KB</div>
+            <span class="stmt-logo-text">Výpis z účtu</span>
+          </div>
+          <div class="stmt-meta">
+            Datum výpisu<br>
+            <strong>18.2.2022</strong>
+          </div>
+        </div>
+        <div class="stmt-title">Výpis z účtu</div>
+        <div class="stmt-holder">
+          <span style="font-size: 6px; color:#6A6A6A;">Majitel účtu</span><br>
+          <span class="stmt-holder-name">PETRA ZACHOVALÁ</span><br>
+          <span style="font-size: 6px; color:#6A6A6A;">Číslo účtu / IBAN</span><br>
+          <strong>123456789/0100</strong>
+        </div>
+        <div style="font-size: 7px; font-weight: 700; border-top: 1.5px solid #1A1A1A; padding-top: 4px; margin-top: 6px;">
+          Transakce
+        </div>
+        <div class="stmt-tr">
+          <span>28.1.2022 MILAN 000000-0006060398/0100</span>
+          <strong>1,87 Kč</strong>
+        </div>
+        <div class="stmt-tr">
+          <span>28.1.2022 MILAN 000000-0006060398/0100</span>
+          <strong>-1,30 Kč</strong>
+        </div>
+        <div class="stmt-tr highlight-amount">
+          <span>28.1.2022 MILAN 000000-0006060398/0100</span>
+          <strong>100 Kč</strong>
+        </div>
+        <div class="stmt-tr highlight-vs">
+          <span>Variabilní symbol: 987564566778</span>
+          <strong>Zpráva</strong>
+        </div>
+        <div class="stmt-tr">
+          <span>5.1.2022 SEGI 000000-0000107271/0100</span>
+          <strong>0,10 Kč</strong>
+        </div>
+      </div>
+    </div>
+    
+    <div class="scroll" style="background: #F4F4F4; padding: 20px 24px;">
+      <!-- Results text blocks on gray background -->
+      <div style="margin-bottom: 20px;">
+        <div style="font-size: 13px; color: #8E8E93; font-weight: 500;">Z účtu</div>
+        <div style="font-size: 20px; color: #1C1C1E; font-weight: 700; margin-top: 4px;" id="ocr-success-from-acc">123456789/0100</div>
+      </div>
+      <div style="margin-bottom: 20px;">
+        <div style="font-size: 13px; color: #8E8E93; font-weight: 500;">Částka</div>
+        <div style="font-size: 20px; color: #1C1C1E; font-weight: 700; margin-top: 4px;" id="ocr-success-amount">100 Kč</div>
+      </div>
+      <div style="margin-bottom: 20px;">
+        <div style="font-size: 13px; color: #8E8E93; font-weight: 500;">Variabilní symbol</div>
+        <div style="font-size: 20px; color: #1C1C1E; font-weight: 700; margin-top: 4px;" id="ocr-success-vs">987564566778</div>
+      </div>
+    </div>
+    
+    <div class="bottom-bar" style="background: #F4F4F4; border-top: none; padding: 16px 20px 24px;">
+      <button class="primary-btn red" style="margin-bottom: 10px;" onclick="submitOCRSuccess()">K platbě</button>
+      <button class="secondary-btn-outline" style="background:#FFF; border: 1px solid #1C1C1E;" onclick="go('screen-newpayment-edit')">Upravit údaje</button>
+    </div>
+  </section>
+
+  <!-- SCREEN 5: Edit scanned payment (prefilled fields) -->
+  <section class="screen" id="screen-newpayment-edit">
+    <div class="topbar white">
+      <button class="back-txt-btn" onclick="go('screen-ocr-success')"><span style="font-size: 20px; line-height: 1; font-weight: 300;">‹</span> Zpět</button>
+      <div class="title" style="margin-left: 12px;">Nová platba</div>
+      <div style="width: 44px;"></div>
+    </div>
+    
+    <div class="scroll" style="padding: 16px; background: #F8F9FA;">
+      <div class="field" style="background: #FFF; border-radius: 12px; border: 1px solid #C7C7CC; padding: 10px 14px; margin-bottom: 12px;">
+        <div class="label" style="font-size: 11px; color: #8E8E93; font-weight: 500;">Zpráva pro příjemce</div>
+        <input type="text" class="field-input-text" id="inp-edit-msg" placeholder="Zpráva pro příjemce" style="width: 100%; border: none; outline: none; font-size: 15px; color: #1C1C1E; background: transparent; margin-top: 2px; font-family: inherit;">
+      </div>
+      <div class="field" style="background: #FFF; border-radius: 12px; border: 1px solid #C7C7CC; padding: 10px 14px; margin-bottom: 12px;">
+        <div class="label" style="font-size: 11px; color: #8E8E93; font-weight: 500;">Variabilní symbol</div>
+        <input type="text" class="field-input-text" id="inp-edit-vs" value="987564566778" style="width: 100%; border: none; outline: none; font-size: 15px; color: #1C1C1E; background: transparent; margin-top: 2px; font-family: inherit;">
+      </div>
+      <div class="field" style="background: #FFF; border-radius: 12px; border: 1px solid #C7C7CC; padding: 10px 14px; margin-bottom: 12px;">
+        <div class="label" style="font-size: 11px; color: #8E8E93; font-weight: 500;">Popis pro mě</div>
+        <input type="text" class="field-input-text" id="inp-edit-desc" placeholder="Popis platby" style="width: 100%; border: none; outline: none; font-size: 15px; color: #1C1C1E; background: transparent; margin-top: 2px; font-family: inherit;">
+      </div>
+      <div class="field" style="background: #FFF; border-radius: 12px; border: 1px solid #C7C7CC; padding: 10px 14px; margin-bottom: 12px;">
+        <div class="label" style="font-size: 11px; color: #8E8E93; font-weight: 500;">Konstantní symbol</div>
+        <input type="text" class="field-input-text" id="inp-edit-ks" placeholder="Konstantní symbol" style="width: 100%; border: none; outline: none; font-size: 15px; color: #1C1C1E; background: transparent; margin-top: 2px; font-family: inherit;">
+      </div>
+      <div class="field" style="background: #FFF; border-radius: 12px; border: 1px solid #C7C7CC; padding: 10px 14px; margin-bottom: 12px;">
+        <div class="label" style="font-size: 11px; color: #8E8E93; font-weight: 500;">Specifický symbol</div>
+        <input type="text" class="field-input-text" id="inp-edit-ss" placeholder="Specifický symbol" style="width: 100%; border: none; outline: none; font-size: 15px; color: #1C1C1E; background: transparent; margin-top: 2px; font-family: inherit;">
+      </div>
+      
+      <div style="margin-top: 20px;">
+        <div style="font-size: 13px; color: #1C1C1E; font-weight: 500; margin-bottom: 8px;">Odeslat platbu</div>
+        <div class="mode-segment" style="width: 100%; display: flex; background: #E5E5EA; border-radius: 9px; padding: 2px;">
+          <button id="btn-send-now" class="active" onclick="setSendOption('now')" style="flex: 1; border: none; background: transparent; padding: 8px 0; font-size: 13px; font-weight: 600; border-radius: 7px; text-align: center; font-family: inherit; transition: all 0.15s; outline: none;">Co nejdříve</button>
+          <button id="btn-send-later" onclick="setSendOption('later')" style="flex: 1; border: none; background: transparent; padding: 8px 0; font-size: 13px; font-weight: 600; border-radius: 7px; text-align: center; font-family: inherit; transition: all 0.15s; outline: none;">Později</button>
+        </div>
+      </div>
+    </div>
+    
+    <div class="bottom-bar" style="padding: 16px 20px 24px;">
+      <button class="primary-btn red" onclick="submitEditPayment()">Pokračovat</button>
+    </div>
+  </section>
+
+  <!-- SCREEN 6: Review (OCR — Final Summary) -->
+  <section class="screen" id="screen-review-ocr">
+    <div class="topbar white">
+      <button class="back-txt-btn" onclick="go('screen-ocr-success')"><span style="font-size: 20px; line-height: 1; font-weight: 300;">‹</span> Zpět</button>
+    </div>
+    
+    <div class="scroll" style="padding: 16px; background: #F8F9FA;">
+      <h2 style="font-size: 28px; font-weight: 700; color: #1C1C1E; margin-bottom: 16px; padding: 0 4px;">Souhrn</h2>
+      
+      <div class="summary-card" style="background: #FFF; border-radius: 16px; border: 1px solid #E5E5EA; padding: 0;">
+        <div class="summary-item" style="padding: 14px 16px; border-bottom: 1px solid #E5E5EA;">
+          <div class="summary-label" style="font-size: 11px; color: #8E8E93; font-weight: 500; margin-bottom: 4px;">Z účtu</div>
+          <div class="summary-val" id="sum-from-acc" style="font-size: 14px; color: #1C1C1E; font-weight: 600; line-height: 1.4;">Můj běžný účet<br>122000/0100</div>
+        </div>
+        <div class="summary-item" style="padding: 14px 16px; border-bottom: 1px solid #E5E5EA;">
+          <div class="summary-label" style="font-size: 11px; color: #8E8E93; font-weight: 500; margin-bottom: 4px;">Na účet</div>
+          <div class="summary-val" id="sum-to-acc" style="font-size: 14px; color: #1C1C1E; font-weight: 600; line-height: 1.4;">987-654321/0100</div>
+        </div>
+        <div class="summary-item" style="padding: 14px 16px; border-bottom: 1px solid #E5E5EA;">
+          <div class="summary-label" style="font-size: 11px; color: #8E8E93; font-weight: 500; margin-bottom: 4px;">Částka</div>
+          <div class="summary-val" id="sum-amount" style="font-size: 14px; color: #1C1C1E; font-weight: 600; line-height: 1.4;">2 495,00 Kč</div>
+        </div>
+        <div class="summary-item" style="padding: 14px 16px; border-bottom: 1px solid #E5E5EA;">
+          <div class="summary-label" style="font-size: 11px; color: #8E8E93; font-weight: 500; margin-bottom: 4px;">Variabilní symbol</div>
+          <div class="summary-val" id="sum-vs" style="font-size: 14px; color: #1C1C1E; font-weight: 600; line-height: 1.4;">123456789</div>
+        </div>
+        <div class="summary-item" style="padding: 14px 16px; border-bottom: 1px solid #E5E5EA;">
+          <div class="summary-label" style="font-size: 11px; color: #8E8E93; font-weight: 500; margin-bottom: 4px;">Popis pro mě</div>
+          <div class="summary-val" id="sum-desc" style="font-size: 14px; color: #1C1C1E; font-weight: 600; line-height: 1.4;">Za internet</div>
+        </div>
+        <div class="summary-item" style="padding: 14px 16px; border-bottom: 1px solid #E5E5EA;">
+          <div class="summary-label" style="font-size: 11px; color: #8E8E93; font-weight: 500; margin-bottom: 4px;">Konstantní symbol</div>
+          <div class="summary-val" id="sum-ks" style="font-size: 14px; color: #1C1C1E; font-weight: 600; line-height: 1.4;">123456789</div>
+        </div>
+        <div class="summary-item" style="padding: 14px 16px; border-bottom: 1px solid #E5E5EA;">
+          <div class="summary-label" style="font-size: 11px; color: #8E8E93; font-weight: 500; margin-bottom: 4px;">Specifický symbol</div>
+          <div class="summary-val" id="sum-ss" style="font-size: 14px; color: #1C1C1E; font-weight: 600; line-height: 1.4;">123456789</div>
+        </div>
+        <div class="summary-item" style="padding: 14px 16px;">
+          <div class="summary-label" style="font-size: 11px; color: #8E8E93; font-weight: 500; margin-bottom: 4px;">Datum platby</div>
+          <div class="summary-val" id="sum-date" style="font-size: 14px; color: #1C1C1E; font-weight: 600; line-height: 1.4;">8. 1. 2026</div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="bottom-bar" style="padding: 16px 20px 24px;">
+      <button class="primary-btn red" onclick="submitFinalPayment()">Potvrdit platbu</button>
+    </div>
+  </section>
+
+  <!-- SCREEN 7: Success -->
+  <section class="screen" id="screen-success">
+    <div class="topbar white"><div class="title" style="text-align:center;">Platba odeslána</div></div>
+    <div class="confirm-wrap">
+      <div class="check">✓</div>
+      <h2 style="font-size:20px;margin-bottom:8px;" id="success-amount-title">100 Kč odesláno</h2>
+      <p style="color:var(--text-2);font-size:14px;" id="success-amount-desc">Petra Zachovalá · VS 987564566778</p>
+      <button class="primary-btn red" style="margin-top:28px;max-width:260px;" onclick="go('screen-dashboard')">Hotovo</button>
+    </div>
+  </section>
+
+  <!-- Dialog Modals inside phone frame stage -->
+  <!-- 1. Alert: No QR code found? -->
+  <div class="alert-overlay" id="alert-no-qr">
+    <div class="alert-box">
+      <div class="alert-content">
+        <h3 class="alert-title">Nedaří se načíst QR kód?</h3>
+        <p class="alert-text">Pokud na dokladu není, stačí SMS nebo fakturu vyfotit a platební údaje načteme sami.</p>
+      </div>
+      <div class="alert-buttons">
+        <button class="alert-btn" onclick="closeNoQRAlert()">Hledat QR</button>
+        <button class="alert-btn bold" onclick="switchToOCR()">Vyfotit</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. Alert: OCR fail "Kde nic tu nic" -->
+  <div class="alert-overlay" id="alert-ocr-fail">
+    <div class="alert-box">
+      <div class="alert-content">
+        <h3 class="alert-title">Kde nic tu nic</h3>
+        <p class="alert-text">Nepodařilo se načíst platební údaje.</p>
+      </div>
+      <div class="alert-buttons">
+        <button class="alert-btn" onclick="closeOCRFailAlert()">Zpět</button>
+        <button class="alert-btn bold" onclick="goToManualPayment()">Zadat ručně</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. Bottom Sheet: Consent for data processing -->
+  <div class="sheet-overlay" id="sheet-consent">
+    <div class="bottom-sheet">
+      <div class="sheet-handle"></div>
+      <button class="sheet-close-btn" onclick="closeConsentSheet()">✕</button>
+      <h3 class="sheet-title">Souhlas se zpracováním údajů</h3>
+      <div class="sheet-scroll-content">
+        <p class="sheet-text">Pro vyčtení platebních údajů z nahraného dokumentu budeme dokument zpracovávat. Vaše data jsou zabezpečena a slouží výhradně pro vyplnění tohoto platebního příkazu.</p>
+      </div>
+      <div class="sheet-actions">
+        <button class="primary-btn red" onclick="acceptConsent()">Souhlasím</button>
+        <button class="secondary-btn-outline" style="border: 1px solid #1A1A1A;" onclick="closeConsentSheet()">Zavřít</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+</div>
+
+<div class="controls">
+  <button onclick="cameFromFlow = false; go('screen-dashboard')">1. Dashboard</button>
+  <button onclick="cameFromFlow = false; go('screen-newpayment')">2. Nová platba</button>
+  <button onclick="cameFromFlow = false; go('screen-scan'); setMode('qr');">3. Skener (QR)</button>
+  <button onclick="cameFromFlow = false; go('screen-scan'); setMode('inv');">3b. Skener (Údaje)</button>
+  <button onclick="cameFromFlow = false; go('screen-ocr-loading'); startLoadingSimulation();">4. Loading OCR</button>
+  <button onclick="cameFromFlow = false; go('screen-ocr-success'); updateOCRSuccessUI();">4b. Načtené údaje</button>
+  <button onclick="cameFromFlow = false; go('screen-newpayment-edit');">5. Editovat platbu</button>
+  <button onclick="cameFromFlow = false; go('screen-review-ocr');">6. Souhrn</button>
+  <button onclick="go('screen-success')">7. Hotovo</button>
+  <button id="ctrl-toggle-fail" onclick="toggleOCRFail()" style="background:#555; font-weight:600;">Simulace OCR: Úspěch</button>
+  <button onclick="resetTooltips()" style="background:#444; border:1px solid #666;">↺ Reset nápovědy</button>
+</div>
+
+<p class="legend">
+  <strong>Jak prototyp ovládat:</strong> Na dashboardu klikni na „Skenovat" nebo „Nová platba". Ve skeneru přepínej režim (Auto / QR / Faktura) a stiskni kruhový spouštěč — v režimu QR simuluje načtení QR kódu, v režimu Faktura rozpoznávání OCR. Ikonkou vlevo otevřeš volbu galerie/PDF.
+</p>
+<script>
+function lsSet(k,v){try{localStorage.setItem(k,v);}catch(e){}}
+function lsGet(k){try{return localStorage.getItem(k);}catch(e){return null;}}
+function lsRemove(k){try{localStorage.removeItem(k);}catch(e){}}
+
+// Global state variables (declared at top to prevent Temporal Dead Zone ReferenceError)
+let mode = 'qr';
+let qrTimeout = null;
+let ocrTimers = [];
+let screenStack = [];
+let historySupported = true;
+
+  // ===== Contextual tooltip logic =====
+  const TOOLTIP_KEY = 'tooltip_qr_noqr_dismissed';
+  var tooltipSeenOnPayment = false;
+
+  function showTooltip() {
+    if (lsGet(TOOLTIP_KEY)) return;
+    const el = document.getElementById('ctx-tooltip-qr');
+    if (!el) return;
+    tooltipSeenOnPayment = true;
+    el.classList.add('show');
+    requestAnimationFrame(() => requestAnimationFrame(() => el.classList.add('visible')));
+  }
+
+  function dismissTooltip() {
+    const el = document.getElementById('ctx-tooltip-qr');
+    if (!el) return;
+    el.classList.remove('visible');
+    lsSet(TOOLTIP_KEY, '1');
+    setTimeout(() => el.classList.remove('show'), 280);
+  }
+
+  function hideTooltipImmediate() {
+    const el = document.getElementById('ctx-tooltip-qr');
+    if (!el) return;
+    el.classList.remove('visible', 'show');
+  }
+
+  function showScanTooltip() {
+    if (lsGet(TOOLTIP_KEY)) return;
+    if (tooltipSeenOnPayment) return;
+    const el = document.getElementById('ctx-tooltip-scan');
+    if (!el) return;
+    el.classList.add('show');
+    requestAnimationFrame(() => requestAnimationFrame(() => el.classList.add('visible')));
+  }
+
+  function dismissScanTooltip() {
+    const el = document.getElementById('ctx-tooltip-scan');
+    if (!el) return;
+    el.classList.remove('visible');
+    lsSet(TOOLTIP_KEY, '1');
+    setTimeout(() => el.classList.remove('show'), 280);
+  }
+
+  function hideScanTooltipImmediate() {
+    const el = document.getElementById('ctx-tooltip-scan');
+    if (!el) return;
+    el.classList.remove('visible', 'show');
+  }
+
+  // Interaktivní navigace a sledování flow
+  var cameFromFlow = false;
+  var ocrShouldFail = false;
+
+  function toggleOCRFail() {
+    ocrShouldFail = !ocrShouldFail;
+    const btn = document.getElementById('ctrl-toggle-fail');
+    if (btn) {
+      btn.textContent = 'Simulace OCR: ' + (ocrShouldFail ? 'Chyba' : 'Úspěch');
+      btn.style.background = ocrShouldFail ? '#E3000F' : '#555';
+    }
+    showToast('Simulace OCR přepnuta na: ' + (ocrShouldFail ? 'CHYBA' : 'ÚSPĚCH'));
+  }
+
+  function clearOcrTimers() {
+    ocrTimers.forEach(t => clearTimeout(t));
+    ocrTimers = [];
+    document.querySelectorAll('.active-highlight').forEach(el => el.classList.remove('active-highlight'));
+    document.querySelectorAll('.falling-value').forEach(el => el.remove());
+    
+    // Reset any manual inline style updates
+    const accTr = document.querySelector('.sim-kb-statement strong');
+    if (accTr && accTr.parentElement) {
+      accTr.parentElement.style.outline = '';
+      accTr.parentElement.style.background = '';
+      accTr.parentElement.style.borderRadius = '';
+      accTr.parentElement.style.padding = '';
+    }
+  }
+
+  // Vykreslí obrazovku — bez zásahu do historie
+  function _renderScreen(id) {
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    const target = document.getElementById(id);
+    if (!target) return;
+    target.classList.add('active');
+    
+    if (id !== 'screen-ocr-loading') {
+      clearOcrTimers();
+    }
+    
+    // reset scan UI on re-entry
+    if (id === 'screen-scan') {
+      hideLoader();
+      closeSheet();
+      setMode(mode);
+      setTimeout(showScanTooltip, 400);
+    } else {
+      hideScanTooltipImmediate();
+      clearNoQRAlertTimer();
+      closeNoQRAlert();
+      closeOCRFailAlert();
+      closeConsentSheet();
+    }
+    
+    if (id === 'screen-ocr-success') {
+      updateOCRSuccessUI();
+    }
+    
+    if (id === 'screen-newpayment-edit') {
+      populateEditFields();
+    }
+    
+    if (id === 'screen-review-ocr') {
+      updateSummaryScreen(!cameFromFlow);
+    }
+    
+    if (id === 'screen-newpayment') {
+      setTimeout(showTooltip, 400);
+    } else {
+      hideTooltipImmediate();
+    }
+  }
+
+  // Navigace přes history API s fallbackem
+  function safePushState(state, url) {
+    if (!historySupported) return;
+    try { history.pushState(state, '', url); }
+    catch (err) { historySupported = false; }
+  }
+  function safeReplaceState(state, url) {
+    if (!historySupported) return;
+    try { history.replaceState(state, '', url); }
+    catch (err) { historySupported = false; }
+  }
+
+
+
+  function go(id) {
+    _renderScreen(id);
+    if (screenStack[screenStack.length - 1] === id) return;
+    screenStack.push(id);
+    safePushState({ screen: id, idx: screenStack.length - 1 }, '#' + id);
+  }
+
+  window.addEventListener('popstate', (e) => {
+    if (e.state && e.state.screen) {
+      const idx = typeof e.state.idx === 'number' ? e.state.idx : screenStack.length - 2;
+      screenStack.length = Math.max(0, idx + 1);
+      _renderScreen(e.state.screen);
+    } else {
+      _renderScreen('screen-dashboard');
+    }
+  });
+
+  (function initHistory() {
+    let hash = '';
+    try { hash = (location.hash || '').replace('#', ''); } catch (_) {}
+    const startId = (hash && document.getElementById(hash)) ? hash : 'screen-dashboard';
+    _renderScreen(startId);
+    screenStack.push(startId);
+    safeReplaceState({ screen: startId, idx: 0 }, '#' + startId);
+  })();
+
+
+
+  function startNoQRAlertTimer() {
+    clearTimeout(qrTimeout);
+    if (mode === 'qr') {
+      qrTimeout = setTimeout(() => {
+        openNoQRAlert();
+      }, 4000);
+    }
+  }
+
+  function clearNoQRAlertTimer() {
+    clearTimeout(qrTimeout);
+  }
+
+  function openNoQRAlert() {
+    document.getElementById('alert-no-qr').classList.add('show');
+  }
+
+  function closeNoQRAlert() {
+    document.getElementById('alert-no-qr').classList.remove('show');
+    startNoQRAlertTimer();
+  }
+
+  function switchToOCR() {
+    document.getElementById('alert-no-qr').classList.remove('show');
+    setMode('inv');
+  }
+
+  function setMode(m) {
+    mode = m;
+    document.querySelectorAll('.mode-segment button').forEach(b => b.classList.remove('active'));
+    const btn = document.getElementById('mode-' + m);
+    if (btn) btn.classList.add('active');
+    
+    const hint = document.getElementById('hint');
+    const scanFrame = document.querySelector('.scan-frame');
+    const shutter = document.getElementById('shutter');
+    const simQR = document.getElementById('sim-qr');
+    const simPlain = document.getElementById('sim-plain');
+    
+    if (m === 'qr') {
+      if (hint) hint.textContent = 'Namiřte fotoaparát na QR kód, vyfotí se automaticky.';
+      if (scanFrame) scanFrame.style.display = 'block';
+      if (shutter) shutter.style.display = 'none';
+      if (simQR) simQR.classList.add('show');
+      if (simPlain) simPlain.classList.remove('show');
+      startNoQRAlertTimer();
+    } else {
+      if (hint) hint.textContent = 'Stačí vyfotit SMS nebo fakturu a platební údaje načteme sami.';
+      if (scanFrame) scanFrame.style.display = 'none';
+      if (shutter) shutter.style.display = 'flex';
+      if (simQR) simQR.classList.remove('show');
+      if (simPlain) simPlain.classList.add('show');
+      clearNoQRAlertTimer();
+      closeNoQRAlert();
+    }
+  }
+
+  let flashOn = false;
+  function toggleFlash() {
+    flashOn = !flashOn;
+    const slash = document.getElementById('flash-slash');
+    const btn = document.querySelector('.cam-flash-btn');
+    if (flashOn) {
+      if (slash) slash.style.display = 'none';
+      if (btn) btn.style.background = 'rgba(227, 0, 15, 0.8)';
+    } else {
+      if (slash) slash.style.display = 'inline';
+      if (btn) btn.style.background = 'rgba(0,0,0,0.5)';
+    }
+  }
+
+  function showLoader(text) {
+    document.getElementById('loader-text').textContent = text;
+    document.getElementById('loader').classList.add('show');
+  }
+  function hideLoader() {
+    document.getElementById('loader').classList.remove('show');
+  }
+
+  // Spustí interaktivní capture
+  function capture() {
+    clearNoQRAlertTimer();
+    if (mode === 'qr') {
+      showLoader('Rozpoznávám QR kód…');
+      setTimeout(() => { hideLoader(); go('screen-review-qr'); }, 900);
+    } else {
+      if (lsGet('ocr_consent_approved') === '1') {
+        cameFromFlow = true;
+        go('screen-ocr-loading');
+        startLoadingSimulation();
+      } else {
+        openConsentSheet();
+      }
+    }
+  }
+
+  // Navázání interakce s hledáčkem pro simulaci naskenování QR kódu kliknutím
+  document.querySelector('.cam-viewport').addEventListener('click', function(e) {
+    // ignoruj pokud uživatel klikl na flash tlačítko
+    if (e.target.closest('.cam-flash-btn')) return;
+    if (mode === 'qr') {
+      capture();
+    }
+  });
+
+  function openSheet() { document.getElementById('sheet').classList.add('show'); }
+  function closeSheet() { document.getElementById('sheet').classList.remove('show'); }
+
+  // Consent & OCR loading simulation
+  function openConsentSheet() {
+    document.getElementById('sheet-consent').classList.add('show');
+  }
+  function closeConsentSheet() {
+    document.getElementById('sheet-consent').classList.remove('show');
+  }
+  function acceptConsent() {
+    closeConsentSheet();
+    lsSet('ocr_consent_approved', '1');
+    cameFromFlow = true;
+    go('screen-ocr-loading');
+    startLoadingSimulation();
+  }
+
+  function startLoadingSimulation() {
+    // Clean up first
+    clearOcrTimers();
+    
+    // Set initial values
+    let fromAcc = lsGet('payment_from_acc') || '123456789/0100';
+    const accBox = document.querySelector('#loading-field-acc .loading-detected-box');
+    if (accBox) accBox.textContent = fromAcc;
+    
+    // Hide real contents, show skeletons
+    document.getElementById('loading-field-amt').classList.remove('active');
+    document.getElementById('loading-field-vs').classList.remove('active');
+    
+    // Add blue dashed highlight border to the account on the statement card
+    const accTr = document.querySelector('.sim-kb-statement strong');
+    if (accTr && accTr.parentElement) {
+      accTr.parentElement.style.outline = '2px dashed #007AFF';
+      accTr.parentElement.style.background = 'rgba(0, 102, 255, 0.15)';
+      accTr.parentElement.style.borderRadius = '2px';
+      accTr.parentElement.style.padding = '2px';
+    }
+
+    // Timer 1: Highlight amount and trigger falling animation at 3.0s
+    ocrTimers.push(setTimeout(() => {
+      const amtRow = document.querySelector('.stmt-tr.highlight-amount');
+      if (amtRow) amtRow.classList.add('active-highlight');
+      
+      // Create falling element
+      const fallingAmt = document.createElement('div');
+      fallingAmt.className = 'falling-value animate-amt';
+      fallingAmt.textContent = '100 Kč';
+      fallingAmt.style.left = '45%';
+      fallingAmt.style.top = '280px';
+      document.querySelector('.ocr-loading-body').appendChild(fallingAmt);
+    }, 3000));
+
+    // Timer 2: Land amount at 4.3s
+    ocrTimers.push(setTimeout(() => {
+      document.getElementById('loading-field-amt').classList.add('active');
+      document.querySelectorAll('.falling-value.animate-amt').forEach(el => el.remove());
+    }, 4300));
+
+    // Timer 3: Highlight VS and trigger falling animation at 6.5s
+    ocrTimers.push(setTimeout(() => {
+      const vsRow = document.querySelector('.stmt-tr.highlight-vs');
+      if (vsRow) vsRow.classList.add('active-highlight');
+      
+      // Create falling element
+      const fallingVs = document.createElement('div');
+      fallingVs.className = 'falling-value animate-vs';
+      fallingVs.textContent = '987564566778';
+      fallingVs.style.left = '55%';
+      fallingVs.style.top = '300px';
+      document.querySelector('.ocr-loading-body').appendChild(fallingVs);
+    }, 6500));
+
+    // Timer 4: Land VS at 7.8s
+    ocrTimers.push(setTimeout(() => {
+      document.getElementById('loading-field-vs').classList.add('active');
+      document.querySelectorAll('.falling-value.animate-vs').forEach(el => el.remove());
+    }, 7800));
+
+    // Timer 5: Complete simulation and redirect at 10.0s
+    ocrTimers.push(setTimeout(() => {
+      // Clean up highlights in statement
+      document.querySelectorAll('.active-highlight').forEach(el => el.classList.remove('active-highlight'));
+      
+      if (ocrShouldFail) {
+        go('screen-scan');
+        openOCRFailAlert();
+      } else {
+        lsSet('payment_from_acc', '123456789/0100');
+        lsSet('payment_to_acc', '987-654321/0100');
+        lsSet('payment_amount', '100 Kč');
+        lsSet('payment_vs', '987564566778');
+        lsSet('payment_msg', '');
+        lsSet('payment_desc', '');
+        lsSet('payment_ks', '');
+        lsSet('payment_ss', '');
+        lsSet('payment_date', '8. 1. 2026');
+        
+        updateOCRSuccessUI();
+        go('screen-ocr-success');
+      }
+    }, 10000));
+  }
+
+  function openOCRFailAlert() {
+    document.getElementById('alert-ocr-fail').classList.add('show');
+  }
+  function closeOCRFailAlert() {
+    document.getElementById('alert-ocr-fail').classList.remove('show');
+  }
+  function goToManualPayment() {
+    closeOCRFailAlert();
+    go('screen-newpayment');
+  }
+
+  // Zobrazování dat z OCR
+  function updateOCRSuccessUI() {
+    const fromAccEl = document.getElementById('ocr-success-from-acc');
+    const amtEl = document.getElementById('ocr-success-amount');
+    const vsEl = document.getElementById('ocr-success-vs');
+    
+    if (fromAccEl) fromAccEl.textContent = lsGet('payment_from_acc') || '123456789/0100';
+    if (amtEl) amtEl.textContent = lsGet('payment_amount') || '100 Kč';
+    if (vsEl) vsEl.textContent = lsGet('payment_vs') || '987564566778';
+  }
+
+  function submitOCRSuccess() {
+    updateSummaryScreen(false);
+    go('screen-review-ocr');
+  }
+
+  // Formulář a editace
+  function populateEditFields() {
+    document.getElementById('inp-edit-msg').value = lsGet('payment_msg') || '';
+    document.getElementById('inp-edit-vs').value = lsGet('payment_vs') || '987564566778';
+    document.getElementById('inp-edit-desc').value = lsGet('payment_desc') || '';
+    document.getElementById('inp-edit-ks').value = lsGet('payment_ks') || '';
+    document.getElementById('inp-edit-ss').value = lsGet('payment_ss') || '';
+    
+    let sendOpt = lsGet('payment_send_option') || 'now';
+    setSendOption(sendOpt);
+  }
+
+  let sendOption = 'now';
+  function setSendOption(opt) {
+    sendOption = opt;
+    lsSet('payment_send_option', opt);
+    document.querySelectorAll('#screen-newpayment-edit .mode-segment button').forEach(b => b.classList.remove('active'));
+    if (opt === 'now') {
+      document.getElementById('btn-send-now').classList.add('active');
+    } else {
+      document.getElementById('btn-send-later').classList.add('active');
+    }
+  }
+
+  function submitEditPayment() {
+    lsSet('payment_msg', document.getElementById('inp-edit-msg').value);
+    lsSet('payment_vs', document.getElementById('inp-edit-vs').value);
+    lsSet('payment_desc', document.getElementById('inp-edit-desc').value);
+    lsSet('payment_ks', document.getElementById('inp-edit-ks').value);
+    lsSet('payment_ss', document.getElementById('inp-edit-ss').value);
+    
+    updateSummaryScreen(false);
+    go('screen-review-ocr');
+  }
+
+  // Aktualizace souhrnu
+  function updateSummaryScreen(useMockupValues = false) {
+    if (useMockupValues) {
+      lsSet('payment_from_acc', 'Můj běžný účet<br>122000/0100');
+      lsSet('payment_to_acc', '987-654321/0100');
+      lsSet('payment_amount', '2 495,00 Kč');
+      lsSet('payment_vs', '123456789');
+      lsSet('payment_desc', 'Za internet');
+      lsSet('payment_ks', '123456789');
+      lsSet('payment_ss', '123456789');
+      lsSet('payment_date', '8. 1. 2026');
+    }
+    
+    let fromAccVal = lsGet('payment_from_acc') || 'Můj běžný účet<br>122000/0100';
+    if (!fromAccVal.includes('<br>') && fromAccVal.includes('/')) {
+      fromAccVal = 'Můj běžný účet<br>' + fromAccVal;
+    }
+    document.getElementById('sum-from-acc').innerHTML = fromAccVal;
+    document.getElementById('sum-to-acc').textContent = lsGet('payment_to_acc') || '987-654321/0100';
+    document.getElementById('sum-amount').textContent = lsGet('payment_amount') || '2 495,00 Kč';
+    document.getElementById('sum-vs').textContent = lsGet('payment_vs') || '123456789';
+    
+    let desc = lsGet('payment_desc') || '';
+    let descEl = document.getElementById('sum-desc');
+    if (desc) {
+      descEl.textContent = desc;
+      descEl.style.color = 'var(--text)';
+    } else {
+      descEl.textContent = 'Nezadáno';
+      descEl.style.color = '#999';
+    }
+    
+    let ks = lsGet('payment_ks') || '';
+    let ksEl = document.getElementById('sum-ks');
+    if (ks) {
+      ksEl.textContent = ks;
+      ksEl.style.color = 'var(--text)';
+    } else {
+      ksEl.textContent = 'Nezadáno';
+      ksEl.style.color = '#999';
+    }
+    
+    let ss = lsGet('payment_ss') || '';
+    let ssEl = document.getElementById('sum-ss');
+    if (ss) {
+      ssEl.textContent = ss;
+      ssEl.style.color = 'var(--text)';
+    } else {
+      ssEl.textContent = 'Nezadáno';
+      ssEl.style.color = '#999';
+    }
+    
+    document.getElementById('sum-date').textContent = lsGet('payment_date') || '8. 1. 2026';
+  }
+
+  // Dokončení platby
+  function submitFinalPayment() {
+    let amt = lsGet('payment_amount') || '2 495,00 Kč';
+    let vs = lsGet('payment_vs') || '123456789';
+    let label = 'Petra Zachovalá';
+    
+    document.getElementById('success-amount-title').textContent = amt + ' odesláno';
+    document.getElementById('success-amount-desc').textContent = label + ' · VS ' + vs;
+    
+    go('screen-success');
+  }
+
+  function submitQRSuccess() {
+    lsSet('payment_amount', '100,00 Kč');
+    lsSet('payment_vs', '987564566778');
+    
+    let amt = '100,00 Kč';
+    let vs = '987564566778';
+    let label = 'ABC s.r.o.';
+    
+    document.getElementById('success-amount-title').textContent = amt + ' odesláno';
+    document.getElementById('success-amount-desc').textContent = label + ' · VS ' + vs;
+    
+    go('screen-success');
+  }
+
+  function showToast(msg) {
+    var el = document.getElementById('toast');
+    if (!el) return;
+    el.textContent = msg;
+    el.classList.add('show');
+    setTimeout(function() { el.classList.remove('show'); }, 2200);
+  }
+
+  function resetTooltips() {
+    lsRemove(TOOLTIP_KEY);
+    lsRemove('ocr_consent_approved');
+    tooltipSeenOnPayment = false;
+    hideTooltipImmediate();
+    hideScanTooltipImmediate();
+    go('screen-dashboard');
+    showToast('Nápověda byla resetována');
+  }
+
+  // Reset nápovědy trojklikem
+  (function() {
+    var tapCount = 0, tapTimer = null;
+    document.querySelectorAll('.topbar').forEach(function(bar) {
+      bar.addEventListener('click', function(e) {
+        if (e.target.closest('button')) return;
+        tapCount++;
+        clearTimeout(tapTimer);
+        tapTimer = setTimeout(function() { tapCount = 0; }, 800);
+        if (tapCount >= 3) {
+          tapCount = 0;
+          clearTimeout(tapTimer);
+          resetTooltips();
+        }
+      });
+    });
+  })();
+
+  // Kliknutí mimo tooltip → zavřít
+  document.getElementById('stage').addEventListener('click', function(e) {
+    const tooltip = document.getElementById('ctx-tooltip-qr');
+    if (tooltip && tooltip.classList.contains('show') && !tooltip.contains(e.target)) {
+      dismissTooltip();
+    }
+    const scanTooltip = document.getElementById('ctx-tooltip-scan');
+    if (scanTooltip && scanTooltip.classList.contains('show') && !scanTooltip.contains(e.target)) {
+      dismissScanTooltip();
+    }
+  });
+
+</script>
+</body>
+</html>
