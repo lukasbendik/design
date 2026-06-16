@@ -1,0 +1,15 @@
+{
+  "name": "Načtení platebních údajů",
+  "short_name": "Platba",
+  "description": "Prototyp: skenování platby (QR + faktura)",
+  "icons": [
+    { "src": "../../icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "../../icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+  ],
+  "start_url": "./?k=4c129f69f551195cbc5e8b57cc5a0975b6efa1e8510573524d11df03c7d010c6",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#E3000F",
+  "theme_color": "#E3000F"
+}
