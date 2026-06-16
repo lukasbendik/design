@@ -547,7 +547,8 @@ h1 { font-size: 18px; color: #fff; font-weight: 600; }
   transition: transform 0.95s cubic-bezier(.45,.05,.35,1), opacity 0.95s ease;
 }
 .drop-chip.in { opacity: 1; transform: translate(-50%, 0) scale(1); }
-.drop-chip.fall { opacity: 0; transform: translate(-50%, 360px) scale(0.8); }
+.drop-chip.fall { opacity: 1; transform: translate(-50%, 330px) scale(0.94); }
+.drop-chip.gone { opacity: 0; transition: opacity 0.22s ease; }
 .drop-chip .dc-label { font-size: 13px; opacity: 0.85; }
 .drop-chip .dc-val { font-size: 18px; font-weight: 700; margin-top: 2px; }
 .found-row { margin-bottom: 12px; animation: foundIn 0.4s ease both; }
@@ -595,14 +596,9 @@ h1 { font-size: 18px; color: #fff; font-weight: 600; }
 .stmt-tr.hl-vs { background: rgba(0,102,255,0.07); outline: 1px dashed #1565FF; }
 
 /* ===== OCR result cards ===== */
-.ocr-results-wrap { flex-shrink: 0; padding: 10px 14px 0; }
-.ocr-results {
-  background: #FFF;
-  border-radius: 14px;
-  padding: 2px 16px;
-  border: 1px solid var(--border);
-}
-.ocr-result-item { padding: 8px 0; border-bottom: 1px solid var(--border); }
+.ocr-results-wrap { flex-shrink: 0; padding: 6px 18px 0; }
+.ocr-results { background: transparent; border: none; padding: 0; }
+.ocr-result-item { padding: 7px 0; border-bottom: 1px solid var(--border); }
 .ocr-result-item:last-child { border-bottom: none; }
 .ocr-res-label { font-size: 13px; color: var(--text-2); margin-bottom: 2px; }
 .ocr-res-val { font-size: 18px; font-weight: 400; color: var(--text); letter-spacing: -0.3px; }
@@ -1075,7 +1071,7 @@ h1 { font-size: 18px; color: #fff; font-weight: 600; }
   <!-- ============ SCREEN 7: Summary ============ -->
   <section class="screen" id="screen-summary">
     <div class="topbar white">
-      <button class="back-btn" onclick="go('screen-payment-detail')">
+      <button class="back-btn" onclick="goBack()">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>Zpět
       </button>
     </div>
@@ -1343,6 +1339,13 @@ function go(id, replace){
   screenStack.push(id);
   safePush({screen:id, idx:screenStack.length-1}, '#'+id);
 }
+function goBack(){
+  if (historySupported && screenStack.length > 1){ history.back(); return; }
+  // fallback bez history API
+  screenStack.pop();
+  var prev = screenStack[screenStack.length-1] || 'screen-dashboard';
+  _renderScreen(prev);
+}
 window.addEventListener('popstate', function(e){
   closeAllOverlays();
   if (e.state && e.state.screen){
@@ -1483,12 +1486,13 @@ function runLoadingFound(){
       requestAnimationFrame(function(){ requestAnimationFrame(function(){ chip.classList.add('in'); }); });
       lt(function(){ chip.classList.add('fall'); }, 850);
       lt(function(){
-        chip.remove();
         var row = document.createElement('div');
         row.className = 'found-row';
         row.innerHTML = '<div class="found-label">'+f.l+'</div><div class="found-val">'+f.v+'</div>';
         foundList.appendChild(row);
         renderSkeletons(n - (i+1));
+        chip.classList.add('gone');
+        lt(function(){ chip.remove(); }, 240);
       }, 1800);
     }, start);
   });
