@@ -2048,7 +2048,7 @@
     </div>
     
     <!-- Dark viewport containing the statement with warning badge -->
-    <div class="ocr-loading-body" style="height: 400px; flex: none;">
+    <div class="ocr-loading-body" style="height: 490px; flex: none;">
       <!-- Warning badge at the top -->
       <div class="warning-badge">
         <svg class="warning-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#FF9500" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
@@ -2060,7 +2060,7 @@
       </div>
       
       <!-- Simulated Statement Card -->
-      <div class="sim-kb-statement" style="transform: scale(0.98); margin-top: 36px;">
+      <div class="sim-kb-statement" style="transform: scale(1.15); margin-top: 54px;">
         <div class="stmt-header">
           <div class="stmt-logo">
             <div class="stmt-logo-sq">KB</div>
@@ -2104,8 +2104,8 @@
       </div>
     </div>
     
-    <div class="scroll" style="background: #F4F4F4; padding: 12px 20px; overflow: hidden; flex: 1; display: flex; flex-direction: column; justify-content: flex-end; gap: 8px;">
-      <!-- Results text blocks on gray background - Stacked vertically at the bottom -->
+    <div class="scroll" style="background: #F4F4F4; padding: 14px 20px 0; overflow: hidden; flex: 1; display: flex; flex-direction: column; gap: 8px;">
+      <!-- Results text blocks on gray background - Stacked vertically at the top -->
       <div>
         <div style="font-size: 11px; color: #8E8E93; font-weight: 500; text-transform: uppercase; letter-spacing: 0.5px;">Z účtu</div>
         <div style="font-size: 16px; color: #1C1C1E; font-weight: 700; margin-top: 2px;" id="ocr-success-from-acc">123456789/0100</div>
@@ -2221,8 +2221,8 @@
       <div style="margin-top: 20px;">
         <div style="font-size: 13px; color: #1C1C1E; font-weight: 500; margin-bottom: 8px;">Odeslat platbu</div>
         <div class="mode-segment" style="width: 100%; display: flex; background: #E5E5EA; border-radius: 9px; padding: 2px;">
-          <button id="btn-send-now" class="active" onclick="setSendOption('now')" style="flex: 1; border: none; background: transparent; padding: 8px 0; font-size: 13px; font-weight: 600; border-radius: 7px; text-align: center; font-family: inherit; transition: all 0.15s; outline: none;">Co nejdříve</button>
-          <button id="btn-send-later" onclick="setSendOption('later')" style="flex: 1; border: none; background: transparent; padding: 8px 0; font-size: 13px; font-weight: 600; border-radius: 7px; text-align: center; font-family: inherit; transition: all 0.15s; outline: none;">Později</button>
+          <button id="btn-send-now" class="active" onclick="setSendOption('now')" style="flex: 1; border: none; padding: 8px 0; font-size: 13px; font-weight: 600; border-radius: 7px; text-align: center; font-family: inherit; transition: all 0.15s; outline: none;">Co nejdříve</button>
+          <button id="btn-send-later" onclick="setSendOption('later')" style="flex: 1; border: none; padding: 8px 0; font-size: 13px; font-weight: 600; border-radius: 7px; text-align: center; font-family: inherit; transition: all 0.15s; outline: none;">Později</button>
         </div>
       </div>
     </div>
@@ -2235,7 +2235,7 @@
   <!-- SCREEN 6: Review (OCR — Final Summary) -->
   <section class="screen" id="screen-review-ocr">
     <div class="topbar white">
-      <button class="back-txt-btn" onclick="go('screen-ocr-success')"><span style="font-size: 20px; line-height: 1; font-weight: 300;">‹</span> Zpět</button>
+      <button class="back-txt-btn" onclick="go(summaryBackToScreen)"><span style="font-size: 20px; line-height: 1; font-weight: 300;">‹</span> Zpět</button>
     </div>
     
     <div class="scroll" style="padding: 16px; background: #F8F9FA;">
@@ -2506,6 +2506,7 @@ let noQrModalShown = lsGet('no_qr_modal_shown') === '1';
 
   // Interaktivní navigace a sledování flow
   var cameFromFlow = false;
+  var summaryBackToScreen = 'screen-ocr-success';
   var ocrShouldFail = false;
 
   function toggleOCRFail() {
@@ -3084,6 +3085,7 @@ let noQrModalShown = lsGet('no_qr_modal_shown') === '1';
   }
 
   function submitOCRSuccess() {
+    summaryBackToScreen = 'screen-ocr-success';
     updateSummaryScreen(false);
     go('screen-review-ocr');
   }
@@ -3194,6 +3196,7 @@ let noQrModalShown = lsGet('no_qr_modal_shown') === '1';
     lsSet('payment_ks', document.getElementById('inp-edit-ks').value);
     lsSet('payment_ss', document.getElementById('inp-edit-ss').value);
     
+    summaryBackToScreen = 'screen-newpayment-edit';
     updateSummaryScreen(false);
     go('screen-review-ocr');
   }
