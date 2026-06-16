@@ -1,0 +1,1579 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<script>
+(function(){var H='4c129f69f551195cbc5e8b57cc5a0975b6efa1e8510573524d11df03c7d010c6',K='rozcestnik__auth';try{var p=new URLSearchParams(location.search);if(p.get('k')===H){localStorage.setItem(K,'1');p.delete('k');var q=p.toString();history.replaceState(history.state,'',location.pathname+(q?'?'+q:'')+location.hash);}if(localStorage.getItem(K)!=='1')location.replace('../../');}catch(e){}})();
+</script>
+<meta charset="UTF-8">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+
+<!-- Google Analytics 4 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXX"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-XXXXXXX', { send_page_view: false });
+</script>
+
+<!-- Microsoft Clarity -->
+<script type="text/javascript">
+  (function(c,l,a,r,i,t,y){
+    c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+    t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+    y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+  })(window, document, "clarity", "script", "XXXXXXX");
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<title>Prototyp: Načtení platebních údajů</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+:root {
+  --red: #E3000F;
+  --red-dark: #B8000C;
+  --bg: #F4F4F4;
+  --card: #FFFFFF;
+  --text: #1A1A1A;
+  --text-2: #6A6A6A;
+  --text-3: #9A9A9A;
+  --border: #D9D9D9;
+  --green: #0E8A4F;
+  --shadow: 0 1px 3px rgba(0,0,0,0.06);
+}
+html, body {
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+  background: #2a2a2a;
+  color: var(--text);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 24px 12px;
+  gap: 16px;
+}
+h1 { font-size: 18px; color: #fff; font-weight: 600; }
+.subtitle { color: #bdbdbd; font-size: 13px; text-align: center; max-width: 720px; line-height: 1.5; }
+
+.stage {
+  position: relative;
+  width: 390px;
+  height: 800px;
+  background: var(--bg);
+  border-radius: 40px;
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+  border: 8px solid #111;
+}
+.screen {
+  position: absolute;
+  inset: 0;
+  display: none;
+  flex-direction: column;
+  background: var(--bg);
+}
+.screen.active { display: flex; }
+
+/* ===== Top bar ===== */
+.topbar {
+  height: 56px;
+  display: flex;
+  align-items: center;
+  padding: 0 14px;
+  gap: 8px;
+  background: var(--bg);
+  flex-shrink: 0;
+}
+.topbar.white { background: var(--bg); }
+.topbar .title { font-size: 17px; font-weight: 500; }
+.topbar .title.center { flex: 1; text-align: left; }
+.iconbtn {
+  width: 40px; height: 40px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  border: none;
+  background: transparent;
+  color: var(--text);
+}
+.iconbtn:active { background: rgba(0,0,0,0.05); }
+.iconbtn svg { width: 24px; height: 24px; }
+.avatar {
+  width: 38px; height: 38px; border-radius: 50%;
+  background: #c9c9c9 url('https://i.pravatar.cc/80?img=12') center/cover;
+}
+
+/* back button (text) */
+.back-btn {
+  display: flex; align-items: center; gap: 2px;
+  background: none; border: none; color: var(--text);
+  font-size: 17px; padding: 4px 0; cursor: pointer;
+  font-family: inherit;
+}
+.back-btn svg { width: 20px; height: 20px; }
+
+/* ===== Tabs (dashboard) ===== */
+.tabs {
+  display: flex; gap: 8px; overflow-x: auto; padding: 4px 14px 12px;
+  background: var(--bg);
+  flex-shrink: 0;
+  scrollbar-width: none;
+}
+.tabs::-webkit-scrollbar { display: none; }
+.tab {
+  padding: 9px 18px;
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  background: #fff;
+  font-size: 15px;
+  white-space: nowrap;
+  color: var(--text);
+}
+.tab.active { background: var(--red); color: #fff; border-color: var(--red); }
+
+.scroll {
+  flex: 1;
+  overflow-y: auto;
+  padding: 4px 14px 120px;
+}
+
+/* ===== Dashboard cards ===== */
+.card {
+  background: #fff;
+  border-radius: 14px;
+  padding: 16px;
+  margin-bottom: 12px;
+  box-shadow: var(--shadow);
+}
+.card .row { display: flex; align-items: center; justify-content: space-between; }
+.acc-label { font-size: 16px; color: var(--text); }
+.acc-num { font-size: 15px; color: var(--text-3); }
+.balance { font-size: 30px; font-weight: 400; letter-spacing: -0.5px; margin-top: 2px; }
+.balance .dec { font-size: 19px; color: var(--text); }
+.chev { color: #b0b0b0; font-size: 22px; }
+.acct-row { display: flex; align-items: center; justify-content: space-between; padding: 16px; }
+.acct-block { padding: 14px 16px 16px; cursor: pointer; }
+.card[onclick] { cursor: pointer; }
+.fx-row { display: flex; gap: 10px; margin-top: 14px; }
+.fx-chip {
+  border: 1px solid var(--border); border-radius: 10px;
+  padding: 8px 12px; display: inline-flex; align-items: center; gap: 8px;
+  font-size: 15px; white-space: nowrap;
+}
+.fx-flag { width: 20px; height: 20px; border-radius: 50%; flex-shrink: 0; display: inline-flex; overflow: hidden; }
+.fx-flag svg { display: block; }
+.divider { border: none; border-top: 1px solid var(--border); margin: 14px 0; }
+.divider.flush { margin: 0; }
+.sum-bar { height: 6px; border-radius: 3px; background: #E0E0E0; margin: 4px 0 12px; overflow: hidden; }
+.sum-bar > i { display: block; height: 100%; border-radius: 3px; }
+.sum-line { display: flex; justify-content: space-between; align-items: center; font-size: 16px; margin: 8px 0; }
+.sum-line .ic { width: 26px; height: 26px; border-radius: 50%; border: 1.5px solid var(--text); display: inline-flex; align-items: center; justify-content: center; margin-right: 8px; font-size: 13px; }
+
+/* ===== Bottom floating action pill ===== */
+.fab {
+  position: absolute;
+  left: 14px; right: 14px;
+  bottom: 18px;
+  background: var(--red);
+  color: #fff;
+  border-radius: 22px;
+  display: flex;
+  justify-content: space-around;
+  padding: 12px 6px;
+  box-shadow: 0 8px 24px rgba(227,0,15,0.35);
+}
+.fab button {
+  background: transparent; color: #fff; border: none;
+  display: flex; flex-direction: column; align-items: center; gap: 6px;
+  padding: 4px 10px;
+  font-size: 13px;
+  cursor: pointer;
+  border-radius: 14px;
+  font-family: inherit;
+  flex: 1;
+}
+.fab button:active { background: rgba(255,255,255,0.15); }
+.fab svg { width: 26px; height: 26px; }
+
+/* ===== Result screen ===== */
+.result-illus { display: flex; justify-content: center; padding: 60px 0 24px; }
+.result-title { font-size: 30px; font-weight: 700; letter-spacing: -0.5px; padding: 0 6px 18px; }
+.result-list { background: transparent; }
+.result-row { display: flex; align-items: center; gap: 14px; padding: 16px 4px; cursor: pointer; }
+.result-ic { color: var(--red); display: flex; }
+.result-ic svg { width: 26px; height: 26px; }
+.result-row-title { font-size: 17px; color: var(--text); }
+.result-row .chev { margin-left: auto; }
+
+/* ===== Account detail ===== */
+.detail-head { padding: 8px 20px 6px; }
+.detail-acct-row { display: flex; justify-content: space-between; align-items: baseline; margin-top: 6px; }
+.detail-acct-name { font-size: 17px; font-weight: 600; color: var(--text); }
+.detail-acct-num { font-size: 17px; color: var(--text-3); }
+.detail-balance { font-size: 34px; font-weight: 700; color: var(--text); letter-spacing: -0.5px; margin-top: 6px; }
+.detail-balance span { font-size: 20px; font-weight: 400; }
+.detail-list-card {
+  background: #fff; border-radius: 14px;
+  margin: 0 14px 12px; box-shadow: var(--shadow);
+  cursor: pointer; display: flex; align-items: center; justify-content: space-between;
+  padding: 16px 18px;
+}
+.detail-list-left { display: flex; align-items: center; gap: 14px; }
+.detail-list-icon { color: var(--red); display: flex; }
+.detail-list-icon svg { width: 24px; height: 24px; }
+.detail-list-title { font-size: 17px; font-weight: 600; color: var(--text); }
+.tx-card { background: #fff; border-radius: 14px; box-shadow: var(--shadow); overflow: hidden; margin: 0 14px 16px; }
+.tx-row { display: flex; align-items: center; gap: 14px; padding: 14px 18px; border-top: 1px solid #f0f0f0; cursor: pointer; }
+.tx-row:first-child { border-top: none; }
+.tx-avatar { position: relative; flex-shrink: 0; width: 44px; height: 44px; border-radius: 10px; background: #ECECEC; display: flex; align-items: center; justify-content: center; color: #9A9A9A; font-size: 17px; font-weight: 600; }
+.tx-badge { position: absolute; bottom: -3px; right: -3px; width: 20px; height: 20px; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 2px solid #fff; color: #fff; font-size: 12px; }
+.tx-badge.out { background: #1A1A1A; }
+.tx-badge.in { background: var(--green); }
+.tx-main { flex: 1; min-width: 0; }
+.tx-name { font-size: 17px; font-weight: 600; color: var(--text); }
+.tx-note { font-size: 14px; color: var(--text-2); margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.tx-amount { font-size: 17px; font-weight: 600; color: var(--text); white-space: nowrap; flex-shrink: 0; }
+.tx-amount.in { color: var(--green); }
+.detail-bottom-bar {
+  flex-shrink: 0; margin: 0 14px 18px;
+  background: var(--red); border-radius: 22px;
+  display: flex; justify-content: space-around; padding: 12px 6px;
+  box-shadow: 0 8px 24px rgba(227,0,15,0.35);
+}
+.detail-btn { display: flex; flex-direction: column; align-items: center; gap: 6px; color: #fff; cursor: pointer; padding: 4px 10px; flex: 1; background: none; border: none; font-family: inherit; font-size: 13px; }
+.detail-btn:active { opacity: 0.85; }
+.detail-btn svg { width: 26px; height: 26px; }
+
+/* ===== New payment form ===== */
+.np-acc-row {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 6px 2px 14px;
+  cursor: pointer;
+}
+.np-acc-name { font-size: 19px; font-weight: 600; }
+.np-acc-num { font-size: 15px; color: var(--text-3); margin-top: 2px; }
+
+.field {
+  background: transparent;
+  border-radius: 12px;
+  padding: 12px 16px;
+  margin: 0 0 14px;
+  border: 1px solid var(--border);
+}
+.field .label { font-size: 13px; color: var(--text-2); }
+.field .value { font-size: 18px; color: var(--text); margin-top: 4px; }
+.field .value.placeholder { color: var(--text-3); }
+.field-input-text {
+  width: 100%;
+  border: none;
+  outline: none;
+  font-size: 18px;
+  color: var(--text);
+  background: transparent;
+  margin-top: 4px;
+  font-family: inherit;
+}
+.field-input-text::placeholder { color: var(--text-3); }
+.row2 { display: flex; gap: 12px; }
+.row2 > .field { flex: 1; margin-bottom: 0; }
+.field.currency { flex: 0 0 120px; position: relative; }
+.field.currency .caret { position: absolute; right: 14px; top: 50%; transform: translateY(-50%); color: var(--text-2); }
+
+.contact-row {
+  display: flex; align-items: center; gap: 12px;
+  padding: 8px 2px 18px;
+  cursor: pointer;
+}
+.contact-row .ic-contact { color: var(--red); display: flex; }
+.contact-row .ic-contact svg { width: 30px; height: 22px; }
+.contact-row strong { font-size: 17px; font-weight: 600; }
+.contact-row .chev { margin-left: auto; }
+.bal-hint { font-size: 14px; color: var(--text-2); margin-top: 8px; }
+
+.send-label { font-size: 17px; font-weight: 600; margin: 18px 2px 12px; }
+
+/* ===== Segment control ===== */
+.mode-segment {
+  display: flex;
+  background: #E5E5EA;
+  border-radius: 9px;
+  padding: 3px;
+  width: 230px;
+}
+.mode-segment.full { width: 100%; }
+.mode-segment button {
+  flex: 1;
+  border: none;
+  background: transparent;
+  color: var(--text);
+  padding: 9px 0;
+  font-size: 15px;
+  font-weight: 500;
+  border-radius: 7px;
+  cursor: pointer;
+  text-align: center;
+  transition: background 0.15s, color 0.15s;
+  font-family: inherit;
+}
+.mode-segment button.active {
+  background: #FFF;
+  color: var(--text);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.06);
+}
+
+/* ===== Bottom bar / buttons ===== */
+.bottom-bar {
+  padding: 12px 14px 16px;
+  background: var(--bg);
+  flex-shrink: 0;
+}
+.primary-btn {
+  width: 100%;
+  background: var(--red);
+  color: #fff;
+  border: none;
+  padding: 17px;
+  border-radius: 12px;
+  font-size: 17px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+}
+.primary-btn:active { background: var(--red-dark); }
+.secondary-btn-outline {
+  width: 100%;
+  border-radius: 12px;
+  padding: 17px;
+  font-size: 17px;
+  font-weight: 500;
+  background: transparent;
+  color: var(--text);
+  border: 1px solid var(--text);
+  cursor: pointer;
+  text-align: center;
+  font-family: inherit;
+  margin-top: 10px;
+}
+.secondary-btn-outline:active { background: rgba(0,0,0,0.05); }
+
+/* ===== Camera / scanner ===== */
+.camera {
+  flex: 1;
+  background: #B9BBB8;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  color: var(--text);
+}
+.cam-closebar {
+  height: 52px;
+  display: flex; align-items: center;
+  padding: 0 16px;
+  background: var(--bg);
+  position: relative; z-index: 10;
+  flex-shrink: 0;
+}
+.cam-segbar {
+  display: flex; justify-content: center;
+  padding: 0 16px 12px;
+  background: var(--bg);
+  position: relative; z-index: 10;
+  flex-shrink: 0;
+}
+.cam-close-txt {
+  font-size: 16px;
+  color: var(--text);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  text-align: left;
+  font-family: inherit;
+}
+.cam-viewport {
+  flex: 1;
+  background:
+    repeating-linear-gradient(60deg, rgba(0,0,0,0.012) 0 2px, transparent 2px 5px),
+    repeating-linear-gradient(120deg, rgba(255,255,255,0.02) 0 2px, transparent 2px 6px),
+    #B5B7B4;
+  position: relative;
+  display: flex; justify-content: center; align-items: center;
+  overflow: hidden;
+}
+.cam-flash-btn {
+  position: absolute;
+  top: 14px;
+  right: 16px;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: rgba(120,120,120,0.55);
+  border: none;
+  color: #FFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 5;
+}
+.cam-flash-btn svg { width: 22px; height: 22px; }
+.scan-frame {
+  position: absolute;
+  top: 46%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 240px; height: 240px;
+  pointer-events: none;
+  z-index: 1;
+}
+.scan-frame::before, .scan-frame::after,
+.scan-frame > span::before, .scan-frame > span::after {
+  content: '';
+  position: absolute;
+  width: 30px; height: 30px;
+  border: 4px solid #fff;
+  border-radius: 3px;
+}
+.scan-frame::before { top: 0; left: 0; border-right: none; border-bottom: none; }
+.scan-frame::after { top: 0; right: 0; border-left: none; border-bottom: none; }
+.scan-frame > span::before { bottom: 0; left: 0; border-right: none; border-top: none; }
+.scan-frame > span::after { bottom: 0; right: 0; border-left: none; border-top: none; }
+.scan-hint {
+  position: absolute;
+  top: 74px;
+  left: 16px;
+  right: 16px;
+  font-size: 15px;
+  line-height: 1.4;
+  text-align: center;
+  background: rgba(50,50,50,0.82);
+  color: #FFF;
+  padding: 12px 16px;
+  border-radius: 10px;
+  z-index: 5;
+  pointer-events: none;
+}
+.cam-bottom {
+  padding: 22px 16px 26px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+  background: var(--bg);
+  position: relative; z-index: 10;
+  flex-shrink: 0;
+}
+.shutter {
+  width: 70px; height: 70px;
+  border-radius: 50%;
+  border: 4px solid #1A1A1A;
+  background: transparent;
+  padding: 4px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.shutter::after {
+  content: '';
+  display: block;
+  width: 100%; height: 100%;
+  border-radius: 50%;
+  background: #1A1A1A;
+  transition: transform 0.15s;
+}
+.shutter:active::after { transform: scale(0.9); }
+.gallery-link {
+  font-size: 17px;
+  font-weight: 500;
+  color: var(--text);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+/* ===== OCR loading screen ===== */
+.ocr-loading-body {
+  flex: 1;
+  background: #1C1C1E;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+.loading-badge {
+  position: absolute;
+  top: 18px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(60,60,60,0.92);
+  color: #FFF;
+  padding: 9px 18px;
+  border-radius: 20px;
+  font-size: 15px;
+  font-weight: 500;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  white-space: nowrap;
+}
+.loading-badge.spin::after {
+  content: '';
+  width: 12px; height: 12px;
+  border: 2px solid #FFF;
+  border-top-color: transparent;
+  border-radius: 50%;
+  animation: loading-spin 0.8s infinite linear;
+}
+@keyframes loading-spin { to { transform: rotate(360deg); } }
+.drop-chip {
+  position: absolute;
+  left: 50%; top: 130px;
+  transform: translate(-50%, 0) scale(0.9);
+  opacity: 0;
+  display: flex; flex-direction: column; align-items: center; text-align: center;
+  color: #FFF; z-index: 7; pointer-events: none;
+  transition: transform 0.95s cubic-bezier(.45,.05,.35,1), opacity 0.95s ease;
+}
+.drop-chip.in { opacity: 1; transform: translate(-50%, 0) scale(1); }
+.drop-chip.fall { opacity: 0; transform: translate(-50%, 360px) scale(0.8); }
+.drop-chip .dc-label { font-size: 13px; opacity: 0.85; }
+.drop-chip .dc-val { font-size: 18px; font-weight: 700; margin-top: 2px; }
+.found-row { margin-bottom: 12px; animation: foundIn 0.4s ease both; }
+.found-row .found-label { font-size: 13px; color: #444; }
+.found-row .found-val { font-size: 18px; font-weight: 700; color: #222; margin-top: 2px; }
+@keyframes foundIn { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: none; } }
+.loading-footer {
+  padding: 16px 18px 22px;
+  background: #C9CACB;
+  flex-shrink: 0;
+}
+.skeleton-line {
+  height: 14px;
+  background: #B3B4B6;
+  border-radius: 7px;
+  margin-top: 12px;
+  animation: skeleton-pulse 1.5s infinite ease-in-out;
+}
+@keyframes skeleton-pulse { 0% { opacity: 0.55; } 50% { opacity: 1; } 100% { opacity: 0.55; } }
+
+/* ===== KB statement mock ===== */
+.sim-kb-statement {
+  background: #FFF;
+  border-radius: 10px;
+  width: 230px;
+  padding: 12px;
+  color: #1A1A1A;
+  font-size: 7px;
+  line-height: 1.35;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.35);
+  position: relative;
+}
+.stmt-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 6px; }
+.stmt-logo { display: flex; align-items: center; gap: 3px; }
+.stmt-logo-sq { width: 14px; height: 11px; background: #E3000F; }
+.stmt-logo-text { font-weight: 700; font-size: 6px; text-align: center; line-height: 1.1; }
+.stmt-meta { text-align: right; font-size: 6px; color: #6A6A6A; }
+.stmt-title { font-size: 9px; font-weight: 700; text-align: center; margin: 6px 0; }
+.stmt-holder { display: flex; justify-content: space-between; gap: 6px; border-bottom: 1px solid #E5E5E5; padding-bottom: 6px; margin-bottom: 5px; }
+.stmt-holder-name { font-size: 7.5px; font-weight: 700; }
+.stmt-tr { padding: 4px 0; border-bottom: 0.5px solid #EEE; }
+.stmt-tr .tr-top { display: flex; justify-content: space-between; font-weight: 700; }
+.stmt-tr .tr-sub { color: #8a8a8a; font-size: 6px; }
+.stmt-tr.hl-amount { background: rgba(227,0,15,0.07); outline: 1px dashed var(--red); }
+.stmt-tr.hl-vs { background: rgba(0,102,255,0.07); outline: 1px dashed #1565FF; }
+
+/* ===== OCR result cards ===== */
+.ocr-results-wrap { flex-shrink: 0; padding: 10px 14px 0; }
+.ocr-results {
+  background: #FFF;
+  border-radius: 14px;
+  padding: 2px 16px;
+  border: 1px solid var(--border);
+}
+.ocr-result-item { padding: 8px 0; border-bottom: 1px solid var(--border); }
+.ocr-result-item:last-child { border-bottom: none; }
+.ocr-res-label { font-size: 13px; color: var(--text-2); margin-bottom: 2px; }
+.ocr-res-val { font-size: 18px; font-weight: 400; color: var(--text); letter-spacing: -0.3px; }
+
+/* ===== Summary ===== */
+.summary-card {
+  background: #FFF;
+  border-radius: 14px;
+  border: 1px solid var(--border);
+  padding: 4px 16px;
+  margin-bottom: 12px;
+}
+.summary-item { padding: 14px 0; border-bottom: 1px solid var(--border); }
+.summary-item:last-child { border-bottom: none; }
+.summary-label { font-size: 14px; color: var(--text-2); margin-bottom: 5px; }
+.summary-val { font-size: 18px; font-weight: 400; color: var(--text); }
+.summary-h1 { font-size: 30px; font-weight: 700; letter-spacing: -0.5px; padding: 2px 2px 14px; }
+
+/* ===== Contextual tooltip ===== */
+.ctx-tooltip {
+  position: absolute;
+  width: 290px;
+  background: #2D2D2D;
+  border-radius: 12px;
+  padding: 14px 16px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.28);
+  z-index: 100;
+  display: none;
+  opacity: 0;
+  transform: translateY(-8px) scale(0.97);
+  transition: opacity 0.26s cubic-bezier(.22,.8,.46,1), transform 0.26s cubic-bezier(.22,.8,.46,1);
+  cursor: pointer;
+}
+.ctx-tooltip.show { display: block; }
+.ctx-tooltip.visible { opacity: 1; transform: translateY(0) scale(1); }
+.ctx-tooltip::before {
+  content: '';
+  position: absolute;
+  top: -7px;
+  width: 14px; height: 8px;
+  background: #2D2D2D;
+  clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+}
+#ctx-tooltip-qr { top: 54px; right: 10px; }
+#ctx-tooltip-qr::before { right: 22px; }
+#ctx-tooltip-scan { top: 116px; right: 14px; width: 280px; }
+#ctx-tooltip-scan::before { right: 70px; }
+.ctx-tt-title { font-size: 15px; font-weight: 600; color: #fff; margin-bottom: 4px; line-height: 1.35; }
+.ctx-tt-text { font-size: 14px; color: rgba(255,255,255,0.82); line-height: 1.4; }
+
+/* ===== iOS alert dialogs ===== */
+.alert-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.4);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+  z-index: 150;
+}
+.alert-overlay.show { opacity: 1; pointer-events: auto; }
+.alert-box {
+  width: 300px;
+  background: rgba(250,250,250,0.96);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+  transform: scale(0.9);
+  transition: transform 0.25s cubic-bezier(.22,.8,.46,1);
+}
+.alert-overlay.show .alert-box { transform: scale(1); }
+.alert-content { padding: 22px 18px 18px; text-align: center; }
+.alert-title { font-size: 19px; font-weight: 600; color: var(--text); margin-bottom: 6px; }
+.alert-text { font-size: 14px; color: var(--text); line-height: 1.45; }
+.alert-buttons { display: flex; border-top: 0.5px solid #C7C7C7; }
+.alert-btn {
+  flex: 1;
+  border: none;
+  background: transparent;
+  padding: 14px 0;
+  font-size: 17px;
+  color: #007AFF;
+  cursor: pointer;
+  font-family: inherit;
+}
+.alert-btn:active { background: rgba(0,0,0,0.05); }
+.alert-btn:first-child { border-right: 0.5px solid #C7C7C7; }
+.alert-btn.bold { font-weight: 600; }
+
+/* ===== Bottom sheet (consent) ===== */
+.sheet-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.45);
+  display: flex;
+  align-items: flex-end;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.28s ease;
+  z-index: 140;
+}
+.sheet-overlay.show { opacity: 1; pointer-events: auto; }
+.bottom-sheet {
+  width: 100%;
+  background: #F7F7F7;
+  border-radius: 18px 18px 0 0;
+  padding: 14px 20px 26px;
+  transform: translateY(100%);
+  transition: transform 0.28s cubic-bezier(.22,.8,.46,1);
+  position: relative;
+}
+.sheet-overlay.show .bottom-sheet { transform: translateY(0); }
+.sheet-handle { width: 38px; height: 5px; background: #D5D5D8; border-radius: 3px; margin: 0 auto 14px; }
+.sheet-close-btn {
+  position: absolute;
+  top: 14px; right: 18px;
+  width: 30px; height: 30px;
+  border-radius: 50%;
+  background: #E3E3E6;
+  border: none;
+  font-size: 13px;
+  color: #8E8E93;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+}
+.sheet-title { font-size: 24px; font-weight: 700; color: var(--text); margin-bottom: 14px; letter-spacing: -0.4px; }
+.sheet-text { font-size: 16px; color: var(--text); line-height: 1.5; margin-bottom: 22px; }
+.sheet-actions { display: flex; flex-direction: column; gap: 12px; }
+
+/* ===== Toast ===== */
+.toast {
+  position: absolute;
+  bottom: 90px;
+  left: 50%;
+  transform: translateX(-50%) translateY(12px);
+  background: #1A1A1A;
+  color: #fff;
+  font-size: 14px;
+  padding: 10px 18px;
+  border-radius: 24px;
+  white-space: nowrap;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.25);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.22s ease, transform 0.22s ease;
+  z-index: 200;
+}
+.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+/* ===== Desktop controls ===== */
+.controls { color: #fff; display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; max-width: 760px; }
+.controls button { background: #444; color: #fff; border: none; padding: 8px 14px; border-radius: 20px; font-size: 12px; cursor: pointer; }
+.controls button:hover { background: #555; }
+.legend { color: #aaa; font-size: 11px; text-align: center; max-width: 720px; line-height: 1.5; }
+
+/* ===== Mobile fullscreen ===== */
+@media (max-width: 640px) {
+  html, body {
+    padding: 0 !important; margin: 0 !important;
+    background: var(--bg) !important;
+    width: 100vw; height: 100vh; height: 100dvh;
+    min-height: 0 !important; display: block !important; overflow: hidden;
+  }
+  h1, .subtitle, .controls, .legend { display: none !important; }
+  .stage {
+    position: fixed !important; inset: 0 !important;
+    width: 100vw !important; height: 100vh !important; height: 100dvh !important;
+    max-width: none !important; max-height: none !important;
+    border-radius: 0 !important; border: none !important; box-shadow: none !important;
+  }
+  .topbar { padding-top: env(safe-area-inset-top, 0px); height: calc(56px + env(safe-area-inset-top, 0px)); }
+  .cam-top { padding-top: env(safe-area-inset-top, 0px); height: calc(56px + env(safe-area-inset-top, 0px)); }
+  .fab { bottom: calc(18px + env(safe-area-inset-bottom, 0px)); }
+  .bottom-bar { padding-bottom: calc(16px + env(safe-area-inset-bottom, 0px)); }
+  .cam-bottom { padding-bottom: calc(26px + env(safe-area-inset-bottom, 0px)); }
+}
+</style>
+</head>
+<body>
+<h1>Prototyp — Načtení platebních údajů z fotky</h1>
+<p class="subtitle">Skenování QR kódu i vyčítání platebních údajů z faktury / SMS. Projdi flow kliknutím na tlačítka v mockupu.</p>
+
+<div class="stage" id="stage">
+
+  <!-- ============ SCREEN 1: Dashboard ============ -->
+  <section class="screen active" id="screen-dashboard">
+    <div class="topbar">
+      <div style="flex:1;"></div>
+      <button class="iconbtn" title="Klíč">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="8" cy="8" r="5"/><path d="M11.5 11.5L21 21M17 17l2-2M14 14l2-2"/></svg>
+      </button>
+      <button class="iconbtn" style="position:relative;" title="Banka">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 21h18M4 21V10M20 21V10M3 10l9-6 9 6M9 21v-7M15 21v-7"/></svg>
+        <span style="position:absolute;top:3px;right:3px;min-width:17px;height:17px;background:#E3000F;color:#fff;border-radius:9px;font-size:11px;display:flex;align-items:center;justify-content:center;padding:0 4px;">1</span>
+      </button>
+      <div class="avatar"></div>
+    </div>
+    <div class="tabs">
+      <div class="tab active">Přehled</div>
+      <div class="tab">Extra</div>
+      <div class="tab">Karty</div>
+      <div class="tab">Půjčky</div>
+      <div class="tab">Spoření</div>
+    </div>
+    <div class="scroll">
+      <div class="card" style="padding:0;">
+        <div class="acct-row"><div class="acc-label">Tarif Komfort</div><div class="chev">›</div></div>
+        <hr class="divider flush">
+        <div class="acct-block" onclick="openAccount('bezny')">
+          <div class="row"><div class="acc-label">Běžný účet</div><div class="acc-num">122000/0100</div></div>
+          <div class="row"><div class="balance">18 063<span class="dec">,38 Kč</span></div><div class="chev">›</div></div>
+        </div>
+        <hr class="divider flush">
+        <div class="acct-block" onclick="openAccount('bezny2')">
+          <div class="row"><div class="acc-label">Běžný účet 2</div><div class="acc-num">326683762/0100</div></div>
+          <div class="row"><div class="balance">48 490<span class="dec">,20 Kč</span></div><div class="chev">›</div></div>
+          <div class="fx-row">
+            <div class="fx-chip"><span class="fx-flag"><svg viewBox="0 0 24 24" width="20" height="20"><defs><clipPath id="czclip"><circle cx="12" cy="12" r="12"/></clipPath></defs><g clip-path="url(#czclip)"><rect width="24" height="12" fill="#fff"/><rect y="12" width="24" height="12" fill="#D7141A"/><path d="M0 0L12 12L0 24Z" fill="#11457E"/></g></svg></span>40 000,00 Kč</div>
+            <div class="fx-chip"><span class="fx-flag"><svg viewBox="0 0 24 24" width="20" height="20"><circle cx="12" cy="12" r="12" fill="#034EA2"/><g fill="#FFCC00"><circle cx="12" cy="4.5" r="1"/><circle cx="15.75" cy="5.5" r="1"/><circle cx="18.5" cy="8.25" r="1"/><circle cx="19.5" cy="12" r="1"/><circle cx="18.5" cy="15.75" r="1"/><circle cx="15.75" cy="18.5" r="1"/><circle cx="12" cy="19.5" r="1"/><circle cx="8.25" cy="18.5" r="1"/><circle cx="5.5" cy="15.75" r="1"/><circle cx="4.5" cy="12" r="1"/><circle cx="5.5" cy="8.25" r="1"/><circle cx="8.25" cy="5.5" r="1"/></g></svg></span>334,26 EUR</div>
+          </div>
+        </div>
+      </div>
+      <div class="card" onclick="openAccount('sporeni')">
+        <div class="row"><div class="acc-label">Spoření</div><div class="acc-num">326683764/0100</div></div>
+        <div class="row"><div class="balance">11 490<span class="dec">,20 Kč</span></div><div class="chev">›</div></div>
+      </div>
+      <div class="card">
+        <div class="row"><div class="acc-label" style="font-size:18px;font-weight:600;">Souhrn za červen</div><div class="chev">›</div></div>
+        <div style="font-size:14px;color:var(--text-2);margin-top:2px;margin-bottom:12px;">Běžný účet</div>
+        <div class="sum-bar"><i style="width:40%;background:#1A1A1A;"></i></div>
+        <div class="sum-line"><span><span class="ic">→</span>Výdaje</span><span>−10 000,00 Kč</span></div>
+        <div class="sum-bar"><i style="width:100%;background:var(--green);"></i></div>
+        <div class="sum-line" style="color:var(--green);"><span><span class="ic" style="border-color:var(--green);color:var(--green);">←</span>Příjmy</span><span>20 000,00 Kč</span></div>
+        <hr class="divider">
+        <div class="sum-line"><span>Rozdíl</span><span>10 000,00 Kč</span></div>
+      </div>
+    </div>
+    <div class="fab">
+      <button onclick="openNewPayment(true)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="17" cy="12" r="4"/><path d="M2 9h7M2 12h5M2 15h7"/></svg>
+        Nová platba
+      </button>
+      <button onclick="openScan(true)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><path d="M14 14h3v3M21 14v7h-7"/></svg>
+        Skenovat
+      </button>
+      <button onclick="showToast('Zaplať mi — mimo tento prototyp')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="9" cy="7" r="3"/><path d="M3 20c0-3 3-5 6-5M14 11l2.5 2.5L21 9M13 17c1 1 3 1 4 0"/></svg>
+        Zaplať mi
+      </button>
+    </div>
+  </section>
+
+  <!-- ============ SCREEN: Account detail ============ -->
+  <section class="screen" id="screen-account-detail">
+    <div class="topbar white">
+      <button class="back-btn" onclick="go('screen-dashboard')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>Přehled
+      </button>
+    </div>
+    <div class="scroll" style="padding:0 0 16px;">
+      <div class="detail-head">
+        <div class="detail-acct-row">
+          <span class="detail-acct-name" id="det-name">Běžný účet</span>
+          <span class="detail-acct-num" id="det-num">122000/0100</span>
+        </div>
+        <div class="detail-balance" id="det-balance">18 063<span>,38 Kč</span></div>
+      </div>
+      <div style="height:14px"></div>
+      <div class="detail-list-card" onclick="showToast('Detail a správa účtu — mimo tento prototyp')">
+        <div class="detail-list-left">
+          <span class="detail-list-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
+          </span>
+          <span class="detail-list-title">Detail a správa účtu</span>
+        </div>
+        <span class="chev">›</span>
+      </div>
+      <div class="detail-list-card" onclick="showToast('Filtr — mimo tento prototyp')">
+        <div class="detail-list-left"><span class="detail-list-title">Filtr</span></div>
+        <span class="detail-list-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><line x1="4" y1="7" x2="20" y2="7"/><circle cx="9" cy="7" r="2.5" fill="#fff"/><line x1="4" y1="14" x2="20" y2="14"/><circle cx="16" cy="14" r="2.5" fill="#fff"/></svg>
+        </span>
+      </div>
+      <div class="tx-card" id="det-tx"></div>
+    </div>
+    <div class="detail-bottom-bar">
+      <button class="detail-btn" onclick="openNewPayment(true)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="17" cy="12" r="4"/><path d="M2 9h7M2 12h5M2 15h7"/></svg>
+        Nová platba
+      </button>
+      <button class="detail-btn" onclick="openScan()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><path d="M14 14h3v3M21 14v7h-7"/></svg>
+        Skenovat
+      </button>
+      <button class="detail-btn" onclick="showToast('Zaplať mi — mimo tento prototyp')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="9" cy="7" r="3"/><path d="M3 20c0-3 3-5 6-5M14 11l2.5 2.5L21 9M13 17c1 1 3 1 4 0"/></svg>
+        Zaplať mi
+      </button>
+    </div>
+  </section>
+
+  <!-- ============ SCREEN 2: New payment ============ -->
+  <section class="screen" id="screen-newpayment">
+    <div class="topbar white">
+      <button class="iconbtn" onclick="go('screen-dashboard')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+      <div class="title center">Nová platba</div>
+      <button class="iconbtn" onclick="openScan()" title="Skenovat">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><path d="M14 14h3v3M21 14v7h-7"/></svg>
+      </button>
+    </div>
+
+    <div class="ctx-tooltip" id="ctx-tooltip-qr" onclick="dismissTooltip()">
+      <div class="ctx-tt-title">Nově umíme načítat platební údaje</div>
+      <div class="ctx-tt-text">Stačí vyfotit SMS nebo fakturu a platební údaje načteme sami.</div>
+    </div>
+
+    <div class="scroll" style="padding:6px 16px 120px;">
+      <div class="np-acc-row">
+        <div>
+          <div class="np-acc-name">Běžný účet</div>
+          <div class="np-acc-num">123456−4835477/0100</div>
+        </div>
+        <div class="chev">›</div>
+      </div>
+      <div class="field">
+        <div class="label">Komu</div>
+        <input type="text" class="field-input-text" id="inp-komu" placeholder="Číslo účtu, IBAN, šablona nebo příjemce" oninput="saveField('np_komu', this.value)">
+      </div>
+      <div class="contact-row" onclick="showToast('Platba na kontakt — mimo tento prototyp')">
+        <span class="ic-contact">
+          <svg viewBox="0 0 30 22" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 11a8 8 0 018-8M9 11a8 8 0 018-8"/><circle cx="22" cy="8" r="3" fill="currentColor" stroke="none"/><path d="M17 18c0-2.5 2.2-4 5-4s5 1.5 5 4" fill="currentColor" stroke="none"/></svg>
+        </span>
+        <strong>Platba na kontakt</strong>
+        <span class="chev">›</span>
+      </div>
+      <div class="row2">
+        <div class="field">
+          <div class="label">Částka</div>
+          <input type="text" inputmode="decimal" class="field-input-text" id="inp-amount" placeholder="0" oninput="saveField('np_amount', this.value)">
+        </div>
+        <div class="field currency" onclick="showToast('Výběr měny — mimo tento prototyp')">
+          <div class="label">Měna</div>
+          <div class="value">Kč</div>
+          <span class="caret">⌄</span>
+        </div>
+      </div>
+      <div class="bal-hint">Na účtu máte 18 063,38 Kč.</div>
+    </div>
+    <div class="bottom-bar">
+      <button class="primary-btn" onclick="go('screen-payment-detail')">Pokračovat</button>
+    </div>
+  </section>
+
+  <!-- ============ SCREEN 3: Scanner ============ -->
+  <section class="screen" id="screen-scan">
+    <div class="camera">
+      <div class="cam-closebar">
+        <button class="cam-close-txt" onclick="closeScan()">Zavřít</button>
+      </div>
+      <div class="cam-segbar">
+        <div class="mode-segment">
+          <button id="mode-qr" class="active" onclick="setMode('qr')">QR kód</button>
+          <button id="mode-inv" onclick="setMode('inv')">Platební údaje</button>
+        </div>
+      </div>
+
+      <div class="cam-viewport">
+        <button class="cam-flash-btn" onclick="toggleFlash()" title="Svítilna">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M13 2L3 14h9l-1 8 10-12h-9z"/>
+            <line x1="2" y1="2" x2="22" y2="22" id="flash-slash"/>
+          </svg>
+        </button>
+        <div class="scan-frame" id="scan-frame"><span></span></div>
+        <div class="scan-hint" id="hint">Namiřte fotoaparát na QR kód, vyfotí se automaticky.</div>
+      </div>
+
+      <div class="cam-bottom">
+        <button class="shutter" id="shutter" onclick="capture()" style="display:none;"></button>
+        <button class="gallery-link" onclick="galleryCapture()">Načíst z fotek nebo souboru</button>
+      </div>
+    </div>
+
+    <div class="ctx-tooltip" id="ctx-tooltip-scan" onclick="dismissScanTooltip()">
+      <div class="ctx-tt-title">Nově umíme načítat platební údaje</div>
+      <div class="ctx-tt-text">Stačí vyfotit SMS nebo fakturu a platební údaje načteme sami.</div>
+    </div>
+  </section>
+
+  <!-- ============ SCREEN 4: OCR loading ============ -->
+  <section class="screen" id="screen-ocr-loading">
+    <div class="topbar white">
+      <button class="iconbtn" onclick="go('screen-scan')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+      </button>
+      <div class="title center">Načtené údaje</div>
+      <div style="width:40px;"></div>
+    </div>
+    <div class="ocr-loading-body" id="loading-body">
+      <div class="loading-badge spin">Hledáme platební údaje</div>
+      <div class="sim-kb-statement" id="stmt-loading"></div>
+    </div>
+    <div class="loading-footer">
+      <div id="found-list"></div>
+      <div id="skeleton-list"></div>
+    </div>
+  </section>
+
+  <!-- ============ SCREEN 5: OCR result ============ -->
+  <section class="screen" id="screen-ocr-success">
+    <div class="topbar white">
+      <button class="iconbtn" onclick="go('screen-scan')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+      </button>
+      <div class="title center">Načtené údaje</div>
+      <div style="width:40px;"></div>
+    </div>
+    <div class="ocr-loading-body" style="flex:1;">
+      <div class="loading-badge" style="width:calc(100% - 32px);font-size:14px;border-radius:10px;text-align:left;padding:11px 14px;line-height:1.35;white-space:normal;">
+        Načtené údaje nemusí být správně. Věnujte pozornost kontrole.
+      </div>
+      <div class="sim-kb-statement" id="stmt-success" style="margin-top:14px;"></div>
+    </div>
+    <div class="ocr-results-wrap">
+      <div class="ocr-results">
+        <div class="ocr-result-item"><div class="ocr-res-label">Z účtu</div><div class="ocr-res-val">123456789/0100</div></div>
+        <div class="ocr-result-item"><div class="ocr-res-label">Částka</div><div class="ocr-res-val">100 Kč</div></div>
+        <div class="ocr-result-item"><div class="ocr-res-label">Variabilní symbol</div><div class="ocr-res-val">987564566778</div></div>
+      </div>
+    </div>
+    <div class="bottom-bar">
+      <button class="primary-btn" onclick="scanToSummary()">K platbě</button>
+      <button class="secondary-btn-outline" onclick="scanToEdit()">Upravit údaje</button>
+    </div>
+  </section>
+
+  <!-- ============ SCREEN 6: Payment detail ============ -->
+  <section class="screen" id="screen-payment-detail">
+    <div class="topbar white">
+      <button class="back-btn" onclick="go('screen-newpayment')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>Zpět
+      </button>
+      <div class="title center" style="text-align:center;flex:1;margin-right:48px;">Nová platba</div>
+    </div>
+    <div class="scroll" style="padding:14px;">
+      <div class="field"><div class="label">Zpráva pro příjemce</div><input type="text" class="field-input-text" id="inp-msg" placeholder="" oninput="saveField('pd_msg', this.value)"></div>
+      <div class="field"><div class="label">Variabilní symbol</div><input type="text" class="field-input-text" id="inp-vs" placeholder="" oninput="saveField('pd_vs', this.value)"></div>
+      <div class="field"><div class="label">Popis pro mě</div><input type="text" class="field-input-text" id="inp-desc" placeholder="" oninput="saveField('pd_desc', this.value)"></div>
+      <div class="field"><div class="label">Konstantní symbol</div><input type="text" class="field-input-text" id="inp-ks" placeholder="" oninput="saveField('pd_ks', this.value)"></div>
+      <div class="field"><div class="label">Specifický symbol</div><input type="text" class="field-input-text" id="inp-ss" placeholder="" oninput="saveField('pd_ss', this.value)"></div>
+      <div class="send-label">Odeslat platbu</div>
+      <div class="mode-segment full">
+        <button id="send-now" class="active" onclick="setSendOption('now')">Co nejdříve</button>
+        <button id="send-later" onclick="setSendOption('later')">Později</button>
+      </div>
+    </div>
+    <div class="bottom-bar">
+      <button class="primary-btn" onclick="go('screen-summary')">Pokračovat</button>
+    </div>
+  </section>
+
+  <!-- ============ SCREEN 7: Summary ============ -->
+  <section class="screen" id="screen-summary">
+    <div class="topbar white">
+      <button class="back-btn" onclick="go('screen-payment-detail')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>Zpět
+      </button>
+    </div>
+    <div class="scroll" style="padding:14px;">
+      <div class="summary-h1">Souhrn</div>
+      <div class="summary-card">
+        <div class="summary-item"><div class="summary-label">Z účtu</div><div class="summary-val">Můj běžný účet<br>122000/0100</div></div>
+        <div class="summary-item"><div class="summary-label">Na účet</div><div class="summary-val" id="sum-to">987-654321/0100</div></div>
+        <div class="summary-item"><div class="summary-label">Částka</div><div class="summary-val" id="sum-amount">2 495,00 Kč</div></div>
+        <div class="summary-item"><div class="summary-label">Variabilní symbol</div><div class="summary-val" id="sum-vs">123456789</div></div>
+        <div class="summary-item"><div class="summary-label">Popis pro mě</div><div class="summary-val" id="sum-desc">Za internet</div></div>
+        <div class="summary-item"><div class="summary-label">Konstantní symbol</div><div class="summary-val" id="sum-ks">123456789</div></div>
+        <div class="summary-item"><div class="summary-label">Specifický symbol</div><div class="summary-val" id="sum-ss">123456789</div></div>
+        <div class="summary-item"><div class="summary-label">Datum platby</div><div class="summary-val" id="sum-date">8. 1. 2026</div></div>
+      </div>
+    </div>
+    <div class="bottom-bar">
+      <button class="primary-btn" onclick="confirmPayment()">Potvrdit platbu</button>
+    </div>
+  </section>
+
+  <!-- ============ SCREEN 8: Result ============ -->
+  <section class="screen" id="screen-result">
+    <div class="topbar white">
+      <button class="cam-close-txt" style="font-size:16px;" onclick="resultClose()">Zavřít</button>
+    </div>
+    <div class="scroll" style="padding:0 14px;">
+      <div class="result-illus">
+        <svg viewBox="0 0 200 160" width="190" height="152">
+          <ellipse cx="100" cy="120" rx="70" ry="14" fill="#000" opacity="0.06"/>
+          <polygon points="55,108 100,86 165,108 120,130" fill="#FFFFFF"/>
+          <polygon points="55,108 120,130 120,140 55,118" fill="#E6E6E6"/>
+          <polygon points="120,130 165,108 165,118 120,140" fill="#D8D8D8"/>
+          <path d="M78 92 L96 110 L140 50" fill="none" stroke="#E3000F" stroke-width="16" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M140 50 L150 56 L106 116 L96 110 Z" fill="#B8000C" opacity="0.55"/>
+        </svg>
+      </div>
+      <div class="result-title">Zadali jste platbu</div>
+      <div class="result-list">
+        <div class="result-row" onclick="showToast('Uložit šablonu — mimo tento prototyp')">
+          <span class="result-ic">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+          </span>
+          <span class="result-row-title">Uložit šablonu</span>
+          <span class="chev">›</span>
+        </div>
+        <hr class="divider flush" style="margin:0 18px;">
+        <div class="result-row" onclick="showToast('Založit trvalý příkaz — mimo tento prototyp')">
+          <span class="result-ic">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 4v4h4"/><path d="M12 8v4l3 2"/></svg>
+          </span>
+          <span class="result-row-title">Založit trvalý příkaz</span>
+          <span class="chev">›</span>
+        </div>
+      </div>
+    </div>
+    <div class="bottom-bar">
+      <button class="primary-btn" onclick="resultNewPayment()">Zadat další</button>
+      <button class="secondary-btn-outline" onclick="resultClose()">Zavřít</button>
+    </div>
+  </section>
+
+  <!-- ============ Dialog: no QR ============ -->
+  <div class="alert-overlay" id="alert-no-qr">
+    <div class="alert-box">
+      <div class="alert-content">
+        <h3 class="alert-title">Nedaří se načíst QR kód?</h3>
+        <p class="alert-text">Pokud na dokladu není, stačí SMS nebo fakturu vyfotit a platební údaje načteme sami.</p>
+      </div>
+      <div class="alert-buttons">
+        <button class="alert-btn" onclick="closeNoQR()">Hledat QR</button>
+        <button class="alert-btn bold" onclick="switchToOCR()">Vyfotit</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ Dialog: OCR fail ============ -->
+  <div class="alert-overlay" id="alert-ocr-fail">
+    <div class="alert-box">
+      <div class="alert-content">
+        <h3 class="alert-title">Kde nic tu nic</h3>
+        <p class="alert-text">Nepodařilo se načíst platební údaje.</p>
+      </div>
+      <div class="alert-buttons">
+        <button class="alert-btn" onclick="closeOCRFail()">Zpět</button>
+        <button class="alert-btn bold" onclick="manualEntry()">Zadat ručně</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ Sheet: consent ============ -->
+  <div class="sheet-overlay" id="sheet-consent">
+    <div class="bottom-sheet">
+      <div class="sheet-handle"></div>
+      <button class="sheet-close-btn" onclick="closeConsent()">✕</button>
+      <h3 class="sheet-title">Souhlas se zpracováním údajů</h3>
+      <p class="sheet-text">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since 1966, when designers at Letraset and James Mosley, the librarian at St Bride Printing Library in London, took a 1914 Cicero translation and scrambled it to make dummy text for Letraset's Body Type sheets.</p>
+      <div class="sheet-actions">
+        <button class="primary-btn" onclick="acceptConsent()">Souhlasím</button>
+        <button class="secondary-btn-outline" style="margin-top:0;" onclick="closeConsent()">Zavřít</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+</div>
+
+<div class="controls">
+  <button onclick="go('screen-dashboard')">1. Přehled</button>
+  <button onclick="openNewPayment()">2. Nová platba</button>
+  <button onclick="openScan()">3. Skener</button>
+  <button onclick="go('screen-ocr-loading')">4. Načítání</button>
+  <button onclick="go('screen-ocr-success')">5. Načtené údaje</button>
+  <button onclick="go('screen-payment-detail')">6. Detail</button>
+  <button onclick="go('screen-summary')">7. Souhrn</button>
+  <button onclick="resetAll()" style="background:#555;border:1px solid #888;">↺ Reset</button>
+</div>
+<p class="legend">QR režim po chvíli nabídne vyfocení dokladu. V režimu „Platební údaje" stiskni spoušť → souhlas → načtení. „Načíst z fotek nebo souboru" demonstruje neúspěch (Kde nic tu nic).</p>
+
+<script>
+function lsSet(k,v){try{localStorage.setItem(k,v);}catch(e){}}
+function lsGet(k){try{return localStorage.getItem(k);}catch(e){return null;}}
+function lsRemove(k){try{localStorage.removeItem(k);}catch(e){}}
+
+/* ===== Analytics: virtual page_view ===== */
+function trackPage(name){
+  try { if (window.gtag) gtag('event','page_view',{ page_path:'#'+name, page_title:name }); } catch(e){}
+  try { if (window.clarity) clarity('set','screen',name); } catch(e){}
+}
+
+/* ===== KB statement mock (shared markup) ===== */
+function statementHTML(){
+  return ''+
+  '<div class="stmt-header"><div class="stmt-logo"><div class="stmt-logo-sq"></div><span class="stmt-logo-text">KB</span></div>'+
+  '<div class="stmt-meta">Výpis z účtu<br>1.1.2022 − 31.1.2022<br><strong>Datum výpisu 18.2.2022</strong></div></div>'+
+  '<div class="stmt-holder"><div><span style="color:#6A6A6A;">Majitel</span><br><span class="stmt-holder-name">PETRA ZACHOVALÁ</span><br>Královny Žofie 1720/24<br>148 00 Praha − Kunratice</div>'+
+  '<div style="text-align:right;"><span style="color:#6A6A6A;">IBAN</span><br>CZ1101000000000021022102<br><span style="color:#6A6A6A;">Číslo účtu</span><br><strong>123456789/0100</strong></div></div>'+
+  '<div class="stmt-title">Transakce</div>'+
+  '<div class="stmt-tr"><div class="tr-top"><span>28.1.2022 MILAN</span><span>1,87 Kč</span></div><div class="tr-sub">pozdrav · Příchozí úhrada</div></div>'+
+  '<div class="stmt-tr"><div class="tr-top"><span>28.1.2022 MILAN</span><span>−1,30 Kč</span></div><div class="tr-sub">zkus mi to poslat zpět · Odchozí úhrada</div></div>'+
+  '<div class="stmt-tr hl-amount"><div class="tr-top"><span>28.1.2022 MILAN</span><span>100 Kč</span></div><div class="tr-sub">Příchozí úhrada</div></div>'+
+  '<div class="stmt-tr hl-vs"><div class="tr-top"><span>Variabilní symbol</span><span>987564566778</span></div><div class="tr-sub">Specifický symbol 0</div></div>'+
+  '<div class="stmt-tr"><div class="tr-top"><span>5.1.2022 SEGI</span><span>−0,10 Kč</span></div><div class="tr-sub">test · Odchozí úhrada</div></div>'+
+  '<div style="text-align:center;color:#8a8a8a;font-size:6px;margin-top:6px;">Strana 1/2</div>';
+}
+document.getElementById('stmt-loading').innerHTML = statementHTML();
+document.getElementById('stmt-success').innerHTML = statementHTML();
+
+/* ===== Field persistence ===== */
+const FIELD_INPUTS = {
+  np_komu:'inp-komu', np_amount:'inp-amount',
+  pd_msg:'inp-msg', pd_vs:'inp-vs', pd_desc:'inp-desc', pd_ks:'inp-ks', pd_ss:'inp-ss'
+};
+function saveField(key,val){ lsSet(key, val); }
+function restoreFields(){
+  Object.keys(FIELD_INPUTS).forEach(function(key){
+    var el = document.getElementById(FIELD_INPUTS[key]);
+    if (el) { var v = lsGet(key); el.value = (v===null?'':v); }
+  });
+  setSendOption(lsGet('pd_send') || 'now', true);
+}
+
+/* ===== Send option segment ===== */
+function setSendOption(opt, silent){
+  lsSet('pd_send', opt);
+  var now = document.getElementById('send-now'), later = document.getElementById('send-later');
+  if (now && later) {
+    now.classList.toggle('active', opt==='now');
+    later.classList.toggle('active', opt==='later');
+  }
+}
+
+/* ===== Summary render ===== */
+function fmtAmount(raw){
+  if (raw===null || raw==='' ) return null;
+  var n = parseFloat(String(raw).replace(/\s/g,'').replace(',','.'));
+  if (isNaN(n)) return raw + ' Kč';
+  return n.toLocaleString('cs-CZ',{minimumFractionDigits:2, maximumFractionDigits:2}) + ' Kč';
+}
+function todayCz(){
+  var d = new Date();
+  return d.getDate()+'. '+(d.getMonth()+1)+'. '+d.getFullYear();
+}
+function setSummaryVal(id, val, fallback){
+  var el = document.getElementById(id);
+  if (!el) return;
+  if (val && String(val).trim()!=='') { el.textContent = val; el.style.color=''; }
+  else { el.textContent = fallback; el.style.color = '#999'; }
+}
+function renderSummary(){
+  setSummaryVal('sum-to', lsGet('np_komu'), 'Nezadáno');
+  setSummaryVal('sum-amount', fmtAmount(lsGet('np_amount')), 'Nezadáno');
+  setSummaryVal('sum-vs', lsGet('pd_vs'), 'Nezadáno');
+  setSummaryVal('sum-desc', lsGet('pd_desc'), 'Nezadáno');
+  setSummaryVal('sum-ks', lsGet('pd_ks'), 'Nezadáno');
+  setSummaryVal('sum-ss', lsGet('pd_ss'), 'Nezadáno');
+  document.getElementById('sum-date').textContent = (lsGet('pd_send')==='later') ? 'Naplánováno' : todayCz();
+}
+
+/* ===== Tooltips ===== */
+const TOOLTIP_KEY = 'np_tooltip_dismissed';
+var tooltipSeenOnPayment = false;
+function showTooltip(){
+  if (lsGet(TOOLTIP_KEY)) return;
+  var el = document.getElementById('ctx-tooltip-qr'); if(!el) return;
+  tooltipSeenOnPayment = true;
+  el.classList.add('show');
+  requestAnimationFrame(function(){ requestAnimationFrame(function(){ el.classList.add('visible'); }); });
+}
+function dismissTooltip(){
+  var el = document.getElementById('ctx-tooltip-qr'); if(!el) return;
+  el.classList.remove('visible'); lsSet(TOOLTIP_KEY,'1');
+  setTimeout(function(){ el.classList.remove('show'); }, 280);
+}
+function hideTooltipImmediate(){ var el=document.getElementById('ctx-tooltip-qr'); if(el) el.classList.remove('visible','show'); }
+function showScanTooltip(){
+  if (lsGet(TOOLTIP_KEY)) return;
+  if (tooltipSeenOnPayment) return;
+  var el = document.getElementById('ctx-tooltip-scan'); if(!el) return;
+  el.classList.add('show');
+  requestAnimationFrame(function(){ requestAnimationFrame(function(){ el.classList.add('visible'); }); });
+}
+function dismissScanTooltip(){
+  var el = document.getElementById('ctx-tooltip-scan'); if(!el) return;
+  el.classList.remove('visible'); lsSet(TOOLTIP_KEY,'1');
+  setTimeout(function(){ el.classList.remove('show'); }, 280);
+}
+function hideScanTooltipImmediate(){ var el=document.getElementById('ctx-tooltip-scan'); if(el) el.classList.remove('visible','show'); }
+
+/* ===== Navigation (hash + history) ===== */
+var noQRTimer = null;
+function _renderScreen(id){
+  document.querySelectorAll('.screen').forEach(function(s){ s.classList.remove('active'); });
+  var target = document.getElementById(id); if(!target) return;
+  target.classList.add('active');
+  trackPage(id.replace('screen-',''));
+
+  clearTimeout(noQRTimer);
+  if (id !== 'screen-ocr-loading') clearLoadingTimers();
+
+  if (id === 'screen-newpayment') { restoreFields(); setTimeout(showTooltip, 450); }
+  else { hideTooltipImmediate(); }
+
+  if (id === 'screen-scan') {
+    setMode(mode);
+    setTimeout(showScanTooltip, 450);
+  } else { hideScanTooltipImmediate(); }
+
+  if (id === 'screen-payment-detail') { restoreFields(); }
+  if (id === 'screen-summary') { renderSummary(); }
+}
+
+var historySupported = true;
+function safePush(state,url){ if(!historySupported) return; try{ history.pushState(state,'',url); }catch(e){ historySupported=false; } }
+function safeReplace(state,url){ if(!historySupported) return; try{ history.replaceState(state,'',url); }catch(e){ historySupported=false; } }
+var screenStack = [];
+function go(id, replace){
+  _renderScreen(id);
+  if (replace){
+    if (screenStack.length) screenStack[screenStack.length-1]=id; else screenStack.push(id);
+    safeReplace({screen:id, idx:screenStack.length-1}, '#'+id);
+    return;
+  }
+  if (screenStack[screenStack.length-1] === id) return;
+  screenStack.push(id);
+  safePush({screen:id, idx:screenStack.length-1}, '#'+id);
+}
+window.addEventListener('popstate', function(e){
+  closeAllOverlays();
+  if (e.state && e.state.screen){
+    var idx = typeof e.state.idx==='number' ? e.state.idx : screenStack.length-2;
+    screenStack.length = Math.max(0, idx+1);
+    _renderScreen(e.state.screen);
+  } else { _renderScreen('screen-dashboard'); }
+});
+(function initHistory(){
+  var hash=''; try{ hash=(location.hash||'').replace('#',''); }catch(_){}
+  var startId = (hash && document.getElementById(hash) && hash.indexOf('screen-')===0) ? hash : 'screen-dashboard';
+  _renderScreen(startId);
+  screenStack.push(startId);
+  safeReplace({screen:startId, idx:0}, '#'+startId);
+})();
+
+/* ===== Entry helpers ===== */
+function openNewPayment(fresh){
+  if (fresh){ ['np_komu','np_amount','pd_msg','pd_vs','pd_desc','pd_ks','pd_ss','pd_send'].forEach(lsRemove); }
+  go('screen-newpayment');
+}
+var ACCOUNTS = {
+  bezny:   { name:'Běžný účet',   num:'122000/0100',     bal:'18 063', dec:',38 Kč' },
+  bezny2:  { name:'Běžný účet 2', num:'326683762/0100',  bal:'48 490', dec:',20 Kč' },
+  sporeni: { name:'Spoření',      num:'326683764/0100',  bal:'11 490', dec:',20 Kč' }
+};
+var TX = [
+  { dir:'out', name:'Albert',          note:'Nákup potravin',       amount:'−524,90 Kč' },
+  { dir:'in',  name:'MILAN',           note:'Vrácení peněz',        amount:'1 200,00 Kč' },
+  { dir:'out', name:'ČEZ Prodej',      note:'Záloha elektřina',     amount:'−1 850,00 Kč' },
+  { dir:'out', name:'Spotify',         note:'Předplatné',           amount:'−169,00 Kč' },
+  { dir:'in',  name:'Mzda',            note:'Výplata',              amount:'42 300,00 Kč' },
+  { dir:'out', name:'Lékárna Dr.Max',  note:'Platba kartou',        amount:'−312,00 Kč' }
+];
+function renderTx(){
+  return TX.map(function(t){
+    var ini = t.name.charAt(0).toUpperCase();
+    var badge = t.dir==='in'
+      ? '<span class="tx-badge in">↓</span>'
+      : '<span class="tx-badge out">↑</span>';
+    return '<div class="tx-row" onclick="showToast(\'Detail transakce — mimo tento prototyp\')">'+
+      '<div class="tx-avatar">'+ini+badge+'</div>'+
+      '<div class="tx-main"><div class="tx-name">'+t.name+'</div><div class="tx-note">'+t.note+'</div></div>'+
+      '<div class="tx-amount'+(t.dir==='in'?' in':'')+'">'+t.amount+'</div></div>';
+  }).join('');
+}
+function openAccount(key){
+  var a = ACCOUNTS[key]; if(!a) return;
+  document.getElementById('det-name').textContent = a.name;
+  document.getElementById('det-num').textContent = a.num;
+  document.getElementById('det-balance').innerHTML = a.bal+'<span>'+a.dec+'</span>';
+  document.getElementById('det-tx').innerHTML = renderTx();
+  go('screen-account-detail');
+}
+function openScan(){ go('screen-scan'); }
+function closeScan(){ history.length>1 ? history.back() : go('screen-dashboard'); }
+
+/* ===== Scanner ===== */
+var mode = 'qr';
+function setMode(m){
+  mode = m;
+  document.querySelectorAll('.mode-segment button').forEach(function(b){ b.classList.remove('active'); });
+  var btn = document.getElementById('mode-'+m); if(btn) btn.classList.add('active');
+  var hint=document.getElementById('hint'), frame=document.getElementById('scan-frame'), shutter=document.getElementById('shutter');
+  clearTimeout(noQRTimer);
+  if (m==='qr'){
+    if(hint) hint.textContent='Namiřte fotoaparát na QR kód, vyfotí se automaticky.';
+    if(frame) frame.style.display='block';
+    if(shutter) shutter.style.display='none';
+    // simulate "no QR found" after a while
+    noQRTimer = setTimeout(function(){
+      if (document.getElementById('screen-scan').classList.contains('active') && mode==='qr'){
+        openAlert('alert-no-qr');
+      }
+    }, 7000);
+  } else {
+    if(hint) hint.textContent='Stačí vyfotit SMS nebo fakturu a platební údaje načteme sami.';
+    if(frame) frame.style.display='none';
+    if(shutter) shutter.style.display='flex';
+  }
+}
+var flashOn=false;
+function toggleFlash(){
+  flashOn=!flashOn;
+  var slash=document.getElementById('flash-slash'), btn=document.querySelector('.cam-flash-btn');
+  if(flashOn){ if(slash) slash.style.display='none'; if(btn) btn.style.background='rgba(227,0,15,0.8)'; }
+  else { if(slash) slash.style.display='inline'; if(btn) btn.style.background='rgba(120,120,120,0.55)'; }
+}
+
+/* Shutter on "Platební údaje" → consent → loading → success */
+function capture(){
+  clearTimeout(noQRTimer); closeNoQR();
+  pendingOutcome = 'success';
+  if (lsGet('consent_ok')==='1') startLoading(true);
+  else openSheet('sheet-consent');
+}
+/* Gallery link → consent → loading → fail (Kde nic tu nic) */
+function galleryCapture(){
+  clearTimeout(noQRTimer); closeNoQR();
+  pendingOutcome = 'fail';
+  if (lsGet('consent_ok')==='1') startLoading(false);
+  else openSheet('sheet-consent');
+}
+var pendingOutcome = 'success';
+var LOADING_MS = 10000;
+var FOUND_FIELDS = [
+  { l:'Z účtu',            v:'123456789/0100' },
+  { l:'Částka',            v:'100 Kč' },
+  { l:'Variabilní symbol', v:'987564566778' },
+  { l:'Specifický symbol', v:'0' }
+];
+var loadingTimers = [];
+function clearLoadingTimers(){ if(!loadingTimers) loadingTimers=[]; loadingTimers.forEach(clearTimeout); loadingTimers = []; }
+function lt(fn, ms){ var id = setTimeout(fn, ms); loadingTimers.push(id); return id; }
+
+function renderSkeletons(n){
+  var widths = ['80%','45%','65%','35%'];
+  var h = '';
+  for (var i=0;i<n;i++){ h += '<div class="skeleton-line" style="width:'+widths[i%widths.length]+';"></div>'; }
+  document.getElementById('skeleton-list').innerHTML = h;
+}
+function runLoadingFound(){
+  clearLoadingTimers();
+  var body = document.getElementById('loading-body');
+  var foundList = document.getElementById('found-list');
+  foundList.innerHTML = '';
+  body.querySelectorAll('.drop-chip').forEach(function(c){ c.remove(); });
+  var n = FOUND_FIELDS.length;
+  renderSkeletons(n);
+  var step = LOADING_MS / n;
+  FOUND_FIELDS.forEach(function(f, i){
+    var start = Math.round(step*i + 500);
+    lt(function(){
+      var chip = document.createElement('div');
+      chip.className = 'drop-chip';
+      chip.innerHTML = '<span class="dc-label">'+f.l+'</span><span class="dc-val">'+f.v+'</span>';
+      body.appendChild(chip);
+      requestAnimationFrame(function(){ requestAnimationFrame(function(){ chip.classList.add('in'); }); });
+      lt(function(){ chip.classList.add('fall'); }, 850);
+      lt(function(){
+        chip.remove();
+        var row = document.createElement('div');
+        row.className = 'found-row';
+        row.innerHTML = '<div class="found-label">'+f.l+'</div><div class="found-val">'+f.v+'</div>';
+        foundList.appendChild(row);
+        renderSkeletons(n - (i+1));
+      }, 1800);
+    }, start);
+  });
+}
+function startLoading(success){
+  if (typeof success==='boolean') pendingOutcome = success ? 'success' : 'fail';
+  closeAllOverlays();
+  go('screen-ocr-loading');
+  runLoadingFound();
+  lt(function(){
+    if (!document.getElementById('screen-ocr-loading').classList.contains('active')) return;
+    if (pendingOutcome==='fail'){ openAlert('alert-ocr-fail'); }
+    else { go('screen-ocr-success', true); }
+    pendingOutcome = 'success';
+  }, LOADING_MS);
+}
+
+/* ===== Overlays ===== */
+function openAlert(id){ document.getElementById(id).classList.add('show'); trackPage(id); }
+function openSheet(id){ document.getElementById(id).classList.add('show'); trackPage(id); }
+function closeAllOverlays(){
+  document.querySelectorAll('.alert-overlay.show, .sheet-overlay.show').forEach(function(o){ o.classList.remove('show'); });
+}
+function closeNoQR(){ document.getElementById('alert-no-qr').classList.remove('show'); }
+function switchToOCR(){ document.getElementById('alert-no-qr').classList.remove('show'); setMode('inv'); }
+function closeOCRFail(){ document.getElementById('alert-ocr-fail').classList.remove('show'); go('screen-scan'); }
+function manualEntry(){ document.getElementById('alert-ocr-fail').classList.remove('show'); openNewPayment(true); }
+function closeConsent(){ document.getElementById('sheet-consent').classList.remove('show'); }
+function acceptConsent(){
+  lsSet('consent_ok','1');
+  document.getElementById('sheet-consent').classList.remove('show');
+  startLoading(pendingOutcome!=='fail');
+}
+
+/* ===== Scan result → payment ===== */
+function prefillScanned(){
+  lsSet('np_komu','123456789/0100');
+  lsSet('np_amount','100');
+  lsSet('pd_vs','987564566778');
+}
+/* K platbě → rovnou souhrn */
+function scanToSummary(){ prefillScanned(); go('screen-summary'); }
+/* Upravit údaje → první krok platebního formuláře s předvyplněnými údaji */
+function scanToEdit(){ prefillScanned(); go('screen-newpayment'); }
+
+/* ===== Confirm → result ===== */
+function confirmPayment(){ go('screen-result'); }
+function clearPaymentFields(){ ['np_komu','np_amount','pd_msg','pd_vs','pd_desc','pd_ks','pd_ss','pd_send'].forEach(lsRemove); }
+function resultNewPayment(){ clearPaymentFields(); openNewPayment(true); }
+function resultClose(){ clearPaymentFields(); go('screen-dashboard'); }
+
+/* ===== Toast ===== */
+function showToast(msg){
+  var el=document.getElementById('toast'); if(!el) return;
+  el.textContent=msg; el.classList.add('show');
+  setTimeout(function(){ el.classList.remove('show'); }, 2200);
+}
+
+/* ===== Reset (triple-tap header / control) ===== */
+function resetAll(){
+  ['np_komu','np_amount','pd_msg','pd_vs','pd_desc','pd_ks','pd_ss','pd_send','consent_ok',TOOLTIP_KEY].forEach(lsRemove);
+  tooltipSeenOnPayment=false;
+  hideTooltipImmediate(); hideScanTooltipImmediate();
+  go('screen-dashboard');
+  showToast('Prototyp resetován');
+}
+(function(){
+  var tapCount=0, tapTimer=null;
+  document.querySelectorAll('.topbar').forEach(function(bar){
+    bar.addEventListener('click', function(e){
+      if (e.target.closest('button')) return;
+      tapCount++; clearTimeout(tapTimer);
+      tapTimer=setTimeout(function(){ tapCount=0; }, 800);
+      if (tapCount>=3){ tapCount=0; clearTimeout(tapTimer); resetAll(); }
+    });
+  });
+})();
+
+/* Click outside tooltip → close */
+document.getElementById('stage').addEventListener('click', function(e){
+  var t1=document.getElementById('ctx-tooltip-qr');
+  if (t1 && t1.classList.contains('show') && !t1.contains(e.target)) dismissTooltip();
+  var t2=document.getElementById('ctx-tooltip-scan');
+  if (t2 && t2.classList.contains('show') && !t2.contains(e.target)) dismissScanTooltip();
+});
+</script>
+</body>
+</html>
