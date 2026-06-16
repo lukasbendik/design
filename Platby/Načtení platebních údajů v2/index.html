@@ -2733,6 +2733,7 @@ let noQrModalShown = lsGet('no_qr_modal_shown') === '1';
 
   function startNoQRAlertTimer() {
     clearTimeout(qrTimeout);
+    qrTimeout = null;
     if (noQrModalShown) return; // Only show once!
     
     // Check if we are currently on screen-scan and mode is qr
@@ -2754,20 +2755,18 @@ let noQrModalShown = lsGet('no_qr_modal_shown') === '1';
 
   function openNoQRAlert() {
     document.getElementById('alert-no-qr').classList.add('show');
-  }
-
-  function closeNoQRAlert() {
-    document.getElementById('alert-no-qr').classList.remove('show');
-    // Dismiss permanently once seen/interacted with
+    // Označ jako zobrazené hned při otevření – modál se ukáže jen jednou
     lsSet('no_qr_modal_shown', '1');
     noQrModalShown = true;
+  }
+
+  // Pouze skryje modál – NEoznačuje jako zobrazené (volá se i defenzivně při navigaci)
+  function closeNoQRAlert() {
+    document.getElementById('alert-no-qr').classList.remove('show');
   }
 
   function switchToOCR() {
-    document.getElementById('alert-no-qr').classList.remove('show');
-    // Dismiss permanently once seen/interacted with
-    lsSet('no_qr_modal_shown', '1');
-    noQrModalShown = true;
+    closeNoQRAlert();
     setMode('inv');
   }
 
