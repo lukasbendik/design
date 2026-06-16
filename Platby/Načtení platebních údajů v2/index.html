@@ -946,6 +946,7 @@
     display: flex;
     align-items: center;
     gap: 8px;
+    white-space: nowrap;
   }
   .loading-badge::after {
     content: '';
@@ -954,6 +955,28 @@
     border-top-color: transparent;
     border-radius: 50%;
     animation: loading-spin 0.8s infinite linear;
+  }
+  .warning-badge {
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    width: calc(100% - 32px);
+    background: rgba(45, 45, 45, 0.95);
+    color: #FFF;
+    font-size: 12.5px;
+    font-weight: 500;
+    border-radius: 8px;
+    padding: 10px 12px;
+    line-height: 1.35;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    z-index: 10;
+    box-sizing: border-box;
+  }
+  .warning-icon {
+    flex-shrink: 0;
   }
   @keyframes loading-spin {
     to { transform: rotate(360deg); }
@@ -1323,6 +1346,32 @@
     }
   }
   
+  @keyframes fall-down-acc {
+    0% {
+      opacity: 0;
+      transform: translate(-50%, -50%) scale(0.8);
+    }
+    15% {
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1.05);
+    }
+    30% {
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1);
+    }
+    85% {
+      opacity: 1;
+      transform: translate(-50%, calc(-50% + 280px)) scale(0.95);
+    }
+    100% {
+      opacity: 0;
+      transform: translate(-50%, calc(-50% + 325px)) scale(0.85);
+    }
+  }
+
+  .falling-value.animate-acc {
+    animation: fall-down-acc 1.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  }
   .falling-value.animate-amt {
     animation: fall-down-amt 1.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
   }
@@ -1675,10 +1724,16 @@
     </div>
     
     <div class="loading-footer" style="background: #F4F4F4; border-top: none; padding: 16px 20px 24px; display: flex; flex-direction: column; gap: 14px;">
-      <!-- Field 1: Z účtu (active from start) -->
-      <div id="loading-field-acc" class="loading-footer-field active">
-        <div style="font-size: 12px; color: #8E8E93; font-weight: 500;">Z účtu</div>
-        <div class="loading-detected-box">123456789/0100</div>
+      <!-- Field 1: Z účtu (skeleton initially, then active) -->
+      <div id="loading-field-acc" class="loading-footer-field">
+        <div class="skeleton-group">
+          <div class="skeleton-line skeleton-label" style="margin-top: 2px;"></div>
+          <div class="skeleton-line skeleton-val" style="margin-top: 6px;"></div>
+        </div>
+        <div class="real-content" style="display: none;">
+          <div style="font-size: 12px; color: #8E8E93; font-weight: 500;">Z účtu</div>
+          <div class="loading-detected-box">123456789/0100</div>
+        </div>
       </div>
       
       <!-- Field 2: Částka (skeleton initially, then active) -->
@@ -1716,14 +1771,19 @@
     </div>
     
     <!-- Dark viewport containing the statement with warning badge -->
-    <div class="ocr-loading-body" style="height: 330px; flex: none;">
+    <div class="ocr-loading-body" style="height: 380px; flex: none;">
       <!-- Warning badge at the top -->
-      <div class="loading-badge" style="background: rgba(45, 45, 45, 0.95); width: calc(100% - 32px); font-size: 12px; border-radius: 8px; text-align: center; padding: 10px 12px; line-height: 1.35; position: absolute; top: 16px; left: 16px; transform: none; display: flex; align-items: center; justify-content: center; color: #FFF; font-weight: 500;">
+      <div class="warning-badge">
+        <svg class="warning-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#FF9500" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"></circle>
+          <line x1="12" y1="8" x2="12" y2="12"></line>
+          <line x1="12" y1="16" x2="12.01" y2="16"></line>
+        </svg>
         Načtené údaje nemusí být správné. Věnujte pozornost kontrole.
       </div>
       
       <!-- Simulated Statement Card -->
-      <div class="sim-kb-statement" style="transform: scale(0.85); margin-top: 30px;">
+      <div class="sim-kb-statement" style="transform: scale(0.95); margin-top: 36px;">
         <div class="stmt-header">
           <div class="stmt-logo">
             <div class="stmt-logo-sq">KB</div>
@@ -1767,32 +1827,97 @@
       </div>
     </div>
     
-    <div class="scroll" style="background: #F4F4F4; padding: 20px 24px;">
-      <!-- Results text blocks on gray background -->
-      <div style="margin-bottom: 20px;">
-        <div style="font-size: 13px; color: #8E8E93; font-weight: 500;">Z účtu</div>
-        <div style="font-size: 20px; color: #1C1C1E; font-weight: 700; margin-top: 4px;" id="ocr-success-from-acc">123456789/0100</div>
+    <div class="scroll" style="background: #F4F4F4; padding: 12px 20px; overflow: hidden; flex: 1;">
+      <!-- Results text blocks on gray background - Compact grid -->
+      <div style="margin-bottom: 8px;">
+        <div style="font-size: 11px; color: #8E8E93; font-weight: 500; text-transform: uppercase; letter-spacing: 0.5px;">Z účtu</div>
+        <div style="font-size: 16px; color: #1C1C1E; font-weight: 700; margin-top: 2px;" id="ocr-success-from-acc">123456789/0100</div>
       </div>
-      <div style="margin-bottom: 20px;">
-        <div style="font-size: 13px; color: #8E8E93; font-weight: 500;">Částka</div>
-        <div style="font-size: 20px; color: #1C1C1E; font-weight: 700; margin-top: 4px;" id="ocr-success-amount">100 Kč</div>
-      </div>
-      <div style="margin-bottom: 20px;">
-        <div style="font-size: 13px; color: #8E8E93; font-weight: 500;">Variabilní symbol</div>
-        <div style="font-size: 20px; color: #1C1C1E; font-weight: 700; margin-top: 4px;" id="ocr-success-vs">987564566778</div>
+      <div style="display: flex; gap: 20px;">
+        <div style="flex: 1;">
+          <div style="font-size: 11px; color: #8E8E93; font-weight: 500; text-transform: uppercase; letter-spacing: 0.5px;">Částka</div>
+          <div style="font-size: 16px; color: #1C1C1E; font-weight: 700; margin-top: 2px;" id="ocr-success-amount">100 Kč</div>
+        </div>
+        <div style="flex: 1.2;">
+          <div style="font-size: 11px; color: #8E8E93; font-weight: 500; text-transform: uppercase; letter-spacing: 0.5px;">Variabilní symbol</div>
+          <div style="font-size: 16px; color: #1C1C1E; font-weight: 700; margin-top: 2px;" id="ocr-success-vs">987564566778</div>
+        </div>
       </div>
     </div>
     
-    <div class="bottom-bar" style="background: #F4F4F4; border-top: none; padding: 16px 20px 24px;">
-      <button class="primary-btn red" style="margin-bottom: 10px;" onclick="submitOCRSuccess()">K platbě</button>
-      <button class="secondary-btn-outline" style="background:#FFF; border: 1px solid #1C1C1E;" onclick="go('screen-newpayment-edit')">Upravit údaje</button>
+    <div class="bottom-bar" style="background: #F4F4F4; border-top: none; padding: 8px 20px 16px;">
+      <button class="primary-btn red" style="margin-bottom: 8px;" onclick="submitOCRSuccess()">K platbě</button>
+      <button class="secondary-btn-outline" style="background:#FFF; border: 1px solid #1C1C1E;" onclick="go('screen-newpayment-primary-edit')">Upravit údaje</button>
+    </div>
+  </section>
+
+  <!-- SCREEN 5a: Edit primary scanned payment details (Z účtu, Komu, Částka) -->
+  <section class="screen" id="screen-newpayment-primary-edit">
+    <div class="topbar white">
+      <button class="iconbtn" onclick="go('screen-ocr-success')">✕</button>
+      <div class="title" style="margin-left: 12px;">Nová platba</div>
+      <button class="iconbtn" onclick="go('screen-scan'); setMode('qr');">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/>
+          <rect x="3" y="14" width="7" height="7"/><path d="M14 14h7v3M14 18v3h7"/>
+        </svg>
+      </button>
+    </div>
+    
+    <div class="scroll" style="padding: 16px; background: #F8F9FA;">
+      <!-- Source Account Selector (clickable card) -->
+      <div class="field" onclick="openSourceAccSheet()" style="background: #FFF; border-radius: 12px; border: 1px solid #E5E5EA; padding: 14px; margin-bottom: 12px; display: flex; align-items: center; justify-content: space-between; cursor: pointer; box-shadow: var(--shadow);">
+        <div>
+          <div style="font-size: 15px; font-weight: 600; color: #1C1C1E;" id="lbl-primary-from-acc-name">Běžný účet</div>
+          <div style="font-size: 13px; color: #8E8E93; margin-top: 2px;" id="lbl-primary-from-acc-num">123456-4835477/0100</div>
+        </div>
+        <div style="color: #8E8E93; font-size: 18px;">›</div>
+      </div>
+      
+      <!-- Target Account (Komu) input box -->
+      <div class="field" style="background: #FFF; border-radius: 12px; border: 1px solid #C7C7CC; padding: 10px 14px; margin-bottom: 12px;">
+        <div class="label" style="font-size: 11px; color: #8E8E93; font-weight: 500;">Komu</div>
+        <input type="text" class="field-input-text" id="inp-primary-to-acc" value="123456789/0100" style="width: 100%; border: none; outline: none; font-size: 16px; font-weight: 500; color: #1C1C1E; background: transparent; margin-top: 4px; font-family: inherit;">
+      </div>
+      
+      <!-- Platba na kontakt bar -->
+      <div style="background:#fff; padding:14px; border-radius:12px; border:1px solid #E5E5EA; margin-bottom:12px; display:flex; align-items:center; gap:10px; box-shadow: var(--shadow);">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#E3000F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;">
+          <circle cx="12" cy="12" r="10"></circle>
+          <circle cx="12" cy="12" r="4"></circle>
+        </svg>
+        <strong style="font-size: 15px; font-weight: 600;">Platba na kontakt</strong>
+        <span style="margin-left:auto; color: #8E8E93; font-size: 18px;">›</span>
+      </div>
+      
+      <!-- Amount and Currency row -->
+      <div class="row2" style="display: flex; gap: 12px; margin-bottom: 4px;">
+        <div class="field" style="flex: 3; background: #FFF; border-radius: 12px; border: 1px solid #C7C7CC; padding: 10px 14px;">
+          <div class="label" style="font-size: 11px; color: #8E8E93; font-weight: 500;">Částka</div>
+          <input type="text" class="field-input-text" id="inp-primary-amount" value="100" style="width: 100%; border: none; outline: none; font-size: 16px; font-weight: 500; color: #1C1C1E; background: transparent; margin-top: 4px; font-family: inherit;">
+        </div>
+        <div class="field" style="flex: 1.2; background: #FFF; border-radius: 12px; border: 1px solid #C7C7CC; padding: 10px 14px; display: flex; flex-direction: column; justify-content: center; position: relative;">
+          <div class="label" style="font-size: 11px; color: #8E8E93; font-weight: 500;">Měna</div>
+          <div style="display: flex; align-items: center; justify-content: space-between; margin-top: 4px;">
+            <span style="font-size: 16px; font-weight: 500; color: #1C1C1E;">Kč</span>
+            <span style="font-size: 10px; color: #8E8E93;">▼</span>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Balance indicator -->
+      <div style="font-size: 12px; color: #8E8E93; margin-top: 4px; padding-left: 4px;" id="lbl-primary-from-acc-balance">Na účtu máte 18 063,38 Kč.</div>
+    </div>
+    
+    <div class="bottom-bar" style="padding: 16px 20px 24px;">
+      <button class="primary-btn red" onclick="submitPrimaryEditPayment()">Pokračovat</button>
     </div>
   </section>
 
   <!-- SCREEN 5: Edit scanned payment (prefilled fields) -->
   <section class="screen" id="screen-newpayment-edit">
     <div class="topbar white">
-      <button class="back-txt-btn" onclick="go('screen-ocr-success')"><span style="font-size: 20px; line-height: 1; font-weight: 300;">‹</span> Zpět</button>
+      <button class="back-txt-btn" onclick="go('screen-newpayment-primary-edit')"><span style="font-size: 20px; line-height: 1; font-weight: 300;">‹</span> Zpět</button>
       <div class="title" style="margin-left: 12px;">Nová platba</div>
       <div style="width: 44px;"></div>
     </div>
@@ -1884,7 +2009,7 @@
   </section>
 
   <!-- SCREEN 7: Success -->
-  <section class="screen" id="screen-success" style="background: #F4F4F4; display: none; flex-direction: column; height: 100%;">
+  <section class="screen" id="screen-success" style="background: #F4F4F4; flex-direction: column; height: 100%;">
     <div class="topbar white" style="background: #F4F4F4; border-bottom: none; display: flex; justify-content: flex-start; padding: 0 16px; height: 56px; align-items: center;">
       <button class="cam-close-txt" style="color: var(--text); font-size: 15px; font-weight: 500;" onclick="go('screen-dashboard')">Zavřít</button>
     </div>
@@ -1983,6 +2108,41 @@
       <div class="sheet-actions">
         <button class="primary-btn red" onclick="acceptConsent()">Souhlasím</button>
         <button class="secondary-btn-outline" style="border: 1px solid #1A1A1A;" onclick="closeConsentSheet()">Zavřít</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4. Bottom Sheet: Select Source Account -->
+  <div class="sheet-overlay" id="sheet-source-acc">
+    <div class="bottom-sheet">
+      <div class="sheet-handle"></div>
+      <button class="sheet-close-btn" onclick="closeSourceAccSheet()">✕</button>
+      <h3 class="sheet-title">Vyberte účet</h3>
+      <div class="sheet-scroll-content">
+        <!-- Option 1: Běžný účet -->
+        <div style="padding: 14px 16px; border-bottom: 1px solid #E5E5EA; display: flex; justify-content: space-between; align-items: center; cursor: pointer;" onclick="selectPrimarySourceAccount('acc1')">
+          <div>
+            <div style="font-size: 15px; font-weight: 600; color: #1C1C1E; text-align: left;">Běžný účet</div>
+            <div style="font-size: 13px; color: #8E8E93; margin-top: 2px;">123456-4835477/0100</div>
+          </div>
+          <div style="font-size: 16px; font-weight: 600; color: #1C1C1E;">18 063,38 Kč</div>
+        </div>
+        <!-- Option 2: Běžný účet 2 -->
+        <div style="padding: 14px 16px; border-bottom: 1px solid #E5E5EA; display: flex; justify-content: space-between; align-items: center; cursor: pointer;" onclick="selectPrimarySourceAccount('acc2')">
+          <div>
+            <div style="font-size: 15px; font-weight: 600; color: #1C1C1E; text-align: left;">Běžný účet 2</div>
+            <div style="font-size: 13px; color: #8E8E93; margin-top: 2px;">326683762/0100</div>
+          </div>
+          <div style="font-size: 16px; font-weight: 600; color: #1C1C1E;">48 490,20 Kč</div>
+        </div>
+        <!-- Option 3: Spoření -->
+        <div style="padding: 14px 16px; display: flex; justify-content: space-between; align-items: center; cursor: pointer;" onclick="selectPrimarySourceAccount('sav')">
+          <div>
+            <div style="font-size: 15px; font-weight: 600; color: #1C1C1E; text-align: left;">Spoření</div>
+            <div style="font-size: 13px; color: #8E8E93; margin-top: 2px;">326683764/0100</div>
+          </div>
+          <div style="font-size: 16px; font-weight: 600; color: #1C1C1E;">11 490,20 Kč</div>
+        </div>
       </div>
     </div>
   </div>
@@ -2123,10 +2283,15 @@ let noQrModalShown = lsGet('no_qr_modal_shown') === '1';
       closeNoQRAlert();
       closeOCRFailAlert();
       closeConsentSheet();
+      closeSourceAccSheet();
     }
     
     if (id === 'screen-ocr-success') {
       updateOCRSuccessUI();
+    }
+    
+    if (id === 'screen-newpayment-primary-edit') {
+      populatePrimaryEditFields();
     }
     
     if (id === 'screen-newpayment-edit') {
@@ -2332,6 +2497,7 @@ let noQrModalShown = lsGet('no_qr_modal_shown') === '1';
     if (accBox) accBox.textContent = fromAcc;
     
     // Hide real contents, show skeletons
+    document.getElementById('loading-field-acc').classList.remove('active');
     document.getElementById('loading-field-amt').classList.remove('active');
     document.getElementById('loading-field-vs').classList.remove('active');
     
@@ -2343,6 +2509,22 @@ let noQrModalShown = lsGet('no_qr_modal_shown') === '1';
       accTr.parentElement.style.borderRadius = '2px';
       accTr.parentElement.style.padding = '2px';
     }
+
+    // Timer 0.5s: Trigger falling animation for Z účtu
+    ocrTimers.push(setTimeout(() => {
+      const fallingAcc = document.createElement('div');
+      fallingAcc.className = 'falling-value animate-acc';
+      fallingAcc.textContent = '123456789/0100';
+      fallingAcc.style.left = '35%';
+      fallingAcc.style.top = '190px';
+      document.querySelector('.ocr-loading-body').appendChild(fallingAcc);
+    }, 500));
+
+    // Timer 1.8s: Land account number
+    ocrTimers.push(setTimeout(() => {
+      document.getElementById('loading-field-acc').classList.add('active');
+      document.querySelectorAll('.falling-value.animate-acc').forEach(el => el.remove());
+    }, 1800));
 
     // Timer 1: Highlight amount and trigger falling animation at 3.0s
     ocrTimers.push(setTimeout(() => {
@@ -2434,6 +2616,81 @@ let noQrModalShown = lsGet('no_qr_modal_shown') === '1';
   function submitOCRSuccess() {
     updateSummaryScreen(false);
     go('screen-review-ocr');
+  }
+
+  // Ovládání výběru zdrojového účtu v editaci
+  function openSourceAccSheet() {
+    document.getElementById('sheet-source-acc').classList.add('show');
+  }
+  function closeSourceAccSheet() {
+    const el = document.getElementById('sheet-source-acc');
+    if (el) el.classList.remove('show');
+  }
+  function selectPrimarySourceAccount(accType) {
+    let name = 'Běžný účet';
+    let num = '123456-4835477/0100';
+    let balance = '18 063,38 Kč';
+    
+    if (accType === 'acc2') {
+      name = 'Běžný účet 2';
+      num = '326683762/0100';
+      balance = '48 490,20 Kč';
+    } else if (accType === 'sav') {
+      name = 'Spoření';
+      num = '326683764/0100';
+      balance = '11 490,20 Kč';
+    }
+    
+    document.getElementById('lbl-primary-from-acc-name').textContent = name;
+    document.getElementById('lbl-primary-from-acc-num').textContent = num;
+    document.getElementById('lbl-primary-from-acc-balance').textContent = 'Na účtu máte ' + balance + '.';
+    
+    lsSet('payment_from_acc_name', name);
+    lsSet('payment_from_acc', name + '<br>' + num);
+    lsSet('payment_from_acc_balance', balance);
+    
+    closeSourceAccSheet();
+  }
+
+  function populatePrimaryEditFields() {
+    let fromAccName = lsGet('payment_from_acc_name') || 'Běžný účet';
+    let fromAccNum = lsGet('payment_from_acc') || '123456-4835477/0100';
+    let fromAccBal = lsGet('payment_from_acc_balance') || '18 063,38 Kč';
+    
+    if (fromAccNum.includes('<br>')) {
+      const parts = fromAccNum.split('<br>');
+      fromAccName = parts[0];
+      fromAccNum = parts[1];
+    } else if (fromAccNum === '123456789/0100') {
+      fromAccName = 'Běžný účet';
+      fromAccNum = '123456-4835477/0100';
+      fromAccBal = '18 063,38 Kč';
+    }
+    
+    document.getElementById('lbl-primary-from-acc-name').textContent = fromAccName;
+    document.getElementById('lbl-primary-from-acc-num').textContent = fromAccNum;
+    document.getElementById('lbl-primary-from-acc-balance').textContent = 'Na účtu máte ' + fromAccBal + '.';
+    
+    let toAcc = lsGet('payment_to_acc') || '987-654321/0100';
+    document.getElementById('inp-primary-to-acc').value = toAcc;
+    
+    let amt = lsGet('payment_amount') || '100 Kč';
+    amt = amt.replace(' Kč', '').replace(',00', '').trim();
+    document.getElementById('inp-primary-amount').value = amt;
+  }
+
+  function submitPrimaryEditPayment() {
+    const fromAccName = document.getElementById('lbl-primary-from-acc-name').textContent;
+    const fromAccNum = document.getElementById('lbl-primary-from-acc-num').textContent;
+    const toAcc = document.getElementById('inp-primary-to-acc').value;
+    const amt = document.getElementById('inp-primary-amount').value;
+    
+    lsSet('payment_from_acc_name', fromAccName);
+    lsSet('payment_from_acc', fromAccName + '<br>' + fromAccNum);
+    lsSet('payment_to_acc', toAcc);
+    lsSet('payment_amount', amt + ' Kč');
+    
+    go('screen-newpayment-edit');
   }
 
   // Formulář a editace
