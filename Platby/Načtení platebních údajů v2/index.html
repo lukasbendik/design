@@ -1927,9 +1927,9 @@
             <span class="chat-name">Petr Novák</span>
           </div>
           <div class="chat-bubble">
-            Ahoj, pošli mi prosím za lístky 🙏<br>
+            Ahoj, zaplať prosím dětský tábor 🙏<br>
             Č. účtu: 123456789/0100<br>
-            Částka: 100 Kč<br>
+            Částka: 3 500 Kč<br>
             VS: 987564566778
           </div>
           <div class="chat-time">9:41</div>
@@ -1998,7 +1998,7 @@
         <div class="value">ABC s.r.o.</div>
       </div>
       <div class="row2">
-        <div class="field highlight"><div class="label">Částka</div><div class="value">100,00 Kč</div></div>
+        <div class="field highlight"><div class="label">Částka</div><div class="value">3 500,00 Kč</div></div>
         <div class="field highlight"><div class="label">VS</div><div class="value">987564566778</div></div>
       </div>
       <div class="row2">
@@ -2011,7 +2011,7 @@
       </div>
     </div>
     <div class="bottom-bar">
-      <button class="primary-btn red" onclick="go('screen-success')">Zaplatit 100,00 Kč</button>
+      <button class="primary-btn red" onclick="go('screen-success')">Zaplatit 3 500,00 Kč</button>
     </div>
   </section>
 
@@ -2033,9 +2033,9 @@
           <span class="sim-msg-name">Petr Novák</span>
         </div>
         <div class="sim-msg-bubble">
-          <div class="sim-msg-text">Ahoj, pošli mi prosím za lístky 🙏</div>
+          <div class="sim-msg-text">Ahoj, zaplať prosím dětský tábor 🙏</div>
           <div class="stmt-tr msg-row"><span>Č. účtu</span><strong>123456789/0100</strong></div>
-          <div class="stmt-tr msg-row highlight-amount"><span>Částka</span><strong>100 Kč</strong></div>
+          <div class="stmt-tr msg-row highlight-amount"><span>Částka</span><strong>3 500 Kč</strong></div>
           <div class="stmt-tr msg-row highlight-vs"><span>VS</span><strong>987564566778</strong></div>
         </div>
         <div class="sim-msg-time">9:41</div>
@@ -2063,7 +2063,7 @@
         </div>
         <div class="real-content" style="display: none;">
           <div style="font-size: 12px; color: #8E8E93; font-weight: 500;">Částka</div>
-          <div class="loading-detected-box">100 Kč</div>
+          <div class="loading-detected-box">3 500 Kč</div>
         </div>
       </div>
 
@@ -2108,9 +2108,9 @@
           <span class="sim-msg-name">Petr Novák</span>
         </div>
         <div class="sim-msg-bubble">
-          <div class="sim-msg-text">Ahoj, pošli mi prosím za lístky 🙏</div>
+          <div class="sim-msg-text">Ahoj, zaplať prosím dětský tábor 🙏</div>
           <div class="stmt-tr msg-row highlight-acc"><span>Č. účtu</span><strong>123456789/0100</strong></div>
-          <div class="stmt-tr msg-row highlight-amount"><span>Částka</span><strong>100 Kč</strong></div>
+          <div class="stmt-tr msg-row highlight-amount"><span>Částka</span><strong>3 500 Kč</strong></div>
           <div class="stmt-tr msg-row highlight-vs"><span>VS</span><strong>987564566778</strong></div>
         </div>
         <div class="sim-msg-time">9:41</div>
@@ -2125,7 +2125,7 @@
       </div>
       <div>
         <div style="font-size: 11px; color: #8E8E93; font-weight: 500; text-transform: uppercase; letter-spacing: 0.5px;">Částka</div>
-        <div style="font-size: 16px; color: #1C1C1E; font-weight: 700; margin-top: 2px;" id="ocr-success-amount">100 Kč</div>
+        <div style="font-size: 16px; color: #1C1C1E; font-weight: 700; margin-top: 2px;" id="ocr-success-amount">3 500 Kč</div>
       </div>
       <div>
         <div style="font-size: 11px; color: #8E8E93; font-weight: 500; text-transform: uppercase; letter-spacing: 0.5px;">Variabilní symbol</div>
@@ -2181,7 +2181,7 @@
       <div class="row2" style="display: flex; gap: 12px; margin-bottom: 4px;">
         <div class="field" style="flex: 3; background: #FFF; border-radius: 12px; border: 1px solid #C7C7CC; padding: 10px 14px;">
           <div class="label" style="font-size: 11px; color: #8E8E93; font-weight: 500;">Částka</div>
-          <input type="text" class="field-input-text" id="inp-primary-amount" value="100" style="width: 100%; border: none; outline: none; font-size: 16px; font-weight: 500; color: #1C1C1E; background: transparent; margin-top: 4px; font-family: inherit;">
+          <input type="text" class="field-input-text" id="inp-primary-amount" value="3500" style="width: 100%; border: none; outline: none; font-size: 16px; font-weight: 500; color: #1C1C1E; background: transparent; margin-top: 4px; font-family: inherit;">
         </div>
         <div class="field" style="flex: 1.2; background: #FFF; border-radius: 12px; border: 1px solid #C7C7CC; padding: 10px 14px; display: flex; flex-direction: column; justify-content: center; position: relative;">
           <div class="label" style="font-size: 11px; color: #8E8E93; font-weight: 500;">Měna</div>
@@ -2829,7 +2829,7 @@ let noQrModalShown = lsGet('no_qr_modal_shown') === '1';
       // Create falling element
       const fallingAmt = document.createElement('div');
       fallingAmt.className = 'falling-value animate-amt';
-      fallingAmt.textContent = '100 Kč';
+      fallingAmt.textContent = '3 500 Kč';
       fallingAmt.style.left = '45%';
       fallingAmt.style.top = '280px';
       document.querySelector('.ocr-loading-body').appendChild(fallingAmt);
@@ -2872,7 +2872,7 @@ let noQrModalShown = lsGet('no_qr_modal_shown') === '1';
       } else {
         lsSet('payment_from_acc', '123456789/0100');
         lsSet('payment_to_acc', '987-654321/0100');
-        lsSet('payment_amount', '100 Kč');
+        lsSet('payment_amount', '3 500 Kč');
         lsSet('payment_vs', '987564566778');
         lsSet('payment_msg', '');
         lsSet('payment_desc', '');
@@ -3099,7 +3099,7 @@ let noQrModalShown = lsGet('no_qr_modal_shown') === '1';
       }
       fromAccEl.textContent = val;
     }
-    if (amtEl) amtEl.textContent = lsGet('payment_amount') || '100 Kč';
+    if (amtEl) amtEl.textContent = lsGet('payment_amount') || '3 500 Kč';
     if (vsEl) vsEl.textContent = lsGet('payment_vs') || '987564566778';
   }
 
@@ -3165,7 +3165,7 @@ let noQrModalShown = lsGet('no_qr_modal_shown') === '1';
     let toAcc = lsGet('payment_to_acc') || '987-654321/0100';
     document.getElementById('inp-primary-to-acc').value = toAcc;
     
-    let amt = lsGet('payment_amount') || '100 Kč';
+    let amt = lsGet('payment_amount') || '3 500 Kč';
     amt = amt.replace(' Kč', '').replace(',00', '').trim();
     document.getElementById('inp-primary-amount').value = amt;
   }
@@ -3290,10 +3290,10 @@ let noQrModalShown = lsGet('no_qr_modal_shown') === '1';
   }
 
   function submitQRSuccess() {
-    lsSet('payment_amount', '100,00 Kč');
+    lsSet('payment_amount', '3 500,00 Kč');
     lsSet('payment_vs', '987564566778');
     
-    let amt = '100,00 Kč';
+    let amt = '3 500,00 Kč';
     let vs = '987564566778';
     let label = 'ABC s.r.o.';
     
