@@ -112,7 +112,7 @@ h1.proto-title { font-size: 18px; color: #fff; font-weight: 600; }
 }
 
 /* SCROLL AREA */
-.scroll { flex: 1; overflow-y: auto; padding: 4px 16px 120px; -webkit-overflow-scrolling: touch; }
+.scroll { flex: 1; overflow-y: auto; padding: 4px 16px 150px; -webkit-overflow-scrolling: touch; }
 .scroll::-webkit-scrollbar { display: none; }
 
 .h-large { font-size: 26px; font-weight: 700; padding: 4px 16px 12px; line-height: 1.2; }
@@ -156,6 +156,33 @@ h1.proto-title { font-size: 18px; color: #fff; font-weight: 600; }
 .property-body .pprice { font-size: 22px; font-weight: 800; color: var(--text); }
 .property-meta { display: flex; gap: 14px; margin-top: 8px; flex-wrap: wrap; }
 .property-meta span { font-size: 12.5px; color: var(--text-2); display: flex; align-items: center; gap: 4px; }
+
+/* SREALITY DETAIL */
+.sr-topbar { display:flex; align-items:center; gap:6px; padding:6px 6px; flex-shrink:0; background:var(--bg); }
+.sr-topbar .sp { flex:1; }
+.sr-iconbtn { width:38px; height:38px; border-radius:50%; display:flex; align-items:center; justify-content:center; background:transparent; border:none; cursor:pointer; }
+.sr-iconbtn:active { background:rgba(0,0,0,.06); }
+.sr-gallery { position:relative; height:230px; background:linear-gradient(160deg,#aeb9c4 0%,#8a98a8 45%,#6f7d8d 100%); overflow:hidden; flex-shrink:0; }
+.sr-gallery .sky { position:absolute; inset:0; background:linear-gradient(180deg,#bcd2e8 0%,#dce8f2 38%,#cdd6cf 38%,#b7c2ab 100%); }
+.sr-gallery .house2 { position:absolute; left:50%; bottom:40px; transform:translateX(-50%); }
+.sr-gallery .src-tag { position:absolute; top:12px; left:12px; background:rgba(255,255,255,.95); color:#d6151f; font-weight:800; font-size:12px; padding:4px 9px; border-radius:6px; letter-spacing:.3px; z-index:2; }
+.sr-gallery .photo-count { position:absolute; bottom:12px; right:12px; background:rgba(0,0,0,.6); color:#fff; font-size:12px; font-weight:600; padding:4px 10px; border-radius:100px; z-index:2; display:flex; align-items:center; gap:5px; }
+.sr-gallery .fav { position:absolute; top:10px; right:10px; width:38px; height:38px; border-radius:50%; background:rgba(255,255,255,.92); display:flex; align-items:center; justify-content:center; z-index:2; border:none; cursor:pointer; }
+.sr-gallery .dots { position:absolute; bottom:12px; left:50%; transform:translateX(-50%); display:flex; gap:5px; z-index:2; }
+.sr-gallery .dots i { width:6px; height:6px; border-radius:50%; background:rgba(255,255,255,.55); }
+.sr-gallery .dots i.on { background:#fff; }
+.sr-price { font-size:24px; font-weight:800; padding:14px 0 2px; }
+.sr-title { font-size:16px; font-weight:600; line-height:1.35; margin-bottom:4px; }
+.sr-addr { font-size:13px; color:var(--text-2); display:flex; align-items:center; gap:5px; margin-bottom:14px; }
+.sr-params { display:grid; grid-template-columns:1fr 1fr; gap:1px; background:var(--border); border-radius:14px; overflow:hidden; margin-bottom:16px; }
+.sr-params .pp { background:var(--card); padding:11px 13px; }
+.sr-params .pp .k { font-size:11.5px; color:var(--text-2); margin-bottom:2px; }
+.sr-params .pp .v { font-size:14px; font-weight:700; }
+.sr-desc { font-size:13.5px; color:#333; line-height:1.6; }
+.sr-feat { list-style:none; margin-top:8px; }
+.sr-feat li { display:flex; gap:9px; align-items:flex-start; padding:6px 0; font-size:13.5px; color:#333; }
+.sr-feat li::before { content:''; width:6px; height:6px; border-radius:50%; background:var(--red); margin-top:7px; flex-shrink:0; }
+.hypo-hint { font-size:12px; color:var(--text-2); text-align:center; margin-bottom:8px; display:flex; align-items:center; justify-content:center; gap:6px; }
 
 /* AI badge */
 .ai-pill {
@@ -299,40 +326,79 @@ h1.proto-title { font-size: 18px; color: #fff; font-weight: 600; }
   <!-- ===== SPLASH ===== -->
   <section class="screen" id="screen-splash" data-action="enter-from-splash" data-title="Splash"></section>
 
-  <!-- ===== START / Nemovitost ze Sreality ===== -->
-  <section class="screen" id="screen-start" data-title="Vybraná nemovitost">
-    <div class="topbar">
-      <span class="title">Zajistit hypotéku</span>
+  <!-- ===== START / Detail inzerátu Sreality ===== -->
+  <section class="screen" id="screen-start" data-title="Detail nemovitosti">
+    <div class="sr-topbar">
+      <button class="sr-iconbtn" data-action="back" aria-label="Zpět">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+      </button>
+      <span class="sp"></span>
+      <button class="sr-iconbtn" data-action="noop" aria-label="Sdílet">
+        <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.6" y1="13.5" x2="15.4" y2="17.5"/><line x1="15.4" y1="6.5" x2="8.6" y2="10.5"/></svg>
+      </button>
     </div>
+
+    <div class="sr-gallery">
+      <div class="sky"></div>
+      <span class="src-tag">Sreality.cz</span>
+      <button class="fav" data-action="noop" aria-label="Uložit">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#d6151f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.8 4.6a5.5 5.5 0 00-7.8 0L12 5.6l-1-1a5.5 5.5 0 00-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 000-7.8z"/></svg>
+      </button>
+      <div class="house2">
+        <svg width="120" height="96" viewBox="0 0 120 96" fill="none">
+          <rect x="22" y="44" width="76" height="44" fill="#f3ede4" stroke="#6f5b45" stroke-width="1.5"/>
+          <path d="M14 46 L60 16 L106 46 Z" fill="#9a4a3a" stroke="#6f3528" stroke-width="1.5"/>
+          <rect x="34" y="56" width="14" height="14" fill="#9fc2dd" stroke="#5b7184" stroke-width="1.2"/>
+          <rect x="72" y="56" width="14" height="14" fill="#9fc2dd" stroke="#5b7184" stroke-width="1.2"/>
+          <rect x="54" y="64" width="12" height="24" fill="#7a5c3e" stroke="#5b4126" stroke-width="1.2"/>
+        </svg>
+      </div>
+      <div class="photo-count">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="12" cy="12" r="3"/></svg>
+        1 / 32
+      </div>
+      <div class="dots"><i class="on"></i><i></i><i></i><i></i><i></i></div>
+    </div>
+
     <div class="scroll">
-      <div class="ai-pill"><span class="ai-dot"></span> AI posouzení od KB</div>
-      <div class="h-large" style="padding-left:0; padding-right:0;">Dosáhnete na tuto nemovitost?</div>
-      <p class="lead" style="padding-left:0;">Zjistěte hned, jestli na vybraný byt dostanete hypotéku a za jakých podmínek. Bez papírů, do 2 minut.</p>
-
-      <div class="property-card">
-        <div class="property-photo">
-          <span class="src-tag">Sreality.cz</span>
-          <div class="house">
-            <svg width="92" height="92" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/><path d="M10 20v-6h4v6"/></svg>
-          </div>
-        </div>
-        <div class="property-body">
-          <div class="ptitle">Byt 2+kk, 58 m²</div>
-          <div class="paddr">Praha 9 – Vysočany, Sokolovská</div>
-          <div class="pprice" id="prop-price">6 490 000 Kč</div>
-          <div class="property-meta">
-            <span>🛏️ 2+kk</span><span>📐 58 m²</span><span>🏢 4. patro</span><span>🅿️ Garáž</span>
-          </div>
-        </div>
+      <div class="sr-price">16 670 000 Kč</div>
+      <div class="sr-title">Prodej rodinného domu 168 m², pozemek 1 182 m²</div>
+      <div class="sr-addr">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#6A6A6A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 12-9 12s-9-5-9-12a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        V Polích, Heřmanova Huť – Vlkýš · Plzeň-sever
       </div>
 
-      <div class="note-ai">
+      <div class="sr-params">
+        <div class="pp"><div class="k">Dispozice</div><div class="v">5+kk</div></div>
+        <div class="pp"><div class="k">Užitná plocha</div><div class="v">168 m²</div></div>
+        <div class="pp"><div class="k">Pozemek</div><div class="v">1 182 m²</div></div>
+        <div class="pp"><div class="k">Stav</div><div class="v">Novostavba 2025</div></div>
+        <div class="pp"><div class="k">Konstrukce</div><div class="v">Cihlová</div></div>
+        <div class="pp"><div class="k">Energ. třída</div><div class="v">B – úsporná</div></div>
+      </div>
+
+      <div class="section-label" style="margin-left:0;">O nemovitosti</div>
+      <p class="sr-desc">Novostavba rodinného domu na okraji obce s výhledem do okolí. Moderní, energeticky úsporné bydlení s veškerou infrastrukturou. Dva nadzemní podlaží, čtyři ložnice, obývací pokoj s jídelnou a kuchyní, šatna, technická místnost a dílna.</p>
+      <ul class="sr-feat">
+        <li>Tepelné čerpadlo s podlahovým vytápěním</li>
+        <li>Řízené větrání s rekuperací, krbová vložka</li>
+        <li>Garáž + 2–3 parkovací stání, zahrada</li>
+        <li>Veřejný vodovod, kanalizace, 3fázová elektřina</li>
+        <li>Vlak 1,2 km, snadný nájezd na dálnici</li>
+      </ul>
+
+      <div class="note-ai" style="margin-top:16px;">
         <span class="ni">💡</span>
-        <span>Posouzení je nezávazné a slouží jen pro vaši orientaci. Pro konečnou nabídku banka ověří vaše údaje.</span>
+        <span>Chcete vědět, jestli na dům dosáhnete? KB vám hned udělá nezávazné vstupní posouzení hypotéky.</span>
       </div>
     </div>
+
     <div class="btn-dock">
-      <button class="primary-btn" data-action="start-chat">Spustit posouzení s AI</button>
+      <div class="hypo-hint">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#6A6A6A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+        Zabezpečeno · partner Komerční banka
+      </div>
+      <button class="primary-btn" data-action="start-chat">Zajistit hypotéku</button>
     </div>
   </section>
 
@@ -370,7 +436,7 @@ h1.proto-title { font-size: 18px; color: #fff; font-weight: 600; }
           <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
         </div>
         <div class="v-title" id="verdict-title">Na nemovitost dosáhnete</div>
-        <div class="v-text" id="verdict-text">Podle zadaných údajů máte na byt 2+kk reálnou šanci získat hypotéku.</div>
+        <div class="v-text" id="verdict-text">Podle zadaných údajů máte na dům reálnou šanci získat hypotéku.</div>
       </div>
 
       <div class="card">
@@ -489,7 +555,7 @@ const LS = 'hypo__';
 /* ============================================================
    STATE
    ============================================================ */
-const PRICE = 6490000;
+const PRICE = 16670000;
 const state = {
   income: 0,        // čistý měsíční příjem domácnosti
   liabilities: 0,   // měsíční splátky stávajících závazků
@@ -565,14 +631,14 @@ const chatDock = document.getElementById('chat-dock');
 let chatStarted = false;
 
 const QUESTIONS = [
-  { key:'applicants', text:'Začneme rychlým posouzením vybraného bytu za 6 490 000 Kč. 🏡\n\nKolik vás bude o hypotéku žádat?',
+  { key:'applicants', text:'Začneme rychlým posouzením vybraného rodinného domu za 16 670 000 Kč. 🏡\n\nKolik vás bude o hypotéku žádat?',
     chips:[{l:'Sám / sama',v:1},{l:'S partnerem',v:2}] },
   { key:'income', text:'Jaký je váš čistý měsíční příjem domácnosti (po zdanění)?',
     input:'number', placeholder:'např. 65000', suffix:'Kč/měs.' },
   { key:'liabilities', text:'Máte nějaké stávající měsíční splátky (úvěry, leasing, kreditka)?',
     input:'number', placeholder:'např. 4000', suffix:'Kč/měs.', chips:[{l:'Žádné',v:0}] },
   { key:'ownFunds', text:'Kolik máte vlastních zdrojů na nákup (úspory)?\n\nBanka většinou financuje max. 90 % ceny, zbytek jdou vlastní peníze.',
-    input:'number', placeholder:'např. 1000000', suffix:'Kč', chips:[{l:'10 % ceny (649 000)',v:649000}] }
+    input:'number', placeholder:'např. 4000000', suffix:'Kč', chips:[{l:'10 % ceny (1 667 000)',v:1667000}] }
 ];
 let qIndex = 0;
 
@@ -655,8 +721,8 @@ function chatDone(){
     clearTyping();
     const c = calc();
     const msg = c.ok
-      ? 'Hotovo! 🎉 Spočítal jsem, že na byt <b>dosáhnete</b>. Odhadovaná splátka vychází na <b>'+fmt(c.payment).replace(' Kč','')+' Kč/měs.</b>\n\nUkážu vám detailní posouzení.'
-      : 'Spočítal jsem to. Na byt by to při těchto údajích bylo <b>na hraně</b> – ukážu vám detaily a co s tím lze udělat.';
+      ? 'Hotovo! 🎉 Spočítal jsem, že na dům <b>dosáhnete</b>. Odhadovaná splátka vychází na <b>'+fmt(c.payment).replace(' Kč','')+' Kč/měs.</b>\n\nUkážu vám detailní posouzení.'
+      : 'Spočítal jsem to. Na dům by to při těchto údajích bylo <b>na hraně</b> – ukážu vám detaily a co s tím lze udělat.';
     bubble('ai', msg.replace(/\n/g,'<br>'));
     chatDock.innerHTML = '';
     const row = document.createElement('div');
@@ -683,7 +749,7 @@ function startChoice(){
   typing();
   setTimeout(()=>{
     clearTyping();
-    bubble('ai', 'Dobrý den! Pomůžu vám zjistit, zda dosáhnete na byt 2+kk za 6 490 000 Kč. 🏡<br><br>Můžu si vaše příjmy a závazky <b>bezpečně načíst přímo z vaší banky</b> – stačí se přihlásit. Nebo vše vyplníte ručně. Jak chcete pokračovat?');
+    bubble('ai', 'Dobrý den! Pomůžu vám zjistit, zda dosáhnete na rodinný dům za 16 670 000 Kč. 🏡<br><br>Můžu si vaše příjmy a závazky <b>bezpečně načíst přímo z vaší banky</b> – stačí se přihlásit. Nebo vše vyplníte ručně. Jak chcete pokračovat?');
     chatDock.innerHTML = '';
     const wrap = document.createElement('div'); wrap.className='quick-chips';
     const bankBtn = document.createElement('button');
@@ -721,16 +787,16 @@ function bankLogin(){
       clearTyping();
       // simulovaná data načtená z banky
       state.applicants = 1;
-      state.income = 68000;
-      state.liabilities = 3200;
-      state.ownFunds = 1500000;
+      state.income = 165000;
+      state.liabilities = 5000;
+      state.ownFunds = 4000000;
       saveState();
       bubble('ai',
         '<b>Přihlášení ověřeno ✓</b><br>Načetl jsem tyto údaje z vašeho účtu:'+
         '<div style="margin-top:10px;border:1px solid var(--border);border-radius:12px;overflow:hidden;">'+
-          bankRow('Čistý měsíční příjem','68 000 Kč')+
-          bankRow('Stávající splátky','3 200 Kč')+
-          bankRow('Vlastní zdroje (úspory)','1 500 000 Kč', true)+
+          bankRow('Čistý měsíční příjem','165 000 Kč')+
+          bankRow('Stávající splátky','5 000 Kč')+
+          bankRow('Vlastní zdroje (úspory)','4 000 000 Kč', true)+
         '</div>'+
         '<div style="margin-top:8px;font-size:12px;color:var(--text-2);">Údaje můžete na schůzce upřesnit.</div>'
       );
@@ -784,7 +850,7 @@ function fillResult(){
     box.className = 'verdict ok';
     ico.innerHTML = '<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>';
     title.textContent = 'Na nemovitost dosáhnete';
-    text.textContent = 'Podle zadaných údajů máte na byt 2+kk reálnou šanci získat hypotéku za níže uvedených podmínek.';
+    text.textContent = 'Podle zadaných údajů máte na dům reálnou šanci získat hypotéku za níže uvedených podmínek.';
     explain.innerHTML = 'Splátku jsem spočítal z výše úvěru, sazby 5,29 % a 30leté splatnosti. Vychází na cca <b>'+dstiPct+' %</b> vašeho čistého příjmu po závazcích — banka obvykle akceptuje do 45 %.';
   } else {
     box.className = 'verdict warn';
@@ -866,7 +932,8 @@ const ACTIONS = {
   'go-meeting': ()=>{ trackEvent('result_book_meeting'); showScreen('meeting'); },
   'confirm-meeting': ()=>{ if(!(state.day && state.slot)) return; trackEvent('meeting_confirmed',{day:state.day,slot:state.slot}); showScreen('confirm'); },
   'go-start': ()=>{ trackEvent('go_start'); showScreen('start'); },
-  'add-calendar': ()=>{ trackEvent('add_calendar'); alert('Přidáno do kalendáře (demo).'); }
+  'add-calendar': ()=>{ trackEvent('add_calendar'); alert('Přidáno do kalendáře (demo).'); },
+  'noop': ()=>{}
 };
 document.body.addEventListener('click', e=>{
   const t = e.target.closest('[data-action]');
