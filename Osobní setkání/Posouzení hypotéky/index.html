@@ -200,6 +200,8 @@ h1.proto-title { font-size: 18px; color: #fff; font-weight: 600; }
   font-size: 13px; font-weight: 600; padding: 9px 14px; border-radius: 100px; cursor: pointer;
 }
 .chip:active { background: var(--ai-bg); }
+.chip.chip-bank { background: var(--ai-accent); border-color: var(--ai-accent); color: #fff; display: inline-flex; align-items: center; }
+.chip.chip-bank:active { background: #4a32b8; }
 .input-row { display: flex; gap: 8px; align-items: center; }
 .input-row input {
   flex: 1; height: 46px; border: 1px solid var(--border); border-radius: 23px;
@@ -672,7 +674,92 @@ function initChat(){
   chatStarted = true;
   chatBody.innerHTML = '';
   qIndex = 0;
-  askQuestion();
+  startChoice();
+}
+
+/* Úvodní volba: načíst data z banky vs. vyplnit ručně */
+function startChoice(){
+  chatDock.innerHTML = '';
+  typing();
+  setTimeout(()=>{
+    clearTyping();
+    bubble('ai', 'Dobrý den! Pomůžu vám zjistit, zda dosáhnete na byt 2+kk za 6 490 000 Kč. 🏡<br><br>Můžu si vaše příjmy a závazky <b>bezpečně načíst přímo z vaší banky</b> – stačí se přihlásit. Nebo vše vyplníte ručně. Jak chcete pokračovat?');
+    chatDock.innerHTML = '';
+    const wrap = document.createElement('div'); wrap.className='quick-chips';
+    const bankBtn = document.createElement('button');
+    bankBtn.className = 'chip chip-bank';
+    bankBtn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-3px;margin-right:5px;"><path d="M3 21h18"/><path d="M5 21V8l7-4 7 4v13"/><path d="M9 21v-6h6v6"/></svg>Přihlásit se do mé banky';
+    bankBtn.onclick = bankLogin;
+    const manualBtn = document.createElement('button');
+    manualBtn.className = 'chip';
+    manualBtn.textContent = 'Vyplním ručně';
+    manualBtn.onclick = ()=>{
+      bubble('user','Vyplním ručně');
+      trackEvent('chat_data_source', { source:'manual' });
+      chatDock.innerHTML = '';
+      qIndex = 0;
+      setTimeout(askQuestion, 350);
+    };
+    wrap.appendChild(bankBtn); wrap.appendChild(manualBtn);
+    chatDock.appendChild(wrap);
+    const hint = document.createElement('div'); hint.className='input-hint'; hint.textContent='Přihlášení i data jsou jen ukázkové (prototyp)';
+    chatDock.appendChild(hint);
+  }, 600);
+}
+
+/* Simulace přihlášení do banky a načtení dat */
+function bankLogin(){
+  bubble('user','Přihlásit se do mé banky');
+  trackEvent('chat_data_source', { source:'bank' });
+  chatDock.innerHTML = '';
+  typing();
+  setTimeout(()=>{
+    clearTyping();
+    bubble('ai','Otevírám zabezpečené přihlášení… 🔒');
+    typing();
+    setTimeout(()=>{
+      clearTyping();
+      // simulovaná data načtená z banky
+      state.applicants = 1;
+      state.income = 68000;
+      state.liabilities = 3200;
+      state.ownFunds = 1500000;
+      saveState();
+      bubble('ai',
+        '<b>Přihlášení ověřeno ✓</b><br>Načetl jsem tyto údaje z vašeho účtu:'+
+        '<div style="margin-top:10px;border:1px solid var(--border);border-radius:12px;overflow:hidden;">'+
+          bankRow('Čistý měsíční příjem','68 000 Kč')+
+          bankRow('Stávající splátky','3 200 Kč')+
+          bankRow('Vlastní zdroje (úspory)','1 500 000 Kč', true)+
+        '</div>'+
+        '<div style="margin-top:8px;font-size:12px;color:var(--text-2);">Údaje můžete na schůzce upřesnit.</div>'
+      );
+      chatDock.innerHTML = '';
+      const wrap = document.createElement('div'); wrap.className='quick-chips';
+      const ok = document.createElement('button'); ok.className='chip'; ok.textContent='Souhlasí, pokračovat';
+      ok.onclick = ()=>{
+        bubble('user','Souhlasí, pokračovat');
+        trackEvent('chat_bank_data_confirmed');
+        chatDock.innerHTML = '';
+        chatDone();
+      };
+      const edit = document.createElement('button'); edit.className='chip'; edit.textContent='Upravit ručně';
+      edit.onclick = ()=>{
+        bubble('user','Upravit ručně');
+        trackEvent('chat_bank_data_edit');
+        chatDock.innerHTML = '';
+        qIndex = 0;
+        setTimeout(askQuestion, 350);
+      };
+      wrap.appendChild(ok); wrap.appendChild(edit);
+      chatDock.appendChild(wrap);
+    }, 1400);
+  }, 900);
+}
+function bankRow(l,v,last){
+  return '<div style="display:flex;justify-content:space-between;padding:9px 12px;'+(last?'':'border-bottom:1px solid var(--border);')+'">'+
+    '<span style="font-size:13px;color:var(--text-2);">'+l+'</span>'+
+    '<span style="font-size:14px;font-weight:700;">'+v+'</span></div>';
 }
 
 /* ============================================================
