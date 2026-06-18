@@ -83,12 +83,6 @@ h1.proto-title { font-size: 18px; color: #fff; font-weight: 600; }
 }
 .screen.active { display: flex; }
 
-/* SPLASH */
-#screen-splash {
-  background: #E2001A url('../../assets/splash.png') center center / cover no-repeat;
-  cursor: pointer;
-}
-
 /* TOP BAR */
 .topbar {
   height: 54px;
@@ -324,8 +318,6 @@ h1.proto-title { font-size: 18px; color: #fff; font-weight: 600; }
 <div class="stage">
 
   <!-- ===== SPLASH ===== -->
-  <section class="screen" id="screen-splash" data-action="enter-from-splash" data-title="Splash"></section>
-
   <!-- ===== START / Detail inzerátu Sreality ===== -->
   <section class="screen" id="screen-start" data-title="Detail nemovitosti">
     <div class="sr-topbar">
@@ -571,8 +563,8 @@ function loadState(){ try{ const s=JSON.parse(lsGet(LS+'state')); if(s) Object.a
    ANALYTICS
    ============================================================ */
 const PROTO = 'posouzeni_hypoteky';
-const PAGE_NAMES = { splash:'splash', start:'start', chat:'chat', result:'result', meeting:'meeting', confirm:'confirm' };
-const PAGE_TITLES = { splash:'Splash', start:'Vybraná nemovitost', chat:'Chat s AI', result:'Výsledek posouzení', meeting:'Osobní schůzka', confirm:'Schůzka domluvena' };
+const PAGE_NAMES = { start:'start', chat:'chat', result:'result', meeting:'meeting', confirm:'confirm' };
+const PAGE_TITLES = { start:'Detail nemovitosti', chat:'Chat s AI', result:'Výsledek posouzení', meeting:'Osobní schůzka', confirm:'Schůzka domluvena' };
 function trackPage(id){
   const name = PAGE_NAMES[id]||id, title = PAGE_TITLES[id]||id;
   if (typeof gtag==='function') gtag('event','page_view',{ page_title:title, page_location:location.origin+location.pathname+'#'+id, page_path:'/'+name, prototype:PROTO });
@@ -584,7 +576,7 @@ function trackEvent(n,p){ if(typeof gtag==='function') gtag('event',n,Object.ass
 /* ============================================================
    ROUTING – hash + history
    ============================================================ */
-const SCREENS = ['splash','start','chat','result','meeting','confirm'];
+const SCREENS = ['start','chat','result','meeting','confirm'];
 function showScreen(id, opts){
   opts = opts || {};
   if (!SCREENS.includes(id)) id = 'start';
@@ -925,7 +917,6 @@ function fillConfirm(){
    AKCE
    ============================================================ */
 const ACTIONS = {
-  'enter-from-splash': ()=>{ trackEvent('splash_enter'); showScreen('start'); },
   'start-chat': ()=>{ trackEvent('start_assessment'); showScreen('chat'); },
   'back': ()=> history.back(),
   'back-chat': ()=>{ trackEvent('result_edit_params'); history.back(); },
@@ -949,8 +940,8 @@ document.body.addEventListener('click', e=>{
    ============================================================ */
 loadState();
 // obnova obrazovky z URL hash při refresh
-const initial = location.hash.replace('#','') || 'splash';
-const startId = SCREENS.includes(initial) ? initial : 'splash';
+const initial = location.hash.replace('#','') || 'start';
+const startId = SCREENS.includes(initial) ? initial : 'start';
 showScreen(startId, {fromPop:true});
 history.replaceState({screen:startId},'','#'+startId);
 </script>
