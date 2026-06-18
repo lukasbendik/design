@@ -1,0 +1,804 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<script>
+(function(){var H='4c129f69f551195cbc5e8b57cc5a0975b6efa1e8510573524d11df03c7d010c6',K='rozcestnik__auth';try{var p=new URLSearchParams(location.search);if(p.get('k')===H){localStorage.setItem(K,'1');p.delete('k');var q=p.toString();history.replaceState(history.state,'',location.pathname+(q?'?'+q:'')+location.hash);}if(localStorage.getItem(K)!=='1')location.replace('../../');}catch(e){}})();
+</script>
+<meta charset="UTF-8">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="robots" content="noindex, nofollow">
+<title>Posouzení hypotéky</title>
+
+<!-- Google Analytics 4 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXX"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-XXXXXXX', { send_page_view: false });
+</script>
+
+<!-- Microsoft Clarity -->
+<script type="text/javascript">
+  (function(c,l,a,r,i,t,y){
+    c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+    t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+    y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+  })(window, document, "clarity", "script", "XXXXXXX");
+</script>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+:root {
+  --red: #E3000F;
+  --red-dark: #B8000C;
+  --bg: #F4F4F4;
+  --card: #FFFFFF;
+  --text: #1A1A1A;
+  --text-2: #6A6A6A;
+  --text-3: #9A9A9A;
+  --border: #E5E5E5;
+  --green: #0E8A4F;
+  --green-bg: #E7F4EC;
+  --amber: #B8860B;
+  --amber-bg: #FBF3E0;
+  --ai-bg: #F0EEFF;
+  --ai-accent: #5B3FD6;
+  --shadow: 0 1px 3px rgba(0,0,0,0.06);
+  --radius: 16px;
+}
+html, body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+  background: #2a2a2a;
+  color: var(--text);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 24px 12px;
+  gap: 14px;
+}
+h1.proto-title { font-size: 18px; color: #fff; font-weight: 600; }
+.subtitle { color: #bdbdbd; font-size: 13px; text-align: center; max-width: 720px; line-height: 1.5; }
+
+.stage {
+  position: relative;
+  width: 390px;
+  height: 800px;
+  max-width: 100vw;
+  background: var(--bg);
+  border-radius: 40px;
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+  border: 8px solid #111;
+}
+.screen {
+  position: absolute;
+  inset: 0;
+  display: none;
+  flex-direction: column;
+  background: var(--bg);
+}
+.screen.active { display: flex; }
+
+/* SPLASH */
+#screen-splash {
+  background: #E2001A url('../../assets/splash.png') center center / cover no-repeat;
+  cursor: pointer;
+}
+
+/* TOP BAR */
+.topbar {
+  height: 54px;
+  display: flex;
+  align-items: center;
+  padding: 0 8px;
+  gap: 6px;
+  background: var(--bg);
+  flex-shrink: 0;
+}
+.topbar .title { font-size: 17px; font-weight: 600; flex: 1; text-align: left; padding-left: 4px; }
+.back-btn {
+  display: flex; align-items: center; gap: 4px;
+  background: none; border: none; cursor: pointer;
+  font-size: 17px; color: var(--text); padding: 8px 10px;
+}
+.close-link {
+  background: none; border: none; cursor: pointer;
+  font-size: 16px; color: var(--red); padding: 8px 14px; font-weight: 500;
+  align-self: flex-end;
+}
+
+/* SCROLL AREA */
+.scroll { flex: 1; overflow-y: auto; padding: 4px 16px 120px; -webkit-overflow-scrolling: touch; }
+.scroll::-webkit-scrollbar { display: none; }
+
+.h-large { font-size: 26px; font-weight: 700; padding: 4px 16px 12px; line-height: 1.2; }
+.lead { font-size: 14px; color: var(--text-2); padding: 0 16px 14px; line-height: 1.5; }
+
+/* CARDS */
+.card {
+  background: var(--card);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 16px;
+  margin-bottom: 12px;
+}
+.card-row { display: flex; justify-content: space-between; align-items: baseline; padding: 9px 0; border-bottom: 1px solid var(--border); }
+.card-row:last-child { border-bottom: none; }
+.card-row .lbl { font-size: 14px; color: var(--text-2); }
+.card-row .val { font-size: 15px; font-weight: 600; text-align: right; }
+
+/* PROPERTY (Sreality) */
+.property-card {
+  background: var(--card); border-radius: var(--radius);
+  box-shadow: var(--shadow); overflow: hidden; margin-bottom: 14px;
+}
+.property-photo {
+  height: 168px;
+  background: linear-gradient(135deg, #c9d6e3 0%, #9fb3c8 60%, #8aa0b8 100%);
+  position: relative; display: flex; align-items: flex-end;
+}
+.property-photo .src-tag {
+  position: absolute; top: 12px; left: 12px;
+  background: rgba(255,255,255,0.94); color: #d6151f; font-weight: 800;
+  font-size: 12px; padding: 4px 9px; border-radius: 6px; letter-spacing: .3px;
+}
+.property-photo .house {
+  position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+  opacity: .55;
+}
+.property-body { padding: 14px 16px 16px; }
+.property-body .ptitle { font-size: 16px; font-weight: 700; margin-bottom: 3px; }
+.property-body .paddr { font-size: 13px; color: var(--text-2); margin-bottom: 10px; }
+.property-body .pprice { font-size: 22px; font-weight: 800; color: var(--text); }
+.property-meta { display: flex; gap: 14px; margin-top: 8px; flex-wrap: wrap; }
+.property-meta span { font-size: 12.5px; color: var(--text-2); display: flex; align-items: center; gap: 4px; }
+
+/* AI badge */
+.ai-pill {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: var(--ai-bg); color: var(--ai-accent);
+  font-size: 12px; font-weight: 700; padding: 5px 11px; border-radius: 100px;
+  margin-bottom: 10px;
+}
+.ai-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--ai-accent); }
+
+/* CHAT */
+.chat-head {
+  display: flex; align-items: center; gap: 10px; padding: 8px 16px 12px;
+  border-bottom: 1px solid var(--border); flex-shrink: 0; background: var(--bg);
+}
+.chat-avatar {
+  width: 38px; height: 38px; border-radius: 50%;
+  background: linear-gradient(135deg,#6e54e0,#4226b0);
+  display: flex; align-items: center; justify-content: center; color: #fff;
+  flex-shrink: 0;
+}
+.chat-head .ch-name { font-size: 15px; font-weight: 700; }
+.chat-head .ch-sub { font-size: 12px; color: var(--green); display: flex; align-items: center; gap: 5px; }
+.chat-head .ch-sub::before { content: ''; width: 7px; height: 7px; border-radius: 50%; background: var(--green); }
+
+.chat-body { flex: 1; overflow-y: auto; padding: 16px 14px 16px; display: flex; flex-direction: column; gap: 10px; }
+.chat-body::-webkit-scrollbar { display: none; }
+.msg { max-width: 82%; padding: 11px 14px; border-radius: 18px; font-size: 14px; line-height: 1.45; white-space: pre-line; }
+.msg.ai { background: var(--card); color: var(--text); border-bottom-left-radius: 6px; align-self: flex-start; box-shadow: var(--shadow); }
+.msg.user { background: var(--red); color: #fff; border-bottom-right-radius: 6px; align-self: flex-end; }
+.msg.ai .ai-tag { display: block; font-size: 10.5px; font-weight: 700; color: var(--ai-accent); margin-bottom: 4px; letter-spacing: .4px; }
+.typing { display: flex; gap: 4px; align-items: center; padding: 14px; }
+.typing span { width: 7px; height: 7px; border-radius: 50%; background: #bbb; animation: blink 1.2s infinite both; }
+.typing span:nth-child(2){ animation-delay: .2s; } .typing span:nth-child(3){ animation-delay: .4s; }
+@keyframes blink { 0%,80%,100%{opacity:.25;} 40%{opacity:1;} }
+
+/* chat input dock */
+.chat-dock { flex-shrink: 0; padding: 10px 12px calc(10px + env(safe-area-inset-bottom)); border-top: 1px solid var(--border); background: var(--bg); }
+.quick-chips { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 10px; }
+.chip {
+  background: var(--card); border: 1.5px solid var(--ai-accent); color: var(--ai-accent);
+  font-size: 13px; font-weight: 600; padding: 9px 14px; border-radius: 100px; cursor: pointer;
+}
+.chip:active { background: var(--ai-bg); }
+.input-row { display: flex; gap: 8px; align-items: center; }
+.input-row input {
+  flex: 1; height: 46px; border: 1px solid var(--border); border-radius: 23px;
+  padding: 0 16px; font-size: 15px; background: var(--card); outline: none; color: var(--text);
+}
+.input-row input:focus { border-color: var(--ai-accent); }
+.send-btn {
+  width: 46px; height: 46px; border-radius: 50%; border: none; flex-shrink: 0;
+  background: var(--red); color: #fff; cursor: pointer; display: flex; align-items: center; justify-content: center;
+}
+.send-btn:disabled { background: #cfcfcf; }
+.input-hint { font-size: 11px; color: var(--text-3); text-align: center; margin-top: 6px; }
+
+/* RESULT */
+.verdict {
+  border-radius: var(--radius); padding: 18px 16px; margin-bottom: 14px; text-align: center;
+}
+.verdict.ok { background: var(--green-bg); }
+.verdict.warn { background: var(--amber-bg); }
+.verdict .v-ico { width: 52px; height: 52px; border-radius: 50%; margin: 0 auto 10px; display: flex; align-items: center; justify-content: center; }
+.verdict.ok .v-ico { background: var(--green); }
+.verdict.warn .v-ico { background: var(--amber); }
+.verdict .v-title { font-size: 18px; font-weight: 800; margin-bottom: 4px; }
+.verdict.ok .v-title { color: var(--green); }
+.verdict.warn .v-title { color: var(--amber); }
+.verdict .v-text { font-size: 13.5px; color: var(--text-2); line-height: 1.5; }
+
+.big-num { text-align: center; padding: 6px 0 2px; }
+.big-num .bn-val { font-size: 30px; font-weight: 800; }
+.big-num .bn-lbl { font-size: 13px; color: var(--text-2); }
+
+.section-label { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: var(--text-3); margin: 16px 4px 8px; }
+
+/* slider note */
+.note-ai {
+  background: var(--ai-bg); border-radius: 12px; padding: 12px 14px; font-size: 13px; color: #3a2b8a;
+  line-height: 1.5; margin-bottom: 12px; display: flex; gap: 9px;
+}
+.note-ai .ni { flex-shrink: 0; }
+
+/* MEETING slots */
+.branch-card { display: flex; gap: 12px; align-items: center; }
+.branch-card .b-ico { width: 42px; height: 42px; border-radius: 12px; background: var(--ai-bg); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.day-row { display: flex; gap: 8px; overflow-x: auto; padding: 2px 0 4px; margin-bottom: 12px; }
+.day-row::-webkit-scrollbar { display: none; }
+.day {
+  min-width: 64px; padding: 10px 0; border: 1.5px solid var(--border); border-radius: 14px;
+  background: var(--card); text-align: center; cursor: pointer; flex-shrink: 0;
+}
+.day.active { border-color: var(--red); background: #fff5f5; }
+.day .d-dow { font-size: 11px; color: var(--text-2); text-transform: uppercase; }
+.day .d-num { font-size: 18px; font-weight: 700; }
+.day .d-mon { font-size: 11px; color: var(--text-3); }
+.slots { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+.slot {
+  padding: 11px 0; border: 1.5px solid var(--border); border-radius: 12px; background: var(--card);
+  text-align: center; font-size: 14px; font-weight: 600; cursor: pointer;
+}
+.slot.active { border-color: var(--red); background: var(--red); color: #fff; }
+
+/* checklist */
+.checklist { list-style: none; }
+.checklist li { display: flex; gap: 10px; align-items: flex-start; padding: 8px 0; font-size: 14px; line-height: 1.4; }
+.checklist li .ck { width: 22px; height: 22px; border-radius: 50%; background: var(--green-bg); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+
+/* SUCCESS */
+.success-wrap { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 24px; text-align: center; }
+.success-ico { width: 84px; height: 84px; border-radius: 50%; background: var(--green-bg); display: flex; align-items: center; justify-content: center; margin-bottom: 18px; }
+.success-wrap h2 { font-size: 22px; font-weight: 800; margin-bottom: 8px; }
+.success-wrap p { font-size: 14px; color: var(--text-2); line-height: 1.5; max-width: 300px; }
+
+/* BUTTONS dock */
+.btn-dock { position: absolute; left: 0; right: 0; bottom: 0; padding: 12px 16px calc(14px + env(safe-area-inset-bottom)); background: linear-gradient(to top, var(--bg) 70%, transparent); display: flex; flex-direction: column; gap: 9px; }
+.primary-btn {
+  width: 100%; height: 52px; border: none; border-radius: 26px; background: var(--red); color: #fff;
+  font-size: 16px; font-weight: 700; cursor: pointer;
+}
+.primary-btn:disabled { background: #cfcfcf; }
+.primary-btn:active:not(:disabled) { background: var(--red-dark); }
+.secondary-btn {
+  width: 100%; height: 50px; border: 1.5px solid var(--border); border-radius: 25px; background: var(--card);
+  color: var(--text); font-size: 15px; font-weight: 600; cursor: pointer;
+}
+
+.hint { color: #bdbdbd; font-size: 12px; text-align: center; max-width: 700px; }
+.hint code { background:#444; padding:1px 5px; border-radius:4px; }
+</style>
+</head>
+<body>
+<h1 class="proto-title">Posouzení hypotéky — AI vstupní posouzení</h1>
+<p class="subtitle">Uživatel má vybranou nemovitost a chce hned vědět, zda na ni dosáhne a za jakých podmínek. AI udělá vstupní posouzení a připraví podklady pro osobní schůzku s poradcem.</p>
+
+<div class="stage">
+
+  <!-- ===== SPLASH ===== -->
+  <section class="screen" id="screen-splash" data-action="enter-from-splash" data-title="Splash"></section>
+
+  <!-- ===== START / Nemovitost ze Sreality ===== -->
+  <section class="screen" id="screen-start" data-title="Vybraná nemovitost">
+    <div class="topbar">
+      <span class="title">Zajistit hypotéku</span>
+    </div>
+    <div class="scroll">
+      <div class="ai-pill"><span class="ai-dot"></span> AI posouzení od KB</div>
+      <div class="h-large" style="padding-left:0; padding-right:0;">Dosáhnete na tuto nemovitost?</div>
+      <p class="lead" style="padding-left:0;">Zjistěte hned, jestli na vybraný byt dostanete hypotéku a za jakých podmínek. Bez papírů, do 2 minut.</p>
+
+      <div class="property-card">
+        <div class="property-photo">
+          <span class="src-tag">Sreality.cz</span>
+          <div class="house">
+            <svg width="92" height="92" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/><path d="M10 20v-6h4v6"/></svg>
+          </div>
+        </div>
+        <div class="property-body">
+          <div class="ptitle">Byt 2+kk, 58 m²</div>
+          <div class="paddr">Praha 9 – Vysočany, Sokolovská</div>
+          <div class="pprice" id="prop-price">6 490 000 Kč</div>
+          <div class="property-meta">
+            <span>🛏️ 2+kk</span><span>📐 58 m²</span><span>🏢 4. patro</span><span>🅿️ Garáž</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="note-ai">
+        <span class="ni">💡</span>
+        <span>Posouzení je nezávazné a slouží jen pro vaši orientaci. Pro konečnou nabídku banka ověří vaše údaje.</span>
+      </div>
+    </div>
+    <div class="btn-dock">
+      <button class="primary-btn" data-action="start-chat">Spustit posouzení s AI</button>
+    </div>
+  </section>
+
+  <!-- ===== CHAT s AI ===== -->
+  <section class="screen" id="screen-chat" data-title="Chat s AI poradcem">
+    <div class="chat-head">
+      <button class="back-btn" style="padding:8px 6px;" data-action="back" aria-label="Zpět">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+      </button>
+      <div class="chat-avatar">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a4 4 0 014 4v2a4 4 0 01-8 0V6a4 4 0 014-4z"/><path d="M5 21v-1a7 7 0 0114 0v1"/></svg>
+      </div>
+      <div style="flex:1;">
+        <div class="ch-name">KB asistent hypoték</div>
+        <div class="ch-sub">online</div>
+      </div>
+    </div>
+    <div class="chat-body" id="chat-body"></div>
+    <div class="chat-dock" id="chat-dock"></div>
+  </section>
+
+  <!-- ===== VÝSLEDEK posouzení ===== -->
+  <section class="screen" id="screen-result" data-title="Výsledek posouzení">
+    <div class="topbar">
+      <button class="back-btn" data-action="back">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+        Zpět
+      </button>
+    </div>
+    <div class="scroll">
+      <div class="ai-pill"><span class="ai-dot"></span> Vstupní posouzení AI</div>
+
+      <div class="verdict ok" id="verdict-box">
+        <div class="v-ico" id="verdict-ico">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+        </div>
+        <div class="v-title" id="verdict-title">Na nemovitost dosáhnete</div>
+        <div class="v-text" id="verdict-text">Podle zadaných údajů máte na byt 2+kk reálnou šanci získat hypotéku.</div>
+      </div>
+
+      <div class="card">
+        <div class="big-num">
+          <div class="bn-val" id="r-payment">— Kč<span style="font-size:15px;font-weight:600;color:var(--text-2);"> / měs.</span></div>
+          <div class="bn-lbl">Odhadovaná měsíční splátka</div>
+        </div>
+      </div>
+
+      <div class="section-label">Parametry hypotéky</div>
+      <div class="card" id="r-params">
+        <div class="card-row"><span class="lbl">Cena nemovitosti</span><span class="val" id="r-price">—</span></div>
+        <div class="card-row"><span class="lbl">Vlastní zdroje</span><span class="val" id="r-own">—</span></div>
+        <div class="card-row"><span class="lbl">Výše úvěru</span><span class="val" id="r-loan">—</span></div>
+        <div class="card-row"><span class="lbl">LTV (zástava)</span><span class="val" id="r-ltv">—</span></div>
+        <div class="card-row"><span class="lbl">Úroková sazba (od)</span><span class="val" id="r-rate">5,29 % p.a.</span></div>
+        <div class="card-row"><span class="lbl">Doba splácení</span><span class="val" id="r-years">30 let</span></div>
+        <div class="card-row"><span class="lbl">Fixace</span><span class="val">5 let</span></div>
+      </div>
+
+      <div class="note-ai">
+        <span class="ni">🤖</span>
+        <span id="ai-explain">Splátku jsem spočítal z výše úvěru, sazby 5,29 % a 30leté splatnosti. Vychází na cca <b>33 %</b> vašeho čistého příjmu po závazcích — banka obvykle akceptuje do 45 %.</span>
+      </div>
+
+      <div class="section-label">Co dál</div>
+      <div class="note-ai" style="background:#fff; box-shadow:var(--shadow); color:var(--text);">
+        <span class="ni">📅</span>
+        <span>Domluvte si osobní schůzku s hypotečním poradcem. AI mu předá všechny vaše údaje, takže schůzka bude rychlá a věcná.</span>
+      </div>
+    </div>
+    <div class="btn-dock">
+      <button class="primary-btn" data-action="go-meeting">Sjednat osobní schůzku</button>
+      <button class="secondary-btn" data-action="back-chat">Upravit parametry v chatu</button>
+    </div>
+  </section>
+
+  <!-- ===== SCHŮZKA ===== -->
+  <section class="screen" id="screen-meeting" data-title="Osobní schůzka">
+    <div class="topbar">
+      <button class="back-btn" data-action="back">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+        Zpět
+      </button>
+    </div>
+    <div class="scroll">
+      <div class="h-large" style="padding-left:0;">Osobní schůzka s poradcem</div>
+      <p class="lead" style="padding-left:0;">Vyberte pobočku a termín. Hypoteční poradce bude mít připravené všechny vaše podklady z posouzení.</p>
+
+      <div class="section-label">Pobočka</div>
+      <div class="card branch-card">
+        <div class="b-ico">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#5B3FD6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18"/><path d="M5 21V8l7-5 7 5v13"/><path d="M9 21v-6h6v6"/></svg>
+        </div>
+        <div style="flex:1;">
+          <div style="font-weight:700;font-size:15px;">KB Praha – Vysočany</div>
+          <div style="font-size:13px;color:var(--text-2);">Sokolovská 192 · 1,2 km od nemovitosti</div>
+        </div>
+      </div>
+
+      <div class="section-label">Termín</div>
+      <div class="day-row" id="day-row"></div>
+      <div class="slots" id="slot-grid"></div>
+
+      <div class="section-label">Poradce bude mít připraveno</div>
+      <div class="card">
+        <ul class="checklist">
+          <li><span class="ck"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#0E8A4F" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>Vybraná nemovitost a její cena</li>
+          <li><span class="ck"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#0E8A4F" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>Vaše příjmy, závazky a vlastní zdroje</li>
+          <li><span class="ck"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#0E8A4F" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>Předběžný výpočet hypotéky a splátky</li>
+          <li><span class="ck"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#0E8A4F" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>Seznam dokumentů, které máte přinést</li>
+        </ul>
+      </div>
+    </div>
+    <div class="btn-dock">
+      <button class="primary-btn" id="meeting-btn" data-action="confirm-meeting" disabled>Vyberte termín</button>
+    </div>
+  </section>
+
+  <!-- ===== POTVRZENÍ ===== -->
+  <section class="screen" id="screen-confirm" data-title="Schůzka domluvena">
+    <button class="close-link" data-action="go-start">Zavřít</button>
+    <div class="success-wrap">
+      <div class="success-ico">
+        <svg width="42" height="42" viewBox="0 0 24 24" fill="none" stroke="#0E8A4F" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+      </div>
+      <h2>Schůzka domluvena</h2>
+      <p id="confirm-text">Těšíme se na vás. Poradce má od AI připravené všechny podklady.</p>
+
+      <div class="card" style="width:100%; margin-top:22px; text-align:left;">
+        <div class="card-row"><span class="lbl">Termín</span><span class="val" id="c-when">—</span></div>
+        <div class="card-row"><span class="lbl">Pobočka</span><span class="val">Praha – Vysočany</span></div>
+        <div class="card-row"><span class="lbl">Poradce</span><span class="val">Jana Marková</span></div>
+        <div class="card-row"><span class="lbl">Odhad. splátka</span><span class="val" id="c-payment">—</span></div>
+      </div>
+    </div>
+    <div class="btn-dock">
+      <button class="primary-btn" data-action="add-calendar">Přidat do kalendáře</button>
+      <button class="secondary-btn" data-action="go-start">Hotovo</button>
+    </div>
+  </section>
+
+</div>
+
+<p class="hint">Tip: funguje navigace <code>zpět</code> v prohlížeči i v iOS gestech. Každá obrazovka má vlastní <code>#hash</code>.</p>
+
+<script>
+/* ============================================================
+   localStorage helpers (sandbox-safe pro Claude app iframe)
+   ============================================================ */
+function lsSet(k,v){ try{ localStorage.setItem(k,v); }catch(e){} }
+function lsGet(k){ try{ return localStorage.getItem(k); }catch(e){ return null; } }
+function lsRemove(k){ try{ localStorage.removeItem(k); }catch(e){} }
+const LS = 'hypo__';
+
+/* ============================================================
+   STATE
+   ============================================================ */
+const PRICE = 6490000;
+const state = {
+  income: 0,        // čistý měsíční příjem domácnosti
+  liabilities: 0,   // měsíční splátky stávajících závazků
+  ownFunds: 0,      // vlastní zdroje
+  applicants: 1,
+  day: '',          // index dne
+  slot: ''          // čas
+};
+function saveState(){ lsSet(LS+'state', JSON.stringify(state)); }
+function loadState(){ try{ const s=JSON.parse(lsGet(LS+'state')); if(s) Object.assign(state,s); }catch(e){} }
+
+/* ============================================================
+   ANALYTICS
+   ============================================================ */
+const PROTO = 'posouzeni_hypoteky';
+const PAGE_NAMES = { splash:'splash', start:'start', chat:'chat', result:'result', meeting:'meeting', confirm:'confirm' };
+const PAGE_TITLES = { splash:'Splash', start:'Vybraná nemovitost', chat:'Chat s AI', result:'Výsledek posouzení', meeting:'Osobní schůzka', confirm:'Schůzka domluvena' };
+function trackPage(id){
+  const name = PAGE_NAMES[id]||id, title = PAGE_TITLES[id]||id;
+  if (typeof gtag==='function') gtag('event','page_view',{ page_title:title, page_location:location.origin+location.pathname+'#'+id, page_path:'/'+name, prototype:PROTO });
+  if (typeof clarity==='function'){ clarity('set','screen',name); clarity('set','prototype',PROTO); clarity('event','page_view_'+name); }
+  document.title = title + ' · Posouzení hypotéky';
+}
+function trackEvent(n,p){ if(typeof gtag==='function') gtag('event',n,Object.assign({prototype:PROTO},p||{})); if(typeof clarity==='function') clarity('event',n); }
+
+/* ============================================================
+   ROUTING – hash + history
+   ============================================================ */
+const SCREENS = ['splash','start','chat','result','meeting','confirm'];
+function showScreen(id, opts){
+  opts = opts || {};
+  if (!SCREENS.includes(id)) id = 'start';
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  const el = document.getElementById('screen-'+id);
+  if (el) el.classList.add('active');
+  const sc = el && el.querySelector('.scroll'); if (sc) sc.scrollTop = 0;
+
+  const newHash = '#'+id;
+  if (!opts.fromPop && location.hash !== newHash) history.pushState({screen:id},'',newHash);
+  trackPage(id);
+
+  if (id==='chat') initChat();
+  if (id==='result') fillResult();
+  if (id==='meeting') initMeeting();
+  if (id==='confirm') fillConfirm();
+}
+window.addEventListener('popstate', e=>{
+  const id = (e.state && e.state.screen) || location.hash.replace('#','') || 'start';
+  showScreen(id, {fromPop:true});
+});
+
+/* ============================================================
+   VÝPOČET hypotéky
+   ============================================================ */
+function fmt(n){ return Math.round(n).toLocaleString('cs-CZ').replace(/ /g,' ') + ' Kč'; }
+function calc(){
+  const loan = Math.max(0, PRICE - state.ownFunds);
+  const ltv = PRICE>0 ? loan/PRICE : 0;
+  const r = 0.0529/12, n = 30*12;
+  const payment = loan>0 ? loan * r / (1 - Math.pow(1+r, -n)) : 0;
+  const disposable = Math.max(0, state.income - state.liabilities);
+  const dsti = disposable>0 ? payment/disposable : 1;     // splátka / čistý příjem po závazcích
+  // verdikt: LTV <= 90 % a DSTI <= 45 %
+  const ok = ltv <= 0.901 && dsti <= 0.45 && loan > 0;
+  return { loan, ltv, payment, disposable, dsti, ok };
+}
+
+/* ============================================================
+   CHAT – stavový automat otázek
+   ============================================================ */
+const chatBody = document.getElementById('chat-body');
+const chatDock = document.getElementById('chat-dock');
+let chatStarted = false;
+
+const QUESTIONS = [
+  { key:'applicants', text:'Začneme rychlým posouzením vybraného bytu za 6 490 000 Kč. 🏡\n\nKolik vás bude o hypotéku žádat?',
+    chips:[{l:'Sám / sama',v:1},{l:'S partnerem',v:2}] },
+  { key:'income', text:'Jaký je váš čistý měsíční příjem domácnosti (po zdanění)?',
+    input:'number', placeholder:'např. 65000', suffix:'Kč/měs.' },
+  { key:'liabilities', text:'Máte nějaké stávající měsíční splátky (úvěry, leasing, kreditka)?',
+    input:'number', placeholder:'např. 4000', suffix:'Kč/měs.', chips:[{l:'Žádné',v:0}] },
+  { key:'ownFunds', text:'Kolik máte vlastních zdrojů na nákup (úspory)?\n\nBanka většinou financuje max. 90 % ceny, zbytek jdou vlastní peníze.',
+    input:'number', placeholder:'např. 1000000', suffix:'Kč', chips:[{l:'10 % ceny (649 000)',v:649000}] }
+];
+let qIndex = 0;
+
+function bubble(role, html){
+  const d = document.createElement('div');
+  d.className = 'msg '+role;
+  d.innerHTML = (role==='ai' ? '<span class="ai-tag">KB ASISTENT</span>' : '') + html;
+  chatBody.appendChild(d);
+  chatBody.scrollTop = chatBody.scrollHeight;
+  return d;
+}
+function typing(){
+  const d = document.createElement('div');
+  d.className = 'msg ai'; d.id = 'typing-bubble';
+  d.innerHTML = '<div class="typing"><span></span><span></span><span></span></div>';
+  chatBody.appendChild(d); chatBody.scrollTop = chatBody.scrollHeight;
+}
+function clearTyping(){ const t=document.getElementById('typing-bubble'); if(t) t.remove(); }
+
+function askQuestion(){
+  if (qIndex >= QUESTIONS.length){ chatDone(); return; }
+  const q = QUESTIONS[qIndex];
+  chatDock.innerHTML = '';
+  typing();
+  setTimeout(()=>{
+    clearTyping();
+    bubble('ai', q.text.replace(/\n/g,'<br>'));
+    renderDock(q);
+  }, 650);
+}
+
+function renderDock(q){
+  chatDock.innerHTML = '';
+  if (q.chips){
+    const wrap = document.createElement('div'); wrap.className='quick-chips';
+    q.chips.forEach(c=>{
+      const b = document.createElement('button'); b.className='chip'; b.textContent=c.l;
+      b.onclick = ()=> answer(q, c.v, c.l);
+      wrap.appendChild(b);
+    });
+    chatDock.appendChild(wrap);
+  }
+  if (q.input){
+    const row = document.createElement('div'); row.className='input-row';
+    const inp = document.createElement('input');
+    inp.type = q.input==='number' ? 'tel' : 'text';
+    inp.inputMode = 'numeric';
+    inp.placeholder = q.placeholder || '';
+    const send = document.createElement('button'); send.className='send-btn';
+    send.innerHTML = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>';
+    const submit = ()=>{
+      const raw = inp.value.replace(/\s/g,'').replace(/[^0-9]/g,'');
+      if (raw==='') return;
+      const num = parseInt(raw,10);
+      answer(q, num, num.toLocaleString('cs-CZ').replace(/ /g,' ') + (q.suffix? ' '+q.suffix : ''));
+    };
+    send.onclick = submit;
+    inp.addEventListener('keydown', e=>{ if(e.key==='Enter') submit(); });
+    row.appendChild(inp); row.appendChild(send);
+    chatDock.appendChild(row);
+    const hint = document.createElement('div'); hint.className='input-hint'; hint.textContent='Zadejte hodnotu a odešlete';
+    chatDock.appendChild(hint);
+    setTimeout(()=>inp.focus(), 100);
+  }
+}
+
+function answer(q, value, label){
+  state[q.key] = value;
+  saveState();
+  bubble('user', label);
+  trackEvent('chat_answer', { field:q.key, value:value });
+  chatDock.innerHTML = '';
+  qIndex++;
+  setTimeout(askQuestion, 350);
+}
+
+function chatDone(){
+  typing();
+  setTimeout(()=>{
+    clearTyping();
+    const c = calc();
+    const msg = c.ok
+      ? 'Hotovo! 🎉 Spočítal jsem, že na byt <b>dosáhnete</b>. Odhadovaná splátka vychází na <b>'+fmt(c.payment).replace(' Kč','')+' Kč/měs.</b>\n\nUkážu vám detailní posouzení.'
+      : 'Spočítal jsem to. Na byt by to při těchto údajích bylo <b>na hraně</b> – ukážu vám detaily a co s tím lze udělat.';
+    bubble('ai', msg.replace(/\n/g,'<br>'));
+    chatDock.innerHTML = '';
+    const row = document.createElement('div');
+    const btn = document.createElement('button'); btn.className='primary-btn'; btn.style.position='static';
+    btn.textContent = 'Zobrazit výsledek posouzení';
+    btn.onclick = ()=>{ trackEvent('chat_complete', { reachable:c.ok }); showScreen('result'); };
+    row.appendChild(btn); chatDock.appendChild(row);
+    chatBody.scrollTop = chatBody.scrollHeight;
+  }, 800);
+}
+
+function initChat(){
+  // pokud už uživatel vyplnil data, otevři rovnou s rekapitulací + možností upravit
+  if (chatStarted){ return; }
+  chatStarted = true;
+  chatBody.innerHTML = '';
+  qIndex = 0;
+  askQuestion();
+}
+
+/* ============================================================
+   VÝSLEDEK
+   ============================================================ */
+function fillResult(){
+  const c = calc();
+  document.getElementById('r-price').textContent = fmt(PRICE);
+  document.getElementById('r-own').textContent = fmt(state.ownFunds);
+  document.getElementById('r-loan').textContent = fmt(c.loan);
+  document.getElementById('r-ltv').textContent = Math.round(c.ltv*100) + ' %';
+  document.getElementById('r-payment').innerHTML = fmt(c.payment).replace(' Kč','') + ' Kč<span style="font-size:15px;font-weight:600;color:var(--text-2);"> / měs.</span>';
+
+  const box = document.getElementById('verdict-box');
+  const ico = document.getElementById('verdict-ico');
+  const title = document.getElementById('verdict-title');
+  const text = document.getElementById('verdict-text');
+  const explain = document.getElementById('ai-explain');
+  const dstiPct = Math.round(c.dsti*100);
+
+  if (c.ok){
+    box.className = 'verdict ok';
+    ico.innerHTML = '<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>';
+    title.textContent = 'Na nemovitost dosáhnete';
+    text.textContent = 'Podle zadaných údajů máte na byt 2+kk reálnou šanci získat hypotéku za níže uvedených podmínek.';
+    explain.innerHTML = 'Splátku jsem spočítal z výše úvěru, sazby 5,29 % a 30leté splatnosti. Vychází na cca <b>'+dstiPct+' %</b> vašeho čistého příjmu po závazcích — banka obvykle akceptuje do 45 %.';
+  } else {
+    box.className = 'verdict warn';
+    ico.innerHTML = '<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="8" x2="12" y2="13"/><line x1="12" y1="16.5" x2="12" y2="16.5"/></svg>';
+    title.textContent = 'Bude to na hraně';
+    if (c.ltv > 0.901){
+      text.textContent = 'Vlastní zdroje pokrývají méně než 10 % ceny. Banka financuje max. 90 % — bude potřeba vyšší vlastní vklad.';
+      explain.innerHTML = 'LTV vychází na <b>'+Math.round(c.ltv*100)+' %</b>, banka jde max. do 90 %. Doplněním vlastních zdrojů nebo nižší cenou se dostanete do limitu.';
+    } else {
+      text.textContent = 'Splátka je vzhledem k příjmu po závazcích vysoká. Pomohlo by delší splácení, vyšší vklad nebo druhý žadatel.';
+      explain.innerHTML = 'Splátka tvoří cca <b>'+dstiPct+' %</b> vašeho čistého příjmu po závazcích — banka obvykle akceptuje do 45 %. Probereme možnosti na schůzce.';
+    }
+  }
+}
+
+/* ============================================================
+   SCHŮZKA – termíny
+   ============================================================ */
+const DOW = ['Ne','Po','Út','St','Čt','Pá','So'];
+const MON = ['led','úno','bře','dub','kvě','čvn','čvc','srp','zář','říj','lis','pro'];
+const SLOTS = ['9:00','10:30','13:00','14:30','16:00','17:30'];
+let meetingInit = false;
+function initMeeting(){
+  if (meetingInit) { return; }
+  meetingInit = true;
+  const dayRow = document.getElementById('day-row');
+  dayRow.innerHTML = '';
+  const today = new Date();
+  for (let i=1; i<=6; i++){
+    const d = new Date(today.getTime() + i*86400000);
+    const dow = d.getDay();
+    if (dow===0 || dow===6) continue; // přeskoč víkend
+    const el = document.createElement('div'); el.className='day'; el.dataset.day = i;
+    el.dataset.label = DOW[dow]+' '+d.getDate()+'. '+MON[d.getMonth()];
+    el.innerHTML = '<div class="d-dow">'+DOW[dow]+'</div><div class="d-num">'+d.getDate()+'</div><div class="d-mon">'+MON[d.getMonth()]+'</div>';
+    el.onclick = ()=>{
+      document.querySelectorAll('#day-row .day').forEach(x=>x.classList.remove('active'));
+      el.classList.add('active');
+      state.day = el.dataset.label; saveState(); checkMeeting();
+    };
+    dayRow.appendChild(el);
+  }
+  const grid = document.getElementById('slot-grid');
+  grid.innerHTML = '';
+  SLOTS.forEach(s=>{
+    const el = document.createElement('div'); el.className='slot'; el.textContent=s;
+    el.onclick = ()=>{
+      document.querySelectorAll('#slot-grid .slot').forEach(x=>x.classList.remove('active'));
+      el.classList.add('active');
+      state.slot = s; saveState(); checkMeeting();
+    };
+    grid.appendChild(el);
+  });
+}
+function checkMeeting(){
+  const btn = document.getElementById('meeting-btn');
+  const ok = state.day && state.slot;
+  btn.disabled = !ok;
+  btn.textContent = ok ? 'Potvrdit schůzku' : 'Vyberte termín';
+}
+
+/* ============================================================
+   POTVRZENÍ
+   ============================================================ */
+function fillConfirm(){
+  const c = calc();
+  document.getElementById('c-when').textContent = (state.day||'—') + ' · ' + (state.slot||'');
+  document.getElementById('c-payment').textContent = fmt(c.payment).replace(' Kč','') + ' Kč/měs.';
+}
+
+/* ============================================================
+   AKCE
+   ============================================================ */
+const ACTIONS = {
+  'enter-from-splash': ()=>{ trackEvent('splash_enter'); showScreen('start'); },
+  'start-chat': ()=>{ trackEvent('start_assessment'); showScreen('chat'); },
+  'back': ()=> history.back(),
+  'back-chat': ()=>{ trackEvent('result_edit_params'); history.back(); },
+  'go-meeting': ()=>{ trackEvent('result_book_meeting'); showScreen('meeting'); },
+  'confirm-meeting': ()=>{ if(!(state.day && state.slot)) return; trackEvent('meeting_confirmed',{day:state.day,slot:state.slot}); showScreen('confirm'); },
+  'go-start': ()=>{ trackEvent('go_start'); showScreen('start'); },
+  'add-calendar': ()=>{ trackEvent('add_calendar'); alert('Přidáno do kalendáře (demo).'); }
+};
+document.body.addEventListener('click', e=>{
+  const t = e.target.closest('[data-action]');
+  if (!t) return;
+  // splash je celá obrazovka klikací, ale uvnitř ostatních ber jen tlačítka s data-action
+  const action = t.dataset.action;
+  const fn = ACTIONS[action];
+  if (fn){ e.preventDefault(); fn(); }
+});
+
+/* ============================================================
+   INIT
+   ============================================================ */
+loadState();
+// obnova obrazovky z URL hash při refresh
+const initial = location.hash.replace('#','') || 'splash';
+const startId = SCREENS.includes(initial) ? initial : 'splash';
+showScreen(startId, {fromPop:true});
+history.replaceState({screen:startId},'','#'+startId);
+</script>
+</body>
+</html>
