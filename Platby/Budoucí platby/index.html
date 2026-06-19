@@ -1009,13 +1009,24 @@ h1.proto-title {
       </div>
 
       <!-- Summary Card (Celkem odejde) -->
-      <div class="menu-card" style="margin-bottom: 24px;">
+      <div class="menu-card" style="margin-bottom: 12px;">
         <div class="menu-row" style="padding: 16px; background: #fff;">
           <div class="tx-info">
             <span class="tx-title" style="font-size: 15px; font-weight: 600;">Celkem odejde</span>
             <span class="tx-desc" style="font-size: 12px; color: var(--text-3);" id="fo-summary-period">Do 10. 7. 2026</span>
           </div>
           <span style="font-size: 16px; font-weight: 700; color: var(--text);" id="fo-summary-val">-35 397,00 Kč</span>
+        </div>
+      </div>
+
+      <!-- Can Spend Card (Kolik můžete utratit) -->
+      <div class="menu-card" style="margin-bottom: 24px; border: 1px solid rgba(14, 138, 79, 0.15); background: linear-gradient(180deg, #ffffff 0%, #f5faf6 100%);">
+        <div class="menu-row" style="padding: 16px; background: transparent;">
+          <div class="tx-info">
+            <span class="tx-title" style="font-size: 15px; font-weight: 700; color: var(--green);">Kolik můžete utratit</span>
+            <span class="tx-desc" style="font-size: 12px; color: var(--text-2);">Aktuální zůstatek minus budoucí platby</span>
+          </div>
+          <span style="font-size: 16px; font-weight: 800; color: var(--green);" id="fo-can-spend-val">12 694,20 Kč</span>
         </div>
       </div>
       
@@ -1154,10 +1165,10 @@ const defaultState = {
     },
     {
       id: 'fp4',
-      title: 'Výplata - ACME Corp',
+      title: 'Předplatné Netflix',
       type: 'Budoucí platba',
-      description: 'Mzda za měsíc červen 2026',
-      amount: 28000.00,
+      description: 'Pravidelné měsíční předplatné',
+      amount: -399.00,
       date: '10. 07. 2026',
       status: 'scheduled',
       vs: '102026',
@@ -1442,8 +1453,8 @@ function updateUI() {
     document.getElementById('fo-balance-val').innerText = formatMoney(czkBal);
     
     // Fill category values with correct signs
-    document.getElementById('fo-future-val').innerText = (catSums.budouci >= 0 ? '+' : '') + formatMoney(catSums.budouci);
-    document.getElementById('fo-future-val').style.color = catSums.budouci > 0 ? 'var(--green)' : 'var(--text-3)';
+    document.getElementById('fo-future-val').innerText = formatMoney(catSums.budouci);
+    document.getElementById('fo-future-val').style.color = catSums.budouci < 0 ? 'var(--text)' : 'var(--text-3)';
     
     document.getElementById('fo-trvaly-val').innerText = formatMoney(catSums.trvaly);
     document.getElementById('fo-trvaly-val').style.color = catSums.trvaly < 0 ? 'var(--text)' : 'var(--text-3)';
@@ -1459,6 +1470,10 @@ function updateUI() {
 
     // Total expenses (Celkem odejde)
     document.getElementById('fo-summary-val').innerText = formatMoney(futureExpensesSum);
+
+    // Can spend calculation (Aktuální zůstatek + totalFutureSum, kde totalFutureSum je záporná částka)
+    const canSpendVal = czkBal + totalFutureSum;
+    document.getElementById('fo-can-spend-val').innerText = formatMoney(canSpendVal);
   }
 
   // 3. Render Normal History Transactions
