@@ -278,9 +278,11 @@ h1.proto-title {
   padding: 0 4px;
   cursor: pointer;
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
-  gap: 4px;
+  gap: 4px 6px;
   user-select: none;
+  line-height: 1.4;
 }
 .detail-balance-dispo:active {
   opacity: 0.7;
@@ -288,10 +290,15 @@ h1.proto-title {
 .detail-balance-dispo-val {
   font-weight: 700;
   color: var(--text);
+  white-space: nowrap;
 }
 .detail-balance-dispo-icon {
   color: var(--blue);
   display: inline-flex;
+  align-items: center;
+}
+#dispo-pending-label {
+  white-space: nowrap;
 }
 
 /* ====== CURRENCY FILTERS ====== */
@@ -1382,14 +1389,17 @@ function updateUI() {
   if (activeScheduledCount > 0 && currentCurrencyFilter === 'all') {
     dispoContainer.style.display = 'flex';
     document.getElementById('dispo-balance-val').innerText = formatMoney(expectedDispo);
-    const sumSign = totalFutureSum < 0 ? '-' : '+';
-    document.getElementById('dispo-pending-label').innerText = `(budoucí platby: ${formatMoney(totalFutureSum)})`;
+    const prefix = totalFutureSum > 0 ? '+' : '';
+    const formattedPending = prefix + Math.round(totalFutureSum).toLocaleString('cs-CZ') + ' Kč';
+    document.getElementById('dispo-pending-label').innerText = `(budoucí: ${formattedPending})`;
   } else if (currentCurrencyFilter === 'czk') {
     dispoContainer.style.display = 'flex';
     // recalculate for CZK view
     const czkExpectedDispo = (40000.00 + (czkBal - defaultState.balance)) + totalFutureSum;
     document.getElementById('dispo-balance-val').innerText = formatMoney(czkExpectedDispo);
-    document.getElementById('dispo-pending-label').innerText = `(budoucí platby: ${formatMoney(totalFutureSum)})`;
+    const prefix = totalFutureSum > 0 ? '+' : '';
+    const formattedPending = prefix + Math.round(totalFutureSum).toLocaleString('cs-CZ') + ' Kč';
+    document.getElementById('dispo-pending-label').innerText = `(budoucí: ${formattedPending})`;
   } else {
     // If no future payments or in EUR view, hide dispo or keep it equal
     if (currentCurrencyFilter === 'eur') {
