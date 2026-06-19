@@ -262,12 +262,36 @@ h1.proto-title {
   font-size: 38px;
   font-weight: 700;
   color: var(--text);
-  margin-bottom: 16px;
+  margin-bottom: 6px;
   padding: 0 4px;
 }
 .detail-balance span {
   font-size: 22px;
   font-weight: 600;
+}
+
+/* MINIMALIST DISPO BALANCE (NEW FEATURE) */
+.detail-balance-dispo {
+  font-size: 13px;
+  color: var(--text-2);
+  margin-bottom: 20px;
+  padding: 0 4px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  user-select: none;
+}
+.detail-balance-dispo:active {
+  opacity: 0.7;
+}
+.detail-balance-dispo-val {
+  font-weight: 700;
+  color: var(--text);
+}
+.detail-balance-dispo-icon {
+  color: var(--blue);
+  display: inline-flex;
 }
 
 /* ====== CURRENCY FILTERS ====== */
@@ -300,110 +324,6 @@ h1.proto-title {
   height: 12px;
   border-radius: 2px;
   object-fit: cover;
-}
-
-/* ====== PREDICTION WIDGET (NEW UX FEATURE) ====== */
-.prediction-widget {
-  background: #fff;
-  border-radius: 16px;
-  padding: 16px;
-  margin-bottom: 16px;
-  box-shadow: var(--shadow);
-  border: 1px solid rgba(226, 0, 26, 0.1);
-  background: linear-gradient(180deg, #ffffff 0%, #fbfbfc 100%);
-  cursor: pointer;
-}
-.prediction-widget:active {
-  background: #f7f7f8;
-}
-.prediction-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 12px;
-}
-.prediction-title {
-  font-size: 13px;
-  font-weight: 700;
-  color: var(--red);
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-.prediction-period {
-  font-size: 11px;
-  color: var(--text-3);
-  font-weight: 500;
-}
-.prediction-bar-container {
-  height: 8px;
-  background: #eef2f6;
-  border-radius: 4px;
-  overflow: hidden;
-  margin-bottom: 12px;
-  display: flex;
-}
-.prediction-bar-current {
-  height: 100%;
-  background: var(--green);
-  transition: width 0.3s ease;
-}
-.prediction-bar-future-negative {
-  height: 100%;
-  background: var(--red);
-  opacity: 0.5;
-  transition: width 0.3s ease;
-}
-.prediction-bar-future-positive {
-  height: 100%;
-  background: var(--blue);
-  opacity: 0.5;
-  transition: width 0.3s ease;
-}
-
-.prediction-details {
-  display: flex;
-  justify-content: space-between;
-  gap: 8px;
-}
-.prediction-col {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-}
-.prediction-col-label {
-  font-size: 11px;
-  color: var(--text-2);
-}
-.prediction-col-val {
-  font-size: 14px;
-  font-weight: 700;
-  white-space: nowrap;
-}
-.prediction-col-val.neg { color: var(--red); }
-.prediction-col-val.pos { color: var(--green); }
-.prediction-col-val.blue { color: var(--blue); }
-
-.prediction-dispo {
-  margin-top: 12px;
-  padding-top: 10px;
-  border-top: 1px dashed var(--border);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-.prediction-dispo-label {
-  font-size: 12px;
-  font-weight: 600;
-  color: var(--text);
-}
-.prediction-dispo-val {
-  font-size: 15px;
-  font-weight: 700;
-  color: var(--text);
 }
 
 /* ====== MENU/NAVIGATION BOX ====== */
@@ -553,19 +473,90 @@ h1.proto-title {
 .tx-amount.future-neg { color: rgba(26,26,26,0.6); font-style: italic; }
 .tx-amount.future-pos { color: rgba(14,138,79,0.6); font-style: italic; }
 
-/* FUTURE PAYMENTS SPECIAL STYLING */
-.tx-row.future-scheduled {
+/* ====== MINIMALIST ACCORDION SYSTEM FOR FUTURE PAYMENTS ====== */
+.future-panel-header {
+  background: #fff;
+  border-radius: 16px;
+  padding: 14px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: var(--shadow);
+  cursor: pointer;
+  transition: background 0.15s, border-radius 0.15s;
+  user-select: none;
+  border: 1px solid rgba(30, 64, 175, 0.15);
+  background: linear-gradient(180deg, #ffffff 0%, #f7f9fc 100%);
+}
+.future-panel-header:active {
+  background: #f0f4f8;
+}
+.future-panel-header.expanded {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  border-bottom: 1px dashed var(--border);
+}
+.future-panel-title-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.future-panel-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--blue);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.future-panel-subtitle {
+  font-size: 12px;
+  color: var(--text-2);
+  font-weight: 600;
+}
+.future-panel-toggle-btn {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--blue);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.future-panel-toggle-btn svg {
+  transition: transform 0.25s ease;
+}
+.future-panel-header.expanded .future-panel-toggle-btn svg {
+  transform: rotate(180deg);
+}
+
+.future-panel-content {
+  display: none;
+  background: #fff;
+  border-bottom-left-radius: 16px;
+  border-bottom-right-radius: 16px;
+  box-shadow: var(--shadow);
+  border: 1px solid rgba(30, 64, 175, 0.15);
+  border-top: none;
+  overflow: hidden;
+}
+.future-panel-content.show {
+  display: block;
+}
+
+/* Kompaktnější řádky uvnitř harmoniky */
+.future-panel-content .tx-row {
+  border-radius: 0;
+  box-shadow: none;
+  border-bottom: 1px solid #f5f7fa;
   border-left: 4px solid var(--blue);
 }
-.tx-row.future-scheduled .tx-icon {
-  background: var(--blue-bg);
-  color: var(--blue);
+.future-panel-content .tx-row:last-child {
+  border-bottom: none;
 }
-.tx-row.future-skipped {
-  opacity: 0.5;
+.future-panel-content .tx-row.future-skipped {
   border-left: 4px solid var(--text-3);
+  opacity: 0.5;
 }
-.tx-row.future-skipped .tx-amount {
+.future-panel-content .tx-row.future-skipped .tx-amount {
   text-decoration: line-through;
 }
 
@@ -789,7 +780,7 @@ h1.proto-title {
 <body>
 
 <h1 class="proto-title">Interaktivní prototyp: Detail účtu s budoucími platbami</h1>
-<div class="subtitle">Tento prototyp simuluje integraci budoucích a očekávaných transakcí. Vyzkoušejte akce jako "Zaplatit hned" nebo "Přeskočit" a sledujte vliv na zůstatky.</div>
+<div class="subtitle">Minimalistický design integrující naplánované transakce přímo pod zůstatek a do sbalitelného panelu v transakční historii.</div>
 
 <!-- THE MOBILE DEVICE -->
 <div class="stage">
@@ -921,6 +912,17 @@ h1.proto-title {
       </div>
       <div class="detail-balance"><span id="detail-main-balance">48 490</span>,<span id="detail-decimal-balance">20</span> <span>Kč</span></div>
 
+      <!-- MINIMALIST DISPO INLINE WIDGET -->
+      <div class="detail-balance-dispo" id="dispo-info-container" onclick="scrollToFuture()">
+        Disponibilní: <span class="detail-balance-dispo-val" id="dispo-balance-val">33 990,20 Kč</span>
+        <span class="detail-balance-dispo-icon">
+          <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"></path>
+          </svg>
+        </span>
+        <span id="dispo-pending-label" style="font-size: 11px; color: var(--text-3); margin-left: 2px;">(budoucí platby: -14 500 Kč)</span>
+      </div>
+
       <!-- Currency Filters -->
       <div class="currency-filters">
         <button class="filter-chip active" id="filter-all" onclick="setCurrencyFilter('all')">Vše</button>
@@ -932,38 +934,6 @@ h1.proto-title {
           <img class="flag-icon" src="https://flagcdn.com/w20/eu.png" alt="EU flag">
           334,26 EUR
         </button>
-      </div>
-
-      <!-- NEW UX FEATURE: PREDICTION WIDGET -->
-      <div class="prediction-widget" onclick="scrollToFuture()">
-        <div class="prediction-header">
-          <div class="prediction-title">
-            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
-            </svg>
-            Předpověď zůstatku
-          </div>
-          <div class="prediction-period">do 10. 7. 2026</div>
-        </div>
-        <div class="prediction-bar-container">
-          <div id="bar-current" class="prediction-bar-current" style="width: 60%;"></div>
-          <div id="bar-future-neg" class="prediction-bar-future-negative" style="width: 15%;"></div>
-          <div id="bar-future-pos" class="prediction-bar-future-positive" style="width: 25%;"></div>
-        </div>
-        <div class="prediction-details">
-          <div class="prediction-col">
-            <span class="prediction-col-label">Budoucí výdaje</span>
-            <span class="prediction-col-val neg" id="pred-expenses">-14 500,00 Kč</span>
-          </div>
-          <div class="prediction-col" style="border-left: 1px solid var(--border); padding-left: 10px;">
-            <span class="prediction-col-label">Budoucí příjmy</span>
-            <span class="prediction-col-val pos" id="pred-incomes">+28 000,00 Kč</span>
-          </div>
-        </div>
-        <div class="prediction-dispo">
-          <span class="prediction-dispo-label">Očekávaný zůstatek ke 10. 7.</span>
-          <span class="prediction-dispo-val" id="pred-dispo-val">61 990,20 Kč</span>
-        </div>
       </div>
 
       <!-- Detail & Správa účtu Button -->
@@ -995,7 +965,7 @@ h1.proto-title {
         </div>
       </div>
 
-      <!-- TRANSACTION HISTORY AREA -->
+      <!-- TRANSACTION HISTORY AREA WITH INTEGRATED COMPACT ACCORDION -->
       <div id="tx-history-container">
         <!-- Rendered dynamically via JS -->
       </div>
@@ -1074,20 +1044,22 @@ h1.proto-title {
 <!-- INSTRUCTION BOX FOR DESKTOP USER -->
 <div class="instructions-bubble">
   <h3>Nápověda pro testování prototypu</h3>
-  <p>V mobilním zobrazení (v rámečku vlevo) simulujete reálnou aplikaci:</p>
+  <p>Tato verze je <strong>výrazně minimalistická</strong> a šetří místo na mobilní obrazovce:</p>
   <ul>
     <li>Klepnutím na <strong>Běžný účet 2</strong> otevřete detail účtu.</li>
-    <li>Nahoře vidíte novou červenou kartu <strong>Předpověď zůstatku</strong> a pod ní sekci <strong>Budoucí a naplánované platby</strong>.</li>
-    <li>Klepnutím na jakoukoli budoucí platbu (např. <em>ČEZ Distribuce</em> nebo <em>Nájem bytu</em>) otevřete její detail.</li>
-    <li>Můžete zvolit <strong>Zaplatit hned</strong> (platba proběhne a okamžitě se zařadí do historie jako dnes provedená, zůstatek se sníží) nebo <strong>Přeskočit tuto platbu</strong>.</li>
-    <li>Sledujte, jak se dynamicky mění disponibilní i celkový zůstatek a progress bar predikce!</li>
+    <li>Pod zůstatkem je nyní pouze <strong>jeden diskrétní řádek</strong> s disponibilním zůstatkem. Klepnutím na něj se přenesete k budoucím platbám.</li>
+    <li>Nad transakcemi je sbalený řádek <strong>Budoucí platby (x) [ Zobrazit ]</strong>. Klepnutím na něj se seznam naplánovaných plateb plynule rozbalí přímo v historii.</li>
+    <li>Klepnutím na rozbalenou budoucí platbu (např. <em>ČEZ</em> nebo <em>Nájem</em>) otevřete spodní panel pro správu (Zaplatit hned / Přeskočit).</li>
+    <li>Po vyřízení plateb se vše ihned minimalisticky aktualizuje. Pokud nezbyde žádná budoucí platba, sbalitelný panel úplně zmizí!</li>
   </ul>
 </div>
 
 <script>
 // INITIAL DATA STATE AND PERSISTENCE
-const STORAGE_KEY = 'rozcestnik__budouci_platby_state';
+const STORAGE_KEY = 'rozcestnik__budouci_platby_state_v2';
+const EXPANDED_KEY = 'rozcestnik__budouci_platby_expanded';
 let appState = {};
+let futurePaymentsExpanded = false;
 
 const defaultState = {
   balance: 48490.20,
@@ -1208,6 +1180,10 @@ function loadState() {
   } else {
     appState = JSON.parse(JSON.stringify(defaultState));
   }
+
+  // Load expanded state
+  const exp = localStorage.getItem(EXPANDED_KEY);
+  futurePaymentsExpanded = exp === 'true';
 }
 
 // SAVE STATE
@@ -1240,7 +1216,7 @@ function goTo(screenId, options = {}) {
     window.location.hash = screenId;
   }
 
-  // Send GA page view event if needed
+  // Send GA page view event
   gtag('event', 'screen_view', {
     screen_name: screenId
   });
@@ -1263,7 +1239,6 @@ window.addEventListener('DOMContentLoaded', () => {
     // Show splash screen, then go home after 1.5s
     goTo('splash');
     setTimeout(() => {
-      // Only transition if user didn't navigate elsewhere manually
       if (window.location.hash === '#splash' || window.location.hash === '') {
         goTo('home');
       }
@@ -1271,7 +1246,7 @@ window.addEventListener('DOMContentLoaded', () => {
   }
 });
 
-// Also react to browser back/forward buttons
+// React to browser back/forward buttons
 window.addEventListener('popstate', (e) => {
   const hash = window.location.hash.replace('#', '');
   if (hash) {
@@ -1297,12 +1272,45 @@ function setCurrencyFilter(filter) {
   updateUI();
 }
 
-// SCROLL TO FUTURE SECTION
+// SCROLL TO FUTURE SECTION & AUTO-EXPAND
 function scrollToFuture() {
-  const futureEl = document.getElementById('section-future-payments');
-  if (futureEl) {
-    futureEl.scrollIntoView({ behavior: 'smooth' });
+  // Expand first
+  if (!futurePaymentsExpanded) {
+    toggleFuturePanel();
   }
+  
+  setTimeout(() => {
+    const futureEl = document.getElementById('future-panel-accordion');
+    if (futureEl) {
+      futureEl.scrollIntoView({ behavior: 'smooth' });
+    }
+  }, 100);
+}
+
+// TOGGLE FUTURE COMPACT ACCORDION
+function toggleFuturePanel() {
+  futurePaymentsExpanded = !futurePaymentsExpanded;
+  localStorage.setItem(EXPANDED_KEY, futurePaymentsExpanded);
+  
+  const header = document.getElementById('future-header-el');
+  const content = document.getElementById('future-content-el');
+  
+  if (header && content) {
+    if (futurePaymentsExpanded) {
+      header.classList.add('expanded');
+      content.classList.add('show');
+      document.getElementById('future-toggle-text').innerText = 'Skrýt';
+    } else {
+      header.classList.remove('expanded');
+      content.classList.remove('show');
+      document.getElementById('future-toggle-text').innerText = 'Zobrazit';
+    }
+  }
+
+  // Event for GA tracking
+  gtag('event', 'future_panel_toggle', {
+    expanded: futurePaymentsExpanded
+  });
 }
 
 // FORMAT NUMBER
@@ -1320,18 +1328,14 @@ function formatMoney(amount, currency = 'Kč') {
 // UPDATE USER INTERFACE
 function updateUI() {
   // 1. Calculate Balances
-  // CZK Balance
-  let czkBal = appState.balance; // base balance is CZK
-  // EUR Balance (base in CZK, let's keep static EUR portion or convert)
-  let eurBal = 334.26; // static representation for UI
+  let czkBal = appState.balance; 
+  let eurBal = 334.26;
 
-  // Recalculate based on currency filter
   let displayBalance = czkBal;
   let currencyLabel = 'Kč';
 
   if (currentCurrencyFilter === 'czk') {
-    displayBalance = 40000.00; // static czk portion from podklady
-    // Subtract paid future items if any affected the base
+    displayBalance = 40000.00; 
     const baseCzkDiff = czkBal - defaultState.balance;
     displayBalance += baseCzkDiff;
   } else if (currentCurrencyFilter === 'eur') {
@@ -1354,12 +1358,14 @@ function updateUI() {
   document.getElementById('home-acc2-balance').innerHTML = `${wholeVal},<span>${decimalVal}</span>`;
   document.getElementById('home-acc2-czk').innerText = formatMoney(40000.00 + (czkBal - defaultState.balance)) + ' Kč';
 
-  // 2. Prediction Widget Math (CZK based)
+  // 2. Math for future payments (CZK based)
   let futureExpensesSum = 0;
   let futureIncomesSum = 0;
+  let activeScheduledCount = 0;
 
   appState.futurePayments.forEach(p => {
     if (p.status === 'scheduled') {
+      activeScheduledCount++;
       if (p.amount < 0) {
         futureExpensesSum += p.amount;
       } else {
@@ -1368,32 +1374,43 @@ function updateUI() {
     }
   });
 
-  const expectedDispo = czkBal + futureExpensesSum + futureIncomesSum;
+  const totalFutureSum = futureExpensesSum + futureIncomesSum;
+  const expectedDispo = czkBal + totalFutureSum;
 
-  document.getElementById('pred-expenses').innerText = formatMoney(futureExpensesSum);
-  document.getElementById('pred-incomes').innerText = '+' + formatMoney(futureIncomesSum);
-  document.getElementById('pred-dispo-val').innerText = formatMoney(expectedDispo);
-
-  // Predict bar percentages
-  const maxBar = Math.max(czkBal, expectedDispo, czkBal + futureIncomesSum);
-  const curPercent = (czkBal / maxBar) * 100;
-  const negPercent = (Math.abs(futureExpensesSum) / maxBar) * 100;
-  const posPercent = (futureIncomesSum / maxBar) * 100;
-
-  document.getElementById('bar-current').style.width = `${curPercent}%`;
-  document.getElementById('bar-future-neg').style.width = `${negPercent}%`;
-  document.getElementById('bar-future-pos').style.width = `${posPercent}%`;
+  // Update Compact Dispo Info Line
+  const dispoContainer = document.getElementById('dispo-info-container');
+  if (activeScheduledCount > 0 && currentCurrencyFilter === 'all') {
+    dispoContainer.style.display = 'flex';
+    document.getElementById('dispo-balance-val').innerText = formatMoney(expectedDispo);
+    const sumSign = totalFutureSum < 0 ? '-' : '+';
+    document.getElementById('dispo-pending-label').innerText = `(budoucí platby: ${formatMoney(totalFutureSum)})`;
+  } else if (currentCurrencyFilter === 'czk') {
+    dispoContainer.style.display = 'flex';
+    // recalculate for CZK view
+    const czkExpectedDispo = (40000.00 + (czkBal - defaultState.balance)) + totalFutureSum;
+    document.getElementById('dispo-balance-val').innerText = formatMoney(czkExpectedDispo);
+    document.getElementById('dispo-pending-label').innerText = `(budoucí platby: ${formatMoney(totalFutureSum)})`;
+  } else {
+    // If no future payments or in EUR view, hide dispo or keep it equal
+    if (currentCurrencyFilter === 'eur') {
+      dispoContainer.style.display = 'none'; // EUR has no future payments in our simulation
+    } else {
+      // CZK/All with 0 scheduled
+      document.getElementById('dispo-balance-val').innerText = formatMoney(czkBal);
+      document.getElementById('dispo-pending-label').innerText = `(žádné budoucí platby)`;
+      dispoContainer.style.display = 'flex';
+    }
+  }
 
   // 3. Render Transactions
-  renderTransactions();
+  renderTransactions(activeScheduledCount, totalFutureSum);
 }
 
 // RENDER TRANSACTION HISTORY
-function renderTransactions() {
+function renderTransactions(activeScheduledCount, totalFutureSum) {
   const container = document.getElementById('tx-history-container');
   container.innerHTML = '';
 
-  // Filter lists based on currency filter
   const filterFn = (tx) => {
     if (currentCurrencyFilter === 'all') return true;
     if (currentCurrencyFilter === 'czk' && tx.currency === 'CZK') return true;
@@ -1413,30 +1430,42 @@ function renderTransactions() {
     groups[tx.date].push(tx);
   });
 
-  // Render FUTURE AND SCHEDULED (If we have any active scheduled or skipped in this view)
+  // Render MINIMALIST FUTURE ACCORDION
   const activeFuture = filteredFuture.filter(p => p.status === 'scheduled' || p.status === 'skipped');
   
   if (activeFuture.length > 0) {
-    const section = document.createElement('div');
-    section.className = 'history-section';
-    section.id = 'section-future-payments';
+    const accordionWrapper = document.createElement('div');
+    accordionWrapper.className = 'history-section';
+    accordionWrapper.id = 'future-panel-accordion';
+    accordionWrapper.style.marginBottom = '20px';
     
-    section.innerHTML = `
-      <div class="history-title-row">
-        <span class="history-date" style="color: var(--blue); display: flex; align-items: center; gap: 6px;">
-          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+    const formattedSum = formatMoney(totalFutureSum);
+    const isExpandedClass = futurePaymentsExpanded ? 'expanded' : '';
+    const isShowClass = futurePaymentsExpanded ? 'show' : '';
+    const toggleBtnText = futurePaymentsExpanded ? 'Skrýt' : 'Zobrazit';
+
+    accordionWrapper.innerHTML = `
+      <div class="future-panel-header ${isExpandedClass}" id="future-header-el" onclick="toggleFuturePanel()">
+        <div class="future-panel-title-container">
+          <svg width="18" height="18" fill="none" stroke="var(--blue)" stroke-width="2.5" viewBox="0 0 24 24" style="flex-shrink:0;">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
           </svg>
-          Budoucí a naplánované
-        </span>
-        <span class="history-count">${activeFuture.length} platby</span>
+          <span class="future-panel-title">Budoucí platby (${activeScheduledCount})</span>
+          <span class="future-panel-subtitle" style="color: ${totalFutureSum < 0 ? 'var(--red)' : 'var(--green)'}">${totalFutureSum > 0 ? '+' : ''}${formattedSum}</span>
+        </div>
+        <div class="future-panel-toggle-btn">
+          <span id="future-toggle-text">${toggleBtnText}</span>
+          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"></path>
+          </svg>
+        </div>
       </div>
-      <div class="tx-card" id="future-tx-card"></div>
+      <div class="future-panel-content ${isShowClass}" id="future-content-el"></div>
     `;
     
-    container.appendChild(section);
+    container.appendChild(accordionWrapper);
     
-    const cardContainer = section.querySelector('#future-tx-card');
+    const contentBox = accordionWrapper.querySelector('#future-content-el');
     
     activeFuture.forEach(fp => {
       const row = document.createElement('div');
@@ -1456,8 +1485,8 @@ function renderTransactions() {
 
       row.innerHTML = `
         <div class="tx-icon">
-          <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+          <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
           </svg>
           <div class="tx-icon-badge future">
             <svg width="10" height="10" fill="currentColor" viewBox="0 0 16 16">
@@ -1469,16 +1498,16 @@ function renderTransactions() {
           <span class="tx-title">${fp.title}</span>
           <span class="tx-desc">${fp.description}</span>
           <span class="tx-status-text future">${statusDesc}</span>
-          ${fp.status === 'scheduled' ? '<span class="future-actions-hint">Zobrazit možnosti ➔</span>' : ''}
+          ${fp.status === 'scheduled' ? '<span class="future-actions-hint">Možnosti ➔</span>' : ''}
         </div>
         <div class="tx-amount ${amtClass}">${fp.amount > 0 ? '+' : ''}${formattedAmt}</div>
       `;
       
-      cardContainer.appendChild(row);
+      contentBox.appendChild(row);
     });
   }
 
-  // Render HISTORY (Dnes, Včera, etc.)
+  // Render Normal History groups (Dnes, Včera, etc.)
   const dateKeys = Object.keys(groups);
   
   dateKeys.forEach(dateKey => {
@@ -1507,7 +1536,6 @@ function renderTransactions() {
       const amtClass = isNeg ? 'neg' : 'pos';
       const formattedAmt = formatMoney(tx.amount, tx.currency === 'CZK' ? 'Kč' : 'EUR');
       
-      // Determine Icon
       let iconSvg = '';
       let badgeClass = '';
       let badgeSvg = '';
@@ -1606,14 +1634,12 @@ function openFutureDetail(fpId) {
   // Open overlay
   const overlay = document.getElementById('bottom-sheet-overlay');
   overlay.style.display = 'block';
-  // Force reflow
   overlay.offsetHeight;
   overlay.classList.add('active');
 }
 
 function closeBottomSheet(e) {
   if (e && e.target !== document.getElementById('bottom-sheet-overlay') && e.target !== document.querySelector('.bottom-sheet-overlay')) {
-    // If event is clicked inside the sheet, don't close
     if (!e.target.closest('.bottom-sheet') && !e.target.classList.contains('btn-secondary')) {
       return;
     }
@@ -1641,13 +1667,9 @@ function payFutureNow() {
   const fp = appState.futurePayments.find(p => p.id === activeFuturePaymentId);
   if (!fp) return;
 
-  // Mark as paid
   fp.status = 'paid';
-  
-  // Adjust balance
   appState.balance += fp.amount;
 
-  // Add to history
   appState.historyPayments.unshift({
     id: 'h_added_' + Date.now(),
     title: fp.title,
