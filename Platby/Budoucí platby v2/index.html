@@ -1,0 +1,939 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<script>
+(function(){var H='4c129f69f551195cbc5e8b57cc5a0975b6efa1e8510573524d11df03c7d010c6',K='rozcestnik__auth';try{var p=new URLSearchParams(location.search);if(p.get('k')===H){localStorage.setItem(K,'1');p.delete('k');var q=p.toString();history.replaceState(history.state,'',location.pathname+(q?'?'+q:'')+location.hash);}if(localStorage.getItem(K)!=='1')location.replace('../../');}catch(e){}})();
+</script>
+<meta charset="UTF-8">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Prototyp: Detail účtu – budoucí platby v2</title>
+
+<!-- Google Analytics 4 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXX"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-XXXXXXX', { send_page_view: false });
+</script>
+
+<!-- Microsoft Clarity -->
+<script type="text/javascript">
+  (function(c,l,a,r,i,t,y){
+    c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+    t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+    y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+  })(window, document, "clarity", "script", "XXXXXXX");
+</script>
+
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+:root {
+  --red: #E2001A;
+  --red-dark: #B8000C;
+  --bg: #F4F4F4;
+  --card: #FFFFFF;
+  --text: #1A1A1A;
+  --text-2: #6A6A6A;
+  --text-3: #9A9A9A;
+  --border: #E9E9E9;
+  --green: #0E8A4F;
+  --green-bg: #EAF6EF;
+  --orange: #C2410C;
+  --orange-bg: #FEF3E7;
+  --blue: #1E40AF;
+  --blue-bg: #EAF0FB;
+  --shadow: 0 1px 3px rgba(0,0,0,0.07);
+  --shadow-md: 0 6px 20px rgba(0,0,0,0.12);
+}
+
+html, body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+  background: #2a2a2a;
+  color: var(--text);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 24px 12px 40px;
+  gap: 16px;
+}
+h1.proto-title { font-size: 18px; color: #fff; font-weight: 600; text-align: center; }
+.subtitle { color: #bdbdbd; font-size: 13px; text-align: center; max-width: 720px; line-height: 1.5; }
+
+/* ====== PHONE SHELL ====== */
+.stage {
+  position: relative;
+  width: 390px;
+  height: 820px;
+  background: var(--bg);
+  border-radius: 40px;
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.45);
+  border: 8px solid #111;
+  display: flex;
+  flex-direction: column;
+}
+.screen {
+  position: absolute;
+  inset: 0;
+  display: none;
+  flex-direction: column;
+  background: var(--bg);
+  overflow: hidden;
+}
+.screen.active { display: flex; }
+
+/* ====== SPLASH ====== */
+#screen-splash {
+  background: #E2001A url('../../assets/splash.png') center center / cover no-repeat;
+  z-index: 100;
+  cursor: pointer;
+}
+
+/* ====== TOP BAR ====== */
+.topbar {
+  height: 52px;
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+  background: #FFFFFF;
+  flex-shrink: 0;
+  position: relative;
+  border-bottom: 1px solid var(--border);
+}
+.topbar-title { position: absolute; left: 0; right: 0; text-align: center; font-size: 17px; font-weight: 600; pointer-events: none; }
+.back-btn {
+  display: flex; align-items: center; gap: 4px;
+  background: none; border: none; cursor: pointer;
+  font-size: 16px; color: var(--text); font-weight: 500;
+  padding: 8px 0; z-index: 1;
+}
+.back-btn:active { opacity: 0.6; }
+.topbar-icons { margin-left: auto; display: flex; gap: 16px; z-index: 1; }
+.topbar-icon { width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; color: var(--text); cursor: pointer; }
+.avatar-img { width: 32px; height: 32px; border-radius: 50%; object-fit: cover; border: 1px solid var(--border); }
+
+/* ====== SCROLL ====== */
+.scroll { flex: 1; overflow-y: auto; -webkit-overflow-scrolling: touch; padding: 14px 14px 130px; }
+.scroll::-webkit-scrollbar { display: none; }
+
+/* ====== HOME ====== */
+.home-tabs { display: flex; gap: 8px; overflow-x: auto; padding: 4px 14px 12px; }
+.home-tabs::-webkit-scrollbar { display: none; }
+.tab-btn { padding: 8px 16px; border-radius: 20px; border: 1px solid var(--border); background: #fff; font-size: 14px; font-weight: 500; color: var(--text-2); cursor: pointer; white-space: nowrap; }
+.tab-btn.active { background: var(--red); color: #fff; border-color: var(--red); }
+.account-card { background: #fff; border-radius: 16px; padding: 16px; margin-bottom: 12px; box-shadow: var(--shadow); cursor: pointer; transition: transform .15s, box-shadow .15s; position: relative; }
+.account-card:active { transform: scale(0.985); box-shadow: none; }
+.account-name { font-size: 16px; font-weight: 600; color: var(--text); }
+.account-number { font-size: 13px; color: var(--text-3); }
+.account-balance-large { font-size: 28px; font-weight: 700; color: var(--text); margin-top: 4px; }
+.account-balance-large span { font-size: 18px; font-weight: 600; }
+.account-badges { display: flex; gap: 8px; margin-top: 12px; }
+.account-card-arrow { position: absolute; right: 16px; top: 50%; transform: translateY(-50%); color: var(--text-3); }
+.acc-mini-future { margin-top: 12px; padding-top: 12px; border-top: 1px dashed var(--border); display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--text-2); }
+.acc-mini-future b { color: var(--text); }
+.acc-mini-future .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--orange); flex-shrink: 0; }
+
+/* ====== DETAIL HEADER ====== */
+.detail-head { padding: 4px 4px 0; }
+.detail-account-info { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 6px; }
+.detail-account-name { font-size: 15px; font-weight: 500; color: var(--text-2); }
+.detail-account-number { font-size: 14px; color: var(--text-3); }
+.balance-label { font-size: 12px; color: var(--text-3); font-weight: 600; text-transform: uppercase; letter-spacing: .04em; }
+.detail-balance { font-size: 38px; font-weight: 700; color: var(--text); margin: 2px 0 4px; line-height: 1.05; }
+.detail-balance span { font-size: 22px; font-weight: 600; }
+
+/* Currency chips */
+.currency-filters { display: flex; gap: 8px; margin: 12px 0 0; }
+.filter-chip { display: flex; align-items: center; gap: 6px; padding: 7px 12px; border-radius: 20px; border: 1px solid var(--border); background: #fff; font-size: 13px; font-weight: 600; color: var(--text); cursor: pointer; }
+.filter-chip.active { background: var(--red); color: #fff; border-color: var(--red); }
+.flag-icon { width: 18px; height: 12px; border-radius: 2px; object-fit: cover; }
+
+/* ====== FORECAST CARD (hero feature) ====== */
+.forecast-card {
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: var(--shadow);
+  padding: 14px 16px 16px;
+  margin: 14px 0 4px;
+  cursor: pointer;
+  border: 1px solid var(--border);
+}
+.forecast-card:active { background: #fafafa; }
+.forecast-top { display: flex; align-items: center; justify-content: space-between; }
+.forecast-top-l { display: flex; align-items: center; gap: 8px; }
+.forecast-ic { width: 28px; height: 28px; border-radius: 8px; background: var(--blue-bg); color: var(--blue); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.forecast-label { font-size: 12px; color: var(--text-2); font-weight: 600; }
+.forecast-val { font-size: 20px; font-weight: 700; color: var(--text); }
+.forecast-val.warn { color: var(--orange); }
+.forecast-link { font-size: 12px; font-weight: 700; color: var(--red); display: flex; align-items: center; gap: 2px; }
+
+/* mini balance trajectory bar */
+.traj { margin-top: 14px; }
+.traj-bar { height: 8px; border-radius: 6px; background: #eef0f2; position: relative; overflow: hidden; }
+.traj-fill { position: absolute; top: 0; left: 0; bottom: 0; border-radius: 6px; background: linear-gradient(90deg, var(--orange) 0%, #E2001A 100%); }
+.traj-ticks { display: flex; justify-content: space-between; margin-top: 7px; }
+.traj-tick { font-size: 10px; color: var(--text-3); font-weight: 600; }
+.traj-tick b { display: block; color: var(--text-2); font-size: 11px; }
+.forecast-income { margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--border); display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--text-2); }
+.forecast-income .ic-in { color: var(--green); display: flex; }
+.forecast-income b { color: var(--green); }
+
+/* ====== SEGMENT CONTROL ====== */
+.segment { display: flex; background: #ECECEC; border-radius: 12px; padding: 3px; margin: 18px 0 14px; }
+.seg-btn { flex: 1; text-align: center; padding: 9px 6px; border-radius: 9px; border: none; background: none; font-size: 13px; font-weight: 600; color: var(--text-2); cursor: pointer; transition: all .18s; position: relative; }
+.seg-btn.active { background: #fff; color: var(--text); box-shadow: 0 1px 4px rgba(0,0,0,.12); }
+.seg-badge { display: inline-flex; align-items: center; justify-content: center; min-width: 18px; height: 18px; padding: 0 5px; border-radius: 9px; background: var(--orange); color: #fff; font-size: 11px; font-weight: 700; margin-left: 5px; vertical-align: 1px; }
+.seg-btn.active .seg-badge { background: var(--orange); }
+
+/* ====== UPCOMING TIMELINE ====== */
+.tl-month { font-size: 13px; font-weight: 700; color: var(--text-2); margin: 6px 4px 10px; text-transform: capitalize; }
+.tl { position: relative; margin-left: 4px; }
+.tl-item {
+  position: relative;
+  display: flex;
+  gap: 14px;
+  padding-bottom: 14px;
+}
+.tl-item:last-child { padding-bottom: 0; }
+/* vertical line */
+.tl-rail { position: relative; flex-shrink: 0; width: 36px; display: flex; flex-direction: column; align-items: center; }
+.tl-line { position: absolute; top: 0; bottom: 0; width: 2px; background: var(--border); left: 50%; transform: translateX(-50%); }
+.tl-item:first-child .tl-line { top: 18px; }
+.tl-item:last-child .tl-line { bottom: calc(100% - 18px); }
+.tl-node {
+  position: relative; z-index: 1;
+  width: 36px; height: 36px; border-radius: 50%;
+  background: #fff; border: 2px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--text-2);
+}
+.tl-node.out { border-color: #f0d3d6; color: var(--red); background: #fff5f5; }
+.tl-node.in { border-color: #c9e7d6; color: var(--green); background: var(--green-bg); }
+.tl-body {
+  flex: 1; min-width: 0;
+  background: #fff; border-radius: 14px; box-shadow: var(--shadow);
+  padding: 12px 14px; cursor: pointer; transition: background .15s;
+  border: 1px solid transparent;
+}
+.tl-body:active { background: #fafafa; }
+.tl-body.skipped { opacity: .55; }
+.tl-body.skipped .tl-amount { text-decoration: line-through; }
+.tl-row1 { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
+.tl-title { font-size: 15px; font-weight: 600; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.tl-amount { font-size: 15px; font-weight: 700; white-space: nowrap; flex-shrink: 0; }
+.tl-amount.out { color: var(--text); }
+.tl-amount.in { color: var(--green); }
+.tl-row2 { display: flex; justify-content: space-between; align-items: center; margin-top: 3px; gap: 8px; }
+.tl-meta { font-size: 12px; color: var(--text-2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.tl-when { font-size: 11px; font-weight: 700; color: var(--orange); background: var(--orange-bg); padding: 2px 7px; border-radius: 8px; white-space: nowrap; flex-shrink: 0; }
+.tl-when.soon { color: var(--red); background: #fdeaec; }
+.tl-when.far { color: var(--text-2); background: #f0f0f0; }
+.tl-after { font-size: 11px; color: var(--text-3); margin-top: 6px; padding-top: 6px; border-top: 1px dashed var(--border); display: flex; justify-content: space-between; }
+.tl-after b { color: var(--text-2); font-weight: 700; }
+.tl-tag { display: inline-block; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .03em; color: var(--blue); background: var(--blue-bg); padding: 1px 6px; border-radius: 6px; margin-left: 6px; vertical-align: 1px; }
+.tl-tag.skip { color: var(--text-2); background: #ededed; }
+
+.empty-future { text-align: center; padding: 30px 20px; color: var(--text-2); }
+.empty-future svg { color: var(--green); margin-bottom: 10px; }
+.empty-future b { display: block; color: var(--text); font-size: 15px; margin-bottom: 4px; }
+.empty-future span { font-size: 13px; }
+
+/* ====== HISTORY LIST ====== */
+.history-title-row { display: flex; justify-content: space-between; align-items: center; margin: 4px 4px 8px; }
+.history-date { font-size: 14px; font-weight: 700; color: var(--text-2); }
+.history-count { font-size: 12px; color: var(--text-3); font-weight: 500; }
+.tx-card { background: #fff; border-radius: 16px; box-shadow: var(--shadow); margin-bottom: 12px; overflow: hidden; }
+.tx-row { display: flex; align-items: center; padding: 14px 16px; border-bottom: 1px solid var(--border); cursor: pointer; transition: background .15s; }
+.tx-row:last-child { border-bottom: none; }
+.tx-row:active { background: #f9f9f9; }
+.tx-icon { width: 40px; height: 40px; border-radius: 50%; background: #f0f0f2; display: flex; align-items: center; justify-content: center; margin-right: 12px; flex-shrink: 0; color: var(--text-2); position: relative; }
+.tx-icon-badge { position: absolute; bottom: -2px; right: -2px; width: 16px; height: 16px; border-radius: 50%; background: #fff; display: flex; align-items: center; justify-content: center; box-shadow: 0 1px 3px rgba(0,0,0,.2); }
+.tx-icon-badge.in { color: var(--green); }
+.tx-icon-badge.out { color: var(--text-2); }
+.tx-icon-badge.failed { color: var(--red); }
+.tx-info { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+.tx-title { font-size: 15px; font-weight: 600; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.tx-desc { font-size: 12px; color: var(--text-2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.tx-status-text { font-size: 11px; font-weight: 600; }
+.tx-status-text.failed { color: var(--red); }
+.tx-amount { font-size: 16px; font-weight: 700; text-align: right; margin-left: 8px; flex-shrink: 0; }
+.tx-amount.neg { color: var(--text); }
+.tx-amount.pos { color: var(--green); }
+
+/* menu rows */
+.menu-card { background: #fff; border-radius: 16px; box-shadow: var(--shadow); margin-top: 14px; overflow: hidden; }
+.menu-row { display: flex; align-items: center; padding: 16px; cursor: pointer; transition: background .15s; }
+.menu-row:active { background: #f9f9f9; }
+.menu-icon { margin-right: 12px; color: var(--red); display: flex; }
+.menu-text { font-size: 15px; font-weight: 600; color: var(--text); flex: 1; }
+.menu-arrow { color: var(--text-3); display: flex; }
+
+/* ====== QUICK ACTION PANEL ====== */
+.quick-panel-container { position: absolute; bottom: 24px; left: 14px; right: 14px; z-index: 10; pointer-events: none; }
+.quick-panel { background: var(--red); border-radius: 20px; padding: 12px 16px; display: flex; justify-content: space-around; box-shadow: 0 8px 24px rgba(226,0,26,.35); pointer-events: auto; }
+.quick-btn { display: flex; flex-direction: column; align-items: center; gap: 4px; color: #FFF; background: none; border: none; cursor: pointer; flex: 1; }
+.quick-btn:active { opacity: .8; }
+.quick-btn-icon { width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; }
+.quick-btn-text { font-size: 11px; font-weight: 600; }
+
+/* ====== BOTTOM SHEET ====== */
+.bottom-sheet-overlay { position: absolute; inset: 0; background: rgba(0,0,0,.5); z-index: 200; display: none; opacity: 0; transition: opacity .25s ease; }
+.bottom-sheet-overlay.active { display: block; opacity: 1; }
+.bottom-sheet { position: absolute; bottom: 0; left: 0; right: 0; background: #fff; border-top-left-radius: 24px; border-top-right-radius: 24px; box-shadow: 0 -8px 32px rgba(0,0,0,.15); padding: 16px 20px 28px; transform: translateY(100%); transition: transform .28s cubic-bezier(.1,.76,.55,.94); z-index: 201; max-height: 92%; overflow-y: auto; }
+.bottom-sheet::-webkit-scrollbar { display: none; }
+.bottom-sheet-overlay.active .bottom-sheet { transform: translateY(0); }
+.bottom-sheet-handle { width: 40px; height: 5px; background: var(--border); border-radius: 3px; margin: 0 auto 16px; }
+.bs-head { display: flex; align-items: center; gap: 12px; margin-bottom: 18px; }
+.bs-head-ic { width: 44px; height: 44px; border-radius: 12px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.bs-head-ic.out { background: #fff5f5; color: var(--red); }
+.bs-head-ic.in { background: var(--green-bg); color: var(--green); }
+.bottom-sheet-title { font-size: 18px; font-weight: 700; color: var(--text); }
+.bottom-sheet-subtitle { font-size: 13px; color: var(--text-3); margin-top: 2px; }
+.bs-amount-big { font-size: 26px; font-weight: 700; margin-bottom: 18px; }
+.bs-amount-big.out { color: var(--text); }
+.bs-amount-big.in { color: var(--green); }
+.detail-grid { display: flex; flex-direction: column; gap: 12px; margin-bottom: 22px; }
+.detail-grid-row { display: flex; justify-content: space-between; border-bottom: 1px solid #f3f3f3; padding-bottom: 9px; gap: 12px; }
+.detail-grid-row:last-child { border-bottom: none; padding-bottom: 0; }
+.detail-grid-label { font-size: 13px; color: var(--text-2); flex-shrink: 0; }
+.detail-grid-val { font-size: 13px; font-weight: 600; color: var(--text); text-align: right; }
+.bottom-sheet-actions { display: flex; flex-direction: column; gap: 10px; }
+.btn-primary { width: 100%; padding: 14px; border-radius: 12px; border: none; background: var(--red); color: #fff; font-size: 15px; font-weight: 700; cursor: pointer; transition: background .15s; }
+.btn-primary:active { background: var(--red-dark); }
+.btn-secondary { width: 100%; padding: 14px; border-radius: 12px; border: 1px solid var(--border); background: #fff; color: var(--text); font-size: 15px; font-weight: 600; cursor: pointer; }
+.btn-secondary:active { background: #f9f9f9; }
+.btn-text-danger { width: 100%; padding: 10px; border: none; background: none; color: var(--red); font-size: 13px; font-weight: 600; cursor: pointer; }
+
+/* ====== TOAST ====== */
+.toast { position: absolute; top: 68px; left: 20px; right: 20px; background: #1A1A1A; color: #fff; padding: 12px 16px; border-radius: 10px; font-size: 13px; font-weight: 600; box-shadow: var(--shadow-md); transform: translateY(-120px); opacity: 0; transition: all .3s cubic-bezier(.18,.89,.32,1.28); z-index: 300; display: flex; align-items: center; gap: 8px; }
+.toast.show { transform: translateY(0); opacity: 1; }
+.toast-icon { color: var(--green); flex-shrink: 0; }
+
+/* ====== DESKTOP HELP ====== */
+.instructions-bubble { background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.15); border-radius: 16px; padding: 16px; color: #fff; max-width: 390px; font-size: 13px; line-height: 1.5; display: flex; flex-direction: column; gap: 8px; }
+.instructions-bubble h3 { font-size: 14px; font-weight: 700; color: #fff; }
+.instructions-bubble ul { padding-left: 16px; }
+.instructions-bubble em { color: #ffd0d4; font-style: normal; font-weight: 600; }
+</style>
+</head>
+<body>
+
+<h1 class="proto-title">Detail účtu – budoucí platby v2</h1>
+<div class="subtitle">Predikce zůstatku (forecast) + časová osa nadcházejících plateb s běžícím zůstatkem. Přepínač Nadcházející / Historie přímo v detailu účtu.</div>
+
+<div class="stage">
+
+  <!-- TOAST -->
+  <div id="toast" class="toast">
+    <svg class="toast-icon" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/></svg>
+    <span id="toast-text"></span>
+  </div>
+
+  <!-- SPLASH -->
+  <div id="screen-splash" class="screen active"></div>
+
+  <!-- HOME -->
+  <div id="screen-home" class="screen">
+    <div class="topbar">
+      <div class="topbar-icon">
+        <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+      </div>
+      <div class="topbar-title">Přehled</div>
+      <div class="topbar-icons">
+        <div class="topbar-icon" style="position:relative;">
+          <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path></svg>
+          <span style="position:absolute;top:-2px;right:-2px;width:8px;height:8px;background:var(--red);border-radius:50%;"></span>
+        </div>
+        <img class="avatar-img" src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="Avatar">
+      </div>
+    </div>
+
+    <div class="home-tabs">
+      <button class="tab-btn active">Přehled</button>
+      <button class="tab-btn">Extra</button>
+      <button class="tab-btn">Karty</button>
+      <button class="tab-btn">Půjčky</button>
+      <button class="tab-btn">Spoření</button>
+    </div>
+
+    <div class="scroll" style="padding-top:0;">
+      <div style="font-size:13px;font-weight:700;color:var(--text-3);text-transform:uppercase;letter-spacing:.05em;margin:8px 0 12px 4px;">Tarif Komfort</div>
+
+      <div class="account-card" onclick="goTo('detail')">
+        <div class="account-name">Běžný účet</div>
+        <div class="account-number">122000/0100</div>
+        <div class="account-balance-large">18 063,<span>38 Kč</span></div>
+        <div class="account-card-arrow"><svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"></path></svg></div>
+      </div>
+
+      <div class="account-card" onclick="goTo('detail')">
+        <div class="account-name">Běžný účet 2</div>
+        <div class="account-number">326683762/0100</div>
+        <div class="account-balance-large"><span id="home-acc2-balance">48 490,20</span> <span>Kč</span></div>
+        <div class="account-badges">
+          <div class="filter-chip" style="padding:4px 8px;font-size:11px;pointer-events:none;border-color:var(--border);">
+            <img class="flag-icon" src="https://flagcdn.com/w20/cz.png" alt="CZ">40 000,00 Kč
+          </div>
+          <div class="filter-chip" style="padding:4px 8px;font-size:11px;pointer-events:none;border-color:var(--border);">
+            <img class="flag-icon" src="https://flagcdn.com/w20/eu.png" alt="EU">334,26 EUR
+          </div>
+        </div>
+        <div class="acc-mini-future" id="home-acc2-future">
+          <span class="dot"></span>
+          <span><b id="home-future-count">3 nadcházející platby</b> · po nich zbyde <b id="home-future-after">33 990 Kč</b></span>
+        </div>
+      </div>
+
+      <div style="font-size:13px;font-weight:700;color:var(--text-3);text-transform:uppercase;letter-spacing:.05em;margin:20px 0 12px 4px;">Spoření</div>
+      <div class="account-card" style="cursor:default;">
+        <div class="account-name">Spoření</div>
+        <div class="account-number">326683764/0100</div>
+        <div class="account-balance-large">11 490,<span>20 Kč</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DETAIL -->
+  <div id="screen-detail" class="screen">
+    <div class="topbar">
+      <button class="back-btn" onclick="goTo('home')">
+        <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"></path></svg>
+        Zpět
+      </button>
+      <div class="topbar-icons">
+        <div class="topbar-icon">
+          <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+        </div>
+      </div>
+    </div>
+
+    <div class="scroll" id="detail-scroll">
+      <div class="detail-head">
+        <div class="detail-account-info">
+          <div class="detail-account-name">Běžný účet 2</div>
+          <div class="detail-account-number">326683762/0100</div>
+        </div>
+        <div class="balance-label">Aktuální zůstatek</div>
+        <div class="detail-balance"><span id="detail-main-balance">48 490</span>,<span id="detail-decimal-balance">20</span> <span>Kč</span></div>
+
+        <div class="currency-filters">
+          <button class="filter-chip active">Vše</button>
+          <button class="filter-chip"><img class="flag-icon" src="https://flagcdn.com/w20/cz.png" alt="CZ">40 000,00 Kč</button>
+          <button class="filter-chip"><img class="flag-icon" src="https://flagcdn.com/w20/eu.png" alt="EU">334,26 EUR</button>
+        </div>
+      </div>
+
+      <!-- FORECAST CARD -->
+      <div class="forecast-card" id="forecast-card" onclick="switchTab('future', true)">
+        <div class="forecast-top">
+          <div class="forecast-top-l">
+            <div class="forecast-ic">
+              <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path></svg>
+            </div>
+            <div>
+              <div class="forecast-label">Po nadcházejících platbách zbyde</div>
+              <div class="forecast-val warn" id="forecast-low">33 990,20 Kč</div>
+            </div>
+          </div>
+          <div class="forecast-link">Detail<svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"></path></svg></div>
+        </div>
+
+        <div class="traj">
+          <div class="traj-bar"><div class="traj-fill" id="traj-fill" style="width:70%;"></div></div>
+          <div class="traj-ticks">
+            <div class="traj-tick">dnes<b id="traj-now">48 490 Kč</b></div>
+            <div class="traj-tick" style="text-align:right;">nejnižší bod<b id="traj-low">33 990 Kč</b></div>
+          </div>
+        </div>
+
+        <div class="forecast-income">
+          <span class="ic-in"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m0-16l-5 5m5-5l5 5"></path></svg></span>
+          <span>Po výplatě <b id="forecast-income-date">10. 7.</b> budete mít <b id="forecast-income-val">61 990,20 Kč</b></span>
+        </div>
+      </div>
+
+      <!-- SEGMENT -->
+      <div class="segment">
+        <button class="seg-btn active" id="seg-future" onclick="switchTab('future')">Nadcházející<span class="seg-badge" id="seg-future-count">3</span></button>
+        <button class="seg-btn" id="seg-history" onclick="switchTab('history')">Historie</button>
+      </div>
+
+      <div id="tab-future"></div>
+      <div id="tab-history" style="display:none;"></div>
+
+      <!-- menu rows (shared) -->
+      <div class="menu-card">
+        <div class="menu-row">
+          <div class="menu-icon"><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 10h16M4 14h16M4 18h16"></path></svg></div>
+          <div class="menu-text">Detail a správa účtu</div>
+          <div class="menu-arrow"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"></path></svg></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- QUICK ACTIONS -->
+  <div id="quick-actions-panel" class="quick-panel-container">
+    <div class="quick-panel">
+      <button class="quick-btn">
+        <div class="quick-btn-icon"><svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"></path></svg></div>
+        <span class="quick-btn-text">Nová platba</span>
+      </button>
+      <button class="quick-btn">
+        <div class="quick-btn-icon"><svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg></div>
+        <span class="quick-btn-text">QR platba</span>
+      </button>
+      <button class="quick-btn">
+        <div class="quick-btn-icon"><svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"></path></svg></div>
+        <span class="quick-btn-text">Zaplať mi</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- BOTTOM SHEET -->
+  <div id="bottom-sheet-overlay" class="bottom-sheet-overlay" onclick="closeBottomSheet(event)">
+    <div class="bottom-sheet">
+      <div class="bottom-sheet-handle"></div>
+      <div class="bs-head">
+        <div class="bs-head-ic out" id="bs-ic">
+          <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+        </div>
+        <div>
+          <div class="bottom-sheet-title" id="bs-title">Název platby</div>
+          <div class="bottom-sheet-subtitle" id="bs-type">Trvalý příkaz</div>
+        </div>
+      </div>
+      <div class="bs-amount-big out" id="bs-amount-big">-1 500,00 Kč</div>
+
+      <div class="detail-grid">
+        <div class="detail-grid-row"><span class="detail-grid-label">Datum splatnosti</span><span class="detail-grid-val" id="bs-date">23. 06. 2026</span></div>
+        <div class="detail-grid-row"><span class="detail-grid-label">Zůstatek po platbě</span><span class="detail-grid-val" id="bs-after">46 990,20 Kč</span></div>
+        <div class="detail-grid-row"><span class="detail-grid-label">Účet příjemce</span><span class="detail-grid-val" id="bs-account">27-18492048/0100</span></div>
+        <div class="detail-grid-row"><span class="detail-grid-label">Variabilní symbol</span><span class="detail-grid-val" id="bs-vs">28471904</span></div>
+        <div class="detail-grid-row"><span class="detail-grid-label">Popis</span><span class="detail-grid-val" id="bs-desc">Popis</span></div>
+      </div>
+
+      <div class="bottom-sheet-actions" id="bs-actions"></div>
+    </div>
+  </div>
+
+</div>
+
+<div class="instructions-bubble">
+  <h3>Nápověda pro testování</h3>
+  <ul>
+    <li>Klepni na <em>Běžný účet 2</em> → detail účtu.</li>
+    <li>Nahoře <em>forecast karta</em>: kolik zbyde po nadcházejících platbách + kdy přijde výplata. Klepnutí přepne na záložku Nadcházející.</li>
+    <li>Přepínač <em>Nadcházející / Historie</em>. Nadcházející = časová osa s běžícím zůstatkem po každé platbě.</li>
+    <li>Klepni na budoucí platbu → spodní panel: <em>Zaplatit hned</em>, <em>Přeskočit</em>, <em>Zrušit příkaz</em>.</li>
+    <li>Po akci se forecast i osa hned přepočítají.</li>
+  </ul>
+</div>
+
+<script>
+/* ===== localStorage helpers (iframe-safe) ===== */
+function lsGet(k){ try { return localStorage.getItem(k); } catch(e){ return null; } }
+function lsSet(k,v){ try { localStorage.setItem(k,v); } catch(e){} }
+
+const STORAGE_KEY = 'rozcestnik__budouci_v2_state';
+const TAB_KEY = 'rozcestnik__budouci_v2_tab';
+const TODAY = new Date(2026, 5, 19); // 19. 6. 2026
+
+let appState = {};
+let activeTab = 'future';
+let activeFpId = null;
+
+const defaultState = {
+  balance: 48490.20,
+  futurePayments: [
+    { id:'fp1', title:'ČEZ Distribuce', type:'Inkaso', description:'Záloha na elektřinu', amount:-1500.00, dueY:2026, dueM:6, dueD:23, status:'scheduled', vs:'28471904', account:'27-18492048/0100' },
+    { id:'fp2', title:'Nájem bytu', type:'Trvalý příkaz', description:'Nájem červenec 2026 – J. Pokorný', amount:-12000.00, dueY:2026, dueM:6, dueD:25, status:'scheduled', vs:'202607', account:'19-38291048/0800' },
+    { id:'fp3', title:'O2 Family', type:'Trvalý příkaz', description:'Mobil a internet pro rodinu', amount:-1000.00, dueY:2026, dueM:6, dueD:28, status:'scheduled', vs:'9840284', account:'27-48201948/0300' },
+    { id:'fp4', title:'Výplata – ACME Corp', type:'Příchozí platba', description:'Mzda za červen 2026', amount:28000.00, dueY:2026, dueM:7, dueD:10, status:'scheduled', vs:'102026', account:'12000284/0100' }
+  ],
+  historyPayments: [
+    { id:'h1', title:'Tesco', description:'Vršovická 3827/11, Praha', amount:-2430.30, date:'Dnes', status:'success', icon:'out' },
+    { id:'h2', title:'Karel Kropáček', description:'Příspěvek na chatu', amount:2000.00, date:'Dnes', status:'success', icon:'in' },
+    { id:'h3', title:'Josef Pokorný', description:'Nájem srpen 2022', amount:-12000.00, date:'Dnes', status:'failed', icon:'failed', errorText:'Platba neodešla' },
+    { id:'h4', title:'Albert', description:'Nákup potravin', amount:-420.00, date:'Včera', status:'success', icon:'out' },
+    { id:'h5', title:'Výběr z bankomatu', description:'Bankomat KB Praha', amount:-1500.00, date:'Včera', status:'success', icon:'out' }
+  ]
+};
+
+function loadState(){
+  const d = lsGet(STORAGE_KEY);
+  if (d){ try { appState = JSON.parse(d); } catch(e){ appState = clone(defaultState); } }
+  else { appState = clone(defaultState); }
+  const t = lsGet(TAB_KEY);
+  if (t === 'history' || t === 'future') activeTab = t;
+}
+function saveState(){ lsSet(STORAGE_KEY, JSON.stringify(appState)); }
+function clone(o){ return JSON.parse(JSON.stringify(o)); }
+
+/* ===== money + dates ===== */
+function fmt(amount, withSign){
+  const abs = Math.abs(amount).toLocaleString('cs-CZ', { minimumFractionDigits:2, maximumFractionDigits:2 });
+  let sign = amount < 0 ? '-' : (withSign ? '+' : '');
+  return sign + abs + ' Kč';
+}
+function fmtShort(amount){
+  return Math.round(amount).toLocaleString('cs-CZ') + ' Kč';
+}
+const MONTHS = ['ledna','února','března','dubna','května','června','července','srpna','září','října','listopadu','prosince'];
+const MONTHS_NOM = ['Leden','Únor','Březen','Duben','Květen','Červen','Červenec','Srpen','Září','Říjen','Listopad','Prosinec'];
+function fpDate(fp){ return new Date(fp.dueY, fp.dueM-1, fp.dueD); }
+function fpDateStr(fp){ return ('0'+fp.dueD).slice(-2) + '. ' + ('0'+fp.dueM).slice(-2) + '. ' + fp.dueY; }
+function fpDateLong(fp){ return fp.dueD + '. ' + MONTHS[fp.dueM-1].replace(/a$/,'a'); }
+function daysFromToday(fp){
+  const ms = fpDate(fp) - TODAY;
+  return Math.round(ms / 86400000);
+}
+function relWhen(fp){
+  const d = daysFromToday(fp);
+  if (d <= 0) return 'dnes';
+  if (d === 1) return 'zítra';
+  if (d < 5) return 'za ' + d + ' dny';
+  return 'za ' + d + ' dní';
+}
+
+/* ===== sorted scheduled future ===== */
+function scheduledSorted(){
+  return appState.futurePayments
+    .filter(p => p.status === 'scheduled')
+    .sort((a,b) => fpDate(a) - fpDate(b));
+}
+/* all not-paid (scheduled+skipped) for list display */
+function activeForList(){
+  return appState.futurePayments
+    .filter(p => p.status === 'scheduled' || p.status === 'skipped')
+    .sort((a,b) => fpDate(a) - fpDate(b));
+}
+
+/* ===== forecast math: running balance, low point, income ===== */
+function computeForecast(){
+  let bal = appState.balance;
+  let low = bal;
+  let firstIncome = null;
+  const sched = scheduledSorted();
+  // running balance per scheduled payment
+  const running = {};
+  sched.forEach(p => {
+    bal += p.amount;
+    running[p.id] = bal;
+    if (bal < low) low = bal;
+    if (p.amount > 0 && !firstIncome) firstIncome = { date: p, bal: bal };
+  });
+  const outCount = sched.filter(p => p.amount < 0).length;
+  return { running, low, finalAfterIncome: bal, firstIncome, count: sched.length, outCount };
+}
+
+/* ===== NAV ===== */
+function goTo(screenId, opt = {}){
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  const t = document.getElementById('screen-' + screenId);
+  if (t) t.classList.add('active');
+  document.getElementById('quick-actions-panel').style.display = (screenId === 'splash') ? 'none' : 'block';
+  if (!opt.skipHistory) window.location.hash = screenId;
+  gtag('event', 'page_view', { page_title: 'screen_' + screenId, page_path: '/' + screenId });
+  if (screenId === 'detail' || screenId === 'home') render();
+}
+
+function switchTab(tab, scroll){
+  activeTab = tab;
+  lsSet(TAB_KEY, tab);
+  document.getElementById('seg-future').classList.toggle('active', tab === 'future');
+  document.getElementById('seg-history').classList.toggle('active', tab === 'history');
+  document.getElementById('tab-future').style.display = (tab === 'future') ? 'block' : 'none';
+  document.getElementById('tab-history').style.display = (tab === 'history') ? 'block' : 'none';
+  gtag('event', 'detail_tab_switch', { tab: tab });
+  if (scroll){
+    setTimeout(() => { document.querySelector('.segment').scrollIntoView({ behavior:'smooth', block:'start' }); }, 60);
+  }
+}
+
+/* ===== RENDER ===== */
+function render(){
+  const f = computeForecast();
+
+  // hero balance
+  const bp = appState.balance.toFixed(2).split('.');
+  document.getElementById('detail-main-balance').innerText = parseInt(bp[0]).toLocaleString('cs-CZ');
+  document.getElementById('detail-decimal-balance').innerText = bp[1];
+  document.getElementById('home-acc2-balance').innerHTML = parseInt(bp[0]).toLocaleString('cs-CZ') + ',<span>' + bp[1] + '</span>';
+
+  // forecast card
+  const fc = document.getElementById('forecast-card');
+  if (f.outCount > 0){
+    fc.style.display = 'block';
+    document.getElementById('forecast-low').innerText = fmt(f.low);
+    document.getElementById('traj-now').innerText = fmtShort(appState.balance);
+    document.getElementById('traj-low').innerText = fmtShort(f.low);
+    // trajectory fill: low / now ratio
+    const ratio = appState.balance > 0 ? Math.max(8, Math.min(100, Math.round(f.low / appState.balance * 100))) : 100;
+    document.getElementById('traj-fill').style.width = ratio + '%';
+    const incEl = document.querySelector('.forecast-income');
+    if (f.firstIncome){
+      incEl.style.display = 'flex';
+      document.getElementById('forecast-income-date').innerText = f.firstIncome.date.dueD + '. ' + f.firstIncome.date.dueM + '.';
+      document.getElementById('forecast-income-val').innerText = fmt(f.finalAfterIncome);
+    } else { incEl.style.display = 'none'; }
+  } else {
+    fc.style.display = 'none';
+  }
+
+  // home mini
+  const homeFut = document.getElementById('home-acc2-future');
+  if (f.outCount > 0){
+    homeFut.style.display = 'flex';
+    document.getElementById('home-future-count').innerText = f.count + ' ' + plural(f.count, 'nadcházející platba','nadcházející platby','nadcházejících plateb');
+    document.getElementById('home-future-after').innerText = fmtShort(f.low);
+  } else { homeFut.style.display = 'none'; }
+
+  // segment badge
+  const badge = document.getElementById('seg-future-count');
+  const listItems = activeForList();
+  const schedCount = scheduledSorted().length;
+  if (schedCount > 0){ badge.style.display = 'inline-flex'; badge.innerText = schedCount; }
+  else { badge.style.display = 'none'; }
+
+  // tab visibility
+  document.getElementById('seg-future').classList.toggle('active', activeTab === 'future');
+  document.getElementById('seg-history').classList.toggle('active', activeTab === 'history');
+  document.getElementById('tab-future').style.display = (activeTab === 'future') ? 'block' : 'none';
+  document.getElementById('tab-history').style.display = (activeTab === 'history') ? 'block' : 'none';
+
+  renderFuture(f);
+  renderHistory();
+}
+
+function plural(n, one, few, many){
+  if (n === 1) return one;
+  if (n >= 2 && n <= 4) return few;
+  return many;
+}
+
+function renderFuture(f){
+  const box = document.getElementById('tab-future');
+  const items = activeForList();
+
+  if (items.length === 0){
+    box.innerHTML = `<div class="empty-future">
+      <svg width="40" height="40" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+      <b>Žádné nadcházející platby</b>
+      <span>Aktuálně nemáte naplánované žádné budoucí platby.</span>
+    </div>`;
+    return;
+  }
+
+  // group by month label
+  let html = '';
+  let lastMonth = null;
+  items.forEach((fp, i) => {
+    const monthLabel = MONTHS[fp.dueM-1] + ' ' + fp.dueY;
+    if (monthLabel !== lastMonth){
+      if (lastMonth !== null) html += '</div>'; // close previous tl
+      html += `<div class="tl-month">${MONTHS_NOM[fp.dueM-1]} ${fp.dueY}</div><div class="tl">`;
+      lastMonth = monthLabel;
+    }
+    const isOut = fp.amount < 0;
+    const dir = isOut ? 'out' : 'in';
+    const d = daysFromToday(fp);
+    let whenCls = 'far'; if (d <= 1) whenCls = 'soon'; else if (d <= 5) whenCls = '';
+    const skippedCls = fp.status === 'skipped' ? 'skipped' : '';
+    const after = f.running[fp.id];
+    const afterHtml = (fp.status === 'scheduled' && after !== undefined)
+      ? `<div class="tl-after"><span>Zůstatek po platbě</span><b>${fmtShort(after)}</b></div>` : '';
+    const tag = fp.status === 'skipped'
+      ? `<span class="tl-tag skip">Přeskočeno</span>`
+      : (isOut ? '' : `<span class="tl-tag">Příjem</span>`);
+    const nodeIcon = isOut
+      ? `<svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 5v14m0 0l5-5m-5 5l-5-5"></path></svg>`
+      : `<svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 19V5m0 0l-5 5m5-5l5 5"></path></svg>`;
+
+    html += `
+      <div class="tl-item">
+        <div class="tl-rail">
+          <div class="tl-line"></div>
+          <div class="tl-node ${dir}">${nodeIcon}</div>
+        </div>
+        <div class="tl-body ${skippedCls}" onclick="openFutureDetail('${fp.id}')">
+          <div class="tl-row1">
+            <div class="tl-title">${fp.title}${tag}</div>
+            <div class="tl-amount ${dir}">${fmt(fp.amount, true)}</div>
+          </div>
+          <div class="tl-row2">
+            <div class="tl-meta">${fp.type} · ${fpDateLong(fp)}</div>
+            <div class="tl-when ${whenCls}">${fp.status === 'skipped' ? 'přeskočeno' : relWhen(fp)}</div>
+          </div>
+          ${afterHtml}
+        </div>
+      </div>`;
+  });
+  html += '</div>';
+  box.innerHTML = html;
+}
+
+function renderHistory(){
+  const box = document.getElementById('tab-history');
+  const groups = {};
+  appState.historyPayments.forEach(tx => { (groups[tx.date] = groups[tx.date] || []).push(tx); });
+
+  let html = '';
+  Object.keys(groups).forEach(dateKey => {
+    const list = groups[dateKey];
+    html += `<div class="history-title-row"><span class="history-date">${dateKey}</span><span class="history-count">${list.length} ${plural(list.length,'transakce','transakce','transakcí')}</span></div><div class="tx-card">`;
+    list.forEach(tx => {
+      const isNeg = tx.amount < 0;
+      const amtCls = isNeg ? 'neg' : 'pos';
+      let badgeCls = tx.icon, badgeSvg = '';
+      if (tx.icon === 'in') badgeSvg = `<svg width="10" height="10" fill="currentColor" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M8 4a.5.5 0 0 1 .5.5v5.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 1 1 .708-.708L7.5 10.293V4.5A.5.5 0 0 1 8 4z"/></svg>`;
+      else if (tx.icon === 'failed') badgeSvg = `<svg width="8" height="8" fill="currentColor" viewBox="0 0 16 16"><path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/></svg>`;
+      else badgeSvg = `<svg width="10" height="10" fill="currentColor" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M8 12a.5.5 0 0 0 .5-.5V5.707l2.146 2.147a.5.5 0 0 0 .708-.708l-3-3a.5.5 0 0 0-.708 0l-3 3a.5.5 0 1 0 .708.708L7.5 5.707V11.5a.5.5 0 0 0 .5.5z"/></svg>`;
+      const personSvg = `<svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>`;
+      html += `
+        <div class="tx-row">
+          <div class="tx-icon">${personSvg}<div class="tx-icon-badge ${badgeCls}">${badgeSvg}</div></div>
+          <div class="tx-info">
+            <span class="tx-title">${tx.title}</span>
+            <span class="tx-desc">${tx.description}</span>
+            ${tx.status === 'failed' ? `<span class="tx-status-text failed">${tx.errorText}</span>` : ''}
+          </div>
+          <div class="tx-amount ${amtCls}">${fmt(tx.amount, true)}</div>
+        </div>`;
+    });
+    html += '</div>';
+  });
+  box.innerHTML = html;
+}
+
+/* ===== BOTTOM SHEET ===== */
+function openFutureDetail(id){
+  const fp = appState.futurePayments.find(p => p.id === id);
+  if (!fp) return;
+  activeFpId = id;
+  const isOut = fp.amount < 0;
+  const f = computeForecast();
+
+  document.getElementById('bs-ic').className = 'bs-head-ic ' + (isOut ? 'out' : 'in');
+  document.getElementById('bs-title').innerText = fp.title;
+  document.getElementById('bs-type').innerText = fp.type + (fp.status === 'skipped' ? ' · přeskočeno' : '');
+  const big = document.getElementById('bs-amount-big');
+  big.className = 'bs-amount-big ' + (isOut ? 'out' : 'in');
+  big.innerText = fmt(fp.amount, true);
+  document.getElementById('bs-date').innerText = fpDateStr(fp);
+  const after = f.running[fp.id];
+  document.getElementById('bs-after').innerText = (fp.status === 'scheduled' && after !== undefined) ? fmt(after).replace('-','− ').replace('−  ','− ') : '—';
+  document.getElementById('bs-account').innerText = fp.account;
+  document.getElementById('bs-vs').innerText = fp.vs;
+  document.getElementById('bs-desc').innerText = fp.description;
+
+  const act = document.getElementById('bs-actions');
+  if (fp.status === 'scheduled'){
+    act.innerHTML = `
+      <button class="btn-primary" onclick="payNow()">Zaplatit hned</button>
+      <button class="btn-secondary" onclick="skipThisMonth()">Přeskočit tuto platbu</button>
+      <button class="btn-text-danger" onclick="cancelPermanently()">Zrušit trvalý příkaz</button>`;
+  } else {
+    act.innerHTML = `
+      <button class="btn-primary" onclick="restore()">Obnovit platbu</button>
+      <button class="btn-secondary" onclick="closeBottomSheet()">Zavřít</button>`;
+  }
+
+  const ov = document.getElementById('bottom-sheet-overlay');
+  ov.style.display = 'block';
+  ov.offsetHeight;
+  ov.classList.add('active');
+  // virtual page_view for GA/Clarity
+  if (!location.hash.startsWith('#fp-')) history.pushState(history.state, '', '#fp-' + id);
+  gtag('event', 'page_view', { page_title: 'future_detail', page_path: '/future/' + id });
+}
+
+function closeBottomSheet(e){
+  if (e && e.target){
+    const inside = e.target.closest('.bottom-sheet');
+    if (inside && !e.target.classList.contains('btn-secondary')) return;
+  }
+  const ov = document.getElementById('bottom-sheet-overlay');
+  ov.classList.remove('active');
+  setTimeout(() => { ov.style.display = 'none'; }, 250);
+  if (location.hash.startsWith('#fp-')) history.replaceState(history.state, '', '#detail');
+}
+
+function showToast(text){
+  document.getElementById('toast-text').innerText = text;
+  const t = document.getElementById('toast');
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2600);
+}
+
+function payNow(){
+  const fp = appState.futurePayments.find(p => p.id === activeFpId);
+  if (!fp) return;
+  fp.status = 'paid';
+  appState.balance += fp.amount;
+  appState.historyPayments.unshift({
+    id:'h_'+Date.now(), title:fp.title, description:fp.description + ' (zaplaceno dříve)',
+    amount:fp.amount, date:'Dnes', status:'success', icon: fp.amount > 0 ? 'in' : 'out'
+  });
+  saveState(); closeBottomSheet(); render();
+  showToast('Platba odeslána ke zpracování');
+}
+function skipThisMonth(){
+  const fp = appState.futurePayments.find(p => p.id === activeFpId);
+  if (!fp) return;
+  fp.status = 'skipped';
+  saveState(); closeBottomSheet(); render();
+  showToast('Platba pro tento měsíc přeskočena');
+}
+function restore(){
+  const fp = appState.futurePayments.find(p => p.id === activeFpId);
+  if (!fp) return;
+  fp.status = 'scheduled';
+  saveState(); closeBottomSheet(); render();
+  showToast('Platba obnovena');
+}
+function cancelPermanently(){
+  if (!confirm('Opravdu zrušit tento trvalý příkaz?')) return;
+  appState.futurePayments = appState.futurePayments.filter(p => p.id !== activeFpId);
+  saveState(); closeBottomSheet(); render();
+  showToast('Trvalý příkaz zrušen');
+}
+
+/* ===== INIT + HASH RESTORE ===== */
+window.addEventListener('DOMContentLoaded', () => {
+  loadState();
+  const hash = window.location.hash.replace('#', '');
+  if (hash.startsWith('fp-')){
+    goTo('detail', { skipHistory:true });
+    openFutureDetail(hash.replace('fp-',''));
+  } else if (hash && hash !== 'splash'){
+    goTo(hash, { skipHistory:true });
+  } else {
+    goTo('splash');
+    setTimeout(() => {
+      if (window.location.hash === '#splash' || window.location.hash === '') goTo('home');
+    }, 1500);
+  }
+});
+
+window.addEventListener('popstate', () => {
+  const hash = window.location.hash.replace('#', '');
+  // closing the sheet via back
+  const ov = document.getElementById('bottom-sheet-overlay');
+  if (!hash.startsWith('fp-') && ov.classList.contains('active')){
+    ov.classList.remove('active');
+    setTimeout(() => { ov.style.display = 'none'; }, 250);
+  }
+  if (hash.startsWith('fp-')){ openFutureDetail(hash.replace('fp-','')); return; }
+  if (hash) goTo(hash, { skipHistory:true });
+  else goTo('home', { skipHistory:true });
+});
+</script>
+</body>
+</html>
