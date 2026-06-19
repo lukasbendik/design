@@ -838,7 +838,7 @@ h1.proto-title {
 
       <!-- MINIMALIST FUTURE PAYMENTS ROW UNDER BALANCE -->
       <div class="detail-balance-dispo" id="dispo-info-container" onclick="goTo('future-overview')">
-        Budoucí platby: <span class="detail-balance-dispo-val" id="dispo-balance-val" style="margin-left: 4px; color: var(--blue);">+13 500,00 Kč</span>
+        Budoucí platby do 10. 7.: <span class="detail-balance-dispo-val" id="dispo-balance-val" style="margin-left: 4px; color: var(--text);">13 500,00 Kč</span>
         <span class="detail-balance-dispo-icon" style="margin-left: 2px;">
           <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"></path>
@@ -1421,14 +1421,12 @@ function updateUI() {
   const dispoContainer = document.getElementById('dispo-info-container');
   if (activeScheduledCount > 0 && currentCurrencyFilter === 'all') {
     dispoContainer.style.display = 'flex';
-    const prefix = totalFutureSum > 0 ? '+' : '';
-    document.getElementById('dispo-balance-val').innerText = prefix + formatMoney(totalFutureSum);
-    document.getElementById('dispo-balance-val').style.color = totalFutureSum < 0 ? 'var(--red)' : 'var(--green)';
+    document.getElementById('dispo-balance-val').innerText = formatMoney(Math.abs(totalFutureSum));
+    document.getElementById('dispo-balance-val').style.color = 'var(--text)';
   } else if (currentCurrencyFilter === 'czk') {
     dispoContainer.style.display = 'flex';
-    const prefix = totalFutureSum > 0 ? '+' : '';
-    document.getElementById('dispo-balance-val').innerText = prefix + formatMoney(totalFutureSum);
-    document.getElementById('dispo-balance-val').style.color = totalFutureSum < 0 ? 'var(--red)' : 'var(--green)';
+    document.getElementById('dispo-balance-val').innerText = formatMoney(Math.abs(totalFutureSum));
+    document.getElementById('dispo-balance-val').style.color = 'var(--text)';
   } else {
     if (currentCurrencyFilter === 'eur') {
       dispoContainer.style.display = 'none'; 
