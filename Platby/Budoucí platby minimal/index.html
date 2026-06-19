@@ -93,11 +93,15 @@ h1.proto-title { font-size: 18px; color: #fff; font-weight: 600; text-align: cen
 .detail-balance { font-size: 38px; font-weight: 700; margin-bottom: 6px; padding: 0 4px; line-height: 1.05; }
 .detail-balance span { font-size: 22px; font-weight: 600; }
 
-/* minimal disponibilni line */
-.dispo-line { display: flex; align-items: center; gap: 6px; padding: 0 4px; margin-bottom: 16px; font-size: 13px; color: var(--text-2); cursor: pointer; user-select: none; }
+/* minimal "kolik můžu utratit" line */
+.dispo-line { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 0 4px; margin-bottom: 16px; cursor: pointer; user-select: none; }
 .dispo-line:active { opacity: .6; }
-.dispo-line b { color: var(--text); font-weight: 700; }
-.dispo-line .chev { color: var(--text-3); display: inline-flex; }
+.dispo-main { display: flex; flex-direction: column; gap: 1px; min-width: 0; }
+.dispo-label { font-size: 12px; color: var(--text-2); }
+.dispo-amt { display: flex; align-items: baseline; gap: 6px; flex-wrap: wrap; }
+.dispo-amt b { color: var(--text); font-weight: 700; font-size: 15px; white-space: nowrap; }
+.dispo-note { color: var(--text-3); font-size: 12px; }
+.dispo-line .chev { color: var(--text-3); display: inline-flex; flex-shrink: 0; }
 
 .currency-filters { display: flex; gap: 8px; margin-bottom: 16px; padding: 0 4px; }
 .filter-chip { display: flex; align-items: center; gap: 6px; padding: 7px 12px; border-radius: 20px; border: 1px solid var(--border); background: #fff; font-size: 13px; font-weight: 600; color: var(--text); cursor: pointer; }
@@ -268,10 +272,11 @@ h1.proto-title { font-size: 18px; color: #fff; font-weight: 600; text-align: cen
 
       <!-- minimal "kolik můžu utratit" line -->
       <div class="dispo-line" id="dispo-line" onclick="goTo('future-overview')">
-        <span>Kolik můžu utratit</span>
-        <b id="dispo-val">12 694,20 Kč</b>
-        <span id="dispo-note" style="color:var(--text-3);">· 6 budoucích plateb</span>
-        <span class="chev"><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"></path></svg></span>
+        <div class="dispo-main">
+          <span class="dispo-label">Kolik můžu utratit</span>
+          <span class="dispo-amt"><b id="dispo-val">12 694,20 Kč</b><span class="dispo-note" id="dispo-note">· 6 budoucích plateb</span></span>
+        </div>
+        <span class="chev"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"></path></svg></span>
       </div>
 
       <div class="currency-filters">
