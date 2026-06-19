@@ -368,14 +368,14 @@ h1.proto-title { font-size: 18px; color: #fff; font-weight: 600; text-align: cen
     <div class="scroll" style="padding-top:0;">
       <div style="font-size:13px;font-weight:700;color:var(--text-3);text-transform:uppercase;letter-spacing:.05em;margin:8px 0 12px 4px;">Tarif Komfort</div>
 
-      <div class="account-card" onclick="goTo('detail')">
+      <div class="account-card" onclick="openDetail('acc1')">
         <div class="account-name">Běžný účet</div>
         <div class="account-number">122000/0100</div>
         <div class="account-balance-large">18 063,<span>38 Kč</span></div>
         <div class="account-card-arrow"><svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"></path></svg></div>
       </div>
 
-      <div class="account-card" onclick="goTo('detail')">
+      <div class="account-card" onclick="openDetail('acc2')">
         <div class="account-name">Běžný účet 2</div>
         <div class="account-number">326683762/0100</div>
         <div class="account-balance-large"><span id="home-acc2-balance">48 490,20</span> <span>Kč</span></div>
@@ -419,13 +419,13 @@ h1.proto-title { font-size: 18px; color: #fff; font-weight: 600; text-align: cen
     <div class="scroll" id="detail-scroll">
       <div class="detail-head">
         <div class="detail-account-info">
-          <div class="detail-account-name">Běžný účet 2</div>
-          <div class="detail-account-number">326683762/0100</div>
+          <div class="detail-account-name" id="detail-account-name">Běžný účet 2</div>
+          <div class="detail-account-number" id="detail-account-number">326683762/0100</div>
         </div>
         <div class="balance-label">Aktuální zůstatek</div>
         <div class="detail-balance"><span id="detail-main-balance">48 490</span>,<span id="detail-decimal-balance">20</span> <span>Kč</span></div>
 
-        <div class="currency-filters">
+        <div class="currency-filters" id="currency-filters">
           <button class="filter-chip active">Vše</button>
           <button class="filter-chip"><img class="flag-icon" src="https://flagcdn.com/w20/cz.png" alt="CZ">40 000,00 Kč</button>
           <button class="filter-chip"><img class="flag-icon" src="https://flagcdn.com/w20/eu.png" alt="EU">334,26 EUR</button>
@@ -520,6 +520,16 @@ const TODAY = new Date(2026, 5, 19); // 19. 6. 2026
 let appState = {};
 let activeTab = 'history';
 let activeFpId = null;
+let currentAccountId = 'acc2';
+
+// Účet bez budoucích i historických položek (prázdný stav)
+const ACC1 = { name:'Běžný účet', number:'122000/0100', balance:18063.38, hasCurrencies:false, futurePayments:[], historyPayments:[] };
+const ACC_META = {
+  acc1: { name:'Běžný účet', number:'122000/0100', hasCurrencies:false },
+  acc2: { name:'Běžný účet 2', number:'326683762/0100', hasCurrencies:true }
+};
+// vrací datovou sadu aktuálně zobrazeného účtu
+function DATA(){ return currentAccountId === 'acc2' ? appState : ACC1; }
 
 const defaultState = {
   balance: 48490.20,
@@ -576,20 +586,20 @@ function relWhen(fp){
 
 /* ===== sorted scheduled future ===== */
 function scheduledSorted(){
-  return appState.futurePayments
+  return DATA().futurePayments
     .filter(p => p.status === 'scheduled')
     .sort((a,b) => fpDate(a) - fpDate(b));
 }
 /* all not-paid (scheduled+skipped) for list display */
 function activeForList(){
-  return appState.futurePayments
+  return DATA().futurePayments
     .filter(p => p.status === 'scheduled' || p.status === 'skipped')
     .sort((a,b) => fpDate(a) - fpDate(b));
 }
 
 /* ===== forecast math: running balance, low point, income ===== */
 function computeForecast(){
-  let bal = appState.balance;
+  let bal = DATA().balance;
   let low = bal;
   let firstIncome = null;
   const sched = scheduledSorted();
@@ -606,6 +616,11 @@ function computeForecast(){
 }
 
 /* ===== NAV ===== */
+function openDetail(accId){
+  currentAccountId = accId;
+  goTo('detail');
+}
+
 function goTo(screenId, opt = {}){
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
   const t = document.getElementById('screen-' + screenId);
@@ -632,19 +647,30 @@ function switchTab(tab, scroll){
 /* ===== RENDER ===== */
 function render(){
   const f = computeForecast();
+  const meta = ACC_META[currentAccountId];
 
-  // hero balance
-  const bp = appState.balance.toFixed(2).split('.');
+  // detail header (name/number/currencies) podle účtu
+  document.getElementById('detail-account-name').innerText = meta.name;
+  document.getElementById('detail-account-number').innerText = meta.number;
+  document.getElementById('currency-filters').style.display = meta.hasCurrencies ? 'flex' : 'none';
+
+  // hero balance (zobrazený účet)
+  const bp = DATA().balance.toFixed(2).split('.');
   document.getElementById('detail-main-balance').innerText = parseInt(bp[0]).toLocaleString('cs-CZ');
   document.getElementById('detail-decimal-balance').innerText = bp[1];
-  document.getElementById('home-acc2-balance').innerHTML = parseInt(bp[0]).toLocaleString('cs-CZ') + ',<span>' + bp[1] + '</span>';
 
-  // home mini
+  // home: zůstatek + mini budoucí platby vždy pro Běžný účet 2 (appState)
+  const a2 = appState.balance.toFixed(2).split('.');
+  document.getElementById('home-acc2-balance').innerHTML = parseInt(a2[0]).toLocaleString('cs-CZ') + ',<span>' + a2[1] + '</span>';
+  const a2sched = appState.futurePayments.filter(p => p.status === 'scheduled');
+  const a2out = a2sched.filter(p => p.amount < 0).length;
   const homeFut = document.getElementById('home-acc2-future');
-  if (f.outCount > 0){
+  if (a2out > 0){
+    let bal = appState.balance, low = bal;
+    a2sched.slice().sort((x,y)=>fpDate(x)-fpDate(y)).forEach(p => { bal += p.amount; if (bal < low) low = bal; });
     homeFut.style.display = 'flex';
-    document.getElementById('home-future-count').innerText = f.count + ' ' + plural(f.count, 'nadcházející platba','nadcházející platby','nadcházejících plateb');
-    document.getElementById('home-future-after').innerText = fmtShort(f.low);
+    document.getElementById('home-future-count').innerText = a2sched.length + ' ' + plural(a2sched.length, 'nadcházející platba','nadcházející platby','nadcházejících plateb');
+    document.getElementById('home-future-after').innerText = fmtShort(low);
   } else { homeFut.style.display = 'none'; }
 
   // segment badge
@@ -722,8 +748,19 @@ function renderFuture(f){
 
 function renderHistory(){
   const box = document.getElementById('tab-history');
+  const hist = DATA().historyPayments;
+
+  if (hist.length === 0){
+    box.innerHTML = `<div class="empty-future">
+      <svg width="40" height="40" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 17v-6m6 6V7M3 5a2 2 0 012-2h14a2 2 0 012 2v14a2 2 0 01-2 2H5a2 2 0 01-2-2V5z"></path></svg>
+      <b>Žádné položky</b>
+      <span>Na tomto účtu zatím nejsou žádné transakce.</span>
+    </div>`;
+    return;
+  }
+
   const groups = {};
-  appState.historyPayments.forEach(tx => { (groups[tx.date] = groups[tx.date] || []).push(tx); });
+  hist.forEach(tx => { (groups[tx.date] = groups[tx.date] || []).push(tx); });
 
   let html = '';
   Object.keys(groups).forEach(dateKey => {
