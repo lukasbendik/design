@@ -513,7 +513,7 @@ h1.proto-title { font-size: 18px; color: #fff; font-weight: 600; text-align: cen
 function lsGet(k){ try { return localStorage.getItem(k); } catch(e){ return null; } }
 function lsSet(k,v){ try { localStorage.setItem(k,v); } catch(e){} }
 
-const STORAGE_KEY = 'rozcestnik__budouci_v2_state';
+const STORAGE_KEY = 'rozcestnik__budouci_v2_state_v2';
 const TAB_KEY = 'rozcestnik__budouci_v2_tab';
 const TODAY = new Date(2026, 5, 19); // 19. 6. 2026
 
@@ -543,8 +543,16 @@ const defaultState = {
     { id:'h1', title:'Tesco', description:'Vršovická 3827/11, Praha', amount:-2430.30, date:'Dnes', status:'success', icon:'out' },
     { id:'h2', title:'Karel Kropáček', description:'Příspěvek na chatu', amount:2000.00, date:'Dnes', status:'success', icon:'in' },
     { id:'h3', title:'Josef Pokorný', description:'Nájem srpen 2022', amount:-12000.00, date:'Dnes', status:'failed', icon:'failed', errorText:'Platba neodešla' },
-    { id:'h4', title:'Albert', description:'Nákup potravin', amount:-420.00, date:'Včera', status:'success', icon:'out' },
-    { id:'h5', title:'Výběr z bankomatu', description:'Bankomat KB Praha', amount:-1500.00, date:'Včera', status:'success', icon:'out' }
+    { id:'h4', title:'Rohlik.cz', description:'Online nákup potravin', amount:-1284.50, date:'Dnes', status:'success', icon:'out' },
+    { id:'h5', title:'Albert', description:'Nákup potravin', amount:-420.00, date:'Včera', status:'success', icon:'out' },
+    { id:'h6', title:'Výběr z bankomatu', description:'Bankomat KB Praha', amount:-1500.00, date:'Včera', status:'success', icon:'out' },
+    { id:'h7', title:'Spotify', description:'Předplatné Premium', amount:-199.00, date:'Včera', status:'success', icon:'out' },
+    { id:'h8', title:'Jana Nováková', description:'Vratka za oběd', amount:320.00, date:'Včera', status:'success', icon:'in' },
+    { id:'h9', title:'Mzda – ACME Corp', description:'Výplata za květen 2026', amount:42000.00, date:'17. 6.', status:'success', icon:'in' },
+    { id:'h10', title:'Benzina', description:'Čerpací stanice Praha 4', amount:-1650.00, date:'17. 6.', status:'success', icon:'out' },
+    { id:'h11', title:'Alza.cz', description:'Elektronika', amount:-3299.00, date:'16. 6.', status:'success', icon:'out' },
+    { id:'h12', title:'Starbucks', description:'Anděl, Praha 5', amount:-149.00, date:'16. 6.', status:'success', icon:'out' },
+    { id:'h13', title:'Lékárna Dr.Max', description:'Léky a doplňky', amount:-540.00, date:'15. 6.', status:'success', icon:'out' }
   ]
 };
 
