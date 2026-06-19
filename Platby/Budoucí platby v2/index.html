@@ -257,6 +257,9 @@ h1.proto-title { font-size: 18px; color: #fff; font-weight: 600; text-align: cen
 .tx-icon-badge.in { color: var(--green); }
 .tx-icon-badge.out { color: var(--text-2); }
 .tx-icon-badge.failed { color: var(--red); }
+.tx-icon-badge.future { color: var(--blue); }
+.tx-row.future-skipped { opacity: .5; }
+.tx-row.future-skipped .tx-amount { text-decoration: line-through; }
 .tx-info { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
 .tx-title { font-size: 15px; font-weight: 600; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .tx-desc { font-size: 12px; color: var(--text-2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
@@ -325,7 +328,7 @@ h1.proto-title { font-size: 18px; color: #fff; font-weight: 600; text-align: cen
 <body>
 
 <h1 class="proto-title">Detail účtu – budoucí platby v2</h1>
-<div class="subtitle">Detail účtu s přepínačem Historie / Nadcházející. Nadcházející platby jako časová osa s běžícím zůstatkem po každé platbě.</div>
+<div class="subtitle">Detail účtu s přepínačem Historie / Nadcházející. Budoucí platby ve stejném designu jako historie, seskupené po měsících.</div>
 
 <div class="stage">
 
@@ -484,7 +487,6 @@ h1.proto-title { font-size: 18px; color: #fff; font-weight: 600; text-align: cen
 
       <div class="detail-grid">
         <div class="detail-grid-row"><span class="detail-grid-label">Datum splatnosti</span><span class="detail-grid-val" id="bs-date">23. 06. 2026</span></div>
-        <div class="detail-grid-row"><span class="detail-grid-label">Zůstatek po platbě</span><span class="detail-grid-val" id="bs-after">46 990,20 Kč</span></div>
         <div class="detail-grid-row"><span class="detail-grid-label">Účet příjemce</span><span class="detail-grid-val" id="bs-account">27-18492048/0100</span></div>
         <div class="detail-grid-row"><span class="detail-grid-label">Variabilní symbol</span><span class="detail-grid-val" id="bs-vs">28471904</span></div>
         <div class="detail-grid-row"><span class="detail-grid-label">Popis</span><span class="detail-grid-val" id="bs-desc">Popis</span></div>
@@ -500,7 +502,7 @@ h1.proto-title { font-size: 18px; color: #fff; font-weight: 600; text-align: cen
   <h3>Nápověda pro testování</h3>
   <ul>
     <li>Klepni na <em>Běžný účet 2</em> → detail účtu.</li>
-    <li>Přepínač <em>Historie / Nadcházející</em> (výchozí Historie). Nadcházející = časová osa s běžícím zůstatkem po každé platbě.</li>
+    <li>Přepínač <em>Historie / Nadcházející</em> (výchozí Historie). Budoucí platby vypadají stejně jako historie, seskupené po měsících.</li>
     <li>Klepni na budoucí platbu → spodní panel: <em>Zaplatit hned</em>, <em>Přeskočit</em>, <em>Zrušit příkaz</em>.</li>
     <li>Po akci se osa i zůstatky hned přepočítají.</li>
   </ul>
@@ -681,51 +683,40 @@ function renderFuture(f){
     return;
   }
 
-  // group by month label
-  let html = '';
-  let lastMonth = null;
-  items.forEach((fp, i) => {
-    const monthLabel = MONTHS[fp.dueM-1] + ' ' + fp.dueY;
-    if (monthLabel !== lastMonth){
-      if (lastMonth !== null) html += '</div>'; // close previous tl
-      html += `<div class="tl-month">${MONTHS_NOM[fp.dueM-1]} ${fp.dueY}</div><div class="tl">`;
-      lastMonth = monthLabel;
-    }
-    const isOut = fp.amount < 0;
-    const dir = isOut ? 'out' : 'in';
-    const d = daysFromToday(fp);
-    let whenCls = 'far'; if (d <= 1) whenCls = 'soon'; else if (d <= 5) whenCls = '';
-    const skippedCls = fp.status === 'skipped' ? 'skipped' : '';
-    const after = f.running[fp.id];
-    const afterHtml = (fp.status === 'scheduled' && after !== undefined)
-      ? `<div class="tl-after"><span>Zůstatek po platbě</span><b>${fmtShort(after)}</b></div>` : '';
-    const tag = fp.status === 'skipped'
-      ? `<span class="tl-tag skip">Přeskočeno</span>`
-      : (isOut ? '' : `<span class="tl-tag">Příjem</span>`);
-    const nodeIcon = isOut
-      ? `<svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 5v14m0 0l5-5m-5 5l-5-5"></path></svg>`
-      : `<svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 19V5m0 0l-5 5m5-5l5 5"></path></svg>`;
-
-    html += `
-      <div class="tl-item">
-        <div class="tl-rail">
-          <div class="tl-line"></div>
-          <div class="tl-node ${dir}">${nodeIcon}</div>
-        </div>
-        <div class="tl-body ${skippedCls}" onclick="openFutureDetail('${fp.id}')">
-          <div class="tl-row1">
-            <div class="tl-title">${fp.title}${tag}</div>
-            <div class="tl-amount ${dir}">${fmt(fp.amount, true)}</div>
-          </div>
-          <div class="tl-row2">
-            <div class="tl-meta">${fp.type} · ${fpDateLong(fp)}</div>
-            <div class="tl-when ${whenCls}">${fp.status === 'skipped' ? 'přeskočeno' : relWhen(fp)}</div>
-          </div>
-          ${afterHtml}
-        </div>
-      </div>`;
+  // group by month – same design as history rows
+  const groups = {};
+  const order = [];
+  items.forEach(fp => {
+    const key = MONTHS_NOM[fp.dueM-1] + ' ' + fp.dueY;
+    if (!groups[key]){ groups[key] = []; order.push(key); }
+    groups[key].push(fp);
   });
-  html += '</div>';
+
+  const clockBadge = `<svg width="10" height="10" fill="currentColor" viewBox="0 0 16 16"><path d="M8 3.5a.5.5 0 0 0-1 0V9a.5.5 0 0 0 .252.434l3.5 2a.5.5 0 0 0 .496-.868L8 8.71V3.5z"/><path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm7-8A7 7 0 1 1 1 8a7 7 0 0 1 14 0z"/></svg>`;
+
+  let html = '';
+  order.forEach(key => {
+    const list = groups[key];
+    html += `<div class="history-title-row"><span class="history-date">${key}</span><span class="history-count">${list.length} ${plural(list.length,'platba','platby','plateb')}</span></div><div class="tx-card">`;
+    list.forEach(fp => {
+      const amtCls = fp.amount < 0 ? 'neg' : 'pos';
+      const skipCls = fp.status === 'skipped' ? ' future-skipped' : '';
+      const desc = fp.type + ' · ' + fpDateLong(fp) + (fp.status === 'skipped' ? ' · přeskočeno' : '');
+      html += `
+        <div class="tx-row${skipCls}" onclick="openFutureDetail('${fp.id}')">
+          <div class="tx-icon">
+            <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
+            <div class="tx-icon-badge future">${clockBadge}</div>
+          </div>
+          <div class="tx-info">
+            <span class="tx-title">${fp.title}</span>
+            <span class="tx-desc">${desc}</span>
+          </div>
+          <div class="tx-amount ${amtCls}">${fmt(fp.amount, true)}</div>
+        </div>`;
+    });
+    html += '</div>';
+  });
   box.innerHTML = html;
 }
 
@@ -777,8 +768,6 @@ function openFutureDetail(id){
   big.className = 'bs-amount-big ' + (isOut ? 'out' : 'in');
   big.innerText = fmt(fp.amount, true);
   document.getElementById('bs-date').innerText = fpDateStr(fp);
-  const after = f.running[fp.id];
-  document.getElementById('bs-after').innerText = (fp.status === 'scheduled' && after !== undefined) ? fmt(after).replace('-','− ').replace('−  ','− ') : '—';
   document.getElementById('bs-account').innerText = fp.account;
   document.getElementById('bs-vs').innerText = fp.vs;
   document.getElementById('bs-desc').innerText = fp.description;
