@@ -325,7 +325,7 @@ h1.proto-title { font-size: 18px; color: #fff; font-weight: 600; text-align: cen
 <body>
 
 <h1 class="proto-title">Detail účtu – budoucí platby v2</h1>
-<div class="subtitle">Predikce zůstatku (forecast) + časová osa nadcházejících plateb s běžícím zůstatkem. Přepínač Nadcházející / Historie přímo v detailu účtu.</div>
+<div class="subtitle">Detail účtu s přepínačem Historie / Nadcházející. Nadcházející platby jako časová osa s běžícím zůstatkem po každé platbě.</div>
 
 <div class="stage">
 
@@ -429,52 +429,23 @@ h1.proto-title { font-size: 18px; color: #fff; font-weight: 600; text-align: cen
         </div>
       </div>
 
-      <!-- FORECAST CARD -->
-      <div class="forecast-card" id="forecast-card" onclick="switchTab('future', true)">
-        <div class="forecast-top">
-          <div class="forecast-top-l">
-            <div class="forecast-ic">
-              <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path></svg>
-            </div>
-            <div>
-              <div class="forecast-label">Po nadcházejících platbách zbyde</div>
-              <div class="forecast-val warn" id="forecast-low">33 990,20 Kč</div>
-            </div>
-          </div>
-          <div class="forecast-link">Detail<svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"></path></svg></div>
-        </div>
-
-        <div class="traj">
-          <div class="traj-bar"><div class="traj-fill" id="traj-fill" style="width:70%;"></div></div>
-          <div class="traj-ticks">
-            <div class="traj-tick">dnes<b id="traj-now">48 490 Kč</b></div>
-            <div class="traj-tick" style="text-align:right;">nejnižší bod<b id="traj-low">33 990 Kč</b></div>
-          </div>
-        </div>
-
-        <div class="forecast-income">
-          <span class="ic-in"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m0-16l-5 5m5-5l5 5"></path></svg></span>
-          <span>Po výplatě <b id="forecast-income-date">10. 7.</b> budete mít <b id="forecast-income-val">61 990,20 Kč</b></span>
-        </div>
-      </div>
-
-      <!-- SEGMENT -->
-      <div class="segment">
-        <button class="seg-btn active" id="seg-future" onclick="switchTab('future')">Nadcházející<span class="seg-badge" id="seg-future-count">3</span></button>
-        <button class="seg-btn" id="seg-history" onclick="switchTab('history')">Historie</button>
-      </div>
-
-      <div id="tab-future"></div>
-      <div id="tab-history" style="display:none;"></div>
-
-      <!-- menu rows (shared) -->
-      <div class="menu-card">
+      <!-- menu rows (shared) – above segment -->
+      <div class="menu-card" style="margin-top:14px;">
         <div class="menu-row">
           <div class="menu-icon"><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 10h16M4 14h16M4 18h16"></path></svg></div>
           <div class="menu-text">Detail a správa účtu</div>
           <div class="menu-arrow"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"></path></svg></div>
         </div>
       </div>
+
+      <!-- SEGMENT: Historie vlevo (výchozí), Nadcházející vpravo -->
+      <div class="segment">
+        <button class="seg-btn active" id="seg-history" onclick="switchTab('history')">Historie</button>
+        <button class="seg-btn" id="seg-future" onclick="switchTab('future')">Nadcházející<span class="seg-badge" id="seg-future-count">3</span></button>
+      </div>
+
+      <div id="tab-history"></div>
+      <div id="tab-future" style="display:none;"></div>
     </div>
   </div>
 
@@ -529,10 +500,9 @@ h1.proto-title { font-size: 18px; color: #fff; font-weight: 600; text-align: cen
   <h3>Nápověda pro testování</h3>
   <ul>
     <li>Klepni na <em>Běžný účet 2</em> → detail účtu.</li>
-    <li>Nahoře <em>forecast karta</em>: kolik zbyde po nadcházejících platbách + kdy přijde výplata. Klepnutí přepne na záložku Nadcházející.</li>
-    <li>Přepínač <em>Nadcházející / Historie</em>. Nadcházející = časová osa s běžícím zůstatkem po každé platbě.</li>
+    <li>Přepínač <em>Historie / Nadcházející</em> (výchozí Historie). Nadcházející = časová osa s běžícím zůstatkem po každé platbě.</li>
     <li>Klepni na budoucí platbu → spodní panel: <em>Zaplatit hned</em>, <em>Přeskočit</em>, <em>Zrušit příkaz</em>.</li>
-    <li>Po akci se forecast i osa hned přepočítají.</li>
+    <li>Po akci se osa i zůstatky hned přepočítají.</li>
   </ul>
 </div>
 
@@ -546,7 +516,7 @@ const TAB_KEY = 'rozcestnik__budouci_v2_tab';
 const TODAY = new Date(2026, 5, 19); // 19. 6. 2026
 
 let appState = {};
-let activeTab = 'future';
+let activeTab = 'history';
 let activeFpId = null;
 
 const defaultState = {
@@ -666,26 +636,6 @@ function render(){
   document.getElementById('detail-main-balance').innerText = parseInt(bp[0]).toLocaleString('cs-CZ');
   document.getElementById('detail-decimal-balance').innerText = bp[1];
   document.getElementById('home-acc2-balance').innerHTML = parseInt(bp[0]).toLocaleString('cs-CZ') + ',<span>' + bp[1] + '</span>';
-
-  // forecast card
-  const fc = document.getElementById('forecast-card');
-  if (f.outCount > 0){
-    fc.style.display = 'block';
-    document.getElementById('forecast-low').innerText = fmt(f.low);
-    document.getElementById('traj-now').innerText = fmtShort(appState.balance);
-    document.getElementById('traj-low').innerText = fmtShort(f.low);
-    // trajectory fill: low / now ratio
-    const ratio = appState.balance > 0 ? Math.max(8, Math.min(100, Math.round(f.low / appState.balance * 100))) : 100;
-    document.getElementById('traj-fill').style.width = ratio + '%';
-    const incEl = document.querySelector('.forecast-income');
-    if (f.firstIncome){
-      incEl.style.display = 'flex';
-      document.getElementById('forecast-income-date').innerText = f.firstIncome.date.dueD + '. ' + f.firstIncome.date.dueM + '.';
-      document.getElementById('forecast-income-val').innerText = fmt(f.finalAfterIncome);
-    } else { incEl.style.display = 'none'; }
-  } else {
-    fc.style.display = 'none';
-  }
 
   // home mini
   const homeFut = document.getElementById('home-acc2-future');
