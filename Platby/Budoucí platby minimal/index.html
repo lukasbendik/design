@@ -266,12 +266,12 @@ h1.proto-title { font-size: 18px; color: #fff; font-weight: 600; text-align: cen
       </div>
       <div class="detail-balance"><span id="detail-main-balance">48 490</span>,<span id="detail-decimal-balance">20</span> <span>Kč</span></div>
 
-      <!-- minimal disponibilni line -->
-      <div class="dispo-line" id="dispo-line" onclick="scrollToFuture()">
-        <span>Disponibilní</span>
-        <b id="dispo-val">33 990,20 Kč</b>
-        <span id="dispo-note" style="color:var(--text-3);">· 3 budoucí platby</span>
-        <span class="chev"><svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"></path></svg></span>
+      <!-- minimal "kolik můžu utratit" line -->
+      <div class="dispo-line" id="dispo-line" onclick="goTo('future-overview')">
+        <span>Kolik můžu utratit</span>
+        <b id="dispo-val">12 694,20 Kč</b>
+        <span id="dispo-note" style="color:var(--text-3);">· 6 budoucích plateb</span>
+        <span class="chev"><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"></path></svg></span>
       </div>
 
       <div class="currency-filters">
@@ -289,6 +289,93 @@ h1.proto-title { font-size: 18px; color: #fff; font-weight: 600; text-align: cen
       </div>
 
       <div id="tx-list"></div>
+    </div>
+  </div>
+
+  <!-- FUTURE OVERVIEW SCREEN (Kolik můžu utratit) -->
+  <div id="screen-future-overview" class="screen">
+    <div class="topbar">
+      <button class="back-btn" onclick="goTo('detail')" style="color:var(--text-2);font-size:15px;font-weight:normal;">Zavřít</button>
+    </div>
+    <div class="scroll" style="padding-top:8px;">
+      <h2 style="font-size:26px;font-weight:700;color:var(--text);margin-bottom:20px;padding:0 4px;">Budoucí platby</h2>
+
+      <!-- Account info -->
+      <div class="menu-card" style="margin-bottom:16px;">
+        <div class="menu-row" style="padding:14px 16px;">
+          <div class="tx-info">
+            <span class="tx-title" style="font-size:14px;font-weight:600;">Běžný účet 2</span>
+            <span class="tx-desc" style="font-size:12px;color:var(--text-3);">326683762/0100</span>
+          </div>
+          <div class="menu-arrow"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"></path></svg></div>
+        </div>
+      </div>
+
+      <!-- Categories -->
+      <div class="menu-card" style="margin-bottom:16px;">
+        <div class="menu-row" style="padding:14px 16px;">
+          <div class="tx-info"><span class="tx-title" style="font-size:14px;font-weight:500;color:var(--text-2);">Aktuální zůstatek</span></div>
+          <span style="font-size:14px;font-weight:700;color:var(--text);margin-right:8px;" id="fo-balance-val">48 490,20 Kč</span>
+          <div class="menu-arrow"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"></path></svg></div>
+        </div>
+
+        <div class="menu-row" style="padding:14px 16px;" onclick="openCategoryList('budouci')">
+          <div class="tx-info"><span class="tx-title" style="font-size:14px;font-weight:500;color:var(--text-2);">Budoucí platby</span></div>
+          <span style="font-size:14px;font-weight:700;color:var(--text);margin-right:8px;" id="fo-budouci-val">-399,00 Kč</span>
+          <div class="menu-arrow"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"></path></svg></div>
+        </div>
+
+        <div class="menu-row" style="padding:14px 16px;" onclick="openCategoryList('trvaly')">
+          <div class="tx-info"><span class="tx-title" style="font-size:14px;font-weight:500;color:var(--text-2);">Trvalé příkazy</span></div>
+          <span style="font-size:14px;font-weight:700;color:var(--text);margin-right:8px;" id="fo-trvaly-val">-13 000,00 Kč</span>
+          <div class="menu-arrow"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"></path></svg></div>
+        </div>
+
+        <div class="menu-row" style="padding:14px 16px;flex-direction:column;align-items:stretch;gap:4px;" onclick="openCategoryList('inkaso')">
+          <div style="display:flex;justify-content:space-between;align-items:center;width:100%;">
+            <div class="tx-info"><span class="tx-title" style="font-size:14px;font-weight:500;color:var(--text-2);">Inkasa</span></div>
+            <div style="display:flex;align-items:center;">
+              <span style="font-size:14px;font-weight:700;color:var(--text);margin-right:8px;" id="fo-inkaso-val">-1 500,00 Kč</span>
+              <div class="menu-arrow"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"></path></svg></div>
+            </div>
+          </div>
+          <span style="font-size:11px;color:var(--text-3);font-weight:normal;margin-top:-2px;">Limit plateb, o které si příjemci můžou požádat.</span>
+        </div>
+
+        <div class="menu-row" style="padding:14px 16px;" onclick="openCategoryList('sipo')">
+          <div class="tx-info"><span class="tx-title" style="font-size:14px;font-weight:500;color:var(--text-2);">SIPO</span></div>
+          <span style="font-size:14px;font-weight:700;color:var(--text);margin-right:8px;" id="fo-sipo-val">-3 000,00 Kč</span>
+          <div class="menu-arrow"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"></path></svg></div>
+        </div>
+
+        <div class="menu-row" style="padding:14px 16px;" onclick="openCategoryList('splatky')">
+          <div class="tx-info"><span class="tx-title" style="font-size:14px;font-weight:500;color:var(--text-2);">Pravidelné splátky</span></div>
+          <span style="font-size:14px;font-weight:700;color:var(--text);margin-right:8px;" id="fo-splatky-val">-17 897,00 Kč</span>
+          <div class="menu-arrow"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"></path></svg></div>
+        </div>
+      </div>
+
+      <!-- Celkem odejde -->
+      <div class="menu-card" style="margin-bottom:12px;">
+        <div class="menu-row" style="padding:16px;">
+          <div class="tx-info">
+            <span class="tx-title" style="font-size:15px;font-weight:600;">Celkem odejde</span>
+            <span class="tx-desc" style="font-size:12px;color:var(--text-3);">Do 31. 7. 2026</span>
+          </div>
+          <span style="font-size:16px;font-weight:700;color:var(--text);" id="fo-summary-val">-35 796,00 Kč</span>
+        </div>
+      </div>
+
+      <!-- Kolik můžete utratit -->
+      <div class="menu-card" style="margin-bottom:24px;border:1px solid rgba(14,138,79,0.15);background:linear-gradient(180deg,#ffffff 0%,#f5faf6 100%);">
+        <div class="menu-row" style="padding:16px;">
+          <div class="tx-info">
+            <span class="tx-title" style="font-size:15px;font-weight:700;color:var(--green);">Kolik můžete utratit</span>
+            <span class="tx-desc" style="font-size:12px;color:var(--text-2);">Předpokládaný zůstatek k 31. 7. 2026</span>
+          </div>
+          <span style="font-size:16px;font-weight:800;color:var(--green);" id="fo-can-spend-val">12 694,20 Kč</span>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -332,16 +419,19 @@ h1.proto-title { font-size: 18px; color: #fff; font-weight: 600; text-align: cen
 function lsGet(k){ try { return localStorage.getItem(k); } catch(e){ return null; } }
 function lsSet(k,v){ try { localStorage.setItem(k,v); } catch(e){} }
 
-const STORAGE_KEY = 'rozcestnik__budouci_min_state';
+const STORAGE_KEY = 'rozcestnik__budouci_min_state_v2';
 let appState = {};
 let activeFpId = null;
 
 const defaultState = {
   balance: 48490.20,
   futurePayments: [
-    { id:'fp1', title:'ČEZ Distribuce', type:'Inkaso · 23. 6.', description:'Záloha na elektřinu', amount:-1500.00, date:'23. 06. 2026', status:'scheduled', vs:'28471904', account:'27-18492048/0100' },
-    { id:'fp2', title:'Nájem bytu', type:'Trvalý příkaz · 25. 6.', description:'Nájem červenec 2026', amount:-12000.00, date:'25. 06. 2026', status:'scheduled', vs:'202607', account:'19-38291048/0800' },
-    { id:'fp3', title:'O2 Family', type:'Trvalý příkaz · 28. 6.', description:'Mobil a internet', amount:-1000.00, date:'28. 06. 2026', status:'scheduled', vs:'9840284', account:'27-48201948/0300' }
+    { id:'fp1', title:'ČEZ Distribuce', type:'Inkaso', description:'Záloha na elektřinu', amount:-1500.00, date:'23. 06. 2026', status:'scheduled', vs:'28471904', account:'27-18492048/0100', category:'inkaso' },
+    { id:'fp2', title:'Nájem bytu', type:'Trvalý příkaz', description:'Nájem za červenec 2026 – J. Pokorný', amount:-12000.00, date:'25. 06. 2026', status:'scheduled', vs:'202607', account:'19-38291048/0800', category:'trvaly' },
+    { id:'fp3', title:'O2 Family', type:'Trvalý příkaz', description:'Mobilní služby a internet pro rodinu', amount:-1000.00, date:'28. 06. 2026', status:'scheduled', vs:'9840284', account:'27-48201948/0300', category:'trvaly' },
+    { id:'fp4', title:'Předplatné Netflix', type:'Budoucí platba', description:'Pravidelné měsíční předplatné', amount:-399.00, date:'10. 07. 2026', status:'scheduled', vs:'102026', account:'12000284/0100', category:'budouci' },
+    { id:'fp5', title:'SIPO platba', type:'SIPO', description:'Sdružené inkaso plateb obyvatelstva', amount:-3000.00, date:'29. 06. 2026', status:'scheduled', vs:'83920194', account:'10003-28194018/0800', category:'sipo' },
+    { id:'fp6', title:'Splátka hypotéky', type:'Pravidelné splátky', description:'Pravidelná splátka úvěru na bydlení', amount:-17897.00, date:'30. 06. 2026', status:'scheduled', vs:'20260630', account:'284019284/0100', category:'splatky' }
   ],
   historyPayments: [
     { id:'h1', title:'Tesco', description:'Vršovická 3827/11, Praha', amount:-2430.30, date:'Dnes', status:'success', icon:'out' },
@@ -374,17 +464,13 @@ function goTo(screenId, opt = {}){
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
   const t = document.getElementById('screen-' + screenId);
   if (t) t.classList.add('active');
-  document.getElementById('quick-actions-panel').style.display = (screenId === 'splash') ? 'none' : 'block';
+  document.getElementById('quick-actions-panel').style.display = (screenId === 'splash' || screenId === 'future-overview') ? 'none' : 'block';
   if (!opt.skipHistory) window.location.hash = screenId;
   gtag('event', 'page_view', { page_title: 'screen_' + screenId, page_path: '/' + screenId });
-  if (screenId === 'detail' || screenId === 'home') render();
+  if (screenId === 'detail' || screenId === 'home' || screenId === 'future-overview') render();
 }
 
-function scrollToFuture(){
-  const el = document.getElementById('future-head');
-  if (el) el.scrollIntoView({ behavior:'smooth', block:'start' });
-  gtag('event', 'dispo_tap', {});
-}
+function setFo(id, txt){ const el = document.getElementById(id); if (el) el.innerText = txt; }
 
 /* RENDER */
 function render(){
@@ -394,18 +480,33 @@ function render(){
   document.getElementById('detail-decimal-balance').innerText = bp[1];
   document.getElementById('home-acc2-balance').innerHTML = whole + ',<span>' + bp[1] + '</span>';
 
-  // disponibilni = balance + sum of scheduled outgoing/incoming (co reálně zbyde)
-  const sum = scheduled().reduce((a,p) => a + p.amount, 0);
-  const dispo = appState.balance + sum;
-  const cnt = scheduled().length;
+  const sched = scheduled();
+  const sum = sched.reduce((a,p) => a + p.amount, 0); // záporné
+  const canSpend = appState.balance + sum;
+  const cnt = sched.length;
+
+  // "Kolik můžu utratit" řádek
   const dispoLine = document.getElementById('dispo-line');
   if (cnt > 0){
     dispoLine.style.display = 'flex';
-    document.getElementById('dispo-val').innerText = fmt(dispo);
+    document.getElementById('dispo-val').innerText = fmt(canSpend);
     document.getElementById('dispo-note').innerText = '· ' + cnt + ' ' + plural(cnt,'budoucí platba','budoucí platby','budoucích plateb');
   } else {
     dispoLine.style.display = 'none';
   }
+
+  // Obrazovka Budoucí platby (kategorie)
+  const cat = { budouci:0, trvaly:0, inkaso:0, sipo:0, splatky:0 };
+  let expenses = 0;
+  sched.forEach(p => { if (cat[p.category] !== undefined) cat[p.category] += p.amount; if (p.amount < 0) expenses += p.amount; });
+  setFo('fo-balance-val', fmt(appState.balance));
+  setFo('fo-budouci-val', fmt(cat.budouci));
+  setFo('fo-trvaly-val', fmt(cat.trvaly));
+  setFo('fo-inkaso-val', fmt(cat.inkaso));
+  setFo('fo-sipo-val', fmt(cat.sipo));
+  setFo('fo-splatky-val', fmt(cat.splatky));
+  setFo('fo-summary-val', fmt(expenses));
+  setFo('fo-can-spend-val', fmt(canSpend));
 
   renderList();
 }
@@ -416,31 +517,7 @@ function renderList(){
   const box = document.getElementById('tx-list');
   let html = '';
 
-  // FUTURE group (muted) on top
-  const fut = activeFuture();
-  if (fut.length > 0){
-    const cnt = scheduled().length;
-    html += `<div class="sec-head" id="future-head">
-      <span class="sec-date"><span class="pin">●</span> Naplánováno</span>
-      <span class="sec-count">${cnt} ${plural(cnt,'platba','platby','plateb')}</span>
-    </div><div class="tx-card">`;
-    fut.forEach(fp => {
-      const skip = fp.status === 'skipped' ? ' skipped' : '';
-      const badge = `<svg width="10" height="10" fill="currentColor" viewBox="0 0 16 16"><path d="M8 3.5a.5.5 0 0 0-1 0V9a.5.5 0 0 0 .252.434l3.5 2a.5.5 0 0 0 .496-.868L8 8.71V3.5z"/><path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm7-8A7 7 0 1 1 1 8a7 7 0 0 1 14 0z"/></svg>`;
-      html += `
-        <div class="tx-row future${skip}" onclick="openFutureDetail('${fp.id}')">
-          <div class="tx-icon">${personSvg()}<div class="tx-icon-badge future">${badge}</div></div>
-          <div class="tx-info">
-            <span class="tx-title">${fp.title}</span>
-            <span class="tx-desc">${fp.type}${fp.status==='skipped'?' · přeskočeno':''}</span>
-          </div>
-          <div class="tx-amount">${fmt(fp.amount, true)}</div>
-        </div>`;
-    });
-    html += '</div>';
-  }
-
-  // HISTORY groups
+  // Pouze historie – naplánované platby jsou na samostatné obrazovce
   const groups = {};
   appState.historyPayments.forEach(tx => { (groups[tx.date] = groups[tx.date] || []).push(tx); });
   Object.keys(groups).forEach(dateKey => {
@@ -469,11 +546,54 @@ function renderList(){
   box.innerHTML = html;
 }
 
-/* BOTTOM SHEET */
-function openFutureDetail(id){
+/* BOTTOM SHEET – seznam kategorie */
+function openCategoryList(category){
+  const list = appState.futurePayments.filter(p => p.category === category && (p.status === 'scheduled' || p.status === 'skipped'));
+  const names = { trvaly:'Trvalé příkazy', inkaso:'Inkasa', sipo:'SIPO', splatky:'Pravidelné splátky', budouci:'Budoucí platby' };
+  document.getElementById('bs-title').innerText = names[category] || 'Budoucí platby';
+  document.getElementById('bs-type').innerText = 'Seznam naplánovaných plateb';
+  document.querySelector('.detail-grid').style.display = 'none';
+
+  const act = document.getElementById('bs-actions');
+  act.innerHTML = '';
+  const wrap = document.createElement('div');
+  wrap.style.cssText = 'margin:0 -20px 16px;max-height:300px;overflow-y:auto;';
+  if (list.length === 0){
+    wrap.innerHTML = '<div style="text-align:center;padding:24px;color:var(--text-3);font-weight:500;font-size:14px;">Žádné aktivní platby v této kategorii</div>';
+  } else {
+    list.forEach(fp => {
+      const skip = fp.status === 'skipped';
+      const row = document.createElement('div');
+      row.className = 'tx-row';
+      row.style.cssText = 'padding:12px 20px;border-bottom:1px solid #f5f5f5;';
+      row.innerHTML = `
+        <div class="tx-info">
+          <span class="tx-title" style="font-size:14px;">${fp.title}</span>
+          <span class="tx-desc" style="font-size:11px;">${fp.description}</span>
+          <span class="tx-status-text" style="font-size:10px;font-weight:600;color:${skip?'var(--text-3)':'var(--blue)'};">${skip?'Přeskočeno pro tento měsíc':fp.type+' • '+fp.date}</span>
+        </div>
+        <div class="tx-amount neg" style="font-size:14px;text-decoration:${skip?'line-through':'none'};">${fmt(fp.amount, true)}</div>`;
+      row.onclick = () => { closeBottomSheet(); setTimeout(() => openFutureDetail(fp.id, true), 200); };
+      wrap.appendChild(row);
+    });
+  }
+  act.appendChild(wrap);
+  const closeBtn = document.createElement('button');
+  closeBtn.className = 'btn-secondary';
+  closeBtn.innerText = 'Zavřít';
+  closeBtn.onclick = () => closeBottomSheet();
+  act.appendChild(closeBtn);
+
+  const ov = document.getElementById('bottom-sheet-overlay');
+  ov.style.display = 'block'; ov.offsetHeight; ov.classList.add('active');
+}
+
+/* BOTTOM SHEET – detail platby */
+function openFutureDetail(id, allowBack){
   const fp = appState.futurePayments.find(p => p.id === id);
   if (!fp) return;
   activeFpId = id;
+  document.querySelector('.detail-grid').style.display = 'flex';
   document.getElementById('bs-title').innerText = fp.title;
   document.getElementById('bs-type').innerText = fp.type + (fp.status==='skipped'?' · přeskočeno':'');
   document.getElementById('bs-amount').innerText = fmt(fp.amount, true);
@@ -482,20 +602,21 @@ function openFutureDetail(id){
   document.getElementById('bs-vs').innerText = fp.vs;
 
   const act = document.getElementById('bs-actions');
+  let buttons;
   if (fp.status === 'scheduled'){
-    act.innerHTML = `
-      <button class="btn-primary" onclick="payNow()">Zaplatit hned</button>
-      <button class="btn-secondary" onclick="skipThis()">Přeskočit tuto platbu</button>
-      <button class="btn-text-danger" onclick="cancelPerm()">Zrušit trvalý příkaz</button>`;
+    buttons = `
+      <button class="btn-primary" onclick="payNow(${!!allowBack})">Zaplatit hned</button>
+      <button class="btn-secondary" onclick="skipThis(${!!allowBack})">Přeskočit tuto platbu</button>`;
   } else {
-    act.innerHTML = `
-      <button class="btn-primary" onclick="restore()">Obnovit platbu</button>
-      <button class="btn-secondary" onclick="closeBottomSheet()">Zavřít</button>`;
+    buttons = `<button class="btn-primary" onclick="restore(${!!allowBack})">Obnovit platbu</button>`;
   }
+  const back = allowBack
+    ? `<button class="btn-secondary" style="margin-top:6px;background:#f0f0f2;border:none;color:var(--text-2);" onclick="openCategoryList('${fp.category}')">Zpět na seznam</button>`
+    : `<button class="btn-secondary" style="margin-top:6px;" onclick="closeBottomSheet()">Zavřít</button>`;
+  act.innerHTML = buttons + back;
 
   const ov = document.getElementById('bottom-sheet-overlay');
   ov.style.display = 'block'; ov.offsetHeight; ov.classList.add('active');
-  if (!location.hash.startsWith('#fp-')) history.pushState(history.state, '', '#fp-' + id);
   gtag('event', 'page_view', { page_title: 'future_detail', page_path: '/future/' + id });
 }
 
@@ -507,7 +628,6 @@ function closeBottomSheet(e){
   const ov = document.getElementById('bottom-sheet-overlay');
   ov.classList.remove('active');
   setTimeout(() => { ov.style.display = 'none'; }, 250);
-  if (location.hash.startsWith('#fp-')) history.replaceState(history.state, '', '#detail');
 }
 
 function showToast(text){
@@ -517,24 +637,24 @@ function showToast(text){
   setTimeout(() => t.classList.remove('show'), 2600);
 }
 
-function payNow(){
+function afterAction(fp, allowBack){
+  saveState(); render();
+  if (allowBack) openCategoryList(fp.category);
+  else closeBottomSheet();
+}
+function payNow(allowBack){
   const fp = appState.futurePayments.find(p => p.id === activeFpId); if (!fp) return;
   fp.status = 'paid'; appState.balance += fp.amount;
-  appState.historyPayments.unshift({ id:'h_'+Date.now(), title:fp.title, description:fp.description+' (zaplaceno dříve)', amount:fp.amount, date:'Dnes', status:'success', icon: fp.amount>0?'in':'out' });
-  saveState(); closeBottomSheet(); render(); showToast('Platba odeslána ke zpracování');
+  appState.historyPayments.unshift({ id:'h_'+Date.now(), title:fp.title, description:fp.description+' (zaplaceno z budoucích plateb)', amount:fp.amount, date:'Dnes', status:'success', icon: fp.amount>0?'in':'out' });
+  afterAction(fp, allowBack); showToast('Platba odeslána ke zpracování');
 }
-function skipThis(){
+function skipThis(allowBack){
   const fp = appState.futurePayments.find(p => p.id === activeFpId); if (!fp) return;
-  fp.status = 'skipped'; saveState(); closeBottomSheet(); render(); showToast('Platba pro tento měsíc přeskočena');
+  fp.status = 'skipped'; afterAction(fp, allowBack); showToast('Platba pro tento měsíc přeskočena');
 }
-function restore(){
+function restore(allowBack){
   const fp = appState.futurePayments.find(p => p.id === activeFpId); if (!fp) return;
-  fp.status = 'scheduled'; saveState(); closeBottomSheet(); render(); showToast('Platba obnovena');
-}
-function cancelPerm(){
-  if (!confirm('Opravdu zrušit tento trvalý příkaz?')) return;
-  appState.futurePayments = appState.futurePayments.filter(p => p.id !== activeFpId);
-  saveState(); closeBottomSheet(); render(); showToast('Trvalý příkaz zrušen');
+  fp.status = 'scheduled'; afterAction(fp, allowBack); showToast('Platba obnovena');
 }
 
 /* INIT + HASH RESTORE */
