@@ -152,12 +152,13 @@ body{min-height:100dvh;}
 .prodgroup{padding:0;}
 .tarifrow{display:flex;align-items:center;gap:var(--space-12);padding:14px var(--pad-xl);cursor:pointer;}
 .tarifrow .t{flex:1;font:500 16px/24px var(--font-family);}
-.prodgroup .acctcard{margin:0 8px 8px;border-radius:var(--radius-md);}
+.prodgroup .acctcard{margin:0 12px 12px;border-radius:var(--radius-md);}
 
 /* HOME ----------------------------------------------------------- */
 .tabs{display:flex;gap:var(--space-8);overflow-x:auto;padding:8px var(--pad-xl) 4px;scrollbar-width:none;}
 .tabs::-webkit-scrollbar{display:none;}
-.tab{flex:0 0 auto;height:38px;padding:0 16px;border-radius:var(--radius-full);border:var(--border-sm) solid var(--color-background-border);background:var(--color-background-surface);font:400 15px/20px var(--font-family);color:var(--color-content-primary);cursor:pointer;display:flex;align-items:center;}
+/* CO Tab v5.0 — tab item: h32, padding 8/12, radius-sm (4), gap 8 (z Figmy) */
+.tab{flex:0 0 auto;padding:8px 12px;border-radius:var(--radius-sm);border:var(--border-sm) solid var(--color-background-border);background:var(--color-background-surface);font:400 15px/20px var(--font-family);color:var(--color-content-primary);cursor:pointer;display:flex;align-items:center;}
 .tab.on{background:var(--color-interactive-primary);color:#fff;border-color:var(--color-interactive-primary);font-weight:500;}
 .homehdr{display:flex;align-items:center;justify-content:flex-end;gap:18px;padding:10px var(--pad-xl) 0;}
 .homehdr .av{width:34px;height:34px;border-radius:var(--radius-full);background:#cdd3e0 url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="34" height="34"><circle cx="17" cy="13" r="7" fill="%23939bb0"/><path d="M4 34c0-8 7-12 13-12s13 4 13 12" fill="%23939bb0"/></svg>') center/cover;}

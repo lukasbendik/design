@@ -65,10 +65,10 @@ Obal pro skupiny obsahu. **Varianta určuje pozadí – nepleť si je:**
 
 Společné: radius `--radius-xl`, padding `--pad-2xl`.
 
-**Grouped widget pattern (home):** sekundární karta jako **obal**, uvnitř bílá primary subkarta. Např. „Tarif Komfort" = WrapSecondary obal → Tarif řádek nahoře → bílá `acctcard` (účty) uvnitř (margin 8). Souhrn/statistiky = samostatná WrapSecondary. Nedělej všechno jako bílou primary kartu.
+**Grouped widget pattern (home):** sekundární karta jako **obal**, uvnitř bílá primary subkarta. Např. „Tarif Komfort" = WrapSecondary obal → Tarif řádek nahoře (padding `14px var(--pad-xl)`) → bílá `acctcard` (účty) uvnitř s **vnitřním paddingem `12px` po stranách i dole** (`margin:0 12px 12px`, radius `--radius-md`) – účty NESMÍ být až ke kraji obalu. Souhrn/statistiky = samostatná WrapSecondary. Nedělej všechno jako bílou primary kartu.
 
-### CO Tab (horní přepínač sekcí)
-Vodorovný scrollovatelný řádek pilulek (Přehled/Extra/Karty…). Aktivní = `--color-interactive-primary` (bílý text), neaktivní = bílá s `--border-sm` `--color-background-border`, radius `--radius-full`, výška ~38, padding 0/16, font 15 (aktivní 500). Gap `--space-8`, vodorovný scroll.
+### CO Tab (horní přepínač sekcí) — `CO Tab / v5.0`
+Vodorovný scrollovatelný řádek tabů (Přehled/Extra/Karty…). **Z Figmy:** tab item výška 32, **radius `--radius-sm` (4px) — NE full pill!**, padding `8px 12px`, gap `--space-8`, font 15 (aktivní 500). Aktivní = `--color-interactive-primary` (bílý text), neaktivní = `--color-background-surface` s `--border-sm` `--color-background-border`.
 
 ### CO Header / CO Header Assisted
 - Horní hlavička obrazovky: titul (`.t-headings-title-*`), volitelně back chevron vlevo a akce vpravo. Assisted = větší/kontextová varianta.
