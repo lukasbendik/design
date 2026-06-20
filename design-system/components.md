@@ -117,7 +117,8 @@ Horní lišta, sticky `top:0`, bg `--color-background-body`. **Dvě varianty, ne
 - Tečky/indikátor stránek (carousel). Aktivní `--color-interactive-primary`, neaktivní `--color-background-border`.
 
 ### CO DigitPicker
-- Numpad pro PIN/částku (Android / iOS / IB varianty).
+- Numpad pro PIN/částku (Android / iOS / IB varianty). Mřížka 3×4: 1–9, vlevo dole biometrie (FaceID/TouchID), 0, vpravo dole ⌫. Klávesa = kruh ~72px, 1px border, surface bg; biometrie a ⌫ bez borderu (ghost).
+- **Autorizace platby = PIN bottom sheet** (DigitPicker + 6 teček), vždy za souhrnem – viz `screens.md` §E2.
 
 ### CO Chart (v4.0)
 - **Typy:** Donut, PlotPortfolioValue, PlotFundPerformance, PlotTwoValues, PlotValueRange. Barvy řad: `--color-chart-*` (in/out/funds/bonds/stocks/cool/neon/evaluation/rusty-red).

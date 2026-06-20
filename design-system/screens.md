@@ -149,6 +149,18 @@ Bottom: CO Button primary ("Zadat další") + secondary ("Zavřít")
 ```
 **Pozor:** na result nadpis **vlevo** (ne center), akce **není karta** (plain row na body). Centrovaná je jen ilustrace.
 
+### E2) Autorizace platby — PIN (bottom sheet) — VŽDY ZA SOUHRNEM
+Po souhrnu („Potvrdit platbu") se zespodu vysune **bottom sheet** s PIN zadáním. Pořadí v platebním flow je pevné: **…→ Souhrn → PIN autorizace → Result**.
+```
+Bottom sheet (přes ztmavený podklad rgba(33,33,33,.45)):
+  handle (40×4) nahoře, vpravo nahoře kruhové ✕ (zavře → zpět na souhrn)
+  Titul "Potvrzení platby" (17/500) + podtitul "Potvrďte ji PIN kódem." (16, secondary)
+  6 PIN teček (prázdný kroužek / plný)
+  Numpad 3×4 (CO DigitPicker): 1–9, FaceID (vlevo dole), 0, ⌫ (vpravo dole)
+        klávesy = kruh 72px, border, surface bg; FaceID + ⌫ bez borderu
+```
+Po zadání 6 číslic (nebo FaceID) → automaticky `Result`. Sheet má vlastní hash `#pin` (back/refresh funguje). Pozn.: „Platba k autorizaci" (detail s Autorizovat/Smazat) je JINÁ obrazovka (autorizace cizí/čekající platby) – do nového platebního flow nepatří; autorizace nové platby = tento PIN.
+
 ### F) Empty / Error stavy
 Viz Patterns „PA Empty States", „PA Error and Result States": centrovaný `ES Illustration` + nadpis + popis (`--color-content-tertiary`) + akce (CO Button), svisle centrované.
 
