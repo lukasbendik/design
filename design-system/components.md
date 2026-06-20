@@ -97,7 +97,8 @@ Horní lišta, sticky `top:0`, bg `--color-background-body`. **Dvě varianty, ne
 | **Standard (iOS)** | 48 | `[back/close vlevo] [titul CENTROVANÝ 17/500] [akce vpravo]` | flow obrazovky (krok 1/2), close-only (result) |
 | **Large** | ~96 | řádek „‹ Zpět" (48) **+ pod ním velký titul VLEVO** `.t-headings-title-secondary` (32/40) | souhrn, detail, autorizace |
 
-- **Velký titul je VŽDY stejná velikost (32/40), zarovnaný VLEVO** – nepoužívej jednou 32 a jinde 24. Titul má padding `0 16 4`, header padding-bottom 4, obsah začíná ~16 pod ním (těsně, ne velká mezera).
+- **Velký titul je VŽDY stejná velikost (32/40), zarovnaný VLEVO** – nepoužívej jednou 32 a jinde 24. Header padding-bottom 4, obsah začíná ~16 pod ním (těsně, ne velká mezera).
+- **Levá hrana titulu = levá hrana contentu (16 px od kraje obrazovky), tj. zarovnaná s hranou karet** – NE odsazená o padding karty. Titul má jen vnější 16 (jako content), žádné dvojité odsazení. (Vnitřní text karty je pak přirozeně odsazen o padding karty – to je OK.)
 - Standard varianta = titul centrovaný (iOS pattern). Back = „‹ Zpět" (chevron + text), close = „Zavřít" / „✕".
 - Nemíchej varianty na podobných obrazovkách – stejný typ obrazovky = stejný header.
 
