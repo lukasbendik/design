@@ -146,11 +146,19 @@ body{min-height:100dvh;}
 /* section heading */
 .sect{font:500 18px/24px var(--font-family);padding:4px var(--pad-xs);}
 
+/* CO Content Card — Secondary (transparent + border, bez shadow) */
+.card-secondary{background:transparent;border:var(--border-sm) solid var(--color-background-border);border-radius:var(--radius-xl);box-shadow:none;overflow:hidden;}
+/* product group: secondary obal + bílá vnitřní karta (Tarif + účty) */
+.prodgroup{padding:0;}
+.tarifrow{display:flex;align-items:center;gap:var(--space-12);padding:14px var(--pad-xl);cursor:pointer;}
+.tarifrow .t{flex:1;font:500 16px/24px var(--font-family);}
+.prodgroup .acctcard{margin:0 8px 8px;border-radius:var(--radius-md);}
+
 /* HOME ----------------------------------------------------------- */
 .tabs{display:flex;gap:var(--space-8);overflow-x:auto;padding:8px var(--pad-xl) 4px;scrollbar-width:none;}
 .tabs::-webkit-scrollbar{display:none;}
-.tab{flex:0 0 auto;height:40px;padding:0 18px;border-radius:var(--radius-full);border:var(--border-sm) solid var(--color-background-border);background:var(--color-background-surface);font:500 15px/20px var(--font-family);color:var(--color-content-primary);cursor:pointer;display:flex;align-items:center;}
-.tab.on{background:var(--color-interactive-primary);color:#fff;border-color:var(--color-interactive-primary);}
+.tab{flex:0 0 auto;height:38px;padding:0 16px;border-radius:var(--radius-full);border:var(--border-sm) solid var(--color-background-border);background:var(--color-background-surface);font:400 15px/20px var(--font-family);color:var(--color-content-primary);cursor:pointer;display:flex;align-items:center;}
+.tab.on{background:var(--color-interactive-primary);color:#fff;border-color:var(--color-interactive-primary);font-weight:500;}
 .homehdr{display:flex;align-items:center;justify-content:flex-end;gap:18px;padding:10px var(--pad-xl) 0;}
 .homehdr .av{width:34px;height:34px;border-radius:var(--radius-full);background:#cdd3e0 url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="34" height="34"><circle cx="17" cy="13" r="7" fill="%23939bb0"/><path d="M4 34c0-8 7-12 13-12s13 4 13 12" fill="%23939bb0"/></svg>') center/cover;}
 .acctcard .arow{display:flex;align-items:center;padding:var(--pad-xl);gap:var(--space-12);}
@@ -161,9 +169,10 @@ body{min-height:100dvh;}
 .acctcard .no{font:400 14px/20px var(--font-family);color:var(--color-content-tertiary);}
 .acctcard .bal{font:500 26px/32px var(--font-family);margin-top:2px;}
 .acctcard .bal small{font:500 16px/20px var(--font-family);color:var(--color-content-secondary);}
-.curtags{display:flex;gap:var(--space-8);margin-top:8px;flex-wrap:wrap;}
-.curtag{display:flex;align-items:center;gap:6px;height:32px;padding:0 10px;border:var(--border-sm) solid var(--color-background-border);border-radius:var(--radius-md);font:400 14px/20px var(--font-family);}
-.curtag .dot{width:18px;height:18px;border-radius:var(--radius-full);}
+.curtags{display:flex;gap:var(--space-8);margin-top:8px;flex-wrap:nowrap;}
+.curtag{display:flex;align-items:center;gap:6px;height:32px;padding:0 10px;border:var(--border-sm) solid var(--color-background-border);border-radius:var(--radius-md);font:400 14px/20px var(--font-family);white-space:nowrap;}
+.curtag .dot{width:18px;height:18px;border-radius:var(--radius-full);overflow:hidden;flex:0 0 auto;display:block;}
+.curtag .dot svg{display:block;width:18px;height:18px;}
 .summ .barwrap{height:8px;border-radius:var(--radius-full);background:#e2e2e2;overflow:hidden;margin:4px 0;}
 .summ .bar{height:100%;background:var(--color-content-primary);}
 .summ .bar.green{background:var(--color-attention-success);}
@@ -218,32 +227,32 @@ body{min-height:100dvh;}
       <button class="tab">Půjčky</button>
       <button class="tab">Spoření</button>
     </div>
-    <div class="content" style="flex:0 0 auto;padding-bottom:8px;">
-      <div class="card">
-        <div class="itemnav" style="box-shadow:none;border-radius:var(--radius-xl);">
-          <div class="body"><div class="t">Tarif Komfort</div></div>
+    <div class="content" style="flex:0 0 auto;padding-bottom:96px;">
+      <!-- Tariff badge widget + Main product widget = secondary group card -->
+      <div class="card-secondary prodgroup">
+        <div class="tarifrow">
+          <div class="t">Tarif Komfort</div>
           <svg class="icn" width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M9 6l6 6-6 6" stroke="#717171" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </div>
-      </div>
-
-      <div class="card acctcard">
-        <div class="arow" onclick="startPayment()">
-          <div class="body">
-            <div class="topline"><span class="nm">Běžný účet</span><span class="no">122000/0100</span></div>
-            <div class="bal">18 063<small>,38 Kč</small></div>
-            <div class="curtags">
-              <span class="curtag"><span class="dot" style="background:linear-gradient(#fff 50%,#d52b1e 50%);border:1px solid #eee"></span>40 000,00 Kč</span>
-              <span class="curtag"><span class="dot" style="background:#003399"></span>334,26 EUR</span>
+        <div class="card acctcard">
+          <div class="arow" onclick="startPayment()">
+            <div class="body">
+              <div class="topline"><span class="nm">Běžný účet</span><span class="no">122000/0100</span></div>
+              <div class="bal">18 063<small>,38 Kč</small></div>
             </div>
+            <svg class="icn" width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M9 6l6 6-6 6" stroke="#717171" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </div>
-          <svg class="icn" width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M9 6l6 6-6 6" stroke="#717171" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </div>
-        <div class="arow" onclick="startPayment()">
-          <div class="body">
-            <div class="topline"><span class="nm">Běžný účet 2</span><span class="no">326683762/0100</span></div>
-            <div class="bal">48 490<small>,20 Kč</small></div>
+          <div class="arow" onclick="startPayment()">
+            <div class="body">
+              <div class="topline"><span class="nm">Běžný účet 2</span><span class="no">326683762/0100</span></div>
+              <div class="bal">48 490<small>,20 Kč</small></div>
+              <div class="curtags">
+                <span class="curtag"><span class="dot"><svg viewBox="0 0 18 18"><rect width="18" height="9" fill="#fff"/><rect y="9" width="18" height="9" fill="#d7141a"/><path d="M0 0L9 9L0 18Z" fill="#11457e"/></svg></span>40 000,00 Kč</span>
+                <span class="curtag"><span class="dot"><svg viewBox="0 0 18 18"><rect width="18" height="18" fill="#039"/><g fill="#fc0"><circle cx="9" cy="3.2" r="0.9"/><circle cx="9" cy="14.8" r="0.9"/><circle cx="3.2" cy="9" r="0.9"/><circle cx="14.8" cy="9" r="0.9"/><circle cx="5" cy="5" r="0.9"/><circle cx="13" cy="5" r="0.9"/><circle cx="5" cy="13" r="0.9"/><circle cx="13" cy="13" r="0.9"/></g></svg></span>334,26 EUR</span>
+              </div>
+            </div>
+            <svg class="icn" width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M9 6l6 6-6 6" stroke="#717171" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </div>
-          <svg class="icn" width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M9 6l6 6-6 6" stroke="#717171" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </div>
       </div>
 
@@ -257,7 +266,7 @@ body{min-height:100dvh;}
         </div>
       </div>
 
-      <div class="card pad summ">
+      <div class="card-secondary summ" style="padding:var(--pad-2xl)">
         <div style="display:flex;justify-content:space-between;align-items:flex-start;">
           <div>
             <div class="t-headline-secondary">Souhrn za červen</div>

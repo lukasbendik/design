@@ -55,8 +55,20 @@ Typografie: utility třídy `.t-*` (viz dole).
 - Řádek s checkboxem (Normal / Consent), On/Off. Zaškrtnuto = `--color-interactive-primary`.
 
 ### CO Content Card
-- **Varianty:** WrapPrimary / WrapSecondary / WrapHighlighted, Promo/PromoTargeted, Rating.
-- Karta: bg `--color-background-surface`, radius `--radius-xl`, stín `--shadow-panel` (highlighted `--shadow-highlighted`), padding `--pad-2xl`.
+Obal pro skupiny obsahu. **Varianta určuje pozadí – nepleť si je:**
+
+| Varianta | Pozadí | Stín | Border | Použití |
+|---|---|---|---|---|
+| **WrapPrimary** | `--color-background-surface` (#fff) | `--shadow-panel` | – | hlavní karta (účet, produkt) |
+| **WrapSecondary** | **transparent / body** | **žádný** | `--border-sm` `--color-background-border` | podružná karta (souhrn, statistiky, skupinový obal) |
+| **WrapHighlighted** | #fff | `--shadow-highlighted` | – | zvýrazněná/promo |
+
+Společné: radius `--radius-xl`, padding `--pad-2xl`.
+
+**Grouped widget pattern (home):** sekundární karta jako **obal**, uvnitř bílá primary subkarta. Např. „Tarif Komfort" = WrapSecondary obal → Tarif řádek nahoře → bílá `acctcard` (účty) uvnitř (margin 8). Souhrn/statistiky = samostatná WrapSecondary. Nedělej všechno jako bílou primary kartu.
+
+### CO Tab (horní přepínač sekcí)
+Vodorovný scrollovatelný řádek pilulek (Přehled/Extra/Karty…). Aktivní = `--color-interactive-primary` (bílý text), neaktivní = bílá s `--border-sm` `--color-background-border`, radius `--radius-full`, výška ~38, padding 0/16, font 15 (aktivní 500). Gap `--space-8`, vodorovný scroll.
 
 ### CO Header / CO Header Assisted
 - Horní hlavička obrazovky: titul (`.t-headings-title-*`), volitelně back chevron vlevo a akce vpravo. Assisted = větší/kontextová varianta.
@@ -80,7 +92,8 @@ Typografie: utility třídy `.t-*` (viz dole).
 - Složené bloky (produktová karta, detail transakce). Stav z výše uvedených atomů + tokenů.
 
 ### CO Icon / CO Icon Avatar / ES Icon / ES Illustration
-- Ikony 16/24/32 px (`ES Icon`), avatar (`CO Icon Avatar`), ilustrace (`ES Illustration`). V prototypu nahraď inline SVG nebo emoji placeholderem o stejném rozměru.
+- Ikony 16/24/32 px (`ES Icon`), avatar (`CO Icon Avatar`), ilustrace (`ES Illustration`). V prototypu nahraď inline SVG o stejném rozměru.
+- **Vlajky/měnové ikony dělej věcně správně** (ne nahodile). ČR = bílá nahoře / červená dole + modrý trojúhelník zleva (`#fff`/`#d7141a`/`#11457e`), NE polská (bílo-červená vodorovně). EU = modrá `#039` se žlutými hvězdami. Měnový tag (`.curtag`) = vlajka v kolečku + částka na jednom řádku (`white-space:nowrap`), tagy vedle sebe v řádku.
 
 ---
 
