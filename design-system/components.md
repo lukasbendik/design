@@ -87,6 +87,8 @@ Společné: **radius `--radius-md` (8px) — z Figmy, NE xl!**, padding `--pad-2
 **Grouped widget pattern (home):** sekundární karta jako **obal**, uvnitř bílá primary subkarta. Např. „Tarif Komfort" = WrapSecondary obal → Tarif řádek nahoře (`CO Item Navigation`, padding `--pad-xl`) → bílá `acctcard` (účty) **flush, padding 0** (`margin:0`, bez vlastního radiusu – obal s `overflow:hidden` zaoblí spodní rohy). Bílá subkarta jde **od kraje ke kraji** obalu (NE odsazená). Souhrn/statistiky = samostatná WrapSecondary. Nedělej všechno jako bílou primary kartu.
 
 ### CO Tab (horní přepínač sekcí) — `CO Tab / v5.0`
+**Taby na HS (vždy v tomto pořadí):** Přehled · Extra · Karty · Půjčky · Spoření · Investice · Pojištění · Účty. (Přehled = výchozí aktivní.) Vodorovný scroll – nevejdou se najednou.
+
 Vodorovný scrollovatelný řádek tabů (Přehled/Extra/Karty…). **Z Figmy:** tab item výška 32, **radius `--radius-sm` (4px) — NE full pill!**, padding `8px 12px`, gap `--space-8`, font 15 (aktivní 500). Aktivní = `--color-interactive-primary` (bílý text), neaktivní = `--color-background-surface` s `--border-sm` `--color-background-border`.
 
 ### CO Header (`v4.0`) — JEDNA komponenta, používej KONZISTENTNĚ
