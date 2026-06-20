@@ -21,6 +21,23 @@ Konvence názvů ve Figmě: `CO` = Core component, `ES` = Elements (ikony/ilustr
 
 Typografie: utility třídy `.t-*` (viz dole).
 
+### Ověřené radiusy z Figmy (nehádej!)
+Tyto hodnoty jsou vytažené přímo z `💠 CORE Components.fig` (dekódováno lokálně). Použij je, neodhaduj:
+
+| Komponenta | Radius | Pozn. |
+|---|---|---|
+| CO Button | `--radius-md` (8) | výška 48 |
+| CO Input (box) | `--radius-md` (8) | |
+| CO Content Card | `--radius-md` (8) | **ne xl!** |
+| CO Item Navigation | `--radius-md` (8) | gap 16, pad 16 |
+| CO Tab (item) | `--radius-sm` (4) | h32, pad 8/12, **ne pill** |
+| CO Tag | `--radius-sm` (4) | h32 |
+| CO Toolbar (floating) | `--radius-xl` (16) | |
+| Segmented control | obal 8 / segment 6 | |
+| CO Divider | – | čára 1px, inset 16 |
+
+> Když si komponentou nejsi jistý, řekni si o ověření – mám `CORE Components.fig` dekódovaný lokálně (`Figma/_pipeline/_work/comp.json`) a vytáhnu přesný radius/padding/velikost.
+
 ---
 
 ## Komponenty
@@ -40,9 +57,9 @@ Typografie: utility třídy `.t-*` (viz dole).
 - **Tokeny:** radius `--radius-md`, border `--border-sm` `--color-background-border`; focus border `--color-content-primary` nebo brand; error border + text `--color-attention-alert`; label `.t-content-caption-primary`, hodnota `.t-content-body-primary`.
 - Search Bar = input s ikonou lupy vlevo, radius může být `--radius-xl`/`full`.
 
-### CO Item Navigation (řádek s navigací)
+### CO Item Navigation (řádek s navigací) — `v5.0`
 - **Stavy:** Resting / Focus, leading ikona `24: ES Icon` nebo `32: Avatar/Flag`, trailing chevron, toggle On/Off, badge Success/Error.
-- **Layout:** leading icon + (title `.t-content-body-primary` / subtitle `.t-content-body-secondary` v `--color-content-tertiary`) + trailing chevron `--color-content-tertiary`. Divider `--color-background-divider` dole. Padding `--pad-xl`.
+- **Geometrie (Figma):** `[row gap16 pad16 radius-md(8)]`, výška ~62–78. Title `.t-content-body-primary` / subtitle `.t-content-body-secondary` v `--color-content-tertiary`, trailing chevron `--color-content-tertiary`.
 
 ### CO Item Transaction (řádek transakce)
 - **Stavy:** Incoming / Outgoing / Done / Error / Waiting / Paused; 1–3 řádky (One/Two/Three); Resting / Select(Inactive).
@@ -63,9 +80,9 @@ Obal pro skupiny obsahu. **Varianta určuje pozadí – nepleť si je:**
 | **WrapSecondary** | **transparent / body** | **žádný** | `--border-sm` `--color-background-border` | podružná karta (souhrn, statistiky, skupinový obal) |
 | **WrapHighlighted** | #fff | `--shadow-highlighted` | – | zvýrazněná/promo |
 
-Společné: radius `--radius-xl`, padding `--pad-2xl`.
+Společné: **radius `--radius-md` (8px) — z Figmy, NE xl!**, padding `--pad-2xl`.
 
-**Grouped widget pattern (home):** sekundární karta jako **obal**, uvnitř bílá primary subkarta. Např. „Tarif Komfort" = WrapSecondary obal → Tarif řádek nahoře (padding `14px var(--pad-xl)`) → bílá `acctcard` (účty) uvnitř s **vnitřním paddingem `12px` po stranách i dole** (`margin:0 12px 12px`, radius `--radius-md`) – účty NESMÍ být až ke kraji obalu. Souhrn/statistiky = samostatná WrapSecondary. Nedělej všechno jako bílou primary kartu.
+**Grouped widget pattern (home):** sekundární karta jako **obal**, uvnitř bílá primary subkarta. Např. „Tarif Komfort" = WrapSecondary obal → Tarif řádek nahoře (`CO Item Navigation`, padding `--pad-xl`) → bílá `acctcard` (účty) **flush, padding 0** (`margin:0`, bez vlastního radiusu – obal s `overflow:hidden` zaoblí spodní rohy). Bílá subkarta jde **od kraje ke kraji** obalu (NE odsazená). Souhrn/statistiky = samostatná WrapSecondary. Nedělej všechno jako bílou primary kartu.
 
 ### CO Tab (horní přepínač sekcí) — `CO Tab / v5.0`
 Vodorovný scrollovatelný řádek tabů (Přehled/Extra/Karty…). **Z Figmy:** tab item výška 32, **radius `--radius-sm` (4px) — NE full pill!**, padding `8px 12px`, gap `--space-8`, font 15 (aktivní 500). Aktivní = `--color-interactive-primary` (bílý text), neaktivní = `--color-background-surface` s `--border-sm` `--color-background-border`.
@@ -73,8 +90,11 @@ Vodorovný scrollovatelný řádek tabů (Přehled/Extra/Karty…). **Z Figmy:**
 ### CO Header / CO Header Assisted
 - Horní hlavička obrazovky: titul (`.t-headings-title-*`), volitelně back chevron vlevo a akce vpravo. Assisted = větší/kontextová varianta.
 
-### CO Tag
-- **Varianty:** Enabled / Inactive, s ikonou, Flag+Outline. Malý štítek: radius `--radius-full` nebo `--radius-sm`, text `.t-content-caption-primary`, padding `--pad-sm`/`--pad-md`. Barva dle významu (`attention/*`).
+### CO Tag (`v3.0`)
+- **Geometrie (Figma):** výška 32, **radius `--radius-sm` (4px)**, padding 8, gap 8/4. Varianty Enabled / Inactive, s ikonou, Flag+Outline. Barva dle významu (`attention/*`). Měnový/vlajkový tag = vlajka v kolečku + text `nowrap` (viz CO Icon).
+
+### CO Divider (`v3.0`)
+- Čára 1 px, `--color-background-divider`, **horizontálně odsazená 16 px** (`pad0/16`) – NE přes celou šířku. V HTML buď `::before` s `left/right:16px`, ne `border-top` přes celou šířku.
 
 ### CO Snackbar
 - Toast dole: bg tmavá plocha, text světlý, radius `--radius-md`, stín `--shadow-floating`. Auto-dismiss.
