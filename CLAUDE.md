@@ -79,9 +79,9 @@ if (initialHash && document.getElementById(initialHash)) {
 
 ## Zabezpečení prototypů
 
-Každý nový prototyp musí být zabezpečený přihlašovacím flagem v `localStorage` (klíč `rozcestnik__auth = '1'`) a sdílecím tokenem v URL parametru `?k=...`. Plaintext heslo `share2026` se v kódu **ani v URL nikde neobjevuje** – všude se používá pouze jeho SHA-256 hash.
+Každý nový prototyp musí být zabezpečený přihlašovacím flagem v `localStorage` (klíč `rozcestnik__auth = '1'`) a sdílecím tokenem v URL parametru `?k=...`. Plaintext heslo se v kódu **ani v URL nikde neobjevuje** – všude se používá pouze jeho SHA-256 hash.
 
-- Plaintext token (jen pro referenci, do kódu nedávat): `share2026`
+- Plaintext token (jen pro referenci, do kódu nedávat): `[viz správce hesel]`
 - SHA-256 hash tokenu (používá se v URL i v kódu): `4c129f69f551195cbc5e8b57cc5a0975b6efa1e8510573524d11df03c7d010c6`
 
 URL z rozcestníku tedy vypadá: `?k=4c129f69f551195cbc5e8b57cc5a0975b6efa1e8510573524d11df03c7d010c6`. Snippet v prototypu porovnává hodnotu z URL přímo s konstantou `H`.
@@ -98,12 +98,12 @@ Logika: pokud URL obsahuje správnou hodnotu `?k=...` (musí přesně odpovídat
 
 Heslo do rozcestníku v `index.html` (a v šabloně v `generate.js`) je uložené jako SHA-256 hash (proměnná `PASSWORD_HASH`). Submit handler hashuje vstup z formuláře a porovnává s hashem.
 
-- Plaintext heslo rozcestníku (uživatel ho zadává do formuláře): `kb26`
+- Plaintext heslo rozcestníku (uživatel ho zadává do formuláře): `[viz správce hesel]`
 - SHA-256 hash hesla (v kódu): `ff0cd0c401667097559c52f6f195734f9751e0389c16581a3516eb3fd3a7d878`
 
 Token, hash a klíč nikdy neměň bez konzultace – jakákoliv změna by zneplatnila všechny dříve sdílené odkazy. Při změně hesla nebo tokenu spočítej nový SHA-256 (`printf '%s' 'heslo' | shasum -a 256`) a aktualizuj všechny prototypy + `index.html` + `generate.js`.
 
-Generátor `generate.js` přidává hash tokenu (`?k=4c129f69...`) ke všem hrefům v rozcestníku automaticky, takže odkazy jdou rovnou kopírovat a sdílet. Plaintext `share2026` se v repozitáři vyskytuje jen v této dokumentaci jako referenční poznámka.
+Generátor `generate.js` přidává hash tokenu (`?k=4c129f69...`) ke všem hrefům v rozcestníku automaticky, takže odkazy jdou rovnou kopírovat a sdílet. Plaintext token se v repozitáři nevyskytuje a je pouze pro referenci.
 
 ## Pojmenování a uložení
 
@@ -160,4 +160,3 @@ Pokud úkol zahrnuje úpravy ve více prototypech nebo více nezávislých změn
 - Používej kritické myšlení a ověřuj správnost výstupů.
 - Používej jednoduchý jazyk, bez slangu.
 - Preferuj krátké, výstižné odpovědi.
-- Pokud uživatel používá Auto mode, vždy na začátku práce napiš, jaký model právě používáš.
