@@ -89,8 +89,17 @@ Společné: **radius `--radius-md` (8px) — z Figmy, NE xl!**, padding `--pad-2
 ### CO Tab (horní přepínač sekcí) — `CO Tab / v5.0`
 Vodorovný scrollovatelný řádek tabů (Přehled/Extra/Karty…). **Z Figmy:** tab item výška 32, **radius `--radius-sm` (4px) — NE full pill!**, padding `8px 12px`, gap `--space-8`, font 15 (aktivní 500). Aktivní = `--color-interactive-primary` (bílý text), neaktivní = `--color-background-surface` s `--border-sm` `--color-background-border`.
 
-### CO Header / CO Header Assisted
-- Horní hlavička obrazovky: titul (`.t-headings-title-*`), volitelně back chevron vlevo a akce vpravo. Assisted = větší/kontextová varianta.
+### CO Header (`v4.0`) — JEDNA komponenta, používej KONZISTENTNĚ
+Horní lišta, sticky `top:0`, bg `--color-background-body`. **Dvě varianty, ne improvizuj:**
+
+| Varianta | Výška | Struktura | Kde |
+|---|---|---|---|
+| **Standard (iOS)** | 48 | `[back/close vlevo] [titul CENTROVANÝ 17/500] [akce vpravo]` | flow obrazovky (krok 1/2), close-only (result) |
+| **Large** | ~96 | řádek „‹ Zpět" (48) **+ pod ním velký titul VLEVO** `.t-headings-title-secondary` (32/40) | souhrn, detail, autorizace |
+
+- **Velký titul je VŽDY stejná velikost (32/40), zarovnaný VLEVO** – nepoužívej jednou 32 a jinde 24. Titul má padding `0 16 4`, header padding-bottom 4, obsah začíná ~16 pod ním (těsně, ne velká mezera).
+- Standard varianta = titul centrovaný (iOS pattern). Back = „‹ Zpět" (chevron + text), close = „Zavřít" / „✕".
+- Nemíchej varianty na podobných obrazovkách – stejný typ obrazovky = stejný header.
 
 ### CO Tag (`v3.0`)
 - **Geometrie (Figma):** výška 32, **radius `--radius-sm` (4px)**, padding 8, gap 8/4. Varianty Enabled / Inactive, s ikonou, Flag+Outline. Barva dle významu (`attention/*`). Měnový/vlajkový tag = vlajka v kolečku + text `nowrap` (viz CO Icon).
