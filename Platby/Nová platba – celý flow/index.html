@@ -12,24 +12,6 @@
 <meta name="robots" content="noindex, nofollow">
 <title>Prototyp: Nová platba – celý flow</title>
 
-<!-- Google Analytics 4 -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-F1YV23DTKQ"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-F1YV23DTKQ', { send_page_view: false });
-</script>
-
-<!-- Microsoft Clarity -->
-<script type="text/javascript">
-  (function(c,l,a,r,i,t,y){
-    c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-    t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-    y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-  })(window, document, "clarity", "script", "w8hlprz19n");
-</script>
-
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
@@ -483,7 +465,6 @@ function setTiming(t, silent){
   lsSet(P+'timing', t);
   var a=document.getElementById('seg-asap'), l=document.getElementById('seg-later');
   if(a&&l){ a.classList.toggle('on', t==='asap'); l.classList.toggle('on', t==='later'); }
-  if(!silent) gtag('event','payment_timing',{ timing:t });
 }
 
 /* ===== formatting ===== */
@@ -533,7 +514,7 @@ function esc(s){ return (s+'').replace(/[&<>]/g,function(c){return {'&':'&amp;',
 
 /* ===== navigation (hash SPA) ===== */
 function startPayment(){ goTo('step1'); }
-function authorize(){ gtag('event','payment_authorized',{}); goTo('result'); }
+function authorize(){ goTo('result'); }
 function resetAndNew(){
   ['komu','amount','currency','msg','vs','popis','ks','ss','timing'].forEach(function(k){ lsDel(P+k); });
   document.querySelectorAll('[data-k]').forEach(function(el){ el.value = el.tagName==='SELECT'? 'Kč' : ''; });
@@ -550,8 +531,6 @@ function goTo(id, opt){
   if(id==='auth') renderAuth();
   var c=t&&t.querySelector('.content'); if(c) c.scrollTop=0;
   if(!opt.skipHistory && location.hash.replace('#','')!==id){ location.hash = id; }
-  gtag('event','page_view',{ page_title:'np_'+id, page_path:'/nova-platba/'+id });
-  if(window.clarity) clarity('set','screen','np_'+id);
 }
 
 /* back / hash restore */
