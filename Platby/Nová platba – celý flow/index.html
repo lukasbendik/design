@@ -84,9 +84,9 @@ body{min-height:100dvh;}
 .hdr .ic{width:40px;height:40px;display:flex;align-items:center;justify-content:center;margin:0 -8px;cursor:pointer;border-radius:var(--radius-full);}
 .hdr .ic:active{background:var(--color-interactive-secondary-active);}
 .hdr .back{display:flex;align-items:center;gap:4px;cursor:pointer;font:400 16px/24px var(--font-family);}
-.hdr.lg{flex-direction:column;align-items:stretch;min-height:auto;padding-top:4px;padding-bottom:8px;}
+.hdr.lg{flex-direction:column;align-items:stretch;min-height:auto;padding-top:0;padding-bottom:4px;}
 .hdr.lg .row{display:flex;align-items:center;min-height:44px;}
-.hdr.lg .big{padding:4px var(--pad-xl) 8px;}
+.hdr.lg .big{padding:0 var(--pad-xl) 4px;}
 
 /* content: hug (natural height), grows to push footer down; page scrolls (pad 16, gap 16) */
 .content{flex:1 0 auto;display:flex;flex-direction:column;gap:var(--space-16);padding:var(--space-16);}
@@ -133,9 +133,9 @@ body{min-height:100dvh;}
 
 /* CO Item Display list (summary/auth) */
 .list{background:var(--color-background-surface);border-radius:var(--radius-md);box-shadow:var(--shadow-panel);overflow:hidden;}
-.list .row{padding:var(--pad-lg) var(--pad-xl);display:flex;flex-direction:column;gap:2px;position:relative;}
+.list .row{padding:var(--pad-xl);display:flex;flex-direction:column;gap:2px;position:relative;}
 .list .row+.row::before{content:"";position:absolute;left:var(--pad-xl);right:var(--pad-xl);top:0;height:1px;background:var(--color-background-divider);}
-.list .row .k{font:400 12px/16px var(--font-family);color:var(--color-content-tertiary);}
+.list .row .k{font:400 14px/20px var(--font-family);color:var(--color-content-tertiary);}
 .list .row .v{font:400 16px/24px var(--font-family);color:var(--color-content-primary);}
 
 /* segmented control */
@@ -188,9 +188,16 @@ body{min-height:100dvh;}
 .toolbar .tb:active{opacity:.8;}
 
 /* result */
-.result-wrap{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;padding:24px var(--pad-xl);}
-.result-ill{margin:40px 0 24px;}
-.result-title{font:500 28px/36px var(--font-family);text-align:center;margin-bottom:24px;}
+.result-wrap{flex:1 0 auto;display:flex;flex-direction:column;align-items:stretch;}
+.result-ill{align-self:center;margin:40px 0 24px;}
+.result-title{font:500 28px/36px var(--font-family);text-align:left;padding:0 var(--pad-xl);margin-bottom:16px;}
+/* akční řádek na výsledkové obrazovce — CO Item Navigation BEZ karty (na body) */
+.actionrow{display:flex;align-items:center;gap:var(--space-16);padding:var(--pad-xl);cursor:pointer;position:relative;}
+.actionrow::before,.actionrow::after{content:"";position:absolute;left:var(--pad-xl);right:var(--pad-xl);height:1px;background:var(--color-background-divider);}
+.actionrow::before{top:0;}
+.actionrow::after{bottom:0;}
+.actionrow .lead{flex:0 0 auto;display:flex;}
+.actionrow .t{flex:1;font:400 16px/24px var(--font-family);color:var(--color-content-primary);}
 
 /* auth top card */
 .authcard{display:flex;flex-direction:column;align-items:center;gap:4px;padding:var(--pad-2xl);}
@@ -438,9 +445,9 @@ body{min-height:100dvh;}
         </svg>
       </div>
       <div class="result-title">Zadali jste platbu</div>
-      <div class="itemnav" style="width:100%">
+      <div class="actionrow">
         <span class="lead"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M3 7a2 2 0 012-2h4l2 2h8a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2V7z" stroke="#e00000" stroke-width="1.6" stroke-linejoin="round"/></svg></span>
-        <div class="body"><div class="t">Uložit šablonu</div></div>
+        <div class="t">Uložit šablonu</div>
         <svg class="icn" width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M9 6l6 6-6 6" stroke="#717171" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </div>
     </div>

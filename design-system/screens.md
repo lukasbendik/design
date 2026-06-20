@@ -134,8 +134,25 @@ Floating: CO Toolbar (Nová platba / QR / Zaplať mi)  – sticky bottom
 ```
 Pozor: „Tarif" NENÍ generický řádek – je to **Tariff badge widget (CO Content Card + CO Item Navigation)**. Účet NENÍ ad-hoc div – je to **CO Product AccountCurrent**. Vždy si vytáhni konkrétní widget z outline (`grep -A8 "Home screen" _work/outline-patterns.txt`) a obal ho do Content Card.
 
-### D) Empty / Error / Result stavy
-Viz Patterns sekce „PA Empty States", „PA Error and Result States": centrovaný `ES Illustration` + nadpis (`.t-headings-headline-primary`) + popis (`.t-content-body-secondary`, `--color-content-tertiary`) + akce (CO Button). Obsah svisle centrovaný (`justify-content:center`).
+### D) Souhrn / Detail (label-hodnota list)
+Header (Zpět + velký titul) → `CO Content Card WrapPrimary` (bílá, radius 8) → uvnitř `CO Item Display` řádky (label NAD hodnotou) oddělené `CO Divider` (inset 16). Item Display: pad 16, label 14/tertiary, value 16/primary. **Karta začíná blízko headeru** (gap ~16, ne 40).
+
+### E) Result / Success („Zadali jste platbu")
+```
+Header  → jen "Zavřít" vlevo (CO Header, bez titulu)
+ES Illustration  → CENTROVANÁ
+Nadpis ("Zadali jste platbu")  → ZAROVNANÝ VLEVO (28/36), padding 16
+Akce ("Uložit šablonu")  → CO Item Navigation BEZ karty:
+        plain řádek na body bg (žádný white/shadow), ikona(brand) + text + chevron,
+        padding 16, divider nahoře i dole (inset 16)
+Bottom: CO Button primary ("Zadat další") + secondary ("Zavřít")
+```
+**Pozor:** na result nadpis **vlevo** (ne center), akce **není karta** (plain row na body). Centrovaná je jen ilustrace.
+
+### F) Empty / Error stavy
+Viz Patterns „PA Empty States", „PA Error and Result States": centrovaný `ES Illustration` + nadpis + popis (`--color-content-tertiary`) + akce (CO Button), svisle centrované.
+
+> **Spacing header→content (obecně):** velký header (Zpět + titul) drž **těsně** k obsahu – titul má padding-bottom ~4, obsah začíná ~16 pod ním. Nedělej velkou mezeru.
 
 ---
 

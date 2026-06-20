@@ -65,8 +65,10 @@ Tyto hodnoty jsou vytažené přímo z `💠 CORE Components.fig` (dekódováno 
 - **Stavy:** Incoming / Outgoing / Done / Error / Waiting / Paused; 1–3 řádky (One/Two/Three); Resting / Select(Inactive).
 - **Layout:** avatar/ikona vlevo, uprostřed název obchodníka (`.t-content-body-primary`) + datum/kategorie (`.t-content-body-secondary`, `--color-content-tertiary`), vpravo částka. Příchozí částka může být `--color-attention-success`, error `--color-attention-alert`.
 
-### CO Item Display
-- Read-only řádek label/hodnota (Value Horizontal / Vertical), volitelně leading ikona, volitelně akce. Label `--color-content-tertiary`, hodnota `--color-content-primary`.
+### CO Item Display (`v5.3`) — řádek label/hodnota (souhrn, detail, autorizace)
+- **Geometrie (Figma):** `[row gap16 pad16]`, výška ~56 (1 řádek) / ~74 (label+value). NE kompaktní pad12!
+- **Typografie:** label `.t-content-body-secondary` (14/20) v `--color-content-tertiary` NAD hodnotou, hodnota `.t-content-body-primary` (16/24) `--color-content-primary`, mezi nimi gap 2.
+- **V kartě:** zabal do `CO Content Card WrapPrimary`, mezi řádky `CO Divider` (1px, inset 16). Value Horizontal / Vertical, volitelně leading ikona/akce.
 
 ### CO Item CheckBox
 - Řádek s checkboxem (Normal / Consent), On/Off. Zaškrtnuto = `--color-interactive-primary`.
