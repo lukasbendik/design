@@ -63,21 +63,23 @@
 .t-caption{font:400 12px/16px var(--font-family);}
 
 html,body{font-family:var(--font-family);color:var(--color-content-primary);background:#2a2a2a;-webkit-font-smoothing:antialiased;}
-body{min-height:100dvh;display:flex;align-items:center;justify-content:center;}
+body{min-height:100dvh;}
 
-/* phone frame on desktop; full-bleed on mobile */
-.phone{position:relative;width:100%;max-width:390px;height:100dvh;background:var(--color-background-body);overflow:hidden;display:flex;flex-direction:column;}
+/* MOBILE: document scrolls, content is hug. DESKTOP: phone frame scrolls internally. */
+.phone{position:relative;width:100%;max-width:390px;margin:0 auto;background:var(--color-background-body);}
 @media(min-width:480px){
-  body{padding:24px;}
-  .phone{height:844px;max-height:calc(100dvh - 48px);border-radius:40px;box-shadow:0 24px 70px rgba(0,0,0,.5);overflow:hidden;}
+  body{display:flex;align-items:center;justify-content:center;padding:24px;}
+  .phone{height:min(844px,calc(100dvh - 48px));overflow-y:auto;-webkit-overflow-scrolling:touch;border-radius:40px;box-shadow:0 24px 70px rgba(0,0,0,.5);}
+  .phone::-webkit-scrollbar{display:none;}
 }
 
-/* screens */
-.screen{position:absolute;inset:0;display:none;flex-direction:column;background:var(--color-background-body);}
-.screen.active{display:flex;}
+/* screens: each fills viewport at minimum but grows with content (hug) → page scrolls */
+.screen{display:none;}
+.screen.active{display:flex;flex-direction:column;min-height:100dvh;background:var(--color-background-body);}
+@media(min-width:480px){ .screen.active{min-height:100%;} }
 
-/* header (CO Header 48) */
-.hdr{flex:0 0 auto;min-height:48px;display:flex;align-items:center;gap:var(--space-8);padding:0 var(--pad-xl);background:var(--color-background-body);}
+/* header (CO Header 48) — sticky top */
+.hdr{position:sticky;top:0;z-index:10;flex:0 0 auto;min-height:48px;padding-top:env(safe-area-inset-top);display:flex;align-items:center;gap:var(--space-8);padding-left:var(--pad-xl);padding-right:var(--pad-xl);background:var(--color-background-body);}
 .hdr .title{flex:1;text-align:center;font:500 17px/24px var(--font-family);}
 .hdr .ic{width:40px;height:40px;display:flex;align-items:center;justify-content:center;margin:0 -8px;cursor:pointer;border-radius:var(--radius-full);}
 .hdr .ic:active{background:var(--color-interactive-secondary-active);}
@@ -86,12 +88,12 @@ body{min-height:100dvh;display:flex;align-items:center;justify-content:center;}
 .hdr.lg .row{display:flex;align-items:center;min-height:44px;}
 .hdr.lg .big{padding:4px var(--pad-xl) 8px;}
 
-/* content scroll area (pad 16, gap 16) */
-.content{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;display:flex;flex-direction:column;gap:var(--space-16);padding:var(--space-16);}
+/* content: hug (natural height), grows to push footer down; page scrolls (pad 16, gap 16) */
+.content{flex:1 0 auto;display:flex;flex-direction:column;gap:var(--space-16);padding:var(--space-16);}
 .content.flush{padding:0;}
 
-/* bottom bar (sticky, CO Button Bar 80) */
-.bottombar{flex:0 0 auto;padding:var(--pad-xl);padding-bottom:max(var(--pad-xl),env(safe-area-inset-bottom));background:var(--color-background-body);display:flex;flex-direction:column;gap:var(--space-8);}
+/* bottom bar — sticky bottom (CO Button Bar 80) */
+.bottombar{position:sticky;bottom:0;z-index:10;flex:0 0 auto;padding:var(--pad-xl);padding-bottom:max(var(--pad-xl),env(safe-area-inset-bottom));background:var(--color-background-body);display:flex;flex-direction:column;gap:var(--space-8);}
 
 /* CO Button */
 .btn{height:48px;border:none;border-radius:var(--radius-md);font:500 16px/24px var(--font-family);cursor:pointer;display:flex;align-items:center;justify-content:center;gap:var(--space-8);width:100%;transition:background .12s;}
@@ -171,7 +173,7 @@ body{min-height:100dvh;display:flex;align-items:center;justify-content:center;}
 .summ .sr .val.green{color:var(--color-attention-success);}
 
 /* floating toolbar (home bottom) */
-.toolbar{position:absolute;left:50%;bottom:16px;transform:translateX(-50%);display:flex;gap:6px;background:var(--color-interactive-primary);border-radius:var(--radius-xl);padding:10px 6px;box-shadow:var(--shadow-floating);}
+.toolbar{position:sticky;bottom:16px;z-index:10;align-self:center;margin-top:auto;display:flex;gap:6px;background:var(--color-interactive-primary);border-radius:var(--radius-xl);padding:10px 6px;box-shadow:var(--shadow-floating);}
 .toolbar .tb{display:flex;flex-direction:column;align-items:center;gap:4px;color:#fff;padding:4px 14px;cursor:pointer;font:400 12px/14px var(--font-family);white-space:nowrap;}
 .toolbar .tb:active{opacity:.8;}
 
@@ -216,7 +218,7 @@ body{min-height:100dvh;display:flex;align-items:center;justify-content:center;}
       <button class="tab">Půjčky</button>
       <button class="tab">Spoření</button>
     </div>
-    <div class="content" style="padding-bottom:110px;">
+    <div class="content" style="flex:0 0 auto;padding-bottom:8px;">
       <div class="card">
         <div class="itemnav" style="box-shadow:none;border-radius:var(--radius-xl);">
           <div class="body"><div class="t">Tarif Komfort</div></div>

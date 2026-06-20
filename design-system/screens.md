@@ -19,23 +19,35 @@ FRAME (root) 375×812  bg=body, [col]
 └─ [sticky dole]        375×80      ← CO Button Bar Bottom NEBO CO Toolbar Floating
 ```
 
-Klíč: **Header (48) a Bottom Bar (80) jsou mimo scroll** (sticky), uprostřed scrollovatelný `Content`. Obsah má **horizontální padding 16**, mezi bloky **gap 16**.
+Klíč: **Header (48) a Bottom Bar (80) jsou mimo scroll** (sticky), obsah má **horizontální padding 16**, mezi bloky **gap 16**.
 
-### HTML kostra
+### ⚠️ Scrollování: stránka scrolluje, obsah je HUG (DŮLEŽITÉ)
 
-```html
-<div class="screen">                      <!-- 100dvh, flex column, bg body -->
-  <header class="app-header">…</header>     <!-- výška 48, sticky top -->
-  <main class="content">…</main>            <!-- flex:1, overflow-y:auto, padding:16 -->
-  <div class="bottom-bar">…</div>           <!-- výška 80, sticky bottom -->
-</div>
-```
+**Nepoužívej fixní výšku obrazovky s vnitřním `overflow:auto` na contentu** – na reálném mobilu se to rozbije (obsah se ořízne, nejde scrollovat). Místo toho:
+
+- **Obsah je hug** (přirozená výška, roste s obsahem), **scrolluje celá stránka** (na mobilu dokument, na desktopu rámeček telefonu).
+- Header = `position:sticky; top:0`. Bottom bar / floating toolbar = `position:sticky; bottom:0`. Drží na místě, zbytek scrolluje pod nimi.
+- Obrazovka má `min-height:100dvh` → vyplní aspoň výšku okna (tlačítko dole i u krátkého obsahu), ale **smí přerůst** a pak scrolluje stránka.
+
 ```css
-.screen{display:flex;flex-direction:column;min-height:100dvh;background:var(--color-background-body)}
-.app-header{height:48px;flex:0 0 auto;background:var(--color-background-body);display:flex;align-items:center;padding:0 var(--pad-xl)}
-.content{flex:1;overflow-y:auto;display:flex;flex-direction:column;gap:var(--space-16);padding:var(--space-16)}
-.bottom-bar{flex:0 0 auto;padding:var(--pad-xl);background:var(--color-background-body)} /* tlačítko 48 + padding */
+/* MOBIL: scrolluje dokument. DESKTOP: scrolluje rámeček telefonu. */
+.phone{width:100%;max-width:390px;margin:0 auto;background:var(--color-background-body);}
+@media(min-width:480px){
+  body{display:flex;justify-content:center;padding:24px;}
+  .phone{height:min(844px,calc(100dvh - 48px));overflow-y:auto;border-radius:40px;}
+}
+.screen{display:none;}
+.screen.active{display:flex;flex-direction:column;min-height:100dvh;}   /* hug, ale aspoň přes okno */
+@media(min-width:480px){ .screen.active{min-height:100%;} }              /* fill rámečku */
+
+.hdr{position:sticky;top:0;z-index:10;flex:0 0 auto;}                    /* sticky header */
+.content{flex:1 0 auto;display:flex;flex-direction:column;
+         gap:var(--space-16);padding:var(--space-16);}                  /* HUG – žádný overflow:auto! */
+.bottombar{position:sticky;bottom:0;z-index:10;flex:0 0 auto;padding:var(--pad-xl);}
+.toolbar{position:sticky;bottom:16px;align-self:center;margin-top:auto;} /* floating toolbar (home) */
 ```
+
+Tím page scrolluje nativně (i pull-to-refresh, adresní lišta se schovává), `100dvh` řeší mobilní viewport, a sticky prvky drží. Ověřeno na mobilním viewportu 375×812.
 
 ---
 
@@ -108,12 +120,19 @@ FRAME root 375×812 bg=body [col]
 ```
 **Vzor formuláře:** inputy ve `Wrap-Form` (col, horiz. padding 16), související pole v `row gap8` (částka+měna), validace/hinty jako InLine Message pod nimi, primární tlačítko ve sticky Button Bar dole.
 
-### C) Homescreen (produktové karty)
+### C) Homescreen / Přehled (`SCR NDB Home screen`)
+Reálná home je **série „widgetů", každý = `CO Content Card`** (bg=surface, radius=xl, shadow-panel), uvnitř konkrétní komponenty. NESkládej z holých řádků – každý blok je Content Card obalující item/product komponentu:
 ```
-FRAME root [col gap16, pad16]
-└─ opakované CO Product … / CO Content Card  (každá karta bg=surface, radius=xl, shadow-panel)
+Header 48 · [Notification] · [Navigation] · spacer16
+Content (col gap16, pad horiz. 16):
+├─ Tariff badge widget   = CO Content Card  →  CO Item Navigation  (tarif + caret, kompakt ~56)
+├─ Main product widget   = CO Content Card  →  CO Product AccountCurrent ×N  (název/číslo/zůstatek
+│                                              + měnové tagy)  [+ CO Item Transaction list]
+├─ Next accounts widget  = CO Content Card  →  CO Product AccountCurrent  (Spoření…)
+└─ Summary widget        = CO Content Card  →  graf příjmy/výdaje
+Floating: CO Toolbar (Nová platba / QR / Zaplať mi)  – sticky bottom
 ```
-Vertikální seznam produktových/obsahových karet, gap 16.
+Pozor: „Tarif" NENÍ generický řádek – je to **Tariff badge widget (CO Content Card + CO Item Navigation)**. Účet NENÍ ad-hoc div – je to **CO Product AccountCurrent**. Vždy si vytáhni konkrétní widget z outline (`grep -A8 "Home screen" _work/outline-patterns.txt`) a obal ho do Content Card.
 
 ### D) Empty / Error / Result stavy
 Viz Patterns sekce „PA Empty States", „PA Error and Result States": centrovaný `ES Illustration` + nadpis (`.t-headings-headline-primary`) + popis (`.t-content-body-secondary`, `--color-content-tertiary`) + akce (CO Button). Obsah svisle centrovaný (`justify-content:center`).
