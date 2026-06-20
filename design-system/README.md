@@ -11,6 +11,7 @@ Tokeny jsou **vygenerované přímo z Figmy** (`💠 CORE Components.fig`) – n
 | `tokens.css` | CSS custom properties: barvy (light/dark/HC), spacing, radius, border, stíny + typografické utility třídy `.t-*`. **Toto se používá v prototypech.** | runtime |
 | `tokens.json` | Stejná data strojově čitelná (barvy primitive + semantic, typografie, spacing, stíny). Pro nástroje/skripty. | nástroje |
 | `components.md` | Katalog komponent (CO Button, CO Input, …) – varianty, stavy, mapování na tokeny, jak postavit v HTML. | já při tvorbě |
+| `screens.md` | **Anatomie obrazovek** – scaffold (Header/Content/Bottom), auto-layout→CSS, rozměrové konvence, recepty celých screenů (detail účtu, platba, list, empty/error). | já při tvorbě |
 | `README.md` | Tento soubor. | člověk |
 
 ## Jak používat při tvorbě prototypu
