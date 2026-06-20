@@ -21,7 +21,7 @@ try {
 }
 
 // Složky, které přeskočíme
-const IGNORE = new Set(["node_modules", ".git", ".cloudflare"]);
+const IGNORE = new Set(["node_modules", ".git", ".cloudflare", "design-system"]);
 
 // Najdi všechny složky a v nich HTML soubory
 const sections = fs

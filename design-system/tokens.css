@@ -1,0 +1,284 @@
+/* KB Design System — auto-generated from 💠 CORE Components.fig (2026-06-19) */
+/* NEMĚNIT RUČNĚ — regeneruj generátorem z Figmy. Viz README.md */
+
+:root{
+  /* ---- Brand / font ---- */
+  --font-family: Inter, system-ui, -apple-system, sans-serif;
+
+  /* ---- Spacing scale (px) ---- */
+  --space-2: 2px;
+  --space-4: 4px;
+  --space-8: 8px;
+  --space-12: 12px;
+  --space-16: 16px;
+  --space-24: 24px;
+  --space-32: 32px;
+  --space-48: 48px;
+  --space-64: 64px;
+  --space-0: 0px;
+
+  /* ---- Padding (semantic) ---- */
+  --pad-xl: 16px;
+  --pad-4xl: 48px;
+  --pad-xs: 2px;
+  --pad-md: 8px;
+  --pad-lg: 12px;
+  --pad-sm: 4px;
+  --pad-2xl: 24px;
+  --pad-3xl: 32px;
+
+  /* ---- Radius ---- */
+  --radius-full: 1024px;
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-xl: 16px;
+  --radius-null: 0px;
+  --radius-segmentedControl-segmentRadius: 6px;
+  --radius-xs: 2px;
+
+  /* ---- Border width ---- */
+  --border-lg: 3px;
+  --border-md: 2px;
+  --border-sm: 1px;
+
+  /* ---- Color: semantic (LIGHT) ---- */
+  --color-content-primary: #212121;
+  --color-interactive-primary: #e00000;
+  --color-content-tertiary: #717171;
+  --color-background-border: #adadad80;
+  --color-interactive-secondary-active: #2121211f;
+  --color-attention-information: #212121;
+  --color-chart-in: #267c29;
+  --color-attention-alert: #b53022;
+  --color-interactive-on-primary: #ffffff;
+  --color-shadow-panel-top: #21212105;
+  --color-attention-processing: #7e6d19;
+  --color-shadow-panel-middle: #21212114;
+  --color-chart-evaluation: #43167c;
+  --color-content-pentary: #f8f8f8;
+  --color-chart-funds: #02a473;
+  --color-interactive-secondary: #212121;
+  --color-attention-alert-surface: #ffede8;
+  --color-chart-bonds: #4e5571;
+  --color-background-divider: #adadad80;
+  --color-content-secondary: #454545;
+  --color-background-border-highlighted: #adadad;
+  --color-background-surface-highlighted: #ffffff;
+  --color-shadow-floating-middle: #21212129;
+  --color-dialog-surface: #ffffff;
+  --color-attention-success: #267c29;
+  --color-content-quaternary: #adadad;
+  --color-background-surface: #ffffff;
+  --color-chart-neon: #9a2760;
+  --color-background-body: #f8f8f8;
+  --color-attention-success-surface: #e2f5de;
+  --color-chart-out: #212121;
+  --color-chart-cool: #888eb1;
+  --color-chart-stocks: #f45b6d;
+  --color-shadow-panel-bottom: #2121211f;
+  --color-content-skeleton-loading: #adadad80;
+  --color-shadow-floating-bottom: #2121213d;
+  --color-shadow-floating-top: #2121210a;
+  --color-interactive-primary-action: #be0000;
+  --color-attention-information-surface: #ededed;
+  --color-dialog-overlay: #21212166;
+  --color-background-surface-avatar: #21212114;
+  --color-background-table-zebra: #2121210a;
+  --color-shadow-highlighted-middle: #21212129;
+  --color-shadow-highlighted-top: #21212114;
+  --color-shadow-highlighted-bottom: #21212152;
+  --color-interactive-secondary-action: #21212114;
+  --color-chart-plot-in-background-top: #267c293d;
+  --color-chart-plot-in-background-bottom: #267c2900;
+  --color-chart-plot-out-background-top: #2121213d;
+  --color-chart-plot-out-background-bottom: #21212100;
+  --color-chart-rusty-red: #e26e52;
+
+  /* ---- Shadow (light) ---- */
+  --shadow-panel: 0px 0px 1px 0px #2121211f, 0px 1px 8px 0px #21212114, 0px 0.4px 2px 0px #21212105;
+  --shadow-floating: 0px 0px 1px 0px #2121213d, 0px 1px 8px 0px #21212129, 0px 0.4px 2px 0px #2121210a;
+  --shadow-highlighted: 0px 0px 1px 0px #21212152, 0px 4.4px 22px 0px #21212129, 0px 11px 88px 0px #21212114;
+}
+
+/* ---- Color: semantic (DARK) ---- */
+[data-theme="dark"]{
+  --color-content-primary: #f9f9f9;
+  --color-interactive-primary: #e00000;
+  --color-content-tertiary: #9e9e9e;
+  --color-background-border: #65656580;
+  --color-interactive-secondary-active: #adadad80;
+  --color-attention-information: #f9f9f9;
+  --color-chart-in: #23af31;
+  --color-attention-alert: #f66b65;
+  --color-interactive-on-primary: #f9f9f9;
+  --color-shadow-panel-top: #21212100;
+  --color-attention-processing: #ae9701;
+  --color-shadow-panel-middle: #21212100;
+  --color-chart-evaluation: #b497f1;
+  --color-content-pentary: #f9f9f9;
+  --color-chart-funds: #177553;
+  --color-interactive-secondary: #f9f9f9;
+  --color-attention-alert-surface: #60110a;
+  --color-chart-bonds: #a0a5c1;
+  --color-background-divider: #65656580;
+  --color-content-secondary: #d9d9d9;
+  --color-background-border-highlighted: #656565;
+  --color-background-surface-highlighted: #3b3b3b;
+  --color-shadow-floating-middle: #21212100;
+  --color-dialog-surface: #212121;
+  --color-attention-success: #23af31;
+  --color-content-quaternary: #656565;
+  --color-background-surface: #1c1c1c;
+  --color-chart-neon: #ee78aa;
+  --color-background-body: #0d0d0d;
+  --color-attention-success-surface: #05390a;
+  --color-chart-out: #f9f9f9;
+  --color-chart-cool: #5d6689;
+  --color-chart-stocks: #ac444f;
+  --color-shadow-panel-bottom: #21212100;
+  --color-content-skeleton-loading: #65656580;
+  --color-shadow-floating-bottom: #21212100;
+  --color-shadow-floating-top: #21212100;
+  --color-interactive-primary-action: #be0000;
+  --color-attention-information-surface: #3b3b3b;
+  --color-dialog-overlay: #2f2f2f99;
+  --color-background-surface-avatar: #f9f9f91a;
+  --color-background-table-zebra: #f9f9f924;
+  --color-shadow-highlighted-middle: #21212100;
+  --color-shadow-highlighted-top: #21212100;
+  --color-shadow-highlighted-bottom: #21212100;
+  --color-interactive-secondary-action: #f9f9f924;
+  --color-chart-plot-in-background-top: #23af313d;
+  --color-chart-plot-in-background-bottom: #23af3100;
+  --color-chart-plot-out-background-top: #f9f9f93d;
+  --color-chart-plot-out-background-bottom: #f9f9f900;
+  --color-chart-rusty-red: #9a5437;
+  --shadow-panel: 0px 8px 48px 0px #00000026, 0px 4px 8px 0px #00000026, 0px 0px 1px 0px #00000070;
+}
+
+/* ---- Color: semantic (LIGHT HIGH CONTRAST) ---- */
+[data-theme="light-hc"]{
+  --color-content-primary: #212121;
+  --color-interactive-primary: #b10317;
+  --color-content-tertiary: #212121;
+  --color-background-border: #adadad;
+  --color-interactive-secondary-active: #2121211f;
+  --color-attention-information: #212121;
+  --color-chart-in: #267c29;
+  --color-attention-alert: #9b281c;
+  --color-interactive-on-primary: #f8f8f8;
+  --color-shadow-panel-top: #21212105;
+  --color-attention-processing: #7e6d19;
+  --color-shadow-panel-middle: #21212114;
+  --color-chart-evaluation: #43167c;
+  --color-content-pentary: #f8f8f8;
+  --color-chart-funds: #02a473;
+  --color-interactive-secondary: #212121;
+  --color-attention-alert-surface: #ffede8;
+  --color-chart-bonds: #4e5571;
+  --color-background-divider: #adadad;
+  --color-content-secondary: #212121;
+  --color-background-border-highlighted: #212121;
+  --color-background-surface-highlighted: #ffffff;
+  --color-shadow-floating-middle: #21212129;
+  --color-dialog-surface: #ffffff;
+  --color-attention-success: #225f22;
+  --color-content-quaternary: #212121;
+  --color-background-surface: #ffffff;
+  --color-chart-neon: #9a2760;
+  --color-background-body: #f8f8f8;
+  --color-attention-success-surface: #e2f5de;
+  --color-chart-out: #212121;
+  --color-chart-cool: #888eb1;
+  --color-chart-stocks: #f45b6d;
+  --color-shadow-panel-bottom: #2121211f;
+  --color-content-skeleton-loading: #adadad;
+  --color-shadow-floating-bottom: #2121213d;
+  --color-shadow-floating-top: #2121210a;
+  --color-interactive-primary-action: #960314;
+  --color-attention-information-surface: #ededed;
+  --color-dialog-overlay: #21212166;
+  --color-background-surface-avatar: #21212114;
+  --color-background-table-zebra: #2121210a;
+  --color-shadow-highlighted-middle: #21212129;
+  --color-shadow-highlighted-top: #21212114;
+  --color-shadow-highlighted-bottom: #21212152;
+  --color-interactive-secondary-action: #21212114;
+  --color-chart-plot-in-background-top: #267c293d;
+  --color-chart-plot-in-background-bottom: #267c2900;
+  --color-chart-plot-out-background-top: #2121213d;
+  --color-chart-plot-out-background-bottom: #21212100;
+  --color-chart-rusty-red: #e26e52;
+}
+/* ---- Color: semantic (DARK HIGH CONTRAST) ---- */
+[data-theme="dark-hc"]{
+  --color-content-primary: #f9f9f9;
+  --color-interactive-primary: #b10317;
+  --color-content-tertiary: #f9f9f9;
+  --color-background-border: #656565;
+  --color-interactive-secondary-active: #adadad80;
+  --color-attention-information: #f9f9f9;
+  --color-chart-in: #23af31;
+  --color-attention-alert: #f88681;
+  --color-interactive-on-primary: #ffffff;
+  --color-shadow-panel-top: #21212100;
+  --color-attention-processing: #ae9701;
+  --color-shadow-panel-middle: #21212100;
+  --color-chart-evaluation: #b497f1;
+  --color-content-pentary: #f9f9f9;
+  --color-chart-funds: #177553;
+  --color-interactive-secondary: #f9f9f9;
+  --color-attention-alert-surface: #60110a;
+  --color-chart-bonds: #a0a5c1;
+  --color-background-divider: #656565;
+  --color-content-secondary: #f9f9f9;
+  --color-background-border-highlighted: #f9f9f9;
+  --color-background-surface-highlighted: #3b3b3b;
+  --color-shadow-floating-middle: #21212100;
+  --color-dialog-surface: #212121;
+  --color-attention-success: #2fdb41;
+  --color-content-quaternary: #f9f9f9;
+  --color-background-surface: #1c1c1c;
+  --color-chart-neon: #ee78aa;
+  --color-background-body: #0d0d0d;
+  --color-attention-success-surface: #05390a;
+  --color-chart-out: #f9f9f9;
+  --color-chart-cool: #5d6689;
+  --color-chart-stocks: #ac444f;
+  --color-shadow-panel-bottom: #21212100;
+  --color-content-skeleton-loading: #656565;
+  --color-shadow-floating-bottom: #21212100;
+  --color-shadow-floating-top: #21212100;
+  --color-interactive-primary-action: #960314;
+  --color-attention-information-surface: #3b3b3b;
+  --color-dialog-overlay: #2f2f2f99;
+  --color-background-surface-avatar: #f9f9f91a;
+  --color-background-table-zebra: #f9f9f924;
+  --color-shadow-highlighted-middle: #21212100;
+  --color-shadow-highlighted-top: #21212100;
+  --color-shadow-highlighted-bottom: #21212100;
+  --color-interactive-secondary-action: #f9f9f924;
+  --color-chart-plot-in-background-top: #23af313d;
+  --color-chart-plot-in-background-bottom: #23af3100;
+  --color-chart-plot-out-background-top: #f9f9f93d;
+  --color-chart-plot-out-background-bottom: #f9f9f900;
+  --color-chart-rusty-red: #9a5437;
+}
+
+/* ---- Typography utility classes ---- */
+.t-content-body-primary{font:400 16px/24px Inter,system-ui,sans-serif;}
+.t-content-button{font:500 16px/24px Inter,system-ui,sans-serif;}
+.t-content-body-secondary-bold{font:500 14px/20px Inter,system-ui,sans-serif;}
+.t-content-caption-primary-bold{font:500 12px/16px Inter,system-ui,sans-serif;}
+.t-content-body-secondary{font:400 14px/20px Inter,system-ui,sans-serif;}
+.t-content-body-primary-bold{font:500 16px/24px Inter,system-ui,sans-serif;}
+.t-content-caption-primary{font:400 12px/16px Inter,system-ui,sans-serif;}
+.t-content-caption-secondary-bold{font:500 10px/16px Inter,system-ui,sans-serif;}
+.t-headings-headline-secondary-bold{font:600 18px/24px Inter,system-ui,sans-serif;}
+.t-headings-headline-primary{font:500 20px/28px Inter,system-ui,sans-serif;}
+.t-headings-title-tertiary{font:500 28px/36px Inter,system-ui,sans-serif;}
+.t-headings-headline-secondary{font:500 18px/24px Inter,system-ui,sans-serif;}
+.t-headings-title-secondary{font:500 32px/44px Inter,system-ui,sans-serif;}
+.t-content-caption-secondary{font:400 10px/16px Inter,system-ui,sans-serif;}
+.t-headings-title-quaternary{font:500 24px/32px Inter,system-ui,sans-serif;}
+.t-headings-title-primary{font:500 42px/52px Inter,system-ui,sans-serif;}
