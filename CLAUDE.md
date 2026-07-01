@@ -137,7 +137,7 @@ Single-file prototypy (CSS i JS inline) verzování nepotřebují – meta tagy 
 
 ## Práce s repozitářem
 
-Před každou změnou prototypu si udělej `git pull`, abys měl aktuální stav z repozitáře. Repozitář `lukasbendik/design` je naklonovaný v `~/Documents/Claude/UX/ux/`. Prototypy automaticky commituj a pushuj.
+Před každou změnou prototypu si udělej `git pull`, abys měl aktuální stav z repozitáře. Repozitář `lukasbendik/design` je naklonovaný v `~/Projects/UX/ux/`. Prototypy automaticky commituj a pushuj.
 
 ## Rozcestník a deploy
 
