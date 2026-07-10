@@ -1444,9 +1444,9 @@
 
           <!-- Segmented control -->
           <div class="segmented-control">
-            <button class="segment-btn" onclick="alert('Simulace: Taby Trvalé příkazy a SIPO nejsou v tomto prototypu funkční. Zůstaňte prosím na tabu Inkasa.')">Trvalé příkazy</button>
-            <button class="segment-btn active">Inkasa</button>
-            <button class="segment-btn" onclick="alert('Simulace: Taby Trvalé příkazy a SIPO nejsou v tomto prototypu funkční. Zůstaňte prosím na tabu Inkasa.')">SIPO</button>
+            <button class="segment-btn active" id="btn-tp-inkasa-tp" onclick="switchTpInkasaTab('tp')">Trvalé příkazy</button>
+            <button class="segment-btn" id="btn-tp-inkasa-inkasa" onclick="switchTpInkasaTab('inkasa')">Inkasa</button>
+            <button class="segment-btn" id="btn-tp-inkasa-sipo" onclick="switchTpInkasaTab('sipo')">SIPO</button>
           </div>
 
           <!-- Seznam inkas -->
@@ -2038,6 +2038,24 @@
     </div>
   </div>
 
+  <!-- ================= MODAL 3: ŽÁDNÉ POLOŽKY K AUTORIZACI ================= -->
+  <div class="modal-overlay" id="modal-no-items-modal">
+    <div class="modal-content" style="max-width: 400px; padding: 32px 24px; text-align: center; border-radius: var(--radius-lg);">
+      <button class="modal-close" onclick="closeModal()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" x2="6" y1="6" y2="18"/><line x1="6" x2="18" y1="6" y2="18"/></svg>
+      </button>
+      
+      <div style="margin-bottom: 20px; display: flex; justify-content: center;">
+        <svg viewBox="0 0 24 24" stroke="var(--color-interactive-primary)" stroke-width="2" fill="none" style="width: 56px; height: 56px;"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+      </div>
+      
+      <h3 class="t-headings-headline-secondary-bold" style="margin-bottom: 12px; font-size: 20px; color: var(--color-content-primary);">Žádné označené položky</h3>
+      <p class="t-content-body-secondary" style="margin-bottom: 28px; color: var(--color-content-tertiary); font-size: 14px; line-height: 20px;">Pro autorizaci musíte nejprve zaškrtnout alespoň jednu položku v seznamu.</p>
+      
+      <button class="btn btn-primary" onclick="closeModal()" style="height: 48px; font-size: 15px; font-weight: 600; width: 100%;">Rozumím</button>
+    </div>
+  </div>
+
   </div> <!-- Konec app-wrapper -->
 
 
@@ -2046,12 +2064,13 @@
     // Seznam podporovaných hlavních obrazovek
     const SCREENS = ['prehled', 'ucet-detail', 'tp-inkasa', 'tp-inkasa-s-autorizaci', 'autorizace', 'vsechny-platby', 'platba-detail'];
     // Seznam modálních hashů
-    const MODALS = ['povoleni-inkasa-modal', 'autorizace-potvrzeni-modal'];
+    const MODALS = ['povoleni-inkasa-modal', 'autorizace-potvrzeni-modal', 'no-items-modal'];
 
     // Globální stav prototypu
     let currentScreen = 'prehled';
     let previousScreen = 'prehled';
     let currentAuthTab = 'inkasa';
+    let currentTpInkasaTab = 'tp';
 
     // Inicializace aplikace
     document.addEventListener('DOMContentLoaded', () => {
@@ -2059,6 +2078,7 @@
       restoreFormValues();
       // Aktualizovat seznamy (inkasa a položky k autorizaci)
       renderDynamicContent();
+      renderTpInkasaList();
       
       // Zpracování výchozího hashe
       const hash = window.location.hash.replace('#', '');
@@ -2173,6 +2193,10 @@
         } else {
           authCard.style.display = 'none';
         }
+      }
+      
+      if (screenId === 'tp-inkasa' || screenId === 'tp-inkasa-s-autorizaci') {
+        renderTpInkasaList();
       }
       
       // Posunout scroll na začátek
@@ -2451,15 +2475,9 @@
       }
 
       if (executeBtn) {
-        if (checkedCount > 0) {
-          executeBtn.removeAttribute('disabled');
-          executeBtn.style.opacity = '1';
-          executeBtn.style.cursor = 'pointer';
-        } else {
-          executeBtn.setAttribute('disabled', 'true');
-          executeBtn.style.opacity = '0.5';
-          executeBtn.style.cursor = 'not-allowed';
-        }
+        executeBtn.removeAttribute('disabled');
+        executeBtn.style.opacity = '1';
+        executeBtn.style.cursor = 'pointer';
       }
     }
 
@@ -2467,7 +2485,7 @@
     function executeSelectedAuth() {
       const checkedCount = document.querySelectorAll('.auth-checkbox:checked').length;
       if (checkedCount === 0) {
-        alert('Nejprve prosím označte položky k autorizaci.');
+        openModal('no-items-modal');
         return;
       }
       deleteSelectedAuth();
@@ -2599,6 +2617,115 @@
         goTo('ucet-detail');
       } else {
         goTo(previousScreen);
+      }
+    }
+
+    function switchTpInkasaTab(tabName) {
+      currentTpInkasaTab = tabName;
+      
+      // Změnit aktivní stav tlačítek
+      document.querySelectorAll('#screen-tp-inkasa .segmented-control .segment-btn').forEach(btn => {
+        btn.classList.remove('active');
+      });
+      if (tabName === 'tp') document.getElementById('btn-tp-inkasa-tp').classList.add('active');
+      if (tabName === 'inkasa') document.getElementById('btn-tp-inkasa-inkasa').classList.add('active');
+      if (tabName === 'sipo') document.getElementById('btn-tp-inkasa-sipo').classList.add('active');
+
+      // Překreslit seznam
+      renderTpInkasaList();
+    }
+
+    function renderTpInkasaList() {
+      const listEl = document.getElementById('inkasa-list');
+      if (!listEl) return;
+
+      listEl.innerHTML = '';
+
+      if (currentTpInkasaTab === 'tp') {
+        const tpData = [
+          { name: 'ČEZ', period: 'Měsíčně', amount: '5 000,00 Kč', initial: 'Č' },
+          { name: 'Školní jídelna', period: 'Měsíčně', amount: '500,00 Kč', initial: 'Š' }
+        ];
+
+        tpData.forEach(item => {
+          const div = document.createElement('div');
+          div.className = 'list-item';
+          div.innerHTML = `
+            <div class="list-item-left">
+              <div class="item-icon">
+                <span class="t-headings-headline-secondary-bold" style="color: var(--color-content-secondary);">${item.initial}</span>
+                <span class="badge-icon badge-success" style="right: -4px; bottom: -4px;">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+                </span>
+              </div>
+              <div class="item-details">
+                <span class="item-title">${item.name}</span>
+                <span class="item-subtitle">${item.period}</span>
+              </div>
+            </div>
+            <div class="list-item-right">${item.amount}</div>
+          `;
+          listEl.appendChild(div);
+        });
+      } else if (currentTpInkasaTab === 'inkasa') {
+        const inkasaData = [
+          { name: 'T-Mobile', period: 'Měsíčně', amount: '650,00 Kč', initial: 'T' },
+          { name: 'O2 Internet', period: 'Měsíčně', amount: '450,00 Kč', initial: 'O' }
+        ];
+
+        const isApproved = localStorage.getItem('inkaso_approved') === '1';
+        if (isApproved) {
+          const name = localStorage.getItem('inkaso_nazev') || 'Nové inkaso';
+          const period = localStorage.getItem('inkaso_obdobi') || 'Měsíčně';
+          const limit = localStorage.getItem('inkaso_limit') || '0,00 Kč';
+          inkasaData.push({ name: name, period: period, amount: limit, initial: name.charAt(0).toUpperCase() });
+        }
+
+        inkasaData.forEach(item => {
+          const div = document.createElement('div');
+          div.className = 'list-item';
+          div.innerHTML = `
+            <div class="list-item-left">
+              <div class="item-icon">
+                <span class="t-headings-headline-secondary-bold" style="color: var(--color-content-secondary);">${item.initial}</span>
+                <span class="badge-icon badge-success" style="right: -4px; bottom: -4px;">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+                </span>
+              </div>
+              <div class="item-details">
+                <span class="item-title">${item.name}</span>
+                <span class="item-subtitle">${item.period}</span>
+              </div>
+            </div>
+            <div class="list-item-right">${item.amount}</div>
+          `;
+          listEl.appendChild(div);
+        });
+      } else if (currentTpInkasaTab === 'sipo') {
+        const sipoData = [
+          { name: 'SIPO platba', period: 'Měsíčně', amount: '4 800,00 Kč', initial: 'S' }
+        ];
+
+        sipoData.forEach(item => {
+          const div = document.createElement('div');
+          div.className = 'list-item';
+          div.innerHTML = `
+            <div class="list-item-left">
+              <div class="item-icon">
+                <span class="t-headings-headline-secondary-bold" style="color: var(--color-content-secondary);">${item.initial}</span>
+                <span class="badge-icon badge-success" style="right: -4px; bottom: -4px;">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+                </span>
+              </div>
+              <div class="item-details">
+                <span class="item-title">${item.name}</span>
+                <span class="item-subtitle">${item.period}</span>
+              </div>
+            </div>
+            <div class="list-item-right">${item.amount}</div>
+          `;
+          listEl.appendChild(div);
+        });
       }
     }
   </script>
