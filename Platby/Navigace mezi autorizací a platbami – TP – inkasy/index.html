@@ -1524,13 +1524,13 @@
         </div>
 
         <div class="right-column">
-          <!-- Akční červená karta Nastavit inkaso -->
-          <div class="card-action-red" onclick="openModal('povoleni-inkasa-modal')">
+          <!-- Akční červená karta Nastavit inkaso / Vytvořit trvalý příkaz -->
+          <div class="card-action-red" id="btn-tp-inkasa-action" onclick="alert('Simulace: Vytvoření trvalého příkazu není v tomto prototypu aktivní.')">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <line x1="12" y1="5" x2="12" y2="19"/>
               <line x1="5" y1="12" x2="19" y2="12"/>
             </svg>
-            <span>Nastavit inkaso</span>
+            <span>Vytvořit trvalý příkaz</span>
           </div>
 
           <!-- Karta Autorizace se zobrazí v pravém sloupci na screen-tp-inkasa, pokud je aktivní verze s autorizací -->
@@ -2665,6 +2665,21 @@
       if (tabName === 'tp') document.getElementById('btn-tp-inkasa-tp').classList.add('active');
       if (tabName === 'inkasa') document.getElementById('btn-tp-inkasa-inkasa').classList.add('active');
       if (tabName === 'sipo') document.getElementById('btn-tp-inkasa-sipo').classList.add('active');
+
+      // Změnit text a akci na tlačítku v pravém sloupci
+      const actionBtn = document.getElementById('btn-tp-inkasa-action');
+      if (actionBtn) {
+        if (tabName === 'tp') {
+          actionBtn.querySelector('span').textContent = 'Vytvořit trvalý příkaz';
+          actionBtn.setAttribute('onclick', "alert('Simulace: Vytvoření trvalého příkazu není v tomto prototypu aktivní.')");
+        } else if (tabName === 'inkasa') {
+          actionBtn.querySelector('span').textContent = 'Nastavit inkaso';
+          actionBtn.setAttribute('onclick', "openModal('povoleni-inkasa-modal')");
+        } else if (tabName === 'sipo') {
+          actionBtn.querySelector('span').textContent = 'Nové SIPO';
+          actionBtn.setAttribute('onclick', "alert('Simulace: Nastavení nového SIPO není v tomto prototypu aktivní.')");
+        }
+      }
 
       // Překreslit seznam
       renderTpInkasaList();
