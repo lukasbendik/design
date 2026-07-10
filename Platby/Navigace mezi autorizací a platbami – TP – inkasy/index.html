@@ -709,7 +709,7 @@
       background-color: var(--color-background-body);
       z-index: 2000;
       display: none;
-      align-items: center;
+      align-items: flex-start;
       justify-content: center;
       overflow-y: auto;
     }
@@ -721,12 +721,13 @@
     .modal-content {
       background-color: var(--color-background-body);
       width: 100%;
-      height: 100%;
-      padding: 60px 40px;
+      min-height: 100vh;
+      height: auto;
+      padding: 80px 40px 40px 40px;
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
+      justify-content: flex-start;
       position: relative;
     }
 
@@ -735,8 +736,22 @@
       max-width: 600px;
       display: flex;
       flex-direction: column;
-      gap: 24px;
+      min-height: calc(100vh - 120px);
+      justify-content: space-between;
       position: relative;
+    }
+
+    .modal-form-top {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      width: 100%;
+    }
+
+    .modal-form-bottom {
+      margin-top: auto;
+      padding-top: 40px;
+      width: 100%;
     }
 
     .modal-close {
@@ -1633,60 +1648,65 @@
       </button>
 
       <div class="modal-form-wrap">
-        <h2 class="t-headings-title-secondary" style="font-weight: 600; margin-bottom: 0;">Povolení inkasa</h2>
-        
-        <!-- Informace o účtu (jak je na screenshotu 4 - jeden řádek se šipkou a číslem účtu) -->
-        <div style="display: flex; align-items: center; gap: 8px; color: var(--color-content-secondary); font-size: 16px; margin-bottom: 12px; cursor: pointer;" onclick="alert('Účet nelze v tomto prototypu změnit')">
-          <span style="font-weight: 500;">Běžný účet</span>
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="stroke: var(--color-content-tertiary);"><path d="m9 18 6-6-6-6"/></svg>
-          <span style="color: var(--color-content-tertiary);">123456-4835477/0100</span>
-        </div>
+        <!-- Horní část (nadpis a obsah) -->
+        <div class="modal-form-top">
+          <h2 class="t-headings-title-secondary" style="font-weight: 600; margin-bottom: 0;">Povolení inkasa</h2>
+          
+          <!-- Informace o účtu (jak je na screenshotu 4 - jeden řádek se šipkou a číslem účtu) -->
+          <div style="display: flex; align-items: center; gap: 8px; color: var(--color-content-secondary); font-size: 16px; margin-bottom: 12px; cursor: pointer;" onclick="alert('Účet nelze v tomto prototypu změnit')">
+            <span style="font-weight: 500;">Běžný účet</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="stroke: var(--color-content-tertiary);"><path d="m9 18 6-6-6-6"/></svg>
+            <span style="color: var(--color-content-tertiary);">123456-4835477/0100</span>
+          </div>
 
-        <!-- Formulářová pole (SuperField styl) -->
-        <div class="super-field">
-          <label class="super-field-label" for="inp-prijemce">Kdo může inkasovat</label>
-          <input type="text" class="super-field-input" id="inp-prijemce" placeholder="Příjemce nebo číslo účtu">
-        </div>
+          <!-- Formulářová pole (SuperField styl) -->
+          <div class="super-field">
+            <label class="super-field-label" for="inp-prijemce">Kdo může inkasovat</label>
+            <input type="text" class="super-field-input" id="inp-prijemce" placeholder="Příjemce nebo číslo účtu">
+          </div>
 
-        <div class="super-field">
-          <label class="super-field-label" for="inp-nazev">Název inkasa</label>
-          <input type="text" class="super-field-input" id="inp-nazev" placeholder="Např. ČEZ, Internet...">
-        </div>
+          <div class="super-field">
+            <label class="super-field-label" for="inp-nazev">Název inkasa</label>
+            <input type="text" class="super-field-input" id="inp-nazev" placeholder="Např. ČEZ, Internet...">
+          </div>
 
-        <div class="form-row">
-          <div class="super-field" style="flex: 1;">
-            <label class="super-field-label" for="inp-limit">Limit</label>
-            <div style="position: relative; width: 100%;">
-              <input type="number" class="super-field-input" id="inp-limit" placeholder="Limit v Kč" style="padding-right: 32px;">
-              <span style="position: absolute; right: 0; bottom: 0; font-weight: 500; color: var(--color-content-secondary);">Kč</span>
+          <div class="form-row">
+            <div class="super-field" style="flex: 1;">
+              <label class="super-field-label" for="inp-limit">Limit</label>
+              <div style="position: relative; width: 100%;">
+                <input type="number" class="super-field-input" id="inp-limit" placeholder="Limit v Kč" style="padding-right: 32px;">
+                <span style="position: absolute; right: 0; bottom: 0; font-weight: 500; color: var(--color-content-secondary);">Kč</span>
+              </div>
+            </div>
+            <div class="super-field" style="flex: 1;">
+              <label class="super-field-label" for="sel-obdobi">Za období</label>
+              <select class="super-field-input" id="sel-obdobi" style="cursor: pointer; appearance: none; background-image: url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23717171' stroke-width='2'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E&quot;); background-repeat: no-repeat; background-position: right 0 center; background-size: 16px;">
+                <option value="Měsíčně" selected>Měsíčně</option>
+                <option value="Týdně">Týdně</option>
+                <option value="Čtvrtletně">Čtvrtletně</option>
+                <option value="Ročně">Ročně</option>
+              </select>
             </div>
           </div>
-          <div class="super-field" style="flex: 1;">
-            <label class="super-field-label" for="sel-obdobi">Za období</label>
-            <select class="super-field-input" id="sel-obdobi" style="cursor: pointer; appearance: none; background-image: url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23717171' stroke-width='2'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E&quot;); background-repeat: no-repeat; background-position: right 0 center; background-size: 16px;">
-              <option value="Měsíčně" selected>Měsíčně</option>
-              <option value="Týdně">Týdně</option>
-              <option value="Čtvrtletně">Čtvrtletně</option>
-              <option value="Ročně">Ročně</option>
-            </select>
+
+          <div class="form-row">
+            <div class="super-field" style="flex: 1;">
+              <label class="super-field-label" for="inp-platnost-od">Platnost od</label>
+              <input type="text" class="super-field-input" id="inp-platnost-od" value="1. 5. 2022">
+            </div>
+            <div class="super-field" style="flex: 1;">
+              <label class="super-field-label" for="inp-platnost-do">Platnost do</label>
+              <input type="text" class="super-field-input" id="inp-platnost-do" placeholder="neomezeně">
+            </div>
           </div>
         </div>
 
-        <div class="form-row">
-          <div class="super-field" style="flex: 1;">
-            <label class="super-field-label" for="inp-platnost-od">Platnost od</label>
-            <input type="text" class="super-field-input" id="inp-platnost-od" value="1. 5. 2022">
+        <!-- Spodní část (tlačítka) -->
+        <div class="modal-form-bottom">
+          <div class="flex-row-between" style="gap: 16px; width: 100%;">
+            <button class="btn btn-primary" onclick="alert('Tlačítko Pokračovat není v tomto flow aktivní. Klikněte prosím na Uložit k autorizaci.')" style="flex: 1; height: 52px;">Pokračovat</button>
+            <button class="btn btn-secondary" onclick="saveToAuthorization()" style="flex: 1; height: 52px; border-color: var(--color-content-primary); border-width: 1.5px; color: var(--color-content-primary); font-weight: 600;">Uložit k autorizaci</button>
           </div>
-          <div class="super-field" style="flex: 1;">
-            <label class="super-field-label" for="inp-platnost-do">Platnost do</label>
-            <input type="text" class="super-field-input" id="inp-platnost-do" placeholder="neomezeně">
-          </div>
-        </div>
-
-        <!-- Tlačítka vedle sebe (Červené Pokračovat a Bílé Uložit k autorizaci) -->
-        <div class="flex-row-between" style="gap: 16px; margin-top: 16px; width: 100%;">
-          <button class="btn btn-primary" onclick="alert('Tlačítko Pokračovat není v tomto flow aktivní. Klikněte prosím na Uložit k autorizaci.')" style="flex: 1; height: 52px;">Pokračovat</button>
-          <button class="btn btn-secondary" onclick="saveToAuthorization()" style="flex: 1; height: 52px; border-color: var(--color-content-primary); border-width: 1.5px; color: var(--color-content-primary); font-weight: 600;">Uložit k autorizaci</button>
         </div>
       </div>
     </div>
