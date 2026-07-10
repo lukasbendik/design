@@ -1848,7 +1848,8 @@
       // Speciální chování pro obrazovku Trvalé příkazy a Inkasa (obr. 3 vs obr. 6)
       const authCard = document.getElementById('right-column-auth-card');
       if (authCard) {
-        if (screenId === 'tp-inkasa-s-autorizaci' || window.location.hash === '#tp-inkasa-s-autorizaci' || forceAuthCard) {
+        const hasAuthItem = localStorage.getItem('inkaso_saved_for_auth') === '1';
+        if (screenId === 'tp-inkasa-s-autorizaci' || window.location.hash === '#tp-inkasa-s-autorizaci' || forceAuthCard || hasAuthItem) {
           authCard.style.display = 'block';
         } else {
           authCard.style.display = 'none';
