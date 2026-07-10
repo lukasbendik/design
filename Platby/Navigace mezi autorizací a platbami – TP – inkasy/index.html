@@ -1576,34 +1576,19 @@
         </div>
 
         <div class="right-column">
-          <!-- Akční červená karta Nastavit inkaso -->
-          <div class="card-action-red" onclick="openModal('povoleni-inkasa-modal')">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <line x1="12" y1="5" x2="12" y2="19"/>
-              <line x1="5" y1="12" x2="19" y2="12"/>
-            </svg>
-            <span>Nastavit inkaso</span>
-          </div>
-
-          <!-- Odkazy -->
-          <div class="card-navigation">
-            <div class="link-list">
-              <a class="link-item" onclick="goTo('vsechny-platby')">
-                <div class="link-item-left">
-                  <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="stroke: var(--color-interactive-primary);"><circle cx="8" cy="8" r="6"/><circle cx="18" cy="18" r="4"/><path d="M12 8a6 6 0 0 1 6 6M12 2v6M2 12h6"/></svg>
-                  <span>Všechny platby</span>
-                </div>
-                <svg class="link-item-chevron" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
-              </a>
-              <a class="link-item" onclick="goTo('tp-inkasa')">
-                <div class="link-item-left">
-                  <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="stroke: var(--color-interactive-primary);"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>
-                  <span>Trvalé příkazy a Inkasa</span>
-                </div>
-                <svg class="link-item-chevron" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
-              </a>
+          <!-- Karta: Částka k autorizaci -->
+          <div class="card" style="padding: 24px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+              <span class="t-content-body-secondary-bold" style="color: var(--color-content-secondary); font-size: 14px;">Částka k autorizaci</span>
+              <span class="t-headings-headline-secondary-bold" id="auth-summary-amount" style="color: var(--color-content-primary); font-size: 16px;">0,00 Kč</span>
+            </div>
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <span class="t-content-caption-primary" id="auth-summary-count" style="color: var(--color-content-tertiary);">0 z 0 položek</span>
             </div>
           </div>
+
+          <!-- Tlačítko K autorizaci -->
+          <button class="btn btn-primary" id="btn-execute-auth" onclick="executeSelectedAuth()" style="height: 48px; border-radius: var(--radius-md); font-weight: 600;">K autorizaci</button>
         </div>
       </div>
 
@@ -2381,7 +2366,7 @@
         }
       }
 
-      // Aktualizovat stav tlačítka smazat
+      // Aktualizovat stav tlačítka smazat a přehled v pravém sloupci
       updateDeleteButtonState();
     }
 
@@ -2394,18 +2379,78 @@
       updateDeleteButtonState();
     }
 
-    // Aktualizace tlačítka "Smazat vybrané" podle zaškrtnutých checkboxů
+    // Aktualizace tlačítka "Smazat vybrané" a přehledu podle zaškrtnutých checkboxů
     function updateDeleteButtonState() {
       const deleteBtn = document.getElementById('delete-selected-btn');
-      if (!deleteBtn) return;
-
-      const checkedCount = document.querySelectorAll('.auth-checkbox:checked').length;
-      
-      if (checkedCount > 0) {
-        deleteBtn.classList.remove('disabled');
-      } else {
-        deleteBtn.classList.add('disabled');
+      if (deleteBtn) {
+        const checkedCount = document.querySelectorAll('.auth-checkbox:checked').length;
+        if (checkedCount > 0) {
+          deleteBtn.classList.remove('disabled');
+        } else {
+          deleteBtn.classList.add('disabled');
+        }
       }
+      
+      // Přepočítat přehled pro pravý sloupec
+      updateAuthSummary();
+    }
+
+    // Spočítat částku a počet vybraných položek pro pravý sloupec
+    function updateAuthSummary() {
+      const checkboxes = document.querySelectorAll('.auth-checkbox');
+      const totalCount = checkboxes.length;
+      
+      const checkedBoxes = document.querySelectorAll('.auth-checkbox:checked');
+      const checkedCount = checkedBoxes.length;
+
+      let totalAmount = 0;
+      checkedBoxes.forEach(cb => {
+        const card = cb.closest('.auth-item-card');
+        if (card) {
+          const amountDiv = card.querySelector('.t-headings-headline-secondary-bold:last-child');
+          if (amountDiv) {
+            const amountText = amountDiv.textContent;
+            const cleanNumberText = amountText.replace(/[^\d,.-]/g, '').replace(',', '.');
+            const num = parseFloat(cleanNumberText);
+            if (!isNaN(num)) {
+              totalAmount += num;
+            }
+          }
+        }
+      });
+
+      const summaryAmountEl = document.getElementById('auth-summary-amount');
+      const summaryCountEl = document.getElementById('auth-summary-count');
+      const executeBtn = document.getElementById('btn-execute-auth');
+
+      if (summaryAmountEl) {
+        summaryAmountEl.textContent = totalAmount.toLocaleString('cs-CZ', { minimumFractionDigits: 2 }) + ' Kč';
+      }
+      if (summaryCountEl) {
+        summaryCountEl.textContent = `${checkedCount} z ${totalCount} položek`;
+      }
+
+      if (executeBtn) {
+        if (checkedCount > 0) {
+          executeBtn.removeAttribute('disabled');
+          executeBtn.style.opacity = '1';
+          executeBtn.style.cursor = 'pointer';
+        } else {
+          executeBtn.setAttribute('disabled', 'true');
+          executeBtn.style.opacity = '0.5';
+          executeBtn.style.cursor = 'not-allowed';
+        }
+      }
+    }
+
+    // Tlačítko K autorizaci v pravém sloupci
+    function executeSelectedAuth() {
+      const checkedCount = document.querySelectorAll('.auth-checkbox:checked').length;
+      if (checkedCount === 0) {
+        alert('Nejprve prosím označte položky k autorizaci.');
+        return;
+      }
+      deleteSelectedAuth();
     }
 
     // Smazat vybrané položky z autorizace
@@ -2419,7 +2464,6 @@
       selected.forEach(cb => {
         const val = cb.value;
         if (val === 'dynamic') {
-          // Smazat z localStorage
           localStorage.removeItem('inkaso_prijemce');
           localStorage.removeItem('inkaso_nazev');
           localStorage.removeItem('inkaso_limit');
@@ -2448,7 +2492,7 @@
       updateDeleteButtonState();
 
       // Zobrazit potvrzení
-      alert('Vybrané položky byly úspěšně schváleny / smazány.');
+      alert('Vybrané položky byly úspěšně autorizovány.');
     }
 
     // Obnovit hodnoty ve formuláři, pokud jsou v localStorage (např. při rozpracovanosti a zavření)
