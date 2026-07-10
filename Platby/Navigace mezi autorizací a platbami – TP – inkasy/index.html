@@ -1576,10 +1576,10 @@
         </div>
 
         <div class="right-column">
-          <!-- Karta: Částka k autorizaci -->
-          <div class="card" style="padding: 24px;">
+          <!-- Částka k autorizaci bez pozadí -->
+          <div style="padding: 12px 0; margin-bottom: 8px;">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-              <span class="t-content-body-secondary-bold" style="color: var(--color-content-secondary); font-size: 14px;">Částka k autorizaci</span>
+              <span class="t-content-body-secondary-bold" style="color: var(--color-content-secondary); font-size: 15px;">Částka k autorizaci</span>
               <span class="t-headings-headline-secondary-bold" id="auth-summary-amount" style="color: var(--color-content-primary); font-size: 16px;">0,00 Kč</span>
             </div>
             <div style="display: flex; justify-content: space-between; align-items: center;">
@@ -1588,7 +1588,27 @@
           </div>
 
           <!-- Tlačítko K autorizaci -->
-          <button class="btn btn-primary" id="btn-execute-auth" onclick="executeSelectedAuth()" style="height: 48px; border-radius: var(--radius-md); font-weight: 600;">K autorizaci</button>
+          <button class="btn btn-primary" id="btn-execute-auth" onclick="executeSelectedAuth()" style="height: 48px; border-radius: var(--radius-md); font-weight: 600; margin-bottom: 16px;">K autorizaci</button>
+
+          <!-- Odkazy -->
+          <div class="card-navigation">
+            <div class="link-list">
+              <a class="link-item" onclick="goTo('vsechny-platby')">
+                <div class="link-item-left">
+                  <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="stroke: var(--color-interactive-primary); fill: none;"><circle cx="8" cy="8" r="6"/><circle cx="18" cy="18" r="4"/><path d="M12 8a6 6 0 0 1 6 6M12 2v6M2 12h6"/></svg>
+                  <span>Všechny platby</span>
+                </div>
+                <svg class="link-item-chevron" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+              </a>
+              <a class="link-item" onclick="goTo('tp-inkasa')">
+                <div class="link-item-left">
+                  <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="stroke: var(--color-interactive-primary); fill: none;"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>
+                  <span>Trvalé příkazy a Inkasa</span>
+                </div>
+                <svg class="link-item-chevron" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+              </a>
+            </div>
+          </div>
         </div>
       </div>
 
