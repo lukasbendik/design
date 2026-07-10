@@ -764,6 +764,41 @@
       position: relative;
     }
 
+    /* Poloprůhledný overlay pro menší dialogy */
+    .modal-overlay-popup {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: rgba(0, 0, 0, 0.4);
+      backdrop-filter: blur(4px);
+      z-index: 3000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .modal-overlay-popup.active {
+      display: flex;
+    }
+
+    .modal-content-popup {
+      background-color: var(--color-background-surface);
+      box-shadow: var(--shadow-panel);
+      border: 1px solid var(--color-background-border);
+      border-radius: var(--radius-lg);
+      width: 100%;
+      max-width: 440px;
+      padding: 32px 24px;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
     .modal-form-wrap {
       width: 100%;
       max-width: 600px;
@@ -2039,8 +2074,8 @@
   </div>
 
   <!-- ================= MODAL 3: ŽÁDNÉ POLOŽKY K AUTORIZACI ================= -->
-  <div class="modal-overlay" id="modal-no-items-modal">
-    <div class="modal-content" style="max-width: 400px; padding: 32px 24px; text-align: center; border-radius: var(--radius-lg);">
+  <div class="modal-overlay-popup" id="modal-no-items-modal">
+    <div class="modal-content-popup">
       <button class="modal-close" onclick="closeModal()">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" x2="6" y1="6" y2="18"/><line x1="6" x2="18" y1="6" y2="18"/></svg>
       </button>
@@ -2236,7 +2271,7 @@
 
     // Fyzické skrytí všech modalů v DOMu
     function closeAllModalsElements() {
-      document.querySelectorAll('.modal-overlay').forEach(el => el.classList.remove('active'));
+      document.querySelectorAll('.modal-overlay, .modal-overlay-popup').forEach(el => el.classList.remove('active'));
     }
 
     // Uložit vyplněná data z formuláře k autorizaci
