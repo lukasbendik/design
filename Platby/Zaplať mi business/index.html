@@ -214,18 +214,70 @@ body{
 
 /* ===== TOPBAR ===== */
 .topbar{
-  display:flex;align-items:center;gap:8px;padding:14px 14px 12px;
+  display:flex;align-items:center;justify-content:space-between;gap:8px;padding:14px 14px 12px;
   background:#fff;border-bottom:1px solid var(--line);
 }
 .back-btn,.close-btn{
   width:38px;height:38px;border:none;background:transparent;color:var(--text-1);
   display:flex;align-items:center;justify-content:center;cursor:pointer;border-radius:10px;
+  flex-shrink:0;
 }
 .back-btn:active{background:var(--line);}
 .topbar-title{font-size:17px;font-weight:700;}
 
+/* ===== SEGMENTED CONTROL ===== */
+.segmented-control {
+  display: flex;
+  background: var(--bg);
+  border-radius: 8px;
+  padding: 2px;
+  flex: 1;
+  max-width: 200px;
+  margin: 0 auto;
+}
+.seg-btn {
+  flex: 1;
+  border: none;
+  background: transparent;
+  color: var(--text-2);
+  font-size: 13px;
+  font-weight: 600;
+  padding: 6px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  text-align: center;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+}
+.seg-btn.active {
+  background: #fff;
+  color: var(--text-1);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.04);
+}
+
 /* ===== KEYPAD ===== */
 .keypad-screen{flex:1;display:flex;flex-direction:column;padding:0 16px;}
+.keypad-screen-content{display:flex;flex-direction:column;flex:1;}
+.calc-history{
+  font-size:14px;color:var(--text-3);text-align:center;
+  margin-top:20px;min-height:18px;line-height:1.2;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  padding:0 8px;
+}
+.calculator-grid{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:10px;
+  padding:16px 0 24px;
+}
+.calc-key{
+  height:52px;border:none;background:#fff;border-radius:14px;
+  font-size:20px;font-weight:600;color:var(--text-1);cursor:pointer;
+  box-shadow:var(--shadow);display:flex;align-items:center;justify-content:center;
+}
+.calc-key:active{background:var(--line);}
+.calc-op{background:#E8EAED;color:var(--text-1);}
+.calc-op:active{background:var(--line);}
+.calc-eq{background:var(--text-1);color:#fff;}
+.calc-eq:active{background:#000;}
 .kp-label{text-align:center;color:var(--text-2);font-size:14px;margin-top:28px;}
 .kp-amount{
   text-align:center;font-size:48px;font-weight:700;letter-spacing:-1px;
@@ -430,37 +482,77 @@ body{
 
   </section><!-- /screen-home -->
 
-  <!-- ======================== POKLADNA — KLÁVESNICE ======================== -->
+  <!-- ======================== POKLADNA — KLÁVESNICE & KALKULAČKA ======================== -->
   <section class="screen" id="screen-keypad">
 
     <div class="topbar">
       <button class="back-btn" id="btn-keypad-back" aria-label="Zpět">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
       </button>
-      <span class="topbar-title">Pokladna</span>
+      <div class="segmented-control" id="keypad-mode-selector">
+        <button class="seg-btn active" data-mode="pokladna">Pokladna</button>
+        <button class="seg-btn" data-mode="kalkulacka">Kalkulačka</button>
+      </div>
+      <div style="width:38px;"></div>
     </div>
 
     <div class="keypad-screen">
-      <div class="kp-label">Zadejte částku k zaplacení</div>
-      <div class="kp-amount empty"><span id="kp-display">0,00</span><span class="kp-cur">Kč</span></div>
+      <!-- REŽIM POKLADNA -->
+      <div class="keypad-screen-content" id="kp-content-pokladna">
+        <div class="kp-label">Zadejte částku k zaplacení</div>
+        <div class="kp-amount empty"><span id="kp-display">0,00</span><span class="kp-cur">Kč</span></div>
 
-      <div class="kp-presets" id="kp-presets"></div>
+        <div class="kp-presets" id="kp-presets"></div>
 
-      <div class="keypad">
-        <button class="kp-key" data-k="1">1</button>
-        <button class="kp-key" data-k="2">2</button>
-        <button class="kp-key" data-k="3">3</button>
-        <button class="kp-key" data-k="4">4</button>
-        <button class="kp-key" data-k="5">5</button>
-        <button class="kp-key" data-k="6">6</button>
-        <button class="kp-key" data-k="7">7</button>
-        <button class="kp-key" data-k="8">8</button>
-        <button class="kp-key" data-k="9">9</button>
-        <button class="kp-key" data-k="00">00</button>
-        <button class="kp-key" data-k="0">0</button>
-        <button class="kp-key kp-del" data-k="del" aria-label="Smazat">
-          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M21 4H8l-7 8 7 8h13a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2z"/><line x1="18" y1="9" x2="12" y2="15"/><line x1="12" y1="9" x2="18" y2="15"/></svg>
-        </button>
+        <div class="keypad">
+          <button class="kp-key" data-k="1">1</button>
+          <button class="kp-key" data-k="2">2</button>
+          <button class="kp-key" data-k="3">3</button>
+          <button class="kp-key" data-k="4">4</button>
+          <button class="kp-key" data-k="5">5</button>
+          <button class="kp-key" data-k="6">6</button>
+          <button class="kp-key" data-k="7">7</button>
+          <button class="kp-key" data-k="8">8</button>
+          <button class="kp-key" data-k="9">9</button>
+          <button class="kp-key" data-k="00">00</button>
+          <button class="kp-key" data-k="0">0</button>
+          <button class="kp-key kp-del" data-k="del" aria-label="Smazat">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M21 4H8l-7 8 7 8h13a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2z"/><line x1="18" y1="9" x2="12" y2="15"/><line x1="12" y1="9" x2="18" y2="15"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- REŽIM KALKULAČKA -->
+      <div class="keypad-screen-content" id="kp-content-kalkulacka" style="display:none;">
+        <div class="calc-history" id="calc-history">&nbsp;</div>
+        <div class="kp-amount empty" id="calc-display-box"><span id="calc-display">0</span><span class="kp-cur">Kč</span></div>
+
+        <div class="calculator-grid">
+          <button class="calc-key calc-op" data-c="C">C</button>
+          <button class="calc-key calc-op" data-c="(">(</button>
+          <button class="calc-key calc-op" data-c=")">)</button>
+          <button class="calc-key calc-op" data-c="/">/</button>
+
+          <button class="calc-key" data-c="7">7</button>
+          <button class="calc-key" data-c="8">8</button>
+          <button class="calc-key" data-c="9">9</button>
+          <button class="calc-key calc-op" data-c="*">*</button>
+
+          <button class="calc-key" data-c="4">4</button>
+          <button class="calc-key" data-c="5">5</button>
+          <button class="calc-key" data-c="6">6</button>
+          <button class="calc-key calc-op" data-c="-">-</button>
+
+          <button class="calc-key" data-c="1">1</button>
+          <button class="calc-key" data-c="2">2</button>
+          <button class="calc-key" data-c="3">3</button>
+          <button class="calc-key calc-op" data-c="+">+</button>
+
+          <button class="calc-key" data-c="00">00</button>
+          <button class="calc-key" data-c="0">0</button>
+          <button class="calc-key" data-c=",">,</button>
+          <button class="calc-key calc-eq" data-c="=">=</button>
+        </div>
       </div>
     </div>
 
@@ -522,6 +614,13 @@ var MAX_CENTS = 99999999;            // max 999 999,99 Kč
 /* ---- amount state: částka v haléřích (integer) ---- */
 var cents = parseInt(lsGet(STORE+'cents') || '0', 10);
 
+/* ---- calculator state ---- */
+var calcExpression = '';
+var calcCurrentInput = '';
+var calcIsResult = false;
+var calcHistoryText = '';
+var keypadMode = lsGet(STORE+'mode') || 'pokladna';
+
 /* ============================================================
    NAVIGACE MEZI OBRAZOVKAMI
    ============================================================ */
@@ -571,7 +670,7 @@ function showScreenNoHist(id){
   if(el){ el.classList.add('active'); }
   trackPageView(id.replace('screen-',''));
   if(id === 'screen-qr') renderQR();
-  if(id === 'screen-keypad') updateKeypad();
+  if(id === 'screen-keypad') setKeypadMode(keypadMode);
 }
 
 /* ---- Obnova obrazovky z URL hash při refresh ---- */
@@ -584,7 +683,7 @@ function showScreenNoHist(id){
       showScreen(screenId, { skipHistory:true });
       history.replaceState({ screen:screenId }, '', window.location.hash);
       if(screenId === 'screen-qr') renderQR();
-      if(screenId === 'screen-keypad') updateKeypad();
+      if(screenId === 'screen-keypad') setKeypadMode(keypadMode);
     }
   }
 })();
@@ -661,6 +760,182 @@ function pressKey(k){
 }
 
 /* ============================================================
+   ŘÍZENÍ REŽIMŮ (POKLADNA vs KALKULAČKA)
+   ============================================================ */
+function setKeypadMode(mode){
+  keypadMode = mode;
+  lsSet(STORE+'mode', mode);
+  
+  document.querySelectorAll('#keypad-mode-selector .seg-btn').forEach(function(btn){
+    btn.classList.toggle('active', btn.getAttribute('data-mode') === mode);
+  });
+  
+  var pokladnaEl = document.getElementById('kp-content-pokladna');
+  var kalkulackaEl = document.getElementById('kp-content-kalkulacka');
+  
+  if(mode === 'pokladna'){
+    pokladnaEl.style.display = 'flex';
+    kalkulackaEl.style.display = 'none';
+    updateKeypad();
+  } else {
+    pokladnaEl.style.display = 'none';
+    kalkulackaEl.style.display = 'flex';
+    updateCalculator();
+  }
+}
+
+/* ============================================================
+   LOGIKA KALKULAČKY
+   ============================================================ */
+function formatCalcNumber(valStr){
+  if(!valStr || valStr === '0') return '0';
+  if(valStr === '.') return '0,';
+  
+  var parts = valStr.split('.');
+  var intPart = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+  var decPart = parts[1];
+  
+  return intPart + (valStr.indexOf('.') !== -1 ? ',' + (decPart || '') : '');
+}
+
+function updateCalculator(){
+  var disp = document.getElementById('calc-display');
+  var box = document.getElementById('calc-display-box');
+  var hist = document.getElementById('calc-history');
+  var payBtn = document.getElementById('btn-pay');
+  if(!disp) return;
+  
+  var displayHistory = calcHistoryText
+    .replace(/\*/g, ' × ')
+    .replace(/\//g, ' ÷ ')
+    .replace(/\+/g, ' + ')
+    .replace(/\-/g, ' − ')
+    .replace(/\./g, ',');
+  
+  hist.innerHTML = displayHistory || '&nbsp;';
+  
+  var curVal = calcCurrentInput;
+  if(!curVal && !calcExpression){
+    disp.textContent = '0';
+    box.classList.add('empty');
+  } else if(!curVal){
+    var tempExpr = calcExpression.trim();
+    if(tempExpr.endsWith('+') || tempExpr.endsWith('-') || tempExpr.endsWith('*') || tempExpr.endsWith('/')){
+      tempExpr = tempExpr.slice(0, -1).trim();
+    }
+    var tempRes = evaluateExpression(tempExpr);
+    disp.textContent = tempRes !== null ? formatCalcNumber(tempRes.toString()) : '0';
+    box.classList.toggle('empty', tempRes <= 0);
+  } else {
+    disp.textContent = formatCalcNumber(curVal);
+    box.classList.remove('empty');
+  }
+  
+  var finalAmt = getFinalAmount();
+  payBtn.disabled = finalAmt <= 0;
+  if(finalAmt > 0){
+    payBtn.textContent = 'Zaplatit ' + formatCents(finalAmt) + ' Kč';
+  } else {
+    payBtn.textContent = 'Zaplatit';
+  }
+}
+
+function evaluateExpression(expr){
+  var clean = expr.replace(/[^0-9\.\+\-\*\/\(\) ]/g, '');
+  if(!clean) return 0;
+  try {
+    var res = new Function('return ' + clean)();
+    if(typeof res === 'number' && !isNaN(res) && isFinite(res)){
+      return Math.round(res * 100) / 100;
+    }
+  } catch(e){}
+  return null;
+}
+
+function getFinalAmount(){
+  if(keypadMode === 'pokladna'){
+    return cents;
+  } else {
+    var expr = calcExpression + calcCurrentInput;
+    expr = expr.trim();
+    if(expr.endsWith('+') || expr.endsWith('-') || expr.endsWith('*') || expr.endsWith('/')){
+      expr = expr.slice(0, -1).trim();
+    }
+    var val = evaluateExpression(expr);
+    if(val !== null && val > 0){
+      return Math.round(val * 100);
+    }
+    return 0;
+  }
+}
+
+function pressCalcKey(c){
+  if(c === 'C'){
+    calcExpression = '';
+    calcCurrentInput = '';
+    calcIsResult = false;
+    calcHistoryText = '';
+  } else if(c === '='){
+    var expr = calcExpression + calcCurrentInput;
+    if(expr){
+      var res = evaluateExpression(expr);
+      if(res !== null){
+        calcHistoryText = expr + ' =';
+        calcExpression = '';
+        calcCurrentInput = res.toString();
+        calcIsResult = true;
+      }
+    }
+  } else if(c === '+' || c === '-' || c === '*' || c === '/'){
+    if(calcIsResult){
+      calcExpression = calcCurrentInput + c;
+      calcCurrentInput = '';
+      calcIsResult = false;
+    } else if(calcCurrentInput){
+      calcExpression += calcCurrentInput + c;
+      calcCurrentInput = '';
+    } else if(calcExpression){
+      var lastChar = calcExpression.trim().slice(-1);
+      if('+-*/'.indexOf(lastChar) !== -1){
+        calcExpression = calcExpression.trim().slice(0, -1) + c;
+      } else {
+        calcExpression += c;
+      }
+    }
+    calcHistoryText = calcExpression;
+  } else if(c === ','){
+    if(calcIsResult){
+      calcCurrentInput = '0.';
+      calcIsResult = false;
+      calcHistoryText = '';
+    } else if(calcCurrentInput.indexOf('.') === -1){
+      calcCurrentInput = (calcCurrentInput || '0') + '.';
+    }
+  } else if(c === '00'){
+    if(calcIsResult){
+      calcCurrentInput = '0';
+      calcIsResult = false;
+      calcHistoryText = '';
+    } else if(calcCurrentInput && calcCurrentInput !== '0'){
+      calcCurrentInput += '00';
+    }
+  } else {
+    if(calcIsResult){
+      calcCurrentInput = c;
+      calcIsResult = false;
+      calcHistoryText = '';
+    } else {
+      if(calcCurrentInput === '0'){
+        calcCurrentInput = c;
+      } else {
+        calcCurrentInput += c;
+      }
+    }
+  }
+  updateCalculator();
+}
+
+/* ============================================================
    QR OBRAZOVKA
    ============================================================ */
 function newPaymentId(){
@@ -712,7 +987,7 @@ document.addEventListener('DOMContentLoaded', function(){
   // Domů → Pokladna (klávesnice)
   document.getElementById('btn-pokladna').addEventListener('click', function(){
     showScreen('screen-keypad');
-    updateKeypad();
+    setKeypadMode(keypadMode);
   });
 
   // Klávesnice — zpět na domů
@@ -720,15 +995,28 @@ document.addEventListener('DOMContentLoaded', function(){
     showScreen('screen-home');
   });
 
-  // Klávesy
+  // Režimy Pokladna / Kalkulačka
+  document.querySelectorAll('#keypad-mode-selector .seg-btn').forEach(function(btn){
+    btn.addEventListener('click', function(){ setKeypadMode(btn.getAttribute('data-mode')); });
+  });
+
+  // Klávesy Pokladna
   document.querySelectorAll('.kp-key').forEach(function(btn){
     btn.addEventListener('click', function(){ pressKey(btn.getAttribute('data-k')); });
   });
 
+  // Klávesy Kalkulačka
+  document.querySelectorAll('.calc-key').forEach(function(btn){
+    btn.addEventListener('click', function(){ pressCalcKey(btn.getAttribute('data-c')); });
+  });
+
   // Zaplatit → vygeneruj ID + QR, ulož poslední částku, započítej platbu
   document.getElementById('btn-pay').addEventListener('click', function(){
-    if(cents <= 0) return;
+    var finalAmt = getFinalAmount();
+    if(finalAmt <= 0) return;
+    cents = finalAmt;
     newPaymentId();
+    lsSet(STORE+'cents', String(cents));
     lsSet(STORE+'lastCents', String(cents));
     renderPresets();
     showScreen('screen-qr');
@@ -738,18 +1026,21 @@ document.addEventListener('DOMContentLoaded', function(){
   // QR — zpět na klávesnici
   document.getElementById('btn-qr-back').addEventListener('click', function(){
     showScreen('screen-keypad');
-    updateKeypad();
+    setKeypadMode(keypadMode);
   });
 
   // QR — Zadat další → klávesnice (reset částky)
   document.getElementById('btn-qr-another').addEventListener('click', function(){
     cents = 0;
     lsSet(STORE+'cents', '0');
+    calcExpression = '';
+    calcCurrentInput = '';
+    calcIsResult = false;
     showScreen('screen-keypad');
-    updateKeypad();
+    setKeypadMode(keypadMode);
   });
 
-  updateKeypad();
+  setKeypadMode(keypadMode);
   // počáteční page_view pokud nejsme z hashe
   if(!window.location.hash) trackPageView('home');
 });
