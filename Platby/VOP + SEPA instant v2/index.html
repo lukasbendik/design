@@ -44,6 +44,11 @@
     --border: #E0E0E0;
     --success: #2E7D32;
     --success-bg: #E8F5E9;
+    --warning: #FF9500;
+    --warning-bg: #FFF9E6;
+    --info-blue: #0066CC;
+    --info-blue-bg: #F0F7FF;
+    --error-bg: #FCE8E6;
     --pin-empty: #D0D0D0;
     --pin-filled: #1A1A1A;
     --radius-card: 14px;
@@ -419,8 +424,9 @@
   }
   .input-wrap:focus-within { border-color: #1A1A1A; }
   .input-wrap.verified { border-color: var(--success); background: var(--success-bg); }
-  .input-wrap.warning-border { border-color: #FF9500; }
-  .input-hint.warning { color: #FF9500; }
+  .input-wrap.warning-border { border-color: var(--warning); background: var(--warning-bg); }
+  .input-wrap.error-border { border-color: var(--kb-red); background: var(--error-bg); }
+  .input-wrap.info-border { border-color: var(--info-blue); background: var(--info-blue-bg); }
   .input-wrap input, .input-wrap select {
     border: none; outline: none; font-size: 16px;
     background: transparent; width: 100%;
@@ -429,9 +435,11 @@
   .input-wrap input::placeholder { color: var(--text-hint); }
   .input-wrap .verified-icon { color: var(--success); font-size: 20px; flex-shrink: 0; }
   .input-wrap .info-icon { color: var(--kb-red); font-size: 20px; flex-shrink: 0; cursor: pointer; }
-  .input-hint { font-size: 12px; color: var(--text-secondary); margin-top: 4px; padding-left: 2px; }
-  .input-hint.success { color: var(--success); }
-  .input-hint.error { color: var(--kb-red); }
+  .input-hint { font-size: 13px; color: var(--text-secondary); margin-top: 6px; padding: 10px 12px; border-radius: 8px; display: none; line-height: 1.4; }
+  .input-hint.success { display: block; background: var(--success-bg); color: var(--success); border: 1px solid rgba(46,125,50,0.15); }
+  .input-hint.warning { display: block; background: var(--warning-bg); color: #B26A00; border: 1px solid rgba(255,149,0,0.15); }
+  .input-hint.error { display: block; background: var(--error-bg); color: var(--kb-red); border: 1px solid rgba(226,0,26,0.15); }
+  .input-hint.info { display: block; background: var(--info-blue-bg); color: var(--info-blue); border: 1px solid rgba(0,102,204,0.15); }
 
   .amount-row { display: flex; gap: 10px; margin-bottom: 12px; }
   .amount-row .input-group { flex: 1; margin-bottom: 0; }
@@ -2268,7 +2276,7 @@ function setNameState(state, hint) {
   const icon = document.getElementById('name-status-icon');
   const suggestion = document.getElementById('name-suggestion');
 
-  wrap.classList.remove('verified', 'error-border', 'warning-border');
+  wrap.classList.remove('verified', 'error-border', 'warning-border', 'info-border');
   hintEl.className = 'input-hint';
   suggestion.style.display = 'none';
   currentNameState = state;
@@ -2277,26 +2285,29 @@ function setNameState(state, hint) {
     icon.innerHTML = ICONS.info; icon.className = 'info-icon'; icon.style.color = '';
     hintEl.textContent = '';
   } else if (state === 'match') {
+    wrap.classList.add('verified');
     icon.innerHTML = ICONS.match; icon.className = 'verified-icon'; icon.style.color = '';
-    hintEl.textContent = 'Název odpovídá číslu účtu.';
-    hintEl.className = 'input-hint';
+    hintEl.textContent = '✓ Název přesně odpovídá jménu majitele účtu.';
+    hintEl.className = 'input-hint success';
     paymentData.nameVerified = true;
   } else if (state === 'partial') {
+    wrap.classList.add('warning-border');
     icon.innerHTML = ICONS.partial; icon.className = 'info-icon'; icon.style.color = '';
-    hintEl.textContent = 'Název částečně odpovídá číslu účtu.';
-    hintEl.className = 'input-hint';
+    hintEl.textContent = '⚠️ Zadaný název se liší od jména majitele účtu.';
+    hintEl.className = 'input-hint warning';
     suggestion.style.display = 'flex';
     paymentData.nameVerified = false;
   } else if (state === 'nomatch') {
     wrap.classList.add('error-border');
     icon.innerHTML = ICONS.nomatch; icon.className = 'info-icon'; icon.style.color = '';
-    hintEl.textContent = 'Název neodpovídá číslu účtu.';
+    hintEl.textContent = '❌ Pozor: Název neodpovídá jménu majitele účtu. Hrozí riziko, že posíláte peníze cizí osobě.';
     hintEl.className = 'input-hint error';
     paymentData.nameVerified = false;
   } else if (state === 'unverifiable') {
+    wrap.classList.add('info-border');
     icon.innerHTML = ICONS.unverifiable; icon.className = 'info-icon'; icon.style.color = '';
-    hintEl.textContent = 'Název nelze ověřit.';
-    hintEl.className = 'input-hint';
+    hintEl.textContent = 'ℹ️ Název nelze ověřit. Banka příjemce toto ověřování nepodporuje.';
+    hintEl.className = 'input-hint info';
     paymentData.nameVerified = false;
   } else if (state === 'required') {
     wrap.classList.add('error-border');
