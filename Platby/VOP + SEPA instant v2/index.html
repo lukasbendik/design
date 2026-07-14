@@ -1180,23 +1180,20 @@
           <input type="text" id="desc-input" placeholder="">
         </div>
       </div>
-      <div style="font-size:13px;color:var(--text-secondary);margin-bottom:8px;font-weight:500;">Odeslat platbu</div>
+      <div style="font-size:13px;color:var(--text-secondary);margin-bottom:8px;font-weight:500;">Kdy a jak odeslat</div>
       <div class="segment-row" id="timing-seg">
-        <button class="segment-btn active" onclick="selectSegment(0)">Co nejdříve</button>
-        <button class="segment-btn" onclick="selectSegment(1)">Později</button>
+        <button class="segment-btn active" onclick="selectPaymentType('standard')">Standardně</button>
+        <button class="segment-btn" onclick="selectPaymentType('instant')">Okamžitě</button>
+        <button class="segment-btn" onclick="selectPaymentType('later')">Později</button>
+      </div>
+      <div id="payment-type-hint" style="font-size:13px;color:var(--text-secondary);margin-bottom:12px;padding:0 2px;line-height:1.4;">
+        Zkusíme odeslat okamžitě. Pokud to nepůjde, pošleme jako běžnou platbu (doručení do 1 pracovního dne).
       </div>
       <div id="date-wrap" style="display:none;margin-bottom:12px;">
         <div style="font-size:12px;color:var(--text-secondary);margin-bottom:4px;font-weight:500;padding-left:2px;">Datum platby</div>
         <div class="input-wrap">
           <input type="text" id="payment-date" placeholder="D. M. RRRR" style="width:100%;border:none;outline:none;background:transparent;font-family:var(--font);color:var(--text-primary);font-size:16px;">
         </div>
-      </div>
-      <div class="toggle-row" id="instant-row">
-        <div>
-          <span class="toggle-label">Okamžitá platba</span>
-          <div id="instant-hint" style="display:none;font-size:13px;color:var(--text-secondary);margin-top:4px;max-width:240px;line-height:1.4;">Platba bude připsána okamžitě, při nedostupnosti ji nerealizujeme.</div>
-        </div>
-        <div class="toggle-switch" id="instant-toggle" onclick="toggleInstant()"></div>
       </div>
       <div style="height:20px;"></div>
     </div>
@@ -1234,6 +1231,10 @@
         <div class="sd-label">Přesný název příjemce</div>
         <div class="sd-value" id="sum-name">–</div>
         <div class="sd-sub" id="sum-verify">–</div>
+      </div>
+      <div class="sd-row">
+        <div class="sd-label">Způsob odeslání</div>
+        <div class="sd-value" id="sum-type">Standardně</div>
       </div>
       <div class="sd-row">
         <div class="sd-label">Datum platby</div>
@@ -2062,25 +2063,9 @@ function validateIBAN() {
   checkS05();
 }
 
-// Validace IBAN (mod-97) nebo českého čísla účtu ([predcisli-]cislo/kodbanky)
+// Validace IBAN (mod-97) nebo českého čísla účtu ([predcisli-]cislo/kodbanky) - VYPNUTO pro prototyp
 function isValidAccountNumber(raw) {
-  const val = raw.replace(/\s+/g, '');
-  if (!val) return false;
-
-  // IBAN – začíná dvěma písmeny + dvěma číslicemi
-  if (/^[A-Za-z]{2}\d{2}[A-Za-z0-9]+$/.test(val)) {
-    if (val.length < 15 || val.length > 34) return false;
-    const rearranged = val.slice(4) + val.slice(0, 4);
-    let remainder = 0;
-    for (const ch of rearranged.toUpperCase()) {
-      const code = ch >= 'A' && ch <= 'Z' ? (ch.charCodeAt(0) - 55).toString() : ch;
-      for (const d of code) remainder = (remainder * 10 + (+d)) % 97;
-    }
-    return remainder === 1;
-  }
-
-  // České číslo účtu: volitelné předčíslí (max 6 míst), číslo (2–10 míst), lomítko, kód banky (4 míst)
-  return /^(\d{1,6}-)?\d{2,10}\/\d{4}$/.test(val);
+  return true;
 }
 
 // Zůstatek na běžném účtu v Kč
@@ -2242,6 +2227,9 @@ function initS05() {
   paymentData.amount = '';
   paymentData.currency = 'CZK';
   updateBalanceHint();
+  if (typeof selectPaymentType === 'function') {
+    selectPaymentType('standard');
+  }
 }
 
 // ── S06 logic ──
@@ -2388,34 +2376,44 @@ function acceptSuggestion() {
   setNameState('match');
 }
 
-function selectSegment(idx) {
-  document.querySelectorAll('#timing-seg .segment-btn').forEach((b,i) => b.classList.toggle('active', i===idx));
-  track('timing_selected', { timing: idx === 0 ? 'co_nejdrive' : 'pozdeji' });
+let selectedPaymentType = 'standard';
+
+function selectPaymentType(type) {
+  selectedPaymentType = type;
+  const buttons = document.querySelectorAll('#timing-seg .segment-btn');
+  buttons[0].classList.toggle('active', type === 'standard');
+  buttons[1].classList.toggle('active', type === 'instant');
+  buttons[2].classList.toggle('active', type === 'later');
+  
+  track('payment_type_selected', { type: type });
+  
   const dateWrap = document.getElementById('date-wrap');
-  const instantRow = document.getElementById('instant-row');
-  if (idx === 1) {
+  const hint = document.getElementById('payment-type-hint');
+  
+  if (type === 'later') {
     dateWrap.style.display = 'block';
-    instantRow.style.display = 'none';
+    hint.innerHTML = 'Platba se odešle jako běžná ve zvolené datum.';
     const t = new Date();
     document.getElementById('payment-date').value = t.getDate() + '. ' + (t.getMonth()+1) + '. ' + t.getFullYear();
+  } else if (type === 'instant') {
+    dateWrap.style.display = 'none';
+    document.getElementById('payment-date').value = '';
+    hint.innerHTML = '<strong>Výhradně okamžitě.</strong> Peníze dorazí za pár sekund. Pokud banka příjemce okamžitou platbu nepodporuje nebo má výpadek, platba se neodešle.';
   } else {
     dateWrap.style.display = 'none';
     document.getElementById('payment-date').value = '';
-    instantRow.style.display = '';
+    hint.innerHTML = 'Zkusíme odeslat okamžitě. Pokud to nepůjde, pošleme jako běžnou platbu (doručení do 1 pracovního dne).';
   }
 }
 
-function toggleInstant() {
-  const toggle = document.getElementById('instant-toggle');
-  const hint = document.getElementById('instant-hint');
-  toggle.classList.toggle('on');
-  const isOn = toggle.classList.contains('on');
-  hint.style.display = isOn ? 'block' : 'none';
-  track('instant_payment_toggled', { value: isOn ? 'on' : 'off' });
+function selectSegment(idx) {
+  selectPaymentType(idx === 1 ? 'later' : 'standard');
 }
 
+function toggleInstant() {}
 function toggleSwitch(id) {
-  document.getElementById(id).classList.toggle('on');
+  const el = document.getElementById(id);
+  if (el) el.classList.toggle('on');
 }
 
 function fillSummaryAndGoS08(verifyLabel, isError) {
@@ -2426,9 +2424,24 @@ function fillSummaryAndGoS08(verifyLabel, isError) {
   const verifyEl = document.getElementById('sum-verify');
   verifyEl.textContent = verifyLabel;
   verifyEl.classList.toggle('error', !!isError);
-  const today = new Date();
-  document.getElementById('sum-date').textContent = today.getDate()+'. '+(today.getMonth()+1)+'. '+today.getFullYear();
-  track('payment_step2_continue', { name: paymentData.name, name_verified: paymentData.nameVerified });
+  
+  // Typ platby
+  const sumTypeEl = document.getElementById('sum-type');
+  const dateInput = document.getElementById('payment-date').value.trim();
+  if (selectedPaymentType === 'instant') {
+    sumTypeEl.innerHTML = 'Okamžitě <span style="font-size:13px;color:var(--text-secondary);display:block;margin-top:2px;">Pouze okamžitá platba, jinak neposílat</span>';
+    const today = new Date();
+    document.getElementById('sum-date').textContent = today.getDate()+'. '+(today.getMonth()+1)+'. '+today.getFullYear();
+  } else if (selectedPaymentType === 'later') {
+    sumTypeEl.innerHTML = 'Později (budoucí platba)';
+    document.getElementById('sum-date').textContent = dateInput || '–';
+  } else {
+    sumTypeEl.innerHTML = 'Standardně <span style="font-size:13px;color:var(--text-secondary);display:block;margin-top:2px;">Zkusit okamžitě, případně poslat běžně</span>';
+    const today = new Date();
+    document.getElementById('sum-date').textContent = today.getDate()+'. '+(today.getMonth()+1)+'. '+today.getFullYear();
+  }
+  
+  track('payment_step2_continue', { name: paymentData.name, name_verified: paymentData.nameVerified, payment_type: selectedPaymentType });
   goTo('s08');
 }
 
