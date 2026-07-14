@@ -1183,7 +1183,7 @@
       <div style="font-size:13px;color:var(--text-secondary);margin-bottom:8px;font-weight:500;">Kdy a jak odeslat</div>
       <div class="segment-row" id="timing-seg">
         <button class="segment-btn" onclick="selectPaymentType('instant')">Okamžitě</button>
-        <button class="segment-btn active" onclick="selectPaymentType('standard')">Standardně</button>
+        <button class="segment-btn active" onclick="selectPaymentType('standard')">Běžně</button>
         <button class="segment-btn" onclick="selectPaymentType('later')">Později</button>
       </div>
       <div id="payment-type-hint" style="font-size:13px;color:var(--text-secondary);margin-bottom:12px;padding:0 2px;line-height:1.4;">
@@ -1234,7 +1234,7 @@
       </div>
       <div class="sd-row">
         <div class="sd-label">Způsob odeslání</div>
-        <div class="sd-value" id="sum-type">Standardně</div>
+        <div class="sd-value" id="sum-type">Běžně</div>
       </div>
       <div class="sd-row">
         <div class="sd-label">Datum platby</div>
@@ -2436,7 +2436,7 @@ function fillSummaryAndGoS08(verifyLabel, isError) {
     sumTypeEl.innerHTML = 'Později (budoucí platba)';
     document.getElementById('sum-date').textContent = dateInput || '–';
   } else {
-    sumTypeEl.innerHTML = 'Standardně <span style="font-size:13px;color:var(--text-secondary);display:block;margin-top:2px;">Zkusit okamžitě, případně poslat běžně</span>';
+    sumTypeEl.innerHTML = 'Běžně <span style="font-size:13px;color:var(--text-secondary);display:block;margin-top:2px;">Zkusit okamžitě, případně poslat běžně</span>';
     const today = new Date();
     document.getElementById('sum-date').textContent = today.getDate()+'. '+(today.getMonth()+1)+'. '+today.getFullYear();
   }
