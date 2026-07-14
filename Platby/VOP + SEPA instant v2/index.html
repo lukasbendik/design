@@ -1165,10 +1165,6 @@
         </div>
         <div class="input-hint" id="name-hint"></div>
       </div>
-      <div id="name-suggestion" style="display:none;" class="form-card" onclick="acceptSuggestion()">
-        <span style="font-size:15px;font-weight:500;">Mysleli jste Alpenpanorama Gasstehaus?</span>
-        <span class="card-chevron">›</span>
-      </div>
       <div class="section-title">Doplňující informace</div>
       <div class="input-group">
         <div class="input-label">Zpráva pro příjemce</div>
@@ -2274,11 +2270,9 @@ function setNameState(state, hint) {
   const wrap = document.getElementById('name-wrap');
   const hintEl = document.getElementById('name-hint');
   const icon = document.getElementById('name-status-icon');
-  const suggestion = document.getElementById('name-suggestion');
 
   wrap.classList.remove('verified', 'error-border', 'warning-border', 'info-border');
   hintEl.className = 'input-hint';
-  suggestion.style.display = 'none';
   currentNameState = state;
 
   if (state === 'empty') {
@@ -2293,9 +2287,12 @@ function setNameState(state, hint) {
   } else if (state === 'partial') {
     wrap.classList.add('warning-border');
     icon.innerHTML = ICONS.partial; icon.className = 'info-icon'; icon.style.color = '';
-    hintEl.textContent = '⚠️ Zadaný název se liší od jména majitele účtu.';
+    hintEl.innerHTML = '⚠️ Zadaný název se liší od jména majitele účtu.<br>' +
+                       '<div style="margin-top:8px;padding-top:8px;border-top:1px solid rgba(178,106,0,0.15);font-weight:600;display:flex;justify-content:between;align-items:center;cursor:pointer;" onclick="acceptSuggestion()">' +
+                       '<span>Opravit na <strong>' + CORRECT_NAME + '</strong></span>' +
+                       '<span style="margin-left:auto;font-size:16px;">›</span>' +
+                       '</div>';
     hintEl.className = 'input-hint warning';
-    suggestion.style.display = 'flex';
     paymentData.nameVerified = false;
   } else if (state === 'nomatch') {
     wrap.classList.add('error-border');
@@ -2333,11 +2330,12 @@ function validateRecipient() {
     // reset to neutral while typing
     currentNameState = 'pending';
     const wrap = document.getElementById('name-wrap');
-    wrap.classList.remove('verified', 'error-border', 'warning-border');
+    wrap.classList.remove('verified', 'error-border', 'warning-border', 'info-border');
     document.getElementById('name-status-icon').innerHTML = ICONS.info;
     document.getElementById('name-status-icon').className = 'info-icon';
-    document.getElementById('name-hint').textContent = '';
-    document.getElementById('name-suggestion').style.display = 'none';
+    const hintEl = document.getElementById('name-hint');
+    hintEl.className = 'input-hint';
+    hintEl.textContent = '';
     paymentData.nameVerified = false;
   }
 }
