@@ -1724,33 +1724,41 @@
     <div style="font-size:15px;color:var(--text-secondary);margin-bottom:20px;line-height:1.5;">Před odesláním platby ověříme, komu účet skutečně patří.</div>
     <div style="background:#fff;border-radius:14px;overflow:hidden;">
       <div style="padding:16px 18px;border-bottom:1px solid #f0f0f0;display:flex;gap:14px;align-items:flex-start;">
-        <span style="flex-shrink:0;margin-top:2px;" id="vs-icon-match"></span>
         <div>
           <div style="font-size:15px;font-weight:700;margin-bottom:4px;">Název odpovídá číslu účtu</div>
           <div style="font-size:13px;color:var(--text-secondary);">Vše je v pořádku.</div>
         </div>
       </div>
       <div style="padding:16px 18px;border-bottom:1px solid #f0f0f0;display:flex;gap:14px;align-items:flex-start;">
-        <span style="flex-shrink:0;margin-top:2px;" id="vs-icon-partial"></span>
         <div>
           <div style="font-size:15px;font-weight:700;margin-bottom:4px;">Název částečně odpovídá číslu účtu</div>
-          <div style="font-size:13px;color:var(--text-secondary);">Drobný rozdíl v názvu, doporučujeme převzít jméno z návrhu.</div>
+          <div style="font-size:13px;color:var(--text-secondary);line-height:1.4;">
+            Drobný rozdíl v názvu.<br>
+            <span style="display:block;margin-top:4px;font-weight:500;color:var(--text-primary);">Doporučujeme převzít jméno z návrhu.</span>
+          </div>
         </div>
       </div>
       <div style="padding:16px 18px;border-bottom:1px solid #f0f0f0;display:flex;gap:14px;align-items:flex-start;">
-        <span style="flex-shrink:0;margin-top:2px;" id="vs-icon-nomatch"></span>
         <div>
           <div style="font-size:15px;font-weight:700;margin-bottom:4px;">Název neodpovídá číslu účtu</div>
-          <div style="font-size:13px;color:var(--text-secondary);">Může dojít k převodu peněz na účet, který nepatří vámi zadanému příjemci.</div>
+          <div style="font-size:13px;color:var(--text-secondary);line-height:1.4;">
+            Může dojít k převodu peněz na účet, který nepatří vámi zadanému příjemci.<br>
+            <span style="display:block;margin-top:6px;font-weight:500;color:var(--text-primary);">Zkontrolujte číslo účtu i jméno příjemce. Pokud chybu stále vidíte, kontaktujte toho, komu platíte.</span>
+          </div>
         </div>
       </div>
       <div style="padding:16px 18px;display:flex;gap:14px;align-items:flex-start;">
-        <span style="flex-shrink:0;margin-top:2px;" id="vs-icon-unverifiable"></span>
         <div>
           <div style="font-size:15px;font-weight:700;margin-bottom:4px;">Název nelze ověřit</div>
-          <div style="font-size:13px;color:var(--text-secondary);">V daný moment není možné provést ověření. Může dojít k převodu peněz na účet, který nepatří vámi zadanému příjemci.</div>
+          <div style="font-size:13px;color:var(--text-secondary);line-height:1.4;">
+            V daný moment není možné provést ověření. Může dojít k převodu peněz na účet, který nepatří vámi zadanému příjemci.<br>
+            <span style="display:block;margin-top:6px;font-weight:500;color:var(--text-primary);">Platbu můžete zkusit odeslat později.</span>
+          </div>
         </div>
       </div>
+    </div>
+    <div style="font-size:14px;color:var(--text-secondary);margin-top:16px;padding:0 4px;line-height:1.45;">
+      Platbu můžete odeslat vždy, bez ohledu na výsledek ověření. Rozhodnutí je na vás.
     </div>
   </div>
 
@@ -1911,12 +1919,6 @@ function parseHash() {
 function showSheetDOM(name) {
   const cfg = SHEET_CONFIG[name];
   if (!cfg) return;
-  if (name === 'verify') {
-    document.getElementById('vs-icon-match').innerHTML = ICONS.match;
-    document.getElementById('vs-icon-partial').innerHTML = ICONS.partial;
-    document.getElementById('vs-icon-nomatch').innerHTML = ICONS.nomatch;
-    document.getElementById('vs-icon-unverifiable').innerHTML = ICONS.unverifiable;
-  }
   if (name === 'currency') renderCurrencyList();
   document.getElementById(name + '-overlay').style.display = 'block';
   const sheet = document.getElementById(name + '-sheet');
