@@ -1182,12 +1182,12 @@
       </div>
       <div style="font-size:13px;color:var(--text-secondary);margin-bottom:8px;font-weight:500;">Kdy a jak odeslat</div>
       <div class="segment-row" id="timing-seg">
-        <button class="segment-btn active" onclick="selectPaymentType('standard')">Standardně</button>
         <button class="segment-btn" onclick="selectPaymentType('instant')">Okamžitě</button>
+        <button class="segment-btn active" onclick="selectPaymentType('standard')">Standardně</button>
         <button class="segment-btn" onclick="selectPaymentType('later')">Později</button>
       </div>
       <div id="payment-type-hint" style="font-size:13px;color:var(--text-secondary);margin-bottom:12px;padding:0 2px;line-height:1.4;">
-        Zkusíme odeslat okamžitě. Pokud to nepůjde, pošleme jako běžnou platbu (doručení do 1 pracovního dne).
+        Zkusíme poslat hned. Když to nepůjde, odejde jako běžná platba (dorazí do druhého dne).
       </div>
       <div id="date-wrap" style="display:none;margin-bottom:12px;">
         <div style="font-size:12px;color:var(--text-secondary);margin-bottom:4px;font-weight:500;padding-left:2px;">Datum platby</div>
@@ -2381,8 +2381,8 @@ let selectedPaymentType = 'standard';
 function selectPaymentType(type) {
   selectedPaymentType = type;
   const buttons = document.querySelectorAll('#timing-seg .segment-btn');
-  buttons[0].classList.toggle('active', type === 'standard');
-  buttons[1].classList.toggle('active', type === 'instant');
+  buttons[0].classList.toggle('active', type === 'instant');
+  buttons[1].classList.toggle('active', type === 'standard');
   buttons[2].classList.toggle('active', type === 'later');
   
   track('payment_type_selected', { type: type });
@@ -2392,17 +2392,17 @@ function selectPaymentType(type) {
   
   if (type === 'later') {
     dateWrap.style.display = 'block';
-    hint.innerHTML = 'Platba se odešle jako běžná ve zvolené datum.';
+    hint.innerHTML = 'Odešle se jako běžná platba ve zvolený den.';
     const t = new Date();
     document.getElementById('payment-date').value = t.getDate() + '. ' + (t.getMonth()+1) + '. ' + t.getFullYear();
   } else if (type === 'instant') {
     dateWrap.style.display = 'none';
     document.getElementById('payment-date').value = '';
-    hint.innerHTML = '<strong>Výhradně okamžitě.</strong> Peníze dorazí za pár sekund. Pokud banka příjemce okamžitou platbu nepodporuje nebo má výpadek, platba se neodešle.';
+    hint.innerHTML = 'Peníze dorazí hned. Pokud to banka příjemce neumí, platbu vůbec nepošleme.';
   } else {
     dateWrap.style.display = 'none';
     document.getElementById('payment-date').value = '';
-    hint.innerHTML = 'Zkusíme odeslat okamžitě. Pokud to nepůjde, pošleme jako běžnou platbu (doručení do 1 pracovního dne).';
+    hint.innerHTML = 'Zkusíme poslat hned. Když to nepůjde, odejde jako běžná platba (dorazí do druhého dne).';
   }
 }
 
