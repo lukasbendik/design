@@ -1216,7 +1216,7 @@
         <button class="segment-btn" onclick="selectPaymentType('later')">Později</button>
       </div>
       <div id="payment-type-hint" style="font-size:13px;color:var(--text-secondary);margin-bottom:12px;padding:0 2px;line-height:1.4;">
-        Zkusíme poslat hned. Když to nepůjde, odejde jako běžná platba (dorazí do druhého dne).
+        Zkusíme poslat ihned. Když to nepůjde, odejde jako běžná platba.
       </div>
       <div id="date-wrap" style="display:none;margin-bottom:12px;">
         <div style="font-size:12px;color:var(--text-secondary);margin-bottom:4px;font-weight:500;padding-left:2px;">Datum platby</div>
@@ -2451,17 +2451,20 @@ function selectPaymentType(type) {
   
   if (type === 'later') {
     dateWrap.style.display = 'block';
-    hint.innerHTML = 'Odešle se jako běžná platba ve zvolený den.';
+    hint.style.display = 'none';
+    hint.innerHTML = '';
     const t = new Date();
     document.getElementById('payment-date').value = t.getDate() + '. ' + (t.getMonth()+1) + '. ' + t.getFullYear();
   } else if (type === 'instant') {
     dateWrap.style.display = 'none';
     document.getElementById('payment-date').value = '';
-    hint.innerHTML = 'Peníze dorazí hned. Pokud to banka příjemce neumí, platbu vůbec nepošleme.';
+    hint.style.display = 'block';
+    hint.innerHTML = 'Platba proběhne okamžitě. Pokud to nepůjde, neprovede se.';
   } else {
     dateWrap.style.display = 'none';
     document.getElementById('payment-date').value = '';
-    hint.innerHTML = 'Zkusíme poslat hned. Když to nepůjde, odejde jako běžná platba (dorazí do druhého dne).';
+    hint.style.display = 'block';
+    hint.innerHTML = 'Zkusíme poslat ihned. Když to nepůjde, odejde jako běžná platba.';
   }
 }
 
