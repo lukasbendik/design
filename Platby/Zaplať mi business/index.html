@@ -864,6 +864,12 @@ function updateCalculator(){
     .replace(/\./g, ',');
   
   displayHistory = displayHistory.replace(/\s+/g, ' ');
+  if (displayHistory) {
+    var trimmed = displayHistory.trim();
+    if (/[0-9\)]$/.test(trimmed)) {
+      displayHistory = trimmed + ' =';
+    }
+  }
   hist.innerHTML = displayHistory || '&nbsp;';
   
   var res = evaluateExpression(calcExpression);
