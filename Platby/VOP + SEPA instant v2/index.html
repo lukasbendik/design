@@ -1202,7 +1202,7 @@
         <div class="input-hint" id="name-hint" onclick="openVerifySheet()"></div>
       </div>
       <div id="name-suggestion" style="display:none;" class="form-card" onclick="acceptSuggestion()">
-        <span style="font-size:15px;font-weight:500;" id="name-suggestion-text">Mysleli jste Alpenpanorama Gasstehaus?</span>
+        <span style="font-size:15px;font-weight:500;" id="name-suggestion-text">Opravit na Alpenpanorama Gasstehaus</span>
         <span class="card-chevron">›</span>
       </div>
       <div class="section-title">Doplňující informace</div>
@@ -2343,7 +2343,7 @@ function setNameState(state, hint) {
     icon.innerHTML = ICONS.partial; icon.className = 'info-icon'; icon.style.color = '';
     hintEl.textContent = 'Název částečně odpovídá číslu účtu.';
     hintEl.className = 'input-hint warning';
-    document.getElementById('name-suggestion-text').innerHTML = 'Mysleli jste <strong>' + CORRECT_NAME + '</strong>?';
+    document.getElementById('name-suggestion-text').innerHTML = 'Opravit na <strong>' + CORRECT_NAME + '</strong>';
     suggestion.style.display = 'flex';
     paymentData.nameVerified = false;
   } else if (state === 'nomatch') {
