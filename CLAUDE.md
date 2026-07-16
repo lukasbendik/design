@@ -143,11 +143,10 @@ Před každou změnou prototypu si udělej `git pull`, abys měl aktuální stav
 
 Repozitář se přes GitHub Actions (`.github/workflows/deploy.yml`) automaticky deployuje na GitHub Pages. Workflow nejdřív spustí `generate.js`, který vygeneruje rozcestník `index.html` ze všech HTML souborů v podsložkách.
 
-Po každém pushi vždy v odpovědi vrať pouze odkaz na rozcestník:
+Po každém pushi vždy v odpovědi vrať odkaz na rozcestník a také přímý odkaz na konkrétní prototyp (pokud pracujeme na konkrétním prototypu) včetně autorizačního tokenu a hashe, aby ho uživatel mohl rovnou zkopírovat nebo otevřít.
 
 - Rozcestník: `https://lukasbendik.github.io/design/`
-
-Přímý odkaz na konkrétní prototyp NEZASÍLEJ – přímé odkazy nefungují.
+- Příklad přímého odkazu: `https://lukasbendik.github.io/design/Sekce/Název%20prototypu/index.html?k=4c129f69f551195cbc5e8b57cc5a0975b6efa1e8510573524d11df03c7d010c6#hash`
 
 Připomeň, že odkaz začne fungovat až po doběhnutí GitHub Actions (obvykle do minuty).
 
