@@ -2558,7 +2558,7 @@ function choosePartialSuggested() {
 function choosePartialUser() {
   closeSheet('partial', { skipTrack: true });
   paymentData.nameVerified = false;
-  fillSummaryAndGoS08('Název částečně odpovídá číslu účtu.');
+  fillSummaryAndGoS08('Název částečně odpovídá číslu účtu.', true);
 }
 function confirmNomatch() {
   closeSheet('nomatch', { skipTrack: true });
