@@ -856,15 +856,21 @@ function updateCalculator(){
   var payBtn = document.getElementById('btn-pay');
   if(!disp) return;
   
-  var displayHistory = calcExpression
-    .replace(/\*/g, ' × ')
-    .replace(/\//g, ' ÷ ')
-    .replace(/\+/g, ' + ')
-    .replace(/\-/g, ' − ')
-    .replace(/\./g, ',');
-  
-  displayHistory = displayHistory.replace(/\s+/g, ' ');
-  if (displayHistory) {
+  var hasOperator = /[\+\-\*\/]/.test(calcExpression);
+  if (calcExpression.startsWith('-') && !/[\+\-\*\/]/.test(calcExpression.slice(1))) {
+    hasOperator = false;
+  }
+
+  var displayHistory = '';
+  if (hasOperator) {
+    displayHistory = calcExpression
+      .replace(/\*/g, ' × ')
+      .replace(/\//g, ' ÷ ')
+      .replace(/\+/g, ' + ')
+      .replace(/\-/g, ' − ')
+      .replace(/\./g, ',');
+    
+    displayHistory = displayHistory.replace(/\s+/g, ' ');
     var trimmed = displayHistory.trim();
     if (/[0-9\)]$/.test(trimmed)) {
       displayHistory = trimmed + ' =';
