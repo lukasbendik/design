@@ -628,7 +628,7 @@ body{
       
       <div id="payment-status" class="payment-status">
         <div class="status-icon-spinner"></div>
-        <span>Čeká se na platbu...</span>
+        <span>Čekáme na platbu...</span>
       </div>
 
       <div class="scroll-pad"></div>
@@ -1010,7 +1010,7 @@ function startPaymentTimeout() {
   var statusEl = document.getElementById('payment-status');
   if(statusEl) {
     statusEl.className = 'payment-status';
-    statusEl.innerHTML = '<div class="status-icon-spinner"></div><span>Čeká se na platbu...</span>';
+    statusEl.innerHTML = '<div class="status-icon-spinner"></div><span>Čekáme na platbu...</span>';
   }
   
   paymentTimeout = setTimeout(function(){
