@@ -423,10 +423,7 @@
     transition: border-color 0.2s;
   }
   .input-wrap:focus-within { border-color: #1A1A1A; }
-  .input-wrap.verified { border-color: var(--success); }
-  .input-wrap.warning-border { border-color: var(--warning); }
   .input-wrap.error-border { border-color: var(--kb-red); }
-  .input-wrap.info-border { border-color: var(--info-blue); }
   .input-wrap input, .input-wrap select {
     border: none; outline: none; font-size: 16px;
     background: transparent; width: 100%;
@@ -435,12 +432,11 @@
   .input-wrap input::placeholder { color: var(--text-hint); }
   .input-wrap .verified-icon { color: var(--success); font-size: 20px; flex-shrink: 0; }
   .input-wrap .info-icon { color: var(--kb-red); font-size: 20px; flex-shrink: 0; cursor: pointer; }
-  #name-status-icon { display: none !important; }
-  .input-hint { font-size: 13px; color: var(--text-secondary); margin-top: 6px; padding: 10px 12px; border-radius: 8px; display: none; line-height: 1.4; cursor: pointer; }
-  .input-hint.success { display: block; background: var(--success-bg); color: var(--success); border: 1px solid rgba(46,125,50,0.15); }
-  .input-hint.warning { display: block; background: var(--warning-bg); color: #B26A00; border: 1px solid rgba(255,149,0,0.15); }
-  .input-hint.error { display: block; background: var(--error-bg); color: var(--kb-red); border: 1px solid rgba(226,0,26,0.15); }
-  .input-hint.info { display: block; background: var(--info-blue-bg); color: var(--info-blue); border: 1px solid rgba(0,102,204,0.15); }
+  .input-hint { font-size: 12px; color: var(--text-secondary); margin-top: 4px; padding-left: 2px; display: none; }
+  .input-hint.success { display: block; color: var(--text-secondary); }
+  .input-hint.warning { display: block; color: var(--text-secondary); }
+  .input-hint.error { display: block; color: var(--kb-red); }
+  .input-hint.info { display: block; color: var(--text-secondary); }
 
   .amount-row { display: flex; gap: 10px; margin-bottom: 12px; }
   .amount-row .input-group { flex: 1; margin-bottom: 0; }
@@ -1165,6 +1161,10 @@
           <span id="name-status-icon" class="info-icon" onclick="openVerifySheet()" style="cursor:pointer;display:flex;align-items:center;"></span>
         </div>
         <div class="input-hint" id="name-hint" onclick="openVerifySheet()"></div>
+      </div>
+      <div id="name-suggestion" style="display:none;" class="form-card" onclick="acceptSuggestion()">
+        <span style="font-size:15px;font-weight:500;" id="name-suggestion-text">Mysleli jste Alpenpanorama Gasstehaus?</span>
+        <span class="card-chevron">›</span>
       </div>
       <div class="section-title">Doplňující informace</div>
       <div class="input-group">
@@ -2251,7 +2251,7 @@ const ICONS = {
   info:        `<svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="11" cy="11" r="10" stroke="#E2001A" stroke-width="1.8"/><text x="11" y="16" text-anchor="middle" font-size="13" font-weight="700" fill="#E2001A" font-family="serif">i</text></svg>`,
   match:       `<svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="11" cy="11" r="10" stroke="#2E7D32" stroke-width="1.8"/><polyline points="6,11 9.5,14.5 16,8" stroke="#2E7D32" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
   partial:     `<svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M11 2L21 20H1L11 2Z" stroke="#FF9500" stroke-width="1.8" stroke-linejoin="round"/><text x="11" y="17" text-anchor="middle" font-size="11" font-weight="800" fill="#FF9500" font-family="sans-serif">!</text></svg>`,
-  nomatch:     `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M7.67718 1.56743C8.12087 1.38304 8.63121 1.25 9.1 1.25H14.9C15.3688 1.25 15.8791 1.38304 16.3228 1.56743C16.7666 1.75187 17.2201 2.01941 17.5503 2.34967L21.6503 6.44967C21.9806 6.77993 22.2481 7.23336 22.4326 7.67718C22.617 8.12087 22.75 8.63121 22.75 9.1V14.9C22.75 15.3688 22.617 15.8791 22.4326 16.3228C22.2481 16.7666 21.9806 17.2201 21.6503 17.5503L17.5503 21.6503C17.2201 21.9806 16.7666 22.2481 16.3228 22.4326C15.8791 22.617 15.3688 22.75 14.9 22.75H9.1C8.63121 22.75 8.12087 22.617 7.67718 22.4326C7.23336 22.2481 6.77993 21.9806 6.44967 21.6503L2.34967 17.5503C2.01941 17.2201 1.75187 16.7666 1.56743 16.3228C1.38304 15.8791 1.25 15.3688 1.25 14.9V9.1C1.25 8.63121 1.38304 8.12087 1.56743 7.67718C1.75187 7.23336 2.01941 6.77993 2.34967 6.44967L6.44967 2.34967C6.77993 2.01941 7.23336 1.75187 7.67718 1.56743ZM8.25282 2.95257C7.92664 3.08813 7.66007 3.26059 7.51033 3.41033L3.41033 7.51033C3.26059 7.66007 3.08813 7.92664 2.95257 8.25282C2.81696 8.57913 2.75 8.88879 2.75 9.1V14.9C2.75 15.1112 2.81696 15.4209 2.95257 15.7472C3.08813 16.0734 3.26059 16.3399 3.41033 16.4897L7.51033 20.5897C7.66007 20.7394 7.92664 20.9119 8.25282 21.0474C8.57913 21.183 8.88879 21.25 9.1 21.25H14.9C15.1112 21.25 15.4209 21.183 15.7472 21.0474C16.0734 20.9119 16.3399 20.7394 16.4897 20.5897L20.5897 16.4897C20.7394 16.3399 20.9119 16.0734 21.0474 15.7472C21.183 15.4209 21.25 15.1112 21.25 14.9V9.1C21.25 8.88879 21.183 8.57913 21.0474 8.25282C20.9119 7.92664 20.7394 7.66007 20.5897 7.51033L16.4897 3.41033C16.3399 3.26059 16.0734 3.08813 15.7472 2.95257C15.4209 2.81696 15.1112 2.75 14.9 2.75H9.1C8.88879 2.75 8.57913 2.81696 8.25282 2.95257ZM8.5 7.43934L12 10.9393L15.5 7.43934L16.5607 8.5L13.0607 12L16.5607 15.5L15.5 16.5607L12 13.0607L8.5 16.5607L7.43934 15.5L10.9393 12L7.43934 8.5L8.5 7.43934Z" fill="#BE0000"/></svg>`,
+  nomatch:     `<svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="11" cy="11" r="10" stroke="#E2001A" stroke-width="1.8"/><line x1="7" y1="7" x2="15" y2="15" stroke="#E2001A" stroke-width="2" stroke-linecap="round"/><line x1="15" y1="7" x2="7" y2="15" stroke="#E2001A" stroke-width="2" stroke-linecap="round"/></svg>`,
   unverifiable:`<svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="11" cy="11" r="10" stroke="#888" stroke-width="1.8"/><text x="11" y="16" text-anchor="middle" font-size="13" font-weight="700" fill="#888" font-family="sans-serif">?</text></svg>`,
 };
 const CORRECT_NAME = 'Alpenpanorama Gasstehaus';
@@ -2280,52 +2280,36 @@ function setNameState(state, hint) {
   const wrap = document.getElementById('name-wrap');
   const hintEl = document.getElementById('name-hint');
   const icon = document.getElementById('name-status-icon');
+  const suggestion = document.getElementById('name-suggestion');
 
   wrap.classList.remove('verified', 'error-border', 'warning-border', 'info-border');
   hintEl.className = 'input-hint';
+  suggestion.style.display = 'none';
   currentNameState = state;
 
   if (state === 'empty') {
     icon.innerHTML = ICONS.info; icon.className = 'info-icon'; icon.style.color = '';
     hintEl.textContent = '';
   } else if (state === 'match') {
-    wrap.classList.add('verified');
     icon.innerHTML = ICONS.match; icon.className = 'verified-icon'; icon.style.color = '';
-    hintEl.innerHTML = '<div style="display:flex;justify-content:space-between;align-items:center;width:100%;">' +
-                       '<span>Název přesně odpovídá jménu majitele účtu.</span>' +
-                       '<span style="font-size:18px;color:rgba(0,0,0,0.3);margin-left:8px;flex-shrink:0;">›</span>' +
-                       '</div>';
+    hintEl.textContent = 'Název odpovídá číslu účtu.';
     hintEl.className = 'input-hint success';
     paymentData.nameVerified = true;
   } else if (state === 'partial') {
-    wrap.classList.add('warning-border');
     icon.innerHTML = ICONS.partial; icon.className = 'info-icon'; icon.style.color = '';
-    hintEl.innerHTML = '<div style="display:flex;justify-content:space-between;align-items:center;width:100%;">' +
-                       '<span>Zadaný název se liší od jména majitele účtu.</span>' +
-                       '<span style="font-size:18px;color:rgba(0,0,0,0.3);margin-left:8px;flex-shrink:0;">›</span>' +
-                       '</div>' +
-                       '<div style="margin-top:8px;padding-top:8px;border-top:1px solid rgba(178,106,0,0.15);font-weight:600;display:flex;align-items:center;cursor:pointer;" onclick="event.stopPropagation(); acceptSuggestion()">' +
-                       '<span>Opravit na <strong>' + CORRECT_NAME + '</strong></span>' +
-                       '<span style="margin-left:auto;font-size:16px;color:rgba(0,0,0,0.4);">›</span>' +
-                       '</div>';
+    hintEl.textContent = 'Název částečně odpovídá číslu účtu.';
     hintEl.className = 'input-hint warning';
+    document.getElementById('name-suggestion-text').innerHTML = 'Mysleli jste <strong>' + CORRECT_NAME + '</strong>?';
+    suggestion.style.display = 'flex';
     paymentData.nameVerified = false;
   } else if (state === 'nomatch') {
-    wrap.classList.add('error-border');
     icon.innerHTML = ICONS.nomatch; icon.className = 'info-icon'; icon.style.color = '';
-    hintEl.innerHTML = '<div style="display:flex;justify-content:space-between;align-items:center;width:100%;">' +
-                       '<span>Pozor: Název neodpovídá jménu majitele účtu. Hrozí riziko, že posíláte peníze cizí osobě.</span>' +
-                       '<span style="font-size:18px;color:rgba(0,0,0,0.3);margin-left:8px;flex-shrink:0;">›</span>' +
-                       '</div>';
+    hintEl.textContent = 'Název neodpovídá číslu účtu.';
     hintEl.className = 'input-hint error';
     paymentData.nameVerified = false;
   } else if (state === 'unverifiable') {
-    wrap.classList.add('info-border');
     icon.innerHTML = ICONS.unverifiable; icon.className = 'info-icon'; icon.style.color = '';
-    hintEl.innerHTML = '<div style="display:flex;justify-content:space-between;align-items:center;width:100%;">' +
-                       '<span>Název nelze ověřit. Banka příjemce toto ověřování nepodporuje.</span>' +
-                       '<span style="font-size:18px;color:rgba(0,0,0,0.3);margin-left:8px;flex-shrink:0;">›</span>' +
-                       '</div>';
+    hintEl.textContent = 'Název nelze ověřit.';
     hintEl.className = 'input-hint info';
     paymentData.nameVerified = false;
   } else if (state === 'required') {
@@ -2358,6 +2342,7 @@ function validateRecipient() {
     const hintEl = document.getElementById('name-hint');
     hintEl.className = 'input-hint';
     hintEl.textContent = '';
+    document.getElementById('name-suggestion').style.display = 'none';
     paymentData.nameVerified = false;
   }
 }
@@ -2570,6 +2555,7 @@ function resetAndGoHome() {
   document.getElementById('recipient-name').value = '';
   document.getElementById('name-wrap').classList.remove('verified','error-border');
   document.getElementById('name-hint').textContent = '';
+  document.getElementById('name-suggestion').style.display = 'none';
   initS05();
   goTo('s04');
 }
@@ -2579,6 +2565,7 @@ function resetAndGoNew() {
   document.getElementById('recipient-name').value = '';
   document.getElementById('name-wrap').classList.remove('verified','error-border');
   document.getElementById('name-hint').textContent = '';
+  document.getElementById('name-suggestion').style.display = 'none';
   initS05();
   goTo('s05');
 }
