@@ -132,6 +132,20 @@
   .anim-shake {
     animation: errorShake 0.4s ease-in-out forwards;
   }
+  @keyframes flashGreen {
+    0% { background-color: var(--success-bg); }
+    100% { background-color: var(--bg-card); }
+  }
+  @keyframes flashRed {
+    0% { background-color: var(--error-bg); }
+    100% { background-color: var(--bg-card); }
+  }
+  .flash-green {
+    animation: flashGreen 0.8s ease-out forwards;
+  }
+  .flash-red {
+    animation: flashRed 0.8s ease-out forwards;
+  }
   #verify-loader {
     display: none;
     position: absolute; inset: 0; z-index: 300;
@@ -2308,7 +2322,7 @@ function setNameState(state, hint) {
   const icon = document.getElementById('name-status-icon');
   const suggestion = document.getElementById('name-suggestion');
 
-  wrap.classList.remove('verified', 'error-border', 'warning-border', 'info-border');
+  wrap.classList.remove('verified', 'error-border', 'warning-border', 'info-border', 'flash-green', 'flash-red');
   hintEl.className = 'input-hint';
   suggestion.style.display = 'none';
   currentNameState = state;
@@ -2351,12 +2365,15 @@ function setNameState(state, hint) {
   }
 
   icon.classList.remove('anim-pop', 'anim-shake');
+  wrap.classList.remove('flash-green', 'flash-red');
   if (state !== 'empty' && state !== 'loading') {
     void icon.offsetWidth; // trigger reflow to restart CSS animations
     if (state === 'match') {
       icon.classList.add('anim-pop');
+      wrap.classList.add('flash-green');
     } else if (state === 'partial' || state === 'nomatch') {
       icon.classList.add('anim-shake');
+      wrap.classList.add('flash-red');
     } else if (state === 'unverifiable' || state === 'required') {
       icon.classList.add('anim-pop');
     }
@@ -2378,7 +2395,7 @@ function validateRecipient() {
     // reset to neutral while typing
     currentNameState = 'pending';
     const wrap = document.getElementById('name-wrap');
-    wrap.classList.remove('verified', 'error-border', 'warning-border', 'info-border');
+    wrap.classList.remove('verified', 'error-border', 'warning-border', 'info-border', 'flash-green', 'flash-red');
     document.getElementById('name-status-icon').innerHTML = ICONS.info;
     document.getElementById('name-status-icon').className = 'info-icon';
     const hintEl = document.getElementById('name-hint');
