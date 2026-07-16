@@ -276,8 +276,8 @@ body{
 .calc-key:active{background:var(--line);}
 .calc-op{background:#E8EAED;color:var(--text-1);}
 .calc-op:active{background:var(--line);}
-.calc-eq{background:var(--text-1);color:#fff;}
-.calc-eq:active{background:#000;}
+.kp-del, .calc-del{background:transparent !important;box-shadow:none !important;}
+.kp-del:active, .calc-del:active{background:var(--line) !important;}
 .kp-label{text-align:center;color:var(--text-2);font-size:14px;margin-top:28px;}
 .kp-amount{
   text-align:center;font-size:48px;font-weight:700;letter-spacing:-1px;
@@ -312,8 +312,7 @@ body{
   box-shadow:var(--shadow);display:flex;align-items:center;justify-content:center;
 }
 .kp-key:active{background:var(--line);}
-.kp-del{background:transparent;box-shadow:none;}
-.kp-del:active{background:var(--line);}
+/* kp-del and calc-del are styled together above */
 
 /* ===== BOTTOM BAR / BUTTONS ===== */
 .bottom-bar{
@@ -592,7 +591,9 @@ body{
           <button class="calc-key" data-c="00">00</button>
           <button class="calc-key" data-c="0">0</button>
           <button class="calc-key" data-c=",">,</button>
-          <button class="calc-key calc-eq" data-c="=">=</button>
+          <button class="calc-key calc-del" data-c="del" aria-label="Smazat">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M21 4H8l-7 8 7 8h13a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2z"/><line x1="18" y1="9" x2="12" y2="15"/><line x1="12" y1="9" x2="18" y2="15"/></svg>
+          </button>
         </div>
       </div>
     </div>
@@ -855,30 +856,24 @@ function updateCalculator(){
   var payBtn = document.getElementById('btn-pay');
   if(!disp) return;
   
-  var displayHistory = calcHistoryText
+  var displayHistory = calcExpression
     .replace(/\*/g, ' × ')
     .replace(/\//g, ' ÷ ')
     .replace(/\+/g, ' + ')
     .replace(/\-/g, ' − ')
     .replace(/\./g, ',');
   
+  displayHistory = displayHistory.replace(/\s+/g, ' ');
   hist.innerHTML = displayHistory || '&nbsp;';
   
-  var curVal = calcCurrentInput;
-  if(!curVal && !calcExpression){
+  var res = evaluateExpression(calcExpression);
+  
+  if(!calcExpression){
     disp.textContent = '0';
     box.classList.add('empty');
-  } else if(!curVal){
-    var tempExpr = calcExpression.trim();
-    if(tempExpr.endsWith('+') || tempExpr.endsWith('-') || tempExpr.endsWith('*') || tempExpr.endsWith('/')){
-      tempExpr = tempExpr.slice(0, -1).trim();
-    }
-    var tempRes = evaluateExpression(tempExpr);
-    disp.textContent = tempRes !== null ? formatCalcNumber(tempRes.toString()) : '0';
-    box.classList.toggle('empty', tempRes <= 0);
   } else {
-    disp.textContent = formatCalcNumber(curVal);
-    box.classList.remove('empty');
+    disp.textContent = res !== null ? formatCalcNumber(res.toString()) : '0';
+    box.classList.toggle('empty', res <= 0);
   }
   
   var finalAmt = getFinalAmount();
@@ -892,13 +887,33 @@ function updateCalculator(){
 
 function evaluateExpression(expr){
   var clean = expr.replace(/[^0-9\.\+\-\*\/\(\) ]/g, '');
-  if(!clean) return 0;
-  try {
-    var res = new Function('return ' + clean)();
-    if(typeof res === 'number' && !isNaN(res) && isFinite(res)){
-      return Math.round(res * 100) / 100;
+  if(!clean.trim()) return null;
+  
+  var temp = clean;
+  while(temp.length > 0) {
+    var exprToEval = temp;
+    var openB = (exprToEval.match(/\(/g) || []).length;
+    var closeB = (exprToEval.match(/\)/g) || []).length;
+    if(openB > closeB) {
+      exprToEval += ')'.repeat(openB - closeB);
+    } else if (closeB > openB) {
+      exprToEval = exprToEval.slice(0, -(closeB - openB));
     }
-  } catch(e){}
+    
+    try {
+      var testExpr = exprToEval.replace(/\(\s*\)/g, '');
+      if (testExpr.trim() === '') testExpr = '0';
+      var res = new Function('return ' + testExpr)();
+      if(typeof res === 'number' && !isNaN(res) && isFinite(res)){
+        return Math.round(res * 100) / 100;
+      }
+    } catch(e) {}
+    
+    temp = temp.trim();
+    if (temp.length > 0) {
+      temp = temp.slice(0, -1).trim();
+    }
+  }
   return null;
 }
 
@@ -906,12 +921,7 @@ function getFinalAmount(){
   if(keypadMode === 'pokladna'){
     return cents;
   } else {
-    var expr = calcExpression + calcCurrentInput;
-    expr = expr.trim();
-    if(expr.endsWith('+') || expr.endsWith('-') || expr.endsWith('*') || expr.endsWith('/')){
-      expr = expr.slice(0, -1).trim();
-    }
-    var val = evaluateExpression(expr);
+    var val = evaluateExpression(calcExpression);
     if(val !== null && val > 0){
       return Math.round(val * 100);
     }
@@ -922,64 +932,63 @@ function getFinalAmount(){
 function pressCalcKey(c){
   if(c === 'C'){
     calcExpression = '';
-    calcCurrentInput = '';
-    calcIsResult = false;
-    calcHistoryText = '';
-  } else if(c === '='){
-    var expr = calcExpression + calcCurrentInput;
-    if(expr){
-      var res = evaluateExpression(expr);
-      if(res !== null){
-        calcHistoryText = expr + ' =';
-        calcExpression = '';
-        calcCurrentInput = res.toString();
-        calcIsResult = true;
+  } else if(c === 'del'){
+    if(calcExpression.length > 0){
+      if(calcExpression.endsWith(' ')){
+        calcExpression = calcExpression.trim().slice(0, -1).trim();
+      } else {
+        calcExpression = calcExpression.slice(0, -1);
       }
     }
   } else if(c === '+' || c === '-' || c === '*' || c === '/'){
-    if(calcIsResult){
-      calcExpression = calcCurrentInput + c;
-      calcCurrentInput = '';
-      calcIsResult = false;
-    } else if(calcCurrentInput){
-      calcExpression += calcCurrentInput + c;
-      calcCurrentInput = '';
-    } else if(calcExpression){
-      var lastChar = calcExpression.trim().slice(-1);
+    var temp = calcExpression.trim();
+    if(temp.length === 0){
+      if(c === '-') {
+        calcExpression = '-';
+      }
+    } else {
+      var lastChar = temp.slice(-1);
       if('+-*/'.indexOf(lastChar) !== -1){
-        calcExpression = calcExpression.trim().slice(0, -1) + c;
-      } else {
-        calcExpression += c;
+        if (temp === '-') {
+          if (c !== '-') {
+            calcExpression = '';
+          }
+        } else {
+          calcExpression = calcExpression.trim().slice(0, -1).trim() + ' ' + c + ' ';
+        }
+      } else if (lastChar !== '(') {
+        calcExpression = calcExpression.trim() + ' ' + c + ' ';
+      } else if (lastChar === '(' && c === '-') {
+        calcExpression += '-';
       }
     }
-    calcHistoryText = calcExpression;
   } else if(c === ','){
-    if(calcIsResult){
-      calcCurrentInput = '0.';
-      calcIsResult = false;
-      calcHistoryText = '';
-    } else if(calcCurrentInput.indexOf('.') === -1){
-      calcCurrentInput = (calcCurrentInput || '0') + '.';
+    var parts = calcExpression.split(/[\+\-\*\/\(\)\s]+/);
+    var lastNumber = parts.pop();
+    if(lastNumber.indexOf('.') === -1){
+      if(!lastNumber){
+        calcExpression += '0.';
+      } else {
+        calcExpression += '.';
+      }
     }
   } else if(c === '00'){
-    if(calcIsResult){
-      calcCurrentInput = '0';
-      calcIsResult = false;
-      calcHistoryText = '';
-    } else if(calcCurrentInput && calcCurrentInput !== '0'){
-      calcCurrentInput += '00';
+    var parts = calcExpression.split(/[\+\-\*\/\(\)\s]+/);
+    var lastNumber = parts.pop();
+    if(lastNumber && lastNumber !== '0'){
+      calcExpression += '00';
+    } else if(!lastNumber){
+      calcExpression += '0';
     }
+  } else if(c === '(' || c === ')'){
+    calcExpression += c;
   } else {
-    if(calcIsResult){
-      calcCurrentInput = c;
-      calcIsResult = false;
-      calcHistoryText = '';
+    var parts = calcExpression.split(/[\+\-\*\/\(\)\s]+/);
+    var lastNumber = parts.pop();
+    if(lastNumber === '0'){
+      calcExpression = calcExpression.slice(0, -1) + c;
     } else {
-      if(calcCurrentInput === '0'){
-        calcCurrentInput = c;
-      } else {
-        calcCurrentInput += c;
-      }
+      calcExpression += c;
     }
   }
   updateCalculator();
