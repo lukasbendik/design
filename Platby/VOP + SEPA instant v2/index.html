@@ -1231,7 +1231,7 @@
         <button class="segment-btn" onclick="selectPaymentType('later')">Později</button>
       </div>
       <div id="payment-type-hint" style="font-size:13px;color:var(--text-secondary);margin-bottom:12px;padding:0 2px;line-height:1.4;">
-        Zkusíme poslat ihned. Když to nepůjde, odejde jako běžná platba.
+        Odejde jako běžná platba s doručením dnes nebo následující pracovní den.
       </div>
       <div id="date-wrap" style="display:none;margin-bottom:12px;">
         <div style="font-size:12px;color:var(--text-secondary);margin-bottom:4px;font-weight:500;padding-left:2px;">Datum platby</div>
@@ -2482,7 +2482,7 @@ function selectPaymentType(type) {
     dateWrap.style.display = 'none';
     document.getElementById('payment-date').value = '';
     hint.style.display = 'block';
-    hint.innerHTML = 'Zkusíme poslat ihned. Když to nepůjde, odejde jako běžná platba.';
+    hint.innerHTML = 'Odejde jako běžná platba s doručením dnes nebo následující pracovní den.';
   }
 }
 
