@@ -2555,12 +2555,13 @@ function selectPaymentType(type) {
       hint.innerHTML = 'Platba proběhne okamžitě. Pokud to nepůjde, neprovede se.';
     } else {
       // type === 'standard'
+      const fallbackText = 'Odejde jako běžná platba s doručením dnes nebo následující pracovní den.';
       if (instantReason === 'limit') {
-        hint.innerHTML = `Odejde jako běžná platba.<span style="color:var(--text-primary);display:block;margin-top:8px;">Okamžitá platba není k dispozici. Limit pro platbu je 400 000 Kč.</span>`;
+        hint.innerHTML = `${fallbackText}<span style="color:var(--text-primary);display:block;margin-top:8px;">Okamžitá platba není k dispozici. Limit pro platbu je 400 000 Kč.</span>`;
       } else if (instantReason === 'bank') {
-        hint.innerHTML = `Odejde jako běžná platba.<span style="color:var(--text-primary);display:block;margin-top:8px;">Banka příjemce nepodporuje okamžité platby.</span>`;
+        hint.innerHTML = `${fallbackText}<span style="color:var(--text-primary);display:block;margin-top:8px;">Banka příjemce nepodporuje okamžité platby.</span>`;
       } else if (instantReason === 'internal_foreign') {
-        hint.innerHTML = `Odejde jako běžná platba.<span style="color:var(--text-primary);display:block;margin-top:8px;">Okamžitá platba není k dispozici pro platby v cizí měně v rámci banky.</span>`;
+        hint.innerHTML = `${fallbackText}<span style="color:var(--text-primary);display:block;margin-top:8px;">Okamžitá platba není k dispozici pro platby v cizí měně v rámci banky.</span>`;
       } else {
         hint.innerHTML = 'Zkusíme poslat ihned. Když to nepůjde, odejde jako běžná platba.';
       }
