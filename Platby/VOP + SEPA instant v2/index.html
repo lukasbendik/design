@@ -531,6 +531,11 @@
     color: var(--text-primary);
     box-shadow: 0 1px 4px rgba(0,0,0,0.12);
   }
+  .segment-btn:disabled, .segment-btn.disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+    color: var(--text-hint);
+  }
 
   .contact-row {
     display: flex; align-items: center; gap: 12px;
@@ -1225,7 +1230,7 @@
           <input type="text" id="desc-input" placeholder="">
         </div>
       </div>
-      <div style="font-size:13px;color:var(--text-secondary);margin-bottom:8px;font-weight:500;">Kdy a jak odeslat</div>
+      <div style="font-size:13px;color:var(--text-secondary);margin-bottom:8px;font-weight:500;">Odeslat platbu</div>
       <div class="segment-row" id="timing-seg">
         <button class="segment-btn" onclick="selectPaymentType('instant')">Okamžitě</button>
         <button class="segment-btn active" onclick="selectPaymentType('standard')">Běžně</button>
@@ -2271,6 +2276,7 @@ function goToS06() {
 
   track('payment_step1_continue', { iban: paymentData.iban, amount: paymentData.amount, currency: paymentData.currency });
   goTo('s06');
+  selectPaymentType(selectedPaymentType);
 }
 
 function initS05() {
@@ -2454,12 +2460,57 @@ function acceptSuggestion() {
   setNameState('match');
 }
 
+function checkInstantPaymentAvailability() {
+  const amt = parseFloat(paymentData.amount) || 0;
+  const cur = paymentData.currency || 'CZK';
+  const iban = (paymentData.iban || '').replace(/\s/g, '').toUpperCase();
+  
+  let reason = '';
+  
+  // 1. Kontrola limitu (400 000 Kč nebo ekvivalent v EUR)
+  let limitExceeded = false;
+  if (cur === 'CZK' && amt > 400000) {
+    limitExceeded = true;
+  } else if (cur === 'EUR' && amt > 16000) { // 16 000 EUR je cca 400 000 Kč
+    limitExceeded = true;
+  } else if (amt * (EXCHANGE_RATES_ALL[cur] || 1) > 400000) {
+    limitExceeded = true;
+  }
+  
+  if (limitExceeded) {
+    reason = 'limit';
+  }
+  // 2. Kontrola banky (pokud začíná na FR nebo obsahuje X)
+  else if (iban.startsWith('FR') || iban.includes('X')) {
+    reason = 'bank';
+  }
+  
+  return reason;
+}
+
 let selectedPaymentType = 'standard';
 
 function selectPaymentType(type) {
+  const instantReason = checkInstantPaymentAvailability();
+  
+  // Pokud je okamžitá platba nedostupná a máme ji vybranou, přepneme na běžnou
+  if (instantReason && type === 'instant') {
+    type = 'standard';
+  }
+  
   selectedPaymentType = type;
   const buttons = document.querySelectorAll('#timing-seg .segment-btn');
-  buttons[0].classList.toggle('active', type === 'instant');
+  
+  if (instantReason) {
+    buttons[0].classList.add('disabled');
+    buttons[0].disabled = true;
+    buttons[0].classList.remove('active');
+  } else {
+    buttons[0].classList.remove('disabled');
+    buttons[0].disabled = false;
+    buttons[0].classList.toggle('active', type === 'instant');
+  }
+  
   buttons[1].classList.toggle('active', type === 'standard');
   buttons[2].classList.toggle('active', type === 'later');
   
@@ -2474,16 +2525,23 @@ function selectPaymentType(type) {
     hint.innerHTML = '';
     const t = new Date();
     document.getElementById('payment-date').value = t.getDate() + '. ' + (t.getMonth()+1) + '. ' + t.getFullYear();
-  } else if (type === 'instant') {
-    dateWrap.style.display = 'none';
-    document.getElementById('payment-date').value = '';
-    hint.style.display = 'block';
-    hint.innerHTML = 'Platba proběhne okamžitě. Pokud to nepůjde, neprovede se.';
   } else {
     dateWrap.style.display = 'none';
     document.getElementById('payment-date').value = '';
     hint.style.display = 'block';
-    hint.innerHTML = 'Odejde jako běžná platba s doručením dnes nebo následující pracovní den.';
+    
+    if (type === 'instant') {
+      hint.innerHTML = 'Platba proběhne okamžitě. Pokud to nepůjde, neprovede se.';
+    } else {
+      // type === 'standard'
+      if (instantReason === 'limit') {
+        hint.innerHTML = 'Odejde jako běžná platba. <span style="color:var(--kb-red);display:block;margin-top:4px;font-weight:500;">Okamžitá platba není k dispozici (částka překračuje limit 400 000 Kč / 16 000 EUR).</span>';
+      } else if (instantReason === 'bank') {
+        hint.innerHTML = 'Odejde jako běžná platba. <span style="color:var(--kb-red);display:block;margin-top:4px;font-weight:500;">Okamžitá platba není k dispozici (banka příjemce ji nepodporuje).</span>';
+      } else {
+        hint.innerHTML = 'Odejde jako běžná platba s doručením dnes nebo následující pracovní den.';
+      }
+    }
   }
 }
 
