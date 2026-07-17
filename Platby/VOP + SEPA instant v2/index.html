@@ -1736,77 +1736,121 @@
 
   <!-- ══ No-match bottom sheet ══ -->
   <div id="nomatch-overlay" onclick="closeNomatchSheet()" style="display:none;position:absolute;inset:0;background:rgba(0,0,0,0.5);z-index:200;"></div>
-  <div id="nomatch-sheet" style="display:none;position:absolute;bottom:0;left:0;right:0;background:#F2F2F7;border-radius:24px 24px 0 0;z-index:201;padding:20px 20px 40px;">
-    <span style="width:40px;height:5px;border-radius:3px;background:#ccc;display:block;margin:0 auto 16px;"></span>
-    <button onclick="closeNomatchSheet()" style="position:absolute;top:16px;right:16px;width:32px;height:32px;border-radius:50%;background:#e0e0e0;border:none;cursor:pointer;font-size:15px;color:#666;display:flex;align-items:center;justify-content:center;">✕</button>
-    <div style="font-size:22px;font-weight:700;margin-bottom:14px;line-height:1.25;">Opravdu chcete pokračovat?</div>
-    <p style="font-size:16px;color:#1A1A1A;line-height:1.5;margin-bottom:14px;">Název příjemce neodpovídá číslu účtu.</p>
-    <p style="font-size:16px;color:#1A1A1A;line-height:1.5;margin-bottom:28px;">
-      Může dojít k převodu peněz na účet, který nepatří vámi zadanému příjemci.<br>
-      <span style="display:block;margin-top:10px;font-weight:500;">Zkontrolujte číslo účtu i jméno příjemce. Pokud chybu stále vidíte, kontaktujte toho, komu platíte.</span>
-    </p>
-    <button class="cta-btn" onclick="confirmNomatch()">Pokračovat</button>
-    <button class="cta-btn outline" onclick="closeNomatchSheet()" style="margin-top:12px;">Zavřít</button>
+  <div id="nomatch-sheet" style="display:none;position:absolute;bottom:0;left:0;right:0;background:#F2F2F7;border-radius:24px 24px 0 0;z-index:201;padding:16px 20px 40px;box-sizing:border-box;">
+    <span style="width:36px;height:5px;border-radius:2.5px;background:#D0D0D2;display:block;margin:0 auto 16px;"></span>
+    <button onclick="closeNomatchSheet()" style="position:absolute;top:16px;right:16px;width:30px;height:30px;border-radius:50%;background:rgba(120, 120, 128, 0.4);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#fff;">
+      <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"><line x1="2" y1="2" x2="10" y2="10"/><line x1="10" y1="2" x2="2" y2="10"/></svg>
+    </button>
+    <div style="font-size:22px;font-weight:700;margin-top:8px;margin-bottom:24px;color:#000;">Opravdu chcete pokračovat?</div>
+    <div style="display:flex;gap:16px;align-items:flex-start;margin-bottom:28px;">
+      <div style="flex-shrink:0;margin-top:2px;">
+        <svg width="24" height="24" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="11" cy="11" r="10" stroke="#E2001A" stroke-width="1.8"/>
+          <line x1="7" y1="7" x2="15" y2="15" stroke="#E2001A" stroke-width="2" stroke-linecap="round"/>
+          <line x1="15" y1="7" x2="7" y2="15" stroke="#E2001A" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <div>
+        <div style="font-size:17px;font-weight:600;color:#000;margin-bottom:6px;line-height:1.3;">Název neodpovídá číslu účtu</div>
+        <div style="font-size:14px;color:#8E8E93;line-height:1.4;">Zkontrolujte číslo účtu a název příjemce. Pokud chybu stále vidíte, kontaktujte toho, komu platíte.</div>
+      </div>
+    </div>
+    <button class="cta-btn" onclick="confirmNomatch()" style="background:#E2001A;">Pokračovat bez ověření</button>
+    <button class="cta-btn outline" onclick="closeNomatchSheet()" style="border-color:#000;color:#000;margin-top:12px;">Zavřít</button>
   </div>
 
   <!-- ══ Unverifiable bottom sheet ══ -->
   <div id="unverifiable-overlay" onclick="closeUnverifiableSheet()" style="display:none;position:absolute;inset:0;background:rgba(0,0,0,0.5);z-index:200;"></div>
-  <div id="unverifiable-sheet" style="display:none;position:absolute;bottom:0;left:0;right:0;background:#F2F2F7;border-radius:24px 24px 0 0;z-index:201;padding:20px 20px 40px;">
-    <span style="width:40px;height:5px;border-radius:3px;background:#ccc;display:block;margin:0 auto 16px;"></span>
-    <button onclick="closeUnverifiableSheet()" style="position:absolute;top:16px;right:16px;width:32px;height:32px;border-radius:50%;background:#e0e0e0;border:none;cursor:pointer;font-size:15px;color:#666;display:flex;align-items:center;justify-content:center;">✕</button>
-    <div style="font-size:22px;font-weight:700;margin-bottom:14px;line-height:1.25;">Opravdu chcete pokračovat?</div>
-    <p style="font-size:16px;color:#1A1A1A;line-height:1.5;margin-bottom:14px;">Název příjemce nelze ověřit.</p>
-    <p style="font-size:16px;color:#1A1A1A;line-height:1.5;margin-bottom:28px;">Může dojít k převodu peněz na účet, který nepatří vámi zadanému příjemci.</p>
-    <button class="cta-btn" onclick="confirmUnverifiable()">Pokračovat</button>
-    <button class="cta-btn outline" onclick="closeUnverifiableSheet()" style="margin-top:12px;">Zavřít</button>
+  <div id="unverifiable-sheet" style="display:none;position:absolute;bottom:0;left:0;right:0;background:#F2F2F7;border-radius:24px 24px 0 0;z-index:201;padding:16px 20px 40px;box-sizing:border-box;">
+    <span style="width:36px;height:5px;border-radius:2.5px;background:#D0D0D2;display:block;margin:0 auto 16px;"></span>
+    <button onclick="closeUnverifiableSheet()" style="position:absolute;top:16px;right:16px;width:30px;height:30px;border-radius:50%;background:rgba(120, 120, 128, 0.4);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#fff;">
+      <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"><line x1="2" y1="2" x2="10" y2="10"/><line x1="10" y1="2" x2="2" y2="10"/></svg>
+    </button>
+    <div style="font-size:22px;font-weight:700;margin-top:8px;margin-bottom:24px;color:#000;">Opravdu chcete pokračovat?</div>
+    <div style="display:flex;gap:16px;align-items:flex-start;margin-bottom:28px;">
+      <div style="flex-shrink:0;margin-top:2px;">
+        <svg width="24" height="24" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="11" cy="11" r="10" stroke="#1A1A1A" stroke-width="1.8"/>
+          <text x="11" y="16" text-anchor="middle" font-size="13" font-weight="700" fill="#1A1A1A" font-family="sans-serif">?</text>
+        </svg>
+      </div>
+      <div>
+        <div style="font-size:17px;font-weight:600;color:#000;margin-bottom:6px;line-height:1.3;">Název nelze ověřit</div>
+        <div style="font-size:14px;color:#8E8E93;line-height:1.4;">Ověření účtu teď nefunguje. Můžete pokračovat bez ověření, nebo platbu odložit na později.</div>
+      </div>
+    </div>
+    <button class="cta-btn" onclick="confirmUnverifiable()" style="background:#E2001A;">Pokračovat bez ověření</button>
+    <button class="cta-btn outline" onclick="closeUnverifiableSheet()" style="border-color:#000;color:#000;margin-top:12px;">Zavřít</button>
   </div>
 
   <!-- ══ Verify info bottom sheet ══ -->
   <div id="verify-overlay" onclick="closeVerifySheet()" style="display:none;position:absolute;inset:0;background:rgba(0,0,0,0.5);z-index:200;"></div>
-  <div id="verify-sheet" style="display:none;position:absolute;bottom:0;left:0;right:0;background:#F2F2F7;border-radius:24px 24px 0 0;z-index:201;padding:16px 20px 40px;">
-    <div style="display:flex;justify-content:flex-end;margin-bottom:8px;">
-      <button onclick="closeVerifySheet()" style="width:30px;height:30px;border-radius:50%;background:#e0e0e0;border:none;cursor:pointer;font-size:14px;color:#666;">✕</button>
-    </div>
-    <span style="width:40px;height:5px;border-radius:3px;background:#ccc;display:block;margin:0 auto 20px;"></span>
-    <div style="font-size:22px;font-weight:700;margin-bottom:10px;">Ověření příjemce</div>
-    <div style="font-size:15px;color:var(--text-secondary);margin-bottom:20px;line-height:1.5;">Před odesláním platby ověříme, komu účet skutečně patří.</div>
-    <div style="background:#fff;border-radius:14px;overflow:hidden;">
-      <div style="padding:16px 18px;border-bottom:1px solid #f0f0f0;display:flex;gap:14px;align-items:flex-start;">
+  <div id="verify-sheet" style="display:none;position:absolute;bottom:0;left:0;right:0;background:#F2F2F7;border-radius:24px 24px 0 0;z-index:201;padding:16px 20px 40px;box-sizing:border-box;">
+    <span style="width:36px;height:5px;border-radius:2.5px;background:#D0D0D2;display:block;margin:0 auto 16px;"></span>
+    <button onclick="closeVerifySheet()" style="position:absolute;top:16px;right:16px;width:30px;height:30px;border-radius:50%;background:rgba(120, 120, 128, 0.2);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#fff;">
+      <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="#787880" stroke-width="2" stroke-linecap="round"><line x1="2" y1="2" x2="10" y2="10"/><line x1="10" y1="2" x2="2" y2="10"/></svg>
+    </button>
+    <div style="font-size:22px;font-weight:700;margin-top:8px;margin-bottom:12px;color:#000;">Ověření příjemce</div>
+    <div style="font-size:15px;color:#3C3C43;opacity:0.6;margin-bottom:24px;line-height:1.45;">Před odesláním platby ověříme, komu účet skutečně patří. Platbu můžete odeslat vždy, bez ohledu na výsledek ověření. Rozhodnutí je na vás.</div>
+    <div style="background:#fff;border-radius:16px;overflow:hidden;box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
+      <div style="font-size:18px;font-weight:700;padding:20px 20px 16px;color:#000;border-bottom:1px solid #F2F2F7;">Možné výsledky ověření</div>
+      
+      <!-- Match -->
+      <div style="padding:16px 20px;border-bottom:1px solid #F2F2F7;display:flex;gap:16px;align-items:flex-start;">
+        <div style="margin-top:2px;flex-shrink:0;">
+          <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="11" cy="11" r="10" stroke="#34C759" stroke-width="1.8"/>
+            <polyline points="6,11 9.5,14.5 16,8" stroke="#34C759" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
         <div>
-          <div style="font-size:15px;font-weight:700;margin-bottom:4px;">Název odpovídá číslu účtu</div>
-          <div style="font-size:13px;color:var(--text-secondary);">Vše je v pořádku.</div>
+          <div style="font-size:15px;font-weight:600;color:#000;margin-bottom:4px;">Název odpovídá číslu účtu</div>
+          <div style="font-size:13px;color:#8E8E93;line-height:1.35;">Vše je v pořádku.</div>
         </div>
       </div>
-      <div style="padding:16px 18px;border-bottom:1px solid #f0f0f0;display:flex;gap:14px;align-items:flex-start;">
+      
+      <!-- Partial -->
+      <div style="padding:16px 20px;border-bottom:1px solid #F2F2F7;display:flex;gap:16px;align-items:flex-start;">
+        <div style="margin-top:2px;flex-shrink:0;">
+          <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M11 2L21 20H1L11 2Z" stroke="#E2001A" stroke-width="1.8" stroke-linejoin="round"/>
+            <text x="11" y="17" text-anchor="middle" font-size="11" font-weight="800" fill="#E2001A" font-family="sans-serif">!</text>
+          </svg>
+        </div>
         <div>
-          <div style="font-size:15px;font-weight:700;margin-bottom:4px;">Název částečně odpovídá číslu účtu</div>
-          <div style="font-size:13px;color:var(--text-secondary);line-height:1.4;">
-            Drobný rozdíl v názvu.<br>
-            <span style="display:block;margin-top:4px;font-weight:500;color:var(--text-primary);">Doporučujeme převzít jméno z návrhu.</span>
-          </div>
+          <div style="font-size:15px;font-weight:600;color:#000;margin-bottom:4px;">Název částečně odpovídá číslu účtu</div>
+          <div style="font-size:13px;color:#8E8E93;line-height:1.35;">Doporučujeme převzít název z návrhu.</div>
         </div>
       </div>
-      <div style="padding:16px 18px;border-bottom:1px solid #f0f0f0;display:flex;gap:14px;align-items:flex-start;">
+      
+      <!-- Nomatch -->
+      <div style="padding:16px 20px;border-bottom:1px solid #F2F2F7;display:flex;gap:16px;align-items:flex-start;">
+        <div style="margin-top:2px;flex-shrink:0;">
+          <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="11" cy="11" r="10" stroke="#E2001A" stroke-width="1.8"/>
+            <line x1="7" y1="7" x2="15" y2="15" stroke="#E2001A" stroke-width="2" stroke-linecap="round"/>
+            <line x1="15" y1="7" x2="7" y2="15" stroke="#E2001A" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </div>
         <div>
-          <div style="font-size:15px;font-weight:700;margin-bottom:4px;">Název neodpovídá číslu účtu</div>
-          <div style="font-size:13px;color:var(--text-secondary);line-height:1.4;">
-            Může dojít k převodu peněz na účet, který nepatří vámi zadanému příjemci.<br>
-            <span style="display:block;margin-top:6px;font-weight:500;color:var(--text-primary);">Zkontrolujte číslo účtu i jméno příjemce. Pokud chybu stále vidíte, kontaktujte toho, komu platíte.</span>
-          </div>
+          <div style="font-size:15px;font-weight:600;color:#000;margin-bottom:4px;">Název neodpovídá číslu účtu</div>
+          <div style="font-size:13px;color:#8E8E93;line-height:1.4;">Zkontrolujte číslo účtu a název příjemce. Pokud chybu stále vidíte, kontaktujte toho, komu platíte.</div>
         </div>
       </div>
-      <div style="padding:16px 18px;display:flex;gap:14px;align-items:flex-start;">
+      
+      <!-- Unverifiable -->
+      <div style="padding:16px 20px;display:flex;gap:16px;align-items:flex-start;">
+        <div style="margin-top:2px;flex-shrink:0;">
+          <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="11" cy="11" r="10" stroke="#1A1A1A" stroke-width="1.8"/>
+            <text x="11" y="16" text-anchor="middle" font-size="13" font-weight="700" fill="#1A1A1A" font-family="sans-serif">?</text>
+          </svg>
+        </div>
         <div>
-          <div style="font-size:15px;font-weight:700;margin-bottom:4px;">Název nelze ověřit</div>
-          <div style="font-size:13px;color:var(--text-secondary);line-height:1.4;">
-            V daný moment není možné provést ověření. Může dojít k převodu peněz na účet, který nepatří vámi zadanému příjemci.<br>
-            <span style="display:block;margin-top:6px;font-weight:500;color:var(--text-primary);">Platbu můžete zkusit odeslat později.</span>
-          </div>
+          <div style="font-size:15px;font-weight:600;color:#000;margin-bottom:4px;">Název nelze ověřit</div>
+          <div style="font-size:13px;color:#8E8E93;line-height:1.4;">Ověření účtu teď nefunguje. Můžete pokračovat bez ověření, nebo platbu odložit na později.</div>
         </div>
       </div>
-    </div>
-    <div style="font-size:14px;color:var(--text-secondary);margin-top:16px;padding:0 4px;line-height:1.45;">
-      Platbu můžete odeslat vždy, bez ohledu na výsledek ověření. Rozhodnutí je na vás.
     </div>
   </div>
 
