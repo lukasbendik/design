@@ -2557,7 +2557,8 @@ function selectPaymentType(type) {
       // type === 'standard'
       const fallbackText = 'Odejde jako běžná platba s doručením dnes nebo následující pracovní den.';
       if (instantReason === 'limit') {
-        hint.innerHTML = `${fallbackText}<span style="color:var(--text-primary);display:block;margin-top:8px;">Okamžitá platba není k dispozici. Limit pro platbu je 400 000 Kč.</span>`;
+        const limitVal = paymentData.currency === 'EUR' ? '16 000 EUR' : '400 000 Kč';
+        hint.innerHTML = `${fallbackText}<span style="color:var(--text-primary);display:block;margin-top:8px;">Okamžitou platbu lze poslat jen do ${limitVal}.</span>`;
       } else if (instantReason === 'bank') {
         hint.innerHTML = `${fallbackText}<span style="color:var(--text-primary);display:block;margin-top:8px;">Banka příjemce nepodporuje okamžité platby.</span>`;
       } else if (instantReason === 'internal_foreign') {
