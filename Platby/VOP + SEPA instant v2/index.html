@@ -874,29 +874,6 @@
 
 <div id="app-shell" data-clarity-unmask="true">
 
-  <!-- ══ S00: Souhlas ══ -->
-  <div id="s00" class="screen active">
-    <div class="s00-content">
-      <h1 class="s00-title">Vítejte na rozhovoru v KB</h1>
-      <div class="s00-card">
-        <div class="s00-card-section">
-          Než budeme pokračovat v rozhovoru, potřebovali bychom od vás souhlas s jeho nahráváním v tomto nástroji Lookback.io spravovaném společností sídlící v USA a následným využitím Komerční bankou. Rádi bychom si následně záznam prošli i s jinými kolegy. Využijeme ho ke zlepšování bankovních produktů, webu a aplikace, kterou spolu dneska projdeme.
-        </div>
-        <div class="s00-card-section">
-          Souhlas bude platit 2 roky, poté data i nahrávku mažeme. Souhlas můžete kdykoliv odvolat. Stačí nám napsat e-mail na adresu respondent@kb.cz.
-        </div>
-        <div class="s00-card-section">
-          Aplikaci vytvořila umělá inteligence jen pro testování. Nejsou v ní žádná skutečná data.
-        </div>
-      </div>
-      <p class="s00-footnote">Více informací najdete na webu naší banky v části Ochrana osobních údajů.</p>
-    </div>
-    <div class="s00-footer">
-      <p class="s00-footnote" style="margin:0 0 12px;">Kliknutím souhlasíte s uvedenými údaji.</p>
-      <button class="cta-btn" onclick="goTo('s04')">Pokračovat do prototypu</button>
-    </div>
-  </div>
-
   <!-- ══ S01: iPhone Home ══ -->
   <div id="s01" class="screen">
     <div class="s01-statusbar">
@@ -1005,7 +982,7 @@
   </div>
 
   <!-- ══ S04: Home ══ -->
-  <div id="s04" class="screen">
+  <div id="s04" class="screen active">
     <div class="s04-topbar">
       <div class="topbar-icon">🔑</div>
       <div style="flex:1"></div>
@@ -3135,10 +3112,10 @@ document.addEventListener('DOMContentLoaded', () => {
     history.replaceState({ screen: initialScreen, sheet: initialSheet || null }, '', restoredHash);
     if (initialSheet && SHEET_CONFIG[initialSheet]) showSheetDOM(initialSheet);
   } else {
-    // Žádný hash → start na s00 (Souhlas)
+    // Žádný hash → start na s04 (Přehled)
     document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-    document.getElementById('s00').classList.add('active');
-    history.replaceState({ screen: 's00' }, '', '#' + slugOf('s00'));
+    document.getElementById('s04').classList.add('active');
+    history.replaceState({ screen: 's04' }, '', '#' + slugOf('s04'));
   }
 });
 
