@@ -560,6 +560,7 @@
   .sd-value.green { color: var(--success); }
   .sd-sub { font-size: 14px; font-weight: 400; color: var(--text-secondary); margin-top: 2px; }
   .sd-sub.error { color: var(--kb-red); }
+  .sd-sub.success { color: var(--success); }
 
   /* Bottom CTA */
   .cta-wrap {
@@ -1193,7 +1194,7 @@
         Částka obsahuje i kurzovou marži <strong id="sepa-margin">–</strong>.
       </div>
       <div class="input-group">
-        <div class="input-label">Přesný název příjemce</div>
+        <div class="input-label">Název příjemce</div>
         <div class="input-wrap" id="name-wrap">
           <input type="text" id="recipient-name" placeholder=""
             oninput="validateRecipient()" onblur="scheduleCheckRecipient()">
@@ -1272,7 +1273,7 @@
         <div class="sd-value">Zdarma</div>
       </div>
       <div class="sd-row">
-        <div class="sd-label">Přesný název příjemce</div>
+        <div class="sd-label">Název příjemce</div>
         <div class="sd-value" id="sum-name">–</div>
         <div class="sd-sub" id="sum-verify">–</div>
       </div>
@@ -2359,7 +2360,7 @@ function setNameState(state, hint) {
   } else if (state === 'required') {
     wrap.classList.add('error-border');
     icon.innerHTML = ICONS.info; icon.className = 'info-icon'; icon.style.color = '';
-    hintEl.textContent = 'Zadejte přesný název příjemce.';
+    hintEl.textContent = 'Zadejte název příjemce.';
     hintEl.className = 'input-hint error';
     paymentData.nameVerified = false;
   }
@@ -2496,14 +2497,21 @@ function toggleSwitch(id) {
   if (el) el.classList.toggle('on');
 }
 
-function fillSummaryAndGoS08(verifyLabel, isError) {
+function fillSummaryAndGoS08(verifyLabel, status) {
   document.getElementById('sum-iban').textContent = paymentData.iban;
   const amt = parseFloat(paymentData.amount) || 0;
   document.getElementById('sum-amount').textContent = amt.toFixed(2).replace('.',',') + ' ' + paymentData.currency;
   document.getElementById('sum-name').textContent = paymentData.name || '–';
   const verifyEl = document.getElementById('sum-verify');
   verifyEl.textContent = verifyLabel;
-  verifyEl.classList.toggle('error', !!isError);
+  
+  // Nastavení barvy podle statusu
+  verifyEl.classList.remove('error', 'success');
+  if (status === 'error') {
+    verifyEl.classList.add('error');
+  } else if (status === 'success') {
+    verifyEl.classList.add('success');
+  }
   
   // Typ platby
   const sumTypeEl = document.getElementById('sum-type');
@@ -2542,7 +2550,7 @@ function goToS08() {
   paymentData.name = name;
 
   if (currentNameState === 'match') {
-    fillSummaryAndGoS08('Název odpovídá číslu účtu.');
+    fillSummaryAndGoS08('Název odpovídá číslu účtu.', 'success');
   } else if (currentNameState === 'partial') {
     document.getElementById('partial-suggested-name').textContent = CORRECT_NAME;
     document.getElementById('partial-user-name').textContent = name;
@@ -2555,7 +2563,7 @@ function goToS08() {
     track('sheet_confirm_continue_shown', { reason: 'unverifiable' });
     showSheet('unverifiable');
   } else {
-    fillSummaryAndGoS08('Neověřeno.');
+    fillSummaryAndGoS08('Neověřeno.', 'info');
   }
 }
 
@@ -2570,20 +2578,20 @@ function choosePartialSuggested() {
   paymentData.name = CORRECT_NAME;
   document.getElementById('recipient-name').value = CORRECT_NAME;
   paymentData.nameVerified = true;
-  fillSummaryAndGoS08('Název odpovídá číslu účtu.');
+  fillSummaryAndGoS08('Název odpovídá číslu účtu.', 'success');
 }
 function choosePartialUser() {
   closeSheet('partial', { skipTrack: true });
   paymentData.nameVerified = false;
-  fillSummaryAndGoS08('Název částečně odpovídá číslu účtu.', true);
+  fillSummaryAndGoS08('Název částečně odpovídá číslu účtu.', 'error');
 }
 function confirmNomatch() {
   closeSheet('nomatch', { skipTrack: true });
-  fillSummaryAndGoS08('Název neodpovídá číslu účtu.', true);
+  fillSummaryAndGoS08('Název neodpovídá číslu účtu.', 'error');
 }
 function confirmUnverifiable() {
   closeSheet('unverifiable', { skipTrack: true });
-  fillSummaryAndGoS08('Název nelze ověřit.', true);
+  fillSummaryAndGoS08('Název nelze ověřit.', 'error');
 }
 
 // ── Auth ──
