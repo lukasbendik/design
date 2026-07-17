@@ -2467,22 +2467,28 @@ function checkInstantPaymentAvailability() {
   
   let reason = '';
   
-  // 1. Kontrola limitu (400 000 Kč nebo ekvivalent v EUR)
-  let limitExceeded = false;
-  if (cur === 'CZK' && amt > 400000) {
-    limitExceeded = true;
-  } else if (cur === 'EUR' && amt > 16000) { // 16 000 EUR je cca 400 000 Kč
-    limitExceeded = true;
-  } else if (amt * (EXCHANGE_RATES_ALL[cur] || 1) > 400000) {
-    limitExceeded = true;
+  // 1. Kontrola vnitrobankovní platby v cizí měně (CZ IBAN s kódem banky 0100 a EUR měnou)
+  if (cur === 'EUR' && iban.startsWith('CZ') && iban.substring(4, 8) === '0100') {
+    reason = 'internal_foreign';
   }
-  
-  if (limitExceeded) {
-    reason = 'limit';
-  }
-  // 2. Kontrola banky (pokud začíná na FR nebo obsahuje X)
-  else if (iban.startsWith('FR') || iban.includes('X')) {
-    reason = 'bank';
+  // 2. Kontrola limitu (400 000 Kč nebo ekvivalent v EUR)
+  else {
+    let limitExceeded = false;
+    if (cur === 'CZK' && amt > 400000) {
+      limitExceeded = true;
+    } else if (cur === 'EUR' && amt > 16000) { // 16 000 EUR je cca 400 000 Kč
+      limitExceeded = true;
+    } else if (amt * (EXCHANGE_RATES_ALL[cur] || 1) > 400000) {
+      limitExceeded = true;
+    }
+    
+    if (limitExceeded) {
+      reason = 'limit';
+    }
+    // 3. Kontrola banky (pokud začíná na FR nebo obsahuje X)
+    else if (iban.startsWith('FR') || iban.includes('X')) {
+      reason = 'bank';
+    }
   }
   
   return reason;
@@ -2534,12 +2540,15 @@ function selectPaymentType(type) {
       hint.innerHTML = 'Platba proběhne okamžitě. Pokud to nepůjde, neprovede se.';
     } else {
       // type === 'standard'
+      const baseText = 'Odejde jako běžná platba s doručením dnes nebo následující pracovní den.';
       if (instantReason === 'limit') {
-        hint.innerHTML = 'Odejde jako běžná platba. <span style="color:var(--kb-red);display:block;margin-top:4px;font-weight:500;">Okamžitá platba není k dispozici (částka překračuje limit 400 000 Kč / 16 000 EUR).</span>';
+        hint.innerHTML = `${baseText}<span style="color:var(--text-primary);display:block;margin-top:8px;">Okamžitá platba není k dispozici. Limit pro platbu je 400 000 Kč.</span>`;
       } else if (instantReason === 'bank') {
-        hint.innerHTML = 'Odejde jako běžná platba. <span style="color:var(--kb-red);display:block;margin-top:4px;font-weight:500;">Okamžitá platba není k dispozici (banka příjemce ji nepodporuje).</span>';
+        hint.innerHTML = `${baseText}<span style="color:var(--text-primary);display:block;margin-top:8px;">Banka příjemce nepodporuje okamžité platby.</span>`;
+      } else if (instantReason === 'internal_foreign') {
+        hint.innerHTML = `${baseText}<span style="color:var(--text-primary);display:block;margin-top:8px;">Okamžitá platba není k dispozici pro platby v cizí měně v rámci banky.</span>`;
       } else {
-        hint.innerHTML = 'Odejde jako běžná platba s doručením dnes nebo následující pracovní den.';
+        hint.innerHTML = baseText;
       }
     }
   }
