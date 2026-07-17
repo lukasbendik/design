@@ -1037,7 +1037,7 @@
               <span class="card-num">122000/0100</span>
             </div>
             <div style="display:flex;justify-content:space-between;align-items:center;">
-              <div class="card-amount" id="dashboard-balance">125 063<span>,38 Kč</span></div>
+              <div class="card-amount" id="dashboard-balance">1 125 063<span>,38 Kč</span></div>
               <span class="card-chevron">›</span>
             </div>
           </div>
@@ -1362,7 +1362,7 @@
           <span class="detail-acct-name">Běžný účet</span>
           <span class="detail-acct-num">122000/0100</span>
         </div>
-        <div class="detail-balance">125 063<span>,38 Kč</span></div>
+        <div class="detail-balance" id="detail-balance-value">1 125 063<span>,38 Kč</span></div>
       </div>
       <div style="height:8px"></div>
       <div class="detail-list-card" onclick="openSheet('mgmtbezny')">
@@ -1919,16 +1919,31 @@ function restoreState() {
     userSeq = userPayments.reduce((m, t) => Math.max(m, t._seq || 0), 0);
   }
   const bal = lsGet('balance', null);
-  if (typeof bal === 'number') accountBalanceCZK = bal;
+  if (typeof bal === 'number') {
+    accountBalanceCZK = bal;
+    if (bal <= 130000) {
+      accountBalanceCZK = 1125063.38;
+      lsSet('balance', accountBalanceCZK);
+    }
+  } else {
+    accountBalanceCZK = 1125063.38;
+  }
   const pd = lsGet('paymentData', null);
   if (pd && typeof pd === 'object') Object.assign(paymentData, pd);
 }
 function updateDashboardBalance() {
   const el = document.getElementById('dashboard-balance');
-  if (!el) return;
-  const whole = Math.floor(accountBalanceCZK).toLocaleString('cs-CZ');
-  const decimal = (accountBalanceCZK % 1).toFixed(2).substring(1).replace('.', ',');
-  el.innerHTML = whole + '<span>' + decimal + ' Kč</span>';
+  if (el) {
+    const whole = Math.floor(accountBalanceCZK).toLocaleString('cs-CZ');
+    const decimal = (accountBalanceCZK % 1).toFixed(2).substring(1).replace('.', ',');
+    el.innerHTML = whole + '<span>' + decimal + ' Kč</span>';
+  }
+  const el2 = document.getElementById('detail-balance-value');
+  if (el2) {
+    const whole = Math.floor(accountBalanceCZK).toLocaleString('cs-CZ');
+    const decimal = (accountBalanceCZK % 1).toFixed(2).substring(1).replace('.', ',');
+    el2.innerHTML = whole + '<span>' + decimal + ' Kč</span>';
+  }
 }
 
 // ── Sheet registry ──
@@ -2124,7 +2139,7 @@ function isValidAccountNumber(raw) {
 }
 
 // Zůstatek na běžném účtu v Kč
-let accountBalanceCZK = 125063.38;
+let accountBalanceCZK = 1125063.38;
 const EXCHANGE_RATES = { CZK: 1, EUR: 24.79, USD: 22.89, GBP: 28.90 };
 const CURRENCY_SYMBOLS = { CZK: 'Kč', EUR: 'EUR', USD: 'USD', GBP: 'GBP' };
 
