@@ -1689,24 +1689,31 @@
   </div>
   <!-- ══ Partial match bottom sheet ══ -->
   <div id="partial-overlay" onclick="closePartialSheet()" style="display:none;position:absolute;inset:0;background:rgba(0,0,0,0.5);z-index:200;"></div>
-  <div id="partial-sheet" style="display:none;position:absolute;bottom:0;left:0;right:0;background:#F2F2F7;border-radius:24px 24px 0 0;z-index:201;padding:20px 20px 40px;">
-    <span style="width:40px;height:5px;border-radius:3px;background:#ccc;display:block;margin:0 auto 16px;"></span>
-    <button onclick="closePartialSheet()" style="position:absolute;top:16px;right:16px;width:32px;height:32px;border-radius:50%;background:#e0e0e0;border:none;cursor:pointer;font-size:15px;color:#666;display:flex;align-items:center;justify-content:center;">✕</button>
-    <div style="font-size:20px;font-weight:700;margin-bottom:20px;">Vyberte název příjemce</div>
-    <div style="background:#fff;border-radius:14px;overflow:hidden;">
-      <div onclick="choosePartialSuggested()" style="padding:16px 18px;border-bottom:1px solid #f0f0f0;display:flex;justify-content:space-between;align-items:center;cursor:pointer;">
+  <div id="partial-sheet" style="display:none;position:absolute;bottom:0;left:0;right:0;background:#F2F2F7;border-radius:24px 24px 0 0;z-index:201;padding:16px 20px 40px;box-sizing:border-box;">
+    <span style="width:36px;height:5px;border-radius:2.5px;background:#D0D0D2;display:block;margin:0 auto 16px;"></span>
+    <button onclick="closePartialSheet()" style="position:absolute;top:16px;right:16px;width:30px;height:30px;border-radius:50%;background:rgba(120, 120, 128, 0.4);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#fff;">
+      <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"><line x1="2" y1="2" x2="10" y2="10"/><line x1="10" y1="2" x2="2" y2="10"/></svg>
+    </button>
+    <div style="font-size:22px;font-weight:700;margin-top:8px;margin-bottom:12px;color:#000;">Vyberte název příjemce</div>
+    <div style="font-size:15px;color:#3C3C43;opacity:0.6;margin-bottom:24px;line-height:1.45;">Doporučujeme převzít název z návrhu.</div>
+    <div style="background:#fff;border-radius:16px;overflow:hidden;box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
+      <div onclick="choosePartialSuggested()" style="padding:18px 20px;border-bottom:1px solid #F2F2F7;display:flex;justify-content:space-between;align-items:center;cursor:pointer;">
         <div>
-          <div style="font-size:17px;font-weight:600;color:#1A1A1A;" id="partial-suggested-name">Alpenpanorama Gasstehaus</div>
-          <div style="font-size:14px;color:#6B6B6B;margin-top:3px;">Navržený název</div>
+          <div style="font-size:20px;font-weight:700;color:#000;margin-bottom:4px;" id="partial-suggested-name">Alpenpanorama Gasstehaus</div>
+          <div style="font-size:15px;color:#8E8E93;">Navržený název</div>
         </div>
-        <span style="color:#ABABAB;font-size:18px;">›</span>
+        <div style="padding-left:12px;">
+          <svg width="8" height="14" viewBox="0 0 8 14" fill="none" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 1L7 7L1 13"/></svg>
+        </div>
       </div>
-      <div onclick="choosePartialUser()" style="padding:16px 18px;display:flex;justify-content:space-between;align-items:center;cursor:pointer;">
+      <div onclick="choosePartialUser()" style="padding:18px 20px;display:flex;justify-content:space-between;align-items:center;cursor:pointer;">
         <div>
-          <div style="font-size:17px;font-weight:600;color:#1A1A1A;" id="partial-user-name">–</div>
-          <div style="font-size:14px;color:#6B6B6B;margin-top:3px;">Vámi zadaný název</div>
+          <div style="font-size:20px;font-weight:700;color:#000;margin-bottom:4px;" id="partial-user-name">–</div>
+          <div style="font-size:15px;color:#8E8E93;">Vámi zadaný název</div>
         </div>
-        <span style="color:#ABABAB;font-size:18px;">›</span>
+        <div style="padding-left:12px;">
+          <svg width="8" height="14" viewBox="0 0 8 14" fill="none" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 1L7 7L1 13"/></svg>
+        </div>
       </div>
     </div>
   </div>
