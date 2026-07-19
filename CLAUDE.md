@@ -154,6 +154,14 @@ Připomeň, že odkaz začne fungovat až po doběhnutí GitHub Actions (obvykle
 
 Pokud úkol zahrnuje úpravy ve více prototypech nebo více nezávislých změn, automaticky rozděl práci na agenty a spusť je paralelně. Nemusím o to explicitně žádat.
 
+## Ukládání zápisků o konverzaci
+
+Na konci každé konverzace (po dokončení práce a verifikaci) je nutné vytvořit zápisek o provedené práci a uložit ho do složky `ux/zapisky/`.
+- Název souboru: `YYYY-MM-DD_[id_konverzace]_[kratky_popis].md` (vše malými písmeny, bez diakritiky, mezery nahradit podtržítky).
+- Zápisek musí obsahovat datum, ID konverzace, zadání uživatele a stručný souhrn provedených změn (převzatý z `walkthrough.md` nebo závěrečné odpovědi).
+- Po uložení zápisku aktualizovat tabulku v `ux/zapisky/README.md` (přidat nový řádek na začátek tabulky).
+- Všechny vytvořené zápisky a aktualizovaný index ihned commitnout a pushnout na GitHub.
+
 ## Komunikace
 
 - Používej kritické myšlení a ověřuj správnost výstupů.
