@@ -1309,13 +1309,13 @@
   <!-- ══ S10: Success ══ -->
   <div id="s10" class="screen">
     <div class="nav-bar">
-      <span class="nav-back" onclick="finishTask()" style="color:var(--text-primary);">Zavřít</span>
+      <span class="nav-back" onclick="closeNewPayment()" style="color:var(--text-primary);">Zavřít</span>
     </div>
     <div class="success-icon-wrap">
       <div class="success-checkmark">✓</div>
     </div>
     <div class="success-title">Zadali jste platbu</div>
-    <div class="template-row" onclick="finishTask()">
+    <div class="template-row">
       <div class="template-left">
         <span class="template-icon">📁</span>
         <span class="template-text">Uložit šablonu</span>
@@ -1323,8 +1323,8 @@
       <span class="card-chevron">›</span>
     </div>
     <div class="cta-wrap" style="margin-top:auto;">
-      <button class="cta-btn" onclick="finishTask()">Zadat další</button>
-      <button class="cta-btn outline" onclick="finishTask()">Zavřít</button>
+      <button class="cta-btn" onclick="goTo('s05')">Zadat další</button>
+      <button class="cta-btn outline" onclick="closeNewPayment()">Zavřít</button>
     </div>
   </div>
 
@@ -1601,19 +1601,6 @@
     </div>
     <div class="cta-wrap">
       <button class="cta-btn">Odeslat QR kód</button>
-    </div>
-  </div>
-
-  <!-- ══ S16: Úkol dokončen (konec testu) ══ -->
-  <div id="s16" class="screen" style="background:var(--bg-screen);">
-    <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:24px;">
-      <div class="success-icon-wrap">
-        <div class="success-checkmark">✓</div>
-      </div>
-      <div class="success-title" style="margin-top:8px;">Úspěšně jste dokončili úkol</div>
-      <p style="margin-top:16px;max-width:300px;font-size:16px;line-height:1.5;color:var(--text-secondary);">
-        Nyní klikněte na žlutou ručičku, ukončete aplikaci Participate a vraťte se zpět do dotazníku Echonity. Děkujeme.
-      </p>
     </div>
   </div>
 
@@ -1993,7 +1980,7 @@ const SCREEN_SLUG = {
   s03:'04-prihlaseni', s04:'05-prehled', s05:'06-nova-platba', s06:'07-sepa-platba',
   s08:'08-souhrn', s10:'09-hotovo', s11:'10-detail-bezneho-uctu',
   s12:'11-detail-sporiciho-uctu', s13:'12-vsechny-platby', s14:'13-qr-platba',
-  s15:'14-zaplat-mi', s16:'15-konec'
+  s15:'14-zaplat-mi'
 };
 const SLUG_SCREEN = Object.fromEntries(Object.entries(SCREEN_SLUG).map(([k,v])=>[v,k]));
 function slugOf(id){ return SCREEN_SLUG[id] || id; }
@@ -2714,21 +2701,6 @@ function hideAuth() {
   document.getElementById('s09').style.display = 'none';
   authPin = '';
   updatePinDots('auth');
-}
-
-// ── Konec testu: dokončení úkolu ──
-// Smaže jen klíče tohoto prototypu (LS_PREFIX), ať další běh začíná čistý.
-// Sdílený klíč rozcestnik__auth nechává být – je společný pro všechny prototypy.
-function finishTask() {
-  track('task_finished');
-  try {
-    Object.keys(localStorage)
-      .filter(k => k.indexOf(LS_PREFIX) === 0)
-      .forEach(k => localStorage.removeItem(k));
-  } catch (e) {}
-  userPayments = [];
-  userSeq = 0;
-  goTo('s16');
 }
 
 // ── Reset ──
