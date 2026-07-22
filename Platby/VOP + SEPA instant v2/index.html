@@ -1323,7 +1323,7 @@
       <span class="card-chevron">›</span>
     </div>
     <div class="cta-wrap" style="margin-top:auto;">
-      <button class="cta-btn" onclick="goTo('s05')">Zadat další</button>
+      <button class="cta-btn" onclick="startNewPayment()">Zadat další</button>
       <button class="cta-btn outline" onclick="closeNewPayment()">Zavřít</button>
     </div>
   </div>
@@ -1873,6 +1873,10 @@ let paymentOrigin = 's04';
 function openNewPayment(origin) {
   paymentOrigin = origin || 's04';
   track('new_payment_open', { source: paymentOrigin === 's11' ? 'account_detail' : 'homescreen' });
+  startNewPayment();
+}
+function startNewPayment() {
+  unverifiableUsed = false;
   goTo('s05');
 }
 function closeNewPayment() { goTo(paymentOrigin || 's04'); }
@@ -2332,8 +2336,7 @@ const ICONS = {
   loading:     `<svg class="spin-icon" width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="11" cy="11" r="9" stroke="#E0E0E0" stroke-width="2"/><path d="M11 2C6.02944 2 2 6.02944 2 11" stroke="#E2001A" stroke-width="2" stroke-linecap="round"/></svg>`,
 };
 const CORRECT_NAME = 'Alpenpanorama Gasstehaus';
-// Vypnutí stavu "Název nelze ověřit." – pro zapnutí nastav na true
-const UNVERIFIABLE_ENABLED = false;
+const UNVERIFIABLE_ENABLED = true;
 let unverifiableUsed = false;
 let checkTimer = null;
 let currentNameState = 'empty';
