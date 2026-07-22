@@ -149,7 +149,7 @@
   #verify-loader {
     display: none;
     position: absolute; inset: 0; z-index: 300;
-    background: rgba(180,180,180,0.72);
+    background: transparent;
     align-items: center; justify-content: center;
   }
   #verify-loader.active { display: flex; }
@@ -2643,6 +2643,11 @@ function goToS08() {
     const loaderEl = document.getElementById('verify-loader');
     loaderEl.style.display = 'flex';
     requestAnimationFrame(() => requestAnimationFrame(() => checkRecipient()));
+    return;
+  }
+  if (currentNameState === 'loading') {
+    pendingContinue = true;
+    document.getElementById('verify-loader').style.display = 'flex';
     return;
   }
   paymentData.name = name;
