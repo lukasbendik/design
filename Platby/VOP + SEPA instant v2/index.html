@@ -1681,7 +1681,7 @@
     <button onclick="closePartialSheet()" style="position:absolute;top:16px;right:16px;width:30px;height:30px;border-radius:50%;background:rgba(120, 120, 128, 0.4);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#fff;">
       <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"><line x1="2" y1="2" x2="10" y2="10"/><line x1="10" y1="2" x2="2" y2="10"/></svg>
     </button>
-    <div style="font-size:22px;font-weight:700;margin-top:8px;margin-bottom:12px;color:#000;">Vyberte název příjemce</div>
+    <div aria-hidden="true" style="height:26px;margin-top:8px;margin-bottom:12px;"></div>
     <div style="display:flex;gap:16px;align-items:flex-start;margin-bottom:32px;">
       <div style="flex-shrink:0;margin-top:2px;">
         <svg width="24" height="24" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -1723,7 +1723,7 @@
     <button onclick="closeNomatchSheet()" style="position:absolute;top:16px;right:16px;width:30px;height:30px;border-radius:50%;background:rgba(120, 120, 128, 0.4);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#fff;">
       <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"><line x1="2" y1="2" x2="10" y2="10"/><line x1="10" y1="2" x2="2" y2="10"/></svg>
     </button>
-    <div style="font-size:22px;font-weight:700;margin-top:8px;margin-bottom:32px;color:#000;">Opravdu chcete pokračovat?</div>
+    <div aria-hidden="true" style="height:26px;margin-top:8px;margin-bottom:32px;"></div>
     <div style="display:flex;gap:16px;align-items:flex-start;margin-bottom:32px;">
       <div style="flex-shrink:0;margin-top:2px;">
         <svg width="24" height="24" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -1739,7 +1739,7 @@
     </div>
     <div style="background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,0.05);">
       <div onclick="closeNomatchSheet()" style="padding:22px 20px;display:flex;justify-content:space-between;align-items:center;cursor:pointer;border-bottom:1px solid #F2F2F7;">
-        <div style="font-size:20px;font-weight:600;color:#000;">Zkontrolovat údaje</div>
+        <div style="font-size:20px;font-weight:600;color:#000;">Ověřit údaje</div>
         <svg width="8" height="14" viewBox="0 0 8 14" fill="none" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 1L7 7L1 13"/></svg>
       </div>
       <div onclick="confirmNomatch()" style="padding:22px 20px;display:flex;justify-content:space-between;align-items:center;cursor:pointer;">
@@ -1756,7 +1756,7 @@
     <button onclick="closeUnverifiableSheet()" style="position:absolute;top:16px;right:16px;width:30px;height:30px;border-radius:50%;background:rgba(120, 120, 128, 0.4);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#fff;">
       <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"><line x1="2" y1="2" x2="10" y2="10"/><line x1="10" y1="2" x2="2" y2="10"/></svg>
     </button>
-    <div style="font-size:22px;font-weight:700;margin-top:8px;margin-bottom:32px;color:#000;">Opravdu chcete pokračovat?</div>
+    <div aria-hidden="true" style="height:26px;margin-top:8px;margin-bottom:32px;"></div>
     <div style="display:flex;gap:16px;align-items:flex-start;margin-bottom:32px;">
       <div style="flex-shrink:0;margin-top:2px;">
         <svg width="24" height="24" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -1771,7 +1771,7 @@
     </div>
     <div style="background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,0.05);">
       <div onclick="closeUnverifiableSheet()" style="padding:22px 20px;display:flex;justify-content:space-between;align-items:center;cursor:pointer;border-bottom:1px solid #F2F2F7;">
-        <div style="font-size:20px;font-weight:600;color:#000;">Zpět k úpravám</div>
+        <div style="font-size:20px;font-weight:600;color:#000;">Ověřit údaje</div>
         <svg width="8" height="14" viewBox="0 0 8 14" fill="none" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 1L7 7L1 13"/></svg>
       </div>
       <div onclick="confirmUnverifiable()" style="padding:22px 20px;display:flex;justify-content:space-between;align-items:center;cursor:pointer;">
