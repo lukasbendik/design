@@ -2645,14 +2645,14 @@ function fillSummaryAndGoS08(verifyLabel, status) {
   const sumTypeEl = document.getElementById('sum-type');
   const dateInput = document.getElementById('payment-date').value.trim();
   if (selectedPaymentType === 'instant') {
-    sumTypeEl.innerHTML = 'Okamžitě <span style="font-size:13px;color:var(--text-secondary);display:block;margin-top:2px;">Pouze okamžitá platba, jinak neposílat</span>';
+    sumTypeEl.textContent = 'Okamžitě';
     const today = new Date();
     document.getElementById('sum-date').textContent = today.getDate()+'. '+(today.getMonth()+1)+'. '+today.getFullYear();
   } else if (selectedPaymentType === 'later') {
-    sumTypeEl.innerHTML = 'Později (budoucí platba)';
+    sumTypeEl.textContent = 'Standardně';
     document.getElementById('sum-date').textContent = dateInput || '–';
   } else {
-    sumTypeEl.innerHTML = 'Běžně <span style="font-size:13px;color:var(--text-secondary);display:block;margin-top:2px;">Zkusit okamžitě, případně poslat běžně</span>';
+    sumTypeEl.textContent = 'Standardně';
     const today = new Date();
     document.getElementById('sum-date').textContent = today.getDate()+'. '+(today.getMonth()+1)+'. '+today.getFullYear();
   }
