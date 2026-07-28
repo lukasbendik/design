@@ -1214,7 +1214,7 @@
         <button class="segment-btn" onclick="selectPaymentType('later')">Později</button>
       </div>
       <div id="payment-type-hint" style="font-size:13px;color:var(--text-secondary);margin-bottom:12px;padding:0 2px;line-height:1.4;">
-        Odejde jako běžná platba s doručením dnes nebo následující pracovní den.
+        Odejde jako běžná platba.
       </div>
       <div id="date-wrap" style="display:none;margin-bottom:12px;">
         <div style="font-size:12px;color:var(--text-secondary);margin-bottom:4px;font-weight:500;padding-left:2px;">Datum platby</div>
@@ -2570,10 +2570,10 @@ function selectPaymentType(type) {
     hint.style.display = 'block';
     
     if (type === 'instant') {
-      hint.innerHTML = 'Platba proběhne okamžitě. Pokud to nepůjde, neprovede se.';
+      hint.innerHTML = 'Odejde okamžitě. Pokud to nepůjde, neprovede se.';
     } else {
       // type === 'standard'
-      const fallbackText = 'Odejde jako běžná platba s doručením dnes nebo následující pracovní den.';
+      const fallbackText = 'Odejde jako běžná platba.';
       if (instantReason === 'limit') {
         const limitVal = paymentData.currency === 'EUR' ? '16 000 EUR' : '400 000 Kč';
         hint.innerHTML = `${fallbackText}<span style="color:var(--text-primary);display:block;margin-top:8px;">Okamžitou platbu lze poslat jen do ${limitVal}.</span>`;
@@ -2582,7 +2582,7 @@ function selectPaymentType(type) {
       } else if (instantReason === 'internal_foreign') {
         hint.innerHTML = `${fallbackText}<span style="color:var(--text-primary);display:block;margin-top:8px;">Okamžitá platba není k dispozici pro platby v cizí měně v rámci banky.</span>`;
       } else {
-        hint.innerHTML = 'Zkusíme poslat ihned. Když to nepůjde, odejde jako běžná platba.';
+        hint.innerHTML = fallbackText;
       }
     }
   }
