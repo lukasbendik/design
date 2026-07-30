@@ -1,0 +1,395 @@
+<!doctype html>
+<html lang="cs">
+<head>
+  <script>
+  (function(){var H='4c129f69f551195cbc5e8b57cc5a0975b6efa1e8510573524d11df03c7d010c6',K='rozcestnik__auth';try{var p=new URLSearchParams(location.search);if(p.get('k')===H){localStorage.setItem(K,'1');p.delete('k');var q=p.toString();history.replaceState(history.state,'',location.pathname+(q?'?'+q:'')+location.hash);}if(localStorage.getItem(K)!=='1')location.replace('../../');}catch(e){}})();
+  </script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#f8f8f8">
+  <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  <title>Počty k autorizaci</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+      --space-2:2px;--space-4:4px;--space-8:8px;--space-12:12px;--space-16:16px;
+      --space-24:24px;--space-32:32px;--space-48:48px;--space-64:64px;
+      --pad-xs:2px;--pad-sm:4px;--pad-md:8px;--pad-lg:12px;--pad-xl:16px;
+      --pad-2xl:24px;--pad-3xl:32px;--pad-4xl:48px;
+      --radius-xs:2px;--radius-sm:4px;--radius-md:8px;--radius-xl:16px;--radius-full:1024px;
+      --radius-segmentedControl-segmentRadius:6px;
+      --border-sm:1px;--border-md:2px;--border-lg:3px;
+      --color-content-primary:#212121;--color-content-secondary:#454545;--color-content-tertiary:#717171;
+      --color-content-quaternary:#adadad;--color-interactive-primary:#e00000;
+      --color-interactive-primary-action:#be0000;--color-interactive-on-primary:#fff;
+      --color-interactive-secondary:#212121;--color-interactive-secondary-action:#21212114;
+      --color-interactive-secondary-active:#2121211f;--color-background-body:#f8f8f8;
+      --color-background-surface:#fff;--color-background-surface-highlighted:#fff;
+      --color-background-border:#adadad80;--color-background-border-highlighted:#adadad;
+      --color-background-divider:#adadad80;--color-attention-alert:#b53022;
+      --color-attention-alert-surface:#ffede8;--color-attention-information-surface:#ededed;
+      --shadow-panel:0 0 1px #2121211f,0 1px 8px #21212114,0 .4px 2px #21212105;
+      --shadow-floating:0 0 1px #2121213d,0 1px 8px #21212129,0 .4px 2px #2121210a;
+    }
+
+    *{box-sizing:border-box}
+    html{background:var(--color-background-body);color:var(--color-content-primary)}
+    body{margin:0;font-family:var(--font-family);background:#ededed;min-width:320px}
+    button{font:inherit;color:inherit}
+    button,a{-webkit-tap-highlight-color:transparent}
+    button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #212121;outline-offset:2px}
+
+    .phone{width:100%;max-width:430px;min-height:100dvh;margin:0 auto;background:var(--color-background-body)}
+    .screen{min-height:100dvh;display:flex;flex-direction:column}
+
+    .header{position:sticky;top:0;z-index:20;background:rgba(248,248,248,.96);backdrop-filter:blur(12px)}
+    .back{height:48px;padding:0 var(--space-16);display:flex;align-items:center;gap:var(--space-4);border:0;background:transparent;cursor:pointer;font-size:16px}
+    .back svg{width:24px;height:24px;flex:none}
+    .title{margin:0;padding:0 var(--space-16) var(--space-4);font-size:32px;line-height:44px;font-weight:500}
+
+    .content{flex:1 0 auto;display:flex;flex-direction:column;gap:var(--space-24);padding:var(--space-16)}
+
+    .summary{border:var(--border-sm) solid var(--color-background-border);border-radius:var(--radius-md);background:transparent;overflow:hidden}
+    .summary-toggle{width:100%;min-height:76px;border:0;background:transparent;padding:var(--space-12) var(--space-16);display:grid;grid-template-columns:minmax(0,.72fr) 1px minmax(0,1.28fr) 20px;gap:var(--space-12);align-items:center;text-align:left;cursor:pointer}
+    .summary-divider{height:40px;background:var(--color-background-divider)}
+    .stat{min-width:0;display:flex;flex-direction:column;gap:var(--space-2)}
+    .stat-label{font-size:12px;line-height:16px;color:var(--color-content-tertiary)}
+    .stat-value{font-size:20px;line-height:28px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .stat-value.total{font-size:24px;line-height:30px}
+    .summary-chevron{width:20px;height:20px;color:var(--color-content-tertiary);transition:transform .18s ease}
+    .summary-toggle[aria-expanded="true"] .summary-chevron{transform:rotate(180deg)}
+    .limit-detail{display:none;position:relative;padding:var(--space-12) var(--space-16) var(--space-16);gap:var(--space-8)}
+    .limit-detail::before{content:"";position:absolute;top:0;left:var(--space-16);right:var(--space-16);height:1px;background:var(--color-background-divider)}
+    .limit-detail.open{display:grid}
+    .limit-row{display:flex;justify-content:space-between;gap:var(--space-16);font-size:14px;line-height:20px}
+    .limit-row span:first-child{color:var(--color-content-tertiary)}
+    .limit-row strong{font-weight:500;white-space:nowrap}
+
+    .tabs{display:grid;grid-template-columns:.82fr 1.42fr .82fr;gap:var(--space-4);padding:var(--space-4);border-radius:var(--radius-md);background:var(--color-interactive-secondary-active)}
+    .tab{min-width:0;height:42px;border:0;border-radius:var(--radius-segmentedControl-segmentRadius);background:transparent;padding:0 var(--space-4);display:flex;align-items:center;justify-content:center;gap:var(--space-4);cursor:pointer;font-size:13px;line-height:18px;font-weight:500;white-space:nowrap}
+    .tab[aria-selected="true"]{background:var(--color-background-surface);box-shadow:var(--shadow-panel)}
+    .tab-count{min-width:20px;height:20px;padding:0 var(--space-4);border-radius:var(--radius-full);display:inline-flex;align-items:center;justify-content:center;background:var(--color-background-surface);color:var(--color-content-secondary);font-size:12px;line-height:16px;font-weight:600}
+    .tab[aria-selected="true"] .tab-count{background:var(--color-interactive-primary);color:var(--color-interactive-on-primary)}
+
+    .selection-bar{display:flex;align-items:center;justify-content:space-between;gap:var(--space-16);min-height:48px;padding:0 var(--space-4)}
+    .select-all{display:flex;align-items:center;gap:var(--space-12);cursor:pointer;min-width:0}
+    .select-all span{font-size:16px;line-height:24px;font-weight:500;white-space:nowrap}
+    .checkbox{appearance:none;width:24px;height:24px;flex:none;margin:0;border:2px solid var(--color-interactive-primary);border-radius:var(--radius-sm);background:transparent;display:grid;place-content:center;cursor:pointer}
+    .checkbox::after{content:"";width:12px;height:7px;border-left:2px solid #fff;border-bottom:2px solid #fff;transform:rotate(-45deg) scale(0);margin-top:-2px;transition:transform .12s ease}
+    .checkbox:checked{background:var(--color-interactive-primary)}
+    .checkbox:checked::after{transform:rotate(-45deg) scale(1)}
+    .checkbox:indeterminate::after{width:12px;height:2px;border:0;background:var(--color-interactive-primary);transform:none;margin:0}
+    .delete{border:0;border-bottom:1px solid currentColor;background:transparent;padding:2px 0;cursor:pointer;font-size:14px;line-height:20px;font-weight:500;white-space:nowrap}
+    .delete:disabled{color:var(--color-content-quaternary);cursor:default}
+
+    .list{display:flex;flex-direction:column;gap:var(--space-16)}
+    .date-card{background:var(--color-background-surface);border-radius:var(--radius-md);box-shadow:var(--shadow-panel);overflow:hidden}
+    .date-title{margin:0;padding:var(--space-16);font-size:20px;line-height:28px;font-weight:500}
+    .item{position:relative;display:grid;grid-template-columns:28px minmax(0,1fr) auto;gap:var(--space-12);align-items:center;min-height:78px;padding:var(--space-12) var(--space-16);cursor:pointer}
+    .item::before{content:"";position:absolute;top:0;left:var(--space-16);right:0;height:1px;background:var(--color-background-divider)}
+    .item-copy{min-width:0;display:flex;flex-direction:column;gap:var(--space-2)}
+    .item-title{font-size:16px;line-height:24px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .item-subtitle{font-size:14px;line-height:20px;color:var(--color-content-tertiary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .item-error{font-size:12px;line-height:16px;color:var(--color-attention-alert)}
+    .item-amount{font-size:16px;line-height:24px;font-weight:500;white-space:nowrap;text-align:right;align-self:start;margin-top:2px}
+    .empty{padding:var(--space-48) var(--space-24);text-align:center;background:var(--color-background-surface);border-radius:var(--radius-md);box-shadow:var(--shadow-panel)}
+    .empty strong{display:block;font-size:18px;line-height:24px;font-weight:500;margin-bottom:var(--space-8)}
+    .empty span{font-size:14px;line-height:20px;color:var(--color-content-tertiary)}
+
+    .bottom{position:sticky;bottom:0;z-index:20;background:var(--color-background-surface);box-shadow:0 -1px 8px #21212114;padding:var(--space-12) var(--space-16) calc(var(--space-16) + env(safe-area-inset-bottom));display:grid;gap:var(--space-12)}
+    .bottom-summary{display:flex;justify-content:space-between;gap:var(--space-16);align-items:end}
+    .bottom-copy{min-width:0}
+    .bottom-label{font-size:16px;line-height:24px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .bottom-meta{font-size:14px;line-height:20px;color:var(--color-content-tertiary)}
+    .bottom-total{font-size:16px;line-height:24px;font-weight:500;text-align:right;white-space:nowrap}
+    .primary{width:100%;height:48px;border:0;border-radius:var(--radius-md);background:var(--color-interactive-primary);color:var(--color-interactive-on-primary);font-size:16px;line-height:24px;font-weight:500;cursor:pointer}
+    .primary:active{background:var(--color-interactive-primary-action)}
+    .primary:disabled{background:var(--color-background-border);cursor:default}
+
+    .toast{position:fixed;z-index:50;left:50%;bottom:calc(118px + env(safe-area-inset-bottom));transform:translate(-50%,18px);width:min(calc(100% - 32px),398px);padding:var(--space-12) var(--space-16);border-radius:var(--radius-md);background:var(--color-content-primary);color:#fff;box-shadow:var(--shadow-floating);font-size:14px;line-height:20px;opacity:0;pointer-events:none;transition:opacity .18s ease,transform .18s ease}
+    .toast.show{opacity:1;transform:translate(-50%,0)}
+
+    @media(min-width:480px){
+      body{padding:24px;min-height:100dvh}
+      .phone{min-height:calc(100dvh - 48px);border-radius:32px;box-shadow:var(--shadow-floating);overflow:clip}
+      .screen{min-height:calc(100dvh - 48px)}
+    }
+    @media(max-width:350px){
+      .content{padding-left:var(--space-12);padding-right:var(--space-12)}
+      .tab{font-size:12px}.tab-count{min-width:18px;height:18px;font-size:10px}
+      .item{grid-template-columns:24px minmax(0,1fr) auto;gap:var(--space-8);padding-left:var(--space-12);padding-right:var(--space-12)}
+      .item-amount{font-size:14px}.summary-toggle{padding-left:var(--space-12);padding-right:var(--space-12);gap:var(--space-8)}
+    }
+    @media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}
+  </style>
+</head>
+<body>
+  <main class="phone" id="screen-authorizations">
+    <section class="screen" aria-labelledby="page-title">
+      <header class="header">
+        <button class="back" type="button" id="back-button" aria-label="Zpět">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 4 7 12l8 8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Zpět
+        </button>
+        <h1 class="title" id="page-title">Autorizace</h1>
+      </header>
+
+      <div class="content">
+        <section class="summary" aria-label="Souhrn autorizace">
+          <button class="summary-toggle" type="button" id="limit-toggle" aria-expanded="false" aria-controls="limit-detail">
+            <span class="stat">
+              <span class="stat-label">K autorizaci</span>
+              <strong class="stat-value total" id="total-count">10</strong>
+            </span>
+            <span class="summary-divider" aria-hidden="true"></span>
+            <span class="stat">
+              <span class="stat-label">K dispozici</span>
+              <strong class="stat-value">158&nbsp;000,00&nbsp;Kč</strong>
+            </span>
+            <svg class="summary-chevron" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <div class="limit-detail" id="limit-detail">
+            <div class="limit-row"><span>Z limitu disponenta k účtu</span><strong>158&nbsp;000,00&nbsp;Kč</strong></div>
+            <div class="limit-row"><span>Z vlastního limitu subjektu</span><strong>258&nbsp;000,00&nbsp;Kč</strong></div>
+          </div>
+        </section>
+
+        <nav class="tabs" role="tablist" aria-label="Typ položek k autorizaci">
+          <button class="tab" id="tab-platby" role="tab" aria-selected="true" aria-controls="authorization-list" data-tab="platby">
+            <span>Platby</span><span class="tab-count" id="count-platby">5</span>
+          </button>
+          <button class="tab" id="tab-trvale" role="tab" aria-selected="false" aria-controls="authorization-list" data-tab="trvale">
+            <span>Trvalé příkazy</span><span class="tab-count" id="count-trvale">2</span>
+          </button>
+          <button class="tab" id="tab-inkasa" role="tab" aria-selected="false" aria-controls="authorization-list" data-tab="inkasa">
+            <span>Inkasa</span><span class="tab-count" id="count-inkasa">3</span>
+          </button>
+        </nav>
+
+        <div class="selection-bar">
+          <label class="select-all" for="select-all">
+            <input class="checkbox" id="select-all" type="checkbox">
+            <span>Označit vše</span>
+          </label>
+          <button class="delete" type="button" id="delete-selected" disabled>Smazat vybrané</button>
+        </div>
+
+        <section class="list" id="authorization-list" role="tabpanel" aria-live="polite" aria-labelledby="tab-platby"></section>
+      </div>
+
+      <footer class="bottom">
+        <div class="bottom-summary">
+          <div class="bottom-copy">
+            <div class="bottom-label">Vybráno k autorizaci</div>
+            <div class="bottom-meta" id="selected-meta">1 z 5</div>
+          </div>
+          <div class="bottom-total" id="selected-total">80&nbsp;000,00&nbsp;Kč</div>
+        </div>
+        <button class="primary" type="button" id="authorize">K autorizaci</button>
+      </footer>
+    </section>
+  </main>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script>
+    const STORAGE_KEY = 'pocty_k_autorizaci__state_v1';
+    const tabLabels = { platby: 'Platby', trvale: 'Trvalé příkazy', inkasa: 'Inkasa' };
+    const initialState = {
+      currentTab: 'platby',
+      limitsOpen: false,
+      items: {
+        platby: [
+          {id:'p1',date:'30. 12. 2024',title:'4835477/0100',subtitle:'VS: 5856214',amount:30000,currency:'Kč',selected:false},
+          {id:'p2',date:'30. 12. 2024',title:'BE48354778985142',subtitle:'',amount:300,currency:'EUR',selected:false},
+          {id:'p3',date:'30. 12. 2024',title:'122000/0100',subtitle:'',amount:800,currency:'EUR',error:'Blokovaná měna',selected:false},
+          {id:'p4',date:'2. 1.',title:'4835477/0100',subtitle:'',amount:80000,currency:'Kč',selected:true},
+          {id:'p5',date:'2. 1.',title:'Sébastien Spageta',subtitle:'VS: 584526',amount:60000,currency:'Kč',error:'Chybná platba',selected:false}
+        ],
+        trvale: [
+          {id:'t1',date:'Nové',title:'Nájem kanceláře',subtitle:'Každý 1. den v měsíci',amount:24500,currency:'Kč',selected:false},
+          {id:'t2',date:'Změny',title:'Spoření',subtitle:'Každý 15. den v měsíci',amount:12000,currency:'Kč',selected:false}
+        ],
+        inkasa: [
+          {id:'i1',date:'Nová',title:'PRE',subtitle:'Limit jednotlivé platby',amount:6000,currency:'Kč',selected:false},
+          {id:'i2',date:'Změny',title:'T-Mobile Czech Republic',subtitle:'Limit jednotlivé platby',amount:2500,currency:'Kč',selected:false},
+          {id:'i3',date:'Změny',title:'Pražská plynárenská',subtitle:'Limit jednotlivé platby',amount:4500,currency:'Kč',selected:false}
+        ]
+      }
+    };
+
+    function cloneInitial(){ return JSON.parse(JSON.stringify(initialState)); }
+    function loadState(){
+      try{
+        const saved = JSON.parse(localStorage.getItem(STORAGE_KEY));
+        if(saved && saved.items && saved.items.platby && saved.items.trvale && saved.items.inkasa) return saved;
+      }catch(e){}
+      return cloneInitial();
+    }
+    let state = loadState();
+
+    const list = document.getElementById('authorization-list');
+    const selectAll = document.getElementById('select-all');
+    const deleteButton = document.getElementById('delete-selected');
+    const authorizeButton = document.getElementById('authorize');
+    const selectedMeta = document.getElementById('selected-meta');
+    const selectedTotal = document.getElementById('selected-total');
+    const limitToggle = document.getElementById('limit-toggle');
+    const limitDetail = document.getElementById('limit-detail');
+    const toast = document.getElementById('toast');
+    let toastTimer;
+
+    function saveState(){ localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); }
+    function escapeHtml(value){
+      return String(value).replace(/[&<>'"]/g, char => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[char]));
+    }
+    function formatAmount(amount,currency){
+      return new Intl.NumberFormat('cs-CZ',{minimumFractionDigits:2,maximumFractionDigits:2}).format(amount) + '\u00a0' + currency;
+    }
+    function counts(){
+      return Object.fromEntries(Object.entries(state.items).map(([key,items]) => [key,items.length]));
+    }
+    function selectedItems(){ return state.items[state.currentTab].filter(item => item.selected); }
+
+    function updateHash(){
+      const hash = '#' + state.currentTab;
+      if(location.hash !== hash) history.pushState({tab:state.currentTab},'',hash);
+    }
+
+    function render(){
+      const currentItems = state.items[state.currentTab];
+      const itemCounts = counts();
+      const total = Object.values(itemCounts).reduce((sum,count) => sum + count,0);
+
+      document.getElementById('total-count').textContent = total;
+      Object.keys(itemCounts).forEach(key => {
+        document.getElementById('count-' + key).textContent = itemCounts[key];
+        const tab = document.querySelector('[data-tab="' + key + '"]');
+        const active = key === state.currentTab;
+        tab.setAttribute('aria-selected',String(active));
+        tab.tabIndex = active ? 0 : -1;
+      });
+
+      const activeTab = document.querySelector('[data-tab="' + state.currentTab + '"]');
+      list.setAttribute('aria-labelledby',activeTab.id);
+
+      const groups = currentItems.reduce((result,item) => {
+        (result[item.date] ||= []).push(item);
+        return result;
+      },{});
+
+      list.innerHTML = currentItems.length ? Object.entries(groups).map(([date,items]) => `
+        <article class="date-card">
+          <h2 class="date-title">${escapeHtml(date)}</h2>
+          ${items.map(item => `
+            <label class="item" for="item-${escapeHtml(item.id)}">
+              <input class="checkbox item-checkbox" id="item-${escapeHtml(item.id)}" type="checkbox" data-id="${escapeHtml(item.id)}" ${item.selected?'checked':''}>
+              <span class="item-copy">
+                <span class="item-title">${escapeHtml(item.title)}</span>
+                ${item.subtitle?`<span class="item-subtitle">${escapeHtml(item.subtitle)}</span>`:''}
+                ${item.error?`<span class="item-error">${escapeHtml(item.error)}</span>`:''}
+              </span>
+              <strong class="item-amount">${escapeHtml(formatAmount(item.amount,item.currency))}</strong>
+            </label>`).join('')}
+        </article>`).join('') : `
+        <div class="empty"><strong>Nic k autorizaci</strong><span>V této kategorii už nejsou žádné položky.</span></div>`;
+
+      const selected = selectedItems();
+      selectAll.checked = currentItems.length > 0 && selected.length === currentItems.length;
+      selectAll.indeterminate = selected.length > 0 && selected.length < currentItems.length;
+      selectAll.disabled = currentItems.length === 0;
+      deleteButton.disabled = selected.length === 0;
+      authorizeButton.disabled = selected.length === 0;
+      selectedMeta.textContent = selected.length + ' z ' + currentItems.length;
+
+      const sums = selected.reduce((result,item) => {
+        result[item.currency] = (result[item.currency] || 0) + item.amount;
+        return result;
+      },{});
+      selectedTotal.textContent = selected.length ? Object.entries(sums).map(([currency,amount]) => formatAmount(amount,currency)).join(' + ') : '\u2014';
+
+      limitToggle.setAttribute('aria-expanded',String(state.limitsOpen));
+      limitDetail.classList.toggle('open',state.limitsOpen);
+      saveState();
+    }
+
+    function selectTab(tabName,{pushHash=true}={}){
+      if(!state.items[tabName]) return;
+      state.currentTab = tabName;
+      if(pushHash) updateHash();
+      render();
+    }
+
+    document.querySelectorAll('.tab').forEach(tab => {
+      tab.addEventListener('click',() => selectTab(tab.dataset.tab));
+      tab.addEventListener('keydown',event => {
+        if(!['ArrowLeft','ArrowRight'].includes(event.key)) return;
+        event.preventDefault();
+        const tabs = [...document.querySelectorAll('.tab')];
+        const direction = event.key === 'ArrowRight' ? 1 : -1;
+        const next = tabs[(tabs.indexOf(tab) + direction + tabs.length) % tabs.length];
+        next.focus();
+        selectTab(next.dataset.tab);
+      });
+    });
+
+    list.addEventListener('change',event => {
+      if(!event.target.matches('.item-checkbox')) return;
+      const item = state.items[state.currentTab].find(entry => entry.id === event.target.dataset.id);
+      if(item) item.selected = event.target.checked;
+      render();
+    });
+
+    selectAll.addEventListener('change',() => {
+      state.items[state.currentTab].forEach(item => item.selected = selectAll.checked);
+      render();
+    });
+
+    deleteButton.addEventListener('click',() => {
+      const removed = selectedItems().length;
+      if(!removed) return;
+      state.items[state.currentTab] = state.items[state.currentTab].filter(item => !item.selected);
+      render();
+      showToast(removed === 1 ? 'Položka smazána.' : 'Vybrané položky smazány.');
+    });
+
+    authorizeButton.addEventListener('click',() => {
+      const selected = selectedItems().length;
+      if(selected) showToast('K autorizaci připraveno: ' + selected);
+    });
+
+    limitToggle.addEventListener('click',() => {
+      state.limitsOpen = !state.limitsOpen;
+      render();
+    });
+
+    document.getElementById('back-button').addEventListener('click',() => {
+      if(history.length > 1) history.back(); else location.href='../../';
+    });
+
+    function showToast(message){
+      clearTimeout(toastTimer);
+      toast.textContent = message;
+      toast.classList.add('show');
+      toastTimer = setTimeout(() => toast.classList.remove('show'),2600);
+    }
+
+    window.addEventListener('popstate',() => {
+      const tab = location.hash.replace('#','');
+      if(state.items[tab]) selectTab(tab,{pushHash:false});
+    });
+
+    // Obnova obrazovky z URL hash při refresh
+    (function(){
+      const tab = location.hash.replace('#','');
+      if(state.items[tab]) state.currentTab = tab;
+      else history.replaceState({tab:state.currentTab},'','#' + state.currentTab);
+      render();
+    })();
+  </script>
+</body>
+</html>
