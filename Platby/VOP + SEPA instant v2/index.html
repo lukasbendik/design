@@ -44,7 +44,7 @@
     --border: #E0E0E0;
     --success: #2E7D32;
     --success-bg: #E8F5E9;
-    --warning: #FF9500;
+    --warning: #BC5200;
     --warning-bg: #FFF9E6;
     --info-blue: #0066CC;
     --info-blue-bg: #F0F7FF;
@@ -473,7 +473,7 @@
   .input-wrap .info-icon { color: var(--kb-red); font-size: 20px; flex-shrink: 0; cursor: pointer; }
   .input-hint { font-size: 12px; color: var(--text-secondary); margin-top: 4px; padding-left: 2px; display: none; }
   .input-hint.success { display: block; color: #212121; }
-  .input-hint.warning { display: block; color: var(--kb-red); }
+  .input-hint.warning { display: block; color: var(--warning); }
   .input-hint.error { display: block; color: var(--kb-red); }
   .input-hint.info { display: block; color: var(--text-secondary); }
 
@@ -565,6 +565,7 @@
   .sd-value.green { color: var(--success); }
   .sd-sub { font-size: 14px; font-weight: 400; color: var(--text-secondary); margin-top: 2px; }
   .sd-sub.error { color: var(--kb-red); }
+  .sd-sub.warning { color: var(--warning); }
   .sd-sub.success { color: var(--success); }
 
   /* Bottom CTA */
@@ -2356,8 +2357,8 @@ function initS05() {
 const ICONS = {
   info:        `<svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="11" cy="11" r="10" stroke="#E2001A" stroke-width="1.8"/><text x="11" y="16" text-anchor="middle" font-size="13" font-weight="700" fill="#E2001A" font-family="serif">i</text></svg>`,
   match:       `<svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="11" cy="11" r="10" stroke="#2E7D32" stroke-width="1.8"/><polyline points="6,11 9.5,14.5 16,8" stroke="#2E7D32" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
-  partial:     `<svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M11 2L21 20H1L11 2Z" stroke="#E2001A" stroke-width="1.8" stroke-linejoin="round"/><text x="11" y="17" text-anchor="middle" font-size="11" font-weight="800" fill="#E2001A" font-family="sans-serif">!</text></svg>`,
-  nomatch:     `<svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="11" cy="11" r="10" stroke="#E2001A" stroke-width="1.8"/><line x1="7" y1="7" x2="15" y2="15" stroke="#E2001A" stroke-width="2" stroke-linecap="round"/><line x1="15" y1="7" x2="7" y2="15" stroke="#E2001A" stroke-width="2" stroke-linecap="round"/></svg>`,
+  partial:     `<svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M11 2L21 20H1L11 2Z" stroke="#BC5200" stroke-width="1.8" stroke-linejoin="round"/><text x="11" y="17" text-anchor="middle" font-size="11" font-weight="800" fill="#BC5200" font-family="sans-serif">!</text></svg>`,
+  nomatch:     `<svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="11" cy="11" r="10" stroke="#BC5200" stroke-width="1.8"/><line x1="7" y1="7" x2="15" y2="15" stroke="#BC5200" stroke-width="2" stroke-linecap="round"/><line x1="15" y1="7" x2="7" y2="15" stroke="#BC5200" stroke-width="2" stroke-linecap="round"/></svg>`,
   unverifiable:`<svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="11" cy="11" r="10" stroke="#888" stroke-width="1.8"/><text x="11" y="16" text-anchor="middle" font-size="13" font-weight="700" fill="#888" font-family="sans-serif">?</text></svg>`,
   loading:     `<svg class="spin-icon" width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="11" cy="11" r="9" stroke="#E0E0E0" stroke-width="2"/><path d="M11 2C6.02944 2 2 6.02944 2 11" stroke="#E2001A" stroke-width="2" stroke-linecap="round"/></svg>`,
 };
@@ -2415,7 +2416,7 @@ function setNameState(state, hint) {
   } else if (state === 'nomatch') {
     icon.innerHTML = ICONS.nomatch; icon.className = 'info-icon'; icon.style.color = '';
     hintEl.textContent = 'Název neodpovídá číslu účtu.';
-    hintEl.className = 'input-hint error';
+    hintEl.className = 'input-hint warning';
     paymentData.nameVerified = false;
   } else if (state === 'unverifiable') {
     icon.innerHTML = ICONS.unverifiable; icon.className = 'info-icon'; icon.style.color = '';
@@ -2633,9 +2634,11 @@ function fillSummaryAndGoS08(verifyLabel, status) {
   verifyEl.textContent = verifyLabel;
   
   // Nastavení barvy podle statusu
-  verifyEl.classList.remove('error', 'success');
+  verifyEl.classList.remove('error', 'warning', 'success');
   if (status === 'error') {
     verifyEl.classList.add('error');
+  } else if (status === 'warning') {
+    verifyEl.classList.add('warning');
   } else if (status === 'success') {
     verifyEl.classList.add('success');
   }
@@ -2715,11 +2718,11 @@ function choosePartialSuggested() {
 function choosePartialUser() {
   closeSheet('partial', { skipTrack: true });
   paymentData.nameVerified = false;
-  fillSummaryAndGoS08('Název částečně odpovídá číslu účtu.', 'error');
+  fillSummaryAndGoS08('Název částečně odpovídá číslu účtu.', 'warning');
 }
 function confirmNomatch() {
   closeSheet('nomatch', { skipTrack: true });
-  fillSummaryAndGoS08('Název neodpovídá číslu účtu.', 'error');
+  fillSummaryAndGoS08('Název neodpovídá číslu účtu.', 'warning');
 }
 function confirmUnverifiable() {
   closeSheet('unverifiable', { skipTrack: true });
