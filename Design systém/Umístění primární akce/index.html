@@ -1,0 +1,257 @@
+<!doctype html>
+<html lang="cs">
+<head>
+  <script>
+  (function(){var H='4c129f69f551195cbc5e8b57cc5a0975b6efa1e8510573524d11df03c7d010c6',K='rozcestnik__auth';try{var p=new URLSearchParams(location.search);if(p.get('k')===H){localStorage.setItem(K,'1');p.delete('k');var q=p.toString();history.replaceState(history.state,'',location.pathname+(q?'?'+q:'')+location.hash);}if(localStorage.getItem(K)!=='1')location.replace('../../');}catch(e){}})();
+  </script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="robots" content="noindex,nofollow">
+  <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <title>Kotva, ne posun — umístění primární akce</title>
+  <link rel="stylesheet" href="../../design-system/tokens.css?v=1">
+  <style>
+    *,*::before,*::after{box-sizing:border-box}
+    html{scroll-behavior:smooth;scroll-padding-top:72px}
+    body{margin:0;background:var(--color-background-body);color:var(--color-content-primary);font-family:var(--font-family);-webkit-font-smoothing:antialiased}
+    button,a{font:inherit}button{color:inherit}a{color:inherit;text-decoration-thickness:1px;text-underline-offset:3px}
+    :focus-visible{outline:3px solid var(--color-content-primary);outline-offset:3px}
+    .wrap{width:min(1240px,calc(100% - 48px));margin:0 auto}
+    .topbar{position:sticky;top:0;z-index:50;background:color-mix(in srgb,var(--color-background-body) 92%,transparent);backdrop-filter:blur(18px);border-bottom:1px solid var(--color-background-divider)}
+    .topbar-in{min-height:64px;display:flex;align-items:center;justify-content:space-between;gap:24px}
+    .brand{display:flex;align-items:center;gap:10px;font-weight:600;text-decoration:none;white-space:nowrap}.brand-mark{width:10px;height:28px;background:var(--color-interactive-primary);border-radius:var(--radius-xs)}
+    .nav{display:flex;gap:4px;overflow:auto;scrollbar-width:none}.nav::-webkit-scrollbar{display:none}.nav a{font-size:13px;line-height:20px;padding:8px 10px;border-radius:var(--radius-sm);text-decoration:none;color:var(--color-content-secondary);white-space:nowrap}.nav a:hover{background:var(--color-background-surface)}
+    .slide{min-height:min(820px,calc(100vh - 64px));padding:72px 0;border-bottom:1px solid var(--color-background-divider);display:flex;align-items:center;scroll-margin-top:64px}
+    .slide.compact{min-height:auto}.slide>.wrap{width:min(1240px,calc(100% - 48px))}
+    .kicker{font-size:12px;line-height:16px;font-weight:600;letter-spacing:.09em;text-transform:uppercase;color:var(--color-interactive-primary);margin:0 0 18px}
+    h1,h2,h3,p{margin-top:0}h1{font-size:clamp(52px,8.4vw,116px);line-height:.9;letter-spacing:-.06em;font-weight:500;margin-bottom:28px;max-width:1080px}h2{font-size:clamp(36px,5vw,64px);line-height:1;letter-spacing:-.045em;font-weight:500;margin-bottom:22px}h3{font-size:20px;line-height:28px;font-weight:600;margin-bottom:8px}
+    .lead{font-size:clamp(20px,2.3vw,29px);line-height:1.42;color:var(--color-content-secondary);max-width:920px;margin-bottom:0}.body-copy{font-size:17px;line-height:27px;color:var(--color-content-secondary);max-width:760px}
+    .hero-grid{display:grid;grid-template-columns:minmax(0,1.02fr) minmax(420px,.98fr);gap:64px;align-items:end}
+    .hero-note{border-left:4px solid var(--color-interactive-primary);padding:4px 0 4px 20px;margin-top:38px;max-width:650px;font-size:16px;line-height:25px}.hero-note strong{display:block;margin-bottom:3px}
+    .anchor-visual{height:510px;background:var(--color-background-surface);border:1px solid var(--color-background-border);border-radius:var(--radius-md);position:relative;overflow:hidden;box-shadow:var(--shadow-panel)}
+    .anchor-line{position:absolute;right:72px;top:0;bottom:0;width:2px;background:var(--color-interactive-primary)}.anchor-dot{position:absolute;right:66px;bottom:82px;width:14px;height:14px;border-radius:50%;background:var(--color-interactive-primary);box-shadow:0 0 0 8px color-mix(in srgb,var(--color-interactive-primary) 12%,transparent)}
+    .anchor-label{position:absolute;right:88px;top:30px;font-size:12px;line-height:16px;color:var(--color-interactive-primary);font-weight:600;text-transform:uppercase;letter-spacing:.07em}
+    .ghost-dialog{position:absolute;left:38px;right:38px;bottom:42px;border:1px solid var(--color-background-border);background:var(--color-dialog-surface);border-radius:var(--radius-md);box-shadow:var(--shadow-floating);padding:28px 28px 24px}.ghost-dialog h3{font-size:25px;line-height:32px}.ghost-dialog p{font-size:15px;line-height:22px;color:var(--color-content-secondary);max-width:380px;margin-bottom:56px}.mini-actions{position:absolute;right:28px;bottom:24px;display:flex;gap:8px}.mini-btn{height:48px;padding:0 24px;border-radius:var(--radius-md);border:1px solid var(--color-background-border);background:var(--color-background-surface);font-weight:500;white-space:nowrap}.mini-btn.primary{border-color:var(--color-interactive-primary);background:var(--color-interactive-primary);color:var(--color-interactive-on-primary)}
+    .thesis-row{display:grid;grid-template-columns:repeat(3,1fr);border:1px solid var(--color-background-divider);border-radius:var(--radius-md);overflow:hidden;margin-top:54px;background:var(--color-background-divider);gap:1px}.thesis{background:var(--color-background-surface);padding:24px;min-height:170px}.thesis span{font-size:12px;color:var(--color-content-tertiary)}.thesis strong{display:block;font-size:21px;line-height:28px;margin:28px 0 7px}.thesis p{font-size:14px;line-height:21px;color:var(--color-content-secondary);margin:0}
+    .section-head{display:grid;grid-template-columns:minmax(260px,.7fr) minmax(0,1.3fr);gap:48px;align-items:start;margin-bottom:42px}.section-head .body-copy{margin:4px 0 0}
+    .demo-shell{background:#dedede;border-radius:var(--radius-md);padding:48px;position:relative}.demo-window{max-width:860px;margin:0 auto;background:var(--color-background-body);border:1px solid #bababa;border-radius:10px;box-shadow:0 30px 80px rgba(33,33,33,.18);overflow:hidden}.window-bar{height:44px;background:#ececec;border-bottom:1px solid #d0d0d0;display:flex;align-items:center;gap:7px;padding:0 16px}.window-dot{width:11px;height:11px;border-radius:50%;background:#b8b8b8}.window-title{margin-left:10px;font-size:12px;color:#676767}.window-content{min-height:360px;padding:48px 54px}.window-content h3{font-size:28px;line-height:36px;margin-bottom:12px}.window-content p{font-size:16px;line-height:24px;color:var(--color-content-secondary);max-width:590px}.window-footer{min-height:88px;border-top:1px solid var(--color-background-divider);background:var(--color-background-surface);display:grid;grid-template-columns:1fr auto;align-items:center;padding:16px 24px}.action-slot{grid-column:2;display:flex;align-items:center;justify-content:flex-end;gap:8px}.demo-btn{height:48px;min-width:122px;padding:0 24px;border-radius:var(--radius-md);font-weight:500;border:1px solid var(--color-background-border);background:var(--color-background-surface);transition:opacity .18s,transform .18s}.demo-btn.primary{background:var(--color-interactive-primary);border-color:var(--color-interactive-primary);color:var(--color-interactive-on-primary)}.demo-btn.secondary[hidden]{display:block;visibility:hidden;pointer-events:none}.demo-marker{position:absolute;right:calc(50% - 430px + 24px);bottom:48px;transform:translateX(0);width:2px;height:88px;background:color-mix(in srgb,var(--color-interactive-primary) 62%,transparent);pointer-events:none}
+    .demo-controls{display:flex;justify-content:center;gap:4px;margin-top:20px}.seg{display:flex;padding:4px;border:1px solid var(--color-background-border);border-radius:var(--radius-md);background:var(--color-background-surface)}.seg button{border:0;background:transparent;border-radius:var(--radius-segmentedControl-segmentRadius);padding:9px 14px;cursor:pointer}.seg button[aria-pressed="true"]{background:var(--color-interactive-secondary-active);font-weight:600}
+    .demo-caption{max-width:860px;margin:18px auto 0;display:flex;justify-content:space-between;gap:24px;font-size:13px;line-height:20px;color:var(--color-content-tertiary)}.fixed{color:var(--color-attention-success);font-weight:600}
+    .evidence-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}.evidence-card{padding:26px;border:1px solid var(--color-background-border);border-radius:var(--radius-md);background:var(--color-background-surface);display:flex;flex-direction:column;min-height:230px}.evidence-top{display:flex;justify-content:space-between;align-items:start;gap:16px}.platform{font-size:12px;line-height:16px;text-transform:uppercase;letter-spacing:.07em;color:var(--color-content-tertiary);font-weight:600}.position{font-size:12px;line-height:16px;padding:5px 8px;border-radius:var(--radius-sm);background:var(--color-attention-success-surface);font-weight:600}.position.opposite{background:var(--color-attention-alert-surface)}.evidence-card p{font-size:15px;line-height:23px;color:var(--color-content-secondary);margin:20px 0 18px}.evidence-card a{font-size:13px;margin-top:auto;color:var(--color-interactive-primary)}
+    .truth{margin-top:20px;padding:20px 22px;border-left:4px solid var(--color-attention-processing);background:var(--color-background-surface);font-size:16px;line-height:25px}
+    .research-layout{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(350px,.85fr);gap:48px;align-items:start}.finding{background:var(--color-content-primary);color:var(--color-background-body);border-radius:var(--radius-md);padding:36px}.finding .number{font-size:clamp(70px,10vw,128px);line-height:.85;letter-spacing:-.06em;font-weight:500;margin-bottom:24px}.finding p{font-size:18px;line-height:28px;margin:0;color:color-mix(in srgb,var(--color-background-body) 82%,transparent)}.finding small{display:block;margin-top:24px;font-size:12px;line-height:18px;color:color-mix(in srgb,var(--color-background-body) 58%,transparent)}
+    .research-notes{display:grid;gap:1px;background:var(--color-background-divider);border:1px solid var(--color-background-divider);border-radius:var(--radius-md);overflow:hidden}.research-note{background:var(--color-background-surface);padding:22px}.research-note strong{display:block;font-size:16px;margin-bottom:5px}.research-note p{font-size:14px;line-height:21px;color:var(--color-content-secondary);margin:0}.research-note.good strong{color:var(--color-attention-success)}.research-note.limit strong{color:var(--color-attention-processing)}
+    .lens-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--color-background-divider);border:1px solid var(--color-background-divider);border-radius:var(--radius-md);overflow:hidden}.lens{background:var(--color-background-surface);padding:24px;min-height:285px}.lens-icon{width:42px;height:42px;border:1px solid var(--color-background-border);border-radius:50%;display:grid;place-items:center;font-weight:600;margin-bottom:28px}.lens h3{font-size:18px;line-height:24px}.lens p{font-size:14px;line-height:21px;color:var(--color-content-secondary)}.lens strong{display:block;font-size:13px;line-height:19px;margin-top:24px;color:var(--color-interactive-primary)}
+    .rule-card{border:2px solid var(--color-interactive-primary);border-radius:var(--radius-md);background:var(--color-background-surface);overflow:hidden}.rule-head{padding:32px;display:grid;grid-template-columns:1fr auto;gap:32px;align-items:start;border-bottom:1px solid var(--color-background-divider)}.rule-head h3{font-size:clamp(28px,4vw,46px);line-height:1.08;letter-spacing:-.03em;margin:0}.status{padding:7px 10px;border-radius:var(--radius-sm);background:var(--color-attention-success-surface);font-size:12px;font-weight:600;white-space:nowrap}.rule-body{display:grid;grid-template-columns:repeat(2,1fr)}.rule-col{padding:28px 32px}.rule-col+ .rule-col{border-left:1px solid var(--color-background-divider)}.rule-col h4{font-size:12px;line-height:16px;text-transform:uppercase;letter-spacing:.07em;color:var(--color-content-tertiary);margin:0 0 18px}.checklist{list-style:none;padding:0;margin:0;display:grid;gap:14px}.checklist li{font-size:15px;line-height:23px;padding-left:28px;position:relative}.checklist li::before{content:"✓";position:absolute;left:0;color:var(--color-attention-success);font-weight:600}.checklist.exceptions li::before{content:"!";color:var(--color-attention-processing)}
+    .patterns{display:grid;gap:14px;margin-top:28px}.pattern{display:grid;grid-template-columns:180px 1fr 1.3fr;gap:20px;align-items:center;padding:18px 20px;border:1px solid var(--color-background-border);border-radius:var(--radius-md);background:var(--color-background-surface)}.pattern-label{font-weight:600}.button-example{display:flex;justify-content:flex-end;gap:8px;min-height:48px}.pattern-note{font-size:13px;line-height:20px;color:var(--color-content-secondary)}
+    .matrix{overflow:auto;border:1px solid var(--color-background-border);border-radius:var(--radius-md);background:var(--color-background-surface)}table{width:100%;border-collapse:collapse;min-width:880px}th,td{padding:16px 18px;text-align:left;border-bottom:1px solid var(--color-background-divider);vertical-align:top;font-size:14px;line-height:21px}th{font-size:11px;line-height:16px;text-transform:uppercase;letter-spacing:.06em;color:var(--color-content-tertiary);background:var(--color-background-surface-highlighted)}tr:last-child td{border-bottom:0}.yes{color:var(--color-attention-success);font-weight:600}.no{color:var(--color-attention-alert);font-weight:600}.maybe{color:var(--color-attention-processing);font-weight:600}
+    .a11y-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.a11y{padding:24px;border:1px solid var(--color-background-border);border-radius:var(--radius-md);background:var(--color-background-surface)}.key{display:inline-grid;place-items:center;min-width:40px;height:32px;padding:0 8px;border:1px solid var(--color-background-border-highlighted);border-bottom-width:3px;border-radius:var(--radius-sm);font-size:12px;font-weight:600;margin-bottom:22px}.a11y p{font-size:14px;line-height:21px;color:var(--color-content-secondary);margin:0}.warning{margin-top:18px;padding:18px 20px;background:var(--color-attention-alert-surface);border-radius:var(--radius-md);font-size:14px;line-height:22px}
+    .roadmap{display:grid;grid-template-columns:repeat(4,1fr);gap:0;counter-reset:step}.road-step{padding:0 24px 0 28px;border-left:2px solid var(--color-background-divider);position:relative;counter-increment:step;min-height:230px}.road-step::before{content:counter(step);position:absolute;left:-17px;top:0;width:32px;height:32px;border-radius:50%;background:var(--color-content-primary);color:var(--color-background-body);display:grid;place-items:center;font-size:12px;font-weight:600}.road-step h3{font-size:18px;line-height:24px;margin-bottom:10px}.road-step p{font-size:14px;line-height:21px;color:var(--color-content-secondary)}.road-step span{font-size:12px;color:var(--color-content-tertiary)}
+    .metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:36px}.metric{background:var(--color-background-surface);border-radius:var(--radius-md);border:1px solid var(--color-background-border);padding:22px}.metric strong{font-size:18px;display:block;margin-bottom:7px}.metric p{font-size:13px;line-height:20px;color:var(--color-content-secondary);margin:0}
+    .decision{background:var(--color-interactive-primary);color:var(--color-interactive-on-primary)}.decision .kicker{color:var(--color-interactive-on-primary);opacity:.75}.decision h2{font-size:clamp(52px,8vw,100px);max-width:1100px}.decision .lead{color:var(--color-interactive-on-primary);opacity:.88}.decision-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(255,255,255,.28);border:1px solid rgba(255,255,255,.28);margin-top:48px}.decision-item{padding:24px;background:var(--color-interactive-primary)}.decision-item span{font-size:12px;opacity:.7}.decision-item strong{display:block;font-size:19px;line-height:27px;margin-top:20px}
+    .sources{columns:2;column-gap:48px;margin:30px 0 0;padding:0;list-style-position:inside}.sources li{break-inside:avoid;margin-bottom:18px;font-size:13px;line-height:20px;color:var(--color-content-secondary)}.sources a{color:var(--color-content-primary);font-weight:600}.source-note{font-size:13px;line-height:20px;color:var(--color-content-tertiary);margin-top:28px}
+    footer{padding:28px 0;font-size:12px;line-height:18px;color:var(--color-content-tertiary)}
+    @media(max-width:960px){.hero-grid,.research-layout{grid-template-columns:1fr}.hero-grid{gap:42px}.anchor-visual{height:460px}.section-head{grid-template-columns:1fr;gap:12px}.evidence-grid,.a11y-grid{grid-template-columns:1fr 1fr}.lens-grid{grid-template-columns:1fr 1fr}.roadmap{grid-template-columns:1fr 1fr;gap:36px 0}.pattern{grid-template-columns:140px 1fr}.pattern-note{grid-column:1/-1}.demo-marker{display:none}}
+    @media(max-width:640px){.wrap,.slide>.wrap{width:min(100% - 28px,1240px)}.topbar-in{min-height:56px}.nav{display:none}.slide{padding:52px 0;min-height:auto}h1{font-size:56px}.hero-grid{display:block}.anchor-visual{height:420px;margin-top:38px}.anchor-line{right:44px}.anchor-dot{right:38px}.anchor-label{right:60px}.ghost-dialog{left:18px;right:18px;padding:22px}.mini-btn{padding:0 16px;min-width:auto}.thesis-row,.evidence-grid,.lens-grid,.rule-body,.a11y-grid,.roadmap,.metrics,.decision-grid{grid-template-columns:1fr}.rule-col+ .rule-col{border-left:0;border-top:1px solid var(--color-background-divider)}.demo-shell{padding:18px}.window-content{min-height:300px;padding:32px 24px}.window-footer{padding:14px}.demo-btn{padding:0 16px;min-width:auto}.demo-caption{display:block}.pattern{grid-template-columns:1fr}.pattern-note{grid-column:auto}.button-example{justify-content:flex-start}.sources{columns:1}.road-step{min-height:auto;padding-bottom:10px}.decision-grid{background:transparent;border-color:rgba(255,255,255,.25)}.decision-item{border-top:1px solid rgba(255,255,255,.25)}}
+    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.demo-btn{transition:none}}
+    @media print{.topbar,.demo-controls{display:none}.slide{min-height:100vh;page-break-after:always;border:0;padding:48px 0}.slide.compact{min-height:100vh}.wrap,.slide>.wrap{width:calc(100% - 56px)}a{text-decoration:none}.anchor-visual,.finding{print-color-adjust:exact;-webkit-print-color-adjust:exact}.decision{print-color-adjust:exact;-webkit-print-color-adjust:exact}}
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="wrap topbar-in">
+      <a class="brand" href="#top"><span class="brand-mark" aria-hidden="true"></span><span>Primární akce</span></a>
+      <nav class="nav" aria-label="Obsah prezentace">
+        <a href="#problem">Problém</a><a href="#platformy">Platformy</a><a href="#vyzkum">Výzkum</a><a href="#pravidlo">Pravidlo</a><a href="#vyjimky">Výjimky</a><a href="#zavedeni">Zavedení</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="slide">
+      <div class="wrap">
+        <div class="hero-grid">
+          <div>
+            <p class="kicker">Systémové pravidlo · desktop · 4. 8. 2026</p>
+            <h1>Kotva,<br>ne posun.</h1>
+            <p class="lead">Primární akce zůstává vpravo. Když přibude sekundární akce, objeví se vlevo vedle ní — bez změny polohy cíle.</p>
+            <div class="hero-note"><strong>Doporučení</strong>Přijmout jako produktovou konvenci pro desktopové flow a vlastní modální dialogy. Neprohlašovat za univerzální pravidlo všech operačních systémů.</div>
+          </div>
+          <div class="anchor-visual" aria-label="Primární tlačítko ukotvené k pravému okraji">
+            <span class="anchor-label">Stálá pravá kotva</span><span class="anchor-line" aria-hidden="true"></span><span class="anchor-dot" aria-hidden="true"></span>
+            <div class="ghost-dialog"><h3>Potvrdit změny?</h3><p>Změny se projeví ve všech vybraných nastaveních.</p><div class="mini-actions"><button class="mini-btn" type="button">Zrušit</button><button class="mini-btn primary" type="button">Uložit změny</button></div></div>
+          </div>
+        </div>
+        <div class="thesis-row">
+          <article class="thesis"><span>01 · PROSTOR</span><strong>Jedna souřadnice</strong><p>Stejný cíl napříč kroky. Uživatel nemusí hledat, kam se akce přesunula.</p></article>
+          <article class="thesis"><span>02 · HIERARCHIE</span><strong>Jedna hlavní cesta</strong><p>Vizuální styl dál určuje prioritu. Poloha ji pouze stabilizuje.</p></article>
+          <article class="thesis"><span>03 · SMĚR</span><strong>Postup doprava</strong><p>Pro české rozhraní dává dvojice Zpět vlevo / Další vpravo srozumitelnou osu flow.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" id="problem">
+      <div class="wrap">
+        <div class="section-head"><div><p class="kicker">Problém</p><h2>Nová akce nemá pohnout starým cílem.</h2></div><p class="body-copy">Dnes může být primární tlačítko samo vlevo. Po přidání sekundární akce se vizuálně přesune. Uživatel pokračuje stejným flow, ale naučená poloha hlavní akce se mění. Návrh zavádí stabilní pravý slot.</p></div>
+        <div class="demo-shell">
+          <div class="demo-window">
+            <div class="window-bar"><i class="window-dot"></i><i class="window-dot"></i><i class="window-dot"></i><span class="window-title">Nastavení oprávnění · krok 2 ze 3</span></div>
+            <div class="window-content"><h3>Zkontrolujte rozsah oprávnění</h3><p>Vybraná oprávnění můžete před pokračováním upravit. Změny se zatím neuloží.</p></div>
+            <div class="window-footer"><div class="action-slot"><button class="demo-btn secondary" id="demo-secondary" type="button" hidden>Zpět</button><button class="demo-btn primary" type="button">Pokračovat</button></div></div>
+          </div>
+          <span class="demo-marker" aria-hidden="true"></span>
+          <div class="demo-controls"><div class="seg" role="group" aria-label="Počet akcí v ukázce"><button id="one-action" type="button" aria-pressed="true">1 akce</button><button id="two-actions" type="button" aria-pressed="false">2 akce</button></div></div>
+          <div class="demo-caption"><span>Přepněte počet akcí. Sekundární obsadí místo vlevo.</span><span class="fixed">Pravý okraj primární akce: beze změny</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" id="platformy">
+      <div class="wrap">
+        <div class="section-head"><div><p class="kicker">Platformní konvence</p><h2>Vpravo má silnou oporu. Ne jednomyslnost.</h2></div><p class="body-copy">Guidelines se liší podle platformy a typu kontejneru. Pro vlastní desktopovou aplikaci dává smysl zvolit jeden interní model. U nativních systémových dialogů je vhodnější respektovat hostitelskou platformu.</p></div>
+        <div class="evidence-grid">
+          <article class="evidence-card"><div class="evidence-top"><span class="platform">Apple HIG · alerts</span><span class="position">Primární vpravo</span></div><p>Nejpravděpodobnější a výchozí akce patří na trailing stranu řádku. Cancel bývá na leading straně.</p><a href="https://developer.apple.com/design/human-interface-guidelines/alerts?changes=_1" target="_blank" rel="noopener">Apple Human Interface Guidelines ↗</a></article>
+          <article class="evidence-card"><div class="evidence-top"><span class="platform">IBM Carbon · modal</span><span class="position">Primární vpravo</span></div><p>U dvou tlačítek je sekundární vlevo a primární vpravo. Progress modal seskupuje Previous a Next vpravo, Next jako primární.</p><a href="https://carbondesignsystem.com/components/modal/usage/" target="_blank" rel="noopener">Carbon Design System ↗</a></article>
+          <article class="evidence-card"><div class="evidence-top"><span class="platform">Adobe Spectrum · alert dialog</span><span class="position">Primární vpravo</span></div><p>Primární action label patří prvnímu, tedy nejpravějšímu tlačítku v alert dialogu.</p><a href="https://spectrum.adobe.com/page/alert-dialog/" target="_blank" rel="noopener">Adobe Spectrum ↗</a></article>
+          <article class="evidence-card"><div class="evidence-top"><span class="platform">Windows App SDK · ContentDialog</span><span class="position opposite">Primární vlevo</span></div><p>Současné WinUI doporučení dává potvrzovací „do it“ akci vlevo a bezpečnou zavírací akci vpravo. Jde o přímý protiklad navržené konvence.</p><a href="https://learn.microsoft.com/en-us/windows/apps/develop/ui/controls/dialogs-and-flyouts/dialogs" target="_blank" rel="noopener">Microsoft Learn ↗</a></article>
+        </div>
+        <div class="truth"><strong>Rozhodovací závěr:</strong> argument „takto to dělají všechny platformy“ neobstojí. Argument „tento model podporuje náš flow, webové zvyklosti a stabilní motoriku“ obstojí — pokud se používá konzistentně.</div>
+      </div>
+    </section>
+
+    <section class="slide" id="vyzkum">
+      <div class="wrap">
+        <div class="section-head"><div><p class="kicker">Empirický podklad</p><h2>Preference ano. Rychlost neprokázána.</h2></div><p class="body-copy">Laboratorní studie webových dotazníků porovnala pořadí Previous a Next, sledování očí, komentáře i spokojenost. Je to dobrý podklad pro vícekrokové flow — ne univerzální důkaz pro každý dialog.</p></div>
+        <div class="research-layout">
+          <div class="finding"><div class="number">39/41</div><p>účastníků preferovalo variantu s <strong>Previous vlevo / Next vpravo</strong>. Toto pořadí také hodnotili jako logičtější.</p><small>Romano Bergstrom, Erdman &amp; Lakhe, 2016 · Survey Practice 9(1)</small></div>
+          <div class="research-notes">
+            <div class="research-note good"><strong>Silný signál: mentální model</strong><p>Opačné pořadí vyvolalo významně více negativních komentářů. Účastníci očekávali postup doprava.</p></div>
+            <div class="research-note"><strong>Bez rozdílu ve výkonu</strong><p>Čas dokončení ani čas kliknutí na primární navigaci se mezi skupinami významně nelišil.</p></div>
+            <div class="research-note"><strong>Učení funguje</strong><p>Účastníci se během flow naučili, kde primární tlačítko hledat — konzistence tedy má vlastní hodnotu.</p></div>
+            <div class="research-note limit"><strong>Limit přenosu</strong><p>Vzorek tvořilo 41 zaměstnanců US Census Bureau. Výzkum řešil webový survey, ne bankovní desktop, modální potvrzení ani destruktivní akce.</p></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide compact">
+      <div class="wrap">
+        <div class="section-head"><div><p class="kicker">HCD pohled</p><h2>Ne persony. Čtyři rizikové čočky.</h2></div><p class="body-copy">Bez vlastního výzkumu by detailní persony byly domněnka. Pro systémové pravidlo jsou užitečnější ověřitelné způsoby interakce a rizika.</p></div>
+        <div class="lens-grid">
+          <article class="lens"><span class="lens-icon">01</span><h3>Častý uživatel</h3><p>Opakuje stejný flow. Těží ze stabilní polohy a motorického návyku.</p><strong>Potřeba: neměnit pravou kotvu mezi kroky.</strong></article>
+          <article class="lens"><span class="lens-icon">02</span><h3>Opatrný uživatel</h3><p>Čte obě možnosti. Potřebuje jasné názvy a rozdílnou vizuální hierarchii.</p><strong>Potřeba: sekundární nesmí soutěžit s primární.</strong></article>
+          <article class="lens"><span class="lens-icon">03</span><h3>Klávesnicový uživatel</h3><p>Poloha není hlavní vodítko. Rozhoduje pořadí focusu, Enter, Escape a viditelný focus.</p><strong>Potřeba: vizuální pořadí nesmí rozbít logické DOM pořadí.</strong></article>
+          <article class="lens"><span class="lens-icon">04</span><h3>Uživatel s rizikem chyby</h3><p>Ve finančním nebo nevratném kroku nesmí výchozí focus podporovat ukvapené potvrzení.</p><strong>Potřeba: bezpečnost má přednost před rychlostí.</strong></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" id="pravidlo">
+      <div class="wrap">
+        <div class="section-head"><div><p class="kicker">Návrh systému</p><h2>Pravidlo, které jde implementovat.</h2></div><p class="body-copy">Pouhá věta „primární vpravo“ nestačí. Systém potřebuje stabilní slot, pořadí, chování jedné akce, přetečení textu, destruktivní variantu a klávesnici.</p></div>
+        <div class="rule-card">
+          <div class="rule-head"><h3>Akční oblast používá pravou kotvu.</h3><span class="status">DOPORUČENO</span></div>
+          <div class="rule-body">
+            <div class="rule-col"><h4>Základní pravidla</h4><ul class="checklist"><li>Jedna primární akce: samostatně vpravo.</li><li>Dvě akce: sekundární vlevo vedle primární.</li><li>Primární pravý okraj zůstává na stejné souřadnici.</li><li>Skupina má gap 8 px; tlačítka výšku 48 px a radius 8 px.</li><li>Popisky používají konkrétní slovesa: Uložit, Pokračovat, Potvrdit platbu.</li></ul></div>
+            <div class="rule-col"><h4>Ochranná pravidla</h4><ul class="checklist exceptions"><li>Destruktivní akce používá danger styl, ne běžný primary styl.</li><li>U nevratných finančních kroků focus nezačíná automaticky na potvrzení.</li><li>Escape zavírá dialog bez provedení akce.</li><li>Na úzké šířce se tlačítka skládají; primární zůstává poslední v toku.</li><li>RTL lokalizace zrcadlí leading/trailing, ne fyzické left/right.</li></ul></div>
+          </div>
+        </div>
+        <div class="patterns">
+          <div class="pattern"><div class="pattern-label">1 akce</div><div class="button-example"><button class="demo-btn primary" type="button">Pokračovat</button></div><div class="pattern-note">Primární obsadí pravý slot. Nevytahovat doleva k začátku obsahu.</div></div>
+          <div class="pattern"><div class="pattern-label">2 akce</div><div class="button-example"><button class="demo-btn" type="button">Zpět</button><button class="demo-btn primary" type="button">Pokračovat</button></div><div class="pattern-note">Sekundární přibude vlevo. Primární se nepohne.</div></div>
+          <div class="pattern"><div class="pattern-label">Nebezpečná akce</div><div class="button-example"><button class="demo-btn" type="button">Zrušit</button><button class="demo-btn primary" style="background:var(--color-attention-alert);border-color:var(--color-attention-alert)" type="button">Smazat přístup</button></div><div class="pattern-note">Poloha může zůstat, ale význam musí nést danger varianta a bezpečný focus.</div></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" id="vyjimky">
+      <div class="wrap">
+        <div class="section-head"><div><p class="kicker">Rozsah a výjimky</p><h2>Jedno pravidlo. Různé kontejnery.</h2></div><p class="body-copy">Největší riziko systémového pravidla: aplikovat ho mechanicky všude. Matice určuje, kde pravá kotva dává smysl a kde má přednost kontext.</p></div>
+        <div class="matrix"><table><thead><tr><th>Kontext</th><th>Primární vpravo</th><th>Sekundární vlevo vedle</th><th>Důvod / výjimka</th></tr></thead><tbody>
+          <tr><td><strong>Vícekrokové desktopové flow</strong></td><td class="yes">Ano</td><td class="yes">Ano</td><td>Podporuje osu Zpět → Další a stabilní cíl mezi kroky.</td></tr>
+          <tr><td><strong>Vlastní modální dialog</strong></td><td class="yes">Ano</td><td class="yes">Ano</td><td>Silná shoda Apple, Carbon a Spectrum; zachovat klávesnicové chování.</td></tr>
+          <tr><td><strong>Jedna akce v dialogu</strong></td><td class="yes">Ano</td><td>—</td><td>Pravý slot zůstane připravený i při variantě se dvěma akcemi.</td></tr>
+          <tr><td><strong>Inline formulář na celé stránce</strong></td><td class="maybe">Podle layoutu</td><td class="maybe">Podle layoutu</td><td>Levostranné zarovnání může lépe navazovat na pole a čtecí osu. Nezaměňovat s footerem flow.</td></tr>
+          <tr><td><strong>Nativní Windows ContentDialog</strong></td><td class="no">Ne</td><td class="no">Ne</td><td>Respektovat pořadí hostitelské platformy; Microsoft umísťuje affirmative vlevo.</td></tr>
+          <tr><td><strong>RTL rozhraní</strong></td><td class="no">Ne fyzicky</td><td class="maybe">Zrcadlit</td><td>Používat trailing/leading tokeny. Fyzické „vpravo“ není internacionalizační pravidlo.</td></tr>
+          <tr><td><strong>Mobil</strong></td><td class="maybe">Jiné pravidlo</td><td class="maybe">Často stack</td><td>Úzká šířka, dosah palce a bottom bar vyžadují samostatnou specifikaci.</td></tr>
+        </tbody></table></div>
+      </div>
+    </section>
+
+    <section class="slide compact">
+      <div class="wrap">
+        <div class="section-head"><div><p class="kicker">Přístupnost</p><h2>Poloha nestačí.</h2></div><p class="body-copy">WAI-ARIA neurčuje levou nebo pravou stranu. Určuje smysluplný focus, uzavřenou tab sekvenci, Escape a návrat focusu. U rizikové akce doporučuje začít na nejméně destruktivní volbě.</p></div>
+        <div class="a11y-grid">
+          <article class="a11y"><span class="key">Tab</span><h3>Logické pořadí</h3><p>Focus prochází dialog bez úniku do pozadí. Vizuální a DOM pořadí se nesmí rozcházet.</p></article>
+          <article class="a11y"><span class="key">Enter</span><h3>Výchozí akce</h3><p>Enter spouští default pouze tam, kde je to bezpečné a očekávané. Ne automaticky u platby nebo smazání.</p></article>
+          <article class="a11y"><span class="key">Esc</span><h3>Bezpečný odchod</h3><p>Escape zavře dialog bez změny. Po zavření se focus vrátí na prvek, který dialog otevřel.</p></article>
+        </div>
+        <div class="warning"><strong>Bankovní kontext:</strong> u dokončení finanční transakce může být vhodné nastavit počáteční focus na nadpis nebo bezpečnou akci. Vizuálně primární tlačítko zůstane vpravo, ale nemusí být výchozím focusem.</div>
+      </div>
+    </section>
+
+    <section class="slide" id="zavedeni">
+      <div class="wrap">
+        <div class="section-head"><div><p class="kicker">Service design</p><h2>Změnit systém, ne jen komponentu.</h2></div><p class="body-copy">Úprava zasahuje design tokeny, komponenty, existující flow, vývojářskou dokumentaci, QA i analytiku. Bez řízené migrace vznikne další varianta místo jednotného pravidla.</p></div>
+        <div class="roadmap">
+          <article class="road-step"><span>Discover</span><h3>Inventura</h3><p>Najít všechny footery, button bary, modály, wizards a nativní dialogy. Označit počet akcí, platformu a rizikovost.</p></article>
+          <article class="road-step"><span>Define</span><h3>Rozhodovací rámec</h3><p>Schválit scope, výjimky, RTL a mobil. Přidat jeden canonical pattern do design systému.</p></article>
+          <article class="road-step"><span>Develop</span><h3>Test prototypu</h3><p>Ověřit 1→2 akce, Previous/Next, dlouhé labely, klávesnici a nevratný krok na 5–8 lidech.</p></article>
+          <article class="road-step"><span>Deliver</span><h3>Postupná migrace</h3><p>Nové flow povinně. Stávající flow podle návštěvnosti a rizika. Kontrola přes vizuální regresi a accessibility QA.</p></article>
+        </div>
+        <div class="metrics">
+          <article class="metric"><strong>Čas k akci</strong><p>Od zobrazení kroku po kliknutí. Porovnat hlavně přechod 1 akce → 2 akce.</p></article>
+          <article class="metric"><strong>Chybné kliknutí / korekce</strong><p>Klik na sekundární, návrat nebo pohyb kurzoru k původní poloze.</p></article>
+          <article class="metric"><strong>Porozumění</strong><p>Po úkolu: která akce pokračuje, která vrací, co se stane po Enter/Escape.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide decision">
+      <div class="wrap">
+        <p class="kicker">Doporučené rozhodnutí</p>
+        <h2>Primární akci ukotvit vpravo.</h2>
+        <p class="lead">Sekundární přidávat vlevo vedle. Zavést pro desktopová flow a vlastní dialogy. Výjimky explicitně popsat, ne řešit nahodile obrazovku po obrazovce.</p>
+        <div class="decision-grid"><div class="decision-item"><span>CO ZÍSKÁME</span><strong>Stabilní cíl a předvídatelný postup flow</strong></div><div class="decision-item"><span>CO NETVRDÍME</span><strong>Že jde o univerzální konvenci všech platforem</strong></div><div class="decision-item"><span>CO OVĚŘIT</span><strong>Rychlost, chyby a porozumění v našem desktopu</strong></div></div>
+      </div>
+    </section>
+
+    <section class="slide compact" id="zdroje">
+      <div class="wrap">
+        <p class="kicker">Zdroje a limity</p><h2>Podklady</h2>
+        <ol class="sources">
+          <li><a href="https://developer.apple.com/design/human-interface-guidelines/alerts?changes=_1" target="_blank" rel="noopener">Apple Human Interface Guidelines — Alerts</a><br>Default a nejpravděpodobnější akce na trailing straně; Cancel na leading straně.</li>
+          <li><a href="https://learn.microsoft.com/en-us/windows/apps/develop/ui/controls/dialogs-and-flyouts/dialogs" target="_blank" rel="noopener">Microsoft Learn — Dialog controls</a><br>Aktuální ContentDialog: affirmative vlevo, safe close vpravo.</li>
+          <li><a href="https://carbondesignsystem.com/components/modal/usage/" target="_blank" rel="noopener">IBM Carbon — Modal usage</a><br>Dvě akce: sekundární vlevo, primární vpravo; progress modal seskupuje Previous/Next vpravo.</li>
+          <li><a href="https://carbondesignsystem.com/components/button/usage/" target="_blank" rel="noopener">IBM Carbon — Button usage</a><br>Rozlišuje full-page levé zarovnání od wizardů a progresivních flow zarovnaných doprava.</li>
+          <li><a href="https://spectrum.adobe.com/page/alert-dialog/" target="_blank" rel="noopener">Adobe Spectrum — Alert dialog</a><br>Primární action label patří pravému tlačítku.</li>
+          <li><a href="https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/" target="_blank" rel="noopener">W3C WAI-ARIA APG — Modal dialog</a><br>Focus management, Escape, návrat focusu a bezpečný počáteční focus.</li>
+          <li><a href="https://doi.org/10.29115/SP-2016-0005" target="_blank" rel="noopener">Romano Bergstrom et al. (2016)</a><br>Navigation Buttons in Web-Based Surveys: Respondents’ Preferences Revisited in the Laboratory.</li>
+          <li><a href="https://www.surveypractice.org/article/3054-placement-and-design-of-navigation-buttons-in-web-surveys" target="_blank" rel="noopener">Couper et al. (2011)</a><br>Placement and Design of Navigation Buttons in Web Surveys; výsledky výkonu jsou malé a kontextové.</li>
+        </ol>
+        <p class="source-note">Stav zdrojů ověřen 4. 8. 2026. Platformní guidelines dokazují konvence, ne dopad v konkrétní bankovní aplikaci. Empirický výzkum podporuje směr Previous/Next ve webovém flow, ale nenahrazuje test vlastního produktu.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer><div class="wrap">UX + service design decision brief · bez analytických a měřicích skriptů · připraveno pro desktop, tisk a screenshoty</div></footer>
+  <script>
+    const stateKey='primary_action_position_brief_v1';
+    const secondary=document.getElementById('demo-secondary');
+    const one=document.getElementById('one-action');
+    const two=document.getElementById('two-actions');
+    function setActions(count){
+      const show=count===2;
+      secondary.hidden=!show;
+      one.setAttribute('aria-pressed',String(!show));
+      two.setAttribute('aria-pressed',String(show));
+      localStorage.setItem(stateKey,String(count));
+    }
+    one.addEventListener('click',()=>setActions(1));
+    two.addEventListener('click',()=>setActions(2));
+    setActions(Number(localStorage.getItem(stateKey))===2?2:1);
+  </script>
+</body>
+</html>
