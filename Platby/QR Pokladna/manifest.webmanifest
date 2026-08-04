@@ -1,6 +1,6 @@
 {
-  "name": "Zaplať mi business",
-  "short_name": "Pokladna",
+  "name": "QR Pokladna",
+  "short_name": "QR Pokladna",
   "description": "Pokladna pro živnostníky — zadej částku, vygeneruj QR platbu.",
   "lang": "cs",
   "start_url": "./",

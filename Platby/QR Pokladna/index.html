@@ -10,7 +10,7 @@
 <meta http-equiv="Expires" content="0">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="robots" content="noindex, nofollow">
-<title>Prototyp: Zaplať mi business</title>
+<title>Prototyp: QR Pokladna</title>
 
 <!-- PWA -->
 <link rel="manifest" href="manifest.webmanifest">
@@ -52,7 +52,7 @@ if('serviceWorker' in navigator){
 
 <style>
 /* ============================================================
-   Zaplať mi business — styl
+   QR Pokladna — styl
    ============================================================ */
 :root{
   --kb-red:#E2001A;
@@ -400,7 +400,7 @@ body{
 </style>
 </head>
 <body>
-<h1 class="proto-title">Zaplať mi business</h1>
+<h1 class="proto-title">QR Pokladna</h1>
 <p class="subtitle">Pokladna pro živnostníky — zadej částku, vygeneruj QR platbu se zákazníkem.</p>
 
 <!-- ================================================================
@@ -643,11 +643,11 @@ body{
 
 </div><!-- /stage -->
 
-<p class="hint">Prototyp · Zaplať mi business · <code>UX Research 2026</code></p>
+<p class="hint">Prototyp · QR Pokladna · <code>UX Research 2026</code></p>
 
 <script>
 /* ============================================================
-   Zaplať mi business — app.js
+   QR Pokladna — app.js
    ============================================================ */
 
 /* ---- localStorage helpery (sandbox-safe) ---- */
@@ -691,12 +691,12 @@ function showScreen(id, opts){
 
 /* ---- GA / Clarity virtuální page_view ---- */
 var TITLES = {
-  home:'Zaplať mi business — Domů',
-  keypad:'Zaplať mi business — Pokladna (klávesnice)',
-  qr:'Zaplať mi business — QR platba'
+  home:'QR Pokladna — Domů',
+  keypad:'QR Pokladna — Pokladna (klávesnice)',
+  qr:'QR Pokladna — QR platba'
 };
 function trackPageView(hash){
-  var title = TITLES[hash] || 'Zaplať mi business';
+  var title = TITLES[hash] || 'QR Pokladna';
   document.title = 'Prototyp: ' + title;
   if(typeof gtag === 'function'){
     gtag('event','page_view',{

@@ -1,5 +1,5 @@
-/* Service worker — Zaplať mi business (PWA) */
-var CACHE = 'zaplatmi-business-v1';
+/* Service worker — QR Pokladna (PWA) */
+var CACHE = 'qr-pokladna-v1';
 var ASSETS = [
   './',
   './index.html',
