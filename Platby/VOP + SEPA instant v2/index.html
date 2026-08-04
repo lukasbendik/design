@@ -2266,7 +2266,6 @@ const CURRENCIES = [
 const EXCHANGE_RATES_ALL = { CZK:1, EUR:24.79, USD:22.89, AUD:14.95, BGN:12.68, CAD:16.74, DKK:3.32, GBP:28.90, HUF:0.062, JPY:0.152, NOK:2.11, PLN:5.76, RON:4.98, SEK:2.17 };
 
 function openVerifySheet() {
-  if (currentNameState === 'empty' || currentNameState === 'required' || currentNameState === 'pending') return;
   track('recipient_name_info_tapped');
   openSheet('verify');
 }
