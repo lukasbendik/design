@@ -2480,12 +2480,11 @@ function validateRecipient() {
   if (!name.trim()) {
     setNameState('empty');
   } else {
-    // reset to neutral while typing
+    // Clear stale result details while typing, but keep the current VOP icon
+    // until it transitions into the loading animation on blur.
     currentNameState = 'pending';
     const wrap = document.getElementById('name-wrap');
     wrap.classList.remove('verified', 'error-border', 'warning-border', 'info-border', 'flash-green', 'flash-red');
-    document.getElementById('name-status-icon').innerHTML = ICONS.info;
-    document.getElementById('name-status-icon').className = 'info-icon';
     const hintEl = document.getElementById('name-hint');
     hintEl.className = 'input-hint';
     hintEl.textContent = '';
