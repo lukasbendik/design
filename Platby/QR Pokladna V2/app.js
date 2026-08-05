@@ -312,13 +312,19 @@
 
   function announcePayments(payments){
     if(!payments||!payments.length)return;
-    payments.forEach(function(payment){
+    updateBadges();
+    var notifications=payments.filter(function(payment){
+      var visibleQr=routeFromHash()==='qr'&&state.activePaymentId===payment.id&&document.visibilityState==='visible'&&document.hasFocus();
+      return !visibleQr;
+    });
+    if(!notifications.length)return;
+    notifications.forEach(function(payment){
       toastQueue.push(payment);
       if(state.settings.notifications&&'Notification'in window&&Notification.permission==='granted'){
         try{new Notification('Platba ověřena',{body:formatAmount(payment.amountCents,payment.currency)+' · '+payment.id});}catch(error){}
       }
     });
-    updateBadges();flashIndicator();showNextToast();
+    flashIndicator();showNextToast();
   }
 
   function showNextToast(){
