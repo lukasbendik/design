@@ -1,5 +1,5 @@
-var CACHE='qr-pokladna-v2-5';
-var ASSETS=['./','./index.html','./styles.css?v=3','./app.js?v=3','./manifest.webmanifest?v=1','./icon.svg?v=1','../../design-system/tokens.css?v=1'];
+var CACHE='qr-pokladna-v2-7';
+var ASSETS=['./','./index.html','./styles.css?v=5','./app.js?v=5','./manifest.webmanifest?v=1','./icon.svg?v=1','../../design-system/tokens.css?v=1'];
 self.addEventListener('install',function(event){self.skipWaiting();event.waitUntil(caches.open(CACHE).then(function(cache){return cache.addAll(ASSETS).catch(function(){});}));});
 self.addEventListener('activate',function(event){event.waitUntil(caches.keys().then(function(keys){return Promise.all(keys.filter(function(key){return key!==CACHE;}).map(function(key){return caches.delete(key);}));}).then(function(){return self.clients.claim();}));});
 self.addEventListener('fetch',function(event){
