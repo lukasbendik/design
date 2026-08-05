@@ -200,9 +200,12 @@
 
   function renderCashier(preserveInput){
     renderCurrencyToggle();
-    if(document.activeElement!==el('amountInput')||!preserveInput){
-      el('amountInput').value=formatAmount(state.amountCents,'CZK').replace(/\s?(Kč|€)$/,'').trim();
+    var inputEl=el('amountInput');
+    if(document.activeElement!==inputEl||!preserveInput){
+      inputEl.value=formatAmount(state.amountCents,'CZK').replace(/\s?(Kč|€)$/,'').trim();
     }
+    var valLen=(inputEl.value||'0,00').length;
+    inputEl.style.width=Math.max(1,valLen+0.2)+'ch';
     var selected=state.selectedCurrency||'CZK';
     var convertedEl=el('amountConverted');
     if(selected==='EUR'){
