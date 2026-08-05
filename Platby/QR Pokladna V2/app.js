@@ -198,14 +198,24 @@
     });
   }
 
+  function fitAmountInputWidth(inputEl){
+    if(!inputEl)return;
+    var val=inputEl.value||'0,00';
+    var canvas=fitAmountInputWidth.canvas||(fitAmountInputWidth.canvas=document.createElement('canvas'));
+    var ctx=canvas.getContext('2d');
+    var style=window.getComputedStyle(inputEl);
+    ctx.font=(style.fontWeight||'600')+' '+(style.fontSize||'56px')+' '+(style.fontFamily||'sans-serif');
+    var w=ctx.measureText(val).width;
+    inputEl.style.width=(Math.ceil(w)+2)+'px';
+  }
+
   function renderCashier(preserveInput){
     renderCurrencyToggle();
     var inputEl=el('amountInput');
     if(document.activeElement!==inputEl||!preserveInput){
       inputEl.value=formatAmount(state.amountCents,'CZK').replace(/\s?(Kč|€)$/,'').trim();
     }
-    var valLen=(inputEl.value||'0,00').length;
-    inputEl.style.width=Math.max(1,valLen)+'ch';
+    fitAmountInputWidth(inputEl);
     var selected=state.selectedCurrency||'CZK';
     var convertedEl=el('amountConverted');
     if(selected==='EUR'){
