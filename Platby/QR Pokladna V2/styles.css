@@ -45,12 +45,11 @@ svg{display:block;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:
 .amount-line{display:flex;align-items:center;justify-content:center;max-width:100%;margin:var(--space-4) auto}
 .amount-line input{width:100%;max-width:340px;padding:0;border:0;background:transparent;font-size:clamp(42px,13vw,64px);font-weight:600;line-height:1.12;letter-spacing:-2px;text-align:center;font-variant-numeric:tabular-nums}
 .amount-line input:focus{outline:0}
-.amount-entry>p{margin:0;color:var(--color-content-tertiary);font-size:12px}
 .entry-tools{margin-top:var(--space-16);padding-top:var(--space-12);border-top:var(--border-sm) solid var(--color-background-divider)}
 .preset-row{display:flex;gap:var(--space-8);margin-bottom:var(--space-12);overflow:auto;scrollbar-width:none}
 .preset-row::-webkit-scrollbar{display:none}
 .preset-row button{flex:1 0 auto;min-height:38px;padding:0 var(--space-12);border:var(--border-sm) solid var(--color-background-border);border-radius:var(--radius-sm);background:var(--color-background-surface);font-size:14px;font-weight:500}
-.calc-expression{display:none;min-height:28px;margin:0 0 var(--space-8);color:var(--color-content-tertiary);font-size:15px;text-align:right;word-break:break-all}
+.calc-expression{display:none;margin:0 0 var(--space-8);color:var(--color-content-tertiary);font-size:15px;text-align:right;word-break:break-all}
 .calc-expression.visible{display:block}
 .keypad{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--space-8)}
 .keypad.calculator{grid-template-columns:repeat(4,minmax(0,1fr))}

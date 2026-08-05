@@ -106,7 +106,8 @@
 
   function renderMode(){
     qsa('#headerMode [data-mode]').forEach(function(button){button.classList.toggle('active',button.getAttribute('data-mode')===state.entryMode);});
-    el('calcExpression').classList.toggle('visible',state.entryMode==='calculator');
+    el('calcExpression').classList.toggle('visible',state.entryMode==='calculator'&&Boolean(calcExpression));
+    el('calcExpression').hidden=!calcExpression;
     renderKeypad();
   }
 
@@ -136,7 +137,9 @@
       keys=[['1','1',''],['2','2',''],['3','3',''],['4','4',''],['5','5',''],['6','6',''],['7','7',''],['8','8',''],['9','9',''],[',','.',''],['0','0',''],['⌫','del','']];
     }
     keypad.innerHTML=keys.map(function(key){return '<button type="button" data-key="'+key[1]+'" class="'+key[2]+'" aria-label="'+(key[1]==='del'?'Smazat poslední číslici':key[0])+'">'+key[0]+'</button>';}).join('');
-    el('calcExpression').textContent=calcExpression?calcExpression.replace(/\*/g,' × ').replace(/\//g,' ÷ ').replace(/-/g,' − ').replace(/\./g,','):'Zadejte výpočet';
+    el('calcExpression').textContent=calcExpression.replace(/\*/g,' × ').replace(/\//g,' ÷ ').replace(/-/g,' − ').replace(/\./g,',');
+    el('calcExpression').classList.toggle('visible',state.entryMode==='calculator'&&Boolean(calcExpression));
+    el('calcExpression').hidden=!calcExpression;
   }
 
   function pressEntryKey(key){
