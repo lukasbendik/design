@@ -19,9 +19,9 @@
 <link rel="manifest" href="manifest.webmanifest?v=1">
 <link rel="icon" href="icon.svg?v=1" type="image/svg+xml">
 <link rel="stylesheet" href="../../design-system/tokens.css?v=1">
-<link rel="stylesheet" href="styles.css?v=31">
+<link rel="stylesheet" href="styles.css?v=32">
 <script src="https://cdn.jsdelivr.net/gh/davidshimjs/qrcodejs@gh-pages/qrcode.min.js" defer></script>
-<script src="app.js?v=21" defer></script>
+<script src="app.js?v=22" defer></script>
 </head>
 <body>
 <div class="app-shell">
@@ -45,12 +45,14 @@
           <span class="avatar" id="menuAvatar" aria-hidden="true">U</span>
           <span><strong id="menuUserName">Uživatel</strong><small id="menuRegisterName">Pokladna</small></span>
         </div>
-        <nav aria-label="Hlavní navigace">
+        <div class="menu-nav">
           <button type="button" data-route="pokladna"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M4 7h16v13H4zM7 4h10v3H7zM8 11h8M8 15h5"/></svg><span>Pokladna</span></button>
           <button type="button" data-route="platby"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M4 6h16v14H4zM4 10h16M8 15h4"/></svg><span>Platby</span><i id="paymentMenuCount" hidden></i></button>
           <button type="button" data-route="nastaveni"><svg aria-hidden="true" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19 12a7 7 0 0 0-.1-1l2-1.5-2-3.4-2.4 1a8 8 0 0 0-1.8-1L14.4 3h-4.8l-.4 3.1a8 8 0 0 0-1.8 1l-2.4-1-2 3.4L5.1 11a7 7 0 0 0 0 2L3 14.5l2 3.4 2.4-1a8 8 0 0 0 1.8 1l.4 3.1h4.8l.4-3.1a8 8 0 0 0 1.8-1l2.4 1 2-3.4-2.1-1.5a7 7 0 0 0 .1-1Z"/></svg><span>Nastavení</span></button>
-          <button class="logout-nav" id="logoutButton" type="button"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M10 5H5v14h5M14 8l4 4-4 4M8 12h10"/></svg><span>Odhlásit se</span></button>
-        </nav>
+        </div>
+        <div class="menu-footer">
+          <button class="button secondary compact logout-button" id="logoutButton" type="button">Odhlásit se</button>
+        </div>
       </div>
       </div>
     </div>
@@ -61,17 +63,16 @@
     <span><strong id="paymentToastAmount"></strong><small id="paymentToastId"></small></span>
   </div>
 
-  <main>
+  <main class="app-main">
     <section class="view login-view" id="view-prihlaseni" aria-label="Přihlášení">
       <div class="login-panel">
-        <span class="login-brand" aria-hidden="true">KB</span>
         <div class="login-heading">
           <p class="eyebrow">KB pokladna</p>
-          <h1>Přihlášení do pokladny</h1>
-          <p>Po přihlášení otevřeme pokladnu přiřazenou vašemu účtu.</p>
+          <h1>Přihlášení obsluhy</h1>
+          <p>Pro pokračování se přihlaste ke své pokladně.</p>
         </div>
         <form class="login-form" id="loginForm">
-          <label><span>Uživatelské jméno</span><input id="loginUsername" name="username" autocomplete="username" required></label>
+          <label><span>Uživatel (ID pokladny)</span><input id="loginUsername" name="username" type="text" autocomplete="username" required></label>
           <label><span>Heslo</span><input id="loginPassword" name="password" type="password" autocomplete="current-password" required></label>
           <button class="button primary action-button" type="submit">Přihlásit se</button>
         </form>
@@ -105,7 +106,6 @@
         <p class="qr-help" id="qrHelp">Načtěte QR ve své bankovní aplikaci.</p>
         <div class="verify-progress" id="verifyProgress">
           <div><span id="progressBar"></span></div>
-          <p id="verifyText">Ověřujeme přijetí platby · 60 s</p>
           <div class="status-chip checking" id="paymentStatus"><i></i><span>Čekáme na platbu</span></div>
         </div>
       </div>

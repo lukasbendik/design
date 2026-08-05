@@ -314,12 +314,12 @@
     el('verifyProgress').hidden=false;
     if(payment.status==='paid'){
       status.className='status-chip paid';status.querySelector('span').textContent='Platba ověřena';
-      progressTrack.hidden=true;el('verifyText').hidden=true;
+      progressTrack.hidden=true;
       stopVerifyTimer();return;
     }
     if(payment.status==='expired'){
       status.className='status-chip expired';status.querySelector('span').textContent='Platba neověřena';
-      progressTrack.hidden=true;el('verifyText').hidden=true;
+      progressTrack.hidden=true;
       stopVerifyTimer();return;
     }
     var now=Date.now();
@@ -327,9 +327,8 @@
     var remaining=Math.max(0,payment.expiresAt-now);
     var elapsed=Math.min(1,Math.max(0,(now-payment.createdAt)/duration));
     status.className='status-chip checking';status.querySelector('span').textContent='Čekáme na platbu';
-    progressTrack.hidden=false;el('verifyText').hidden=false;
+    progressTrack.hidden=false;
     el('progressBar').style.width=Math.round(elapsed*100)+'%';
-    el('verifyText').textContent='Ověřujeme přijetí platby · '+Math.ceil(remaining/1000)+' s';
   }
 
   function resetPayment(){
