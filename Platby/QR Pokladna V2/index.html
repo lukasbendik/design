@@ -19,9 +19,9 @@
 <link rel="manifest" href="manifest.webmanifest?v=1">
 <link rel="icon" href="icon.svg?v=1" type="image/svg+xml">
 <link rel="stylesheet" href="../../design-system/tokens.css?v=1">
-<link rel="stylesheet" href="styles.css?v=32">
+<link rel="stylesheet" href="styles.css?v=33">
 <script src="https://cdn.jsdelivr.net/gh/davidshimjs/qrcodejs@gh-pages/qrcode.min.js" defer></script>
-<script src="app.js?v=22" defer></script>
+<script src="app.js?v=23" defer></script>
 </head>
 <body>
 <div class="app-shell">
@@ -90,6 +90,7 @@
         </div>
 
         <div class="entry-tools">
+          <div class="kp-presets" id="kpPresets"></div>
           <div class="keypad" id="keypad" aria-label="Číselná klávesnice"></div>
         </div>
       </div>
@@ -137,6 +138,7 @@
           <h2>Platby</h2>
           <label class="field"><span>Účet pro příchozí platby</span><select id="accountSetting"><option value="CZ6501000000001234567890">1234567890/0100 · Běžný účet</option><option value="CZ2001000000009876543210">9876543210/0100 · EUR účet</option></select></label>
           <label class="field"><span>Měna pokladny</span><select id="currencySetting"><option value="CZK">Česká koruna (Kč)</option><option value="EUR">Euro (EUR)</option></select><small>Měna nastavená pro účet a pobočku.</small></label>
+          <label class="field"><span>Rychlé předvolby částek</span><input id="presetsSetting" type="text" placeholder="100, 200, 500" autocomplete="off"><small>Částky oddělené čárkou pro rychlá tlačítka na pokladně.</small></label>
           <label class="switch-row"><span><strong>Oznámení o přijaté platbě</strong><small>Potvrzení zobrazit také jako oznámení zařízení.</small></span><input id="notificationsSetting" type="checkbox" role="switch"><i aria-hidden="true"></i></label>
           <label class="switch-row"><span><strong>Režim zaměstnance</strong><small>Přístup jen k pokladně a seznamu plateb.</small></span><input id="employeeSetting" type="checkbox" role="switch"><i aria-hidden="true"></i></label>
         </section>

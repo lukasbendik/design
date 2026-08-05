@@ -28,7 +28,7 @@
       currency:'CZK',
       lastAmountCents:0,
       sequence:24,
-      settings:{account:'CZ6501000000001234567890',eur:true,notifications:true,employee:false},
+      settings:{account:'CZ6501000000001234567890',presets:[100,200,500],eur:true,notifications:true,employee:false},
       session:null,
       activePaymentId:null,
       payments:[
@@ -46,6 +46,7 @@
       if(parsed&&parsed.settings&&Array.isArray(parsed.payments)){
         var base=defaults();
         parsed.settings=Object.assign(base.settings,parsed.settings);
+        if(!Array.isArray(parsed.settings.presets)||!parsed.settings.presets.length)parsed.settings.presets=[100,200,500];
         if(!parsed.activePaymentId&&parsed.current&&parsed.current.id){
           parsed.activePaymentId=parsed.current.id;
           if(!parsed.payments.some(function(payment){return payment.id===parsed.current.id;}))parsed.payments.unshift(parsed.current);
@@ -158,12 +159,40 @@
     el('settingsRegisterName').textContent='Pokladna: '+state.session.registerName;
   }
 
+  function formatPresetLabel(cents,currency,isLast){
+    var val=cents/100;
+    var formatted=val%1===0?String(val):val.toFixed(2).replace('.',',');
+    var symbol=currency==='EUR'?'€':'Kč';
+    return (isLast?'Naposledy ':'')+formatted+' '+symbol;
+  }
+
+  function renderPresets(){
+    var container=el('kpPresets');
+    if(!container)return;
+    var presets=state.settings.presets||[100,200,500];
+    var html=presets.map(function(kc){
+      var cents=Math.round(kc*100);
+      var label=formatPresetLabel(cents,state.currency,false);
+      return '<button type="button" class="kp-preset" data-preset-cents="'+cents+'">'+escapeHtml(label)+'</button>';
+    });
+    var lastCents=state.lastAmountCents||0;
+    if(lastCents>0){
+      var lastVal=lastCents/100;
+      if(presets.indexOf(lastVal)<0){
+        var lastLabel=formatPresetLabel(lastCents,state.currency,true);
+        html.push('<button type="button" class="kp-preset kp-preset-last" data-preset-cents="'+lastCents+'">'+escapeHtml(lastLabel)+'</button>');
+      }
+    }
+    container.innerHTML=html.join('');
+  }
+
   function renderCashier(preserveInput){
     if(document.activeElement!==el('amountInput')||!preserveInput){
       el('amountInput').value=formatAmount(state.amountCents,state.currency).replace(/\s?(Kč|€)$/,'').trim();
     }
     el('payButton').disabled=state.amountCents<=0;
     el('payButton').textContent=state.amountCents>0?'Zaplatit '+formatAmount(state.amountCents,state.currency):'Zaplatit';
+    renderPresets();
     renderKeypad();
     updateBadges();
   }
@@ -407,6 +436,7 @@
     renderSession();
     el('accountSetting').value=state.settings.account;
     el('currencySetting').value=state.currency;
+    if(el('presetsSetting'))el('presetsSetting').value=(state.settings.presets||[100,200,500]).join(', ');
     el('notificationsSetting').checked=state.settings.notifications;
     el('employeeSetting').checked=state.settings.employee;
     updateBadges();
@@ -474,6 +504,17 @@
     el('amountInput').addEventListener('focus',function(){entryBuffer=plainAmount(state.amountCents).replace(/,00$/,'');this.value=entryBuffer.replace('.',',');this.select();});
     el('amountInput').addEventListener('input',function(){entryBuffer=normalizeBuffer(this.value);calcExpression=entryBuffer;updateAmount(centsFromBuffer(entryBuffer),true);});
     el('amountInput').addEventListener('blur',function(){this.value=formatAmount(state.amountCents,state.currency).replace(/\s?(Kč|€)$/,'').trim();});
+    if(el('kpPresets')){
+      el('kpPresets').addEventListener('click',function(event){
+        var button=event.target.closest('[data-preset-cents]');
+        if(!button)return;
+        var cents=parseInt(button.getAttribute('data-preset-cents'),10);
+        if(isNaN(cents)||cents<=0)return;
+        entryBuffer=plainAmount(cents);
+        calcExpression=entryBuffer;
+        updateAmount(cents,true);
+      });
+    }
     el('keypad').addEventListener('click',function(event){var button=event.target.closest('[data-key]');if(button)pressCalcKey(button.getAttribute('data-key'));});
     el('payButton').addEventListener('click',startPayment);
     el('newPaymentButton').addEventListener('click',resetPayment);
@@ -481,7 +522,20 @@
     el('paymentList').addEventListener('click',function(event){var row=event.target.closest('[data-payment-id]');if(row)showPaymentDetail(row.getAttribute('data-payment-id'));});
 
     el('accountSetting').addEventListener('change',function(){state.settings.account=this.value;saveState();markSaved();});
-    el('currencySetting').addEventListener('change',function(){state.currency=this.value;saveState();markSaved();});
+    el('currencySetting').addEventListener('change',function(){state.currency=this.value;saveState();markSaved();renderPresets();});
+    if(el('presetsSetting')){
+      el('presetsSetting').addEventListener('change',function(){
+        var raw=this.value;
+        var parsed=raw.split(/[,;\s]+/).map(function(item){
+          var num=parseFloat(item.replace(',','.'));
+          return isNaN(num)||num<=0?null:Math.round(num*100)/100;
+        }).filter(Boolean);
+        state.settings.presets=parsed.length?parsed:[100,200,500];
+        saveState();
+        markSaved();
+        renderPresets();
+      });
+    }
     el('notificationsSetting').addEventListener('change',function(){state.settings.notifications=this.checked;saveState();markSaved();});
     el('employeeSetting').addEventListener('change',function(){state.settings.employee=this.checked;saveState();markSaved();});
 

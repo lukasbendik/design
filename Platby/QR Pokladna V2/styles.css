@@ -69,6 +69,12 @@ svg{display:block;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:
 .amount-line input:focus{outline:0}
 .entry-tools{margin-top:var(--space-16);padding-top:var(--space-12);border-top:var(--border-sm) solid var(--color-background-divider)}
 .calc-expression{display:block;min-height:22px;max-width:340px;margin:var(--space-4) auto 0;color:var(--color-content-tertiary);font-size:15px;line-height:22px;text-align:center;word-break:break-all}
+.kp-presets{display:flex;flex-wrap:wrap;justify-content:center;gap:var(--space-8);margin-bottom:var(--space-12)}
+.kp-preset{height:36px;padding:0 var(--space-16);border:var(--border-sm) solid var(--color-background-border);border-radius:var(--radius-full);background:var(--color-background-surface);color:var(--color-content-primary);font-size:14px;font-weight:600;white-space:nowrap;cursor:pointer;transition:background .15s,border-color .15s,transform .1s}
+.kp-preset:hover{background:var(--color-interactive-secondary-action);border-color:var(--color-content-quaternary)}
+.kp-preset:active{background:var(--color-interactive-secondary-active);transform:translateY(1px)}
+.kp-preset-last{border-color:var(--color-interactive-primary);color:var(--color-interactive-primary);background:color-mix(in srgb,var(--color-interactive-primary) 6%,transparent)}
+.kp-preset-last:hover{background:color-mix(in srgb,var(--color-interactive-primary) 12%,transparent)}
 .keypad{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
 .keypad button{height:clamp(50px,7dvh,62px);border:0;border-radius:var(--radius-lg);background:var(--color-background-surface);box-shadow:var(--shadow-panel);font-size:23px;font-weight:600}
 .keypad button:active{background:var(--color-interactive-secondary-active);transform:translateY(1px)}
