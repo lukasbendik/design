@@ -212,7 +212,9 @@
   }
 
   function spaydString(payment){
-    return 'SPD*1.0*ACC:'+payment.account+'*AM:'+(payment.amountCents/100).toFixed(2)+'*CC:'+payment.currency+'*X-VS:'+payment.variableSymbol+'*MSG:QR POKLADNA';
+    var account=payment.account||state.settings.account;
+    var variableSymbol=payment.variableSymbol||payment.id.replace(/\D/g,'').slice(-10);
+    return 'SPD*1.0*ACC:'+account+'*AM:'+(payment.amountCents/100).toFixed(2)+'*CC:'+payment.currency+'*X-VS:'+variableSymbol+'*MSG:QR POKLADNA';
   }
 
   function renderQrCode(){
@@ -362,11 +364,25 @@
     markSaved.timer=setTimeout(function(){el('saveStatus').textContent='Změny se ukládají automaticky.';},1600);
   }
 
+  function renderDetailQr(payment){
+    var wrapper=el('detailQr');
+    var code=el('detailQrCode');
+    var show=payment.status==='pending';
+    wrapper.hidden=!show;
+    code.innerHTML='';
+    if(!show)return;
+    if(typeof QRCode!=='undefined'){
+      try{new QRCode(code,{text:spaydString(payment),width:220,height:220,correctLevel:QRCode.CorrectLevel.M});}
+      catch(error){code.innerHTML='';try{new QRCode(code,{text:spaydString(payment),width:220,height:220,correctLevel:QRCode.CorrectLevel.L});}catch(fallbackError){code.textContent='QR kód se nepodařilo vytvořit.';}}
+    }else code.textContent='QR kód se nepodařilo načíst.';
+  }
+
   function showPaymentDetail(id){
     var payment=state.payments.find(function(item){return item.id===id;});if(!payment)return;
     el('detailTitle').textContent=formatAmount(payment.amountCents,payment.currency);
     var rows=[['Stav',statusLabels[payment.status]],['Pokladna','Stánek – keramika'],['ID platby',payment.id],['Vytvořeno',formatDateTime(payment.createdAt)]];
     el('paymentDetail').innerHTML=rows.map(function(row){return '<div class="detail-row"><span>'+escapeHtml(row[0])+'</span><strong>'+escapeHtml(row[1])+'</strong></div>';}).join('');
+    renderDetailQr(payment);
     el('paymentDialog').showModal();
   }
 
