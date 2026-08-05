@@ -69,7 +69,7 @@ svg{display:block;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:
 .cashier-view.active{display:flex;flex-direction:column;min-height:calc(100dvh - 56px)}
 .cashier-panel{display:flex;flex:1;flex-direction:column;width:100%;max-width:520px;margin:0 auto;padding:var(--space-16) var(--space-12) 0}
 .amount-entry{padding:0 var(--space-4);text-align:center}
-.amount-header{display:flex;align-items:center;justify-content:center;gap:var(--space-12);max-width:340px;margin:0 auto}
+.amount-header{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:var(--space-8);max-width:340px;margin:0 auto}
 .amount-header>label{color:var(--color-content-tertiary);font-size:14px}
 .currency-toggle{display:inline-flex;padding:2px;border:var(--border-sm) solid var(--color-background-border);border-radius:var(--radius-full);background:var(--color-interactive-secondary-action)}
 .toggle-option{padding:3px 10px;border:0;border-radius:var(--radius-full);background:transparent;color:var(--color-content-tertiary);font-size:12px;font-weight:600;cursor:pointer;transition:background .15s,color .15s,box-shadow .15s}
