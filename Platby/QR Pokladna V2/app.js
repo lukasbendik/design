@@ -236,7 +236,7 @@
     var status=el('paymentStatus');
     if(state.current.status==='paid'){
       status.className='status-chip paid';status.querySelector('span').textContent='Platba ověřena';
-      el('verifyProgress').hidden=false;el('verifyProgress').querySelector('div').hidden=true;el('verifyText').hidden=true;el('newPaymentButton').hidden=false;
+      el('verifyProgress').hidden=false;el('verifyProgress').querySelector('div').hidden=true;el('verifyText').hidden=true;el('qrActionBar').hidden=false;
       stopVerifyTimer();return;
     }
     var now=Date.now();
@@ -244,7 +244,7 @@
     if(remaining<=0){confirmPayment();return;}
     var elapsed=Math.min(1,Math.max(0,1-remaining/10000));
     status.className='status-chip checking';status.querySelector('span').textContent='Čekáme na platbu';
-    el('verifyProgress').hidden=false;el('newPaymentButton').hidden=true;
+    el('verifyProgress').hidden=false;el('qrActionBar').hidden=true;
     el('verifyProgress').querySelector('div').hidden=false;el('verifyText').hidden=false;
     el('progressBar').style.width=Math.round(elapsed*100)+'%';
     el('verifyText').textContent='Ověřujeme přijetí platby · '+Math.ceil(remaining/1000)+' s';
@@ -333,6 +333,10 @@
 
     document.addEventListener('keydown',function(event){
       if(routeFromHash()!=='pokladna'||event.metaKey||event.ctrlKey||event.altKey)return;
+      if(event.key==='Enter'){
+        if(!el('payButton').disabled){startPayment();event.preventDefault();}
+        return;
+      }
       var tag=document.activeElement&&document.activeElement.tagName;
       if(tag==='INPUT'||tag==='SELECT'||tag==='TEXTAREA')return;
       var key=event.key;
