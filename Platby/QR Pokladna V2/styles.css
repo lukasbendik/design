@@ -74,7 +74,7 @@ svg{display:block;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:
 .currency-toggle{display:inline-flex;padding:2px;border:var(--border-sm) solid var(--color-background-border);border-radius:var(--radius-full);background:var(--color-interactive-secondary-action)}
 .toggle-option{padding:3px 10px;border:0;border-radius:var(--radius-full);background:transparent;color:var(--color-content-tertiary);font-size:12px;font-weight:600;cursor:pointer;transition:background .15s,color .15s,box-shadow .15s}
 .toggle-option.active{background:var(--color-background-surface);color:var(--color-content-primary);box-shadow:0 1px 3px rgba(0,0,0,0.12)}
-.amount-line{display:flex;align-items:baseline;justify-content:center;flex-wrap:wrap;gap:var(--space-8);max-width:100%;margin:var(--space-4) auto}
+.amount-line{display:flex;align-items:baseline;justify-content:center;flex-wrap:nowrap;white-space:nowrap;gap:var(--space-8);max-width:100%;margin:var(--space-4) auto}
 .amount-line input{width:auto;field-sizing:content;min-width:1ch;max-width:100%;padding:0;border:0;background:transparent;font-size:clamp(42px,13vw,64px);font-weight:600;line-height:1.12;letter-spacing:-2px;text-align:right;font-variant-numeric:tabular-nums}
 .amount-line input:focus{outline:0}
 .amount-converted{color:var(--color-content-tertiary);font-size:clamp(22px,6vw,32px);font-weight:500;letter-spacing:-0.5px;font-variant-numeric:tabular-nums;white-space:nowrap}
@@ -233,7 +233,9 @@ svg{display:block;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:
 }
 
 @media(max-width:420px){
-  .amount-line input,.qr-summary strong{font-size:42px;letter-spacing:-1.5px}
+  .amount-line input{font-size:clamp(30px,8vw,42px);letter-spacing:-1.5px}
+  .amount-converted{font-size:clamp(16px,4.5vw,24px)}
+  .qr-summary strong{font-size:42px;letter-spacing:-1.5px}
   .cashier-panel{padding-top:var(--space-32)}
   .entry-tools{margin-top:auto}
   .keypad button{height:clamp(48px,7dvh,58px)}
