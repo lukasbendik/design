@@ -182,7 +182,7 @@ svg{display:block;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:
   .entry-tools{margin-top:auto}
   .keypad button{height:62px}
   .keypad.calculator button{height:52px}
-  .pay-bar{padding-top:var(--space-8)}
+  .pay-bar{padding-top:var(--space-16)}
   .qr-panel{padding:var(--space-12)}
   .page-heading{align-items:stretch;flex-direction:column}
   .page-heading .button{width:100%}
