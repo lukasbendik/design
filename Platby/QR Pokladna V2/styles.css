@@ -228,16 +228,10 @@ svg{display:block;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:
   .modal-body{flex:1;overflow-y:auto;display:grid;gap:var(--space-16);margin:var(--space-16) 0}
   .login-view.active{align-items:start;padding:var(--space-48) var(--space-20)}
   .login-panel{padding:0;background:transparent;box-shadow:none}
-  .cashier-panel{padding-top:var(--space-32)}
-  .entry-tools{margin-top:auto;margin-bottom:var(--space-16)}
-}
-
-@media(max-width:699px){
-  .cashier-panel{padding-bottom:80px}
+  .cashier-panel{padding-top:var(--space-12);padding-bottom:76px}
+  .entry-tools{margin-top:auto;margin-bottom:var(--space-8);padding-top:var(--space-8)}
   .kp-presets{flex-wrap:nowrap;overflow-x:auto;justify-content:flex-start;padding:2px 0;margin-bottom:var(--space-8);-webkit-overflow-scrolling:touch;scrollbar-width:none}
   .kp-presets::-webkit-scrollbar{display:none}
-  .cashier-panel{padding-top:var(--space-12)}
-  .entry-tools{margin-top:auto;margin-bottom:var(--space-8);padding-top:var(--space-8)}
   .keypad button{height:clamp(40px,5.8dvh,52px);font-size:19px}
 }
 
@@ -245,7 +239,7 @@ svg{display:block;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:
   .amount-line input{font-size:clamp(30px,8vw,42px);letter-spacing:-1.5px}
   .amount-converted{font-size:clamp(16px,4.5vw,24px)}
   .qr-summary strong{font-size:42px;letter-spacing:-1.5px}
-  .cashier-panel{padding-top:var(--space-8);padding-bottom:76px}
+  .cashier-panel{padding-top:var(--space-8)}
   .keypad button{height:clamp(38px,5.5dvh,48px)}
   .pay-bar{padding-top:var(--space-8);padding-bottom:max(var(--space-8),env(safe-area-inset-bottom))}
   .qr-panel{padding:var(--space-12)}
@@ -255,6 +249,13 @@ svg{display:block;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:
   .list-toolbar select{width:100%}
   .transaction-row{grid-template-columns:36px minmax(0,1fr) auto;gap:var(--space-8)}
   .transaction-icon{width:36px;height:36px}
+}
+
+@media(max-height:720px){
+  .kp-presets{display:none!important}
+  .entry-tools{padding-top:0;border-top:0}
+  .cashier-panel{padding-top:var(--space-8)}
+  .keypad button{height:clamp(36px,5.5dvh,46px);font-size:18px}
 }
 
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}

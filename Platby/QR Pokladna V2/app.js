@@ -230,6 +230,7 @@
 
   function renderKeypad(){
     var keypad=el('keypad');
+    if(!keypad)return;
     var keys=[
       ['C','clear','operator'],['(','(','operator'],[')',')','operator'],['/','/','operator'],
       ['7','7',''],['8','8',''],['9','9',''],['*','*','operator'],
@@ -241,9 +242,13 @@
       var label=key[1]==='del'?'Smazat poslední znak':key[0];
       var content=key[1]==='del'?'<svg aria-hidden="true" viewBox="0 0 32 24"><path d="M12 3h15a3 3 0 0 1 3 3v12a3 3 0 0 1-3 3H12L2 12 12 3Z"/><path d="m18 8 6 8M24 8l-6 8"/></svg>':key[0];
       return '<button type="button" data-key="'+key[1]+'" class="'+key[2]+'" aria-label="'+label+'">'+content+'</button>';
+    }).join('');
     var hasOperator=/[+\-*/()]/.test(calcExpression);
-    el('calcExpression').textContent=hasOperator?calcExpression.replace(/\./g,','):'';
-    el('calcExpression').classList.toggle('visible',hasOperator);
+    var calcEl=el('calcExpression');
+    if(calcEl){
+      calcEl.textContent=hasOperator?calcExpression.replace(/\./g,','):'';
+      calcEl.classList.toggle('visible',hasOperator);
+    }
   }
 
   function safeCalculate(expression){
