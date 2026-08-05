@@ -42,10 +42,9 @@ svg{display:block;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:
 .cashier-panel{width:100%;max-width:520px;margin:0 auto;padding:var(--space-16) var(--space-12) 0}
 .amount-entry{padding:0 var(--space-4);text-align:center}
 .amount-entry>label{display:block;color:var(--color-content-tertiary);font-size:14px}
-.amount-line{display:flex;align-items:center;justify-content:center;gap:var(--space-8);max-width:100%;margin:var(--space-4) auto}
-.amount-line input{flex:1 1 auto;min-width:0;width:auto;max-width:340px;padding:0;border:0;background:transparent;font-size:clamp(42px,13vw,64px);font-weight:600;line-height:1.12;letter-spacing:-2px;text-align:right;font-variant-numeric:tabular-nums}
+.amount-line{display:flex;align-items:center;justify-content:center;max-width:100%;margin:var(--space-4) auto}
+.amount-line input{width:100%;max-width:340px;padding:0;border:0;background:transparent;font-size:clamp(42px,13vw,64px);font-weight:600;line-height:1.12;letter-spacing:-2px;text-align:center;font-variant-numeric:tabular-nums}
 .amount-line input:focus{outline:0}
-.amount-line select{flex:0 0 auto;padding:8px 28px 8px 10px;border:0;border-radius:var(--radius-md);background:var(--color-interactive-secondary-action);font-size:18px;font-weight:500}
 .amount-entry>p{margin:0;color:var(--color-content-tertiary);font-size:12px}
 .entry-tools{margin-top:var(--space-16);padding-top:var(--space-12);border-top:var(--border-sm) solid var(--color-background-divider)}
 .preset-row{display:flex;gap:var(--space-8);margin-bottom:var(--space-12);overflow:auto;scrollbar-width:none}
@@ -90,6 +89,7 @@ svg{display:block;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:
 .verify-progress>div{height:4px;overflow:hidden;border-radius:2px;background:var(--color-interactive-secondary-active)}
 .verify-progress span{display:block;width:0;height:100%;border-radius:2px;background:var(--color-content-primary);transition:width .3s linear}
 .verify-progress p{margin:var(--space-8) 0 0;color:var(--color-content-tertiary);font-size:12px}
+.verify-progress .status-chip{margin-top:var(--space-12)}
 .new-payment-button{width:100%;margin-top:var(--space-16)}
 
 .content-view{max-width:920px;margin:0 auto;padding:var(--space-24) var(--space-12)}
@@ -170,7 +170,6 @@ svg{display:block;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:
 
 @media(max-width:420px){
   .amount-line input{font-size:42px;letter-spacing:-1.5px}
-  .amount-line select{font-size:16px}
   .cashier-panel{padding-top:var(--space-12)}
   .entry-tools{margin-top:var(--space-12)}
   .keypad button{height:52px}

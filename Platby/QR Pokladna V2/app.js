@@ -114,8 +114,6 @@
     if(document.activeElement!==el('amountInput')||!preserveInput){
       el('amountInput').value=formatAmount(state.amountCents,state.currency).replace(/\s?(Kč|€)$/,'').trim();
     }
-    el('currencySelect').value=state.currency;
-    el('currencySelect').querySelector('option[value="EUR"]').disabled=!state.settings.eur;
     el('payButton').disabled=state.amountCents<=0;
     el('payButton').textContent=state.amountCents>0?'Zaplatit '+formatAmount(state.amountCents,state.currency):'Zaplatit';
     var last=el('lastAmountPreset');
@@ -238,7 +236,7 @@
     var status=el('paymentStatus');
     if(state.current.status==='paid'){
       status.className='status-chip paid';status.querySelector('span').textContent='Platba ověřena';
-      el('verifyProgress').hidden=true;el('newPaymentButton').hidden=false;el('qrHelp').textContent='Platba dorazila na účet.';
+      el('verifyProgress').hidden=false;el('verifyProgress').querySelector('div').hidden=true;el('verifyText').hidden=true;el('newPaymentButton').hidden=false;
       stopVerifyTimer();return;
     }
     var now=Date.now();
@@ -247,6 +245,7 @@
     var elapsed=Math.min(1,Math.max(0,1-remaining/10000));
     status.className='status-chip checking';status.querySelector('span').textContent='Čekáme na platbu';
     el('verifyProgress').hidden=false;el('newPaymentButton').hidden=true;
+    el('verifyProgress').querySelector('div').hidden=false;el('verifyText').hidden=false;
     el('progressBar').style.width=Math.round(elapsed*100)+'%';
     el('verifyText').textContent='Ověřujeme přijetí platby · '+Math.ceil(remaining/1000)+' s';
   }
@@ -288,7 +287,7 @@
 
   function renderSettings(){
     el('accountSetting').value=state.settings.account;
-    el('eurSetting').checked=state.settings.eur;
+    el('currencySetting').value=state.currency;
     el('notificationsSetting').checked=state.settings.notifications;
     el('employeeSetting').checked=state.settings.employee;
     updateBadges();
@@ -319,7 +318,6 @@
     el('amountInput').addEventListener('focus',function(){entryBuffer=plainAmount(state.amountCents).replace(/,00$/,'');this.value=entryBuffer.replace('.',',');this.select();});
     el('amountInput').addEventListener('input',function(){entryBuffer=normalizeBuffer(this.value);updateAmount(centsFromBuffer(entryBuffer),true);});
     el('amountInput').addEventListener('blur',function(){this.value=formatAmount(state.amountCents,state.currency).replace(/\s?(Kč|€)$/,'').trim();});
-    el('currencySelect').addEventListener('change',function(){state.currency=this.value;saveState();renderCashier();});
     document.querySelector('.preset-row').addEventListener('click',function(event){var button=event.target.closest('[data-preset]');if(!button)return;entryBuffer=String(button.getAttribute('data-preset'));updateAmount(Math.round(Number(entryBuffer)*100));});
     el('keypad').addEventListener('click',function(event){var button=event.target.closest('[data-key]');if(button)pressEntryKey(button.getAttribute('data-key'));});
     el('payButton').addEventListener('click',startPayment);
@@ -329,7 +327,7 @@
     el('paymentList').addEventListener('click',function(event){var row=event.target.closest('[data-payment-id]');if(row)showPaymentDetail(row.getAttribute('data-payment-id'));});
 
     el('accountSetting').addEventListener('change',function(){state.settings.account=this.value;saveState();markSaved();});
-    el('eurSetting').addEventListener('change',function(){state.settings.eur=this.checked;if(!this.checked&&state.currency==='EUR')state.currency='CZK';saveState();markSaved();});
+    el('currencySetting').addEventListener('change',function(){state.currency=this.value;saveState();markSaved();});
     el('notificationsSetting').addEventListener('change',function(){state.settings.notifications=this.checked;saveState();markSaved();});
     el('employeeSetting').addEventListener('change',function(){state.settings.employee=this.checked;saveState();markSaved();});
 
@@ -348,7 +346,6 @@
   document.addEventListener('DOMContentLoaded',function(){
     state=loadState();
     reconcilePayments();
-    if(!state.settings.eur&&state.currency==='EUR')state.currency='CZK';
     entryBuffer=state.amountCents?String(state.amountCents/100):'';
     bindEvents();renderMode();
     if(!location.hash)setRoute('pokladna',true);else renderRoute();
