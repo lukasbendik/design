@@ -106,6 +106,7 @@
 
   function renderMode(){
     qsa('#headerMode [data-mode]').forEach(function(button){button.classList.toggle('active',button.getAttribute('data-mode')===state.entryMode);});
+    el('view-pokladna').classList.toggle('calculator-mode',state.entryMode==='calculator');
     el('calcExpression').classList.toggle('visible',state.entryMode==='calculator'&&Boolean(calcExpression));
     el('calcExpression').hidden=!calcExpression;
     renderKeypad();

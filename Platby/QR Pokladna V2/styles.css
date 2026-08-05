@@ -49,6 +49,7 @@ svg{display:block;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:
 .preset-row{display:flex;flex-wrap:wrap;justify-content:center;gap:var(--space-8);margin-bottom:var(--space-12)}
 .preset-row::-webkit-scrollbar{display:none}
 .preset-row button{flex:0 0 auto;min-height:38px;padding:0 var(--space-16);border:var(--border-sm) solid var(--color-background-border);border-radius:var(--radius-full);background:var(--color-background-surface);font-size:14px;font-weight:700}
+.cashier-view.calculator-mode .preset-row{display:none}
 .calc-expression{display:none;margin:0 0 var(--space-8);color:var(--color-content-tertiary);font-size:15px;text-align:right;word-break:break-all}
 .calc-expression.visible{display:block}
 .keypad{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--space-8)}
