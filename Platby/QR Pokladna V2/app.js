@@ -296,7 +296,7 @@
     var count=state.payments.filter(function(payment){return payment.status==='pending';}).length;
     var indicator=el('verificationIndicator');
     var badge=el('verificationCount');
-    badge.hidden=count===0;badge.textContent=count;
+    badge.textContent=count;
     indicator.classList.toggle('has-pending',count>0);
     indicator.setAttribute('aria-label',count?count+' '+(count===1?'platba čeká':'platby čekají')+' na ověření':'Žádné platby k ověření');
     el('paymentMenuCount').hidden=count===0;el('paymentMenuCount').textContent=count;

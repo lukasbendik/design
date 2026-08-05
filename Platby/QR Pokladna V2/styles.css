@@ -19,13 +19,12 @@ svg{display:block;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:
 .menu-wrap{position:relative}
 .menu-button{position:relative}
 .menu-button svg{width:24px;height:24px}
-.verification-indicator{position:relative;color:var(--color-content-secondary)}
-.verification-indicator svg{width:22px;height:22px}
-.verification-indicator span{position:absolute;top:0;right:0;display:grid;place-items:center;min-width:18px;height:18px;padding:0 5px;border:2px solid var(--color-background-body);border-radius:var(--radius-full);background:var(--color-interactive-primary);color:var(--color-interactive-on-primary);font-size:10px;font-weight:700;line-height:1}
-.verification-indicator.has-pending svg{animation:pending-ring 1.6s ease-in-out infinite}
+.verification-indicator{position:relative}
+.verification-indicator span{display:grid;place-items:center;min-width:28px;height:28px;padding:0 6px;border-radius:var(--radius-full);background:var(--color-interactive-secondary-action);color:var(--color-content-secondary);font-size:13px;font-weight:700;line-height:1;font-variant-numeric:tabular-nums}
+.verification-indicator.has-pending span{background:var(--color-interactive-primary);color:var(--color-interactive-on-primary);animation:pending-count 1.6s ease-in-out infinite}
 .verification-indicator.just-paid{animation:payment-flash 1.4s ease-out}
-@keyframes pending-ring{0%,100%{transform:rotate(0);opacity:1}45%{transform:rotate(8deg);opacity:.55}55%{transform:rotate(-8deg);opacity:.55}}
-@keyframes payment-flash{0%,100%{background:transparent;color:var(--color-content-secondary)}20%,65%{background:var(--color-attention-success-surface);color:var(--color-attention-success);transform:scale(1.1)}}
+@keyframes pending-count{0%,100%{transform:scale(1)}50%{transform:scale(.9);opacity:.72}}
+@keyframes payment-flash{0%,100%{box-shadow:0 0 0 0 transparent}20%,65%{box-shadow:0 0 0 5px var(--color-attention-success-surface);transform:scale(1.08)}}
 .app-menu{position:absolute;top:46px;right:0;width:min(288px,calc(100vw - 24px));padding:var(--space-8);border:var(--border-sm) solid var(--color-background-border);border-radius:var(--radius-xl);background:var(--color-background-surface);box-shadow:var(--shadow-floating)}
 .menu-account{display:grid;grid-template-columns:40px 1fr;align-items:center;gap:var(--space-12);padding:var(--space-12);border-bottom:var(--border-sm) solid var(--color-background-divider)}
 .avatar{display:grid;place-items:center;width:40px;height:40px;border-radius:50%;background:var(--color-content-primary);color:var(--color-background-surface);font-size:12px;font-weight:600}
