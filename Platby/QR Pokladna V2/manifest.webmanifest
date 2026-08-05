@@ -1,0 +1,15 @@
+{
+  "name": "QR Pokladna V2",
+  "short_name": "QR Pokladna",
+  "description": "Samostatná responzivní QR pokladna pro obchodníky.",
+  "lang": "cs",
+  "start_url": "./#pokladna",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#f8f8f8",
+  "theme_color": "#f8f8f8",
+  "icons": [
+    {"src":"icon.svg","sizes":"any","type":"image/svg+xml","purpose":"any maskable"}
+  ]
+}

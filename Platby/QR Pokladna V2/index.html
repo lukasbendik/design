@@ -1,0 +1,229 @@
+<!doctype html>
+<html lang="cs">
+<head>
+<script>
+(function(){var H='4c129f69f551195cbc5e8b57cc5a0975b6efa1e8510573524d11df03c7d010c6',K='rozcestnik__auth';try{var p=new URLSearchParams(location.search);if(p.get('k')===H){localStorage.setItem(K,'1');p.delete('k');var q=p.toString();history.replaceState(history.state,'',location.pathname+(q?'?'+q:'')+location.hash);}if(localStorage.getItem(K)!=='1')location.replace('../../');}catch(e){}})();
+</script>
+<meta charset="utf-8">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#f8f8f8">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="QR Pokladna">
+<title>Prototyp: QR Pokladna V2</title>
+<link rel="manifest" href="manifest.webmanifest?v=1">
+<link rel="icon" href="icon.svg?v=1" type="image/svg+xml">
+<link rel="stylesheet" href="../../design-system/tokens.css?v=1">
+<link rel="stylesheet" href="styles.css?v=3">
+<script src="https://cdn.jsdelivr.net/gh/davidshimjs/qrcodejs@gh-pages/qrcode.min.js" defer></script>
+<script src="app.js?v=3" defer></script>
+</head>
+<body>
+<div class="app-shell">
+  <aside class="side-nav" aria-label="Hlavní navigace">
+    <div class="brand-lockup">
+      <span class="brand-mark" aria-hidden="true">KB</span>
+      <span>QR Pokladna</span>
+      <span class="version-tag">V2</span>
+    </div>
+    <nav class="nav-list">
+      <button class="nav-item active" type="button" data-route="pokladna">
+        <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M4 7h16v13H4zM7 4h10v3H7zM8 11h8M8 15h5"/></svg>
+        <span>Pokladna</span>
+      </button>
+      <button class="nav-item" type="button" data-route="platby">
+        <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M4 6h16v14H4zM4 10h16M8 15h4"/></svg>
+        <span>Platby</span>
+        <span class="nav-badge" id="pendingBadge">1</span>
+      </button>
+      <button class="nav-item" type="button" data-route="nastaveni">
+        <svg aria-hidden="true" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19 12a7 7 0 0 0-.1-1l2-1.5-2-3.4-2.4 1a8 8 0 0 0-1.8-1L14.4 3h-4.8l-.4 3.1a8 8 0 0 0-1.8 1l-2.4-1-2 3.4L5.1 11a7 7 0 0 0 0 2L3 14.5l2 3.4 2.4-1a8 8 0 0 0 1.8 1l.4 3.1h4.8l.4-3.1a8 8 0 0 0 1.8-1l2.4 1 2-3.4-2.1-1.5a7 7 0 0 0 .1-1Z"/></svg>
+        <span>Nastavení</span>
+      </button>
+    </nav>
+    <div class="side-account">
+      <span class="avatar" aria-hidden="true">LB</span>
+      <span><strong>Keramika Bendik</strong><small>Správce</small></span>
+      <button class="icon-button" type="button" aria-label="Nabídka účtu">•••</button>
+    </div>
+  </aside>
+
+  <main class="app-main">
+    <header class="mobile-header">
+      <div class="brand-lockup"><span class="brand-mark" aria-hidden="true">KB</span><span>QR Pokladna</span></div>
+      <button class="cash-register-chip" type="button" data-route="nastaveni" aria-label="Otevřít nastavení pokladny">
+        <span id="mobileTillName">Stánek – keramika</span>
+        <svg aria-hidden="true" viewBox="0 0 24 24"><path d="m9 6 6 6-6 6"/></svg>
+      </button>
+    </header>
+
+    <section class="view active" id="view-pokladna" data-title="Pokladna">
+      <div class="view-heading cashier-heading">
+        <div>
+          <p class="eyebrow">Přijmout platbu</p>
+          <h1>Nová platba</h1>
+        </div>
+        <label class="till-select-wrap">
+          <span>Pokladna</span>
+          <select id="tillSelect" aria-label="Vybraná pokladna"></select>
+        </label>
+      </div>
+
+      <div class="payment-grid">
+        <section class="composer-card" aria-label="Zadání platby">
+          <div class="amount-entry">
+            <label for="amountInput">K zaplacení</label>
+            <div class="amount-line">
+              <input id="amountInput" inputmode="decimal" autocomplete="off" value="0,00" aria-describedby="amountHint">
+              <select id="currencySelect" aria-label="Měna platby">
+                <option value="CZK">Kč</option>
+                <option value="EUR">EUR</option>
+              </select>
+            </div>
+            <p id="amountHint">Částku napsat nebo zadat tlačítky</p>
+          </div>
+
+          <div class="entry-tools">
+            <div class="segmented" id="entryMode" aria-label="Způsob zadání">
+              <button class="active" type="button" data-mode="keypad">Klávesnice</button>
+              <button type="button" data-mode="calculator">Kalkulačka</button>
+            </div>
+            <div class="preset-row" aria-label="Rychlé částky">
+              <button type="button" data-preset="100">100</button>
+              <button type="button" data-preset="200">200</button>
+              <button type="button" data-preset="500">500</button>
+              <button type="button" id="lastAmountPreset" hidden></button>
+            </div>
+            <div class="calc-expression" id="calcExpression" aria-live="polite"></div>
+            <div class="keypad" id="keypad" aria-label="Číselná klávesnice"></div>
+          </div>
+
+          <div class="payment-details">
+            <button class="details-toggle" id="detailsToggle" type="button" aria-expanded="false" aria-controls="detailsFields">
+              <span><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg> Přidat kategorii nebo poznámku</span>
+              <svg class="chevron" aria-hidden="true" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg>
+            </button>
+            <div class="details-fields" id="detailsFields" hidden>
+              <label class="field"><span>Kategorie</span><select id="categorySelect"></select></label>
+              <label class="field"><span>Poznámka</span><input id="noteInput" maxlength="60" placeholder="Např. hrnek modrý"></label>
+            </div>
+          </div>
+        </section>
+
+        <aside class="qr-card" aria-label="QR platba">
+          <div class="qr-topline">
+            <span class="status-chip empty" id="paymentStatus"><i></i><span>Zadejte částku</span></span>
+            <button class="icon-button" id="qrMenuButton" type="button" aria-label="Další možnosti QR platby">•••</button>
+          </div>
+          <div class="qr-summary">
+            <p>QR platba</p>
+            <strong id="qrAmount">0,00 Kč</strong>
+            <span id="qrMeta">Stánek – keramika · CZK</span>
+          </div>
+          <div class="qr-frame empty" id="qrFrame">
+            <div id="qrCode"></div>
+            <div class="qr-placeholder" id="qrPlaceholder">
+              <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M4 4h6v6H4zM14 4h6v6h-6zM4 14h6v6H4zM15 14h2v2h-2zM18 14h2v6h-6v-2h4zM14 17h2v3h-2z"/></svg>
+              <span>QR vznikne po zadání částky</span>
+            </div>
+          </div>
+          <p class="qr-help" id="qrHelp">Zákazník načte QR ve své bankovní aplikaci.</p>
+          <div class="qr-expiry" id="qrExpiry" hidden>
+            <span>Platnost QR</span><strong id="expiryText">10:00</strong>
+          </div>
+          <div class="qr-actions">
+            <button class="button secondary" id="verifyPayment" type="button" disabled>Ověřit platbu</button>
+            <button class="button primary" id="newPayment" type="button" disabled>Další platba</button>
+          </div>
+          <button class="prototype-action" id="failPayment" type="button" disabled>Pro test: označit jako neprošlou</button>
+        </aside>
+      </div>
+
+      <section class="recent-card" aria-labelledby="recentHeading">
+        <div class="section-heading">
+          <div><p class="eyebrow">Dnes</p><h2 id="recentHeading">Poslední platby</h2></div>
+          <button class="text-button" type="button" data-route="platby">Zobrazit vše</button>
+        </div>
+        <div class="transaction-list" id="recentPayments"></div>
+      </section>
+    </section>
+
+    <section class="view" id="view-platby" data-title="Platby">
+      <div class="view-heading">
+        <div><p class="eyebrow">Přehled</p><h1>Platby</h1><p class="heading-copy">Poslední požadavky ze všech pokladen.</p></div>
+        <button class="button primary compact" type="button" data-route="pokladna">Nová platba</button>
+      </div>
+      <div class="stats-grid" id="paymentStats"></div>
+      <section class="list-card">
+        <div class="list-toolbar">
+          <h2>Posledních 5 plateb</h2>
+          <label class="filter-field"><span class="sr-only">Filtrovat stav</span><select id="statusFilter"><option value="all">Všechny stavy</option><option value="paid">Zaplaceno</option><option value="pending">Čeká na platbu</option><option value="expired">Vypršelo</option><option value="failed">Neprošlo</option></select></label>
+        </div>
+        <div class="transaction-list full" id="allPayments"></div>
+      </section>
+    </section>
+
+    <section class="view" id="view-nastaveni" data-title="Nastavení">
+      <div class="view-heading">
+        <div><p class="eyebrow">Správa služby</p><h1>Nastavení</h1><p class="heading-copy">Pokladny, platby a přístup zaměstnanců.</p></div>
+      </div>
+      <div class="settings-layout">
+        <nav class="settings-index" aria-label="Sekce nastavení">
+          <a href="#nastaveni-pokladny">Pokladny</a><a href="#nastaveni-platby">Platby</a><a href="#nastaveni-oznameni">Oznámení a přístup</a>
+        </nav>
+        <div class="settings-content">
+          <section class="settings-card" id="nastaveni-pokladny">
+            <div class="section-heading"><div><h2>Pokladny</h2><p>Rozlišení stánků, provozoven nebo zařízení.</p></div><button class="button secondary compact" id="addTillButton" type="button">Přidat pokladnu</button></div>
+            <div class="till-list" id="tillList"></div>
+          </section>
+          <section class="settings-card" id="nastaveni-platby">
+            <div class="section-heading"><div><h2>Platby</h2><p>Výchozí údaje nového QR.</p></div></div>
+            <div class="settings-form-grid">
+              <label class="field"><span>Účet pro příchozí platby</span><select id="accountSetting"><option value="CZ6501000000001234567890">1234567890/0100 · Běžný účet</option><option value="CZ2001000000009876543210">9876543210/0100 · EUR účet</option></select></label>
+              <label class="field"><span>Platnost QR kódu</span><select id="expirySetting"><option value="5">5 minut</option><option value="10">10 minut</option><option value="15">15 minut</option><option value="30">30 minut</option></select></label>
+            </div>
+            <fieldset class="choice-group"><legend>Povolené měny</legend><label class="check-row"><input type="checkbox" value="CZK" checked disabled><span><strong>CZK</strong><small>České koruny · vždy dostupné</small></span></label><label class="check-row"><input id="eurSetting" type="checkbox" value="EUR"><span><strong>EUR</strong><small>Eura · směrovat na měnový účet</small></span></label></fieldset>
+            <label class="field"><span>Kategorie oddělené čárkou</span><input id="categoriesSetting" value="Keramika, Šperky, Kurzy" maxlength="120"></label>
+            <label class="switch-row"><span><strong>Označení pro účetnictví</strong><small>Přidat název pokladny a kategorii do zprávy pro příjemce</small></span><input id="accountingSetting" type="checkbox" role="switch"><i aria-hidden="true"></i></label>
+          </section>
+          <section class="settings-card" id="nastaveni-oznameni">
+            <div class="section-heading"><div><h2>Oznámení a přístup</h2><p>Co uvidí obsluha a jak dostane potvrzení.</p></div></div>
+            <label class="switch-row"><span><strong>Oznámení o přijaté platbě</strong><small>Upozornění může přijít se zpožděním; stav lze vždy ověřit ručně.</small></span><input id="notificationsSetting" type="checkbox" role="switch"><i aria-hidden="true"></i></label>
+            <label class="switch-row"><span><strong>Režim zaměstnance</strong><small>Přístup jen k pokladně a posledním platbám, bez účtu a správy.</small></span><input id="employeeSetting" type="checkbox" role="switch"><i aria-hidden="true"></i></label>
+          </section>
+          <div class="save-bar"><span id="saveStatus" aria-live="polite">Změny se ukládají automaticky.</span><button class="button primary" type="button" data-route="pokladna">Zpět do pokladny</button></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <nav class="bottom-nav" aria-label="Hlavní navigace na mobilu">
+    <button class="active" type="button" data-route="pokladna"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M4 7h16v13H4zM7 4h10v3H7zM8 11h8M8 15h5"/></svg><span>Pokladna</span></button>
+    <button type="button" data-route="platby"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M4 6h16v14H4zM4 10h16M8 15h4"/></svg><span>Platby</span><i id="mobilePendingBadge">1</i></button>
+    <button type="button" data-route="nastaveni"><svg aria-hidden="true" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19 12a7 7 0 0 0-.1-1l2-1.5-2-3.4-2.4 1a8 8 0 0 0-1.8-1L14.4 3h-4.8l-.4 3.1a8 8 0 0 0-1.8 1l-2.4-1-2 3.4L5.1 11a7 7 0 0 0 0 2L3 14.5l2 3.4 2.4-1a8 8 0 0 0 1.8 1l.4 3.1h4.8l.4-3.1a8 8 0 0 0 1.8-1l2.4 1 2-3.4-2.1-1.5a7 7 0 0 0 .1-1Z"/></svg><span>Nastavení</span></button>
+  </nav>
+</div>
+
+<dialog id="tillDialog" class="modal">
+  <form method="dialog" id="tillForm">
+    <div class="modal-heading"><div><p class="eyebrow">Nová pokladna</p><h2>Přidat pokladnu</h2></div><button class="icon-button" value="cancel" aria-label="Zavřít">×</button></div>
+    <label class="field"><span>Název pokladny</span><input id="newTillName" required maxlength="32" placeholder="Např. Dílna"></label>
+    <label class="field"><span>Výchozí kategorie</span><select id="newTillCategory"></select></label>
+    <div class="modal-actions"><button class="button secondary" value="cancel">Zrušit</button><button class="button primary" id="confirmTill" value="default">Přidat</button></div>
+  </form>
+</dialog>
+
+<dialog id="paymentDialog" class="modal">
+  <form method="dialog">
+    <div class="modal-heading"><div><p class="eyebrow">Detail platby</p><h2 id="detailTitle">Platba</h2></div><button class="icon-button" value="cancel" aria-label="Zavřít">×</button></div>
+    <div class="detail-list" id="paymentDetail"></div>
+    <div class="modal-actions"><button class="button primary" value="cancel">Hotovo</button></div>
+  </form>
+</dialog>
+</body>
+</html>
