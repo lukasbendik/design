@@ -262,6 +262,7 @@
     if(state.amountCents<=0)return;
     var now=Date.now();
     var id=makePaymentId();
+    var willFail=Math.random()<0.10;
     var payment={
       id:id,
       amountCents:state.amountCents,
@@ -270,9 +271,10 @@
       variableSymbol:id.replace(/\D/g,'').slice(-10),
       registerName:currentRegisterName(),
       status:'pending',
+      willFail:willFail,
       createdAt:now,
-      confirmAt:now+randomSeconds(10,50)*1000,
-      expiresAt:now+60000,
+      confirmAt:willFail?null:(now+randomSeconds(8,25)*1000),
+      expiresAt:willFail?(now+randomSeconds(12,25)*1000):(now+60000),
       updatedAt:now
     };
     state.lastAmountCents=state.amountCents;
@@ -319,19 +321,20 @@
   function reconcilePayments(){
     var now=Date.now();
     var changed=false;
-    var newlyPaid=[];
+    var newEvents=[];
     state.payments.forEach(function(payment){
       if(payment.status!=='pending')return;
-      if(payment.confirmAt&&payment.confirmAt<=now){
+      if(!payment.willFail&&payment.confirmAt&&payment.confirmAt<=now){
         payment.status='paid';payment.paidAt=now;payment.updatedAt=now;changed=true;
-        if(!payment.announcedAt)newlyPaid.push(payment);
+        if(!payment.announcedAt)newEvents.push({payment:payment,type:'paid'});
       }else if(payment.expiresAt&&payment.expiresAt<=now){
         payment.status='expired';payment.updatedAt=now;changed=true;
+        if(!payment.announcedAt)newEvents.push({payment:payment,type:'expired'});
       }
     });
-    if(newlyPaid.length){newlyPaid.forEach(function(payment){payment.announcedAt=now;});changed=true;}
+    if(newEvents.length){newEvents.forEach(function(event){event.payment.announcedAt=now;});changed=true;}
     if(changed)saveState();
-    return newlyPaid;
+    return newEvents;
   }
 
   function updateVerification(){
@@ -385,35 +388,67 @@
     setTimeout(function(){indicator.classList.remove('just-paid');},1400);
   }
 
-  function announcePayments(payments){
-    if(!state.session||!payments||!payments.length)return;
+  function announcePayments(events){
+    if(!state.session||!events||!events.length)return;
     updateBadges();
-    var notifications=payments.filter(function(payment){
-      var visibleQr=routeFromHash()==='qr'&&state.activePaymentId===payment.id&&document.visibilityState==='visible'&&document.hasFocus();
+    var notifications=events.filter(function(item){
+      var visibleQr=routeFromHash()==='qr'&&state.activePaymentId===item.payment.id&&document.visibilityState==='visible'&&document.hasFocus();
       return !visibleQr;
     });
     if(!notifications.length)return;
-    notifications.forEach(function(payment){
-      toastQueue.push(payment);
-      if(state.settings.notifications&&'Notification'in window&&Notification.permission==='granted'){
-        try{new Notification('Platba ověřena',{body:formatAmount(payment.amountCents,payment.currency)+' · '+payment.id});}catch(error){}
+    notifications.forEach(function(item){
+      toastQueue.push(item);
+      if(item.type==='paid'&&state.settings.notifications&&'Notification'in window&&Notification.permission==='granted'){
+        try{new Notification('Platba ověřena',{body:formatAmount(item.payment.amountCents,item.payment.currency)+' · '+item.payment.id});}catch(error){}
       }
     });
     flashIndicator();showNextToast();
   }
 
+  function dismissToast(){
+    var toast=el('paymentToast');
+    if(!toast)return;
+    toast.classList.remove('show');
+    setTimeout(function(){
+      toast.hidden=true;
+      toastTimer=null;
+      showNextToast();
+    },250);
+  }
+
   function showNextToast(){
     if(toastTimer||!toastQueue.length)return;
-    var payment=toastQueue.shift();
+    var item=toastQueue.shift();
+    var payment=item.payment;
     var toast=el('paymentToast');
-    el('paymentToastAmount').textContent=formatAmount(payment.amountCents,payment.currency)+' zaplaceno';
-    el('paymentToastId').textContent='ID platby '+payment.id;
+    var icon=el('paymentToastIcon');
+    var closeBtn=el('paymentToastClose');
+
+    if(item.type==='expired'){
+      toast.classList.add('toast-alert');
+      icon.innerHTML='<svg viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg>';
+      el('paymentToastAmount').textContent=formatAmount(payment.amountCents,payment.currency)+' neověřeno';
+      el('paymentToastId').textContent='ID platby '+payment.id+' · Čas vypršel';
+      if(closeBtn)closeBtn.hidden=false;
+    }else{
+      toast.classList.remove('toast-alert');
+      icon.innerHTML='<svg viewBox="0 0 24 24"><path d="m5 12 4 4L19 6"/></svg>';
+      el('paymentToastAmount').textContent=formatAmount(payment.amountCents,payment.currency)+' zaplaceno';
+      el('paymentToastId').textContent='ID platby '+payment.id;
+      if(closeBtn)closeBtn.hidden=true;
+    }
+
     toast.hidden=false;
     requestAnimationFrame(function(){toast.classList.add('show');});
-    toastTimer=setTimeout(function(){
-      toast.classList.remove('show');
-      setTimeout(function(){toast.hidden=true;toastTimer=null;showNextToast();},250);
-    },4000);
+
+    if(item.type==='expired'){
+      toastTimer='sticky';
+    }else{
+      toastTimer=setTimeout(function(){
+        toast.classList.remove('show');
+        setTimeout(function(){toast.hidden=true;toastTimer=null;showNextToast();},250);
+      },4000);
+    }
   }
 
   function transactionIcon(status){
@@ -516,6 +551,7 @@
       });
     }
     el('keypad').addEventListener('click',function(event){var button=event.target.closest('[data-key]');if(button)pressCalcKey(button.getAttribute('data-key'));});
+    if(el('paymentToastClose'))el('paymentToastClose').addEventListener('click',dismissToast);
     el('payButton').addEventListener('click',startPayment);
     el('newPaymentButton').addEventListener('click',resetPayment);
     el('statusFilter').addEventListener('change',renderPayments);

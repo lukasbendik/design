@@ -19,9 +19,9 @@
 <link rel="manifest" href="manifest.webmanifest?v=1">
 <link rel="icon" href="icon.svg?v=1" type="image/svg+xml">
 <link rel="stylesheet" href="../../design-system/tokens.css?v=1">
-<link rel="stylesheet" href="styles.css?v=35">
+<link rel="stylesheet" href="styles.css?v=36">
 <script src="https://cdn.jsdelivr.net/gh/davidshimjs/qrcodejs@gh-pages/qrcode.min.js" defer></script>
-<script src="app.js?v=25" defer></script>
+<script src="app.js?v=26" defer></script>
 </head>
 <body>
 <div class="app-shell">
@@ -57,8 +57,9 @@
   </header>
 
   <div class="payment-toast" id="paymentToast" role="status" aria-live="polite" aria-atomic="true" hidden>
-    <span class="payment-toast-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m5 12 4 4L19 6"/></svg></span>
-    <span><strong id="paymentToastAmount"></strong><small id="paymentToastId"></small></span>
+    <span class="payment-toast-icon" id="paymentToastIcon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m5 12 4 4L19 6"/></svg></span>
+    <span class="payment-toast-content"><strong id="paymentToastAmount"></strong><small id="paymentToastId"></small></span>
+    <button class="payment-toast-close" id="paymentToastClose" type="button" aria-label="Zavřít notifikaci" hidden>Zavřít</button>
   </div>
 
   <main class="app-main">
