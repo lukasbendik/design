@@ -171,12 +171,13 @@ svg{display:block;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:
 }
 
 @media(max-width:699px){
+  .cashier-panel{padding-top:var(--space-32)}
   .entry-tools{margin-top:auto}
 }
 
 @media(max-width:420px){
   .amount-line input{font-size:42px;letter-spacing:-1.5px}
-  .cashier-panel{padding-top:var(--space-12)}
+  .cashier-panel{padding-top:var(--space-32)}
   .entry-tools{margin-top:auto}
   .keypad button{height:52px}
   .keypad.calculator button{height:44px}
