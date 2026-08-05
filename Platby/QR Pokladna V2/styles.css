@@ -60,7 +60,7 @@ svg{display:block;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:
 .keypad .operator{background:var(--color-interactive-secondary-action)}
 .keypad .danger{color:var(--color-attention-alert)}
 .keypad [data-key="del"]{border-color:transparent;background:transparent;box-shadow:none}
-.pay-bar{position:sticky;bottom:0;margin-top:auto;padding:var(--space-12) max(var(--space-12),env(safe-area-inset-right)) max(var(--space-12),env(safe-area-inset-bottom)) max(var(--space-12),env(safe-area-inset-left));border-top:var(--border-sm) solid var(--color-background-divider);background:var(--color-background-surface);box-shadow:var(--shadow-panel)}
+.pay-bar{position:sticky;bottom:0;display:grid;place-items:center;margin-top:auto;padding:var(--space-12) max(var(--space-12),env(safe-area-inset-right)) max(var(--space-12),env(safe-area-inset-bottom)) max(var(--space-12),env(safe-area-inset-left));border-top:var(--border-sm) solid var(--color-background-divider);background:var(--color-background-surface);box-shadow:var(--shadow-panel)}
 .button{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:0 var(--pad-2xl);border-radius:var(--radius-md);font-size:16px;font-weight:500;text-decoration:none}
 .button.primary{border:var(--border-sm) solid var(--color-interactive-primary);background:var(--color-interactive-primary);color:var(--color-interactive-on-primary)}
 .button.primary:hover{background:var(--color-interactive-primary-action);border-color:var(--color-interactive-primary-action)}
@@ -68,7 +68,7 @@ svg{display:block;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:
 .button:disabled{cursor:not-allowed;opacity:.4}
 .button.compact{min-height:40px;padding:0 var(--space-16);font-size:14px}
 .action-button{min-height:54px;border-radius:var(--radius-md);box-shadow:none;font-weight:700}
-.pay-button{width:100%;max-width:520px;margin:0 auto}
+.pay-button{width:min(100%,520px);margin:0}
 
 .qr-view.active{display:flex;flex-direction:column;min-height:calc(100dvh - 56px);padding:var(--space-16) var(--space-12) 0}
 .qr-panel{align-self:flex-start;width:100%;max-width:480px;padding:var(--space-16);border-radius:0;background:transparent;box-shadow:none;text-align:center}
