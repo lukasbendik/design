@@ -108,8 +108,8 @@ svg{display:block;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:
 .status-chip.expired i{background:var(--color-attention-alert);animation:none}
 @keyframes pulse{50%{opacity:.2}}
 .qr-summary{margin:var(--space-12) 0}
-.qr-summary p{margin:0;color:var(--color-content-tertiary);font-size:13px}
-.qr-summary strong{display:block;font-size:32px;line-height:40px;letter-spacing:-.5px}
+.qr-summary p{margin:0;color:var(--color-content-tertiary);font-size:14px}
+.qr-summary strong{display:block;margin:var(--space-4) 0;font-size:clamp(42px,13vw,64px);font-weight:600;line-height:1.12;letter-spacing:-2px;font-variant-numeric:tabular-nums}
 .qr-frame{display:grid;place-items:center;width:min(68vw,260px);aspect-ratio:1;margin:0 auto;padding:10px;border:var(--border-md) solid var(--color-content-primary);background:#fff}
 #qrCode,#qrCode img,#qrCode canvas{width:100%!important;height:100%!important}
 #qrCode{display:grid;place-items:center}
@@ -205,7 +205,7 @@ svg{display:block;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:
   .cashier-view.active{justify-content:center;padding:var(--space-32) var(--space-24)}
   .cashier-panel{flex:0 0 auto;margin:0 auto;padding:0}
   .pay-bar{position:static;width:100%;max-width:520px;margin:var(--space-16) auto 0;padding:0;border:0;background:transparent;box-shadow:none}
-  .amount-line input{font-size:56px}
+  .amount-line input,.qr-summary strong{font-size:56px}
   .keypad button{height:58px}
   .qr-view.active{justify-content:center;padding:var(--space-32) var(--space-24)}
   .qr-panel{align-self:center;padding:0;border-radius:0;background:transparent;box-shadow:none}
@@ -228,7 +228,7 @@ svg{display:block;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:
 }
 
 @media(max-width:420px){
-  .amount-line input{font-size:42px;letter-spacing:-1.5px}
+  .amount-line input,.qr-summary strong{font-size:42px;letter-spacing:-1.5px}
   .cashier-panel{padding-top:var(--space-32)}
   .entry-tools{margin-top:auto}
   .keypad button{height:clamp(48px,7dvh,58px)}
