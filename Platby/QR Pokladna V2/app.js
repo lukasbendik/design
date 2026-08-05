@@ -191,8 +191,10 @@
   function safeCalculate(expression){
     var clean=expression.replace(/[^0-9+\-*/.()]/g,'');
     if(!clean||!/[0-9]/.test(clean))return null;
+    var evalable=clean.replace(/[+\-*/.(]+$/,'');
+    if(!evalable)return null;
     try{
-      var result=Function('"use strict";return ('+clean+')')();
+      var result=Function('"use strict";return ('+evalable+')')();
       return typeof result==='number'&&isFinite(result)&&result>=0?Math.round(result*100)/100:null;
     }catch(error){return null;}
   }
@@ -204,7 +206,10 @@
       var last=(calcExpression.split(/[+\-*/()]/).pop()||'');
       if(last.indexOf('.')<0)calcExpression+=(last?'':'0')+'.';
     }else if(/[+\-*/]/.test(key)){
-      if(calcExpression&&!/[+\-*/.(]$/.test(calcExpression))calcExpression+=key;
+      if(calcExpression){
+        if(/[+\-*/]$/.test(calcExpression))calcExpression=calcExpression.slice(0,-1)+key;
+        else if(!/[.(]$/.test(calcExpression))calcExpression+=key;
+      }
     }else if(key==='('){
       if(!calcExpression||/[+\-*/(]$/.test(calcExpression))calcExpression+='(';
     }else if(key===')'){
