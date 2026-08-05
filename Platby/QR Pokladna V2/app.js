@@ -205,7 +205,7 @@
       inputEl.value=formatAmount(state.amountCents,'CZK').replace(/\s?(Kč|€)$/,'').trim();
     }
     var valLen=(inputEl.value||'0,00').length;
-    inputEl.style.width=Math.max(1,valLen+0.2)+'ch';
+    inputEl.style.width=Math.max(1,valLen)+'ch';
     var selected=state.selectedCurrency||'CZK';
     var convertedEl=el('amountConverted');
     if(selected==='EUR'){
