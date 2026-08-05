@@ -495,13 +495,64 @@
     }else code.textContent='QR kód se nepodařilo načíst.';
   }
 
+  var activeDetailId=null;
+  var detailTimer=null;
+
+  function stopDetailTimer(){
+    if(detailTimer){clearInterval(detailTimer);detailTimer=null;}
+  }
+
+  function updateDetailView(){
+    var dialog=el('paymentDialog');
+    if(!dialog||!dialog.open||!activeDetailId){
+      stopDetailTimer();return;
+    }
+    var payment=state.payments.find(function(item){return item.id===activeDetailId;});
+    if(!payment)return;
+    var statusText=el('detailStatusText');
+    if(statusText)statusText.textContent=statusLabels[payment.status]||payment.status;
+    var progressTrack=el('detailProgressTrack');
+    if(payment.status==='pending'){
+      if(progressTrack)progressTrack.hidden=false;
+      var bar=el('detailProgressBar');
+      if(bar){
+        var now=Date.now();
+        var duration=Math.max(1,payment.expiresAt-payment.createdAt);
+        var elapsed=Math.min(1,Math.max(0,(now-payment.createdAt)/duration));
+        bar.style.width=Math.round(elapsed*100)+'%';
+      }
+    }else{
+      if(progressTrack)progressTrack.hidden=true;
+      renderDetailQr(payment);
+      stopDetailTimer();
+    }
+  }
+
   function showPaymentDetail(id){
     var payment=state.payments.find(function(item){return item.id===id;});if(!payment)return;
+    activeDetailId=id;
     el('detailTitle').textContent=formatAmount(payment.amountCents,payment.currency);
-    var rows=[['Stav',statusLabels[payment.status]],['Pokladna',payment.registerName||currentRegisterName()],['ID platby',payment.id],['Vytvořeno',formatDateTime(payment.createdAt)]];
-    el('paymentDetail').innerHTML=rows.map(function(row){return '<div class="detail-row"><span>'+escapeHtml(row[0])+'</span><strong>'+escapeHtml(row[1])+'</strong></div>';}).join('');
+    var now=Date.now();
+    var duration=Math.max(1,payment.expiresAt-payment.createdAt);
+    var elapsed=Math.min(1,Math.max(0,(now-payment.createdAt)/duration));
+    var percent=Math.round(elapsed*100);
+    var isPending=payment.status==='pending';
+
+    var statusHtml='<div><strong id="detailStatusText">'+escapeHtml(statusLabels[payment.status]||payment.status)+'</strong>'+
+      '<div class="detail-progress-track" id="detailProgressTrack" '+(isPending?'':'hidden')+'>'+
+      '<span id="detailProgressBar" style="width:'+percent+'%;"></span>'+
+      '</div></div>';
+
+    var rowsHtml='<div class="detail-row"><span>Stav</span>'+statusHtml+'</div>'+
+      '<div class="detail-row"><span>Pokladna</span><strong>'+escapeHtml(payment.registerName||currentRegisterName())+'</strong></div>'+
+      '<div class="detail-row"><span>ID platby</span><strong>'+escapeHtml(payment.id)+'</strong></div>'+
+      '<div class="detail-row"><span>Vytvořeno</span><strong>'+escapeHtml(formatDateTime(payment.createdAt))+'</strong></div>';
+
+    el('paymentDetail').innerHTML=rowsHtml;
     renderDetailQr(payment);
     el('paymentDialog').showModal();
+    stopDetailTimer();
+    if(isPending)detailTimer=setInterval(updateDetailView,250);
   }
 
   function refreshBackground(){
@@ -509,6 +560,7 @@
     updateBadges();
     if(routeFromHash()==='platby')renderPayments();
     if(routeFromHash()==='qr'&&getActivePayment())updateVerification();
+    updateDetailView();
   }
 
   function bindEvents(){
@@ -556,6 +608,7 @@
     el('newPaymentButton').addEventListener('click',resetPayment);
     el('statusFilter').addEventListener('change',renderPayments);
     el('paymentList').addEventListener('click',function(event){var row=event.target.closest('[data-payment-id]');if(row)showPaymentDetail(row.getAttribute('data-payment-id'));});
+    el('paymentDialog').addEventListener('close',function(){activeDetailId=null;stopDetailTimer();});
 
     el('accountSetting').addEventListener('change',function(){state.settings.account=this.value;saveState();markSaved();});
     el('currencySetting').addEventListener('change',function(){state.currency=this.value;saveState();markSaved();renderPresets();});

@@ -190,6 +190,8 @@ svg{display:block;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:
 .detail-row span,.detail-row strong{display:block}
 .detail-row span{color:var(--color-content-tertiary);font-size:12px}
 .detail-row strong{font-size:15px;font-weight:500}
+.detail-progress-track{height:4px;margin-top:6px;border-radius:var(--radius-full);background:var(--color-background-divider);overflow:hidden}
+.detail-progress-track span{display:block;height:100%;border-radius:var(--radius-full);background:var(--color-interactive-primary);transition:width .2s linear}
 
 @media(min-width:700px){
   .modal{width:min(92vw,460px);max-height:90dvh;border-radius:var(--radius-xl);box-shadow:var(--shadow-highlighted)}
