@@ -77,6 +77,7 @@ svg{display:block;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:
 .amount-line{display:flex;align-items:baseline;justify-content:center;flex-wrap:nowrap;white-space:nowrap;gap:0.25em;max-width:100%;margin:var(--space-4) auto}
 .amount-line input{width:auto;min-width:1ch;max-width:100%;padding:0;border:0;background:transparent;font-size:clamp(42px,13vw,64px);font-weight:600;line-height:1.12;letter-spacing:-2px;text-align:right;font-variant-numeric:tabular-nums}
 .amount-line input:focus{outline:0}
+.amount-unit{font-size:clamp(42px,13vw,64px);font-weight:600;line-height:1.12;letter-spacing:-2px;color:var(--color-content-primary);font-variant-numeric:tabular-nums;white-space:nowrap}
 .amount-converted{color:var(--color-content-tertiary);font-size:clamp(22px,6vw,32px);font-weight:500;letter-spacing:-0.5px;font-variant-numeric:tabular-nums;white-space:nowrap}
 .entry-tools{margin-top:var(--space-16);padding-top:var(--space-12);border-top:var(--border-sm) solid var(--color-background-divider)}
 .calc-expression{display:block;min-height:22px;max-width:340px;margin:var(--space-4) auto 0;color:var(--color-content-tertiary);font-size:15px;line-height:22px;text-align:center;word-break:break-all}
@@ -210,7 +211,7 @@ svg{display:block;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:
   .cashier-view.active{justify-content:center;padding:var(--space-32) var(--space-24)}
   .cashier-panel{flex:0 0 auto;margin:0 auto;padding:0}
   .pay-bar{position:static;width:100%;max-width:520px;margin:var(--space-16) auto 0;padding:0;border:0;background:transparent;box-shadow:none}
-  .amount-line input,.qr-summary strong{font-size:56px}
+  .amount-line input,.amount-unit,.qr-summary strong{font-size:56px}
   .keypad button{height:58px}
   .qr-view.active{justify-content:center;padding:var(--space-32) var(--space-24)}
   .qr-panel{align-self:center;padding:0;border-radius:0;background:transparent;box-shadow:none}
@@ -236,7 +237,7 @@ svg{display:block;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:
 }
 
 @media(max-width:420px){
-  .amount-line input{font-size:clamp(30px,8vw,42px);letter-spacing:-1.5px}
+  .amount-line input,.amount-unit{font-size:clamp(30px,8vw,42px);letter-spacing:-1.5px}
   .amount-converted{font-size:clamp(16px,4.5vw,24px)}
   .qr-summary strong{font-size:42px;letter-spacing:-1.5px}
   .cashier-panel{padding-top:var(--space-8)}
