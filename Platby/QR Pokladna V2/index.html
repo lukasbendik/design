@@ -19,9 +19,9 @@
 <link rel="manifest" href="manifest.webmanifest?v=1">
 <link rel="icon" href="icon.svg?v=1" type="image/svg+xml">
 <link rel="stylesheet" href="../../design-system/tokens.css?v=1">
-<link rel="stylesheet" href="styles.css?v=21">
+<link rel="stylesheet" href="styles.css?v=23">
 <script src="https://cdn.jsdelivr.net/gh/davidshimjs/qrcodejs@gh-pages/qrcode.min.js" defer></script>
-<script src="app.js?v=10" defer></script>
+<script src="app.js?v=11" defer></script>
 </head>
 <body>
 <div class="app-shell">
@@ -30,19 +30,17 @@
       <span class="brand-mark" aria-hidden="true">KB</span>
     </button>
 
-    <div class="header-center">
-      <div class="header-mode" id="headerMode" aria-label="Způsob zadání částky">
-        <button class="active" type="button" data-mode="keypad">Klávesnice</button>
-        <button type="button" data-mode="calculator">Kalkulačka</button>
-      </div>
-      <strong class="header-title" id="headerTitle" hidden>QR platba</strong>
-    </div>
+    <strong class="header-title">KB pokladna</strong>
 
-    <div class="menu-wrap">
-      <button class="menu-button" id="menuButton" type="button" aria-label="Otevřít menu" aria-expanded="false" aria-controls="appMenu">
-        <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 7h14M5 12h14M5 17h14"/></svg>
-        <span class="menu-badge" id="menuBadge" hidden></span>
+    <div class="header-actions">
+      <button class="verification-indicator" id="verificationIndicator" type="button" data-route="platby" aria-label="Žádné platby k ověření">
+        <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M12 6v6l4 2"/><circle cx="12" cy="12" r="8"/></svg>
+        <span id="verificationCount" hidden></span>
       </button>
+      <div class="menu-wrap">
+        <button class="menu-button" id="menuButton" type="button" aria-label="Otevřít menu" aria-expanded="false" aria-controls="appMenu">
+          <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 7h14M5 12h14M5 17h14"/></svg>
+        </button>
       <div class="app-menu" id="appMenu" hidden>
         <div class="menu-account">
           <span class="avatar" aria-hidden="true">LB</span>
@@ -54,8 +52,14 @@
           <button type="button" data-route="nastaveni"><svg aria-hidden="true" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19 12a7 7 0 0 0-.1-1l2-1.5-2-3.4-2.4 1a8 8 0 0 0-1.8-1L14.4 3h-4.8l-.4 3.1a8 8 0 0 0-1.8 1l-2.4-1-2 3.4L5.1 11a7 7 0 0 0 0 2L3 14.5l2 3.4 2.4-1a8 8 0 0 0 1.8 1l.4 3.1h4.8l.4-3.1a8 8 0 0 0 1.8-1l2.4 1 2-3.4-2.1-1.5a7 7 0 0 0 .1-1Z"/></svg><span>Nastavení</span></button>
         </nav>
       </div>
+      </div>
     </div>
   </header>
+
+  <div class="payment-toast" id="paymentToast" role="status" aria-live="polite" aria-atomic="true" hidden>
+    <span class="payment-toast-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m5 12 4 4L19 6"/></svg></span>
+    <span><strong id="paymentToastAmount"></strong><small id="paymentToastId"></small></span>
+  </div>
 
   <main>
     <section class="view active cashier-view" id="view-pokladna" aria-label="Pokladna">
@@ -69,12 +73,6 @@
         </div>
 
         <div class="entry-tools">
-          <div class="preset-row" aria-label="Rychlé částky">
-            <button type="button" data-preset="100">100</button>
-            <button type="button" data-preset="200">200</button>
-            <button type="button" data-preset="500">500</button>
-            <button type="button" id="lastAmountPreset" hidden></button>
-          </div>
           <div class="keypad" id="keypad" aria-label="Číselná klávesnice"></div>
         </div>
       </div>
@@ -85,17 +83,16 @@
 
     <section class="view qr-view" id="view-qr" aria-label="QR platba">
       <div class="qr-panel">
-        <button class="back-link" id="qrBack" type="button"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="m15 18-6-6 6-6"/></svg> Zpět</button>
         <div class="qr-summary"><p>K zaplacení</p><strong id="qrAmount">0,00 Kč</strong></div>
         <div class="qr-frame"><div id="qrCode"></div></div>
         <p class="qr-help" id="qrHelp">Zákazník načte QR ve své bankovní aplikaci.</p>
         <div class="verify-progress" id="verifyProgress">
           <div><span id="progressBar"></span></div>
-          <p id="verifyText">Ověřujeme přijetí platby · 10 s</p>
+          <p id="verifyText">Ověřujeme přijetí platby · 60 s</p>
           <div class="status-chip checking" id="paymentStatus"><i></i><span>Čekáme na platbu</span></div>
         </div>
       </div>
-      <div class="qr-action-bar" id="qrActionBar" hidden><button class="button primary action-button new-payment-button" id="newPaymentButton" type="button">Zadat další</button></div>
+      <div class="qr-action-bar" id="qrActionBar"><button class="button primary action-button new-payment-button" id="newPaymentButton" type="button">Zadat další</button></div>
     </section>
 
     <section class="view content-view" id="view-platby" aria-label="Platby">
