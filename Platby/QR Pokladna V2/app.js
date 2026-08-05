@@ -186,7 +186,6 @@
     }).join('');
     el('calcExpression').textContent=calcExpression.replace(/\./g,',');
     el('calcExpression').classList.toggle('visible',Boolean(calcExpression));
-    el('calcExpression').hidden=!calcExpression;
   }
 
   function safeCalculate(expression){
