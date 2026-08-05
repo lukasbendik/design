@@ -174,7 +174,7 @@ svg{display:block;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:
 
 @media(max-width:699px){
   .cashier-panel{padding-top:var(--space-32)}
-  .entry-tools{margin-top:auto}
+  .entry-tools{margin-top:auto;margin-bottom:var(--space-16)}
 }
 
 @media(max-width:420px){
