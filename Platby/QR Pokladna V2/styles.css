@@ -88,7 +88,7 @@ svg{display:block;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:
 #qrCode{display:grid;place-items:center}
 .qr-help{margin:var(--space-12) auto;color:var(--color-content-tertiary);font-size:13px}
 .verify-progress{max-width:300px;margin:0 auto}
-.verify-progress>div{height:4px;overflow:hidden;border-radius:2px;background:var(--color-interactive-secondary-active)}
+.verify-progress>div:first-child{height:4px;overflow:hidden;border-radius:2px;background:var(--color-interactive-secondary-active)}
 .verify-progress span{display:block;width:0;height:100%;border-radius:2px;background:var(--color-content-primary);transition:width .3s linear}
 .verify-progress p{margin:var(--space-8) 0 0;color:var(--color-content-tertiary);font-size:12px}
 .verify-progress .status-chip{margin-top:var(--space-12)}
