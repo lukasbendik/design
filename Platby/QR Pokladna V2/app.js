@@ -12,6 +12,14 @@
   var toastTimer=null;
 
   var statusLabels={pending:'Čeká na platbu',paid:'Zaplaceno',expired:'Vypršelo'};
+  var registers=[
+    {id:'pernicky',name:'Stánek – perníčky'},
+    {id:'motokary',name:'Motokáry'},
+    {id:'potraviny',name:'Potraviny U Náměstí'},
+    {id:'kvetiny',name:'Květinový stánek'},
+    {id:'kavarna',name:'Kavárna Na rohu'},
+    {id:'remesla',name:'Řemeslný stánek'}
+  ];
 
   function defaults(){
     var now=Date.now();
@@ -21,6 +29,7 @@
       lastAmountCents:0,
       sequence:24,
       settings:{account:'CZ6501000000001234567890',eur:true,notifications:true,employee:false},
+      session:null,
       activePaymentId:null,
       payments:[
         {id:'QR-260805-024',amountCents:89000,currency:'CZK',status:'paid',createdAt:now-12*60000,updatedAt:now-12*60000},
@@ -67,6 +76,17 @@
   function plainAmount(cents){return ((cents||0)/100).toFixed(2).replace('.',',');}
   function randomSeconds(min,max){return min+Math.floor(Math.random()*(max-min+1));}
   function getActivePayment(){return state.payments.find(function(payment){return payment.id===state.activePaymentId;})||null;}
+  function createSession(username){
+    var clean=username.trim();
+    var hash=0;
+    for(var index=0;index<clean.length;index++)hash=((hash<<5)-hash+clean.charCodeAt(index))|0;
+    var register=registers[Math.abs(hash)%registers.length];
+    var displayName=clean.indexOf('@')>=0?clean.split('@')[0]:clean;
+    displayName=displayName.replace(/[._-]+/g,' ').replace(/\b\w/g,function(letter){return letter.toUpperCase();});
+    var initials=displayName.split(/\s+/).filter(Boolean).slice(0,2).map(function(part){return part.charAt(0).toUpperCase();}).join('')||'U';
+    return {username:clean,displayName:displayName,initials:initials,registerId:register.id,registerName:register.name,loggedInAt:Date.now()};
+  }
+  function currentRegisterName(){return state.session&&state.session.registerName?state.session.registerName:'Pokladna';}
   function normalizeBuffer(value){
     var clean=String(value||'').replace(/\s/g,'').replace(/[^0-9,.]/g,'').replace(',','.');
     var parts=clean.split('.');
@@ -81,6 +101,7 @@
   }
 
   function routeFromHash(){
+    if(!state.session)return 'prihlaseni';
     var hash=location.hash.slice(1);
     if(hash==='qr'&&getActivePayment())return 'qr';
     if(hash==='platby')return 'platby';
@@ -97,12 +118,18 @@
   }
 
   function renderRoute(){
-    announcePayments(reconcilePayments());
     var route=routeFromHash();
+    var completed=reconcilePayments();
+    if(route!=='prihlaseni')announcePayments(completed);
+    if(route==='prihlaseni'&&location.hash!=='#prihlaseni')history.replaceState(null,'','#prihlaseni');
+    if(route==='pokladna'&&state.session&&location.hash==='#prihlaseni')history.replaceState(null,'','#pokladna');
+    document.body.classList.toggle('logged-out',route==='prihlaseni');
     qsa('.view').forEach(function(view){view.classList.toggle('active',view.id==='view-'+route);});
     qsa('#appMenu [data-route]').forEach(function(button){button.classList.toggle('active',button.getAttribute('data-route')===route);});
-    document.title='Prototyp: QR Pokladna V2 – '+({pokladna:'Pokladna',qr:'QR platba',platby:'Platby',nastaveni:'Nastavení'}[route]);
+    document.title='Prototyp: QR Pokladna V2 – '+({prihlaseni:'Přihlášení',pokladna:'Pokladna',qr:'QR platba',platby:'Platby',nastaveni:'Nastavení'}[route]);
     stopVerifyTimer();
+    if(state.session)renderSession();
+    if(route==='prihlaseni')renderLogin();
     if(route==='pokladna')renderCashier();
     if(route==='qr')renderQrView();
     if(route==='platby')renderPayments();
@@ -116,6 +143,20 @@
     el('menuButton').setAttribute('aria-expanded',String(open));
   }
   function closeMenu(){el('appMenu').hidden=true;el('menuButton').setAttribute('aria-expanded','false');}
+
+  function renderLogin(){
+    setTimeout(function(){el('loginUsername').focus();},0);
+  }
+
+  function renderSession(){
+    if(!state.session)return;
+    el('menuAvatar').textContent=state.session.initials;
+    el('menuUserName').textContent=state.session.displayName;
+    el('menuRegisterName').textContent=state.session.registerName;
+    el('settingsAvatar').textContent=state.session.initials;
+    el('settingsUserName').textContent=state.session.displayName;
+    el('settingsRegisterName').textContent='Pokladna: '+state.session.registerName;
+  }
 
   function renderCashier(preserveInput){
     if(document.activeElement!==el('amountInput')||!preserveInput){
@@ -194,6 +235,7 @@
       currency:state.currency,
       account:state.settings.account,
       variableSymbol:id.replace(/\D/g,'').slice(-10),
+      registerName:currentRegisterName(),
       status:'pending',
       createdAt:now,
       confirmAt:now+randomSeconds(10,50)*1000,
@@ -311,7 +353,7 @@
   }
 
   function announcePayments(payments){
-    if(!payments||!payments.length)return;
+    if(!state.session||!payments||!payments.length)return;
     updateBadges();
     var notifications=payments.filter(function(payment){
       var visibleQr=routeFromHash()==='qr'&&state.activePaymentId===payment.id&&document.visibilityState==='visible'&&document.hasFocus();
@@ -358,6 +400,7 @@
   }
 
   function renderSettings(){
+    renderSession();
     el('accountSetting').value=state.settings.account;
     el('currencySetting').value=state.currency;
     el('notificationsSetting').checked=state.settings.notifications;
@@ -386,7 +429,7 @@
   function showPaymentDetail(id){
     var payment=state.payments.find(function(item){return item.id===id;});if(!payment)return;
     el('detailTitle').textContent=formatAmount(payment.amountCents,payment.currency);
-    var rows=[['Stav',statusLabels[payment.status]],['Pokladna','Stánek – keramika'],['ID platby',payment.id],['Vytvořeno',formatDateTime(payment.createdAt)]];
+    var rows=[['Stav',statusLabels[payment.status]],['Pokladna',payment.registerName||currentRegisterName()],['ID platby',payment.id],['Vytvořeno',formatDateTime(payment.createdAt)]];
     el('paymentDetail').innerHTML=rows.map(function(row){return '<div class="detail-row"><span>'+escapeHtml(row[0])+'</span><strong>'+escapeHtml(row[1])+'</strong></div>';}).join('');
     renderDetailQr(payment);
     el('paymentDialog').showModal();
@@ -406,6 +449,23 @@
     el('appMenu').addEventListener('click',function(event){event.stopPropagation();});
     document.addEventListener('click',closeMenu);
     document.addEventListener('keydown',function(event){if(event.key==='Escape')closeMenu();});
+
+    el('loginForm').addEventListener('submit',function(event){
+      event.preventDefault();
+      var username=el('loginUsername').value.trim();
+      var password=el('loginPassword').value;
+      if(!username||!password){this.reportValidity();return;}
+      state.session=createSession(username);
+      state.amountCents=0;state.activePaymentId=null;entryBuffer='';calcExpression='';qrRenderedFor=null;
+      saveState();this.reset();setRoute('pokladna',true);
+    });
+    el('loginForm').addEventListener('keydown',function(event){
+      if(event.key==='Enter'){event.preventDefault();this.requestSubmit();}
+    });
+    el('logoutButton').addEventListener('click',function(){
+      state.session=null;state.amountCents=0;state.activePaymentId=null;entryBuffer='';calcExpression='';qrRenderedFor=null;
+      saveState();setRoute('prihlaseni',true);
+    });
 
     el('amountInput').addEventListener('focus',function(){entryBuffer=plainAmount(state.amountCents).replace(/,00$/,'');this.value=entryBuffer.replace('.',',');this.select();});
     el('amountInput').addEventListener('input',function(){entryBuffer=normalizeBuffer(this.value);calcExpression=entryBuffer;updateAmount(centsFromBuffer(entryBuffer),true);});
@@ -453,7 +513,9 @@
     entryBuffer=state.amountCents?String(state.amountCents/100):'';
     calcExpression=entryBuffer;
     bindEvents();renderKeypad();
-    if(!location.hash)setRoute('pokladna',true);else renderRoute();
+    if(!state.session)setRoute('prihlaseni',true);
+    else if(!location.hash||location.hash==='#prihlaseni')setRoute('pokladna',true);
+    else renderRoute();
     backgroundTimer=setInterval(refreshBackground,500);
     if('serviceWorker'in navigator){window.addEventListener('load',function(){navigator.serviceWorker.register('sw.js?v=2').catch(function(){});});}
   });
