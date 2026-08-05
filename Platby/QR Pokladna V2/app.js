@@ -172,26 +172,52 @@
     var presets=state.settings.presets||[100,200,500];
     var html=presets.map(function(kc){
       var cents=Math.round(kc*100);
-      var label=formatPresetLabel(cents,state.currency,false);
+      var label=formatPresetLabel(cents,'CZK',false);
       return '<button type="button" class="kp-preset" data-preset-cents="'+cents+'">'+escapeHtml(label)+'</button>';
     });
     var lastCents=state.lastAmountCents||0;
     if(lastCents>0){
       var lastVal=lastCents/100;
       if(presets.indexOf(lastVal)<0){
-        var lastLabel=formatPresetLabel(lastCents,state.currency,true);
+        var lastLabel=formatPresetLabel(lastCents,'CZK',true);
         html.push('<button type="button" class="kp-preset kp-preset-last" data-preset-cents="'+lastCents+'">'+escapeHtml(lastLabel)+'</button>');
       }
     }
     container.innerHTML=html.join('');
   }
 
+  function renderCurrencyToggle(){
+    var toggle=el('currencyToggle');
+    if(!toggle)return;
+    var selected=state.selectedCurrency||'CZK';
+    qsa('[data-currency]',toggle).forEach(function(btn){
+      var curr=btn.getAttribute('data-currency');
+      var active=curr===selected;
+      btn.classList.toggle('active',active);
+      btn.setAttribute('aria-checked',active?'true':'false');
+    });
+  }
+
   function renderCashier(preserveInput){
+    renderCurrencyToggle();
     if(document.activeElement!==el('amountInput')||!preserveInput){
-      el('amountInput').value=formatAmount(state.amountCents,state.currency).replace(/\s?(Kč|€)$/,'').trim();
+      el('amountInput').value=formatAmount(state.amountCents,'CZK').replace(/\s?(Kč|€)$/,'').trim();
     }
-    el('payButton').disabled=state.amountCents<=0;
-    el('payButton').textContent=state.amountCents>0?'Zaplatit '+formatAmount(state.amountCents,state.currency):'Zaplatit';
+    var selected=state.selectedCurrency||'CZK';
+    var convertedEl=el('amountConverted');
+    if(selected==='EUR'){
+      var eurCents=Math.round(state.amountCents/25);
+      if(convertedEl){
+        convertedEl.hidden=state.amountCents<=0;
+        convertedEl.textContent='('+formatAmount(eurCents,'EUR')+')';
+      }
+      el('payButton').disabled=state.amountCents<=0;
+      el('payButton').textContent=state.amountCents>0?'Zaplatit '+formatAmount(eurCents,'EUR'):'Zaplatit';
+    }else{
+      if(convertedEl)convertedEl.hidden=true;
+      el('payButton').disabled=state.amountCents<=0;
+      el('payButton').textContent=state.amountCents>0?'Zaplatit '+formatAmount(state.amountCents,'CZK'):'Zaplatit';
+    }
     renderPresets();
     renderKeypad();
     updateBadges();
@@ -263,10 +289,14 @@
     var now=Date.now();
     var id=makePaymentId();
     var willFail=Math.random()<0.10;
+    var selected=state.selectedCurrency||'CZK';
+    var finalAmountCents=selected==='EUR'?Math.round(state.amountCents/25):state.amountCents;
+    var finalCurrency=selected==='EUR'?'EUR':'CZK';
     var payment={
       id:id,
-      amountCents:state.amountCents,
-      currency:state.currency,
+      amountCents:finalAmountCents,
+      currency:finalCurrency,
+      czkAmountCents:state.amountCents,
       account:state.settings.account,
       variableSymbol:id.replace(/\D/g,'').slice(-10),
       registerName:currentRegisterName(),
@@ -625,6 +655,15 @@
       });
     }
     el('keypad').addEventListener('click',function(event){var button=event.target.closest('[data-key]');if(button)pressCalcKey(button.getAttribute('data-key'));});
+    if(el('currencyToggle')){
+      el('currencyToggle').addEventListener('click',function(event){
+        var btn=event.target.closest('[data-currency]');
+        if(!btn)return;
+        state.selectedCurrency=btn.getAttribute('data-currency');
+        saveState();
+        renderCashier(true);
+      });
+    }
     if(el('paymentToastClose'))el('paymentToastClose').addEventListener('click',dismissToast);
     el('payButton').addEventListener('click',startPayment);
     el('newPaymentButton').addEventListener('click',resetPayment);
