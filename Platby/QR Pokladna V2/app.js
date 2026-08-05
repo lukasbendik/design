@@ -394,7 +394,7 @@
 
   function renderPayments(){
     var filter=el('statusFilter').value;
-    var list=(filter==='all'?state.payments:state.payments.filter(function(payment){return payment.status===filter;})).slice(0,5);
+    var list=filter==='all'?state.payments:state.payments.filter(function(payment){return payment.status===filter;});
     el('paymentList').innerHTML=list.length?list.map(transactionHtml).join(''):'<div class="empty-list">Žádná platba v tomto stavu.</div>';
     updateBadges();
   }

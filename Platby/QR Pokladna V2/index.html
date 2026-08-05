@@ -19,9 +19,9 @@
 <link rel="manifest" href="manifest.webmanifest?v=1">
 <link rel="icon" href="icon.svg?v=1" type="image/svg+xml">
 <link rel="stylesheet" href="../../design-system/tokens.css?v=1">
-<link rel="stylesheet" href="styles.css?v=29">
+<link rel="stylesheet" href="styles.css?v=30">
 <script src="https://cdn.jsdelivr.net/gh/davidshimjs/qrcodejs@gh-pages/qrcode.min.js" defer></script>
-<script src="app.js?v=18" defer></script>
+<script src="app.js?v=19" defer></script>
 </head>
 <body>
 <div class="app-shell">
@@ -112,12 +112,17 @@
       <div class="qr-action-bar" id="qrActionBar"><button class="button primary action-button new-payment-button" id="newPaymentButton" type="button">Zadat další</button></div>
     </section>
 
-    <section class="view content-view" id="view-platby" aria-label="Platby">
-      <div class="page-heading"><div><p class="eyebrow">Přehled</p><h1>Platby</h1><p>Poslední požadavky této pokladny.</p></div><button class="button primary compact" type="button" data-route="pokladna">Nová platba</button></div>
-      <section class="content-card">
-        <div class="list-toolbar"><h2>Posledních 5 plateb</h2><label><span class="sr-only">Filtrovat stav</span><select id="statusFilter"><option value="all">Všechny stavy</option><option value="paid">Zaplaceno</option><option value="pending">Čeká na platbu</option></select></label></div>
-        <div class="transaction-list" id="paymentList"></div>
-      </section>
+    <section class="view content-view platby-view" id="view-platby" aria-label="Platby">
+      <div class="platby-content">
+        <div class="page-heading"><div><p class="eyebrow">Přehled</p><h1>Platby</h1><p>Poslední požadavky této pokladny.</p></div></div>
+        <section class="content-card">
+          <div class="list-toolbar"><h2>Všechny platby</h2><label><span class="sr-only">Filtrovat stav</span><select id="statusFilter"><option value="all">Všechny stavy</option><option value="paid">Zaplaceno</option><option value="pending">Čeká na platbu</option></select></label></div>
+          <div class="transaction-list" id="paymentList"></div>
+        </section>
+      </div>
+      <div class="platby-action-bar">
+        <button class="button primary action-button new-payment-button" type="button" data-route="pokladna">Nová platba</button>
+      </div>
     </section>
 
     <section class="view content-view" id="view-nastaveni" aria-label="Nastavení">
