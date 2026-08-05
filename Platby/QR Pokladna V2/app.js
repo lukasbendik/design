@@ -274,6 +274,7 @@
     var payment=getActivePayment();
     if(!payment){setRoute('pokladna',true);return;}
     el('qrAmount').textContent=formatAmount(payment.amountCents,payment.currency);
+    el('qrPaymentId').textContent='ID platby '+payment.id;
     renderQrCode();
     updateVerification();
     if(payment.status==='pending')verifyTimer=setInterval(updateVerification,250);

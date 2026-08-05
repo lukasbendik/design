@@ -102,7 +102,8 @@ svg{display:block;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:
 .qr-frame{display:grid;place-items:center;width:min(68vw,260px);aspect-ratio:1;margin:0 auto;padding:10px;border:var(--border-md) solid var(--color-content-primary);background:#fff}
 #qrCode,#qrCode img,#qrCode canvas{width:100%!important;height:100%!important}
 #qrCode{display:grid;place-items:center}
-.qr-help{margin:var(--space-12) auto;color:var(--color-content-tertiary);font-size:13px}
+.qr-payment-id{margin:var(--space-12) auto 0;color:var(--color-content-secondary);font-size:12px;font-weight:600;font-variant-numeric:tabular-nums}
+.qr-help{margin:var(--space-4) auto var(--space-12);color:var(--color-content-tertiary);font-size:13px}
 .verify-progress{max-width:300px;margin:0 auto}
 .verify-progress>div:first-child{height:4px;overflow:hidden;border-radius:2px;background:var(--color-interactive-secondary-active)}
 .verify-progress>div:first-child span{display:block;width:0;height:100%;border-radius:2px;background:var(--color-content-primary);transition:width .3s linear}

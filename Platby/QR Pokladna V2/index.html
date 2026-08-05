@@ -19,9 +19,9 @@
 <link rel="manifest" href="manifest.webmanifest?v=1">
 <link rel="icon" href="icon.svg?v=1" type="image/svg+xml">
 <link rel="stylesheet" href="../../design-system/tokens.css?v=1">
-<link rel="stylesheet" href="styles.css?v=27">
+<link rel="stylesheet" href="styles.css?v=28">
 <script src="https://cdn.jsdelivr.net/gh/davidshimjs/qrcodejs@gh-pages/qrcode.min.js" defer></script>
-<script src="app.js?v=16" defer></script>
+<script src="app.js?v=17" defer></script>
 </head>
 <body>
 <div class="app-shell">
@@ -101,7 +101,8 @@
       <div class="qr-panel">
         <div class="qr-summary"><p>K zaplacení</p><strong id="qrAmount">0,00 Kč</strong></div>
         <div class="qr-frame"><div id="qrCode"></div></div>
-        <p class="qr-help" id="qrHelp">Zákazník načte QR ve své bankovní aplikaci.</p>
+        <p class="qr-payment-id" id="qrPaymentId"></p>
+        <p class="qr-help" id="qrHelp">Načtěte QR ve své bankovní aplikaci.</p>
         <div class="verify-progress" id="verifyProgress">
           <div><span id="progressBar"></span></div>
           <p id="verifyText">Ověřujeme přijetí platby · 60 s</p>
@@ -145,7 +146,7 @@
     <div class="modal-heading"><div><p class="eyebrow">Detail platby</p><h2 id="detailTitle">Platba</h2></div><button class="icon-button" value="cancel" aria-label="Zavřít">×</button></div>
     <div class="detail-qr" id="detailQr" hidden>
       <div class="detail-qr-frame"><div id="detailQrCode"></div></div>
-      <p>Zákazník načte QR ve své bankovní aplikaci.</p>
+      <p>Načtěte QR ve své bankovní aplikaci.</p>
     </div>
     <div class="detail-list" id="paymentDetail"></div>
     <button class="button primary" value="cancel">Hotovo</button>
