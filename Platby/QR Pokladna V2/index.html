@@ -19,7 +19,7 @@
 <link rel="manifest" href="manifest.webmanifest?v=1">
 <link rel="icon" href="icon.svg?v=1" type="image/svg+xml">
 <link rel="stylesheet" href="../../design-system/tokens.css?v=1">
-<link rel="stylesheet" href="styles.css?v=25">
+<link rel="stylesheet" href="styles.css?v=26">
 <script src="https://cdn.jsdelivr.net/gh/davidshimjs/qrcodejs@gh-pages/qrcode.min.js" defer></script>
 <script src="app.js?v=14" defer></script>
 </head>
@@ -65,10 +65,10 @@
       <div class="cashier-panel">
         <div class="amount-entry">
           <label for="amountInput">K zaplacení</label>
+          <div class="calc-expression" id="calcExpression" aria-live="polite" hidden></div>
           <div class="amount-line">
             <input id="amountInput" inputmode="decimal" autocomplete="off" value="0,00">
           </div>
-          <div class="calc-expression" id="calcExpression" aria-live="polite" hidden></div>
         </div>
 
         <div class="entry-tools">

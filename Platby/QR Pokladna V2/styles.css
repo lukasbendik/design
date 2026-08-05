@@ -55,7 +55,7 @@ svg{display:block;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:
 .amount-line input{width:100%;max-width:340px;padding:0;border:0;background:transparent;font-size:clamp(42px,13vw,64px);font-weight:600;line-height:1.12;letter-spacing:-2px;text-align:center;font-variant-numeric:tabular-nums}
 .amount-line input:focus{outline:0}
 .entry-tools{margin-top:var(--space-16);padding-top:var(--space-12);border-top:var(--border-sm) solid var(--color-background-divider)}
-.calc-expression{display:none;max-width:340px;margin:0 auto var(--space-8);color:var(--color-content-tertiary);font-size:15px;text-align:right;word-break:break-all}
+.calc-expression{display:none;max-width:340px;margin:var(--space-4) auto 0;color:var(--color-content-tertiary);font-size:15px;text-align:center;word-break:break-all}
 .calc-expression.visible{display:block}
 .keypad{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
 .keypad button{height:clamp(50px,7dvh,62px);border:0;border-radius:var(--radius-lg);background:var(--color-background-surface);box-shadow:var(--shadow-panel);font-size:23px;font-weight:600}
