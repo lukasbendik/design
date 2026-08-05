@@ -416,6 +416,15 @@
     },250);
   }
 
+  function retryPayment(amountCents){
+    if(!amountCents||amountCents<=0)return;
+    var dialog=el('paymentDialog');
+    if(dialog&&dialog.open)dialog.close();
+    dismissToast();
+    state.amountCents=amountCents;
+    startPayment();
+  }
+
   function showNextToast(){
     if(toastTimer||!toastQueue.length)return;
     var item=toastQueue.shift();
@@ -423,18 +432,26 @@
     var toast=el('paymentToast');
     var icon=el('paymentToastIcon');
     var closeBtn=el('paymentToastClose');
+    var toastRetryBtn=el('toastRetryBtn');
+    var toastActions=el('paymentToastActions');
 
     if(item.type==='expired'){
       toast.classList.add('toast-alert');
       icon.innerHTML='<svg viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg>';
       el('paymentToastAmount').textContent=formatAmount(payment.amountCents,payment.currency)+' neověřeno';
       el('paymentToastId').textContent='ID platby '+payment.id+' · Čas vypršel';
+      if(toastActions)toastActions.hidden=false;
+      if(toastRetryBtn){
+        toastRetryBtn.hidden=false;
+        toastRetryBtn.onclick=function(){retryPayment(payment.amountCents);};
+      }
       if(closeBtn)closeBtn.hidden=false;
     }else{
       toast.classList.remove('toast-alert');
       icon.innerHTML='<svg viewBox="0 0 24 24"><path d="m5 12 4 4L19 6"/></svg>';
       el('paymentToastAmount').textContent=formatAmount(payment.amountCents,payment.currency)+' zaplaceno';
       el('paymentToastId').textContent='ID platby '+payment.id;
+      if(toastRetryBtn)toastRetryBtn.hidden=true;
       if(closeBtn)closeBtn.hidden=true;
     }
 
@@ -549,6 +566,11 @@
       '<div class="detail-row"><span>Vytvořeno</span><strong>'+escapeHtml(formatDateTime(payment.createdAt))+'</strong></div>';
 
     el('paymentDetail').innerHTML=rowsHtml;
+    var retryBtn=el('retryPaymentBtn');
+    if(retryBtn){
+      retryBtn.hidden=payment.status!=='expired';
+      retryBtn.onclick=function(){retryPayment(payment.amountCents);};
+    }
     renderDetailQr(payment);
     el('paymentDialog').showModal();
     stopDetailTimer();

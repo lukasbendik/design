@@ -48,7 +48,8 @@ svg{display:block;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:
 .payment-toast strong,.payment-toast small{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .payment-toast strong{font-size:14px;font-weight:600}
 .payment-toast small{color:var(--color-content-tertiary);font-size:12px}
-.payment-toast-close{display:inline-flex;align-items:center;justify-content:center;height:32px;padding:0 var(--space-12);border:var(--border-sm) solid var(--color-background-border);border-radius:var(--radius-md);background:var(--color-background-surface);color:var(--color-content-primary);font-size:13px;font-weight:600;cursor:pointer;white-space:nowrap;flex-shrink:0}
+.payment-toast-actions{display:flex;align-items:center;gap:var(--space-8);flex-shrink:0}
+.payment-toast-close{display:inline-flex;align-items:center;justify-content:center;height:36px;padding:0 var(--space-12);border:var(--border-sm) solid var(--color-background-border);border-radius:var(--radius-md);background:var(--color-background-surface);color:var(--color-content-primary);font-size:13px;font-weight:600;cursor:pointer;white-space:nowrap;flex-shrink:0}
 .payment-toast-close:hover{background:var(--color-interactive-secondary-action)}
 
 .view{display:none}
@@ -192,6 +193,7 @@ svg{display:block;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:
 .detail-row strong{font-size:15px;font-weight:500}
 .detail-progress-track{height:4px;margin-top:6px;border-radius:var(--radius-full);background:var(--color-background-divider);overflow:hidden}
 .detail-progress-track span{display:block;height:100%;border-radius:var(--radius-full);background:var(--color-interactive-primary);transition:width .2s linear}
+.modal-actions{display:flex;flex-direction:column;gap:var(--space-8);width:100%}
 
 @media(min-width:700px){
   .modal{width:min(92vw,460px);max-height:90dvh;border-radius:var(--radius-xl);box-shadow:var(--shadow-highlighted)}
