@@ -224,6 +224,22 @@
     renderPresets();
     renderKeypad();
     updateBadges();
+    setTimeout(checkKeypadFit,0);
+  }
+
+  function checkKeypadFit(){
+    var view=el('view-pokladna');
+    if(!view||!view.classList.contains('active'))return;
+    var keypad=el('keypad');
+    var payBar=q('.pay-bar',view);
+    var presets=el('kpPresets');
+    if(!keypad||!payBar||!presets)return;
+    view.classList.remove('hide-presets-auto');
+    var keypadRect=keypad.getBoundingClientRect();
+    var payBarRect=payBar.getBoundingClientRect();
+    if(keypadRect.bottom>payBarRect.top-2){
+      view.classList.add('hide-presets-auto');
+    }
   }
 
   function updateAmount(cents,preserveInput){state.amountCents=Math.max(0,Math.min(cents,999999999));saveState();renderCashier(preserveInput);}
@@ -621,6 +637,8 @@
   function bindEvents(){
     qsa('[data-route]').forEach(function(button){button.addEventListener('click',function(){setRoute(button.getAttribute('data-route'));});});
     window.addEventListener('hashchange',renderRoute);
+    window.addEventListener('resize',checkKeypadFit);
+    window.addEventListener('orientationchange',checkKeypadFit);
     el('menuButton').addEventListener('click',function(event){event.stopPropagation();toggleMenu();});
     el('appMenu').addEventListener('click',function(event){event.stopPropagation();});
     document.addEventListener('click',closeMenu);
