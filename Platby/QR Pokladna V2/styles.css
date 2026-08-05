@@ -39,7 +39,7 @@ svg{display:block;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:
 .view{display:none}
 .view.active{display:block}
 .cashier-view.active{display:flex;flex-direction:column;min-height:calc(100dvh - 56px)}
-.cashier-panel{width:100%;max-width:520px;margin:0 auto;padding:var(--space-16) var(--space-12) 0}
+.cashier-panel{display:flex;flex:1;flex-direction:column;width:100%;max-width:520px;margin:0 auto;padding:var(--space-16) var(--space-12) 0}
 .amount-entry{padding:0 var(--space-4);text-align:center}
 .amount-entry>label{display:block;color:var(--color-content-tertiary);font-size:14px}
 .amount-line{display:flex;align-items:center;justify-content:center;max-width:100%;margin:var(--space-4) auto}
@@ -171,10 +171,14 @@ svg{display:block;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:
   .settings-grid{grid-template-columns:.8fr 1.2fr;align-items:start}
 }
 
+@media(max-width:699px){
+  .entry-tools{margin-top:auto}
+}
+
 @media(max-width:420px){
   .amount-line input{font-size:42px;letter-spacing:-1.5px}
   .cashier-panel{padding-top:var(--space-12)}
-  .entry-tools{margin-top:var(--space-12)}
+  .entry-tools{margin-top:auto}
   .keypad button{height:52px}
   .keypad.calculator button{height:44px}
   .pay-bar{padding-top:var(--space-8)}

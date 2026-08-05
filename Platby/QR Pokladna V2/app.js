@@ -332,7 +332,13 @@
     el('employeeSetting').addEventListener('change',function(){state.settings.employee=this.checked;saveState();markSaved();});
 
     document.addEventListener('keydown',function(event){
-      if(routeFromHash()!=='pokladna'||event.metaKey||event.ctrlKey||event.altKey)return;
+      var route=routeFromHash();
+      if(event.metaKey||event.ctrlKey||event.altKey)return;
+      if(route==='qr'){
+        if(event.key==='Enter'&&!el('qrActionBar').hidden){resetPayment();event.preventDefault();}
+        return;
+      }
+      if(route!=='pokladna')return;
       if(event.key==='Enter'){
         if(!el('payButton').disabled){startPayment();event.preventDefault();}
         return;
