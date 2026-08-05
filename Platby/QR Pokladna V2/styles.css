@@ -31,13 +31,13 @@ svg{display:block;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:
 .menu-account strong,.menu-account small{display:block}
 .menu-account strong{font-size:14px}
 .menu-account small{color:var(--color-content-tertiary);font-size:12px}
-.app-menu nav{display:grid;gap:2px;padding-top:var(--space-8)}
-.app-menu nav button{display:grid;grid-template-columns:24px 1fr auto;align-items:center;gap:var(--space-12);width:100%;min-height:48px;padding:0 var(--space-12);border:0;border-radius:var(--radius-md);background:transparent;text-align:left}
+.app-menu nav{display:flex;flex-direction:column;gap:2px;padding-top:var(--space-8)}
+.app-menu nav button{display:grid;grid-template-columns:24px 1fr auto;align-items:center;gap:var(--space-12);width:100%;min-height:48px;padding:0 var(--space-12);border:0;border-radius:var(--radius-md);background:transparent;color:var(--color-content-primary);font-size:15px;font-weight:400;text-align:left;cursor:pointer}
 .app-menu nav button:hover,.app-menu nav button.active{background:var(--color-interactive-secondary-action)}
-.app-menu nav button.active{color:var(--color-interactive-primary);font-weight:500}
-.app-menu nav svg{width:21px;height:21px}
+.app-menu nav button.active{color:var(--color-interactive-primary);font-weight:600}
+.app-menu nav svg{width:21px;height:21px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 .app-menu nav i{display:grid;place-items:center;min-width:22px;height:22px;padding:0 6px;border-radius:var(--radius-full);background:var(--color-attention-alert-surface);color:var(--color-attention-alert);font-size:11px;font-style:normal;font-weight:600}
-.app-menu nav .logout-nav{margin-top:var(--space-8);border-top:var(--border-sm) solid var(--color-background-divider);border-radius:0 0 var(--radius-md) var(--radius-md);color:var(--color-content-secondary)}
+.app-menu nav .logout-nav{margin-top:var(--space-8);padding-top:var(--space-12);border-top:var(--border-sm) solid var(--color-background-divider);border-radius:0 0 var(--radius-md) var(--radius-md);color:var(--color-content-secondary)}
 .payment-toast{position:fixed;z-index:80;top:64px;left:50%;display:grid;grid-template-columns:36px minmax(0,1fr);align-items:center;gap:var(--space-12);width:min(calc(100% - 24px),420px);padding:var(--space-12) var(--space-16);border:var(--border-sm) solid color-mix(in srgb,var(--color-attention-success) 24%,transparent);border-radius:var(--radius-lg);background:var(--color-background-surface);box-shadow:var(--shadow-floating);opacity:0;transform:translate(-50%,-12px);transition:opacity .2s ease,transform .2s ease}
 .payment-toast.show{opacity:1;transform:translate(-50%,0)}
 .payment-toast-icon{display:grid;place-items:center;width:36px;height:36px;border-radius:50%;background:var(--color-attention-success-surface);color:var(--color-attention-success)}
