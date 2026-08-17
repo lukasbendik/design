@@ -173,7 +173,7 @@
   .fab svg { width: 24px; height: 24px; }  /* Camera screen */
   .camera {
     flex: 1;
-    background: #111;
+    background: #F7F7F7;
     position: relative;
     display: flex;
     flex-direction: column;
@@ -183,7 +183,7 @@
     display: flex;
     flex-direction: column;
     align-items: stretch;
-    padding: 12px 16px 14px;
+    padding: 16px 16px 12px;
     gap: 10px;
     background: #FFF;
     border-bottom: 1px solid var(--border);
@@ -206,16 +206,16 @@
     background: #E5E5EA;
     border-radius: 9px;
     padding: 2px;
-    width: 260px;
-    margin: 0 auto;
+    width: 100%;
+    margin: 0;
   }
   .mode-segment button {
     flex: 1;
     border: none;
     background: transparent;
     color: var(--text-2);
-    padding: 6px 0;
-    font-size: 13px;
+    padding: 8px 0;
+    font-size: 16px;
     font-weight: 500;
     border-radius: 7px;
     cursor: pointer;
@@ -231,7 +231,13 @@
 
   .cam-viewport {
     flex: 1;
-    background: #D5D6D8;
+    background-color: #D3D8D6;
+    background-image:
+      radial-gradient(rgba(255,255,255,0.34) 0.7px, transparent 0.9px),
+      radial-gradient(rgba(90,100,96,0.18) 0.7px, transparent 1px),
+      repeating-linear-gradient(12deg, rgba(255,255,255,0.08) 0 1px, rgba(80,90,86,0.06) 1px 3px);
+    background-position: 0 0, 4px 3px, 0 0;
+    background-size: 5px 5px, 7px 7px, 9px 9px;
     position: relative;
     display: flex; justify-content: center; align-items: center;
     overflow: hidden;
@@ -348,26 +354,27 @@
 
   .scan-hint {
     position: absolute;
-    bottom: 20px;
-    left: 16px;
-    right: 16px;
-    font-size: 13px;
+    top: 18px;
+    left: 78px;
+    right: auto;
+    width: 220px;
+    font-size: 16px;
     line-height: 1.4;
     background: rgba(45,45,45,0.95);
     color: #FFF;
-    padding: 10px 16px;
-    border-radius: 8px;
+    padding: 9px 14px;
+    border-radius: 9px;
     z-index: 5;
     pointer-events: none;
-    text-align: center;
+    text-align: left;
   }
 
   .cam-bottom {
-    padding: 20px 16px;
+    padding: 20px 16px 24px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 16px;
+    gap: 24px;
     background: #FFF;
     border-top: 1px solid #E5E5E5;
     position: relative; z-index: 10;
@@ -403,6 +410,13 @@
     border: none;
     cursor: pointer;
     font-family: inherit;
+  }
+  .ai-scan-copy {
+    align-self: stretch;
+    font-size: 16px;
+    line-height: 1.45;
+    text-align: left;
+    color: var(--text);
   }
 
   .back-txt-btn {
@@ -2027,6 +2041,7 @@
       </div>
 
       <div class="cam-bottom">
+        <p class="ai-scan-copy">Pomocí umělé inteligence vyčteme z obrázku platební údaje.</p>
         <button class="shutter" id="shutter" onclick="capture()"></button>
         <button class="gallery-link" onclick="openSheet()">Načíst z fotek nebo souboru</button>
       </div>
@@ -2598,7 +2613,7 @@ function lsGet(k){try{return localStorage.getItem(k);}catch(e){return null;}}
 function lsRemove(k){try{localStorage.removeItem(k);}catch(e){}}
 
 // Global state variables (declared at top to prevent Temporal Dead Zone ReferenceError)
-let mode = 'qr';
+let mode = 'inv';
 let qrTimeout = null;
 let ocrTimers = [];
 let screenStack = [];
@@ -2837,18 +2852,18 @@ let noQrModalShown = lsGet('no_qr_modal_shown') === '1';
     const simPlain = document.getElementById('sim-plain');
     
     if (m === 'qr') {
-      if (hint) { hint.textContent = 'Namiřte fotoaparát na QR kód, vyfotí se automaticky.'; hint.style.bottom = '104px'; }
+      if (hint) { hint.textContent = 'Namiřte fotoaparát na QR kód, vyfotí se automaticky.'; hint.style.top = 'auto'; hint.style.bottom = '104px'; }
       if (scanFrame) scanFrame.style.display = 'block';
       if (shutter) shutter.style.display = 'none';
       if (simQR) simQR.classList.add('show');
       if (simPlain) simPlain.classList.remove('show');
       startNoQRAlertTimer();
     } else {
-      if (hint) { hint.textContent = 'Stačí vyfotit SMS nebo fakturu a platební údaje načteme sami.'; hint.style.bottom = '20px'; }
+      if (hint) { hint.textContent = 'Vyfoťte SMS nebo fakturu.'; hint.style.top = '18px'; hint.style.bottom = 'auto'; }
       if (scanFrame) scanFrame.style.display = 'none';
       if (shutter) shutter.style.display = 'flex';
       if (simQR) simQR.classList.remove('show');
-      if (simPlain) simPlain.classList.add('show');
+      if (simPlain) simPlain.classList.remove('show');
       clearNoQRAlertTimer();
       closeNoQRAlert();
     }
