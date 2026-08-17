@@ -2358,15 +2358,15 @@
           <div class="summary-label" style="font-size: 11px; color: #8E8E93; font-weight: 500; margin-bottom: 4px;">Variabilní symbol</div>
           <div class="summary-val" id="sum-vs" style="font-size: 14px; color: #1C1C1E; font-weight: 600; line-height: 1.4;">123456789</div>
         </div>
-        <div class="summary-item" style="padding: 14px 16px; border-bottom: 1px solid #E5E5EA;">
+        <div class="summary-item summary-optional" data-summary-field="desc" style="padding: 14px 16px; border-bottom: 1px solid #E5E5EA;">
           <div class="summary-label" style="font-size: 11px; color: #8E8E93; font-weight: 500; margin-bottom: 4px;">Popis pro mě</div>
           <div class="summary-val" id="sum-desc" style="font-size: 14px; color: #1C1C1E; font-weight: 600; line-height: 1.4;">Za internet</div>
         </div>
-        <div class="summary-item" style="padding: 14px 16px; border-bottom: 1px solid #E5E5EA;">
+        <div class="summary-item summary-optional" data-summary-field="ks" style="padding: 14px 16px; border-bottom: 1px solid #E5E5EA;">
           <div class="summary-label" style="font-size: 11px; color: #8E8E93; font-weight: 500; margin-bottom: 4px;">Konstantní symbol</div>
           <div class="summary-val" id="sum-ks" style="font-size: 14px; color: #1C1C1E; font-weight: 600; line-height: 1.4;">123456789</div>
         </div>
-        <div class="summary-item" style="padding: 14px 16px; border-bottom: 1px solid #E5E5EA;">
+        <div class="summary-item summary-optional" data-summary-field="ss" style="padding: 14px 16px; border-bottom: 1px solid #E5E5EA;">
           <div class="summary-label" style="font-size: 11px; color: #8E8E93; font-weight: 500; margin-bottom: 4px;">Specifický symbol</div>
           <div class="summary-val" id="sum-ss" style="font-size: 14px; color: #1C1C1E; font-weight: 600; line-height: 1.4;">123456789</div>
         </div>
@@ -3503,35 +3503,19 @@ let noQrModalShown = lsGet('no_qr_modal_shown') === '1';
     document.getElementById('sum-amount').textContent = lsGet('payment_amount') || '2 495,00 Kč';
     document.getElementById('sum-vs').textContent = lsGet('payment_vs') || '123456789';
     
-    let desc = lsGet('payment_desc') || '';
-    let descEl = document.getElementById('sum-desc');
-    if (desc) {
-      descEl.textContent = desc;
-      descEl.style.color = 'var(--text)';
-    } else {
-      descEl.textContent = 'Nezadáno';
-      descEl.style.color = '#999';
-    }
-    
-    let ks = lsGet('payment_ks') || '';
-    let ksEl = document.getElementById('sum-ks');
-    if (ks) {
-      ksEl.textContent = ks;
-      ksEl.style.color = 'var(--text)';
-    } else {
-      ksEl.textContent = 'Nezadáno';
-      ksEl.style.color = '#999';
-    }
-    
-    let ss = lsGet('payment_ss') || '';
-    let ssEl = document.getElementById('sum-ss');
-    if (ss) {
-      ssEl.textContent = ss;
-      ssEl.style.color = 'var(--text)';
-    } else {
-      ssEl.textContent = 'Nezadáno';
-      ssEl.style.color = '#999';
-    }
+    const summaryOptionalFields = [
+      ['desc', 'payment_desc', 'sum-desc'],
+      ['ks', 'payment_ks', 'sum-ks'],
+      ['ss', 'payment_ss', 'sum-ss']
+    ];
+    summaryOptionalFields.forEach(([field, storageKey, valueId]) => {
+      const value = (lsGet(storageKey) || '').trim();
+      const row = document.querySelector(`[data-summary-field="${field}"]`);
+      const valueEl = document.getElementById(valueId);
+      if (!row || !valueEl) return;
+      row.style.display = value ? '' : 'none';
+      if (value) valueEl.textContent = value;
+    });
     
     document.getElementById('sum-date').textContent = lsGet('payment_date') || '8. 1. 2026';
   }
