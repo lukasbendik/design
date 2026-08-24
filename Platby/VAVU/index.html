@@ -830,52 +830,54 @@
     .summary-progress-group {
       display: flex;
       flex-direction: column;
-      gap: 16px;
+      gap: 12px;
     }
 
-    .progress-bar-container {
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
+    .summary-track {
+      height: 8px;
+      width: 100%;
+      overflow: hidden;
+      border-radius: var(--radius-full);
+      background: #ededed;
     }
 
-    .progress-bar-labels {
-      display: flex;
-      justify-content: space-between;
-      font-size: 14px;
+    .summary-track .progress-fill {
+      height: 100%;
+      border-radius: inherit;
     }
 
-    .progress-bar-title {
-      color: var(--color-content-secondary);
+    .summary-row {
       display: flex;
       align-items: center;
-      gap: 6px;
+      gap: 12px;
+      min-height: 32px;
+      color: var(--color-content-primary);
+      font-size: 16px;
     }
 
-    .progress-bar-value {
+    .summary-row-value {
+      margin-left: auto;
       font-weight: 600;
+      white-space: nowrap;
     }
 
-    .progress-bg {
-      height: 8px;
-      background-color: #ededed;
-      border-radius: var(--radius-full);
-      overflow: hidden;
+    .summary-row-icon {
+      width: 24px;
+      height: 24px;
+      flex: 0 0 24px;
+      color: var(--color-content-primary);
     }
 
-    .progress-fill {
-      height: 100%;
-      border-radius: var(--radius-full);
+    .summary-row.income {
+      color: var(--color-attention-success);
     }
 
-    .progress-fill.expenses {
-      background-color: var(--color-content-primary);
-      width: 50%;
+    .summary-row.income .summary-row-icon {
+      color: var(--color-attention-success);
     }
 
-    .progress-fill.allowance {
-      background-color: var(--color-attention-success);
-      width: 100%;
+    .summary-row.income .summary-row-value {
+      color: var(--color-attention-success);
     }
 
     .summary-difference {
@@ -1927,29 +1929,17 @@
             </div>
             
             <div class="summary-progress-group">
-              <div class="progress-bar-container">
-                <div class="progress-bar-labels">
-                  <span class="progress-bar-title">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 16 16 12 12 8"/><line x1="8" x2="16" y1="12" y2="12"/></svg>
-                    Výdaje
-                  </span>
-                  <span class="progress-bar-value">-10 000,00 Kč</span>
-                </div>
-                <div class="progress-bg">
-                  <div class="progress-fill expenses"></div>
-                </div>
+              <div class="summary-track" aria-hidden="true"><div class="progress-fill expenses" style="width: 50%; background: var(--color-content-primary);"></div></div>
+              <div class="summary-row">
+                <svg class="summary-row-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="11" fill="currentColor"/><path d="M7 12h9M13 8l4 4-4 4" fill="none" stroke="var(--color-background-body)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <span>Výdaje</span>
+                <span class="summary-row-value">-10 000,00 Kč</span>
               </div>
-
-              <div class="progress-bar-container">
-                <div class="progress-bar-labels">
-                  <span class="progress-bar-title">
-                    <span>&larr;</span> Kapesné 💰
-                  </span>
-                  <span class="progress-bar-value amount-positive">20 000,00 Kč</span>
-                </div>
-                <div class="progress-bg">
-                  <div class="progress-fill allowance"></div>
-                </div>
+              <div class="summary-track" aria-hidden="true"><div class="progress-fill allowance" style="width: 100%; background: var(--color-attention-success);"></div></div>
+              <div class="summary-row income">
+                <svg class="summary-row-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="11" fill="currentColor"/><path d="M17 12H8m3-4-4 4 4 4" fill="none" stroke="var(--color-background-surface)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <span>Kapesné 💰</span>
+                <span class="summary-row-value">20 000,00 Kč</span>
               </div>
             </div>
 
