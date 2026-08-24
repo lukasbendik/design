@@ -317,6 +317,177 @@
       overflow: hidden;
     }
 
+    /* ---- VAVU: úvodní výběr uživatele ---- */
+    body.login-mode {
+      overflow: hidden;
+    }
+
+    body.login-mode .sidebar,
+    body.login-mode .topbar,
+    body.login-mode .chatbot-btn {
+      display: none;
+    }
+
+    body.login-mode .main-content {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100vh;
+      display: block;
+    }
+
+    .login-screen {
+      width: 100%;
+      height: 100vh;
+      display: none;
+      background: var(--color-background-surface);
+      color: var(--color-content-primary);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .login-screen.active {
+      display: flex;
+    }
+
+    .login-visual {
+      width: 50%;
+      height: 100%;
+      overflow: hidden;
+      background: #f7f7f7;
+      flex: 0 0 50%;
+    }
+
+    .login-visual img {
+      display: block;
+      width: 200%;
+      max-width: none;
+      height: 100%;
+      object-fit: cover;
+      object-position: left center;
+    }
+
+    .login-panel {
+      width: 50%;
+      min-width: 0;
+      padding: 28px 32px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      position: relative;
+    }
+
+    .login-language {
+      position: absolute;
+      top: 24px;
+      right: 32px;
+      color: var(--color-content-primary);
+      font: var(--content-body-secondary);
+      text-decoration: underline;
+      text-underline-offset: 4px;
+    }
+
+    .login-content {
+      width: min(100%, 440px);
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .login-info {
+      min-height: 44px;
+      padding: 0 16px;
+      border-radius: var(--border-radius-md);
+      background: #f1f1f1;
+      box-shadow: var(--shadow-panel);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font: var(--content-body-secondary);
+    }
+
+    .login-info .login-caret {
+      margin-left: auto;
+      width: 8px;
+      height: 16px;
+    }
+
+    .login-heading {
+      font: var(--headings-title-tertiary);
+      margin: 42px 0 4px;
+    }
+
+    .login-user-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .login-user,
+    .login-other-user {
+      width: 100%;
+      min-height: 56px;
+      padding: 0 16px;
+      border: 0;
+      border-radius: var(--border-radius-md);
+      background: var(--color-background-surface);
+      box-shadow: var(--shadow-panel);
+      color: var(--color-content-primary);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-align: left;
+      font: var(--content-body-primary-bold);
+      cursor: pointer;
+    }
+
+    .login-user:hover,
+    .login-other-user:hover {
+      background: var(--color-background-surface-highlighted);
+      box-shadow: var(--shadow-floating);
+    }
+
+    .login-user-icon {
+      width: 24px;
+      height: 24px;
+      padding: 4px;
+      border-radius: var(--border-radius-sm);
+      background: #ededed;
+      color: var(--color-content-secondary);
+      flex: 0 0 24px;
+    }
+
+    .login-user .login-caret,
+    .login-other-user .login-caret {
+      width: 8px;
+      height: 16px;
+      margin-left: auto;
+    }
+
+    .login-links {
+      margin-top: 42px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .login-link {
+      color: var(--color-content-primary);
+      font: var(--content-body-secondary-bold);
+      text-decoration: underline;
+      text-underline-offset: 4px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      width: fit-content;
+    }
+
+    .login-link .login-link-icon {
+      width: 20px;
+      height: 20px;
+    }
+
     /* Středový sloupec */
     .center-column {
       flex: 1;
@@ -1503,6 +1674,41 @@
     }
 
     @media (max-width: 767px) {
+      .login-screen {
+        flex-direction: column;
+        overflow-y: auto;
+      }
+
+      .login-visual {
+        width: 100%;
+        height: 30vh;
+        min-height: 180px;
+        flex: 0 0 30vh;
+      }
+
+      .login-visual img {
+        width: 200%;
+      }
+
+      .login-panel {
+        width: 100%;
+        min-height: 70vh;
+        padding: 72px 24px 32px;
+      }
+
+      .login-language {
+        top: 24px;
+        right: 24px;
+      }
+
+      .login-heading {
+        margin-top: 24px;
+      }
+
+      .login-links {
+        margin-top: 24px;
+      }
+
       .payment-flow-column {
         padding-top: var(--padding-md);
       }
@@ -1611,6 +1817,58 @@
 
     <!-- 3. HLAVNÍ OBSAHOVÁ ČÁST -->
     <main class="main-content">
+
+      <!-- ================= SCREEN 0: PŘIHLÁŠENÍ ================= -->
+      <div class="screen login-screen" id="screen-login">
+        <div class="login-visual" aria-hidden="true">
+          <img src="assets/login-reference.png" alt="">
+        </div>
+        <section class="login-panel" aria-labelledby="login-heading">
+          <a class="login-language" href="#login">English</a>
+          <div class="login-content">
+            <div class="login-info">
+              <svg class="login-user-icon" aria-hidden="true"><use href="#es-info"></use></svg>
+              <span>Kontrolní kód na přihlašovací stránce</span>
+              <svg class="login-caret" aria-hidden="true"><use href="#es-caret-right"></use></svg>
+            </div>
+
+            <h1 class="login-heading" id="login-heading">Přihlášení do bankovnictví</h1>
+
+            <div class="login-user-list" role="list" aria-label="Výběr uživatele">
+              <button class="login-user" type="button" onclick="selectLoginUser('Kateřina H.')">
+                <svg class="login-user-icon" aria-hidden="true"><use href="#es-person"></use></svg>
+                <span>Kateřina H.</span>
+                <svg class="login-caret" aria-hidden="true"><use href="#es-caret-right"></use></svg>
+              </button>
+              <button class="login-user" type="button" onclick="selectLoginUser('Šárka B.')">
+                <svg class="login-user-icon" aria-hidden="true"><use href="#es-person"></use></svg>
+                <span>Šárka B.</span>
+                <svg class="login-caret" aria-hidden="true"><use href="#es-caret-right"></use></svg>
+              </button>
+              <button class="login-user" type="button" onclick="selectLoginUser('Naděžda P.')">
+                <svg class="login-user-icon" aria-hidden="true"><use href="#es-person"></use></svg>
+                <span>Naděžda P.</span>
+                <svg class="login-caret" aria-hidden="true"><use href="#es-caret-right"></use></svg>
+              </button>
+              <button class="login-user" type="button" onclick="selectLoginUser('Šárka M.')">
+                <svg class="login-user-icon" aria-hidden="true"><use href="#es-person"></use></svg>
+                <span>Šárka M.</span>
+                <svg class="login-caret" aria-hidden="true"><use href="#es-caret-right"></use></svg>
+              </button>
+              <button class="login-other-user" type="button" onclick="selectLoginUser('Kateřina H.')">
+                <svg class="login-user-icon" aria-hidden="true"><use href="#es-person"></use></svg>
+                <span>Přihlásit se jako někdo jiný</span>
+                <svg class="login-caret" aria-hidden="true"><use href="#es-caret-right"></use></svg>
+              </button>
+            </div>
+
+            <div class="login-links">
+              <a class="login-link" href="#login"><svg class="login-link-icon" aria-hidden="true"><use href="#es-key"></use></svg>Spravovat zapamatovaná jména</a>
+              <a class="login-link" href="#login"><svg class="login-link-icon" aria-hidden="true"><use href="#es-card"></use></svg>Osobní certifikát na čipové kartě</a>
+            </div>
+          </div>
+        </section>
+      </div>
       
       <!-- ================= SCREEN 1: PŘEHLED ================= -->
       <div class="screen" id="screen-prehled">
@@ -2770,7 +3028,7 @@
   <!-- ================= JS LOGIKA ================= -->
   <script>
     // Seznam podporovaných hlavních obrazovek
-    const SCREENS = ['prehled', 'ucet-detail', 'tp-inkasa', 'tp-inkasa-s-autorizaci', 'autorizace', 'vsechny-platby', 'platba-detail', 'nova-platba', 'nova-platba-detaily', 'platba-vysledek'];
+    const SCREENS = ['login', 'prehled', 'ucet-detail', 'tp-inkasa', 'tp-inkasa-s-autorizaci', 'autorizace', 'vsechny-platby', 'platba-detail', 'nova-platba', 'nova-platba-detaily', 'platba-vysledek'];
     // Seznam modálních hashů
     const MODALS = ['povoleni-inkasa-modal', 'autorizace-potvrzeni-modal', 'no-items-modal', 'payment-signature-modal'];
 
@@ -2786,6 +3044,7 @@
       restoreFormValues();
       restorePaymentValues();
       bindPaymentPersistence();
+      renderCurrentUser();
       // Aktualizovat seznamy (inkasa a položky k autorizaci)
       renderDynamicContent();
       renderTpInkasaList();
@@ -2793,7 +3052,11 @@
       // Zpracování výchozího hashe
       const hash = window.location.hash.replace('#', '');
       if (!hash) {
-        window.location.hash = 'prehled';
+        if (localStorage.getItem('vavu_selected_user')) {
+          window.location.hash = 'prehled';
+        } else {
+          window.location.hash = 'login';
+        }
       } else {
         handleRouting();
       }
@@ -2806,7 +3069,14 @@
       const hash = window.location.hash.replace('#', '');
       
       if (!hash) {
-        window.location.hash = 'prehled';
+        window.location.hash = localStorage.getItem('vavu_selected_user') ? 'prehled' : 'login';
+        return;
+      }
+
+      if (!localStorage.getItem('vavu_selected_user') && hash !== 'login') {
+        history.replaceState(null, '', '#login');
+        currentScreen = 'login';
+        showScreenElements('login');
         return;
       }
 
@@ -2873,12 +3143,13 @@
 
       const paymentFlowScreens = ['nova-platba', 'nova-platba-detaily', 'platba-vysledek'];
       document.body.classList.toggle('flow-mode', paymentFlowScreens.includes(targetScreenId));
+      document.body.classList.toggle('login-mode', targetScreenId === 'login');
 
       // Aktualizovat aktivní třídu v levém menu
       document.querySelectorAll('.menu-item').forEach(el => el.classList.remove('active'));
       
       // Mapování obrazovek na menu položky
-      let menuId = 'nav-prehled';
+      let menuId = screenId === 'login' ? null : 'nav-prehled';
       if (screenId === 'ucet-detail' || screenId === 'tp-inkasa' || screenId === 'tp-inkasa-s-autorizaci' || screenId === 'autorizace' || screenId === 'vsechny-platby' || screenId === 'platba-detail') {
         menuId = 'nav-ucy';
       } else if (screenId === 'extra') {
@@ -2917,6 +3188,23 @@
       
       // Posunout scroll na začátek
       window.scrollTo(0, 0);
+    }
+
+    function renderCurrentUser() {
+      const name = localStorage.getItem('vavu_selected_user') || 'František Koudelka';
+      const initials = localStorage.getItem('vavu_selected_initials') || 'FK';
+      const nameEl = document.getElementById('topbar-user-name');
+      const avatarEl = document.getElementById('avatar-letters');
+      if (nameEl) nameEl.textContent = name;
+      if (avatarEl) avatarEl.textContent = initials;
+    }
+
+    function selectLoginUser(name) {
+      const initials = name.split(/\s+/).filter(Boolean).map(part => part.replace('.', '').charAt(0)).join('').slice(0, 2).toUpperCase();
+      localStorage.setItem('vavu_selected_user', name);
+      localStorage.setItem('vavu_selected_initials', initials);
+      renderCurrentUser();
+      goTo('prehled');
     }
 
     // Otevřít modal změnou hash
