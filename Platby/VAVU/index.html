@@ -835,6 +835,79 @@
       flex: 0 0 24px;
     }
 
+    .screen.insurance-overview-screen.active {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 320px;
+      align-items: start;
+      gap: var(--padding-2xl);
+      overflow: hidden;
+    }
+
+    .insurance-overview-card {
+      padding: 0;
+      overflow: hidden;
+    }
+
+    .insurance-overview-heading {
+      padding: var(--padding-xl);
+      border-bottom: 1px solid var(--background-divider);
+      font: var(--headings-headline-secondary-bold);
+    }
+
+    .insurance-row {
+      min-height: 116px;
+      padding: var(--padding-xl);
+      display: flex;
+      align-items: center;
+      gap: var(--padding-xl);
+      cursor: pointer;
+    }
+
+    .insurance-row + .insurance-row {
+      border-top: 1px solid var(--background-divider);
+    }
+
+    .insurance-copy {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: var(--padding-xs);
+    }
+
+    .insurance-name {
+      font: var(--headings-headline-secondary);
+    }
+
+    .insurance-detail {
+      font: var(--content-body-primary);
+      color: var(--content-tertiary);
+    }
+
+    .insurance-chevron {
+      width: 24px;
+      height: 24px;
+      color: var(--content-primary);
+      flex: 0 0 24px;
+    }
+
+    .new-insurance-button {
+      min-height: 56px;
+      border-radius: var(--radius-md);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--padding-md);
+      background: var(--interactive-primary);
+      color: var(--interactive-on-primary);
+      font: var(--content-body-primary-bold);
+      cursor: pointer;
+    }
+
+    .new-insurance-button svg {
+      width: 24px;
+      height: 24px;
+    }
+
     /* Tlačítko zpět */
     .back-btn {
       display: inline-flex;
@@ -2252,7 +2325,23 @@
         </div>
       </div>
 
-      <!-- ================= SCREEN 5: EXTRA ================= -->
+      <!-- ================= SCREEN 5: POJIŠTĚNÍ ================= -->
+      <div class="screen insurance-overview-screen" id="screen-pojisteni">
+        <div class="card insurance-overview-card">
+          <h1 class="insurance-overview-heading">Cestovní pojištění a pojištění karet</h1>
+          <div class="insurance-row" role="button" tabindex="0" onclick="alert('Detail pojištění není v tomto prototypu rozpracovaný.')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.click()}">
+            <div class="insurance-copy"><span class="insurance-name">Pojištění platebních karet a osobních věcí</span><span class="insurance-detail">Platné na dobu neurčitou<br>V rámci služby Bezpečí+</span></div>
+            <svg class="insurance-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
+          </div>
+          <div class="insurance-row" role="button" tabindex="0" onclick="alert('Detail pojištění není v tomto prototypu rozpracovaný.')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.click()}">
+            <div class="insurance-copy"><span class="insurance-name">Celoroční cestovní pojištění</span><span class="insurance-detail">Platné na dobu neurčitou<br>V rámci služby Cestování Rodina+</span></div>
+            <svg class="insurance-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
+          </div>
+        </div>
+        <button class="new-insurance-button" type="button" onclick="alert('Nové pojištění není v tomto prototypu rozpracované.')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>Nové pojištění</button>
+      </div>
+
+      <!-- ================= SCREEN 6: EXTRA ================= -->
       <div class="screen extra-overview-screen" id="screen-extra">
         <div class="extra-overview-column">
           <div class="extra-service-list">
