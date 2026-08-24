@@ -3625,11 +3625,9 @@
       // Zpracování výchozího hashe
       const hash = window.location.hash.replace('#', '');
       if (!hash) {
-        if (localStorage.getItem('vavu_selected_user')) {
-          window.location.hash = 'prehled';
-        } else {
-          window.location.hash = 'login';
-        }
+        // Přímé otevření prototypu vždy začíná přihlášením.
+        // Přehled se obnovuje pouze z konkrétního hashe (#prehled).
+        window.location.hash = 'login';
       } else {
         handleRouting();
       }
@@ -3642,7 +3640,8 @@
       const hash = window.location.hash.replace('#', '');
       
       if (!hash) {
-        window.location.hash = localStorage.getItem('vavu_selected_user') ? 'prehled' : 'login';
+        // URL bez konkrétní obrazovky = vstupní login, i když uživatel zůstal uložený.
+        window.location.hash = 'login';
         return;
       }
 
