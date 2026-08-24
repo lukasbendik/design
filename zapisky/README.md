@@ -6,6 +6,7 @@ Tato složka obsahuje automaticky generované zápisky z jednotlivých konverzac
 
 | Datum | Název konverzace / Téma | Zápis | ID konverzace |
 | :--- | :--- | :--- | :--- |
+| 2026-08-24 | VAVU — výchozí záložka autorizace Platby | [2026-08-24_01a033fc_vavu_autorizace_platby.md](2026-08-24_01a033fc_vavu_autorizace_platby.md) | `01a033fc...` |
 | 2026-08-24 | VAVU — login při přímém otevření | [2026-08-24_01a033fc_vavu_login_vstup.md](2026-08-24_01a033fc_vavu_login_vstup.md) | `01a033fc...` |
 | 2026-08-24 | VAVU — oprava routingu nových obrazovek | [2026-08-24_01a033b9_vavu_routing_nove_stranky.md](2026-08-24_01a033b9_vavu_routing_nove_stranky.md) | `01a033b9...` |
 | 2026-08-24 | VAVU — pozadí tlačítka Upravit přehled | [2026-08-24_01a033b9_vavu_upravit_prehlad_pozadi.md](2026-08-24_01a033b9_vavu_upravit_prehlad_pozadi.md) | `01a033b9...` |
