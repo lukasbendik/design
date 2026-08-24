@@ -666,6 +666,63 @@
       color: var(--color-content-secondary);
     }
 
+    .loan-overview-screen.active {
+      display: block;
+      overflow: hidden;
+    }
+
+    .loan-overview-column {
+      width: 100%;
+      height: 100%;
+      overflow-y: auto;
+      padding-right: 8px;
+    }
+
+    .loan-offer-list {
+      display: flex;
+      flex-direction: column;
+      gap: var(--padding-xl);
+    }
+
+    .loan-offer-card {
+      min-height: 140px;
+      padding: var(--padding-xl);
+      display: flex;
+      align-items: center;
+      gap: var(--padding-xl);
+      cursor: pointer;
+    }
+
+    .loan-offer-copy {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: var(--padding-xs);
+    }
+
+    .loan-offer-title {
+      font: var(--headings-headline-secondary-bold);
+    }
+
+    .loan-offer-description {
+      font: var(--content-body-primary);
+      color: var(--content-secondary);
+    }
+
+    .loan-offer-icon {
+      width: 56px;
+      height: 56px;
+      flex: 0 0 56px;
+      color: var(--interactive-primary);
+    }
+
+    .loan-offer-chevron {
+      width: 24px;
+      height: 24px;
+      color: var(--content-primary);
+      flex: 0 0 24px;
+    }
+
     /* Tlačítko zpět */
     .back-btn {
       display: inline-flex;
@@ -2040,7 +2097,39 @@
         </div>
       </div>
 
-      <!-- ================= SCREEN 3: BĚŽNÝ ÚČET DETAIL ================= -->
+      <!-- ================= SCREEN 3: PŮJČKY ================= -->
+      <div class="screen loan-overview-screen" id="screen-pujcky">
+        <div class="loan-overview-column">
+          <div class="loan-offer-list">
+            <div class="card loan-offer-card" role="button" tabindex="0" onclick="alert('Detail půjčky není v tomto prototypu rozpracovaný.')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.click()}">
+              <div class="loan-offer-copy"><span class="loan-offer-title">Osobní půjčka</span><span class="loan-offer-description">Sjednejte si spotřebitelský úvěr online až do výše 2 500 000 Kč.</span></div>
+              <svg class="loan-offer-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 30h27M12 26h22M15 22h16"/><path d="M30 13h8v22h-8"/><path d="M34 13v22"/></svg><svg class="loan-offer-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
+            </div>
+            <div class="card loan-offer-card" role="button" tabindex="0" onclick="alert('Detail půjčky není v tomto prototypu rozpracovaný.')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.click()}">
+              <div class="loan-offer-copy"><span class="loan-offer-title">Konsolidace</span><span class="loan-offer-description">Slučte si úvěry až do výše 2 500 000 Kč.</span></div>
+              <svg class="loan-offer-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 30h28M14 25h20M18 20h12"/><path d="M12 35h24"/></svg><svg class="loan-offer-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
+            </div>
+            <div class="card loan-offer-card" role="button" tabindex="0" onclick="alert('Detail půjčky není v tomto prototypu rozpracovaný.')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.click()}">
+              <div class="loan-offer-copy"><span class="loan-offer-title">Kontokorent</span><span class="loan-offer-description">Ideální rezerva před výplatou nebo na nečekané výdaje.</span></div>
+              <svg class="loan-offer-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 31h31M12 27h23M16 23h15"/><path d="M31 15h8v18h-8"/></svg><svg class="loan-offer-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
+            </div>
+            <div class="card loan-offer-card" role="button" tabindex="0" onclick="alert('Detail půjčky není v tomto prototypu rozpracovaný.')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.click()}">
+              <div class="loan-offer-copy"><span class="loan-offer-title">Hypotéka</span><span class="loan-offer-description">Získejte navíc až 800 000 Kč na to, co jiné hypotéky nepokryjí.</span></div>
+              <svg class="loan-offer-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m8 28 16-13 16 13"/><path d="M13 26v12h22V26"/><path d="M20 38v-8h8v8"/></svg><svg class="loan-offer-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
+            </div>
+            <div class="card loan-offer-card" role="button" tabindex="0" onclick="alert('Detail půjčky není v tomto prototypu rozpracovaný.')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.click()}">
+              <div class="loan-offer-copy"><span class="loan-offer-title">Půjčky na bydlení</span><span class="loan-offer-description">Na rekonstrukci, vybavení i udržitelné bydlení bez zajištění až do 3,5 mil. Kč.</span></div>
+              <svg class="loan-offer-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m8 28 16-13 16 13"/><path d="M13 26v12h22V26"/><path d="M20 38v-8h8v8"/></svg><svg class="loan-offer-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
+            </div>
+            <div class="card loan-offer-card" role="button" tabindex="0" onclick="alert('Detail půjčky není v tomto prototypu rozpracovaný.')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.click()}">
+              <div class="loan-offer-copy"><span class="loan-offer-title">Kreditní karta</span><span class="loan-offer-description">Sjednejte si kreditní kartu a můžete mít k dispozici až 250 000 Kč na cokoliv.</span></div>
+              <svg class="loan-offer-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="7" y="13" width="34" height="23" rx="3"/><path d="M7 20h34M13 29h9"/></svg><svg class="loan-offer-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ================= SCREEN 4: BĚŽNÝ ÚČET DETAIL ================= -->
       <div class="screen" id="screen-ucet-detail">
         <div class="center-column">
           <button class="back-btn" onclick="goTo('prehled')">
