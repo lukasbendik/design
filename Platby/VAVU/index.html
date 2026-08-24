@@ -356,16 +356,16 @@
       overflow: hidden;
       background: #f7f7f7;
       flex: 0 0 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
     .login-visual img {
       display: block;
-      width: 200%;
-      max-width: none;
+      width: 100%;
       height: 100%;
-      object-fit: fill;
-      object-position: left center;
-      transform: none;
+      object-fit: contain;
     }
 
     .login-panel {
@@ -389,7 +389,7 @@
     }
 
     .login-content {
-      width: min(100%, 440px);
+      width: min(100%, 520px);
       margin: 0 auto;
       display: flex;
       flex-direction: column;
@@ -414,9 +414,23 @@
       height: 16px;
     }
 
+    .login-title-row {
+      margin: 42px 0 4px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .login-logo {
+      display: block;
+      width: 96px;
+      height: auto;
+      flex: 0 0 auto;
+    }
+
     .login-heading {
       font: var(--headings-title-tertiary);
-      margin: 42px 0 4px;
+      margin: 0;
     }
 
     .login-user-list {
@@ -2129,8 +2143,7 @@
       }
 
       .login-visual img {
-        width: 200%;
-        transform: none;
+        width: 100%;
       }
 
       .login-panel {
@@ -2145,8 +2158,12 @@
         right: 24px;
       }
 
-      .login-heading {
+      .login-title-row {
         margin-top: 24px;
+      }
+
+      .login-logo {
+        width: 72px;
       }
 
       .login-links {
@@ -2436,7 +2453,7 @@
       <!-- ================= SCREEN 0: PŘIHLÁŠENÍ ================= -->
       <div class="screen login-screen" id="screen-login">
         <div class="login-visual" aria-hidden="true">
-          <img src="assets/login-reference.png" alt="">
+          <img src="assets/login-illustration.png" alt="">
         </div>
         <section class="login-panel" aria-labelledby="login-heading">
           <a class="login-language" href="#login">English</a>
@@ -2447,7 +2464,10 @@
               <svg class="login-caret" aria-hidden="true"><use href="#es-caret-right"></use></svg>
             </div>
 
-            <h1 class="login-heading" id="login-heading">Přihlášení do bankovnictví</h1>
+            <div class="login-title-row">
+              <img class="login-logo" src="assets/kb-logo.png" alt="KB">
+              <h1 class="login-heading" id="login-heading">Přihlášení do bankovnictví</h1>
+            </div>
 
             <div class="login-user-list" role="list" aria-label="Výběr uživatele">
               <button class="login-user" type="button" onclick="selectLoginUser('Kateřina H.')">
