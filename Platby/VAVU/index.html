@@ -1453,6 +1453,30 @@
       display: flex;
     }
 
+    .toast-notification {
+      position: fixed;
+      right: 24px;
+      bottom: 24px;
+      z-index: 3000;
+      max-width: min(420px, calc(100vw - 48px));
+      padding: 14px 16px;
+      border-radius: var(--radius-md);
+      background: var(--color-content-primary);
+      color: var(--color-interactive-on-primary);
+      box-shadow: var(--shadow-highlighted);
+      font: var(--content-body-primary);
+      line-height: 24px;
+      opacity: 0;
+      transform: translateY(12px);
+      pointer-events: none;
+      transition: opacity 180ms ease, transform 180ms ease;
+    }
+
+    .toast-notification.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
     .modal-content-popup {
       background-color: var(--color-background-surface);
       box-shadow: var(--shadow-panel);
@@ -3700,6 +3724,8 @@
 
   </div> <!-- Konec app-wrapper -->
 
+  <div class="toast-notification" id="toast-notification" role="status" aria-live="polite" aria-atomic="true"></div>
+
 
   <!-- ================= JS LOGIKA ================= -->
   <script>
@@ -3713,6 +3739,19 @@
     let previousScreen = 'prehled';
     let currentAuthTab = 'platby';
     let currentTpInkasaTab = 'tp';
+    let toastTimer = null;
+
+    // Neimplementované akce zobrazit jako dočasný toast místo blokujícího modálu.
+    function showToast(message) {
+      const toast = document.getElementById('toast-notification');
+      if (!toast) return;
+      toast.textContent = message;
+      toast.classList.add('is-visible');
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => toast.classList.remove('is-visible'), 3200);
+    }
+
+    window.alert = showToast;
 
     // Inicializace aplikace
     document.addEventListener('DOMContentLoaded', () => {
