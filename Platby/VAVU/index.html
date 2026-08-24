@@ -723,6 +723,67 @@
       flex: 0 0 24px;
     }
 
+    .screen.extra-overview-screen.active {
+      display: block;
+      overflow: hidden;
+    }
+
+    .extra-overview-column {
+      width: 100%;
+      height: 100%;
+      overflow-y: auto;
+      padding-right: 8px;
+    }
+
+    .extra-service-list {
+      display: flex;
+      flex-direction: column;
+      gap: var(--padding-xl);
+    }
+
+    .extra-service-card {
+      padding: 0;
+      overflow: hidden;
+    }
+
+    .extra-service-heading {
+      padding: var(--padding-xl);
+      border-bottom: 1px solid var(--background-divider);
+      font: var(--headings-headline-secondary-bold);
+    }
+
+    .extra-service-row {
+      min-height: 96px;
+      padding: var(--padding-xl);
+      display: flex;
+      align-items: center;
+      gap: var(--padding-xl);
+      cursor: pointer;
+    }
+
+    .extra-service-copy {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: var(--padding-xs);
+    }
+
+    .extra-service-name {
+      font: var(--headings-headline-secondary);
+    }
+
+    .extra-service-validity {
+      font: var(--content-body-primary);
+      color: var(--content-tertiary);
+    }
+
+    .extra-service-chevron {
+      width: 24px;
+      height: 24px;
+      color: var(--content-primary);
+      flex: 0 0 24px;
+    }
+
     /* Tlačítko zpět */
     .back-btn {
       display: inline-flex;
@@ -2129,7 +2190,29 @@
         </div>
       </div>
 
-      <!-- ================= SCREEN 4: BĚŽNÝ ÚČET DETAIL ================= -->
+      <!-- ================= SCREEN 4: EXTRA ================= -->
+      <div class="screen extra-overview-screen" id="screen-extra">
+        <div class="extra-overview-column">
+          <div class="extra-service-list">
+            <section class="card extra-service-card" aria-labelledby="extra-bezpeci-heading">
+              <h1 class="extra-service-heading" id="extra-bezpeci-heading">Extra služba Bezpečí</h1>
+              <div class="extra-service-row" role="button" tabindex="0" onclick="alert('Detail služby není v tomto prototypu rozpracovaný.')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.click()}">
+                <div class="extra-service-copy"><span class="extra-service-name">Bezpečí+</span><span class="extra-service-validity">Platné na dobu neurčitou</span></div>
+                <svg class="extra-service-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
+              </div>
+            </section>
+            <section class="card extra-service-card" aria-labelledby="extra-cestovani-heading">
+              <h1 class="extra-service-heading" id="extra-cestovani-heading">Extra služba Cestování</h1>
+              <div class="extra-service-row" role="button" tabindex="0" onclick="alert('Detail služby není v tomto prototypu rozpracovaný.')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.click()}">
+                <div class="extra-service-copy"><span class="extra-service-name">Cestování Rodina+</span><span class="extra-service-validity">Platné na dobu neurčitou</span></div>
+                <svg class="extra-service-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
+              </div>
+            </section>
+          </div>
+        </div>
+      </div>
+
+      <!-- ================= SCREEN 5: BĚŽNÝ ÚČET DETAIL ================= -->
       <div class="screen" id="screen-ucet-detail">
         <div class="center-column">
           <button class="back-btn" onclick="goTo('prehled')">
