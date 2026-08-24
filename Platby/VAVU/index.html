@@ -784,6 +784,57 @@
       flex: 0 0 24px;
     }
 
+    .screen.investment-overview-screen.active {
+      display: block;
+      overflow: hidden;
+    }
+
+    .investment-overview-column {
+      width: 100%;
+      height: 100%;
+      overflow-y: auto;
+      padding-right: 8px;
+    }
+
+    .investment-offer-card {
+      min-height: 140px;
+      padding: var(--padding-xl);
+      display: flex;
+      align-items: center;
+      gap: var(--padding-xl);
+      cursor: pointer;
+    }
+
+    .investment-offer-copy {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: var(--padding-xs);
+    }
+
+    .investment-offer-title {
+      font: var(--headings-headline-secondary-bold);
+    }
+
+    .investment-offer-description {
+      font: var(--content-body-primary);
+      color: var(--content-secondary);
+    }
+
+    .investment-offer-icon {
+      width: 64px;
+      height: 64px;
+      color: var(--interactive-primary);
+      flex: 0 0 64px;
+    }
+
+    .investment-offer-chevron {
+      width: 24px;
+      height: 24px;
+      color: var(--content-primary);
+      flex: 0 0 24px;
+    }
+
     /* Tlačítko zpět */
     .back-btn {
       display: inline-flex;
@@ -2190,7 +2241,18 @@
         </div>
       </div>
 
-      <!-- ================= SCREEN 4: EXTRA ================= -->
+      <!-- ================= SCREEN 4: INVESTICE ================= -->
+      <div class="screen investment-overview-screen" id="screen-investice">
+        <div class="investment-overview-column">
+          <div class="card investment-offer-card" role="button" tabindex="0" onclick="alert('Detail investiční nabídky není v tomto prototypu rozpracovaný.')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.click()}">
+            <div class="investment-offer-copy"><span class="investment-offer-title">Investiční fondy</span><span class="investment-offer-description">Investujte teď, včetně možnosti sjednat si Dlouhodobý investiční produkt (DIP).</span></div>
+            <svg class="investment-offer-icon" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 46h46M14 39h36M19 32h26"/><path d="m12 18 12 6 11-9 10 4 9-8"/><path d="M12 18v28M55 11v35"/></svg>
+            <svg class="investment-offer-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- ================= SCREEN 5: EXTRA ================= -->
       <div class="screen extra-overview-screen" id="screen-extra">
         <div class="extra-overview-column">
           <div class="extra-service-list">
