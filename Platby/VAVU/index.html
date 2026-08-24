@@ -2176,6 +2176,177 @@
       }
     }
 
+    /* Přehledy produktů: desktopový rámec VAVU + komponenty Golem DS. */
+    .reference-overview-screen.active {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      align-items: start;
+      gap: var(--padding-xl);
+      width: 100%;
+      height: 100%;
+      min-width: 0;
+      overflow-y: auto;
+      padding-right: var(--padding-md);
+    }
+
+    .reference-overview-screen.has-tools.active {
+      grid-template-columns: minmax(0, 1fr) 320px;
+    }
+
+    .reference-main,
+    .reference-tools,
+    .reference-promo-list {
+      display: flex;
+      flex-direction: column;
+      gap: var(--padding-xl);
+      min-width: 0;
+    }
+
+    .reference-panel {
+      overflow: hidden;
+      border-radius: var(--border-radius-md);
+      background: var(--background-surface);
+      box-shadow: var(--shadow-panel);
+    }
+
+    .reference-panel__heading {
+      margin: 0;
+      padding: var(--padding-xl);
+      font: var(--headings-headline-secondary-bold);
+      letter-spacing: var(--tracking-headline-secondary);
+      color: var(--content-primary);
+    }
+
+    .reference-divider {
+      height: .5px;
+      margin: 0 var(--padding-xl);
+      border: 0;
+      background: var(--background-divider);
+    }
+
+    .reference-item {
+      align-items: center;
+      min-height: 88px;
+      border-radius: 0;
+    }
+
+    .reference-item .item__caret {
+      color: var(--content-primary);
+    }
+
+    .reference-promo {
+      min-height: 140px;
+      align-items: center;
+      padding: var(--padding-xl);
+    }
+
+    .reference-promo .promo__content {
+      align-self: flex-start;
+    }
+
+    .reference-promo .promo__illustration {
+      background-size: contain;
+      background-repeat: no-repeat;
+    }
+
+    .reference-primary-action {
+      width: 100%;
+      min-height: 56px;
+    }
+
+    .reference-product {
+      width: 100%;
+      padding: var(--padding-xl);
+      border: 0;
+      border-radius: 0;
+      background: transparent;
+      color: var(--content-primary);
+      text-align: left;
+      cursor: pointer;
+    }
+
+    .reference-product:hover,
+    .reference-item:hover {
+      background: var(--interactive-secondary-action);
+    }
+
+    .reference-product__top,
+    .reference-product__content {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--padding-xl);
+    }
+
+    .reference-product__top {
+      margin-bottom: var(--padding-lg);
+    }
+
+    .reference-product__name {
+      flex: 1;
+      min-width: 0;
+      font: var(--content-body-secondary-bold);
+      color: var(--content-primary);
+    }
+
+    .reference-product__num,
+    .reference-product__caption {
+      font: var(--content-body-secondary);
+      color: var(--content-tertiary);
+    }
+
+    .reference-product__body {
+      flex: 1;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      gap: var(--padding-xs);
+    }
+
+    .reference-product__value {
+      display: flex;
+      align-items: baseline;
+      gap: var(--padding-sm);
+      font: var(--headings-title-tertiary);
+      color: var(--content-primary);
+    }
+
+    .reference-product__value small {
+      font: var(--content-body-primary-bold);
+    }
+
+    .reference-product__caret {
+      align-self: center;
+      color: var(--content-primary);
+    }
+
+    .card-product-thumb {
+      width: 48px;
+      height: 32px;
+      flex: 0 0 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: var(--border-radius-sm);
+      background: var(--background-surface-avatar);
+      color: var(--content-primary);
+    }
+
+    .card-product-thumb .icon {
+      width: 32px;
+      height: 32px;
+    }
+
+    .reference-action-item {
+      min-height: 72px;
+      border-radius: 0;
+    }
+
+    @media (max-width: 900px) {
+      .reference-overview-screen.has-tools.active {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
     /* Helper helper classes */
     .flex-row-between {
       display: flex;
@@ -2399,143 +2570,94 @@
 
 
       <!-- ================= SCREEN 2: KARTY ================= -->
-      <div class="screen" id="screen-karty">
-        <div class="center-column">
-          <h1 class="t-headings-title-secondary" style="margin-bottom: 8px;">Karty</h1>
-          <div class="cards-overview-list">
-            <div class="card cards-overview-card" role="button" tabindex="0" onclick="alert('Detail karty není v tomto prototypu rozpracovaný.')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.click()}">
-              <div class="flex-row-between">
-                <div class="item-details"><span class="item-title">Visa karta</span><span class="item-subtitle">Běžný účet · 123456-4835477/0100</span></div>
-                <svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.5" y="5" width="19" height="14" rx="2"/><path d="M2.5 10h19M6 15h4"/></svg>
-              </div>
-              <div class="flex-row-between"><span class="card-number">•••• 1234</span><span class="card-status">Aktivní</span></div>
-            </div>
-            <div class="card cards-overview-card" role="button" tabindex="0" onclick="alert('Detail karty není v tomto prototypu rozpracovaný.')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.click()}">
-              <div class="flex-row-between">
-                <div class="item-details"><span class="item-title">Virtuální karta</span><span class="item-subtitle">Běžný účet · 123456-4835477/0100</span></div>
-                <svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.5" y="5" width="19" height="14" rx="2"/><path d="M2.5 10h19M6 15h4"/></svg>
-              </div>
-              <div class="flex-row-between"><span class="card-number">•••• 6789</span><span class="card-status">Aktivní</span></div>
-            </div>
-          </div>
+      <div class="screen reference-overview-screen has-tools" id="screen-karty">
+        <div class="reference-main">
+          <section class="reference-panel" aria-labelledby="cards-heading">
+            <h1 class="reference-panel__heading" id="cards-heading">Platební karty</h1>
+            <div class="reference-divider"></div>
+            <button class="reference-product" type="button" onclick="alert('Detail karty není v tomto prototypu rozpracovaný.')">
+              <span class="reference-product__top"><span class="reference-product__name">Visa karta</span><span class="reference-product__num">•••• 1234</span></span>
+              <span class="reference-product__content"><span class="card-product-thumb"><svg class="icon" aria-hidden="true"><use href="#es-card"></use></svg></span><span class="reference-product__body"><span class="item__label">Běžný účet</span><span class="reference-product__caption">Platnost 08/28 · Aktivní</span></span><span class="reference-product__caret"><svg class="icon icon--caret" aria-hidden="true"><use href="#es-caret-right"></use></svg></span></span>
+            </button>
+            <div class="reference-divider"></div>
+            <button class="reference-product" type="button" onclick="alert('Detail karty není v tomto prototypu rozpracovaný.')">
+              <span class="reference-product__top"><span class="reference-product__name">Virtuální karta</span><span class="reference-product__num">•••• 6789</span></span>
+              <span class="reference-product__content"><span class="card-product-thumb"><svg class="icon" aria-hidden="true"><use href="#es-card"></use></svg></span><span class="reference-product__body"><span class="item__label">Běžný účet</span><span class="reference-product__caption">Platnost 11/29 · Aktivní</span></span><span class="reference-product__caret"><svg class="icon icon--caret" aria-hidden="true"><use href="#es-caret-right"></use></svg></span></span>
+            </button>
+          </section>
         </div>
-        <div class="right-column">
-          <div class="card-action-red" role="button" tabindex="0" onclick="goTo('nova-platba')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();goTo('nova-platba')}"><img src="assets/new-payment.png" alt="Nová platba"></div>
-          <div class="card-navigation"><div class="link-list">
-            <a class="link-item" onclick="alert('Správa karet není v tomto prototypu rozpracovaná.')"><div class="link-item-left"><svg viewBox="0 0 24 24" fill="none" stroke="var(--color-interactive-primary)" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 10h18"/></svg><span>Správa karet</span></div><svg class="link-item-chevron" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg></a>
-            <a class="link-item" onclick="alert('Nastavení limitů není v tomto prototypu rozpracované.')"><div class="link-item-left"><svg viewBox="0 0 24 24" fill="none" stroke="var(--color-interactive-primary)" stroke-width="2"><path d="M4 21v-7M4 10V3M12 21v-9M12 8V3M20 21v-5M20 12V3M1 14h6M9 8h6M17 12h6"/></svg><span>Nastavení limitů</span></div><svg class="link-item-chevron" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg></a>
-            <a class="link-item" onclick="alert('Nahlášení ztráty karty není v tomto prototypu rozpracované.')"><div class="link-item-left"><svg viewBox="0 0 24 24" fill="none" stroke="var(--color-interactive-primary)" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg><span>Ztráta nebo krádež karty</span></div><svg class="link-item-chevron" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg></a>
-          </div></div>
-        </div>
+        <aside class="reference-tools">
+          <button class="btn btn--primary reference-primary-action" type="button" onclick="alert('Nová karta není v tomto prototypu rozpracovaná.')"><svg class="icon" aria-hidden="true"><use href="#es-plus"></use></svg>Nová karta</button>
+          <section class="reference-panel">
+            <button class="item reference-action-item" type="button" onclick="alert('Ztracené karty nejsou v tomto prototypu rozpracované.')"><span class="item__icon item__icon--action"><svg class="icon" aria-hidden="true"><use href="#es-card"></use></svg></span><span class="item__text"><span class="item__label">Ztracená nebo odcizená karta</span><span class="item__caption">Rychlé zablokování karty</span></span><span class="item__caret"><svg class="icon icon--caret" aria-hidden="true"><use href="#es-caret-right"></use></svg></span></button>
+          </section>
+        </aside>
       </div>
 
       <!-- ================= SCREEN 3: PŮJČKY ================= -->
-      <div class="screen loan-overview-screen" id="screen-pujcky">
-        <div class="loan-overview-column">
-          <div class="loan-offer-list">
-            <div class="card loan-offer-card" role="button" tabindex="0" onclick="alert('Detail půjčky není v tomto prototypu rozpracovaný.')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.click()}">
-              <div class="loan-offer-copy"><span class="loan-offer-title">Osobní půjčka</span><span class="loan-offer-description">Sjednejte si spotřebitelský úvěr online až do výše 2 500 000 Kč.</span></div>
-              <svg class="loan-offer-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 30h27M12 26h22M15 22h16"/><path d="M30 13h8v22h-8"/><path d="M34 13v22"/></svg><svg class="loan-offer-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
-            </div>
-            <div class="card loan-offer-card" role="button" tabindex="0" onclick="alert('Detail půjčky není v tomto prototypu rozpracovaný.')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.click()}">
-              <div class="loan-offer-copy"><span class="loan-offer-title">Konsolidace</span><span class="loan-offer-description">Slučte si úvěry až do výše 2 500 000 Kč.</span></div>
-              <svg class="loan-offer-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 30h28M14 25h20M18 20h12"/><path d="M12 35h24"/></svg><svg class="loan-offer-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
-            </div>
-            <div class="card loan-offer-card" role="button" tabindex="0" onclick="alert('Detail půjčky není v tomto prototypu rozpracovaný.')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.click()}">
-              <div class="loan-offer-copy"><span class="loan-offer-title">Kontokorent</span><span class="loan-offer-description">Ideální rezerva před výplatou nebo na nečekané výdaje.</span></div>
-              <svg class="loan-offer-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 31h31M12 27h23M16 23h15"/><path d="M31 15h8v18h-8"/></svg><svg class="loan-offer-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
-            </div>
-            <div class="card loan-offer-card" role="button" tabindex="0" onclick="alert('Detail půjčky není v tomto prototypu rozpracovaný.')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.click()}">
-              <div class="loan-offer-copy"><span class="loan-offer-title">Hypotéka</span><span class="loan-offer-description">Získejte navíc až 800 000 Kč na to, co jiné hypotéky nepokryjí.</span></div>
-              <svg class="loan-offer-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m8 28 16-13 16 13"/><path d="M13 26v12h22V26"/><path d="M20 38v-8h8v8"/></svg><svg class="loan-offer-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
-            </div>
-            <div class="card loan-offer-card" role="button" tabindex="0" onclick="alert('Detail půjčky není v tomto prototypu rozpracovaný.')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.click()}">
-              <div class="loan-offer-copy"><span class="loan-offer-title">Půjčky na bydlení</span><span class="loan-offer-description">Na rekonstrukci, vybavení i udržitelné bydlení bez zajištění až do 3,5 mil. Kč.</span></div>
-              <svg class="loan-offer-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m8 28 16-13 16 13"/><path d="M13 26v12h22V26"/><path d="M20 38v-8h8v8"/></svg><svg class="loan-offer-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
-            </div>
-            <div class="card loan-offer-card" role="button" tabindex="0" onclick="alert('Detail půjčky není v tomto prototypu rozpracovaný.')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.click()}">
-              <div class="loan-offer-copy"><span class="loan-offer-title">Kreditní karta</span><span class="loan-offer-description">Sjednejte si kreditní kartu a můžete mít k dispozici až 250 000 Kč na cokoliv.</span></div>
-              <svg class="loan-offer-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="7" y="13" width="34" height="23" rx="3"/><path d="M7 20h34M13 29h9"/></svg><svg class="loan-offer-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
-            </div>
-          </div>
+      <div class="screen reference-overview-screen" id="screen-pujcky">
+        <div class="reference-promo-list">
+          <button class="promo reference-promo" type="button" onclick="alert('Detail půjčky není v tomto prototypu rozpracovaný.')"><span class="promo__content"><span class="promo__title">Osobní půjčka</span><span class="promo__caption">Sjednejte si spotřebitelský úvěr online až do výše 2 500 000 Kč.</span></span><span class="promo__illustration" style="background-image:url('assets/loan-personal.png')" aria-hidden="true"></span><svg class="icon icon--caret promo__caret" aria-hidden="true"><use href="#es-caret-right"></use></svg></button>
+          <button class="promo reference-promo" type="button" onclick="alert('Detail konsolidace není v tomto prototypu rozpracovaný.')"><span class="promo__content"><span class="promo__title">Konsolidace</span><span class="promo__caption">Slučte si úvěry až do výše 2 500 000 Kč.</span></span><span class="promo__illustration" style="background-image:url('assets/loan-consolidation.png')" aria-hidden="true"></span><svg class="icon icon--caret promo__caret" aria-hidden="true"><use href="#es-caret-right"></use></svg></button>
+          <button class="promo reference-promo" type="button" onclick="alert('Detail kontokorentu není v tomto prototypu rozpracovaný.')"><span class="promo__content"><span class="promo__title">Kontokorent</span><span class="promo__caption">Ideální rezerva před výplatou nebo na nečekané výdaje.</span></span><span class="promo__illustration" style="background-image:url('assets/loan-overdraft.png')" aria-hidden="true"></span><svg class="icon icon--caret promo__caret" aria-hidden="true"><use href="#es-caret-right"></use></svg></button>
+          <button class="promo reference-promo" type="button" onclick="alert('Detail hypotéky není v tomto prototypu rozpracovaný.')"><span class="promo__content"><span class="promo__title">Hypotéka</span><span class="promo__caption">Získejte navíc až 800 000 Kč na to, co jiné hypotéky nepokryjí.</span></span><span class="promo__illustration" style="background-image:url('assets/loan-mortgage.png')" aria-hidden="true"></span><svg class="icon icon--caret promo__caret" aria-hidden="true"><use href="#es-caret-right"></use></svg></button>
+          <button class="promo reference-promo" type="button" onclick="alert('Detail půjčky na bydlení není v tomto prototypu rozpracovaný.')"><span class="promo__content"><span class="promo__title">Půjčky na bydlení</span><span class="promo__caption">Na rekonstrukci, vybavení i udržitelné bydlení bez zajištění až do 3,5 mil. Kč.</span></span><span class="promo__illustration" style="background-image:url('assets/loan-housing.png')" aria-hidden="true"></span><svg class="icon icon--caret promo__caret" aria-hidden="true"><use href="#es-caret-right"></use></svg></button>
+          <button class="promo reference-promo" type="button" onclick="alert('Detail kreditní karty není v tomto prototypu rozpracovaný.')"><span class="promo__content"><span class="promo__title">Kreditní karta</span><span class="promo__caption">Sjednejte si kreditní kartu a můžete mít k dispozici až 250 000 Kč na cokoliv.</span></span><span class="promo__illustration" style="background-image:url('assets/loan-credit-card.png')" aria-hidden="true"></span><svg class="icon icon--caret promo__caret" aria-hidden="true"><use href="#es-caret-right"></use></svg></button>
         </div>
       </div>
 
       <!-- ================= SCREEN 4: INVESTICE ================= -->
-      <div class="screen investment-overview-screen" id="screen-investice">
-        <div class="investment-overview-column">
-          <div class="card investment-offer-card" role="button" tabindex="0" onclick="alert('Detail investiční nabídky není v tomto prototypu rozpracovaný.')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.click()}">
-            <div class="investment-offer-copy"><span class="investment-offer-title">Investiční fondy</span><span class="investment-offer-description">Investujte teď, včetně možnosti sjednat si Dlouhodobý investiční produkt (DIP).</span></div>
-            <svg class="investment-offer-icon" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 46h46M14 39h36M19 32h26"/><path d="m12 18 12 6 11-9 10 4 9-8"/><path d="M12 18v28M55 11v35"/></svg>
-            <svg class="investment-offer-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
-          </div>
-        </div>
+      <div class="screen reference-overview-screen" id="screen-investice">
+        <button class="promo reference-promo" type="button" onclick="alert('Detail investiční nabídky není v tomto prototypu rozpracovaný.')"><span class="promo__content"><span class="promo__title">Investiční fondy</span><span class="promo__caption">Investujte teď, včetně možnosti sjednat si Dlouhodobý investiční produkt (DIP).</span></span><span class="promo__illustration" style="background-image:url('assets/investment-funds.png')" aria-hidden="true"></span><svg class="icon icon--caret promo__caret" aria-hidden="true"><use href="#es-caret-right"></use></svg></button>
       </div>
 
       <!-- ================= SCREEN 5: POJIŠTĚNÍ ================= -->
-      <div class="screen insurance-overview-screen" id="screen-pojisteni">
-        <div class="card insurance-overview-card">
-          <h1 class="insurance-overview-heading">Cestovní pojištění a pojištění karet</h1>
-          <div class="insurance-row" role="button" tabindex="0" onclick="alert('Detail pojištění není v tomto prototypu rozpracovaný.')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.click()}">
-            <div class="insurance-copy"><span class="insurance-name">Pojištění platebních karet a osobních věcí</span><span class="insurance-detail">Platné na dobu neurčitou<br>V rámci služby Bezpečí+</span></div>
-            <svg class="insurance-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
-          </div>
-          <div class="insurance-row" role="button" tabindex="0" onclick="alert('Detail pojištění není v tomto prototypu rozpracovaný.')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.click()}">
-            <div class="insurance-copy"><span class="insurance-name">Celoroční cestovní pojištění</span><span class="insurance-detail">Platné na dobu neurčitou<br>V rámci služby Cestování Rodina+</span></div>
-            <svg class="insurance-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
-          </div>
-        </div>
-        <button class="new-insurance-button" type="button" onclick="alert('Nové pojištění není v tomto prototypu rozpracované.')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>Nové pojištění</button>
+      <div class="screen reference-overview-screen has-tools" id="screen-pojisteni">
+        <section class="reference-panel" aria-labelledby="insurance-heading">
+          <h1 class="reference-panel__heading" id="insurance-heading">Cestovní pojištění a pojištění karet</h1>
+          <div class="reference-divider"></div>
+          <button class="item reference-item" type="button" onclick="alert('Detail pojištění není v tomto prototypu rozpracovaný.')"><span class="item__text"><span class="item__label">Pojištění platebních karet a osobních věcí</span><span class="item__caption">Platné na dobu neurčitou<br>V rámci služby Bezpečí+</span></span><span class="item__caret"><svg class="icon icon--caret" aria-hidden="true"><use href="#es-caret-right"></use></svg></span></button>
+          <div class="reference-divider"></div>
+          <button class="item reference-item" type="button" onclick="alert('Detail pojištění není v tomto prototypu rozpracovaný.')"><span class="item__text"><span class="item__label">Celoroční cestovní pojištění</span><span class="item__caption">Platné na dobu neurčitou<br>V rámci služby Cestování Rodina+</span></span><span class="item__caret"><svg class="icon icon--caret" aria-hidden="true"><use href="#es-caret-right"></use></svg></span></button>
+        </section>
+        <aside class="reference-tools"><button class="btn btn--primary reference-primary-action" type="button" onclick="alert('Nové pojištění není v tomto prototypu rozpracované.')"><svg class="icon" aria-hidden="true"><use href="#es-plus"></use></svg>Nové pojištění</button></aside>
       </div>
 
       <!-- ================= SCREEN 6: SPOŘENÍ ================= -->
-      <div class="screen savings-overview-screen" id="screen-sporeni">
-        <div class="savings-overview-column">
-          <section class="card savings-card">
-            <h1 class="savings-heading">Spořicí účet</h1>
-            <div class="savings-account-row" role="button" tabindex="0" onclick="goTo('ucet-detail')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.click()}">
-              <div class="savings-account-copy"><span class="savings-account-name">Spoření</span><span class="savings-account-balance">11 490<small>,20 Kč</small></span></div>
-              <span class="savings-account-number">326683764/0100</span><svg class="savings-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
-            </div>
-            <div class="savings-x-sell" role="button" tabindex="0" onclick="alert('Detail nabídky není v tomto prototypu rozpracovaný.')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.click()}"><span>$Xsell Content</span><svg class="savings-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></div>
+      <div class="screen reference-overview-screen has-tools" id="screen-sporeni">
+        <div class="reference-main">
+          <section class="reference-panel" aria-labelledby="savings-heading">
+            <h1 class="reference-panel__heading" id="savings-heading">Spořicí účet</h1>
+            <div class="reference-divider"></div>
+            <button class="reference-product" type="button" onclick="goTo('ucet-detail')"><span class="reference-product__top"><span class="reference-product__name">Spoření</span><span class="reference-product__num">326683764/0100</span></span><span class="reference-product__content"><span class="reference-product__body"><span class="reference-product__value">11 490<small>,20 Kč</small></span></span><span class="reference-product__caret"><svg class="icon icon--caret" aria-hidden="true"><use href="#es-caret-right"></use></svg></span></span></button>
+            <div class="reference-divider"></div>
+            <button class="item reference-action-item" type="button" onclick="alert('Nabídky pro spoření nejsou v tomto prototypu rozpracované.')"><span class="item__text"><span class="item__label">Nabídky pro vaše spoření</span></span><span class="item__caret"><svg class="icon icon--caret" aria-hidden="true"><use href="#es-caret-right"></use></svg></span></button>
           </section>
-          <section class="card savings-card">
-            <h1 class="savings-heading">Termínované účty</h1>
-            <div class="savings-term-row" role="button" tabindex="0" onclick="alert('Detail termínovaného účtu není v tomto prototypu rozpracovaný.')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.click()}">
-              <div class="savings-term-copy"><span class="savings-term-name">Termínovaný účet</span><span class="savings-account-balance">100 000<small>,00 Kč</small></span><span class="savings-term-detail">Doba vkladu do $Date</span></div>
-              <span class="savings-term-number">1234567/0100</span><svg class="savings-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
-            </div>
+          <section class="reference-panel" aria-labelledby="term-heading">
+            <h1 class="reference-panel__heading" id="term-heading">Termínované účty</h1>
+            <div class="reference-divider"></div>
+            <button class="reference-product" type="button" onclick="alert('Detail termínovaného účtu není v tomto prototypu rozpracovaný.')"><span class="reference-product__top"><span class="reference-product__name">Termínovaný účet</span><span class="reference-product__num">1234567/0100</span></span><span class="reference-product__content"><span class="reference-product__body"><span class="reference-product__value">100 000<small>,00 Kč</small></span><span class="reference-product__caption">Doba vkladu do 24. 8. 2027</span></span><span class="reference-product__caret"><svg class="icon icon--caret" aria-hidden="true"><use href="#es-caret-right"></use></svg></span></span></button>
           </section>
         </div>
-        <div class="right-column">
-          <button class="new-insurance-button" type="button" onclick="alert('Nové spoření není v tomto prototypu rozpracované.')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>Nové spoření</button>
-          <div class="card savings-closed-card" role="button" tabindex="0" onclick="alert('Zrušená spoření nejsou v tomto prototypu rozpracovaná.')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.click()}">
-            <svg class="savings-closed-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 7h14M9 7V4h6v3M7 7l1 13h8l1-13M10 11v5M14 11v5"/></svg>
-            <div class="savings-closed-copy"><span class="savings-closed-title">Zrušená a ukončená spoření</span><span class="savings-closed-count">1 spoření</span></div>
-            <svg class="savings-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
-          </div>
-        </div>
+        <aside class="reference-tools">
+          <button class="btn btn--primary reference-primary-action" type="button" onclick="alert('Nové spoření není v tomto prototypu rozpracované.')"><svg class="icon" aria-hidden="true"><use href="#es-plus"></use></svg>Nové spoření</button>
+          <section class="reference-panel"><button class="item reference-action-item" type="button" onclick="alert('Zrušená spoření nejsou v tomto prototypu rozpracovaná.')"><span class="item__icon item__icon--action"><svg class="icon" aria-hidden="true"><use href="#es-delete"></use></svg></span><span class="item__text"><span class="item__label">Zrušená a ukončená spoření</span><span class="item__caption">1 spoření</span></span><span class="item__caret"><svg class="icon icon--caret" aria-hidden="true"><use href="#es-caret-right"></use></svg></span></button></section>
+        </aside>
       </div>
 
       <!-- ================= SCREEN 7: EXTRA ================= -->
-      <div class="screen extra-overview-screen" id="screen-extra">
-        <div class="extra-overview-column">
-          <div class="extra-service-list">
-            <section class="card extra-service-card" aria-labelledby="extra-bezpeci-heading">
-              <h1 class="extra-service-heading" id="extra-bezpeci-heading">Extra služba Bezpečí</h1>
-              <div class="extra-service-row" role="button" tabindex="0" onclick="alert('Detail služby není v tomto prototypu rozpracovaný.')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.click()}">
-                <div class="extra-service-copy"><span class="extra-service-name">Bezpečí+</span><span class="extra-service-validity">Platné na dobu neurčitou</span></div>
-                <svg class="extra-service-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
-              </div>
-            </section>
-            <section class="card extra-service-card" aria-labelledby="extra-cestovani-heading">
-              <h1 class="extra-service-heading" id="extra-cestovani-heading">Extra služba Cestování</h1>
-              <div class="extra-service-row" role="button" tabindex="0" onclick="alert('Detail služby není v tomto prototypu rozpracovaný.')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.click()}">
-                <div class="extra-service-copy"><span class="extra-service-name">Cestování Rodina+</span><span class="extra-service-validity">Platné na dobu neurčitou</span></div>
-                <svg class="extra-service-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
-              </div>
-            </section>
-          </div>
+      <div class="screen reference-overview-screen" id="screen-extra">
+        <div class="reference-main">
+          <section class="reference-panel" aria-labelledby="extra-bezpeci-heading">
+            <h1 class="reference-panel__heading" id="extra-bezpeci-heading">Extra služba Bezpečí</h1>
+            <div class="reference-divider"></div>
+            <button class="item reference-item" type="button" onclick="alert('Detail služby není v tomto prototypu rozpracovaný.')"><span class="item__text"><span class="item__label">Bezpečí+</span><span class="item__caption">Platné na dobu neurčitou</span></span><span class="item__caret"><svg class="icon icon--caret" aria-hidden="true"><use href="#es-caret-right"></use></svg></span></button>
+          </section>
+          <section class="reference-panel" aria-labelledby="extra-cestovani-heading">
+            <h1 class="reference-panel__heading" id="extra-cestovani-heading">Extra služba Cestování</h1>
+            <div class="reference-divider"></div>
+            <button class="item reference-item" type="button" onclick="alert('Detail služby není v tomto prototypu rozpracovaný.')"><span class="item__text"><span class="item__label">Cestování Rodina+</span><span class="item__caption">Platné na dobu neurčitou</span></span><span class="item__caret"><svg class="icon icon--caret" aria-hidden="true"><use href="#es-caret-right"></use></svg></span></button>
+          </section>
         </div>
       </div>
 
