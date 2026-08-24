@@ -1,0 +1,10 @@
+<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Contracts" transform="translate(1.0946 1.25)">
+<g>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M5 9H11.5V10.5H5V9Z" fill="currentColor"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M5 5H14.5V6.5H5V5Z" fill="currentColor"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M4.75 0C2.12665 0 0 2.12665 0 4.75V16.75C0 19.3734 2.12665 21.5 4.75 21.5H14.75C17.3734 21.5 19.5 19.3734 19.5 16.75V13.2426L18 14.7426V16.75C18 18.5449 16.5449 20 14.75 20H4.75C2.95507 20 1.5 18.5449 1.5 16.75V4.75C1.5 2.95507 2.95507 1.5 4.75 1.5H14.75C16.5449 1.5 18 2.95507 18 4.75V6.2574L19.5 4.7574V4.75C19.5 2.12665 17.3734 0 14.75 0H4.75Z" fill="currentColor"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M21.8107 7.75L11.75 17.8107L10.6893 16.75L20.75 6.68934L21.8107 7.75Z" fill="currentColor"/>
+</g>
+</g>
+</svg>

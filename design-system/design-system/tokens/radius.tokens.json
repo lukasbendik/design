@@ -1,0 +1,18 @@
+{
+  "$schema": "https://tr.designtokens.org/format/",
+  "$description": "Golem corner radius. Essentials are not responsive: a component that needs a different radius on a wide screen switches token, it does not scale one.",
+  "$extensions": {
+    "golem": {
+      "source": "Figma variables read from CO Button, CO Content Card, CO Snackbar, CO Segmented Control and CO Badge nodes 2026-08-12",
+      "componentLevelException": "borderRadius/segmentedControl/segmentRadius = 6px exists in Figma for CO Segmented Control only. Golem's own rule is that component-level essentials are not supported — treat this as legacy and do not copy the pattern."
+    }
+  },
+  "borderRadius": {
+    "null": { "$type": "dimension", "$value": "0px" },
+    "xs":   { "$type": "dimension", "$value": "2px" },
+    "sm":   { "$type": "dimension", "$value": "4px" },
+    "md":   { "$type": "dimension", "$value": "8px", "$description": "Buttons, cards, inputs — the default." },
+    "xl":   { "$type": "dimension", "$value": "16px", "$description": "Modal and sheet." },
+    "full": { "$type": "dimension", "$value": "1024px", "$description": "Pill: badge, tag, floating toolbar, snackbar." }
+  }
+}

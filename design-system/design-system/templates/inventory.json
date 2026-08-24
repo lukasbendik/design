@@ -1,0 +1,1557 @@
+{
+  "$description": "Inventory of every component published to the Figma library '💠 CORE Templates'. Generated from the Figma library index, not hand-typed. status: stable = use it | deprecated = never use in new work | internal = private sub-part, do not place directly | snowflake = one-off exception, do not reuse | draft = unfinished.",
+  "library": "💠 CORE Templates",
+  "fileKey": "dbNZdTD169mAZ39fNGlNUg",
+  "readAt": "2026-08-12",
+  "count": 47,
+  "statusCounts": {
+    "stable": 36,
+    "internal": 1,
+    "deprecated": 10
+  },
+  "templates": [
+    {
+      "name": "TMP Header Assisted",
+      "page": "AK Header",
+      "status": "stable",
+      "type": "set",
+      "nodeId": "32664:7902",
+      "instances": 12,
+      "properties": {
+        "Language selection?": {
+          "type": "boolean",
+          "default": false
+        },
+        "✏️ Customer name": {
+          "type": "text",
+          "default": "$customerName"
+        },
+        "✏️ Acting person": {
+          "type": "text",
+          "default": "$actingPerson"
+        },
+        "Acting person?": {
+          "type": "boolean",
+          "default": true
+        },
+        "Service indicator": {
+          "type": "variant",
+          "options": [
+            "None",
+            "Personal",
+            "Phone",
+            "Videochat"
+          ],
+          "default": "None"
+        }
+      }
+    },
+    {
+      "name": "TMP Call",
+      "page": "Call",
+      "status": "stable",
+      "type": "component",
+      "nodeId": "14551:155281",
+      "instances": 0
+    },
+    {
+      "name": "TMP Broker Detail",
+      "page": "Charts",
+      "status": "stable",
+      "type": "set",
+      "nodeId": "30423:81134",
+      "instances": 11,
+      "properties": {
+        "Time period": {
+          "type": "variant",
+          "options": [
+            "1D",
+            "5D",
+            "1M",
+            "6M",
+            "1R",
+            "5R",
+            "Vše"
+          ],
+          "default": "1D"
+        },
+        "Trend": {
+          "type": "variant",
+          "options": [
+            "Positive",
+            "Negative"
+          ],
+          "default": "Positive"
+        },
+        "Loaded": {
+          "type": "variant",
+          "options": [
+            "True",
+            "False"
+          ],
+          "default": "True"
+        }
+      }
+    },
+    {
+      "name": "TMP Broker Overview",
+      "page": "Charts",
+      "status": "stable",
+      "type": "set",
+      "nodeId": "30423:81076",
+      "instances": 0,
+      "properties": {
+        "Time period": {
+          "type": "variant",
+          "options": [
+            "1M",
+            "6M",
+            "1R",
+            "Vše"
+          ],
+          "default": "1M"
+        },
+        "Trend": {
+          "type": "variant",
+          "options": [
+            "Positive",
+            "Negative"
+          ],
+          "default": "Positive"
+        },
+        "Loaded": {
+          "type": "variant",
+          "options": [
+            "True",
+            "False"
+          ],
+          "default": "True"
+        }
+      }
+    },
+    {
+      "name": "TMP Investment",
+      "page": "Charts",
+      "status": "stable",
+      "type": "set",
+      "nodeId": "30423:81109",
+      "instances": 1,
+      "properties": {
+        "Time period": {
+          "type": "variant",
+          "options": [
+            "Vše",
+            "5D",
+            "1M",
+            "6M",
+            "1R",
+            "5R"
+          ],
+          "default": "5D"
+        },
+        "Loaded": {
+          "type": "variant",
+          "options": [
+            "True",
+            "False"
+          ],
+          "default": "True"
+        }
+      }
+    },
+    {
+      "name": "TMP Financial summary",
+      "page": "Financial summary",
+      "status": "stable",
+      "type": "set",
+      "nodeId": "10065:134866",
+      "instances": 0,
+      "properties": {
+        "Size": {
+          "type": "variant",
+          "options": [
+            "LG",
+            "MD",
+            "SM"
+          ],
+          "default": "LG"
+        },
+        "State": {
+          "type": "variant",
+          "options": [
+            "Default",
+            "Empty",
+            "Loading",
+            "Error"
+          ],
+          "default": "Default"
+        }
+      }
+    },
+    {
+      "name": "TMP SCR Layout / IB Web Large",
+      "page": "Layout (TMP SCR)",
+      "status": "stable",
+      "type": "set",
+      "nodeId": "548:47555",
+      "instances": 2,
+      "properties": {
+        "Communication Center?": {
+          "type": "boolean",
+          "default": true
+        },
+        "Toolbar?": {
+          "type": "boolean",
+          "default": true
+        },
+        "Scrollbar?": {
+          "type": "boolean",
+          "default": false
+        },
+        "Assisted Canal?": {
+          "type": "boolean",
+          "default": false
+        },
+        "Buttons?": {
+          "type": "boolean",
+          "default": false
+        },
+        "Button Bar Bottom?": {
+          "type": "boolean",
+          "default": true
+        },
+        "Button Bar Dynamic": {
+          "type": "boolean",
+          "default": false
+        },
+        "Title in Content?": {
+          "type": "boolean",
+          "default": false
+        },
+        "Placeholder promo?": {
+          "type": "boolean",
+          "default": true
+        },
+        "Placeholder main?": {
+          "type": "boolean",
+          "default": true
+        },
+        "Placeholder side?": {
+          "type": "boolean",
+          "default": true
+        },
+        "Navigation Style": {
+          "type": "variant",
+          "options": [
+            "Ground / Main page",
+            "Ground / Subpage",
+            "Flow / Narrow / first or last step",
+            "Flow / Narrow / step",
+            "Flow / Wide / first or last step",
+            "Flow / Wide / step",
+            "Dialog / Narrow / first or last step",
+            "Dialog / Narrow / step",
+            "Dialog / Wide / first or last step",
+            "Dialog / Wide / step",
+            "Sheet"
+          ],
+          "default": "Ground / Main page"
+        }
+      }
+    },
+    {
+      "name": "TMP SCR Layout / IB Web Large wide",
+      "page": "Layout (TMP SCR)",
+      "status": "stable",
+      "type": "set",
+      "nodeId": "23863:5674",
+      "instances": 2,
+      "properties": {
+        "Assisted Canal?": {
+          "type": "boolean",
+          "default": false
+        },
+        "Communication Center?": {
+          "type": "boolean",
+          "default": true
+        },
+        "Toolbar?": {
+          "type": "boolean",
+          "default": true
+        },
+        "Scrollbar?": {
+          "type": "boolean",
+          "default": false
+        },
+        "Buttons?": {
+          "type": "boolean",
+          "default": false
+        },
+        "Title in Content?": {
+          "type": "boolean",
+          "default": false
+        },
+        "Button Bar Bottom?": {
+          "type": "boolean",
+          "default": true
+        },
+        "Button Bar Dynamic": {
+          "type": "boolean",
+          "default": false
+        },
+        "Placeholder side?": {
+          "type": "boolean",
+          "default": true
+        },
+        "Placeholder main?": {
+          "type": "boolean",
+          "default": true
+        },
+        "Placeholder promo?": {
+          "type": "boolean",
+          "default": true
+        },
+        "Navigation Style": {
+          "type": "variant",
+          "options": [
+            "Ground / Main page",
+            "Ground / Subpage",
+            "Flow / Narrow / first or last step",
+            "Flow / Narrow / step",
+            "Flow / Wide / first or last step",
+            "Flow / Wide / step",
+            "Dialog / Narrow / first or last step",
+            "Dialog / Narrow / step",
+            "Dialog / Wide / first or last step",
+            "Dialog / Wide / step",
+            "Sheet"
+          ],
+          "default": "Ground / Main page"
+        }
+      }
+    },
+    {
+      "name": "TMP SCR Layout / IB Web Medium",
+      "page": "Layout (TMP SCR)",
+      "status": "stable",
+      "type": "set",
+      "nodeId": "668:46710",
+      "instances": 1,
+      "properties": {
+        "Communication Center?": {
+          "type": "boolean",
+          "default": true
+        },
+        "Toolbar?": {
+          "type": "boolean",
+          "default": true
+        },
+        "Button Bar Bottom?": {
+          "type": "boolean",
+          "default": true
+        },
+        "Button Bar Dynamic?": {
+          "type": "boolean",
+          "default": false
+        },
+        "Buttons?": {
+          "type": "boolean",
+          "default": false
+        },
+        "Placeholder promo?": {
+          "type": "boolean",
+          "default": true
+        },
+        "Placeholder main?": {
+          "type": "boolean",
+          "default": true
+        },
+        "Placeholder side?": {
+          "type": "boolean",
+          "default": true
+        },
+        "Navigation Style": {
+          "type": "variant",
+          "options": [
+            "Ground / Main page",
+            "Ground / Subpage",
+            "Flow / First or last step",
+            "Flow / Step",
+            "Dialog / First or last step",
+            "Dialog / Step",
+            "Sheet"
+          ],
+          "default": "Ground / Main page"
+        }
+      }
+    },
+    {
+      "name": "TMP SCR Layout / IB Web Small",
+      "page": "Layout (TMP SCR)",
+      "status": "stable",
+      "type": "set",
+      "nodeId": "547:45980",
+      "instances": 2,
+      "properties": {
+        "Communication Center?": {
+          "type": "boolean",
+          "default": true
+        },
+        "Toolbar?": {
+          "type": "boolean",
+          "default": true
+        },
+        "Button Bar Bottom?": {
+          "type": "boolean",
+          "default": true
+        },
+        "Button Bar Dynamic?": {
+          "type": "boolean",
+          "default": false
+        },
+        "Buttons?": {
+          "type": "boolean",
+          "default": false
+        },
+        "Placeholder promo?": {
+          "type": "boolean",
+          "default": true
+        },
+        "Placeholder main?": {
+          "type": "boolean",
+          "default": true
+        },
+        "Placeholder side?": {
+          "type": "boolean",
+          "default": true
+        },
+        "Navigation Style": {
+          "type": "variant",
+          "options": [
+            "Ground / Main page",
+            "Ground / Subpage",
+            "Flow / First or last step",
+            "Flow / Step",
+            "Dialog / First or last step",
+            "Dialog / Step",
+            "⚠︎ Dialog / PDF document",
+            "Sheet"
+          ],
+          "default": "Ground / Main page"
+        }
+      },
+      "doNotUse": [
+        "Navigation Style=⚠︎ Dialog / PDF document"
+      ]
+    },
+    {
+      "name": "TMP SCR Layout / iOS App",
+      "page": "Layout (TMP SCR)",
+      "status": "stable",
+      "type": "set",
+      "nodeId": "5:57645",
+      "instances": 1,
+      "properties": {
+        "Apple Pay Dialog?": {
+          "type": "boolean",
+          "default": true
+        },
+        "Share Sheet?": {
+          "type": "boolean",
+          "default": true
+        },
+        "CO Modal Alert?": {
+          "type": "boolean",
+          "default": true
+        },
+        "CO Modal Biometric?": {
+          "type": "boolean",
+          "default": true
+        },
+        "FaceID Modal?": {
+          "type": "boolean",
+          "default": true
+        },
+        "Comunication Center?": {
+          "type": "boolean",
+          "default": true
+        },
+        "Toolbar?": {
+          "type": "boolean",
+          "default": true
+        },
+        "Button Bar Bottom?": {
+          "type": "boolean",
+          "default": true
+        },
+        "Button Bar Dynamic?": {
+          "type": "boolean",
+          "default": false
+        },
+        "Buttons?": {
+          "type": "boolean",
+          "default": false
+        },
+        "Placeholder promo?": {
+          "type": "boolean",
+          "default": true
+        },
+        "Placeholder main?": {
+          "type": "boolean",
+          "default": true
+        },
+        "Placeholder side?": {
+          "type": "boolean",
+          "default": true
+        },
+        "Navigation Style": {
+          "type": "variant",
+          "options": [
+            "Ground / Main page",
+            "Ground / Subpage",
+            "Flow / First or last step",
+            "Flow / Step",
+            "FlowModal / First or last step",
+            "FlowModal / Step",
+            "Dialog / First or last step",
+            "Dialog / Step",
+            "DialogModal / First or last step",
+            "DialogModal / Step",
+            "Sheet",
+            "Native"
+          ],
+          "default": "Ground / Main page"
+        }
+      }
+    },
+    {
+      "name": "TMP SCR Layout / iPad App Large, landscape",
+      "page": "Layout (TMP SCR)",
+      "status": "stable",
+      "type": "set",
+      "nodeId": "1485:71992",
+      "instances": 1,
+      "properties": {
+        "Navigation?": {
+          "type": "boolean",
+          "default": true
+        },
+        "Comunication Center?": {
+          "type": "boolean",
+          "default": true
+        },
+        "Toolbar?": {
+          "type": "boolean",
+          "default": true
+        },
+        "Button bar bottom?": {
+          "type": "boolean",
+          "default": true
+        },
+        "Button bar dynamic?": {
+          "type": "boolean",
+          "default": false
+        },
+        "Buttons?": {
+          "type": "boolean",
+          "default": false
+        },
+        "Apple Pay Dialog?": {
+          "type": "boolean",
+          "default": true
+        },
+        "Share Sheet?": {
+          "type": "boolean",
+          "default": true
+        },
+        "CO Modal Alert?": {
+          "type": "boolean",
+          "default": true
+        },
+        "CO Modal Biometric?": {
+          "type": "boolean",
+          "default": true
+        },
+        "FaceID Modal?": {
+          "type": "boolean",
+          "default": true
+        },
+        "Contextual Menu?": {
+          "type": "boolean",
+          "default": true
+        },
+        "Placeholder promo?": {
+          "type": "boolean",
+          "default": true
+        },
+        "Placeholder main?": {
+          "type": "boolean",
+          "default": true
+        },
+        "Placeholder side?": {
+          "type": "boolean",
+          "default": true
+        },
+        "Navigation Style": {
+          "type": "variant",
+          "options": [
+            "Ground / Main page",
+            "Ground / Subpage",
+            "Flow / First or last step",
+            "Flow / Step",
+            "FlowModal / First or last step",
+            "FlowModal / Step",
+            "Dialog / First or last step",
+            "Dialog / Step",
+            "DialogModal / First or last step",
+            "DialogModal / step",
+            "Sheet",
+            "Native"
+          ],
+          "default": "Ground / Main page"
+        }
+      }
+    },
+    {
+      "name": "TMP SCR Layout / iPad App Medium, portrait",
+      "page": "Layout (TMP SCR)",
+      "status": "stable",
+      "type": "set",
+      "nodeId": "1334:70827",
+      "instances": 1,
+      "properties": {
+        "Navigation?": {
+          "type": "boolean",
+          "default": false
+        },
+        "Comunication Centrer?": {
+          "type": "boolean",
+          "default": true
+        },
+        "Toolbar?": {
+          "type": "boolean",
+          "default": true
+        },
+        "Button Bar Dynamic?": {
+          "type": "boolean",
+          "default": false
+        },
+        "Button Bar Bottom?": {
+          "type": "boolean",
+          "default": true
+        },
+        "Buttons?": {
+          "type": "boolean",
+          "default": false
+        },
+        "CO Modal Alert?": {
+          "type": "boolean",
+          "default": true
+        },
+        "CO Modal Biometric?": {
+          "type": "boolean",
+          "default": true
+        },
+        "FaceID Modal?": {
+          "type": "boolean",
+          "default": true
+        },
+        "Share Sheet?": {
+          "type": "boolean",
+          "default": true
+        },
+        "Apple Pay Dialog?": {
+          "type": "boolean",
+          "default": true
+        },
+        "Contextual Menu?": {
+          "type": "boolean",
+          "default": true
+        },
+        "Placeholder promo?": {
+          "type": "boolean",
+          "default": true
+        },
+        "Placeholder main?": {
+          "type": "boolean",
+          "default": true
+        },
+        "Placeholder side?": {
+          "type": "boolean",
+          "default": true
+        },
+        "Navigation Style": {
+          "type": "variant",
+          "options": [
+            "Ground / Main page",
+            "Ground / Subpage",
+            "Flow / First or last step",
+            "Flow / Step",
+            "FlowModal / First or last step",
+            "FlowModal / Step",
+            "Dialog / First or last step",
+            "Dialog / Step",
+            "DialogModal / First or last step",
+            "DialogModal / Step",
+            "Sheet",
+            "Native"
+          ],
+          "default": "Ground / Main page"
+        }
+      }
+    },
+    {
+      "name": "TMP SCR Layout Login / IB Web Large",
+      "page": "Layout (TMP SCR)",
+      "status": "stable",
+      "type": "set",
+      "nodeId": "30188:8727",
+      "instances": 0,
+      "properties": {
+        "Cookies button?": {
+          "type": "boolean",
+          "default": true
+        },
+        "Language button?": {
+          "type": "boolean",
+          "default": true
+        },
+        "Above header content?": {
+          "type": "boolean",
+          "default": true
+        },
+        "Bottom content?": {
+          "type": "boolean",
+          "default": true
+        },
+        "Chatbot button?": {
+          "type": "boolean",
+          "default": false
+        },
+        "Scrollbar?": {
+          "type": "boolean",
+          "default": false
+        },
+        "Assisted Canal?": {
+          "type": "boolean",
+          "default": false
+        },
+        "Navigation style": {
+          "type": "variant",
+          "options": [
+            "Login / Main page",
+            "Login / Subpage"
+          ],
+          "default": "Login / Main page"
+        }
+      }
+    },
+    {
+      "name": "TMP SCR Layout Login / IB Web Large wide",
+      "page": "Layout (TMP SCR)",
+      "status": "stable",
+      "type": "set",
+      "nodeId": "30188:8794",
+      "instances": 0,
+      "properties": {
+        "Cookies button?": {
+          "type": "boolean",
+          "default": true
+        },
+        "Language button?": {
+          "type": "boolean",
+          "default": true
+        },
+        "Above header content?": {
+          "type": "boolean",
+          "default": true
+        },
+        "Bottom content?": {
+          "type": "boolean",
+          "default": true
+        },
+        "Chatbot button?": {
+          "type": "boolean",
+          "default": false
+        },
+        "Scrollbar?": {
+          "type": "boolean",
+          "default": false
+        },
+        "Assisted Canal?": {
+          "type": "boolean",
+          "default": false
+        },
+        "Navigation style": {
+          "type": "variant",
+          "options": [
+            "Login / Main page",
+            "Login / Subpage"
+          ],
+          "default": "Login / Main page"
+        }
+      }
+    },
+    {
+      "name": "TMP SCR Layout Login / IB Web Medium",
+      "page": "Layout (TMP SCR)",
+      "status": "stable",
+      "type": "set",
+      "nodeId": "30188:8670",
+      "instances": 0,
+      "properties": {
+        "Cookies button?": {
+          "type": "boolean",
+          "default": true
+        },
+        "Language button?": {
+          "type": "boolean",
+          "default": true
+        },
+        "Above header content?": {
+          "type": "boolean",
+          "default": true
+        },
+        "Bottom content?": {
+          "type": "boolean",
+          "default": true
+        },
+        "Chatbot button?": {
+          "type": "boolean",
+          "default": false
+        },
+        "Scrollbar?": {
+          "type": "boolean",
+          "default": false
+        },
+        "Navigation style": {
+          "type": "variant",
+          "options": [
+            "Login / Main page",
+            "Login / Subpage"
+          ],
+          "default": "Login / Main page"
+        }
+      }
+    },
+    {
+      "name": "TMP SCR Layout Login / IB Web Small",
+      "page": "Layout (TMP SCR)",
+      "status": "stable",
+      "type": "set",
+      "nodeId": "30188:8309",
+      "instances": 0,
+      "properties": {
+        "Chatbot button?": {
+          "type": "boolean",
+          "default": false
+        },
+        "Cookies button?": {
+          "type": "boolean",
+          "default": true
+        },
+        "Language button?": {
+          "type": "boolean",
+          "default": true
+        },
+        "Above header content?": {
+          "type": "boolean",
+          "default": true
+        },
+        "Bottom content?": {
+          "type": "boolean",
+          "default": true
+        },
+        "Scrollbar?": {
+          "type": "boolean",
+          "default": false
+        },
+        "Navigation style": {
+          "type": "variant",
+          "options": [
+            "Login / Main page",
+            "Login / Subpage"
+          ],
+          "default": "Login / Main page"
+        }
+      }
+    },
+    {
+      "name": "TMP Loading 1s-7s / InLine",
+      "page": "Loading",
+      "status": "stable",
+      "type": "component",
+      "nodeId": "9525:132074",
+      "instances": 0,
+      "properties": {
+        "Show Heading": {
+          "type": "boolean",
+          "default": false
+        }
+      }
+    },
+    {
+      "name": "TMP Loading 1s-7s / Page",
+      "page": "Loading",
+      "status": "stable",
+      "type": "set",
+      "nodeId": "5:47309",
+      "instances": 0,
+      "properties": {
+        "Show Paragraph": {
+          "type": "boolean",
+          "default": true
+        },
+        "Type": {
+          "type": "variant",
+          "options": [
+            "SCR (1-7s)",
+            "Overlay on SCR (1-3s)"
+          ],
+          "default": "SCR (1-7s)"
+        },
+        "Platform": {
+          "type": "variant",
+          "options": [
+            "MB (iOS)",
+            "IB"
+          ],
+          "default": "MB (iOS)"
+        }
+      }
+    },
+    {
+      "name": "TMP Navigation",
+      "page": "Navigation",
+      "status": "stable",
+      "type": "set",
+      "nodeId": "2563:134494",
+      "instances": 3,
+      "properties": {
+        "Size": {
+          "type": "variant",
+          "options": [
+            "sm-Apple+sm-md-IB+responsive-Android",
+            "md-lg-Apple+lg-IB"
+          ],
+          "default": "sm-Apple+sm-md-IB+responsive-Android"
+        },
+        "Položka menu": {
+          "type": "variant",
+          "options": [
+            "Přehled",
+            "Extra",
+            "Karty",
+            "Půjčky",
+            "Spoření",
+            "Investice",
+            "Pojištění",
+            "Účty"
+          ],
+          "default": "Přehled"
+        }
+      }
+    },
+    {
+      "name": "TMP Open in New",
+      "page": "Open In New",
+      "status": "stable",
+      "type": "set",
+      "nodeId": "18812:3721",
+      "instances": 0,
+      "properties": {
+        "co otevře": {
+          "type": "variant",
+          "options": [
+            "web",
+            "video"
+          ],
+          "default": "web"
+        }
+      }
+    },
+    {
+      "name": "TMP Page content blocks (Detach me)",
+      "page": "Page content blocks",
+      "status": "stable",
+      "type": "set",
+      "nodeId": "30463:69565",
+      "instances": 1,
+      "properties": {
+        "Content slot 1": {
+          "type": "slot",
+          "default": "-1:-1"
+        },
+        "Content slot 2": {
+          "type": "slot",
+          "default": "-1:-1"
+        },
+        "Content slot 3": {
+          "type": "slot",
+          "default": "-1:-1"
+        },
+        "Content slot 4": {
+          "type": "slot",
+          "default": "-1:-1"
+        },
+        "Type": {
+          "type": "variant",
+          "options": [
+            "Items",
+            "Items in cards",
+            "Items + dividers",
+            "Items + dividers in cards",
+            "Inputs",
+            "Inputs in cards",
+            "Text",
+            "Text + items in cards",
+            "Inline message S",
+            "Inline message MD-LG",
+            "Action stack pile S",
+            "Action stack pile MD-LG",
+            "Action stack row",
+            "Segmented control",
+            "Button",
+            "Tabs",
+            "Tags",
+            "Promo cards",
+            "Combined content in card",
+            "Empty cards",
+            "Products in cards",
+            "2 column card content LG",
+            "3 column card content LG"
+          ],
+          "default": "Items"
+        }
+      }
+    },
+    {
+      "name": "TMP Placeholder",
+      "page": "Placeholders",
+      "status": "stable",
+      "type": "set",
+      "nodeId": "5:57665",
+      "instances": 0,
+      "properties": {
+        "Content slot": {
+          "type": "slot",
+          "default": "-1:-1"
+        },
+        "Variant": {
+          "type": "variant",
+          "options": [
+            "Placeholder",
+            "Vertical list layout",
+            "2 Columns layout LG",
+            "3 Columns layout LG",
+            "Icon",
+            "Slot placeholder"
+          ],
+          "default": "Placeholder"
+        }
+      }
+    },
+    {
+      "name": "TMP Product detail / IB",
+      "page": "Product detail",
+      "status": "stable",
+      "type": "set",
+      "nodeId": "30735:20876",
+      "instances": 0,
+      "properties": {
+        "Breakpoint": {
+          "type": "variant",
+          "options": [
+            "SM",
+            "MD",
+            "LG",
+            "LG Wide"
+          ],
+          "default": "SM"
+        },
+        "Screen": {
+          "type": "variant",
+          "options": [
+            "Správa",
+            "Detail"
+          ],
+          "default": "Detail"
+        }
+      }
+    },
+    {
+      "name": "TMP Product detail / iOS",
+      "page": "Product detail",
+      "status": "stable",
+      "type": "set",
+      "nodeId": "30734:12681",
+      "instances": 0,
+      "properties": {
+        "Breakpoint": {
+          "type": "variant",
+          "options": [
+            "SM",
+            "MD",
+            "LG"
+          ],
+          "default": "SM"
+        },
+        "Screen": {
+          "type": "variant",
+          "options": [
+            "Správa",
+            "Detail"
+          ],
+          "default": "Detail"
+        }
+      }
+    },
+    {
+      "name": "TMP Sales Summary / IB",
+      "page": "Sales Summary",
+      "status": "stable",
+      "type": "set",
+      "nodeId": "30715:35870",
+      "instances": 0,
+      "properties": {
+        "Breakpoint": {
+          "type": "variant",
+          "options": [
+            "SM",
+            "MD",
+            "LG",
+            "LG Wide"
+          ],
+          "default": "SM"
+        }
+      }
+    },
+    {
+      "name": "TMP Sales Summary / iOS",
+      "page": "Sales Summary",
+      "status": "stable",
+      "type": "set",
+      "nodeId": "30715:35593",
+      "instances": 0,
+      "properties": {
+        "Breakpoint": {
+          "type": "variant",
+          "options": [
+            "SM",
+            "MD",
+            "LG"
+          ],
+          "default": "SM"
+        }
+      }
+    },
+    {
+      "name": "TMP Sales process / Guidelines",
+      "page": "Sales process",
+      "status": "stable",
+      "type": "component",
+      "nodeId": "3390:114398",
+      "instances": 0
+    },
+    {
+      "name": "TMP Sales process / lg-IB",
+      "page": "Sales process",
+      "status": "stable",
+      "type": "set",
+      "nodeId": "3478:116718",
+      "instances": 0,
+      "properties": {
+        "Step": {
+          "type": "variant",
+          "options": [
+            "Záložka pod HS",
+            "Záložka pod HS s aktivním produktem",
+            "🔥 uprav: SCR NDB Nabídka - doplň název produktu",
+            "🔥 uprav: SCR NDB Podmínky nabídky - doplň název produktu",
+            "🔥 uprav: SCR NDB Co vás čeká - doplň název produktu",
+            "🔥 uprav: SCR NDB Rozpracovana nabidka - doplň název produktu",
+            "Nabídka sekce %",
+            "Multisubjekt"
+          ],
+          "default": "Záložka pod HS"
+        }
+      }
+    },
+    {
+      "name": "TMP Sales process / md-IB",
+      "page": "Sales process",
+      "status": "stable",
+      "type": "set",
+      "nodeId": "3477:116378",
+      "instances": 0,
+      "properties": {
+        "Step": {
+          "type": "variant",
+          "options": [
+            "Záložka pod HS",
+            "Nabídka sekce %",
+            "🔥 uprav: SCR NDB Nabídka - doplň název produktu",
+            "🔥 uprav: SCR NDB Podmínky nabídky - doplň název produktu",
+            "🔥 uprav: SCR NDB Co vás čeká - doplň název produktu",
+            "🔥 uprav: SCR NDB Rozpracovana nabidka - doplň název produktu",
+            "Multisubjekt"
+          ],
+          "default": "Záložka pod HS"
+        }
+      }
+    },
+    {
+      "name": "TMP Sales process / sm-IB",
+      "page": "Sales process",
+      "status": "stable",
+      "type": "set",
+      "nodeId": "3477:114303",
+      "instances": 0,
+      "properties": {
+        "Step": {
+          "type": "variant",
+          "options": [
+            "Záložka pod HS",
+            "Nabídka sekce %",
+            "🔥 uprav: SCR NDB Nabídka - doplň název produktu",
+            "🔥 uprav: SCR NDB Podmínky nabídky - doplň název produktu",
+            "🔥 uprav: SCR NDB Co vás čeká - doplň název produktu",
+            "🔥 uprav: SCR NDB Rozpracovana nabidka - doplň název produktu",
+            "Multisubjekt"
+          ],
+          "default": "Záložka pod HS"
+        }
+      }
+    },
+    {
+      "name": "TMP Sales process / sm-iOS",
+      "page": "Sales process",
+      "status": "stable",
+      "type": "set",
+      "nodeId": "9531:134180",
+      "instances": 0,
+      "properties": {
+        "Step": {
+          "type": "variant",
+          "options": [
+            "Záložka pod HS",
+            "Nabídka sekce %",
+            "🔥 uprav: SCR NDB Nabídka - doplň název produktu",
+            "🔥 uprav: SCR NDB Podmínky nabídky - doplň název produktu",
+            "🔥 uprav: SCR NDB Co vás čeká - doplň název produktu",
+            "🔥 uprav: SCR NDB Rozpracovana nabidka - doplň název produktu",
+            "Multisubjekt"
+          ],
+          "default": "Záložka pod HS"
+        }
+      }
+    },
+    {
+      "name": "TMP Support",
+      "page": "Support - PREDELAT DODELAT",
+      "status": "stable",
+      "type": "set",
+      "nodeId": "4431:104946",
+      "instances": 0,
+      "properties": {
+        "s (size)": {
+          "type": "variant",
+          "options": [
+            "responsive"
+          ],
+          "default": "responsive"
+        }
+      }
+    },
+    {
+      "name": "TMP Table",
+      "page": "Table",
+      "status": "stable",
+      "type": "set",
+      "nodeId": "24529:3283",
+      "instances": 0,
+      "properties": {
+        "Paginator?": {
+          "type": "boolean",
+          "default": true
+        },
+        "Cloumn Slot": {
+          "type": "slot",
+          "default": "-1:-1"
+        },
+        "Cloumn Slot 1": {
+          "type": "slot",
+          "default": "-1:-1"
+        },
+        "Cloumn Slot 2": {
+          "type": "slot",
+          "default": "-1:-1"
+        },
+        "Type": {
+          "type": "variant",
+          "options": [
+            "Default",
+            "Expandable"
+          ],
+          "default": "Default"
+        }
+      }
+    },
+    {
+      "name": "_ExpandedRow",
+      "page": "Table",
+      "status": "internal",
+      "type": "set",
+      "nodeId": "24529:3270",
+      "instances": 0,
+      "properties": {
+        "Slot": {
+          "type": "slot",
+          "default": "-1:-1"
+        },
+        "Slot 2": {
+          "type": "slot",
+          "default": "-1:-1"
+        },
+        "Grey bcgr": {
+          "type": "variant",
+          "options": [
+            "true",
+            "false"
+          ],
+          "default": "true"
+        }
+      }
+    },
+    {
+      "name": "TMP Withdrawal / IB",
+      "page": "Withdrawal from the contract",
+      "status": "stable",
+      "type": "component",
+      "nodeId": "32573:10611",
+      "instances": 0
+    },
+    {
+      "name": "TMP Withdrawal / iOS",
+      "page": "Withdrawal from the contract",
+      "status": "stable",
+      "type": "component",
+      "nodeId": "32573:10610",
+      "instances": 0
+    },
+    {
+      "name": "⚠ TMP Content Card with outside padding",
+      "page": "⚠ Content Card with outside padding",
+      "status": "deprecated",
+      "type": "set",
+      "nodeId": "18203:1423",
+      "instances": 0,
+      "properties": {
+        "Show Bottom Padding": {
+          "type": "boolean",
+          "default": false
+        },
+        "Card": {
+          "type": "variant",
+          "options": [
+            "Wrap Primary",
+            "Wrap Secondary",
+            "Wrap Highlighted",
+            "Promo",
+            "⚠PromoTargeted",
+            "NotificationCard"
+          ],
+          "default": "Wrap Primary"
+        }
+      },
+      "doNotUse": [
+        "Card=⚠PromoTargeted"
+      ]
+    },
+    {
+      "name": "_⚠TMP Empty State / SCR Empty Page",
+      "page": "⚠ Empty State - deprecated",
+      "status": "deprecated",
+      "type": "set",
+      "nodeId": "1954:114367",
+      "instances": 0,
+      "properties": {
+        "s": {
+          "type": "variant",
+          "options": [
+            "sm-ib / Ground",
+            "sm-iOS-Android / Ground",
+            "md-ib / Ground",
+            "md-iOS / Ground"
+          ],
+          "default": "sm-iOS-Android / Ground"
+        }
+      }
+    },
+    {
+      "name": "_⚠TMP SCR Detail produktu",
+      "page": "⚠ Product detail - deprecated",
+      "status": "deprecated",
+      "type": "set",
+      "nodeId": "2101:205367",
+      "instances": 0,
+      "properties": {
+        "PA Nav. Style": {
+          "type": "variant",
+          "options": [
+            "sm-iOS-Android",
+            "sm-iOS-Android-subdetail",
+            "sm-ib",
+            "sm-ib-subdetail",
+            "sm-ib-loading",
+            "md-ib",
+            "md-ib-subdetail",
+            "md-ib-loading",
+            "lg-ib",
+            "lg-ib-loading",
+            "sm-iOS-Android-loading"
+          ],
+          "default": "sm-iOS-Android"
+        }
+      }
+    },
+    {
+      "name": "_⚠TMP Sales Summary / IB-LG",
+      "page": "⚠ Sales Summary - deprecated",
+      "status": "deprecated",
+      "type": "set",
+      "nodeId": "24086:10744",
+      "instances": 0,
+      "properties": {
+        "State": {
+          "type": "variant",
+          "options": [
+            "Default"
+          ],
+          "default": "Default"
+        }
+      }
+    },
+    {
+      "name": "_⚠TMP Sales Summary / IB-MD",
+      "page": "⚠ Sales Summary - deprecated",
+      "status": "deprecated",
+      "type": "set",
+      "nodeId": "24434:176250",
+      "instances": 0,
+      "properties": {
+        "State": {
+          "type": "variant",
+          "options": [
+            "Default"
+          ],
+          "default": "Default"
+        }
+      }
+    },
+    {
+      "name": "_⚠TMP Sales Summary / IB-SM",
+      "page": "⚠ Sales Summary - deprecated",
+      "status": "deprecated",
+      "type": "set",
+      "nodeId": "24434:176249",
+      "instances": 0,
+      "properties": {
+        "State": {
+          "type": "variant",
+          "options": [
+            "Default"
+          ],
+          "default": "Default"
+        }
+      }
+    },
+    {
+      "name": "_⚠TMP Sales Summary / MB-LG",
+      "page": "⚠ Sales Summary - deprecated",
+      "status": "deprecated",
+      "type": "set",
+      "nodeId": "24434:176248",
+      "instances": 0,
+      "properties": {
+        "State": {
+          "type": "variant",
+          "options": [
+            "Default"
+          ],
+          "default": "Default"
+        }
+      }
+    },
+    {
+      "name": "_⚠TMP Sales Summary / MB-MD",
+      "page": "⚠ Sales Summary - deprecated",
+      "status": "deprecated",
+      "type": "set",
+      "nodeId": "24434:176247",
+      "instances": 0,
+      "properties": {
+        "State": {
+          "type": "variant",
+          "options": [
+            "Default"
+          ],
+          "default": "Default"
+        }
+      }
+    },
+    {
+      "name": "_⚠TMP Sales Summary / MB-SM",
+      "page": "⚠ Sales Summary - deprecated",
+      "status": "deprecated",
+      "type": "set",
+      "nodeId": "23909:9124",
+      "instances": 0,
+      "properties": {
+        "State": {
+          "type": "variant",
+          "options": [
+            "Default"
+          ],
+          "default": "Default"
+        }
+      }
+    },
+    {
+      "name": "⚠ TMP Stack",
+      "page": "⚠ Stack",
+      "status": "deprecated",
+      "type": "set",
+      "nodeId": "5:16724",
+      "instances": 0,
+      "properties": {
+        "Show Heading": {
+          "type": "boolean",
+          "default": true
+        },
+        "which item": {
+          "type": "variant",
+          "options": [
+            "Display Vertical",
+            "Display Horizontal",
+            "Navigation",
+            "Transaction Dnes",
+            "Checkbox",
+            "Radiobutton",
+            "Switch"
+          ],
+          "default": "Display Vertical"
+        },
+        "Card": {
+          "type": "variant",
+          "options": [
+            "WrapPrimary",
+            "WrapSecondary",
+            "no"
+          ],
+          "default": "WrapPrimary"
+        }
+      }
+    }
+  ]
+}

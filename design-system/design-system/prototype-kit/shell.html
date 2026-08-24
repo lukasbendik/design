@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Prototyp</title>
+
+<!-- Copy this file into workspace/<you>/outputs/<date>-<slug>/index.html and edit the config at the
+     bottom. This is the shell — the device, the breakpoint, the colour mode, the language and the
+     list of steps. The screens live in their own file (start from screen.html) and run inside the
+     frame, so their media queries react to the chosen canvas width and not to the browser window.
+
+     Paths assume the prototype sits four levels under the repository root. -->
+<link rel="stylesheet" href="../../../../knowledge/design-system/prototype-kit/shell.css">
+<script src="../../../../knowledge/design-system/prototype-kit/shell.js"></script>
+</head>
+
+<body>
+<script>
+GolemShell({
+  file:  'screens.html',
+  title: 'Název prototypu',
+  url:   'kb.cz/plus',
+  stepsTitle: 'Kroky',
+  steps: [
+    { id: 'first',  label: 'První obrazovka', sub: 'Ground / Main page' },
+    { id: 'second', label: 'Druhá obrazovka', sub: 'Dialog / first or last step' }
+    // A sheet is its own step: { id: 'second', label: 'Potvrzení', sub: 'Sheet', overlay: 'confirm' }
+  ]
+});
+</script>
+</body>
+</html>

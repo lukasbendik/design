@@ -1,0 +1,381 @@
+/* Golem COMPONENTS — stand-ins for the CO layer, in code.
+   Depends on tokens.css; the frame around them is templates.css.
+
+   These reproduce the look of the corresponding `CO` component closely enough to review a screen.
+   They are not the design system: the full contracts live in ../components/inventory.json and the
+   written specs in ../components/*.md. Before handoff, name the real component and variant.
+
+   Every value below is a token from tokens.css, and every geometry was read out of the Figma
+   components themselves — see the provenance table in ../assets/README.md and the run records in
+   feedback/log/. Nothing here is eyeballed from a screenshot. */
+
+/* ---------------------------------------------------------------- CO Header / v4.0
+
+   iOS: a 44 px navigation zone with padding/sm 4 below it — that is where the 48 comes from. The
+   zone is inset padding/xl 16 leading and padding/md 8 trailing, and its label is
+   content/bodySecondaryBold 14/20. That label is not the screen's title: a screen that needs a
+   title puts a CO Text Heading / v4.0 Page in the content, under the header.
+
+   IB Ground is two bands and 96 tall: a utility bar (Centrum KB+, the subject switch, Nastavení,
+   Odhlásit se) above a title band with `‹ preScreenTitle` and the title. Ground keeps its actions
+   on the trailing edge; flow, dialog and sheet keep the way out on the leading edge (iOS text
+   button, Android ✗) or trailing (IB ✗). */
+
+.header {
+  display: flex; align-items: center; gap: var(--padding-md);
+  min-height: 44px; margin-bottom: var(--padding-sm);
+  padding-inline: var(--padding-xl) var(--padding-md);
+}
+.header__title { font: var(--content-body-secondary-bold); letter-spacing: var(--tracking-body-secondary);
+                 color: var(--content-primary); }
+.header__spacer { flex: 1 1 auto; }
+.header__action {
+  display: inline-flex; align-items: center; justify-content: center; gap: var(--padding-sm);
+  min-height: 44px; padding-inline: var(--padding-md);
+  border: none; background: none; cursor: pointer;
+  border-radius: var(--border-radius-md);
+  font: var(--content-body-secondary-bold); letter-spacing: var(--tracking-body-secondary);
+  color: var(--content-primary);
+}
+.header__action:hover { background: var(--interactive-secondary-action); }
+.header__icon-action {
+  position: relative;
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 44px; height: 44px;
+  border: none; background: none; cursor: pointer; border-radius: var(--border-radius-md);
+  color: var(--content-primary);
+}
+.header__icon-action:hover { background: var(--interactive-secondary-action); }
+
+/* The IB ground header's utility band. Shown only where the platform is the browser; the apps
+   have no such band. Its items are bodySecondaryBold in content/primary. */
+.header--utility {
+  display: none;                       /* templates.css turns it on at lg-IB and nowhere else */
+  min-height: 48px; margin-bottom: 0;
+  justify-content: flex-end; gap: var(--padding-2xl);
+  padding-inline: var(--padding-xl);
+}
+.header--utility .header__action { gap: var(--padding-md); }
+/* The app's trailing header actions. templates.css hides the group at lg-IB, where the utility
+   band already carries them — so this must stay a class, never an inline style. */
+.header__app-only { display: contents; }
+
+/* CO Badge — a filled red circle with white captionSecondaryBold on the icon's top-right */
+.badge {
+  position: absolute; top: 2px; right: 2px;
+  min-width: 16px; height: 16px; padding-inline: 4px;
+  display: inline-flex; align-items: center; justify-content: center;
+  border-radius: var(--border-radius-full);
+  background: var(--interactive-primary); color: var(--interactive-on-primary);
+  font: var(--content-caption-secondary-bold);
+}
+
+/* CO Icon Avatar / Small — 32 px, borderRadius/sm, on background/surfaceAvatar */
+.avatar {
+  width: var(--sizing-icon-large); height: var(--sizing-icon-large);
+  display: inline-flex; align-items: center; justify-content: center;
+  border-radius: var(--border-radius-sm);
+  background: var(--background-surface-avatar);
+  font: var(--content-caption-primary-bold); color: var(--content-primary);
+}
+
+/* ---------------------------------------------------------------- CO Content Card / v6.x
+
+   The card owns its padding; a "Card Wrap" around it carries the 16 px column inset and the 16 px
+   gap to the next block. Measured on every Savings card: wrap 375 → card 343 at sm. */
+
+.card {
+  padding: var(--padding-xl);
+  border-radius: var(--border-radius-md);
+  background: var(--background-surface);
+  box-shadow: var(--shadow-panel);
+}
+.card--flush { padding: 0; }
+.card-wrap { padding-inline: var(--padding-xl); padding-bottom: var(--padding-xl); }
+/* The card's own title band: 16 all round, a section heading, then a divider. */
+.card-title { padding: var(--padding-xl); }
+
+/* CO Content Card / v6.2 Promo — title headlineSecondaryBold 18/24 w600, caption
+   bodySecondaryBold 14/20 in content/secondary, a 125 × 96 illustration, then the caret. */
+.promo {
+  display: flex; align-items: flex-start; gap: var(--padding-md);
+  width: 100%; padding: var(--padding-xl);
+  border: none; text-align: start; cursor: pointer;
+  border-radius: var(--border-radius-md);
+  background: var(--background-surface);
+  box-shadow: var(--shadow-panel);
+}
+.promo__content { display: flex; flex-direction: column; gap: var(--padding-sm); flex: 1 1 0; min-width: 0; }
+.promo__title   { font: var(--headings-headline-secondary-bold); letter-spacing: var(--tracking-headline-secondary);
+                  color: var(--content-primary); }
+.promo__caption { font: var(--content-body-secondary-bold); letter-spacing: var(--tracking-body-secondary);
+                  color: var(--content-secondary); }
+.promo__illustration { flex: none; width: 125px; height: 96px; align-self: center;
+                       background: center/96px 96px no-repeat; }
+.promo__caret { flex: none; align-self: center; color: var(--content-primary); }
+
+/* ---------------------------------------------------------------- CO Item Display / v5.3 and
+   CO Item Navigation / v5.2
+
+   padding/xl 16 on all four sides, 16 px gaps, padding/xs 2 between the two text lines. The left
+   icon sits in a 32 × 24 box: the icon is 24, the box is 32 wide, and that extra 8 is what keeps
+   every label in a list aligned. The caret sits in a wrap with padding/sm 4 above and below, so it
+   centres on the first line of a two-line row rather than on the row as a whole. */
+
+.item {
+  display: flex; align-items: flex-start; gap: var(--padding-xl);
+  width: 100%; padding: var(--padding-xl);
+  border: none; text-align: start; background: none;
+  border-radius: var(--border-radius-md);
+  color: inherit; font: inherit;
+}
+button.item, a.item { cursor: pointer; }
+button.item:hover, a.item:hover { background: var(--interactive-secondary-action); }
+.item__icon    { flex: none; width: var(--sizing-icon-large); height: var(--sizing-icon-small);
+                 display: flex; align-items: center; justify-content: center;
+                 color: var(--content-primary); }
+.item__icon--action { color: var(--interactive-primary); }   /* a destructive or product action */
+.item__text    { display: flex; flex-direction: column; gap: var(--padding-xs); flex: 1; min-width: 0; }
+.item__label   { font: var(--content-body-primary-bold); letter-spacing: var(--tracking-body-primary);
+                 color: var(--content-primary); }
+.item__caption { font: var(--content-body-secondary); letter-spacing: var(--tracking-body-secondary);
+                 color: var(--content-tertiary); }
+.item__message { font: var(--content-caption-primary-bold); color: var(--attention-information); }
+.item__value   { font: var(--content-body-primary-bold); text-align: right; white-space: nowrap;
+                 color: var(--content-primary); }
+.item__value-secondary { font: var(--content-body-secondary); color: var(--content-tertiary); }
+.item__value--in { color: var(--chart-in); }
+.item--centered { align-items: center; }
+.item--vertical .item__label { font: var(--content-caption-primary-bold); }
+.item__caret   { flex: none; display: flex; align-items: center; padding-block: var(--padding-sm);
+                 color: var(--content-tertiary); }
+/* The trailing action icon of an Item Display — Edit, Copy — is interactive/primary, 24 px. */
+.item__action  { flex: none; display: inline-flex; align-items: center; justify-content: center;
+                 width: var(--sizing-icon-small); height: var(--sizing-icon-small);
+                 border: none; background: none; cursor: pointer;
+                 color: var(--interactive-primary); }
+
+/* "Label + Value Wrap": a 12/16 captionPrimaryBold field name above a 16/24 bodyPrimaryBold value,
+   both content/primary. This is how a detail screen states a fact — it is not the caption style,
+   which is grey and sits below the label. Measured 31834:26989. */
+.item__field-label { font: var(--content-caption-primary-bold); letter-spacing: var(--tracking-caption-primary);
+                     color: var(--content-primary); }
+.item__field-value { font: var(--content-body-primary-bold); letter-spacing: var(--tracking-body-primary);
+                     color: var(--content-primary); }
+
+/* ---------------------------------------------------------------- CO Divider / v3.0
+
+   A 0.5 px hairline — measured in the component, not the 1 px border/sm you would assume. Inside a
+   card or a list it is indented by padding/xl 16 so it starts under the text, not under the icon. */
+.divider { height: .5px; background: var(--background-divider); border: 0; margin: 0; }
+.divider--inset { margin-inline-start: var(--padding-xl); }
+
+/* ---------------------------------------------------------------- CO Text Heading / v4.0 and
+   CO Text Paragraph / 4.0 */
+.heading-hero    { font: var(--headings-title-primary);      letter-spacing: var(--tracking-title-primary); margin: 0; }
+.heading-page    { font: var(--headings-title-tertiary);     letter-spacing: var(--tracking-title-tertiary); margin: 0; }
+.heading-section { font: var(--headings-headline-secondary); letter-spacing: var(--tracking-headline-secondary); margin: 0; }
+.heading-group   { font: var(--content-body-secondary-bold); letter-spacing: var(--tracking-body-secondary); margin: 0; }
+.paragraph       { font: var(--content-body-primary);   letter-spacing: var(--tracking-body-primary);   margin: 0; }
+.paragraph--sm   { font: var(--content-body-secondary); letter-spacing: var(--tracking-body-secondary); margin: 0; }
+/* A section heading may carry one trailing text action — an underlined bodySecondaryBold link in
+   interactive/secondary, e.g. "Sdílet" on Číslo účtu. Measured I31834:37036;97300:494874. */
+.heading-row    { display: flex; align-items: flex-start; gap: var(--padding-xl); }
+.heading-row > :first-child { flex: 1 1 0; min-width: 0; }
+.heading-action {
+  border: none; background: none; padding: 0; cursor: pointer;
+  font: var(--content-body-secondary-bold); letter-spacing: var(--tracking-body-secondary);
+  color: var(--interactive-secondary);
+  text-decoration: underline; text-underline-offset: 4px;
+}
+
+/* ---------------------------------------------------------------- CO Product <product> / v3.0
+
+   The header of a product's own screen: name and number, then the balance with the decimals and
+   the currency in body size, then a caption. */
+.product { display: flex; flex-direction: column; gap: var(--padding-lg); padding: var(--padding-xl); }
+.product__row  { display: flex; align-items: flex-start; gap: var(--padding-xs); }
+.product__name { flex: 1 1 0; min-width: 0; font: var(--content-body-secondary-bold);
+                 letter-spacing: var(--tracking-body-secondary); color: var(--content-primary); }
+.product__num  { font: var(--content-body-secondary); letter-spacing: var(--tracking-body-secondary);
+                 color: var(--content-tertiary); white-space: nowrap; }
+.product__value { display: flex; align-items: baseline; }
+.product__amount { font: var(--headings-title-secondary); letter-spacing: var(--tracking-title-secondary);
+                   color: var(--content-primary); }
+.product__decimals, .product__currency { font: var(--content-body-primary-bold);
+                   letter-spacing: var(--tracking-body-primary); color: var(--content-primary); }
+.product__currency { padding-inline-start: var(--padding-sm); }
+.product__caption { font: var(--content-body-secondary); letter-spacing: var(--tracking-body-secondary);
+                    color: var(--content-tertiary); }
+.product--negative .product__amount,
+.product--negative .product__decimals,
+.product--negative .product__currency { color: var(--attention-alert); }
+
+/* CO Product Savings / v3.0 ItemSavingsEnvelope with CO Chart / v4.0 HorizontalSavings:
+   a goal row with a progress bar and the target on the trailing edge. */
+.envelope { display: flex; flex-direction: column; gap: var(--padding-lg); padding: var(--padding-xl);
+            width: 100%; border: none; background: none; text-align: start; cursor: pointer; }
+.envelope:hover { background: var(--interactive-secondary-action); }
+.envelope__row  { display: flex; align-items: center; gap: var(--padding-sm); }
+.envelope__name { flex: 1 1 0; min-width: 0; font: var(--content-body-secondary-bold);
+                  letter-spacing: var(--tracking-body-secondary); color: var(--content-primary); }
+.envelope__value { font: var(--content-body-secondary); letter-spacing: var(--tracking-body-secondary);
+                   color: var(--content-primary); }
+.envelope__bar  { display: flex; height: 8px; border-radius: var(--border-radius-xs);
+                  background: var(--background-divider); overflow: hidden; }
+.envelope__fill { height: 100%; border-radius: var(--border-radius-xs); background: var(--chart-out); }
+.envelope__goal { display: flex; justify-content: flex-end; gap: var(--padding-xs);
+                  font: var(--content-body-secondary); letter-spacing: var(--tracking-body-secondary);
+                  color: var(--content-tertiary); }
+
+/* ---------------------------------------------------------------- CO Button / v4.0 */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  gap: var(--padding-md);
+  min-height: var(--sizing-button-height);
+  padding-inline: var(--padding-xl);
+  border-radius: var(--border-radius-md);
+  border: none; cursor: pointer;
+  font: var(--content-button);
+  letter-spacing: var(--tracking-body-primary);
+}
+.btn--full      { width: 100%; }
+.btn--primary   { background: var(--interactive-primary); color: var(--interactive-on-primary); }
+.btn--primary:hover { background: var(--interactive-primary-action); }
+/* Secondary is an outline button: 1 px, no fill. Not 2 px — that width is the focus ring. */
+.btn--secondary { background: transparent; color: var(--interactive-secondary);
+                  border: var(--border-sm) solid var(--interactive-secondary); }
+.btn--secondary:hover { background: var(--interactive-secondary-action); }
+.btn--tertiary  { background: transparent; color: var(--interactive-secondary); }
+.btn--danger    { background: transparent; color: var(--interactive-primary); }
+.btn[disabled]  { background: var(--content-quaternary);
+                  color: var(--interactive-on-primary); border-color: transparent;
+                  cursor: not-allowed; }
+:where(.btn, .item, .promo, .envelope, .scr__nav a, .scr__nav button, .header__action,
+       .header__icon-action, .heading-action, .item__action, .toolbar button,
+       .sheet__close):focus-visible {
+  outline: var(--border-md) solid var(--interactive-secondary);
+  outline-offset: 2px;
+}
+
+/* ---------------------------------------------------------------- CO InLine Message / v6.0
+
+   The icon carries the severity, the text never does. Info and warning share the same grey
+   surface; there is no yellow message in Golem. */
+.inline-message {
+  display: flex; gap: var(--padding-xl);
+  min-height: 48px;
+  padding: var(--padding-lg) var(--padding-xl);
+  font: var(--content-body-secondary); letter-spacing: var(--tracking-body-secondary);
+  color: var(--content-primary);
+  background: var(--attention-information-surface);
+}
+.inline-message--success { background: var(--attention-success-surface); }
+.inline-message--error   { background: var(--attention-alert-surface); }
+.inline-message__icon    { flex: 0 0 var(--sizing-icon-small); }
+.inline-message--interactive { cursor: pointer; }
+.inline-message--success .inline-message__icon { color: var(--attention-success); }
+.inline-message--error   .inline-message__icon { color: var(--attention-alert); }
+@media (min-width: 768px) {   /* responsive-md-lg gains a radius and the panel shadow */
+  .inline-message { border-radius: var(--border-radius-md); box-shadow: var(--shadow-panel); }
+}
+
+/* ---------------------------------------------------------------- CO Tag / v3.0
+   4 px radius and a 1 px outline, not a pill. Active is filled red. */
+.tag {
+  display: inline-flex; align-items: center; gap: var(--padding-sm);
+  padding: var(--padding-sm) var(--padding-md);
+  border: var(--border-sm) solid var(--background-border-highlighted);
+  border-radius: var(--border-radius-sm);
+  background: var(--background-surface);
+  font: var(--content-caption-primary-bold);
+  color: var(--content-primary);
+}
+.tag--active { background: var(--interactive-primary); border-color: var(--interactive-primary);
+               color: var(--interactive-on-primary); }
+
+/* ---------------------------------------------------------------- CO Input family
+   One 76 px-tall wrap; the border changes with state. */
+.field { display: flex; flex-direction: column; gap: var(--padding-sm); }
+.field__control {
+  display: flex; flex-direction: column; justify-content: center;
+  gap: var(--padding-xl);
+  min-height: 76px;
+  padding: var(--padding-md) var(--padding-lg) var(--padding-lg);
+  border: var(--border-sm) solid var(--background-border-highlighted);
+  border-radius: var(--border-radius-md);
+  background: var(--background-surface);
+  font: var(--content-body-primary-bold);
+  color: var(--content-primary);
+}
+.field__label   { font: var(--content-caption-primary-bold); color: var(--content-primary); }
+.field__control:hover { border-color: var(--content-primary); }
+.field__control:focus-within { border-width: var(--border-lg); border-color: var(--interactive-secondary); }
+.field--error .field__control { border-color: var(--attention-alert); }
+.field--error .field__control:focus-within { border-width: var(--border-lg); border-color: var(--attention-alert); }
+.field__message { font: var(--content-caption-primary-bold); color: var(--attention-information); }
+.field--error .field__message { color: var(--attention-alert); }
+
+/* ---------------------------------------------------------------- CO Snackbar / v2.0 and
+   CO Tooltip / v1.0 — the system's only two inverted surfaces. */
+.snackbar, .tooltip {
+  background: var(--content-secondary);
+  color: var(--background-surface);
+  box-shadow: var(--shadow-floating);
+}
+.snackbar {
+  display: inline-flex; align-items: center; gap: var(--padding-xl);
+  padding: var(--padding-lg) var(--padding-xl);
+  border-radius: var(--border-radius-full);
+  font: var(--content-body-secondary-bold);
+}
+.snackbar--ib, .snackbar--android { border-radius: var(--border-radius-md); }
+.tooltip {
+  max-width: 240px; padding: var(--padding-md);
+  border-radius: var(--border-radius-md);
+  font: var(--content-caption-primary);
+}
+
+/* ---------------------------------------------------------------- CO Spinner / v2.0 customKBshape
+
+   A red rounded-square outline that turns at a constant speed. The three circular platform
+   spinners are deprecated; never use an OS spinner on a KB+ screen.
+
+   The shape is square — 32 × 32, borderRadius/md, a 2 px interactive/primary outline. An earlier
+   version of this kit drew it 32 × 24 and pulsed the scale on an eased curve; both were invented
+   and both made it wobble. Figma holds no keyframes and no prototype interaction for this
+   component (checked 2026-08-12), so the motion below is the minimum that is not made up: one
+   linear turn, 1.2 s, no scaling. The exact curve is an open question for the design-system
+   owner. */
+.spinner {
+  width: var(--sizing-icon-large); height: var(--sizing-icon-large);
+  border: var(--border-md) solid var(--interactive-primary);
+  border-radius: var(--border-radius-md);
+  animation: kb-spin 1.2s linear infinite;
+}
+@keyframes kb-spin { to { transform: rotate(360deg); } }
+
+/* Loading: keep the shape of the loaded content so the screen does not jump. */
+.skeleton, [data-skeleton] {
+  background: var(--content-skeleton-loading);
+  border-radius: var(--border-radius-sm);
+  color: transparent;
+}
+[data-skeleton] > * { visibility: hidden; }
+
+/* ---------------------------------------------------------------- icons and illustrations
+
+   ES Icon is 24 × 24, the carets are 8 × 16, close is 16 × 16 — icons.js carries the sprite.
+   ES Illustration M is 375 × 212 with the artwork 212 × 212 in the middle, S is 125 × 96 with the
+   artwork 96 × 96. The artwork is transparent, so it needs no band of its own. */
+.icon { display: block; flex: none; width: var(--sizing-icon-small); height: var(--sizing-icon-small);
+        fill: currentColor; }
+.icon--caret { width: 8px; height: 16px; }
+.icon--close { width: 16px; height: 16px; }
+.icon--lg    { width: var(--sizing-icon-large); height: var(--sizing-icon-large); }
+.icon--logo  { width: 83px; height: 31.5px; }
+
+.illustration    { height: 212px; background: center/212px 212px no-repeat; }
+.illustration--s { width: 125px; height: 96px; background: center/96px 96px no-repeat; }
+
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="cs" data-platform="ios">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Golem screen skeleton</title>
+
+<!-- Copy this file into workspace/<you>/outputs/<date>-<slug>/screens.html and replace the content;
+     copy shell.html next to it as index.html for the device and breakpoint switcher.
+     Keep the stylesheets and the icon sprite: they are the design system, not a copy of it.
+     Paths below assume the prototype sits four levels under the repository root. -->
+<link rel="stylesheet" href="../../../../knowledge/design-system/prototype-kit/tokens.css">
+<link rel="stylesheet" href="../../../../knowledge/design-system/prototype-kit/fonts.css">
+<link rel="stylesheet" href="../../../../knowledge/design-system/prototype-kit/templates.css">
+<link rel="stylesheet" href="../../../../knowledge/design-system/prototype-kit/components.css">
+<script src="../../../../knowledge/design-system/prototype-kit/icons.js"></script>
+</head>
+
+<body>
+
+<!-- One `.scr` is one screen. `data-nav` is the navigation style and it decides the whole frame:
+     which header, whether main navigation is on screen, how wide the content column is at each
+     breakpoint, and how the bottom button bar behaves. Set it first, then fill the slots.
+     Ground / Main page is shown here; for a Flow or a Dialog use data-nav="flow" / "dialog",
+     delete .scr__nav and .scr__comms, and change the header's way out. -->
+<section class="scr" data-nav="ground-main" aria-label="Účty">
+
+  <header class="scr__header">
+    <div class="header">
+      <span class="header__title">Účty</span>
+      <span class="header__spacer"></span>
+      <button class="header__icon-action" type="button" aria-label="Zprávy">
+        <svg class="icon" aria-hidden="true"><use href="#es-bank"></use></svg>
+        <span class="badge">1</span>
+      </button>
+      <span class="avatar" aria-hidden="true">RP</span>
+    </div>
+  </header>
+
+  <!-- CO Navigation / 3.0. At sm this is a scrolling row of small pills under the header — never a
+       bottom tab bar. From lg it becomes the 252 px side panel, and only there do the destination
+       icons and the KB mark appear. Both forms are the same markup; templates.css switches them. -->
+  <nav class="scr__nav" aria-label="Hlavní navigace">
+    <div class="scr__nav__items">
+      <button type="button"><svg class="icon" aria-hidden="true"><use href="#es-home"></use></svg>Přehled</button>
+      <button type="button" aria-current="page"><svg class="icon" aria-hidden="true"><use href="#es-wallet"></use></svg>Účty</button>
+      <button type="button"><svg class="icon" aria-hidden="true"><use href="#es-card"></use></svg>Karty</button>
+      <button type="button"><svg class="icon" aria-hidden="true"><use href="#es-pay-me"></use></svg>Půjčky</button>
+      <button type="button"><svg class="icon" aria-hidden="true"><use href="#es-moneybox"></use></svg>Spoření</button>
+    </div>
+    <span class="scr__nav__brand" aria-hidden="true">
+      <svg class="icon icon--logo"><use href="#es-logotype-kb"></use></svg>
+    </span>
+  </nav>
+
+  <main class="scr__content">
+    <div class="scr__main">
+      <div class="card-wrap">
+        <div class="card card--flush">
+          <button class="item" type="button">
+            <span class="item__icon"><svg class="icon" aria-hidden="true"><use href="#es-wallet"></use></svg></span>
+            <span class="item__text">
+              <span class="item__label">Běžný účet</span>
+              <span class="item__caption">123456789/0100</span>
+            </span>
+            <span class="item__value">24 812,50 Kč</span>
+            <span class="item__caret"><svg class="icon icon--caret" aria-hidden="true"><use href="#es-caret-right"></use></svg></span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- The tools rail appears from lg only; below it the toolbar floats over the content. -->
+    <aside class="scr__tools"></aside>
+  </main>
+
+  <!-- CO Button Bar Bottom: the buttons always live in .buttonbar__row, so the template can stack
+       them full width at sm and lay them out as one right-aligned row from md. -->
+  <footer class="buttonbar">
+    <div class="buttonbar__row">
+      <button class="btn btn--primary" type="button">Pokračovat</button>
+    </div>
+  </footer>
+</section>
+
+</body>
+</html>

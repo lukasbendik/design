@@ -1,0 +1,12 @@
+<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Bank">
+<g id="Vector">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M13.8638 4.2789C12.7448 3.49557 11.2553 3.49557 10.1363 4.2789L4.37933 8.30878H19.6208L13.8638 4.2789ZM9.2761 3.05006C10.9116 1.90519 13.0885 1.90519 14.724 3.05005L22.4302 8.44436C22.6983 8.63208 22.8138 8.97205 22.7154 9.28426C22.6169 9.59647 22.3274 9.80878 22.0001 9.80878H2.00005C1.6727 9.80878 1.38317 9.59647 1.28475 9.28426C1.18634 8.97205 1.30178 8.63208 1.56996 8.44436L9.2761 3.05006Z" fill="currentColor"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M1.25005 20.3086H22.7501V21.8086H1.25005V20.3086Z" fill="currentColor"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M5.25005 10.8086V19.3086H3.75005V10.8086H5.25005Z" fill="currentColor"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M10.2501 10.8086V19.3086H8.75005V10.8086H10.2501Z" fill="currentColor"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M15.2501 10.8086V19.3086H13.7501V10.8086H15.2501Z" fill="currentColor"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M20.2501 10.8086V19.3086H18.7501V10.8086H20.2501Z" fill="currentColor"/>
+</g>
+</g>
+</svg>

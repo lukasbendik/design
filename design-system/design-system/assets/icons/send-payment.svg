@@ -1,0 +1,10 @@
+<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="SendPayment">
+<g id="Vector">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M4.25 15.25H8.75V16.75H4.25V15.25Z" fill="currentColor"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M1.25 11.25H6.75V12.75H1.25V11.25Z" fill="currentColor"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M3.25 7.25H8.75V8.75H3.25V7.25Z" fill="currentColor"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M16 6.75C13.1005 6.75 10.75 9.10051 10.75 12C10.75 14.8995 13.1005 17.25 16 17.25C18.8995 17.25 21.25 14.8995 21.25 12C21.25 9.10051 18.8995 6.75 16 6.75ZM9.25 12C9.25 8.27208 12.2721 5.25 16 5.25C19.7279 5.25 22.75 8.27208 22.75 12C22.75 15.7279 19.7279 18.75 16 18.75C12.2721 18.75 9.25 15.7279 9.25 12Z" fill="currentColor"/>
+</g>
+</g>
+</svg>

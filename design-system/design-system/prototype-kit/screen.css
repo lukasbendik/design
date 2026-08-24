@@ -1,0 +1,10 @@
+/* The whole screen layer in one link, for prototypes that want a single stylesheet.
+
+   The kit is two layers and they are meant to be readable separately:
+     templates.css  — the screen frame: slots, breakpoints, platforms, navigation styles
+     components.css — the CO stand-ins that go inside it
+
+   Link this file and you get both, in the order they have to load. Link the two directly when you
+   want to be explicit about which layer a prototype leans on. */
+@import url("templates.css");
+@import url("components.css");

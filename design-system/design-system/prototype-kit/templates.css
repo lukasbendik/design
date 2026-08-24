@@ -1,0 +1,410 @@
+/* Golem TEMPLATES — the screen frame, in code.
+   Depends on tokens.css. Pair with components.css (the CO layer), fonts.css and icons.js.
+
+   This file is the code twin of ../templates/screen-templates.md,
+   ../patterns/screen-layout.md, ../patterns/navigation-styles.md and
+   ../patterns/breakpoints-and-platforms.md. Everything a `TMP SCR Layout` decides — how wide the
+   content column is, where the navigation sits, how the bottom button bar behaves, whether a
+   scrollbar shows — is here, not in the screens. A screen fills slots; it never positions itself.
+
+   Read this before writing a prototype: content that "runs off to the sides" is almost always a
+   screen that laid itself out instead of letting the template do it.
+
+   ------------------------------------------------------------------ the contract
+
+   <html data-platform="ios | android | ib" data-theme="light | dark">
+     <body>
+       <section class="scr" data-nav="ground-main | ground-sub | flow | dialog | sheet">
+         <header class="scr__header"> …CO Header… </header>
+         <div class="scr__comms"> …communication centre, ground-main only… </div>
+         <nav class="scr__nav"> …CO Navigation / 3.0, ground only… </nav>
+         <main class="scr__content">
+           <div class="scr__main"> …the content blocks… </div>
+           <aside class="scr__tools"> …lg only: toolbar, actions, settings… </aside>
+         </main>
+         <footer class="buttonbar"> …CO Button Bar Bottom… </footer>
+         <div class="toolbar"> …CO Toolbar, ground-main and ground-sub… </div>
+       </section>
+
+   `data-platform` is the device, `data-nav` is the navigation style, and the width of the box is
+   the breakpoint. Those three decide the whole frame. Nothing else may.
+
+   ------------------------------------------------------------------ the four canvases
+
+   sm 375 · md 768 · lg 1024 · lgWide 1680 — the widths Golem designs on. The design switches
+   template at these widths; it does not stretch between them.
+
+   Measured on the real screens (Savings, file 67HAfngTySwIA0PZKCUnN6, read 2026-08-12):
+
+   | | sm 375 | lg 1024 |
+   |---|---|---|
+   | Ground: navigation | pill row under the header, 48 slot | side panel 252 wide, full height |
+   | Ground: body | 375 | 772 = 1024 − 252 |
+   | Ground: header | 48 (iOS) | 96 (IB, two bands) |
+   | Ground: content | one column 375 | main 452 + tools rail 320 |
+   | Flow / Dialog: content | 375 | one narrow column 520, centred |
+   | Button bar | buttons stacked, full width | one row, auto width, right-aligned in the column |
+   | Toolbar | floating red pill over the content | static, in the tools rail |
+   | Scrollbar | none | IB only, from lg */
+
+:root {
+  /* Layout constants. Not Figma variables — these are template geometry, read off the
+     TMP SCR Layout frames and the screens built from them. Kept here so a prototype never
+     hard-codes them and one correction fixes every screen. */
+  --canvas-sm: 375px;
+  --canvas-md: 768px;
+  --canvas-lg: 1024px;
+  --canvas-lg-wide: 1680px;
+
+  --layout-nav-panel: 252px;      /* Ground side panel at lg (measured 31589:24763) */
+  --layout-tools-rail: 320px;     /* Ground tools rail at lg (measured 31589:24757) */
+  --layout-narrow-column: 520px;  /* Flow / Dialog "Narrow" column at lg (measured 31400:105074) */
+  --layout-main-max: 452px;       /* Ground main column at lg (measured 31589:24753) */
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+/* `hidden` has to win against the breakpoint rules below, which switch layout at the same
+   specificity. A hidden node stays hidden at every width. */
+[hidden] { display: none !important; }
+
+html { height: 100%; }
+body {
+  margin: 0; height: 100%;
+  background: var(--background-body);
+  color: var(--content-primary);
+  font: var(--content-body-primary);
+  letter-spacing: var(--tracking-body-primary);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ---------------------------------------------------------------- the screen box
+
+   `.scr` is the design canvas, not the page. A definite height, not a minimum: the content area
+   can only scroll — and the button bar can only sit at the bottom of the screen — if the box is
+   capped. Standalone that is the viewport; inside a device frame it is the frame.
+   Nothing here is `position: fixed`; that would attach the bar to the browser window. */
+
+.scr {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100dvh;
+  overflow: hidden;
+  background: var(--background-body);
+}
+/* !important because the breakpoint blocks below switch `.scr` to grid at the same specificity,
+   and a hidden screen must stay hidden at every width. */
+.scr[hidden] { display: none !important; }
+
+.scr__header { flex: none; background: transparent; }  /* the header has no surface of its own */
+.scr__comms  { flex: none; padding: var(--padding-xl); }
+.scr__nav    { flex: none; }
+
+/* The scrolling area. Content scrolls under the button bar — that is what CO Button Bar Bottom
+   means by "any content scrolls under it". `min-height: 0` is not decoration: without it the flex
+   child refuses to shrink below its content and pushes the button bar off the bottom. */
+.scr__content { flex: 1 1 auto; min-height: 0; overflow-y: auto; overscroll-behavior: contain; }
+
+/* The content column. At sm it is the whole screen; the breakpoint blocks below narrow it. */
+.scr__main  { min-width: 0; }
+
+/* Two things can sit beside the main column at lg, and they behave differently below it:
+   - the action rail (`.scr__tools`) — toolbar, primary actions, the settings list. Below lg those
+     live somewhere else entirely (a floating toolbar, a Sheet), so the rail is simply absent.
+   - a second content column (`.scr__tools--content`) — the "2 column card content LG" block. Below
+     lg it is not absent, it just continues the single stack. */
+.scr__tools { display: none; }
+.scr__tools--content {
+  display: flex; flex-direction: column; gap: var(--padding-xl);
+  padding: 0 var(--padding-xl) var(--padding-xl);
+}
+
+/* ---------------------------------------------------------------- scrollbars
+
+   An app has no visible scrollbar; the browser does, but only from lg, where the template has an
+   explicit scrollbar slot. Below lg the IB window scrolls without a visible track too. */
+
+html[data-platform="ios"] .scr__content,
+html[data-platform="android"] .scr__content,
+html[data-platform="ib"] .scr__content { scrollbar-width: none; }
+html[data-platform="ios"] .scr__content::-webkit-scrollbar,
+html[data-platform="android"] .scr__content::-webkit-scrollbar,
+html[data-platform="ib"] .scr__content::-webkit-scrollbar { width: 0; height: 0; }
+
+/* ---------------------------------------------------------------- content sub-slots
+
+   promo and main are full-bleed to the column edge; only side is inset by padding/xl 16.
+   Cards carry their own 16 through `.card-wrap` (components.css). */
+.slot--promo, .slot--main { padding-inline: 0; }
+.slot--side { padding-inline: var(--padding-xl); }
+.inset { padding-inline: var(--padding-xl); }
+
+.stack     { display: flex; flex-direction: column; gap: var(--padding-xl); }
+.stack--sm { display: flex; flex-direction: column; gap: var(--padding-md); }
+.stack--lg { display: flex; flex-direction: column; gap: var(--padding-2xl); }
+
+/* ---------------------------------------------------------------- CO Navigation / 3.0 at sm
+
+   NOT a bottom tab bar: a horizontally scrolling row of small pills directly under the header.
+   Eight destinations do not fit in a tab bar, which is why Golem does not use one.
+
+   Measured on SCR NDB Home screen - Spoření / MB-SM: the slot is 48 tall — padding/md 8 above and
+   below a 32 px pill. The pill is 12/16 captionPrimaryBold with padding/lg 12 inline, a 1 px
+   outline and borderRadius/md 8; pills are padding/md 8 apart. It is much smaller than a button —
+   closer to a CO Tag than to CO Button, and getting that wrong is the single most visible mistake
+   on a KB+ ground screen. */
+
+.scr__nav {
+  display: flex; gap: var(--padding-md);
+  padding: var(--padding-md) var(--padding-xl);
+  overflow-x: auto; scrollbar-width: none;
+}
+.scr__nav::-webkit-scrollbar { display: none; }
+/* One markup for both forms: at sm the wrapper disappears and the pills are the row; at lg it
+   becomes the column of destinations inside the panel. */
+.scr__nav__items { display: contents; }
+
+/* The pill row belongs to Ground / Main page. A Ground / Subpage on a phone does not repeat it —
+   the header's back affordance is the whole navigation there. From lg the side panel is on both.
+   Measured on SCR NDB KB Sporeni Detail uctu, MB-SM 4060:36395 against IB-LG 31589:24748. */
+.scr[data-nav="ground-sub"] .scr__nav { display: none; }
+.scr__nav a, .scr__nav button {
+  display: inline-flex; align-items: center; gap: var(--padding-md); flex: 0 0 auto;
+  min-height: 32px;
+  padding: var(--padding-md) var(--padding-lg);
+  border: var(--border-sm) solid var(--background-border-highlighted);
+  border-radius: var(--border-radius-md);
+  background: var(--background-surface);
+  font: var(--content-caption-primary-bold); letter-spacing: var(--tracking-caption-primary);
+  color: var(--content-primary); text-decoration: none; white-space: nowrap; cursor: pointer;
+}
+.scr__nav [aria-current] {
+  background: var(--interactive-primary);
+  border-color: var(--interactive-primary);
+  color: var(--interactive-on-primary);
+}
+/* The destination icon is drawn in the side panel only. At sm the pill is label-only. */
+.scr__nav .icon { display: none; }
+.scr__nav__brand { display: none; }
+
+/* ---------------------------------------------------------------- CO Button Bar Bottom / v4.0
+
+   Sits at the bottom of the screen box on background/body — not a white tray — with the panel
+   shadow lifting it off the content scrolling under it.
+
+   Two forms, and the breakpoint decides:
+   - below md: the buttons stack, each full width, padding 16, gap 16 (measured 26671:4936 → 144
+     tall for two buttons);
+   - from md: one row inside the content column, buttons at their natural width, right-aligned,
+     gap 16, the bar 80 tall (measured 26681:4626 → the row sits in the same 520 column as the
+     content and ends 16 before its trailing edge). The primary button leads the row. */
+
+.buttonbar {
+  flex: none;
+  padding: var(--padding-xl);
+  background: var(--background-body);
+  box-shadow: var(--shadow-panel);
+}
+.buttonbar__row {
+  display: flex; flex-direction: column; gap: var(--padding-xl);
+  margin-inline: auto;
+}
+.buttonbar .btn { width: 100%; }
+
+/* ---------------------------------------------------------------- CO Toolbar / v3.0 Floating
+
+   A red pill overlaid on the content, inside the screen box: 16 px radius, 8 px padding,
+   80 px per item, white captionPrimaryBold under a 24 px icon.
+   Ground / Main page and Ground / Subpage only — never on a Flow, Dialog or Sheet. */
+
+.toolbar {
+  position: absolute; inset-inline: 0; bottom: var(--padding-2xl); z-index: 3;
+  display: flex; justify-content: center; pointer-events: none;
+}
+.toolbar__wrap {
+  display: flex; gap: var(--padding-sm); padding: var(--padding-md);
+  border-radius: var(--border-radius-xl);
+  background: var(--interactive-primary);
+  pointer-events: auto;
+}
+.toolbar button {
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: var(--padding-sm); width: 80px;
+  padding: var(--padding-md) var(--padding-sm);
+  border: none; border-radius: var(--border-radius-md); background: none; cursor: pointer;
+  font: var(--content-caption-primary-bold); letter-spacing: var(--tracking-caption-primary);
+  color: var(--interactive-on-primary); text-align: center;
+}
+.toolbar button:hover { background: #ffffff29; }
+
+/* ---------------------------------------------------------------- Sheet and overlay
+
+   Navigation style Sheet: a partial overlay from the bottom edge, over dialog/overlay.
+   It belongs to the screen box, so it never covers the device frame around it. */
+
+.overlay {
+  position: absolute; inset: 0; z-index: 4;
+  display: flex; flex-direction: column; justify-content: flex-end;
+  background: var(--dialog-overlay);
+}
+.sheet {
+  position: relative;
+  background: var(--background-body);
+  border-start-start-radius: var(--border-radius-xl);
+  border-start-end-radius: var(--border-radius-xl);
+  padding: var(--padding-md) var(--padding-xl) var(--padding-2xl);
+}
+.sheet--flush { padding-inline: 0; }
+.sheet__grabber { width: 40px; height: 4px; margin: 0 auto var(--padding-md);
+                  border-radius: var(--border-radius-full); background: var(--background-divider); }
+.sheet__close {
+  position: absolute; inset-block-start: var(--padding-lg); inset-inline-end: var(--padding-xl);
+  width: var(--sizing-icon-large); height: var(--sizing-icon-large);
+  display: inline-flex; align-items: center; justify-content: center;
+  border: none; border-radius: var(--border-radius-full); cursor: pointer;
+  background: var(--interactive-secondary-action); color: var(--content-secondary);
+  z-index: 1;
+}
+
+/* ================================================================= md — 768
+
+   The first switch. A Flow or a Dialog stops being full-bleed and becomes the narrow centred
+   column it keeps all the way up; a Ground screen still has the pill row and one column.
+   The button bar becomes a row in both cases.
+
+   Caution: md was inferred, not measured. The Savings file designs MB-SM, IB-SM and IB-LG only,
+   so the exact md forms of the button bar and the narrow column are an open question for the
+   design-system owner — see ../patterns/breakpoints-and-platforms.md. */
+
+@media (min-width: 768px) {
+  .scr[data-nav="flow"]   > *,
+  .scr[data-nav="dialog"] > * { --column: var(--layout-narrow-column); }
+
+  .scr[data-nav="flow"]   .scr__header > *,
+  .scr[data-nav="dialog"] .scr__header > *,
+  .scr[data-nav="flow"]   .scr__main,
+  .scr[data-nav="dialog"] .scr__main {
+    max-width: var(--layout-narrow-column); margin-inline: auto;
+  }
+
+  /* The bar spans the screen; the row inside it spans the content column and is right-aligned. */
+  .buttonbar { padding-block: var(--padding-xl); }
+  .buttonbar__row { flex-direction: row; justify-content: flex-end; }
+  .buttonbar .btn { width: auto; }
+  .scr[data-nav="flow"]   .buttonbar__row,
+  .scr[data-nav="dialog"] .buttonbar__row { max-width: var(--layout-narrow-column); }
+  .scr[data-nav^="ground"] .buttonbar__row { max-width: var(--layout-narrow-column); }
+}
+
+/* ================================================================= lg — 1024
+
+   Ground gains the side navigation panel and the tools rail. A Flow or a Dialog has no navigation
+   and keeps the 520 column it took at md — "Narrow" presentation. */
+
+@media (min-width: 1024px) {
+  .scr[data-nav^="ground"] {
+    display: grid;
+    grid-template-areas: "nav header" "nav comms" "nav content" "nav bar";
+    grid-template-columns: var(--layout-nav-panel) 1fr;
+    grid-template-rows: auto auto 1fr auto;
+  }
+  .scr[data-nav^="ground"] .scr__header  { grid-area: header; }
+  .scr[data-nav^="ground"] .scr__comms   { grid-area: comms; }
+  .scr[data-nav^="ground"] .scr__nav     { grid-area: nav; }
+  .scr[data-nav^="ground"] .scr__content { grid-area: content; }
+  .scr[data-nav^="ground"] .buttonbar    { grid-area: bar; }
+
+  /* CO Navigation / 3.0, size md-lg-Apple+lg-IB — a full-height panel on background/body, no
+     surface and no border: it is part of the page, not a card. Measured 52075:4599. */
+  .scr[data-nav="ground-sub"] .scr__nav,
+  .scr__nav {
+    display: flex;
+    flex-direction: column; justify-content: space-between; gap: var(--padding-md);
+    height: 100%;
+    padding: 60px var(--padding-null) 30px var(--padding-xl);
+    overflow-x: visible; overflow-y: auto;
+    background: var(--background-body);
+    border: 0;
+  }
+  .scr__nav a, .scr__nav button {
+    justify-content: flex-start; gap: var(--padding-xl); width: 100%;
+    min-height: 48px;
+    padding: var(--padding-lg) var(--padding-xl);
+    border-color: transparent; background: none;
+    font: var(--content-body-primary-bold); letter-spacing: var(--tracking-body-primary);
+  }
+  .scr__nav .icon { display: block; }          /* the destination icons appear only here */
+  .scr__nav [aria-current] .icon { color: var(--interactive-on-primary); }
+  .scr__nav__items { display: flex; flex-direction: column; gap: var(--padding-md); width: 100%; }
+  .scr__nav__brand { display: block; padding-inline-start: 21px; }
+  .scr__nav__brand .icon--logo { width: 83px; height: 31.5px; color: var(--content-primary); }
+
+  /* Ground content: the main column and the tools rail, side by side and left-aligned after the
+     panel — the content does not centre itself in the body. */
+  /* The button bar's row always spans the column the content above it spans, so the buttons line
+     up with the content and not with the window. On Ground that column is the main one, and it
+     starts at the body's leading edge rather than being centred. */
+  .scr[data-nav^="ground"] .buttonbar__row {
+    max-width: var(--layout-main-max); margin-inline: 0;
+  }
+
+  .scr[data-nav^="ground"] .scr__content { display: flex; align-items: flex-start; }
+  .scr[data-nav^="ground"] .scr__main  { flex: 1 1 auto; max-width: var(--layout-main-max); }
+  .scr[data-nav^="ground"] .scr__tools {
+    display: flex; flex-direction: column; gap: var(--padding-xl);
+    flex: none; width: var(--layout-tools-rail);
+    padding: var(--padding-null) var(--padding-xl) var(--padding-xl) var(--padding-null);
+  }
+
+  /* CO Toolbar / v3.0 Static — the floating pill stops floating and moves into the rail. It stays
+     red: "static" changes where it sits and how wide it is, not what it is. Each item becomes a
+     borderRadius/md button 76 tall that shares the rail width. Measured 31589:24758 (304 × 76). */
+  .scr[data-nav^="ground"] .toolbar {
+    position: static; display: block; pointer-events: auto;
+  }
+  .scr[data-nav^="ground"] .toolbar__wrap {
+    gap: var(--padding-md); padding: 0; background: none; border-radius: 0;
+  }
+  .scr[data-nav^="ground"] .toolbar button {
+    flex: 1 1 0; width: auto; height: 76px;
+    border-radius: var(--border-radius-md);
+    background: var(--interactive-primary);
+  }
+  .scr[data-nav^="ground"] .toolbar button:hover { background: var(--interactive-primary-action); }
+
+  /* The browser shows a scrollbar from lg; the apps never do. */
+  html[data-platform="ib"] .scr__content { scrollbar-width: thin; }
+  html[data-platform="ib"] .scr__content::-webkit-scrollbar { width: 8px; height: 8px; }
+  html[data-platform="ib"] .scr__content::-webkit-scrollbar-thumb {
+    background: var(--background-border); border-radius: var(--border-radius-sm);
+  }
+
+  /* CO Header / v4.0 IB Ground is two bands and 96 tall, but only at lg-IB: at sm-md-IB the
+     utility bar is gone and the title band is all that remains, and an app never has one.
+     The app's own trailing actions — KB Klíč, messages, the avatar — move into that utility bar,
+     so they are not drawn twice. */
+  html[data-platform="ib"] .scr[data-nav^="ground"] .header--utility { display: flex; }
+  html[data-platform="ib"] .scr[data-nav^="ground"] .header__app-only { display: none; }
+
+  /* Two- and three-column content blocks exist from lg up (TMP Page content blocks). */
+  .cols-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--padding-xl); }
+  .cols-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--padding-xl); }
+
+  /* A Ground / Subpage at lg puts the page title in the content, above the columns. */
+  .scr__page-title { grid-column: 1 / -1; }
+}
+
+/* ================================================================= lgWide — 1680
+
+   Not measured. The templates publish a 1680 canvas, but no Savings screen is designed at it, so
+   the only safe statement is that the panel and the rail keep their widths and the main column
+   gets the room. Treated as an assumption — see ../patterns/breakpoints-and-platforms.md. */
+
+@media (min-width: 1680px) {
+  .scr[data-nav^="ground"] .scr__main { max-width: 720px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+}

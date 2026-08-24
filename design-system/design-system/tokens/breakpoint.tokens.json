@@ -1,0 +1,17 @@
+{
+  "$schema": "https://tr.designtokens.org/format/",
+  "$description": "Golem breakpoints, taken from the canvas widths of the TMP SCR Layout templates in '💠 CORE Templates'. A screen is designed once per breakpoint, not fluidly between them: the templates change navigation style and content column count at these widths, they do not stretch.",
+  "$extensions": {
+    "golem": {
+      "source": "Figma frame widths of TMP SCR Layout / iOS App, IB Web Small, IB Web Medium, IB Web Large, IB Web Large wide, iPad App Medium portrait and iPad App Large landscape, read 2026-08-12",
+      "designCanvasHeights": { "sm": 812, "md": 1024, "lg": 768, "lgWide": 1024 },
+      "caution": "These are design canvas widths, not CSS media-query cut-offs. Golem does not publish the exact min-width values used in code — confirm with the front-end owner before hard-coding them."
+    }
+  },
+  "breakpoint": {
+    "sm":     { "$type": "dimension", "$value": "375px",  "$description": "Phone (iOS/Android app) and small web. Single column, bottom navigation, floating toolbar." },
+    "md":     { "$type": "dimension", "$value": "768px",  "$description": "Tablet portrait and medium web. Single wide column; navigation moves to a side panel on iPad." },
+    "lg":     { "$type": "dimension", "$value": "1024px", "$description": "Tablet landscape and large web. Side navigation, content plus side column." },
+    "lgWide": { "$type": "dimension", "$value": "1680px", "$description": "Wide desktop. Same layout as lg with a wider content area and up to three content columns." }
+  }
+}

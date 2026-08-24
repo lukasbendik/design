@@ -1,0 +1,11 @@
+<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="TextFile" transform="translate(2.25 1.25)">
+<g>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M5 15H11.5V16.5H5V15Z" fill="currentColor"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M5 11H14.5V12.5H5V11Z" fill="currentColor"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M10.75 0H4.75C2.12665 0 0 2.12665 0 4.75V16.75C0 19.3734 2.12665 21.5 4.75 21.5H14.75C17.3734 21.5 19.5 19.3734 19.5 16.75V8.75H18V16.75C18 18.5449 16.5449 20 14.75 20H4.75C2.95507 20 1.5 18.5449 1.5 16.75V4.75C1.5 2.95507 2.95507 1.5 4.75 1.5H10.75V0Z" fill="currentColor"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M18.75 6.99991V8.4999H15.75C13.1266 8.4999 11 6.37326 11 3.74991V0.750074H12.5V3.74991C12.5 5.54483 13.9551 6.99991 15.75 6.99991H18.75Z" fill="currentColor"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M10.9216 1.5H7.75V4.76837e-07H10.9216C11.6509 4.76837e-07 12.3504 0.289732 12.8661 0.805457L18.6945 6.63388C19.2103 7.14961 19.5 7.84908 19.5 8.57843V11.75H18V8.57843C18 8.24691 17.8683 7.92896 17.6339 7.69454L11.8055 1.86612C11.571 1.6317 11.2531 1.5 10.9216 1.5Z" fill="currentColor"/>
+</g>
+</g>
+</svg>

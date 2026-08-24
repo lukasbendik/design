@@ -1,0 +1,5365 @@
+{
+  "$description": "Inventory of every component published to the Figma library '💠 ES Illustration'. Generated from the Figma library index, not hand-typed. status: stable = use it | deprecated = never use in new work | internal = private sub-part, do not place directly | snowflake = one-off exception, do not reuse | draft = unfinished. Pages: 'Standard Sizes' is the set to use, 'Sources' holds the master artwork, 'Special Sizes' and 'Export' are production leftovers.",
+  "library": "💠 ES Illustration",
+  "fileKey": "R240iYyZkmWZHsVvYLyjDp",
+  "readAt": "2026-08-12",
+  "count": 1070,
+  "statusCounts": {
+    "internal": 520,
+    "stable": 511,
+    "deprecated": 35,
+    "draft": 4
+  },
+  "illustrations": [
+    {
+      "name": "_Dark",
+      "page": "Export",
+      "status": "internal"
+    },
+    {
+      "name": "_Light",
+      "page": "Export",
+      "status": "internal"
+    },
+    {
+      "name": "_M-dark",
+      "page": "Export",
+      "status": "internal"
+    },
+    {
+      "name": "_M-light",
+      "page": "Export",
+      "status": "internal"
+    },
+    {
+      "name": "_S-dark",
+      "page": "Export",
+      "status": "internal"
+    },
+    {
+      "name": "_S-light",
+      "page": "Export",
+      "status": "internal"
+    },
+    {
+      "name": " _RiskLifeInsurance / Light",
+      "page": "Sources",
+      "status": "stable"
+    },
+    {
+      "name": "_18 / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_18 / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_2in1Mortgage / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_2in1Mortgage / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_AccountBusiness / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_AccountBusiness / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_AccountChildren15-26 / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_AccountChildren15-26 / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_AccountChildren6-15 / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_AccountChildren6-15 / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_AccountGeneral / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_AccountGeneral / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_AccountOffer / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_AccountOffer / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_AccountUnavailable / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_AccountUnavailable / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_Alert / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_Alert / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_AmericanMortgage / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_AmericanMortgage / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_Announcement / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_Announcement / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_AppIconKBPlus / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_AppIconKBPlus / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_ApplePay / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_ApplePay / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_AppleWatch / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_AppleWatch / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_AttorneyEscrow / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_AttorneyEscrow / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_AuthorizationCard / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_AuthorizationCard / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_AuthorizationChangeDevice / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_AuthorizationChangeDevice / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_AuthorizationCode / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_AuthorizationCode / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_AuthorizationCronto / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_AuthorizationCronto / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_AuthorizationDoc / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_AuthorizationDoc / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_AuthorizationKey / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_AuthorizationKey / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_AuthorizationMasterCard / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_AuthorizationMasterCard / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_AuthorizationMoney / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_AuthorizationMoney / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_AuthorizationPhone / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_AuthorizationPhone / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_AuthorizationSet / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_AuthorizationSet / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_AuthorizationVisa / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_AuthorizationVisa / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_AuthorizationVisaSecure / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_AuthorizationVisaSecure/ Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_AutomaticRepayment / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_AutomaticRepayment / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_BailiffEscrow / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_BailiffEscrow / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_BankID / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_BankID / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_BasicPaymentAccount / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_BasicPaymentAccount / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_Beneficiaries / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_Beneficiaries / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_BonusGift",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_Broker / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_Broker / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_BuildingSavingsOffer / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_BuildingSavingsOffer / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_BusinessMultiCurrencyAccount / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_BusinessMultiCurrencyAccount / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_BusinessSavingsOffer / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_BusinessSavingsOffer / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_Calculator / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_Calculator / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_CapitalDepositAccount / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_CapitalDepositAccount / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_CardTypePalette/Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_CardTypePalette/Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_CardUnavailable / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_CardUnavailable / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_Charge / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_Charge / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_ChooseRecipient / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_ChooseRecipient / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_ClickToPayMC / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_ClickToPayMC / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_ClickToPayVISA / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_ClickToPayVISA / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_Clock / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_Clock / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_Clock / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_Clock / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_CompanyNadaceJistotaFamilyStories / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_CompanyNadaceJistotaFamilyStories / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_CompanyNadaceJistotaHelpUkraineStories / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_CompanyNadaceJistotaHelpUkraineStories / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_CompanyNadaceJistotaHospiceStories / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_CompanyNadaceJistotaHospiceStories / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_CompanyNadaceJistotaSustainabilityStories / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_CompanyNadaceJistotaSustainabilityStories / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_ConnectionLost / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_ConnectionLost / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_ConsolidationLoan / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_ConsolidationLoan / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_CreateAccount / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_CreateAccount / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_CreateAccountProcessing / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_CreateAccountProcessing / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_CreditCard / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_CreditCard / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_CreditCardNew / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_CreditCardNew / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_CreditCards / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_CreditCards / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_CustomCard / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_CustomCard / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_DebitCard / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_DebitCard / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_DebitCardBusiness / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_DebitCardBusiness / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_DebitCardChildren / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_DebitCardChildren / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_DepositCardBusiness / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_DepositCardBusiness / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_DeviceNameV1 / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_DeviceNameV1 / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_DeviceNameV2 / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_DeviceNameV2 / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_Dialog / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_Dialog / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_ElanInsurance / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_ElanInsurance / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_EmoError / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_EmoError / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_EmptyDocument / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_EmptyDocument / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_EmptyMessageBox / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_EmptyMessageBox / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_EnablePushNotification / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_EnablePushNotification / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_Error / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_Error / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_ErrorAccountExisting / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_ErrorAccountExisting / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_ErrorContactInfo / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_ErrorContactInfo / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_ErrorIDCard / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_ErrorIDCard / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_ErrorPayment / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_ErrorPayment / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_ErrorSigning / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_ErrorSigning / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_ExtraAPIBusiness / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_ExtraAPIBusiness / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_ExtraPremium / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_ExtraPremium / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_ExtraSafety / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_ExtraSafety / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_ExtraSafetyBusiness / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_ExtraSafetyBusiness / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_ExtraSafetyCanceled / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_ExtraSafetyCanceled / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_ExtraTravel / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_ExtraTravel / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_ExtraTravelBusiness / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_ExtraTravelBusiness / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_ExtraTravelCanceled / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_ExtraTravelCanceled / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_ExtraTravelFamily / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_ExtraTravelFamily / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_ExtraTravelStandard / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_ExtraTravelStandard / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_FaceID / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_FaceID / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_FaceIDCanceled / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_FaceIDCanceled / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_FaceIDSuccess / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_FaceIDSuccess / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_FaceUnlock / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_FaceUnlock / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_FaceUnlockCanceled / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_FaceUnlockCanceled / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_FaceUnlockSuccess / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_FaceUnlockSuccess / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_Fenix / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_Fenix / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_FingerPrint / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_FingerPrint / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_FingerPrintCanceled / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_FingerPrintCanceled / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_FingerPrintSuccess / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_FingerPrintSuccess / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_ForgottenPin / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_ForgottenPin / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_GameController / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_GameController / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_Goal / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_Goal / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_GooglePay / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_GooglePay / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_HomeInsurance / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_HomeInsurance / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_HouseInsurance / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_HouseInsurance / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_HousingExpert",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_IBMTrusteer / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_IBMTrusteer / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_IDCards / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_IDCards / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_IconKB / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_IconKB / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_Idea / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_Idea / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_Info / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_Info / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_InfoPaymentUnavailable / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_InfoPaymentUnavailable / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_InsuranceArrangementProcessDocument / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_InsuranceArrangementProcessDocument/ Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_InsuranceArrangementProcessID1 / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_InsuranceArrangementProcessID1 / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_InsuranceArrangementProcessID2 / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_InsuranceArrangementProcessID2 / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_InsuranceArrangementProcessID3 / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_InsuranceArrangementProcessID3 / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_InsuranceArrangementProcessMerging / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_InsuranceArrangementProcessMerging / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_InsuranceLife / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_InsuranceLife / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_InvestmentEntrepreneurs / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_InvestmentEntrepreneurs / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_InvestmentFunds / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_InvestmentFunds / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_InvestmentFundsHow / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_InvestmentFundsHow / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_InvestmentFundsWhy / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_InvestmentFundsWhy / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_InvestmentGold / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_InvestmentGold / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_InvestmentKids / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_InvestmentKids / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_InvestmentLoan / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_InvestmentLoan / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_InvestmentOneTime / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_InvestmentOneTime / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_InvestmentRegular / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_InvestmentRegular / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_InvestmentUpvest / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_InvestmentUpvest / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_KBCardPlaceholder / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_KBCardPlaceholder / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_KBCardPlaceholderCutoutCredit / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_KBCardPlaceholderCutoutCredit / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_KBCardPlaceholderCutoutDebit / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_KBCardPlaceholderCutoutDebit / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_KBCardPlaceholderCutouts / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_KBCardPlaceholderCutouts / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_KBKey / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_KBKey / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_KBKey / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_KBKey / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_KYC / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_KYC / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_LegalDocuments / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_LegalDocuments / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_LegalDocuments / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_LegalDocuments / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_LifeInvestmentInsurance / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_LifeInvestmentInsurance / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_Loan / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_Loan / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_LoanDeferment / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_LoanDeferment / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_LoanReconstruction / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_LoanReconstruction / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_LoanRepayment / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_LoanRepayment / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_Lock / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_Lock / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_Lock / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_Lock / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_MPKBPlus",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_Maintenance / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_Maintenance / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_Message / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_Message / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_Migration / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_Migration / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_MobilePaymentTerminal / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_MobilePaymentTerminal / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_Money3000 / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_Money3000 / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_Mortgage / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_Mortgage / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_MortgageWithoutProperty / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_MortgageWithoutProperty / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_MulticurrencyAccount / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_MulticurrencyAccount / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_NadaceKBBrokenHeart / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_NadaceKBBrokenHeart / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_NadaceKBHeartStories / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_NadaceKBHeartStories / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_NadaceKBHomeStories / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_NadaceKBHomeStories / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_NadaceKBPathStories / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_NadaceKBPathStories / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_NadaceKBSingleParentStories / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_NadaceKBSingleParentStories / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_Negative / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_Negative / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_NoPaymentYet / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_NoPaymentYetS / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_NoSummaryYet / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_NoSummaryYet / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_NotarialEscrow / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_NotarialEscrow / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_NotificationPlaceholder / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_NotificationPlaceholder / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_OfficeBranch / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_OfficeBranch / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_PayAContact / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_PayAContact / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_PaymentGateway / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_PaymentGateway / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_PaymentProtectionInsurance / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_PaymentProtectionInsurance / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_PaymentProtectionLifeInsurance / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_PaymentProtectionLifeInsurance / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_PaymentTerminal / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_PaymentTerminal / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_PaymentTerminalPrinter / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_PaymentTerminalPrinter / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_PensionInsuranceForChildren / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_PensionInsuranceForChildren / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_PensionsOffer / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_PensionsOffer / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_PermissionBlockedPIN / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_PermissionBlockedPIN / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_PermissionCall / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_PermissionCall / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_PermissionCamera / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_PermissionCamera / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_PermissionFile / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_PermissionFile / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_PermissionMicrophone / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_PermissionMicrophone / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_PermissionUsage / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_PermissionUsage / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_PersonalInformation / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_PersonalInformation / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_PhoneOnline / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_PhoneOnline / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_PhoneOnlineCall / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_PhoneOnlineCall / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_Placeholder / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_Placeholder / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_PlaceholderCredit / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_PlaceholderCredit / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_PlaceholderDebit / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_PlaceholderDebit / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_PlaceholderUniversal / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_PlaceholderUniversal / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_Positive / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_Positive / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_PropertyInsurance / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_PropertyInsurance / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_PropertyInsurance / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_PropertyInsurance / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_PushAllowCZ / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_PushAllowCZ / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_PushAllowEN / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_PushAllowEN / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_QRBasic",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_QRCodeError / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_QRCodeError / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_QRPay",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_QRPayEN",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_QRscanHelp / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_QRscanHelp / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_QRscanHelpEN / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_QRscanHelpEN / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_QRscanHelpHand / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_QRscanHelpHand / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_QRscanHelpIcons / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_QRscanHelpIcons / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_QuestionnaireHealth / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_QuestionnaireHealth / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_RealEstateAgentEscrow / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_RealEstateAgentEscrow / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_RealEstateFunds / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_RealEstateFunds / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_Receipt / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_Receipt / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_RefinancingMortgage / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_RefinancingMortgage / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_RepaymentInsurance / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_RepaymentInsurance / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_ReturnToRetailer / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_ReturnToRetailer/ Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_RiskLifeInsurance / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_RiskLifeInsurance / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_RiskLifeInsurance / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_SMS / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_SMS / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_SavingReserve / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_SavingReserve / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_Savings / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_Savings/ Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_SavingsEnvelope / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_SavingsEnvelope / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_SavingsForChildren / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_SavingsForChildren / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_SavingsOffer / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_SavingsOffer / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_SavingsTerm / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_SavingsTerm / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_SealedPackaging / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_SealedPackaging / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_Search / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_Search / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_SecUpdateApp / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_SecUpdateApp / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_SendPayment / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_SendPayment / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_SpecialAccountsList / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_SpecialAccountsList / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_SplashscreenAndroid / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_SplashscreenAndroid / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_SplashscreeniOS / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_SplashscreeniOS / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_Subscription / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_Subscription / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_SubscriptionBusiness / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_SubscriptionBusiness / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_SubscriptionChildren15-26 / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_SubscriptionChildren15-26 / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_SubscriptionChildren6-15 / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_SubscriptionChildren6-15 / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_SubscriptionIndividual / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_SubscriptionIndividual / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_SubscriptionSB / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_SubscriptionSB / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_Success / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_Success / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_SummaryUnavailable / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_SummaryUnavailable / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_SustainabilityATM / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_SustainabilityATM / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_SustainabilityBulb / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_SustainabilityBulb / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_SustainabilityCalculator / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_SustainabilityCalculator / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_SustainabilityCar / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_SustainabilityCar / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_SustainabilityCards / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_SustainabilityCards / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_SustainabilityCart / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_SustainabilityCart / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_SustainabilityPaper / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_SustainabilityPaper / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_SustainabilityWindmill / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_SustainabilityWindmill / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_SustainableHousingLoan / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_SustainableHousingLoan / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_SustainableMortgage / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_SustainableMortgage / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_Switching / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_Switching / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_TalkBackDisabled / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_TalkBackDisabled / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_Target / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_Target / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_TermAccounts / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_TermAccounts / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_TermAccountsBusiness / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_TermAccountsBusiness / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_TouchID / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_TouchID / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_TouchIDCanceled / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_TouchIDCanceled / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_TouchIDSuccess / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_TouchIDSuccess / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_TravelInsurance / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_TravelInsurance / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_UploadPhoto / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_UploadPhoto / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_UpvestLogo / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_UpvestLogo / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_UpvestTransaction / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_UpvestTransaction / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_VirtualCard / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_VirtualCard / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_VirtualCardBusiness / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_VirtualCardBusiness / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_VitalInvestInsurance / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_VitalInvestInsurance / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_Warning / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_Warning / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_WebCameraOnline / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_WebCameraOnline / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_WelcomeIntro/Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_WelcomeIntro/Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_Widget / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_Widget / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_WorkWithDocument / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_WorkWithDocument / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_eTrading / Dark",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "_eTrading / Light",
+      "page": "Sources",
+      "status": "internal"
+    },
+    {
+      "name": "ES Illustration / AppStoreButtons",
+      "page": "Special Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / CameraScan",
+      "page": "Special Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / CreditCardForLoans",
+      "page": "Special Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / CreditCardGracePeriodENL",
+      "page": "Special Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / CreditCardGracePeriodENM",
+      "page": "Special Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / CreditCardGracePeriodL",
+      "page": "Special Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / CreditCardGracePeriodM",
+      "page": "Special Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / CreditCardKBMC",
+      "page": "Special Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / IDScanNOK",
+      "page": "Special Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / IDScanOK",
+      "page": "Special Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / IDScanWait",
+      "page": "Special Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / IbThumbnailDcs",
+      "page": "Special Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / IbThumbnailKbPlus",
+      "page": "Special Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / InterestRateCompositionL",
+      "page": "Special Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / InterestRateCompositionM",
+      "page": "Special Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / InvestmentHorizonChartCZ",
+      "page": "Special Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / InvestmentHorizonChartEN",
+      "page": "Special Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / KBCardPlaceholder",
+      "page": "Special Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / LogoModraPyramida",
+      "page": "Special Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / LogotypeKB",
+      "page": "Special Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / LogotypeKBShape40",
+      "page": "Special Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / LogotypeKBShape48",
+      "page": "Special Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / MojeKBVISA",
+      "page": "Special Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / PlaceholderS (127x75.56)",
+      "page": "Special Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / QRBasic",
+      "page": "Special Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / QRPay",
+      "page": "Special Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / QRPayEN",
+      "page": "Special Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / QRscanHelp",
+      "page": "Special Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / QRscanHelpEN",
+      "page": "Special Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / QRscanHelpIcons",
+      "page": "Special Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / Receipt",
+      "page": "Special Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / Spinner",
+      "page": "Special Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / UpvestLogo",
+      "page": "Special Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / UpvestTransaction",
+      "page": "Special Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / ⚠︎Emoticon",
+      "page": "Special Sizes",
+      "status": "deprecated"
+    },
+    {
+      "name": "ES Illustration / ⚠︎Notification",
+      "page": "Special Sizes",
+      "status": "deprecated"
+    },
+    {
+      "name": "ES Illustration / ⚠︎NotificationPlaceholder0",
+      "page": "Special Sizes",
+      "status": "deprecated"
+    },
+    {
+      "name": "ES Illustration/LoginCard",
+      "page": "Special Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration/LoginCardError",
+      "page": "Special Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration/LoginDisapproved",
+      "page": "Special Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration/LoginKey",
+      "page": "Special Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration/LoginKeyError",
+      "page": "Special Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration/LoginMaintenance",
+      "page": "Special Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration/LoginNegative",
+      "page": "Special Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration/LoginPass",
+      "page": "Special Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration/LoginPassError",
+      "page": "Special Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration/LoginPortal",
+      "page": "Special Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration/LoginPortalBrand",
+      "page": "Special Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration/LoginSMS",
+      "page": "Special Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration/LoginSMSError",
+      "page": "Special Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration/LoginSuccess",
+      "page": "Special Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration/LoginUser",
+      "page": "Special Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "SplashScreen",
+      "page": "Special Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "_LoginMaintenance",
+      "page": "Special Sizes",
+      "status": "internal"
+    },
+    {
+      "name": "_LoginNegative",
+      "page": "Special Sizes",
+      "status": "internal"
+    },
+    {
+      "name": "_LoginPortal",
+      "page": "Special Sizes",
+      "status": "internal"
+    },
+    {
+      "name": "⚠︎ES Illustration / CardUnavailable-224x88",
+      "page": "Special Sizes",
+      "status": "deprecated"
+    },
+    {
+      "name": "⚠︎ES Illustration / CreateAccount-224x88",
+      "page": "Special Sizes",
+      "status": "deprecated"
+    },
+    {
+      "name": "⚠︎ES Illustration / InfoPaymentUnavailable-224x88",
+      "page": "Special Sizes",
+      "status": "deprecated"
+    },
+    {
+      "name": "⚠︎ES Illustration / _AccountOfferSpecial-224x88",
+      "page": "Special Sizes",
+      "status": "deprecated"
+    },
+    {
+      "name": "ES Illustration /  CreateAccountProcessingS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / 2in1MortgageM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / 2in1MortgageS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / AccountBusinessM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / AccountBusinessS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / AccountChildren15-26M",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / AccountChildren15-26S",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / AccountChildren6To15M",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / AccountChildren6To15S",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / AccountGeneralM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / AccountGeneralS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / AccountOfferM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / AccountOfferS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / AccountUnavailableM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / AccountUnavailableS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / AlertM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / AlertS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / AmericanMortgageM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / AmericanMortgageS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / AnnouncementM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / AnnouncementS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / AppIconKBPlusM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / AppIconKBPlusS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / ApplePayM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / ApplePayS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / AppleWatchM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / AppleWatchS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / AttorneyEscrowM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / AttorneyEscrowS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / AuthorisedOverdraftM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / AuthorisedOverdraftS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / AuthorizationCardM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / AuthorizationCardS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / AuthorizationChangeDeviceM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / AuthorizationChangeDeviceS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / AuthorizationCodeM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / AuthorizationCodeS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / AuthorizationCrontoM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / AuthorizationCrontoS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / AuthorizationDocM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / AuthorizationDocS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / AuthorizationKeyM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / AuthorizationKeyS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / AuthorizationMasterCardM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / AuthorizationMasterCardS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / AuthorizationMoneyM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / AuthorizationMoneyS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / AuthorizationPhoneM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / AuthorizationPhoneS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / AuthorizationSetM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / AuthorizationSetS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / AuthorizationVisaM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / AuthorizationVisaS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / AuthorizationVisaSecureM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / AuthorizationVisaSecureS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / BailiffEscrowM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / BailiffEscrowS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / BankIDM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / BankIDS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / BasicPaymentAccountM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / BasicPaymentAccountS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / BeneficiariesM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / BeneficiariesS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / BrokerM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / BrokerS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / BuildingSavingsOfferM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / BuildingSavingsOfferS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / BusinessMultiCurrencyAccountM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / BusinessMultiCurrencyAccountS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / BusinessSavingsOfferM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / BusinessSavingsOfferS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / CalculatorM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / CalculatorS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / CapitalDepositAccountM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / CapitalDepositAccountS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / CardM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / CardS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / CardTypePaletteM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / CardTypePaletteS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / CardUnavailableM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / CardUnavailableS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / CashbackM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / CashbackS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / ChangeDeviceM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / ChangeDeviceS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / ChargeM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / ChargeS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / ChooseRecipientM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / ChooseRecipientS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / ClickToPayMCM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / ClickToPayMCS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / ClickToPayVISAM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / ClickToPayVISAS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / ClockM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / ClockS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / CompanyNadaceJistotaFamilyStoriesM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / CompanyNadaceJistotaFamilyStoriesS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / CompanyNadaceJistotaHelpUkraineStoriesM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / CompanyNadaceJistotaHelpUkraineStoriesS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / CompanyNadaceJistotaHospiceStoriesM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / CompanyNadaceJistotaHospiceStoriesS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / CompanyNadaceJistotaSustainabilityStoriesM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / CompanyNadaceJistotaSustainabilityStoriesS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / CongratsM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / CongratsS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / ConnectionLostM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / ConnectionLostS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / ConsolidationLoanM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / ConsolidationLoanS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / CreateAccountM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / CreateAccountProcessingM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / CreateAccountS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / CreditCardsM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / CreditCardsS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / CustomCardM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / CustomCardS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / DebitCardBusinessM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / DebitCardBusinessS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / DebitCardChildrenM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / DebitCardChildrenS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / DebitCardM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / DebitCardS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / DeleteAccountM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / DeleteAccountS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / DepositCardBusinessM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / DepositCardBusinessS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / DeviceNameV1M",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / DeviceNameV1S",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / DeviceNameV2M",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / DeviceNameV2S",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / DialogueM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / DialogueS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / ElanInsuranceM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / ElanInsuranceS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / EmptyDocumentM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / EmptyDocumentS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / EmptyMessageBoxM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / EmptyMessageBoxS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / EnablePushNotificationM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / EnablePushNotificationS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / ErrorAccountExistingM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / ErrorAccountExistingS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / ErrorContactInfoM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / ErrorContactInfoS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / ErrorIDCardM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / ErrorIDCardS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / ErrorSigningM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / ErrorSigningS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / ExtraAPIBusinessM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / ExtraAPIBusinessS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / ExtraPremiumM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / ExtraPremiumS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / ExtraSafetyBusinessM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / ExtraSafetyBusinessS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / ExtraSafetyCanceledM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / ExtraSafetyCanceledS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / ExtraSafetyM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / ExtraSafetyS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / ExtraTravelBusinessM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / ExtraTravelBusinessS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / ExtraTravelCanceledM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / ExtraTravelCanceledS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / ExtraTravelFamilyM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / ExtraTravelFamilyS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / ExtraTravelM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / ExtraTravelS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / ExtraTravelStandardM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / ExtraTravelStandardS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / FaceIDCanceledM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / FaceIDCanceledS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / FaceIDM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / FaceIDS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / FaceIDSuccessM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / FaceIDSuccessS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / FaceUnlockCanceledM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / FaceUnlockCanceledS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / FaceUnlockM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / FaceUnlockS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / FaceUnlockSuccessM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / FaceUnlockSuccessS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / FenixM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / FenixS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / FingerPrintCanceledM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / FingerPrintCanceledS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / FingerPrintM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / FingerPrintS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / FingerPrintSuccessM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / FingerPrintSuccessS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / ForgottenPinM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / ForgottenPinS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / GameControllerM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / GameControllerS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / GoalM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / GoalS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / GooglePayM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / GooglePayS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / HomeInsuranceM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / HomeInsuranceS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / HouseInsuranceM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / HouseInsuranceS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / IDCardsM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / IDCardsS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / IconKBM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / IconKBS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / IdeaM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / IdeaS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / InfoM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / InfoPaymentUnavailableM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / InfoPaymentUnavailableS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / InfoS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / InsuranceArrangementProcessDocumentM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / InsuranceArrangementProcessDocumentS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / InsuranceArrangementProcessID1M",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / InsuranceArrangementProcessID1S",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / InsuranceArrangementProcessID2M",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / InsuranceArrangementProcessID2S",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / InsuranceArrangementProcessID3M",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / InsuranceArrangementProcessID3S",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / InsuranceArrangementProcessMergingM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / InsuranceArrangementProcessMergingS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / InsuranceLifeM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / InsuranceLifeS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / InvestmentEntrepreneursM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / InvestmentEntrepreneursS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / InvestmentFundsM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / InvestmentFundsS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / InvestmentFundsWhatM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / InvestmentFundsWhatS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / InvestmentFundsWhyM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / InvestmentFundsWhyS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / InvestmentGoldM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / InvestmentGoldS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / InvestmentKidsM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / InvestmentKidsS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / InvestmentLoanM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / InvestmentLoanS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / InvestmentOneTimeM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / InvestmentOneTimeS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / InvestmentRegularM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / InvestmentRegularS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / InvestmentUpvestM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / InvestmentUpvestS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / KBCardPlaceholderCutoutsM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / KBCardPlaceholderCutoutsS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / KBKeyM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / KBKeyS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / KYCM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / KYCS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / LegalDocumentsM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / LegalDocumentsS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / LifeInvestmentInsuranceM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / LifeInvestmentInsuranceS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / LoanDefermentM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / LoanDefermentS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / LoanM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / LoanReconstructionM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / LoanReconstructionS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / LoanRepaymentM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / LoanRepaymentS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / LoanS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / LockM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / LockS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / MaintenanceM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / MaintenanceS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / MessageM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / MessageS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / MigrationM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / MigrationS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / MobilePaymentTerminalM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / MobilePaymentTerminalS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / Money3000M",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / Money3000S",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / MortgageM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / MortgageS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / MortgageWithoutPropertyM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / MortgageWithoutPropertyS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / MulticurrencyAccountM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / MulticurrencyAccountS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / NadaceKBBrokenHeartStoriesM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / NadaceKBBrokenHeartStoriesS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / NadaceKBHeartStoriesM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / NadaceKBHeartStoriesS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / NadaceKBHomeStoriesM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / NadaceKBHomeStoriesS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / NadaceKBPathStoriesM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / NadaceKBPathStoriesS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / NadaceKBSingleParentStoriesM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / NadaceKBSingleParentStoriesS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / NegativeM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / NegativeS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / NewsInAppM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / NewsInAppS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / NoPaymentsYetM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / NoPaymentsYetS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / NoSummaryYetM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / NoSummaryYetS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / NotarialEscrowM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / NotarialEscrowS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / NotificationPlaceholderM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / NotificationPlaceholderS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / OfficeBranchM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / OfficeBranchS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / PayAContactM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / PayAContactS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / PaymentGatewayM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / PaymentGatewayS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / PaymentProtectionLifeInsuranceM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / PaymentProtectionLifeInsuranceS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / PaymentTerminalM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / PaymentTerminalPrinterM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / PaymentTerminalPrinterS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / PaymentTerminalS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / PensionInsuranceForChildrenM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / PensionInsuranceForChildrenS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / PensionsOfferM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / PensionsOfferS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / PermissionBlockedPINM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / PermissionBlockedPINS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / PermissionCallM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / PermissionCallS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / PermissionCameraM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / PermissionCameraS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / PermissionFileM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / PermissionFileS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / PermissionMicrophoneM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / PermissionMicrophoneS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / PermissionUsageM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / PermissionUsageS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / PersonalInformationM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / PersonalInformationS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / PhoneOnlineCallM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / PhoneOnlineCallS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / PhoneOnlineM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / PhoneOnlineS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / PlaceholderCreditM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / PlaceholderCreditS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / PlaceholderDebitM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / PlaceholderDebitS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / PlaceholderM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / PlaceholderS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / PlaceholderUniversalM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / PlaceholderUniversalS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / PositiveM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / PositiveS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / PropertyInsuranceM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / PropertyInsuranceS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / PushAllowENM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / PushAllowENS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / PushAllowM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / PushAllowS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / QRcodeErrorM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / QRcodeErrorS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / QRscanHelpHandM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / QRscanHelpHandS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / QuestionnaireHealthM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / QuestionnaireHealthS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / RealEstateAgentEscrowM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / RealEstateAgentEscrowS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / RealEstateFundsM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / RealEstateFundsS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / RefinancingMortgageM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / RefinancingMortgageS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / RepaymentInsuranceM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / RepaymentInsuranceS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / ReturnToRetailerM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / ReturnToRetailerS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / RiskLifeInsuranceM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / RiskLifeInsuranceS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / SMSM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / SMSS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / SavingsEnvelopeM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / SavingsEnvelopeS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / SavingsForChildrenM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / SavingsForChildrenS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / SavingsM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / SavingsOfferM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / SavingsOfferS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / SavingsReserveM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / SavingsReserveS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / SavingsS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / SealedPackagingM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / SealedPackagingS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / SearchM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / SearchS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / SecUpdateAppM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / SecUpdateAppS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / SendPaymentM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / SendPaymentS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / SpecialAccountsListM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / SpecialAccountsListS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / SubscriptionBusinessM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / SubscriptionBusinessS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / SubscriptionChildren15-26M",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / SubscriptionChildren15-26S",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / SubscriptionChildren6-15M",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / SubscriptionChildren6-15S",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / SubscriptionChildrenM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / SubscriptionChildrenS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / SubscriptionIndividualM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / SubscriptionIndividualS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / SuccessM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / SuccessS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / SummaryUnavailableM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / SummaryUnavailableS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / SustainabilityATMM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / SustainabilityATMS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / SustainabilityBulbM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / SustainabilityBulbS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / SustainabilityCalculatorM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / SustainabilityCalculatorS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / SustainabilityCarM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / SustainabilityCarS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / SustainabilityCardsM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / SustainabilityCardsS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / SustainabilityCartM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / SustainabilityCartS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / SustainabilityPaperM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / SustainabilityPaperS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / SustainabilityWindmillM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / SustainabilityWindmillS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / SustainableHousingLoanM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / SustainableHousingLoanS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / SustainableMortgageM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / SustainableMortgageS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / SwitchingM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / SwitchingS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / TalkbackDisabledM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / TalkbackDisabledS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / TargetM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / TargetS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / TermAccountsBusinessM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / TermAccountsBusinessS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / TermAccountsM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / TermAccountsS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / TouchIDCanceledM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / TouchIDCanceledS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / TouchIDM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / TouchIDS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / TouchIDSuccessM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / TouchIDSuccessS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / TravelInsuranceM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / TravelInsuranceS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / UploadPhotoM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / UploadPhotoS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / VirtualCardBusinessM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / VirtualCardBusinessS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / VirtualCardM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / VirtualCardS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / VitalInvestInsuranceM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / VitalInvestInsuranceS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / WebCameraOnlineM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / WebCameraOnlineS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / WelcomeIntroM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / WelcomeIntroS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / WidgetM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / WidgetS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / WorkWithDocumentM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / WorkWithDocumentS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / eTradingM",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "ES Illustration / eTradingS",
+      "page": "Standard Sizes",
+      "status": "stable"
+    },
+    {
+      "name": "_ES Illustration / LegalDocumentsM",
+      "page": "Standard Sizes",
+      "status": "internal"
+    },
+    {
+      "name": "_ES Illustration / LegalDocumentsS",
+      "page": "Standard Sizes",
+      "status": "internal"
+    },
+    {
+      "name": "_TEST / ES Illustration / CongratsM",
+      "page": "Standard Sizes",
+      "status": "draft"
+    },
+    {
+      "name": "_TEST / ES Illustration / ErrorM",
+      "page": "Standard Sizes",
+      "status": "draft"
+    },
+    {
+      "name": "_TEST / ES Illustration / ExtraPremiumM",
+      "page": "Standard Sizes",
+      "status": "draft"
+    },
+    {
+      "name": "_TEST / ES Illustration / InfoM",
+      "page": "Standard Sizes",
+      "status": "draft"
+    },
+    {
+      "name": "⚠︎ES Illustration / 18M",
+      "page": "Standard Sizes",
+      "status": "deprecated"
+    },
+    {
+      "name": "⚠︎ES Illustration / 18S",
+      "page": "Standard Sizes",
+      "status": "deprecated"
+    },
+    {
+      "name": "⚠︎ES Illustration / CreditCardM",
+      "page": "Standard Sizes",
+      "status": "deprecated"
+    },
+    {
+      "name": "⚠︎ES Illustration / CreditCardNewM",
+      "page": "Standard Sizes",
+      "status": "deprecated"
+    },
+    {
+      "name": "⚠︎ES Illustration / CreditCardNewS",
+      "page": "Standard Sizes",
+      "status": "deprecated"
+    },
+    {
+      "name": "⚠︎ES Illustration / CreditCardS",
+      "page": "Standard Sizes",
+      "status": "deprecated"
+    },
+    {
+      "name": "⚠︎ES Illustration / ErrorM",
+      "page": "Standard Sizes",
+      "status": "deprecated"
+    },
+    {
+      "name": "⚠︎ES Illustration / ErrorPaymentM",
+      "page": "Standard Sizes",
+      "status": "deprecated"
+    },
+    {
+      "name": "⚠︎ES Illustration / ErrorPaymentS",
+      "page": "Standard Sizes",
+      "status": "deprecated"
+    },
+    {
+      "name": "⚠︎ES Illustration / ErrorS",
+      "page": "Standard Sizes",
+      "status": "deprecated"
+    },
+    {
+      "name": "⚠︎ES Illustration / IBMTrusteerM",
+      "page": "Standard Sizes",
+      "status": "deprecated"
+    },
+    {
+      "name": "⚠︎ES Illustration / IBMTrusteerS",
+      "page": "Standard Sizes",
+      "status": "deprecated"
+    },
+    {
+      "name": "⚠︎ES Illustration / PaymentProtectionInsuranceM",
+      "page": "Standard Sizes",
+      "status": "deprecated"
+    },
+    {
+      "name": "⚠︎ES Illustration / PaymentProtectionInsuranceS",
+      "page": "Standard Sizes",
+      "status": "deprecated"
+    },
+    {
+      "name": "⚠︎ES Illustration / PensionsM",
+      "page": "Standard Sizes",
+      "status": "deprecated"
+    },
+    {
+      "name": "⚠︎ES Illustration / PensionsS",
+      "page": "Standard Sizes",
+      "status": "deprecated"
+    },
+    {
+      "name": "⚠︎ES Illustration / SavingRM",
+      "page": "Standard Sizes",
+      "status": "deprecated"
+    },
+    {
+      "name": "⚠︎ES Illustration / SavingsRS",
+      "page": "Standard Sizes",
+      "status": "deprecated"
+    },
+    {
+      "name": "⚠︎ES Illustration / SavingsTermM",
+      "page": "Standard Sizes",
+      "status": "deprecated"
+    },
+    {
+      "name": "⚠︎ES Illustration / SavingsTermS",
+      "page": "Standard Sizes",
+      "status": "deprecated"
+    },
+    {
+      "name": "⚠︎ES Illustration / SubscriptionM",
+      "page": "Standard Sizes",
+      "status": "deprecated"
+    },
+    {
+      "name": "⚠︎ES Illustration / SubscriptionS",
+      "page": "Standard Sizes",
+      "status": "deprecated"
+    },
+    {
+      "name": "⚠︎ES Illustration / SubscriptionSBM",
+      "page": "Standard Sizes",
+      "status": "deprecated"
+    },
+    {
+      "name": "⚠︎ES Illustration / SubscriptionSBS",
+      "page": "Standard Sizes",
+      "status": "deprecated"
+    },
+    {
+      "name": "⚠︎ES Illustration / UpdateAppM",
+      "page": "Standard Sizes",
+      "status": "deprecated"
+    },
+    {
+      "name": "⚠︎ES Illustration / UpdateAppS",
+      "page": "Standard Sizes",
+      "status": "deprecated"
+    },
+    {
+      "name": "⚠︎ES Illustration / WarningM",
+      "page": "Standard Sizes",
+      "status": "deprecated"
+    },
+    {
+      "name": "⚠︎ES Illustration / WarningS",
+      "page": "Standard Sizes",
+      "status": "deprecated"
+    }
+  ]
+}

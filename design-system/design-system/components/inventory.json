@@ -1,0 +1,6498 @@
+{
+  "$description": "Inventory of every component published to the Figma library '💠 CORE Components'. Generated from the Figma library index, not hand-typed. status: stable = use it | deprecated = never use in new work | internal = private sub-part, do not place directly | snowflake = one-off exception, do not reuse | draft = unfinished.",
+  "library": "💠 CORE Components",
+  "fileKey": "LF8w8yzyLqGKOJvZs1qApB",
+  "readAt": "2026-08-12",
+  "count": 150,
+  "statusCounts": {
+    "stable": 110,
+    "internal": 34,
+    "deprecated": 6
+  },
+  "components": [
+    {
+      "name": "CO Action Stack / v3.0",
+      "page": "CO Action Stack",
+      "status": "stable",
+      "type": "set",
+      "nodeId": "59401:227886",
+      "instances": 12,
+      "properties": {
+        "Action 1?": {
+          "type": "boolean",
+          "default": true
+        },
+        "Action 2?": {
+          "type": "boolean",
+          "default": true
+        },
+        "Action 3?": {
+          "type": "boolean",
+          "default": true
+        },
+        "Action 4?": {
+          "type": "boolean",
+          "default": true
+        },
+        "Action 5?": {
+          "type": "boolean",
+          "default": true
+        },
+        "Action destructive?": {
+          "type": "boolean",
+          "default": true
+        },
+        "Label 1": {
+          "type": "text",
+          "default": "$label"
+        },
+        "Icon 1": {
+          "type": "instance_swap",
+          "default": "55748:73200"
+        },
+        "Label 2": {
+          "type": "text",
+          "default": "$label"
+        },
+        "Icon 2": {
+          "type": "instance_swap",
+          "default": "55748:73200"
+        },
+        "Label 3": {
+          "type": "text",
+          "default": "$label"
+        },
+        "Icon 3": {
+          "type": "instance_swap",
+          "default": "55748:73200"
+        },
+        "Label 4": {
+          "type": "text",
+          "default": "$label"
+        },
+        "Icon 4": {
+          "type": "instance_swap",
+          "default": "55748:73200"
+        },
+        "Label 5": {
+          "type": "text",
+          "default": "$label"
+        },
+        "Icon 5": {
+          "type": "instance_swap",
+          "default": "55748:73200"
+        },
+        "Label 6": {
+          "type": "text",
+          "default": "$label"
+        },
+        "Icon 6": {
+          "type": "instance_swap",
+          "default": "55748:73200"
+        },
+        "Label 7": {
+          "type": "text",
+          "default": "$label"
+        },
+        "Icon 7": {
+          "type": "instance_swap",
+          "default": "55748:73200"
+        },
+        "Action 6?": {
+          "type": "boolean",
+          "default": true
+        },
+        "Variant": {
+          "type": "variant",
+          "options": [
+            "Pile SM",
+            "Pile MD-LG",
+            "Row"
+          ],
+          "default": "Pile SM"
+        },
+        "Actions": {
+          "type": "variant",
+          "options": [
+            "Multiple",
+            "Single",
+            "Single destructive"
+          ],
+          "default": "Multiple"
+        },
+        "Loaded": {
+          "type": "variant",
+          "options": [
+            "No",
+            "Yes"
+          ],
+          "default": "Yes"
+        }
+      }
+    },
+    {
+      "name": "CO Badge",
+      "page": "CO Badge",
+      "status": "stable",
+      "type": "set",
+      "nodeId": "66934:10352",
+      "instances": 8,
+      "properties": {
+        "✏️ Value": {
+          "type": "text",
+          "default": "n"
+        },
+        "Inverse color": {
+          "type": "variant",
+          "options": [
+            "True",
+            "False"
+          ],
+          "default": "False"
+        },
+        "Variant": {
+          "type": "variant",
+          "options": [
+            "Exclamation mark",
+            "Number"
+          ],
+          "default": "Exclamation mark"
+        }
+      }
+    },
+    {
+      "name": "CO Button / v4.0",
+      "page": "CO Button",
+      "status": "stable",
+      "type": "set",
+      "nodeId": "32529:185995",
+      "instances": 97,
+      "properties": {
+        "Tooltip?": {
+          "type": "boolean",
+          "default": false
+        },
+        "Label": {
+          "type": "text",
+          "default": "$label"
+        },
+        "ES Icon": {
+          "type": "instance_swap",
+          "default": "55748:73200"
+        },
+        "Icon?": {
+          "type": "boolean",
+          "default": false
+        },
+        "s": {
+          "type": "variant",
+          "options": [
+            "responsive (fullwidth)",
+            "static (inline)"
+          ],
+          "default": "responsive (fullwidth)"
+        },
+        "Variant": {
+          "type": "variant",
+          "options": [
+            "Primary",
+            "Secondary",
+            "Tertiary"
+          ],
+          "default": "Primary"
+        },
+        "State": {
+          "type": "variant",
+          "options": [
+            "Enabled",
+            "Hover",
+            "Focus",
+            "Disabled",
+            "Loading"
+          ],
+          "default": "Enabled"
+        }
+      }
+    },
+    {
+      "name": "CO Button Bar Bottom / v4.0",
+      "page": "CO Button Bar Bottom",
+      "status": "stable",
+      "type": "set",
+      "nodeId": "32986:188005",
+      "instances": 58,
+      "properties": {
+        "Secondary button?": {
+          "type": "boolean",
+          "default": true
+        },
+        "Primary button?": {
+          "type": "boolean",
+          "default": true
+        },
+        "s": {
+          "type": "variant",
+          "options": [
+            "sm",
+            "md-iPad",
+            "md-IB",
+            "lg-narrow-IB",
+            "lg-wide-IB",
+            "⚠︎ md-lg-IB"
+          ],
+          "default": "sm"
+        },
+        "⚠︎ Buttons": {
+          "type": "variant",
+          "options": [
+            "Primary+Secondary",
+            "Primary",
+            "Secondary"
+          ],
+          "default": "Primary"
+        }
+      },
+      "doNotUse": [
+        "s=⚠︎ md-lg-IB",
+        "⚠︎ Buttons"
+      ]
+    },
+    {
+      "name": "CO Button Bar Chat v1.0",
+      "page": "CO Button Bar Chat",
+      "status": "stable",
+      "type": "set",
+      "nodeId": "127150:170109",
+      "instances": 3,
+      "properties": {
+        "State": {
+          "type": "variant",
+          "options": [
+            "Enabled",
+            "EnabledPlaceholder",
+            "Focus"
+          ],
+          "default": "Enabled"
+        }
+      }
+    },
+    {
+      "name": "CO Button Bar Dynamic / v4.0",
+      "page": "CO Button Bar Dynamic",
+      "status": "stable",
+      "type": "set",
+      "nodeId": "121112:168325",
+      "instances": 18,
+      "properties": {
+        "s": {
+          "type": "variant",
+          "options": [
+            "sm",
+            "md-iPad",
+            "md-lg-IB"
+          ],
+          "default": "sm"
+        },
+        "Buttons": {
+          "type": "variant",
+          "options": [
+            "⚠︎Primary+Tertiary",
+            "Primary+Secondary",
+            "Primary",
+            "Secondary"
+          ],
+          "default": "Primary"
+        }
+      },
+      "doNotUse": [
+        "Buttons=⚠︎Primary+Tertiary"
+      ]
+    },
+    {
+      "name": "CO Button Bar Summary / v1.0",
+      "page": "CO Button Bar Summary",
+      "status": "stable",
+      "type": "set",
+      "nodeId": "6712:8282",
+      "instances": 46,
+      "properties": {
+        "Size": {
+          "type": "variant",
+          "options": [
+            "sm",
+            "md-iPad",
+            "md-IB",
+            "lg-narrow-IB",
+            "lg-wide-IB"
+          ],
+          "default": "sm"
+        },
+        "Button": {
+          "type": "variant",
+          "options": [
+            "Primary",
+            "Secondary"
+          ],
+          "default": "Primary"
+        }
+      }
+    },
+    {
+      "name": "CO Chart / Bar IB",
+      "page": "CO Chart",
+      "status": "stable",
+      "type": "set",
+      "nodeId": "53648:7809",
+      "instances": 28,
+      "properties": {
+        "Section values?": {
+          "type": "boolean",
+          "default": true
+        },
+        "Legend?": {
+          "type": "boolean",
+          "default": true
+        },
+        "Bar 1?": {
+          "type": "boolean",
+          "default": true
+        },
+        "Bar 2?": {
+          "type": "boolean",
+          "default": true
+        },
+        "Bar 3?": {
+          "type": "boolean",
+          "default": true
+        },
+        "Bar 4?": {
+          "type": "boolean",
+          "default": true
+        },
+        "Bar 5?": {
+          "type": "boolean",
+          "default": true
+        },
+        "✏️ Bar label": {
+          "type": "text",
+          "default": "$Label "
+        },
+        "X axis labels?": {
+          "type": "boolean",
+          "default": true
+        },
+        "X axis grid?": {
+          "type": "boolean",
+          "default": true
+        },
+        "✏️ Section value": {
+          "type": "text",
+          "default": "n"
+        },
+        "Loaded": {
+          "type": "variant",
+          "options": [
+            "True",
+            "False"
+          ],
+          "default": "True"
+        }
+      }
+    },
+    {
+      "name": "CO Chart / Column IB",
+      "page": "CO Chart",
+      "status": "stable",
+      "type": "set",
+      "nodeId": "53648:7445",
+      "instances": 34,
+      "properties": {
+        "Section values?": {
+          "type": "boolean",
+          "default": true
+        },
+        "Legend?": {
+          "type": "boolean",
+          "default": true
+        },
+        "Y Axis title?": {
+          "type": "boolean",
+          "default": true
+        },
+        "Column 1?": {
+          "type": "boolean",
+          "default": true
+        },
+        "Column 2?": {
+          "type": "boolean",
+          "default": true
+        },
+        "Column 3?": {
+          "type": "boolean",
+          "default": true
+        },
+        "Column 4?": {
+          "type": "boolean",
+          "default": true
+        },
+        "Column 5?": {
+          "type": "boolean",
+          "default": true
+        },
+        "Column 6?": {
+          "type": "boolean",
+          "default": true
+        },
+        "✏️ Section value 1": {
+          "type": "text",
+          "default": "n"
+        },
+        "✏️ Section value 2": {
+          "type": "text",
+          "default": "n"
+        },
+        "✏️ Section value 3": {
+          "type": "text",
+          "default": "n"
+        },
+        "Y Axis labels?": {
+          "type": "boolean",
+          "default": true
+        },
+        "Y Axis grid?": {
+          "type": "boolean",
+          "default": true
+        },
+        "✏️ Y Axis title": {
+          "type": "text",
+          "default": "$AxisTitle"
+        },
+        "✏️ Column label": {
+          "type": "text",
+          "default": "$Label "
+        },
+        "Sections": {
+          "type": "variant",
+          "options": [
+            "3",
+            "2",
+            "1"
+          ],
+          "default": "3"
+        },
+        "Loaded": {
+          "type": "variant",
+          "options": [
+            "True",
+            "False"
+          ],
+          "default": "True"
+        }
+      }
+    },
+    {
+      "name": "CO Chart / Donut IB",
+      "page": "CO Chart",
+      "status": "stable",
+      "type": "set",
+      "nodeId": "53648:7355",
+      "instances": 29,
+      "properties": {
+        "✏️ Section value 1": {
+          "type": "text",
+          "default": "n"
+        },
+        "✏️ Section value 2": {
+          "type": "text",
+          "default": "n"
+        },
+        "✏️ Section value 3": {
+          "type": "text",
+          "default": "n"
+        },
+        "✏️ Section value 4": {
+          "type": "text",
+          "default": "n"
+        },
+        "✏️ Section value 5": {
+          "type": "text",
+          "default": "n"
+        },
+        "Section values?": {
+          "type": "boolean",
+          "default": true
+        },
+        "✏️ title": {
+          "type": "text",
+          "default": "$title"
+        },
+        "Chart title?": {
+          "type": "boolean",
+          "default": true
+        },
+        "Legend?": {
+          "type": "boolean",
+          "default": true
+        },
+        "Sections": {
+          "type": "variant",
+          "options": [
+            "5",
+            "4",
+            "3",
+            "2",
+            "1"
+          ],
+          "default": "5"
+        },
+        "Loaded": {
+          "type": "variant",
+          "options": [
+            "True",
+            "False"
+          ],
+          "default": "True"
+        }
+      }
+    },
+    {
+      "name": "CO Chart / LineBasic IB",
+      "page": "CO Chart",
+      "status": "stable",
+      "type": "set",
+      "nodeId": "65393:14026",
+      "instances": 33,
+      "properties": {
+        "✏️ 3rd end value": {
+          "type": "text",
+          "default": "n"
+        },
+        "End value?": {
+          "type": "boolean",
+          "default": true
+        },
+        "✏️ 1st start value": {
+          "type": "text",
+          "default": "n"
+        },
+        "✏️ 2nd start value": {
+          "type": "text",
+          "default": "n"
+        },
+        "✏️ 3rd start value": {
+          "type": "text",
+          "default": "n"
+        },
+        "Tooltip?": {
+          "type": "boolean",
+          "default": true
+        },
+        "Start value?": {
+          "type": "boolean",
+          "default": true
+        },
+        "✏️ 1st end value": {
+          "type": "text",
+          "default": "n"
+        },
+        "✏️ 2nd end value": {
+          "type": "text",
+          "default": "n"
+        },
+        "✏️ Start value": {
+          "type": "text",
+          "default": "n"
+        },
+        "Legend?": {
+          "type": "boolean",
+          "default": true
+        },
+        "Number of values": {
+          "type": "variant",
+          "options": [
+            "3",
+            "2",
+            "1"
+          ],
+          "default": "3"
+        },
+        "Loaded": {
+          "type": "variant",
+          "options": [
+            "True",
+            "False"
+          ],
+          "default": "True"
+        },
+        "Value progress": {
+          "type": "variant",
+          "options": [
+            "Steady",
+            "Volatile"
+          ],
+          "default": "Steady"
+        }
+      }
+    },
+    {
+      "name": "CO Chart / LineInterval",
+      "page": "CO Chart",
+      "status": "stable",
+      "type": "set",
+      "nodeId": "64356:12946",
+      "instances": 0,
+      "properties": {
+        "Tooltip?": {
+          "type": "boolean",
+          "default": false
+        },
+        "Closing value?": {
+          "type": "boolean",
+          "default": false
+        },
+        "✏️ High value": {
+          "type": "text",
+          "default": "45,72"
+        },
+        "✏️ Low value": {
+          "type": "text",
+          "default": "42,34"
+        },
+        "✏️ Closing value": {
+          "type": "text",
+          "default": "42,86"
+        },
+        "Invested amount?": {
+          "type": "boolean",
+          "default": false
+        },
+        "Legend?": {
+          "type": "boolean",
+          "default": false
+        },
+        "Time period": {
+          "type": "variant",
+          "options": [
+            "1D",
+            "5D",
+            "1M",
+            "6M",
+            "1R",
+            "5R",
+            "Vše"
+          ],
+          "default": "1D"
+        },
+        "Trend": {
+          "type": "variant",
+          "options": [
+            "Positive",
+            "Negative"
+          ],
+          "default": "Positive"
+        },
+        "Loaded": {
+          "type": "variant",
+          "options": [
+            "True",
+            "False"
+          ],
+          "default": "True"
+        }
+      }
+    },
+    {
+      "name": "CO Chart / LineScale",
+      "page": "CO Chart",
+      "status": "stable",
+      "type": "set",
+      "nodeId": "40662:97673",
+      "instances": 21,
+      "properties": {
+        "Tooltip?": {
+          "type": "boolean",
+          "default": false
+        },
+        "Closing value?": {
+          "type": "boolean",
+          "default": false
+        },
+        "✏️ High value": {
+          "type": "text",
+          "default": "45,72"
+        },
+        "✏️ Low value": {
+          "type": "text",
+          "default": "42,34"
+        },
+        "✏️ Closing value": {
+          "type": "text",
+          "default": "42,86"
+        },
+        "Invested amount?": {
+          "type": "boolean",
+          "default": false
+        },
+        "Legend?": {
+          "type": "boolean",
+          "default": false
+        },
+        "Time period": {
+          "type": "variant",
+          "options": [
+            "1D",
+            "5D",
+            "1M",
+            "6M",
+            "1R",
+            "5R",
+            "Vše"
+          ],
+          "default": "1D"
+        },
+        "Trend": {
+          "type": "variant",
+          "options": [
+            "Positive",
+            "Negative"
+          ],
+          "default": "Positive"
+        },
+        "Loaded": {
+          "type": "variant",
+          "options": [
+            "True",
+            "False"
+          ],
+          "default": "True"
+        }
+      }
+    },
+    {
+      "name": "CO Chart / v4.0 Donut",
+      "page": "CO Chart",
+      "status": "stable",
+      "type": "set",
+      "nodeId": "75339:247899",
+      "instances": 1,
+      "properties": {
+        "Show legend": {
+          "type": "boolean",
+          "default": false
+        },
+        "s": {
+          "type": "variant",
+          "options": [
+            "static"
+          ],
+          "default": "static"
+        },
+        "Loaded": {
+          "type": "variant",
+          "options": [
+            "yes",
+            "no"
+          ],
+          "default": "yes"
+        },
+        "Values": {
+          "type": "variant",
+          "options": [
+            "3",
+            "5"
+          ],
+          "default": "3"
+        }
+      }
+    },
+    {
+      "name": "CO Chart / v4.0 HorizontalAccount",
+      "page": "CO Chart",
+      "status": "stable",
+      "type": "set",
+      "nodeId": "72502:243131",
+      "instances": 3,
+      "properties": {
+        "Loaded": {
+          "type": "variant",
+          "options": [
+            "yes",
+            "no"
+          ],
+          "default": "yes"
+        }
+      }
+    },
+    {
+      "name": "CO Chart / v4.0 HorizontalInvestments",
+      "page": "CO Chart",
+      "status": "stable",
+      "type": "set",
+      "nodeId": "40985:212490",
+      "instances": 4,
+      "properties": {
+        "s": {
+          "type": "variant",
+          "options": [
+            "static"
+          ],
+          "default": "static"
+        },
+        "Loaded": {
+          "type": "variant",
+          "options": [
+            "yes",
+            "No"
+          ],
+          "default": "yes"
+        },
+        "Values": {
+          "type": "variant",
+          "options": [
+            "1",
+            "3",
+            "4",
+            "5"
+          ],
+          "default": "3"
+        }
+      }
+    },
+    {
+      "name": "CO Chart / v4.0 HorizontalSavings",
+      "page": "CO Chart",
+      "status": "stable",
+      "type": "set",
+      "nodeId": "72506:243224",
+      "instances": 3,
+      "properties": {
+        "Max label?": {
+          "type": "boolean",
+          "default": true
+        },
+        "✏️Label": {
+          "type": "text",
+          "default": "$label"
+        },
+        "✏️MaxLabel": {
+          "type": "text",
+          "default": "$maxLabel"
+        },
+        "✏️MaxValue": {
+          "type": "text",
+          "default": "$maxValue"
+        },
+        "✏️Value": {
+          "type": "text",
+          "default": "$value"
+        },
+        "Label+value?": {
+          "type": "boolean",
+          "default": true
+        },
+        "Loaded": {
+          "type": "variant",
+          "options": [
+            "yes",
+            "no"
+          ],
+          "default": "yes"
+        }
+      }
+    },
+    {
+      "name": "CO Chart / v4.0 PlotFundPerformance",
+      "page": "CO Chart",
+      "status": "stable",
+      "type": "set",
+      "nodeId": "75344:247903",
+      "instances": 0,
+      "properties": {
+        "s": {
+          "type": "variant",
+          "options": [
+            "static"
+          ],
+          "default": "static"
+        },
+        "Loaded": {
+          "type": "variant",
+          "options": [
+            "yes",
+            "no"
+          ],
+          "default": "yes"
+        }
+      }
+    },
+    {
+      "name": "CO Chart / v4.0 PlotPortfolioValue",
+      "page": "CO Chart",
+      "status": "stable",
+      "type": "set",
+      "nodeId": "75344:248257",
+      "instances": 1,
+      "properties": {
+        "s": {
+          "type": "variant",
+          "options": [
+            "static"
+          ],
+          "default": "static"
+        },
+        "Loaded": {
+          "type": "variant",
+          "options": [
+            "yes",
+            "no"
+          ],
+          "default": "yes"
+        }
+      }
+    },
+    {
+      "name": "CO Chart / v4.0 PlotTwoValues",
+      "page": "CO Chart",
+      "status": "stable",
+      "type": "set",
+      "nodeId": "75344:248669",
+      "instances": 1,
+      "properties": {
+        "s": {
+          "type": "variant",
+          "options": [
+            "static"
+          ],
+          "default": "static"
+        },
+        "Loaded": {
+          "type": "variant",
+          "options": [
+            "yes",
+            "no"
+          ],
+          "default": "yes"
+        }
+      }
+    },
+    {
+      "name": "CO Chart / v4.0 PlotValueRange",
+      "page": "CO Chart",
+      "status": "stable",
+      "type": "set",
+      "nodeId": "75344:248704",
+      "instances": 0,
+      "properties": {
+        "s": {
+          "type": "variant",
+          "options": [
+            "static"
+          ],
+          "default": "static"
+        },
+        "Loaded": {
+          "type": "variant",
+          "options": [
+            "yes",
+            "no"
+          ],
+          "default": "yes"
+        }
+      }
+    },
+    {
+      "name": "CO Chart / v4.0 VerticalAccount",
+      "page": "CO Chart",
+      "status": "stable",
+      "type": "set",
+      "nodeId": "74552:249675",
+      "instances": 4,
+      "properties": {
+        "s": {
+          "type": "variant",
+          "options": [
+            "responsive"
+          ],
+          "default": "responsive"
+        },
+        "Loaded": {
+          "type": "variant",
+          "options": [
+            "yes",
+            "no"
+          ],
+          "default": "yes"
+        }
+      }
+    },
+    {
+      "name": "Co Chart / Stacked Bar IB",
+      "page": "CO Chart",
+      "status": "stable",
+      "type": "set",
+      "nodeId": "65581:34871",
+      "instances": 27,
+      "properties": {
+        "Section values?": {
+          "type": "boolean",
+          "default": true
+        },
+        "Legend?": {
+          "type": "boolean",
+          "default": true
+        },
+        "✏️ Section value 1": {
+          "type": "text",
+          "default": "n"
+        },
+        "✏️ Section value 2": {
+          "type": "text",
+          "default": "n"
+        },
+        "✏️ Section value 3": {
+          "type": "text",
+          "default": "n"
+        },
+        "✏️ Section value 4": {
+          "type": "text",
+          "default": "n"
+        },
+        "✏️ Section value 5": {
+          "type": "text",
+          "default": "n"
+        },
+        "Sections": {
+          "type": "variant",
+          "options": [
+            "5",
+            "4",
+            "3",
+            "2",
+            "1"
+          ],
+          "default": "5"
+        },
+        "Loaded?": {
+          "type": "variant",
+          "options": [
+            "True",
+            "False"
+          ],
+          "default": "True"
+        }
+      }
+    },
+    {
+      "name": "_ Chart v4.0 VerticalAccount $group[n]",
+      "page": "CO Chart",
+      "status": "internal",
+      "type": "set",
+      "nodeId": "75260:250215",
+      "instances": 0,
+      "properties": {
+        "state": {
+          "type": "variant",
+          "options": [
+            "Selected",
+            "Unselected",
+            "Loading"
+          ],
+          "default": "Unselected"
+        }
+      }
+    },
+    {
+      "name": "_ChartLegend",
+      "page": "CO Chart",
+      "status": "internal",
+      "type": "set",
+      "nodeId": "53648:7334",
+      "instances": 101,
+      "properties": {
+        "✏️ Label": {
+          "type": "text",
+          "default": "$label"
+        },
+        "✏️ Value": {
+          "type": "text",
+          "default": "$value"
+        },
+        "Value?": {
+          "type": "boolean",
+          "default": false
+        },
+        "State": {
+          "type": "variant",
+          "options": [
+            "Enabled",
+            "Hover",
+            "Focus",
+            "Loading"
+          ],
+          "default": "Enabled"
+        }
+      }
+    },
+    {
+      "name": "CO Content Card / v6.0 NotificationCard",
+      "page": "CO Content Card",
+      "status": "stable",
+      "type": "set",
+      "nodeId": "136525:2094",
+      "instances": 10,
+      "properties": {
+        "Title": {
+          "type": "text",
+          "default": "$title"
+        },
+        "Caption": {
+          "type": "text",
+          "default": "$caption prává dlouhá sto a dvacet dva znaků. Tohle je zprává dlouhá sto znaků. Tohle je."
+        },
+        "Show Caption": {
+          "type": "boolean",
+          "default": true
+        },
+        "s": {
+          "type": "variant",
+          "options": [
+            "responsive"
+          ],
+          "default": "responsive"
+        },
+        "$title only": {
+          "type": "variant",
+          "options": [
+            "no",
+            "yes"
+          ],
+          "default": "no"
+        },
+        "Loaded": {
+          "type": "variant",
+          "options": [
+            "yes",
+            "no"
+          ],
+          "default": "yes"
+        }
+      }
+    },
+    {
+      "name": "CO Content Card / v6.0 NotificationItem",
+      "page": "CO Content Card",
+      "status": "stable",
+      "type": "set",
+      "nodeId": "136525:2071",
+      "instances": 1,
+      "properties": {
+        "Title": {
+          "type": "text",
+          "default": "$title"
+        },
+        "Caption": {
+          "type": "text",
+          "default": "$caption dlouhá stodvacet znaků. Tohle je zprává dlouhá stodvacet znaků. Tohle je zprává dlouhá stodvacet znaků. "
+        },
+        "Show caption": {
+          "type": "boolean",
+          "default": true
+        },
+        "Caret": {
+          "type": "boolean",
+          "default": true
+        },
+        "s": {
+          "type": "variant",
+          "options": [
+            "responsive"
+          ],
+          "default": "responsive"
+        },
+        "Loaded": {
+          "type": "variant",
+          "options": [
+            "yes",
+            "no"
+          ],
+          "default": "yes"
+        },
+        "Read": {
+          "type": "variant",
+          "options": [
+            "no",
+            "yes"
+          ],
+          "default": "no"
+        }
+      }
+    },
+    {
+      "name": "CO Content Card / v6.0 WrapHighlighted",
+      "page": "CO Content Card",
+      "status": "stable",
+      "type": "component",
+      "nodeId": "137269:44912",
+      "instances": 0,
+      "properties": {
+        "Content slot": {
+          "type": "slot",
+          "default": "-1:-1"
+        }
+      }
+    },
+    {
+      "name": "CO Content Card / v6.0 WrapPrimary",
+      "page": "CO Content Card",
+      "status": "stable",
+      "type": "component",
+      "nodeId": "137272:41497",
+      "instances": 1,
+      "properties": {
+        "Content slot": {
+          "type": "slot",
+          "default": "-1:-1"
+        }
+      }
+    },
+    {
+      "name": "CO Content Card / v6.0 WrapSecondary",
+      "page": "CO Content Card",
+      "status": "stable",
+      "type": "component",
+      "nodeId": "137269:44911",
+      "instances": 0,
+      "properties": {
+        "Content slot": {
+          "type": "slot",
+          "default": "-1:-1"
+        }
+      }
+    },
+    {
+      "name": "CO Content Card / v6.0 ⚠︎PromoRating",
+      "page": "CO Content Card",
+      "status": "deprecated",
+      "type": "set",
+      "nodeId": "6341:11488",
+      "instances": 4,
+      "properties": {
+        "Caption": {
+          "type": "text",
+          "default": "$caption"
+        },
+        "Title": {
+          "type": "text",
+          "default": "$title"
+        },
+        "Show Caption": {
+          "type": "boolean",
+          "default": true
+        },
+        "s": {
+          "type": "variant",
+          "options": [
+            "responsive"
+          ],
+          "default": "responsive"
+        },
+        "Loaded": {
+          "type": "variant",
+          "options": [
+            "yes",
+            "no"
+          ],
+          "default": "yes"
+        }
+      }
+    },
+    {
+      "name": "CO Content Card / v6.1 ⚠︎PromoTargeted",
+      "page": "CO Content Card",
+      "status": "deprecated",
+      "type": "set",
+      "nodeId": "136525:1971",
+      "instances": 21,
+      "properties": {
+        "Caption": {
+          "type": "text",
+          "default": "$caption"
+        },
+        "Title": {
+          "type": "text",
+          "default": "$title"
+        },
+        "Show Caption": {
+          "type": "boolean",
+          "default": true
+        },
+        "Illustration": {
+          "type": "instance_swap",
+          "default": "59340:74146"
+        },
+        "Show Illustartion": {
+          "type": "boolean",
+          "default": true
+        },
+        "s": {
+          "type": "variant",
+          "options": [
+            "responsive"
+          ],
+          "default": "responsive"
+        },
+        "Loaded": {
+          "type": "variant",
+          "options": [
+            "yes",
+            "no"
+          ],
+          "default": "yes"
+        }
+      }
+    },
+    {
+      "name": "CO Content Card / v6.2 Promo",
+      "page": "CO Content Card",
+      "status": "stable",
+      "type": "set",
+      "nodeId": "136525:2017",
+      "instances": 20,
+      "properties": {
+        "Show Illustration": {
+          "type": "boolean",
+          "default": true
+        },
+        "Caption": {
+          "type": "text",
+          "default": "$caption"
+        },
+        "Title": {
+          "type": "text",
+          "default": "$title"
+        },
+        "Show Caption": {
+          "type": "boolean",
+          "default": true
+        },
+        "Illustration": {
+          "type": "instance_swap",
+          "default": "59340:74145"
+        },
+        "s": {
+          "type": "variant",
+          "options": [
+            "responsive"
+          ],
+          "default": "responsive"
+        },
+        "Loaded": {
+          "type": "variant",
+          "options": [
+            "yes",
+            "no"
+          ],
+          "default": "yes"
+        },
+        "Closable": {
+          "type": "variant",
+          "options": [
+            "No",
+            "yes"
+          ],
+          "default": "No"
+        }
+      }
+    },
+    {
+      "name": "CO DatePicker / IB v2.0",
+      "page": "CO DatePicker",
+      "status": "stable",
+      "type": "set",
+      "nodeId": "10559:87078",
+      "instances": 2,
+      "properties": {
+        "s": {
+          "type": "variant",
+          "options": [
+            "static"
+          ],
+          "default": "static"
+        },
+        "view": {
+          "type": "variant",
+          "options": [
+            "day",
+            "month",
+            "year"
+          ],
+          "default": "day"
+        },
+        "disabledDate": {
+          "type": "variant",
+          "options": [
+            "Yes"
+          ],
+          "default": "Yes"
+        }
+      }
+    },
+    {
+      "name": "CO DatePicker / iOS v2.0",
+      "page": "CO DatePicker",
+      "status": "stable",
+      "type": "set",
+      "nodeId": "10478:73952",
+      "instances": 4,
+      "properties": {
+        "s": {
+          "type": "variant",
+          "options": [
+            "static"
+          ],
+          "default": "static"
+        },
+        "view": {
+          "type": "variant",
+          "options": [
+            "day",
+            "month+year"
+          ],
+          "default": "day"
+        },
+        "Language": {
+          "type": "variant",
+          "options": [
+            "CS",
+            "EN (US)"
+          ],
+          "default": "CS"
+        }
+      }
+    },
+    {
+      "name": "CO InputDatePicker / Android",
+      "page": "CO DatePicker",
+      "status": "stable",
+      "type": "set",
+      "nodeId": "21436:24725",
+      "instances": 0,
+      "properties": {
+        "Supporting text": {
+          "type": "text",
+          "default": "Vyberte datum"
+        },
+        "Headline": {
+          "type": "text",
+          "default": "Vyberte datum"
+        },
+        "Show clear button": {
+          "type": "boolean",
+          "default": false
+        },
+        "Type": {
+          "type": "variant",
+          "options": [
+            "Single Input"
+          ],
+          "default": "Single Input"
+        }
+      }
+    },
+    {
+      "name": "CO ModalDatePicker / Android",
+      "page": "CO DatePicker",
+      "status": "stable",
+      "type": "set",
+      "nodeId": "21436:24318",
+      "instances": 0,
+      "properties": {
+        "Headline": {
+          "type": "text",
+          "default": "17.8.2024"
+        },
+        "Supporting text": {
+          "type": "text",
+          "default": "Vyberte datum"
+        },
+        "Show clear button": {
+          "type": "boolean",
+          "default": false
+        },
+        "Type": {
+          "type": "variant",
+          "options": [
+            "Day",
+            "Year"
+          ],
+          "default": "Day"
+        }
+      }
+    },
+    {
+      "name": "_CO DatePicker / Android v2.0",
+      "page": "CO DatePicker",
+      "status": "internal",
+      "type": "set",
+      "nodeId": "11490:81735",
+      "instances": 2,
+      "properties": {
+        "s": {
+          "type": "variant",
+          "options": [
+            "static"
+          ],
+          "default": "static"
+        },
+        "view": {
+          "type": "variant",
+          "options": [
+            "day+month",
+            "⚠︎year"
+          ],
+          "default": "day+month"
+        },
+        "Language": {
+          "type": "variant",
+          "options": [
+            "CS",
+            "EN (US)"
+          ],
+          "default": "CS"
+        }
+      },
+      "doNotUse": [
+        "view=⚠︎year"
+      ]
+    },
+    {
+      "name": "CO Detail Transaction",
+      "page": "CO Detail Transaction",
+      "status": "stable",
+      "type": "set",
+      "nodeId": "128869:6848",
+      "instances": 13,
+      "properties": {
+        "$label": {
+          "type": "text",
+          "default": "$label"
+        },
+        "Show 2nd Value": {
+          "type": "boolean",
+          "default": true
+        },
+        "2nd Value": {
+          "type": "text",
+          "default": "$secondaryValue"
+        },
+        "Value": {
+          "type": "text",
+          "default": "$value"
+        },
+        "2nd Caption": {
+          "type": "text",
+          "default": "$secondaryCaption"
+        },
+        "Show Caption": {
+          "type": "boolean",
+          "default": true
+        },
+        "Negative Value": {
+          "type": "boolean",
+          "default": false
+        },
+        "$caption": {
+          "type": "text",
+          "default": "$caption"
+        },
+        "Show 2nd Caption": {
+          "type": "boolean",
+          "default": true
+        },
+        "s": {
+          "type": "variant",
+          "options": [
+            "responsive"
+          ],
+          "default": "responsive"
+        }
+      }
+    },
+    {
+      "name": "CO DigitPicker / Android v1.0",
+      "page": "CO DigitPicker",
+      "status": "stable",
+      "type": "component",
+      "nodeId": "6122:8899",
+      "instances": 10,
+      "properties": {
+        "Button": {
+          "type": "text",
+          "default": "$button"
+        }
+      }
+    },
+    {
+      "name": "CO DigitPicker / IB v1.0",
+      "page": "CO DigitPicker",
+      "status": "stable",
+      "type": "component",
+      "nodeId": "6122:8900",
+      "instances": 12
+    },
+    {
+      "name": "CO DigitPicker / iOS v1.0",
+      "page": "CO DigitPicker",
+      "status": "stable",
+      "type": "component",
+      "nodeId": "6122:8898",
+      "instances": 10
+    },
+    {
+      "name": "_AndroidDigit",
+      "page": "CO DigitPicker",
+      "status": "internal",
+      "type": "set",
+      "nodeId": "4817:4290",
+      "instances": 7,
+      "properties": {
+        "State": {
+          "type": "variant",
+          "options": [
+            "Activ",
+            "Enabled",
+            "Hover"
+          ],
+          "default": "Enabled"
+        }
+      }
+    },
+    {
+      "name": "_WebDigit",
+      "page": "CO DigitPicker",
+      "status": "internal",
+      "type": "set",
+      "nodeId": "5558:1885",
+      "instances": 10,
+      "properties": {
+        "State": {
+          "type": "variant",
+          "options": [
+            "Enabled",
+            "Hover",
+            "Focus",
+            "Active",
+            "FocusActive",
+            "HoverActive"
+          ],
+          "default": "Enabled"
+        }
+      }
+    },
+    {
+      "name": "CO Divider / v3.0",
+      "page": "CO Divider",
+      "status": "stable",
+      "type": "set",
+      "nodeId": "8798:71510",
+      "instances": 387,
+      "properties": {
+        "s": {
+          "type": "variant",
+          "options": [
+            "responsive"
+          ],
+          "default": "responsive"
+        }
+      }
+    },
+    {
+      "name": "CO File QR Upload / v1.0 IB",
+      "page": "CO File QR Upload",
+      "status": "stable",
+      "type": "set",
+      "nodeId": "13600:34578",
+      "instances": 44,
+      "properties": {
+        "✏️ File name": {
+          "type": "text",
+          "default": "$fileName"
+        },
+        "File uploaded": {
+          "type": "variant",
+          "options": [
+            "False",
+            "True"
+          ],
+          "default": "False"
+        }
+      }
+    },
+    {
+      "name": "_DeleteButton",
+      "page": "CO File QR Upload",
+      "status": "internal",
+      "type": "set",
+      "nodeId": "13600:34571",
+      "instances": 10,
+      "properties": {
+        "Icon": {
+          "type": "instance_swap",
+          "default": "6772:36972"
+        },
+        "State": {
+          "type": "variant",
+          "options": [
+            "Enabled",
+            "Hover",
+            "Focus"
+          ],
+          "default": "Enabled"
+        }
+      }
+    },
+    {
+      "name": "CO Header / v4.0 Android",
+      "page": "CO Header",
+      "status": "stable",
+      "type": "set",
+      "nodeId": "26683:196567",
+      "instances": 4,
+      "properties": {
+        "Title": {
+          "type": "text",
+          "default": "$title"
+        },
+        "ES Icon": {
+          "type": "instance_swap",
+          "default": "55748:73200"
+        },
+        "screenshot": {
+          "type": "boolean",
+          "default": false
+        },
+        "Show Bottom Zone": {
+          "type": "boolean",
+          "default": true
+        },
+        "s": {
+          "type": "variant",
+          "options": [
+            "responsive-Android"
+          ],
+          "default": "responsive-Android"
+        },
+        "variant (PA Navigation Styles)": {
+          "type": "variant",
+          "options": [
+            "ground / subpage",
+            "ground / main page",
+            "flow / first or last step",
+            "flow / step",
+            "dialog / first or last step",
+            "dialog / step",
+            "sheet",
+            "sheet empty",
+            "ground / ⚠︎entrance"
+          ],
+          "default": "ground / subpage"
+        },
+        "action": {
+          "type": "variant",
+          "options": [
+            "none",
+            "icon"
+          ],
+          "default": "none"
+        },
+        "$title": {
+          "type": "variant",
+          "options": [
+            "no",
+            "yes expanded",
+            "yes left",
+            "yes center"
+          ],
+          "default": "yes expanded"
+        }
+      },
+      "doNotUse": [
+        "variant (PA Navigation Styles)=ground / ⚠︎entrance"
+      ]
+    },
+    {
+      "name": "CO Header / v4.0 IB Dialog",
+      "page": "CO Header",
+      "status": "stable",
+      "type": "set",
+      "nodeId": "26870:195945",
+      "instances": 33,
+      "properties": {
+        "PreScreenTitle": {
+          "type": "text",
+          "default": "$preScreenTitle"
+        },
+        "Title": {
+          "type": "text",
+          "default": "$title"
+        },
+        "Title?": {
+          "type": "boolean",
+          "default": true
+        },
+        "ES Icon": {
+          "type": "instance_swap",
+          "default": "55748:73200"
+        },
+        "Icon?": {
+          "type": "boolean",
+          "default": false
+        },
+        "s": {
+          "type": "variant",
+          "options": [
+            "sm-IB",
+            "md-lg-IB"
+          ],
+          "default": "sm-IB"
+        },
+        "variant (PA Navigation Styles)": {
+          "type": "variant",
+          "options": [
+            "first or last step",
+            "step"
+          ],
+          "default": "first or last step"
+        }
+      }
+    },
+    {
+      "name": "CO Header / v4.0 IB Flow",
+      "page": "CO Header",
+      "status": "stable",
+      "type": "set",
+      "nodeId": "26778:196576",
+      "instances": 30,
+      "properties": {
+        "PreScreenTitle": {
+          "type": "text",
+          "default": "$preScreenTitle"
+        },
+        "Title": {
+          "type": "text",
+          "default": "$title"
+        },
+        "Icon?": {
+          "type": "boolean",
+          "default": false
+        },
+        "ES Icon": {
+          "type": "instance_swap",
+          "default": "55748:73200"
+        },
+        "Title?": {
+          "type": "boolean",
+          "default": true
+        },
+        "s": {
+          "type": "variant",
+          "options": [
+            "lg-IB",
+            "sm-md-IB"
+          ],
+          "default": "sm-md-IB"
+        },
+        "variant (PA Navigation Styles)": {
+          "type": "variant",
+          "options": [
+            "first or last step",
+            "step"
+          ],
+          "default": "first or last step"
+        }
+      }
+    },
+    {
+      "name": "CO Header / v4.0 IB Ground",
+      "page": "CO Header",
+      "status": "stable",
+      "type": "set",
+      "nodeId": "26683:196163",
+      "instances": 51,
+      "properties": {
+        "PreScreenTitle": {
+          "type": "text",
+          "default": "$preScreenTitle"
+        },
+        "Title": {
+          "type": "text",
+          "default": "$title"
+        },
+        "CustomerName": {
+          "type": "text",
+          "default": "$customerName"
+        },
+        "Title?": {
+          "type": "boolean",
+          "default": true
+        },
+        "Main navigation?": {
+          "type": "boolean",
+          "default": true
+        },
+        "Subject switch?": {
+          "type": "boolean",
+          "default": false
+        },
+        "Icon?": {
+          "type": "boolean",
+          "default": false
+        },
+        "ES Icon": {
+          "type": "instance_swap",
+          "default": "55748:73200"
+        },
+        "s": {
+          "type": "variant",
+          "options": [
+            "lg-IB",
+            "sm-md-IB"
+          ],
+          "default": "sm-md-IB"
+        },
+        "variant (PA Navigation Styles)": {
+          "type": "variant",
+          "options": [
+            "subpage",
+            "main page",
+            "⚠︎entrance",
+            "New_main page",
+            "New_subpage"
+          ],
+          "default": "subpage"
+        }
+      },
+      "doNotUse": [
+        "variant (PA Navigation Styles)=⚠︎entrance"
+      ]
+    },
+    {
+      "name": "CO Header / v4.0 IB Sheet",
+      "page": "CO Header",
+      "status": "stable",
+      "type": "set",
+      "nodeId": "26870:196060",
+      "instances": 3,
+      "properties": {
+        "Title": {
+          "type": "text",
+          "default": "$title"
+        },
+        "Show Title": {
+          "type": "boolean",
+          "default": true
+        },
+        "s": {
+          "type": "variant",
+          "options": [
+            "sm-IB",
+            "md-lg-IB"
+          ],
+          "default": "sm-IB"
+        },
+        "Layout (Title)": {
+          "type": "variant",
+          "options": [
+            "Left",
+            "Center",
+            "No"
+          ],
+          "default": "Left"
+        }
+      }
+    },
+    {
+      "name": "CO Header / v4.0 iOS",
+      "page": "CO Header",
+      "status": "stable",
+      "type": "set",
+      "nodeId": "26683:196851",
+      "instances": 143,
+      "properties": {
+        "Title": {
+          "type": "text",
+          "default": "$title"
+        },
+        "ES Icon": {
+          "type": "instance_swap",
+          "default": "55748:73200"
+        },
+        "PreScreenTitle": {
+          "type": "text",
+          "default": "$preScreenTitle"
+        },
+        "s": {
+          "type": "variant",
+          "options": [
+            "responsive-iOS"
+          ],
+          "default": "responsive-iOS"
+        },
+        "variant (PA Navigation Styles)": {
+          "type": "variant",
+          "options": [
+            "ground / subpage",
+            "ground / main page",
+            "flow / first or last step",
+            "flow / step",
+            "dialog / first or last step",
+            "dialog / step",
+            "sheet",
+            "sheet / ⚠︎empty",
+            "ground / ⚠︎entrance",
+            "FlowModal / first or last step",
+            "FlowModal / step",
+            "DialogModal / first or last step",
+            "DialogModal / step"
+          ],
+          "default": "ground / subpage"
+        },
+        "action": {
+          "type": "variant",
+          "options": [
+            "none",
+            "icon"
+          ],
+          "default": "none"
+        },
+        "$title": {
+          "type": "variant",
+          "options": [
+            "no",
+            "yes expanded",
+            "yes center",
+            "yes left"
+          ],
+          "default": "yes expanded"
+        }
+      },
+      "doNotUse": [
+        "variant (PA Navigation Styles)=sheet / ⚠︎empty",
+        "variant (PA Navigation Styles)=ground / ⚠︎entrance"
+      ]
+    },
+    {
+      "name": "_HeaderBack",
+      "page": "CO Header",
+      "status": "internal",
+      "type": "set",
+      "nodeId": "1277:4251",
+      "instances": 8,
+      "properties": {
+        "✏️ Label": {
+          "type": "text",
+          "default": "$preScreenTitle"
+        },
+        "State": {
+          "type": "variant",
+          "options": [
+            "Enabled",
+            "Hover",
+            "Focus"
+          ],
+          "default": "Enabled"
+        }
+      }
+    },
+    {
+      "name": "_HeaderItem",
+      "page": "CO Header",
+      "status": "internal",
+      "type": "set",
+      "nodeId": "143590:9851",
+      "instances": 62,
+      "properties": {
+        "✏️ Label": {
+          "type": "text",
+          "default": "$label"
+        },
+        "Icon": {
+          "type": "instance_swap",
+          "default": "55748:73200"
+        },
+        "Badge?": {
+          "type": "boolean",
+          "default": false
+        },
+        "Label?": {
+          "type": "boolean",
+          "default": true
+        },
+        "State": {
+          "type": "variant",
+          "options": [
+            "Enabled",
+            "Hover",
+            "Focus"
+          ],
+          "default": "Enabled"
+        },
+        "Left Icon": {
+          "type": "variant",
+          "options": [
+            "Icon",
+            "Avatar"
+          ],
+          "default": "Icon"
+        }
+      }
+    },
+    {
+      "name": "CO Icon Avatar / Large",
+      "page": "CO Icon Avatar",
+      "status": "stable",
+      "type": "set",
+      "nodeId": "69408:22683",
+      "instances": 0,
+      "properties": {
+        "Show SubIcon": {
+          "type": "boolean",
+          "default": true
+        },
+        "Subicon": {
+          "type": "instance_swap",
+          "default": "6772:74795"
+        },
+        "Icon": {
+          "type": "instance_swap",
+          "default": "59332:5175"
+        },
+        "Initials": {
+          "type": "text",
+          "default": "$in"
+        },
+        "Logo": {
+          "type": "instance_swap",
+          "default": "59333:559"
+        },
+        "Style": {
+          "type": "variant",
+          "options": [
+            "Photo",
+            "Logo",
+            "Initials",
+            "Icon"
+          ],
+          "default": "Photo"
+        },
+        "Loaded": {
+          "type": "variant",
+          "options": [
+            "Yes",
+            "No"
+          ],
+          "default": "Yes"
+        }
+      }
+    },
+    {
+      "name": "CO Icon Avatar / Medium",
+      "page": "CO Icon Avatar",
+      "status": "stable",
+      "type": "set",
+      "nodeId": "75659:249001",
+      "instances": 12,
+      "properties": {
+        "Show SubIcon": {
+          "type": "boolean",
+          "default": true
+        },
+        "Subicon": {
+          "type": "instance_swap",
+          "default": "6772:74795"
+        },
+        "Icon": {
+          "type": "instance_swap",
+          "default": "59332:5175"
+        },
+        "Initials": {
+          "type": "text",
+          "default": "$in"
+        },
+        "Logo": {
+          "type": "instance_swap",
+          "default": "59333:559"
+        },
+        "Style": {
+          "type": "variant",
+          "options": [
+            "Photo",
+            "Logo",
+            "Initials",
+            "Icon"
+          ],
+          "default": "Photo"
+        },
+        "Loaded": {
+          "type": "variant",
+          "options": [
+            "Yes",
+            "No"
+          ],
+          "default": "Yes"
+        }
+      }
+    },
+    {
+      "name": "CO Icon Avatar / Small",
+      "page": "CO Icon Avatar",
+      "status": "stable",
+      "type": "set",
+      "nodeId": "79894:293371",
+      "instances": 26,
+      "properties": {
+        "Initials": {
+          "type": "text",
+          "default": "$in"
+        },
+        "Icon": {
+          "type": "instance_swap",
+          "default": "59332:5175"
+        },
+        "Show SubIcon": {
+          "type": "boolean",
+          "default": true
+        },
+        "Subicon": {
+          "type": "instance_swap",
+          "default": "6772:74794"
+        },
+        "Logo": {
+          "type": "instance_swap",
+          "default": "59333:559"
+        },
+        "Style": {
+          "type": "variant",
+          "options": [
+            "Photo",
+            "Logo",
+            "Initials",
+            "Icon"
+          ],
+          "default": "Photo"
+        },
+        "Loaded": {
+          "type": "variant",
+          "options": [
+            "Yes",
+            "No"
+          ],
+          "default": "Yes"
+        }
+      }
+    },
+    {
+      "name": "CO Illustrated Message v1.0",
+      "page": "CO Illustrated Message",
+      "status": "stable",
+      "type": "set",
+      "nodeId": "98681:512384",
+      "instances": 27,
+      "properties": {
+        "Show Button": {
+          "type": "boolean",
+          "default": true
+        },
+        "Show Heading": {
+          "type": "boolean",
+          "default": true
+        },
+        "Illustration sm": {
+          "type": "instance_swap",
+          "default": "59340:74145"
+        },
+        "$text": {
+          "type": "text",
+          "default": "$text"
+        },
+        "$textHeading": {
+          "type": "text",
+          "default": "$textHeading"
+        },
+        "Illustration md-lg": {
+          "type": "instance_swap",
+          "default": "5304:113594"
+        },
+        "size": {
+          "type": "variant",
+          "options": [
+            "responsive",
+            "⚠︎md-lg-IB"
+          ],
+          "default": "responsive"
+        }
+      },
+      "doNotUse": [
+        "size=⚠︎md-lg-IB"
+      ]
+    },
+    {
+      "name": "CO Illustration v3.0",
+      "page": "CO Illustration",
+      "status": "stable",
+      "type": "set",
+      "nodeId": "3721:152981",
+      "instances": 8,
+      "properties": {
+        "ES Illustration": {
+          "type": "instance_swap",
+          "default": "59340:74957"
+        },
+        "Width": {
+          "type": "variant",
+          "options": [
+            "FullWidth"
+          ],
+          "default": "FullWidth"
+        }
+      }
+    },
+    {
+      "name": "_CO Illustration ⚠︎v4.0",
+      "page": "CO Illustration",
+      "status": "deprecated",
+      "type": "component",
+      "nodeId": "120986:168543",
+      "instances": 3,
+      "properties": {
+        "ES Illustration": {
+          "type": "instance_swap",
+          "default": "6772:170841"
+        }
+      }
+    },
+    {
+      "name": "CO InLine Message / v6.0",
+      "page": "CO InLine Message",
+      "status": "stable",
+      "type": "set",
+      "nodeId": "56511:224381",
+      "instances": 27,
+      "properties": {
+        "Show Icon": {
+          "type": "boolean",
+          "default": true
+        },
+        "Icon Success": {
+          "type": "instance_swap",
+          "default": "59332:3571"
+        },
+        "Icon Error": {
+          "type": "instance_swap",
+          "default": "59332:5181"
+        },
+        "Icon Warning": {
+          "type": "instance_swap",
+          "default": "59332:3693"
+        },
+        "Icon Info": {
+          "type": "instance_swap",
+          "default": "53648:7318"
+        },
+        "Message": {
+          "type": "text",
+          "default": "$message"
+        },
+        "Interactive >": {
+          "type": "boolean",
+          "default": true
+        },
+        "s": {
+          "type": "variant",
+          "options": [
+            "responsive-sm",
+            "responsive-md-lg"
+          ],
+          "default": "responsive-sm"
+        },
+        "MessageType": {
+          "type": "variant",
+          "options": [
+            "info",
+            "success",
+            "error",
+            "warning"
+          ],
+          "default": "info"
+        }
+      }
+    },
+    {
+      "name": "CO Input Secure / 4.0",
+      "page": "CO Input Secure",
+      "status": "stable",
+      "type": "set",
+      "nodeId": "54848:229616",
+      "instances": 6,
+      "properties": {
+        "Number": {
+          "type": "text",
+          "default": "1"
+        },
+        "s": {
+          "type": "variant",
+          "options": [
+            "static"
+          ],
+          "default": "static"
+        },
+        "Digits": {
+          "type": "variant",
+          "options": [
+            "6-digits",
+            "9-digits"
+          ],
+          "default": "6-digits"
+        },
+        "Filled": {
+          "type": "variant",
+          "options": [
+            "0",
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "filled"
+          ],
+          "default": "0"
+        }
+      }
+    },
+    {
+      "name": "CO Keyboard Secure / v2.0",
+      "page": "CO Keyboard Secure",
+      "status": "stable",
+      "type": "set",
+      "nodeId": "1346:38951",
+      "instances": 11,
+      "properties": {
+        "s": {
+          "type": "variant",
+          "options": [
+            "static-iOS",
+            "static-Android",
+            "static"
+          ],
+          "default": "static-iOS"
+        },
+        "Variant": {
+          "type": "variant",
+          "options": [
+            "PIN or FaceID",
+            "PIN or FaceUnlock",
+            "PIN or Fingerprint/TouchID",
+            "Number"
+          ],
+          "default": "PIN or FaceID"
+        }
+      }
+    },
+    {
+      "name": "_Keyboard Secure key states",
+      "page": "CO Keyboard Secure",
+      "status": "internal",
+      "type": "set",
+      "nodeId": "44972:267843",
+      "instances": 2,
+      "properties": {
+        "Number": {
+          "type": "text",
+          "default": "1"
+        },
+        "ES Icon": {
+          "type": "instance_swap",
+          "default": "59332:2901"
+        },
+        "State": {
+          "type": "variant",
+          "options": [
+            "Enabled",
+            "Hover",
+            "Focus"
+          ],
+          "default": "Enabled"
+        },
+        "content": {
+          "type": "variant",
+          "options": [
+            "number",
+            "icon"
+          ],
+          "default": "number"
+        }
+      }
+    },
+    {
+      "name": "CO Modal Alert / v4.0",
+      "page": "CO Modal",
+      "status": "stable",
+      "type": "set",
+      "nodeId": "23088:160898",
+      "instances": 1,
+      "properties": {
+        "Title": {
+          "type": "text",
+          "default": "$title"
+        },
+        "Text": {
+          "type": "text",
+          "default": "$text"
+        },
+        "Button": {
+          "type": "text",
+          "default": "$button1"
+        },
+        "Button (1)": {
+          "type": "text",
+          "default": "$button2"
+        },
+        "Show Text": {
+          "type": "boolean",
+          "default": true
+        },
+        "s": {
+          "type": "variant",
+          "options": [
+            "responsive-iOS",
+            "responsive-Android",
+            "responsive-IB"
+          ],
+          "default": "responsive-iOS"
+        },
+        "Buttons": {
+          "type": "variant",
+          "options": [
+            "2",
+            "1"
+          ],
+          "default": "1"
+        }
+      }
+    },
+    {
+      "name": "CO Modal Biometric / v4.0",
+      "page": "CO Modal",
+      "status": "stable",
+      "type": "set",
+      "nodeId": "11336:77937",
+      "instances": 0,
+      "properties": {
+        "Title": {
+          "type": "text",
+          "default": "$methodName pro aplikaci Komerční banka"
+        },
+        "Text": {
+          "type": "text",
+          "default": "$biometricInstructions"
+        },
+        "Button": {
+          "type": "text",
+          "default": "Použít PIN"
+        },
+        "Button (1)": {
+          "type": "text",
+          "default": "Zrušit"
+        },
+        "Show Text": {
+          "type": "boolean",
+          "default": true
+        },
+        "s": {
+          "type": "variant",
+          "options": [
+            "static-iOS"
+          ],
+          "default": "static-iOS"
+        },
+        "Technology": {
+          "type": "variant",
+          "options": [
+            "Touch ID",
+            "Face ID"
+          ],
+          "default": "Face ID"
+        },
+        "Stage": {
+          "type": "variant",
+          "options": [
+            "alert",
+            "face scanning",
+            "face success",
+            "face fail 1st",
+            "face fail last"
+          ],
+          "default": "alert"
+        }
+      }
+    },
+    {
+      "name": "CO Navigation / 3.0",
+      "page": "CO Navigation",
+      "status": "stable",
+      "type": "set",
+      "nodeId": "3277:121388",
+      "instances": 6,
+      "properties": {
+        "size": {
+          "type": "variant",
+          "options": [
+            "sm-iPhone+sm-md-IB+responsive-Android",
+            "md-lg-iPad+lg-IB"
+          ],
+          "default": "md-lg-iPad+lg-IB"
+        },
+        "state": {
+          "type": "variant",
+          "options": [
+            "Default",
+            "Loading"
+          ],
+          "default": "Default"
+        }
+      }
+    },
+    {
+      "name": "_Item",
+      "page": "CO Navigation",
+      "status": "internal",
+      "type": "set",
+      "nodeId": "46356:215659",
+      "instances": 2,
+      "properties": {
+        "Label": {
+          "type": "text",
+          "default": "$label"
+        },
+        "ES Icon": {
+          "type": "instance_swap",
+          "default": "55748:73200"
+        },
+        "State": {
+          "type": "variant",
+          "options": [
+            "Enabled",
+            "Hover",
+            "Focus",
+            "Active",
+            "HoverActive",
+            "FocusActive",
+            "Loading"
+          ],
+          "default": "Enabled"
+        }
+      }
+    },
+    {
+      "name": "CO Paginator / v1.0 IB",
+      "page": "CO Paginator",
+      "status": "stable",
+      "type": "set",
+      "nodeId": "19913:22008",
+      "instances": 145,
+      "properties": {
+        "✏️ Info": {
+          "type": "text",
+          "default": "30–40 z 200"
+        },
+        "Item5?": {
+          "type": "boolean",
+          "default": true
+        },
+        "Pages?": {
+          "type": "boolean",
+          "default": true
+        },
+        "Item4?": {
+          "type": "boolean",
+          "default": true
+        },
+        "Item2?": {
+          "type": "boolean",
+          "default": true
+        },
+        "Item1?": {
+          "type": "boolean",
+          "default": true
+        },
+        "Item3?": {
+          "type": "boolean",
+          "default": true
+        },
+        "Info?": {
+          "type": "boolean",
+          "default": true
+        },
+        "Dropdown?": {
+          "type": "boolean",
+          "default": true
+        },
+        "First&Last?": {
+          "type": "boolean",
+          "default": false
+        },
+        "Variant": {
+          "type": "variant",
+          "options": [
+            "ProductPaginator",
+            "TablePaginator"
+          ],
+          "default": "ProductPaginator"
+        }
+      }
+    },
+    {
+      "name": "CO Paginator / v1.0 IB",
+      "page": "CO Paginator",
+      "status": "stable",
+      "type": "set",
+      "nodeId": "58636:18483",
+      "instances": 0,
+      "properties": {
+        "✏️ Info": {
+          "type": "text",
+          "default": "30–40 z 200"
+        },
+        "Item5?": {
+          "type": "boolean",
+          "default": true
+        },
+        "Pages?": {
+          "type": "boolean",
+          "default": true
+        },
+        "Item4?": {
+          "type": "boolean",
+          "default": true
+        },
+        "Item2?": {
+          "type": "boolean",
+          "default": true
+        },
+        "Item1?": {
+          "type": "boolean",
+          "default": true
+        },
+        "Item3?": {
+          "type": "boolean",
+          "default": true
+        },
+        "Info?": {
+          "type": "boolean",
+          "default": true
+        },
+        "Dropdown?": {
+          "type": "boolean",
+          "default": true
+        },
+        "First&Last?": {
+          "type": "boolean",
+          "default": false
+        },
+        "Variant": {
+          "type": "variant",
+          "options": [
+            "ProductPaginator",
+            "TablePaginator"
+          ],
+          "default": "ProductPaginator"
+        }
+      }
+    },
+    {
+      "name": "_Cursor / Default",
+      "page": "CO Paginator",
+      "status": "internal",
+      "type": "component",
+      "nodeId": "1854:10855",
+      "instances": 1
+    },
+    {
+      "name": "_PaginatorItem",
+      "page": "CO Paginator",
+      "status": "internal",
+      "type": "set",
+      "nodeId": "1854:12327",
+      "instances": 61,
+      "properties": {
+        "Number": {
+          "type": "text",
+          "default": "1"
+        },
+        "State": {
+          "type": "variant",
+          "options": [
+            "Enabled",
+            "Hover",
+            "Focus",
+            "Active",
+            "Disabled",
+            "FocusActive"
+          ],
+          "default": "Enabled"
+        },
+        "Type": {
+          "type": "variant",
+          "options": [
+            "Number",
+            "Caret",
+            "Double caret"
+          ],
+          "default": "Caret"
+        }
+      }
+    },
+    {
+      "name": "_PaginatorItem",
+      "page": "CO Paginator",
+      "status": "internal",
+      "type": "set",
+      "nodeId": "58636:18456",
+      "instances": 0,
+      "properties": {
+        "Number": {
+          "type": "text",
+          "default": "1"
+        },
+        "State": {
+          "type": "variant",
+          "options": [
+            "Enabled",
+            "Hover",
+            "Focus",
+            "Active",
+            "Disabled",
+            "FocusActive"
+          ],
+          "default": "Enabled"
+        },
+        "Type": {
+          "type": "variant",
+          "options": [
+            "Number",
+            "Caret",
+            "Double caret"
+          ],
+          "default": "Caret"
+        }
+      }
+    },
+    {
+      "name": "CO Personalisation / v1.0 Product",
+      "page": "CO Personalisation",
+      "status": "stable",
+      "type": "set",
+      "nodeId": "5171:15366",
+      "instances": 23,
+      "properties": {
+        "Divider Top": {
+          "type": "boolean",
+          "default": true
+        },
+        "Show Message": {
+          "type": "boolean",
+          "default": false
+        },
+        "Value before ,": {
+          "type": "text",
+          "default": "$value"
+        },
+        "Value after ,": {
+          "type": "text",
+          "default": "$value"
+        },
+        "Currency": {
+          "type": "text",
+          "default": "(currency)"
+        },
+        "Name": {
+          "type": "text",
+          "default": "$name"
+        },
+        "Show after,": {
+          "type": "boolean",
+          "default": true
+        },
+        "State": {
+          "type": "variant",
+          "options": [
+            "Enabled",
+            "Disabled",
+            "Loading"
+          ],
+          "default": "Enabled"
+        }
+      }
+    },
+    {
+      "name": "CO Personalisation / v1.0 Subject",
+      "page": "CO Personalisation",
+      "status": "stable",
+      "type": "set",
+      "nodeId": "8132:8825",
+      "instances": 14,
+      "properties": {
+        "Name": {
+          "type": "text",
+          "default": "$name"
+        },
+        "Show Message": {
+          "type": "boolean",
+          "default": false
+        },
+        "State": {
+          "type": "variant",
+          "options": [
+            "Enabled",
+            "Disabled",
+            "Loading"
+          ],
+          "default": "Enabled"
+        }
+      }
+    },
+    {
+      "name": "_ArrowDown",
+      "page": "CO Personalisation",
+      "status": "internal",
+      "type": "set",
+      "nodeId": "7567:4384",
+      "instances": 8,
+      "properties": {
+        "State": {
+          "type": "variant",
+          "options": [
+            "Enabled",
+            "Disabled"
+          ],
+          "default": "Enabled"
+        }
+      }
+    },
+    {
+      "name": "_ArrowUp",
+      "page": "CO Personalisation",
+      "status": "internal",
+      "type": "set",
+      "nodeId": "7567:4373",
+      "instances": 8,
+      "properties": {
+        "State": {
+          "type": "variant",
+          "options": [
+            "Enabled",
+            "Disabled"
+          ],
+          "default": "Enabled"
+        }
+      }
+    },
+    {
+      "name": "_PersonalityMessage",
+      "page": "CO Personalisation",
+      "status": "internal",
+      "type": "set",
+      "nodeId": "7567:4336",
+      "instances": 13,
+      "properties": {
+        "Message": {
+          "type": "text",
+          "default": "$message"
+        },
+        "State": {
+          "type": "variant",
+          "options": [
+            "Error",
+            "Warning",
+            "Success",
+            "Info"
+          ],
+          "default": "Error"
+        }
+      }
+    },
+    {
+      "name": "CO Rating / v3.0",
+      "page": "CO Rating",
+      "status": "stable",
+      "type": "set",
+      "nodeId": "5357:20472",
+      "instances": 7,
+      "properties": {
+        "Stars": {
+          "type": "variant",
+          "options": [
+            "0 / initial",
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "0 / loading"
+          ],
+          "default": "0 / initial"
+        }
+      }
+    },
+    {
+      "name": "_RatingStar",
+      "page": "CO Rating",
+      "status": "internal",
+      "type": "set",
+      "nodeId": "5442:13959",
+      "instances": 0,
+      "properties": {
+        "State": {
+          "type": "variant",
+          "options": [
+            "Enabled",
+            "Hover",
+            "Focus",
+            "Checked",
+            "Empty",
+            "Loading"
+          ],
+          "default": "Enabled"
+        }
+      }
+    },
+    {
+      "name": "CO Segmented Control v3.2",
+      "page": "CO Segmented Control",
+      "status": "stable",
+      "type": "set",
+      "nodeId": "26320:190634",
+      "instances": 33,
+      "properties": {
+        "Label 1": {
+          "type": "text",
+          "default": "$label"
+        },
+        "Label 2": {
+          "type": "text",
+          "default": "$label"
+        },
+        "Label 3": {
+          "type": "text",
+          "default": "$label"
+        },
+        "s": {
+          "type": "variant",
+          "options": [
+            "responsive"
+          ],
+          "default": "responsive"
+        },
+        "Items": {
+          "type": "variant",
+          "options": [
+            "2",
+            "3"
+          ],
+          "default": "2"
+        },
+        "Selected": {
+          "type": "variant",
+          "options": [
+            "Label 1",
+            "Label 2",
+            "Label 3"
+          ],
+          "default": "Label 1"
+        }
+      }
+    },
+    {
+      "name": "CO Snackbar / v2.0",
+      "page": "CO Snackbar",
+      "status": "stable",
+      "type": "set",
+      "nodeId": "26324:190064",
+      "instances": 12,
+      "properties": {
+        "Message": {
+          "type": "text",
+          "default": "$message"
+        },
+        "s": {
+          "type": "variant",
+          "options": [
+            "responsive-iOS",
+            "responsive-Android",
+            "responsive-IB"
+          ],
+          "default": "responsive-iOS"
+        }
+      }
+    },
+    {
+      "name": "CO Spinner / v2.0",
+      "page": "CO Spinner",
+      "status": "stable",
+      "type": "set",
+      "nodeId": "52668:217450",
+      "instances": 1,
+      "properties": {
+        "s": {
+          "type": "variant",
+          "options": [
+            "static"
+          ],
+          "default": "static"
+        },
+        "Variant": {
+          "type": "variant",
+          "options": [
+            "customKBshape",
+            "⚠︎iOS native",
+            "⚠︎Android native",
+            "⚠︎IB native"
+          ],
+          "default": "customKBshape"
+        }
+      },
+      "doNotUse": [
+        "Variant=⚠︎iOS native",
+        "Variant=⚠︎Android native",
+        "Variant=⚠︎IB native"
+      ]
+    },
+    {
+      "name": "CO Tab / v5.0",
+      "page": "CO Tab",
+      "status": "stable",
+      "type": "set",
+      "nodeId": "41708:211479",
+      "instances": 30,
+      "properties": {
+        "s": {
+          "type": "variant",
+          "options": [
+            "static"
+          ],
+          "default": "static"
+        },
+        "Variant": {
+          "type": "variant",
+          "options": [
+            "Static",
+            "Scrolls Left",
+            "Scrolls Right"
+          ],
+          "default": "Static"
+        },
+        "№ of items": {
+          "type": "variant",
+          "options": [
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10",
+            "more"
+          ],
+          "default": "2"
+        },
+        "Loaded": {
+          "type": "variant",
+          "options": [
+            "Yes",
+            "No"
+          ],
+          "default": "Yes"
+        }
+      }
+    },
+    {
+      "name": "_CO Tab tabs v5.0",
+      "page": "CO Tab",
+      "status": "internal",
+      "type": "set",
+      "nodeId": "41708:211329",
+      "instances": 24,
+      "properties": {
+        "Label": {
+          "type": "text",
+          "default": "$label"
+        },
+        "State": {
+          "type": "variant",
+          "options": [
+            "Enabled",
+            "Hover",
+            "Focus",
+            "Active",
+            "HoverActive",
+            "FocusActive",
+            "Loading"
+          ],
+          "default": "Enabled"
+        }
+      }
+    },
+    {
+      "name": "CO TableColumn / v1.0 IB",
+      "page": "CO Table",
+      "status": "stable",
+      "type": "set",
+      "nodeId": "144137:3095",
+      "instances": 772,
+      "properties": {
+        "Divider?": {
+          "type": "boolean",
+          "default": true
+        },
+        "Header?": {
+          "type": "boolean",
+          "default": true
+        },
+        "Content slot 1": {
+          "type": "slot",
+          "default": "-1:-1"
+        },
+        "Content slot 2": {
+          "type": "slot",
+          "default": "-1:-1"
+        },
+        "Content slot 3": {
+          "type": "slot",
+          "default": "-1:-1"
+        },
+        "Content slot 4": {
+          "type": "slot",
+          "default": "-1:-1"
+        },
+        "Content slot 5": {
+          "type": "slot",
+          "default": "-1:-1"
+        },
+        "Content slot 6": {
+          "type": "slot",
+          "default": "-1:-1"
+        },
+        "Content slot 7": {
+          "type": "slot",
+          "default": "-1:-1"
+        },
+        "Content slot 8": {
+          "type": "slot",
+          "default": "-1:-1"
+        },
+        "Content slot 9": {
+          "type": "slot",
+          "default": "-1:-1"
+        },
+        "Content slot 10": {
+          "type": "slot",
+          "default": "-1:-1"
+        },
+        "Content slot 11": {
+          "type": "slot",
+          "default": "-1:-1"
+        },
+        "Content slot 12": {
+          "type": "slot",
+          "default": "-1:-1"
+        },
+        "Content slot 13": {
+          "type": "slot",
+          "default": "-1:-1"
+        },
+        "Type": {
+          "type": "variant",
+          "options": [
+            "Text Highlighted",
+            "Text Regular",
+            "Balance",
+            "Size number",
+            "Checkbox",
+            "Avatar",
+            "Icon",
+            "Link",
+            "Tag",
+            "Button",
+            "Status",
+            "Caret",
+            "Loading"
+          ],
+          "default": "Checkbox"
+        }
+      }
+    },
+    {
+      "name": "Co TableCell",
+      "page": "CO Table",
+      "status": "stable",
+      "type": "set",
+      "nodeId": "144137:3031",
+      "instances": 27,
+      "properties": {
+        "✏️ Text": {
+          "type": "text",
+          "default": "$Text"
+        },
+        "✏️ Caption": {
+          "type": "text",
+          "default": "$Caption"
+        },
+        "Caption?": {
+          "type": "boolean",
+          "default": false
+        },
+        "Avatar?": {
+          "type": "boolean",
+          "default": false
+        },
+        "✏️ Value": {
+          "type": "text",
+          "default": "$Value"
+        },
+        "Tag3?": {
+          "type": "boolean",
+          "default": false
+        },
+        "Tag2?": {
+          "type": "boolean",
+          "default": false
+        },
+        "Tag1?": {
+          "type": "boolean",
+          "default": true
+        },
+        "Checkbox": {
+          "type": "instance_swap",
+          "default": "59333:50384"
+        },
+        "Icon": {
+          "type": "instance_swap",
+          "default": "55748:73200"
+        },
+        "Button1?": {
+          "type": "boolean",
+          "default": true
+        },
+        "Button2?": {
+          "type": "boolean",
+          "default": false
+        },
+        "Button3?": {
+          "type": "boolean",
+          "default": false
+        },
+        "Type": {
+          "type": "variant",
+          "options": [
+            "Text + Caption Highlighted",
+            "Text + Caption Regular",
+            "Text + Caption Multiline",
+            "Balance positive",
+            "Balance negative",
+            "Size number",
+            "Link",
+            "Tag",
+            "Status",
+            "Checkbox",
+            "Avatar",
+            "Icon",
+            "Caret",
+            "Button",
+            "Placeholder",
+            "Loading"
+          ],
+          "default": "Text + Caption Regular"
+        }
+      }
+    },
+    {
+      "name": "_Button",
+      "page": "CO Table",
+      "status": "internal",
+      "type": "set",
+      "nodeId": "144137:3360",
+      "instances": 4,
+      "properties": {
+        "Icon": {
+          "type": "instance_swap",
+          "default": "55748:73200"
+        },
+        "State": {
+          "type": "variant",
+          "options": [
+            "Enabled",
+            "Hover",
+            "Focus"
+          ],
+          "default": "Enabled"
+        }
+      }
+    },
+    {
+      "name": "_Caret",
+      "page": "CO Table",
+      "status": "internal",
+      "type": "set",
+      "nodeId": "336:19750",
+      "instances": 0,
+      "properties": {
+        "Icon": {
+          "type": "instance_swap",
+          "default": "6772:74186"
+        },
+        "State": {
+          "type": "variant",
+          "options": [
+            "Enabled",
+            "Hover",
+            "Focus"
+          ],
+          "default": "Enabled"
+        }
+      }
+    },
+    {
+      "name": "_Cursor / Default",
+      "page": "CO Table",
+      "status": "internal",
+      "type": "component",
+      "nodeId": "336:21751",
+      "instances": 1
+    },
+    {
+      "name": "_Cursor / Resize Col",
+      "page": "CO Table",
+      "status": "internal",
+      "type": "component",
+      "nodeId": "336:21744",
+      "instances": 3
+    },
+    {
+      "name": "_HeaderCell",
+      "page": "CO Table",
+      "status": "internal",
+      "type": "set",
+      "nodeId": "144137:3071",
+      "instances": 31,
+      "properties": {
+        "Checkbox": {
+          "type": "instance_swap",
+          "default": "59333:50384"
+        },
+        "✏️ Label": {
+          "type": "text",
+          "default": "$HeaderLabel"
+        },
+        "Sort?": {
+          "type": "boolean",
+          "default": false
+        },
+        "Sort": {
+          "type": "instance_swap",
+          "default": "59332:3240"
+        },
+        "Type": {
+          "type": "variant",
+          "options": [
+            "Left Aligned",
+            "Right Aligned",
+            "Checkbox",
+            "Placeholder"
+          ],
+          "default": "Left Aligned"
+        }
+      }
+    },
+    {
+      "name": "_Status",
+      "page": "CO Table",
+      "status": "internal",
+      "type": "set",
+      "nodeId": "144137:3367",
+      "instances": 6,
+      "properties": {
+        "Icon": {
+          "type": "instance_swap",
+          "default": "55748:73200"
+        },
+        "Icon?": {
+          "type": "boolean",
+          "default": true
+        },
+        "✏️ Label": {
+          "type": "text",
+          "default": "$Status"
+        },
+        "Label?": {
+          "type": "boolean",
+          "default": true
+        },
+        "Type": {
+          "type": "variant",
+          "options": [
+            "Positive",
+            "Negative",
+            "Informative",
+            "Attention",
+            "Neutral"
+          ],
+          "default": "Positive"
+        }
+      }
+    },
+    {
+      "name": "CO Tag / v3.0",
+      "page": "CO Tag",
+      "status": "stable",
+      "type": "set",
+      "nodeId": "73918:245457",
+      "instances": 80,
+      "properties": {
+        "⚠︎IB Show Closable Icon": {
+          "type": "boolean",
+          "default": false
+        },
+        "Icon": {
+          "type": "instance_swap",
+          "default": "53648:7320"
+        },
+        "Value": {
+          "type": "text",
+          "default": "$value (cu)"
+        },
+        "Label": {
+          "type": "text",
+          "default": "$label"
+        },
+        "Show Icon": {
+          "type": "boolean",
+          "default": true
+        },
+        "Show Flag": {
+          "type": "boolean",
+          "default": true
+        },
+        "Show $label": {
+          "type": "boolean",
+          "default": false
+        },
+        "s": {
+          "type": "variant",
+          "options": [
+            "static"
+          ],
+          "default": "static"
+        },
+        "Icon/Flag": {
+          "type": "variant",
+          "options": [
+            "Icon",
+            "Icon+Outline",
+            "Flag+Outline"
+          ],
+          "default": "Icon"
+        },
+        "State": {
+          "type": "variant",
+          "options": [
+            "Enabled",
+            "Hover",
+            "Focus",
+            "Active",
+            "HoverActive",
+            "FocusActive",
+            "Loading"
+          ],
+          "default": "Enabled"
+        }
+      },
+      "doNotUse": [
+        "⚠︎IB Show Closable Icon"
+      ]
+    },
+    {
+      "name": "CO Toolbar / v3.0 Floating ",
+      "page": "CO Toolbar",
+      "status": "stable",
+      "type": "set",
+      "nodeId": "13707:88287",
+      "instances": 16,
+      "properties": {
+        "$label": {
+          "type": "text",
+          "default": "$label"
+        },
+        "$label (1)": {
+          "type": "text",
+          "default": "$label"
+        },
+        "$label (2)": {
+          "type": "text",
+          "default": "$label"
+        },
+        "ES Icon": {
+          "type": "instance_swap",
+          "default": "55748:73200"
+        },
+        "ES Icon (1)": {
+          "type": "instance_swap",
+          "default": "55748:73200"
+        },
+        "ES Icon (2)": {
+          "type": "instance_swap",
+          "default": "55748:73200"
+        },
+        "$label (3)": {
+          "type": "text",
+          "default": "$label"
+        },
+        "ES Icon (3)": {
+          "type": "instance_swap",
+          "default": "55748:73200"
+        },
+        "s": {
+          "type": "variant",
+          "options": [
+            "static-iOS-Android + static-sm-IB"
+          ],
+          "default": "static-iOS-Android + static-sm-IB"
+        },
+        "items": {
+          "type": "variant",
+          "options": [
+            "1",
+            "2",
+            "3",
+            "4"
+          ],
+          "default": "3"
+        }
+      }
+    },
+    {
+      "name": "CO Toolbar / v3.0 Static",
+      "page": "CO Toolbar",
+      "status": "stable",
+      "type": "set",
+      "nodeId": "22235:154800",
+      "instances": 3,
+      "properties": {
+        "$label (2)": {
+          "type": "text",
+          "default": "$label"
+        },
+        "$label (1)": {
+          "type": "text",
+          "default": "$label"
+        },
+        "$label": {
+          "type": "text",
+          "default": "$label"
+        },
+        "ES Icon": {
+          "type": "instance_swap",
+          "default": "55748:73200"
+        },
+        "ES Icon (1)": {
+          "type": "instance_swap",
+          "default": "55748:73200"
+        },
+        "ES Icon (2)": {
+          "type": "instance_swap",
+          "default": "55748:73200"
+        },
+        "$label (3)": {
+          "type": "text",
+          "default": "$label"
+        },
+        "ES Icon (3)": {
+          "type": "instance_swap",
+          "default": "55748:73200"
+        },
+        "s": {
+          "type": "variant",
+          "options": [
+            "responsive-md-lg-IB"
+          ],
+          "default": "responsive-md-lg-IB"
+        },
+        "items": {
+          "type": "variant",
+          "options": [
+            "4",
+            "3",
+            "2",
+            "1"
+          ],
+          "default": "3"
+        }
+      }
+    },
+    {
+      "name": "CO Tooltip / v1.0",
+      "page": "CO Tooltip",
+      "status": "stable",
+      "type": "set",
+      "nodeId": "18737:18553",
+      "instances": 87,
+      "properties": {
+        "Header?": {
+          "type": "boolean",
+          "default": true
+        },
+        "✏️ Header": {
+          "type": "text",
+          "default": "$header"
+        },
+        "✏️ Value": {
+          "type": "text",
+          "default": "$value"
+        },
+        "Position": {
+          "type": "variant",
+          "options": [
+            "righ",
+            "left",
+            "top",
+            "bottom"
+          ],
+          "default": "righ"
+        }
+      }
+    },
+    {
+      "name": "CO Input / v7.0 Basic",
+      "page": "Inputs",
+      "status": "stable",
+      "type": "set",
+      "nodeId": "52667:217531",
+      "instances": 33,
+      "properties": {
+        "⚠️IB optional": {
+          "type": "boolean",
+          "default": false
+        },
+        "Show unit": {
+          "type": "boolean",
+          "default": true
+        },
+        "Show message": {
+          "type": "boolean",
+          "default": true
+        },
+        "Unit": {
+          "type": "text",
+          "default": "$unit"
+        },
+        "Placeholder": {
+          "type": "text",
+          "default": "$placeholder"
+        },
+        "Message": {
+          "type": "text",
+          "default": "$message"
+        },
+        "Value": {
+          "type": "text",
+          "default": "$value"
+        },
+        "Label": {
+          "type": "text",
+          "default": "$label"
+        },
+        "State": {
+          "type": "variant",
+          "options": [
+            "Enabled",
+            "EnabledPlaceholder",
+            "Hover",
+            "HoverPlaceholder",
+            "Focus",
+            "FocusPlaceholder",
+            "Error",
+            "ErrorPlaceholder",
+            "ErrorFocus",
+            "ErrorFocusPlaceholder",
+            "Loading"
+          ],
+          "default": "Enabled"
+        }
+      },
+      "doNotUse": [
+        "⚠️IB optional"
+      ]
+    },
+    {
+      "name": "CO Input / v7.0 Mega",
+      "page": "Inputs",
+      "status": "stable",
+      "type": "set",
+      "nodeId": "52708:217193",
+      "instances": 0,
+      "properties": {
+        "⚠️IB optional": {
+          "type": "boolean",
+          "default": false
+        },
+        "Show unit": {
+          "type": "boolean",
+          "default": true
+        },
+        "Show message": {
+          "type": "boolean",
+          "default": true
+        },
+        "Unit": {
+          "type": "text",
+          "default": "$unit"
+        },
+        "Placeholder": {
+          "type": "text",
+          "default": "$placeholder"
+        },
+        "Message": {
+          "type": "text",
+          "default": "$message"
+        },
+        "Value": {
+          "type": "text",
+          "default": "$value"
+        },
+        "Label": {
+          "type": "text",
+          "default": "$label"
+        },
+        "State": {
+          "type": "variant",
+          "options": [
+            "Enabled",
+            "EnabledPlaceholder",
+            "Hover",
+            "HoverPlaceholder",
+            "Focus",
+            "FocusPlaceholder",
+            "Error",
+            "ErrorPlaceholder",
+            "ErrorFocus",
+            "ErrorFocusPlaceholder",
+            "Loading"
+          ],
+          "default": "Enabled"
+        }
+      },
+      "doNotUse": [
+        "⚠️IB optional"
+      ]
+    },
+    {
+      "name": "CO Input Date / v7.0",
+      "page": "Inputs",
+      "status": "stable",
+      "type": "set",
+      "nodeId": "62041:226413",
+      "instances": 23,
+      "properties": {
+        "⚠️IB optional": {
+          "type": "boolean",
+          "default": false
+        },
+        "Value": {
+          "type": "text",
+          "default": "$value"
+        },
+        "Placeholder": {
+          "type": "text",
+          "default": "$placeholder"
+        },
+        "Show Erase Icon": {
+          "type": "boolean",
+          "default": true
+        },
+        "Label": {
+          "type": "text",
+          "default": "$label"
+        },
+        "Message": {
+          "type": "text",
+          "default": "$message"
+        },
+        "Show Datepicker": {
+          "type": "boolean",
+          "default": false
+        },
+        "Show Message": {
+          "type": "boolean",
+          "default": false
+        },
+        "State": {
+          "type": "variant",
+          "options": [
+            "Enabled",
+            "EnabledPlaceholder",
+            "Hover",
+            "HoverPlaceholder",
+            "Focus",
+            "FocusPlaceholder",
+            "Error",
+            "ErrorPlaceholder",
+            "ErrorFocus",
+            "ErrorFocusPlaceholder",
+            "Loading"
+          ],
+          "default": "Enabled"
+        }
+      },
+      "doNotUse": [
+        "⚠️IB optional"
+      ]
+    },
+    {
+      "name": "CO Input Digits / v1.0",
+      "page": "Inputs",
+      "status": "stable",
+      "type": "set",
+      "nodeId": "14843:31690",
+      "instances": 0,
+      "properties": {
+        "⚠️IB optional": {
+          "type": "boolean",
+          "default": false
+        },
+        "Label": {
+          "type": "text",
+          "default": "$label"
+        },
+        "Value": {
+          "type": "text",
+          "default": "$value"
+        },
+        "Placeholder": {
+          "type": "text",
+          "default": "$placeholder"
+        },
+        "Message": {
+          "type": "text",
+          "default": "$message"
+        },
+        "Show Listbox (Web or iPad only)": {
+          "type": "boolean",
+          "default": false
+        },
+        "Show message": {
+          "type": "boolean",
+          "default": false
+        },
+        "State": {
+          "type": "variant",
+          "options": [
+            "Enabled",
+            "EnabledPlaceholder",
+            "Hover",
+            "HoverPlaceholder",
+            "Focus",
+            "FocusPlaceholder",
+            "Error",
+            "ErrorPlaceholder",
+            "ErrorFocus",
+            "ErrorFocusPlaceholder",
+            "Loading"
+          ],
+          "default": "Enabled"
+        }
+      },
+      "doNotUse": [
+        "⚠️IB optional"
+      ]
+    },
+    {
+      "name": "CO Input Dropdown / v1.0",
+      "page": "Inputs",
+      "status": "stable",
+      "type": "set",
+      "nodeId": "1737:6157",
+      "instances": 40,
+      "properties": {
+        "✏️Value": {
+          "type": "text",
+          "default": "$value"
+        },
+        "Expand Icon?": {
+          "type": "boolean",
+          "default": true
+        },
+        "Listbox?": {
+          "type": "boolean",
+          "default": true
+        },
+        "Left content?": {
+          "type": "boolean",
+          "default": false
+        },
+        "Badge?": {
+          "type": "boolean",
+          "default": false
+        },
+        "State": {
+          "type": "variant",
+          "options": [
+            "Enabled",
+            "Hover",
+            "Focus"
+          ],
+          "default": "Enabled"
+        }
+      }
+    },
+    {
+      "name": "CO Input Search Bar / v7.0",
+      "page": "Inputs",
+      "status": "stable",
+      "type": "set",
+      "nodeId": "59715:229921",
+      "instances": 25,
+      "properties": {
+        "Show Listbox (Web or iPad only)": {
+          "type": "boolean",
+          "default": false
+        },
+        "Placeholder": {
+          "type": "text",
+          "default": "$placeholder"
+        },
+        "Value": {
+          "type": "text",
+          "default": "$value"
+        },
+        "Action Label": {
+          "type": "text",
+          "default": "Zrušit"
+        },
+        "s": {
+          "type": "variant",
+          "options": [
+            "responsive-iOS",
+            "responsive-Android",
+            "responsive"
+          ],
+          "default": "responsive-iOS"
+        },
+        "State": {
+          "type": "variant",
+          "options": [
+            "Enabled",
+            "EnabledPlaceholder",
+            "Hover",
+            "HoverPlaceholder",
+            "Focus",
+            "FocusPlaceholder",
+            "Error",
+            "ErrorPlaceholder",
+            "ErrorFocus",
+            "ErrorFocusPlaceholder",
+            "Loading"
+          ],
+          "default": "Enabled"
+        },
+        "Has button": {
+          "type": "variant",
+          "options": [
+            "Yes",
+            "No"
+          ],
+          "default": "Yes"
+        }
+      }
+    },
+    {
+      "name": "CO Input Select / v7.0",
+      "page": "Inputs",
+      "status": "stable",
+      "type": "set",
+      "nodeId": "55322:235902",
+      "instances": 44,
+      "properties": {
+        "⚠️IB optional": {
+          "type": "boolean",
+          "default": false
+        },
+        "Label": {
+          "type": "text",
+          "default": "$label"
+        },
+        "Value": {
+          "type": "text",
+          "default": "$value"
+        },
+        "Placeholder": {
+          "type": "text",
+          "default": "$placeholder"
+        },
+        "Message": {
+          "type": "text",
+          "default": "$message"
+        },
+        "Show Listbox (Web or iPad only)": {
+          "type": "boolean",
+          "default": false
+        },
+        "Show message": {
+          "type": "boolean",
+          "default": false
+        },
+        "State": {
+          "type": "variant",
+          "options": [
+            "Enabled",
+            "EnabledPlaceholder",
+            "Hover",
+            "HoverPlaceholder",
+            "Focus",
+            "FocusPlaceholder",
+            "Error",
+            "ErrorPlaceholder",
+            "ErrorFocus",
+            "ErrorFocusPlaceholder",
+            "Loading"
+          ],
+          "default": "Enabled"
+        }
+      },
+      "doNotUse": [
+        "⚠️IB optional"
+      ]
+    },
+    {
+      "name": "CO Input SuperField / v7.1",
+      "page": "Inputs",
+      "status": "stable",
+      "type": "set",
+      "nodeId": "26306:199092",
+      "instances": 73,
+      "properties": {
+        "⚠️IB optional": {
+          "type": "boolean",
+          "default": false
+        },
+        "2nd Placeholder": {
+          "type": "text",
+          "default": "$placeholder2"
+        },
+        "Label": {
+          "type": "text",
+          "default": "$label"
+        },
+        "Value": {
+          "type": "text",
+          "default": "$value"
+        },
+        "Show Placeholder": {
+          "type": "boolean",
+          "default": true
+        },
+        "Show Value": {
+          "type": "boolean",
+          "default": true
+        },
+        "Show Message": {
+          "type": "boolean",
+          "default": true
+        },
+        "Message": {
+          "type": "text",
+          "default": "$message"
+        },
+        "2nd Label": {
+          "type": "text",
+          "default": "$secondLabel"
+        },
+        "Show 2nd Label": {
+          "type": "boolean",
+          "default": true
+        },
+        "2nd Value": {
+          "type": "text",
+          "default": "$value2"
+        },
+        "Placeholder": {
+          "type": "text",
+          "default": "$placeholder"
+        },
+        "Caption": {
+          "type": "text",
+          "default": "$caption"
+        },
+        "Show Listbox (Web or iPad only)": {
+          "type": "boolean",
+          "default": false
+        },
+        "State": {
+          "type": "variant",
+          "options": [
+            "Enabled",
+            "EnabledFound",
+            "EnabledPlaceholder",
+            "Hover",
+            "HoverFound",
+            "HoverPlaceholder",
+            "Focus",
+            "FocusPlaceholder",
+            "Error",
+            "ErrorPlaceholder",
+            "ErrorFocus",
+            "ErrorFocusPlaceholder",
+            "Loading"
+          ],
+          "default": "Enabled"
+        }
+      },
+      "doNotUse": [
+        "⚠️IB optional"
+      ]
+    },
+    {
+      "name": "CO Input TextArea / v7.0",
+      "page": "Inputs",
+      "status": "stable",
+      "type": "set",
+      "nodeId": "62524:314675",
+      "instances": 0,
+      "properties": {
+        "⚠️IB optional": {
+          "type": "boolean",
+          "default": false
+        },
+        "Value": {
+          "type": "text",
+          "default": "$value$value$value$value$value$value$value$value"
+        },
+        "Label": {
+          "type": "text",
+          "default": "$label"
+        },
+        "Message": {
+          "type": "text",
+          "default": "$message"
+        },
+        "Placeholder": {
+          "type": "text",
+          "default": "$placeholder$placeholder$placeholder$placeholder$placeholder$placeholder"
+        },
+        "Counter": {
+          "type": "text",
+          "default": "$counter/$counterMax"
+        },
+        "Show message": {
+          "type": "boolean",
+          "default": true
+        },
+        "Show drag-to-resize": {
+          "type": "boolean",
+          "default": false
+        },
+        "State": {
+          "type": "variant",
+          "options": [
+            "Enabled",
+            "EnabledPlaceholder",
+            "Hover",
+            "HoverPlaceholder",
+            "Focus",
+            "FocusPlaceholder",
+            "Error",
+            "ErrorPlaceholder",
+            "ErrorFocus",
+            "ErrorFocusPlaceholder",
+            "Loading"
+          ],
+          "default": "Enabled"
+        }
+      },
+      "doNotUse": [
+        "⚠️IB optional"
+      ]
+    },
+    {
+      "name": "_ListBox",
+      "page": "Inputs",
+      "status": "internal",
+      "type": "component",
+      "nodeId": "1737:6147",
+      "instances": 7,
+      "properties": {
+        "Show Scrollbar": {
+          "type": "boolean",
+          "default": true
+        },
+        "Item3?": {
+          "type": "boolean",
+          "default": true
+        },
+        "Item4?": {
+          "type": "boolean",
+          "default": true
+        },
+        "Item5?": {
+          "type": "boolean",
+          "default": true
+        },
+        "Item6?": {
+          "type": "boolean",
+          "default": true
+        },
+        "Item7?": {
+          "type": "boolean",
+          "default": true
+        },
+        "Item2?": {
+          "type": "boolean",
+          "default": true
+        },
+        "Item1?": {
+          "type": "boolean",
+          "default": true
+        }
+      }
+    },
+    {
+      "name": "_ListBoxItem",
+      "page": "Inputs",
+      "status": "internal",
+      "type": "set",
+      "nodeId": "1737:6128",
+      "instances": 38,
+      "properties": {
+        "Value": {
+          "type": "text",
+          "default": "$value"
+        },
+        "Badge?": {
+          "type": "boolean",
+          "default": false
+        },
+        "Left content?": {
+          "type": "boolean",
+          "default": false
+        },
+        "State": {
+          "type": "variant",
+          "options": [
+            "Enabled",
+            "Hover",
+            "Focus"
+          ],
+          "default": "Enabled"
+        }
+      }
+    },
+    {
+      "name": ".balanceValue",
+      "page": "Items",
+      "status": "internal",
+      "type": "set",
+      "nodeId": "20693:4745",
+      "instances": 0,
+      "properties": {
+        "Value": {
+          "type": "text",
+          "default": "$value"
+        },
+        "Type": {
+          "type": "variant",
+          "options": [
+            "Minus",
+            "Zero",
+            "Plus"
+          ],
+          "default": "Zero"
+        }
+      }
+    },
+    {
+      "name": ".message",
+      "page": "Items",
+      "status": "internal",
+      "type": "set",
+      "nodeId": "16743:23432",
+      "instances": 23,
+      "properties": {
+        "✏️ Message": {
+          "type": "text",
+          "default": "$message"
+        },
+        "Type": {
+          "type": "variant",
+          "options": [
+            "Info",
+            "Success",
+            "Warning",
+            "Error"
+          ],
+          "default": "Info"
+        }
+      }
+    },
+    {
+      "name": ".secondaryValue",
+      "page": "Items",
+      "status": "internal",
+      "type": "set",
+      "nodeId": "143261:3485",
+      "instances": 6,
+      "properties": {
+        "SecondaryValue": {
+          "type": "text",
+          "default": "$secondaryValue"
+        },
+        "Type": {
+          "type": "variant",
+          "options": [
+            "Zero",
+            "Plus",
+            "Minus"
+          ],
+          "default": "Zero"
+        }
+      }
+    },
+    {
+      "name": "CO Item Account Display / v1.0 IB",
+      "page": "Items",
+      "status": "stable",
+      "type": "set",
+      "nodeId": "28503:78818",
+      "instances": 55,
+      "properties": {
+        "✏️ Type of Balance": {
+          "type": "text",
+          "default": "$caption"
+        },
+        "Type of Balance?": {
+          "type": "boolean",
+          "default": true
+        },
+        "✏️ Number": {
+          "type": "text",
+          "default": "$num"
+        },
+        "✏️ Name": {
+          "type": "text",
+          "default": "$label"
+        },
+        "✏️ Balance after": {
+          "type": "text",
+          "default": "$value"
+        },
+        "✏️ Balance before": {
+          "type": "text",
+          "default": "$value"
+        },
+        "✏️ Balance currency": {
+          "type": "text",
+          "default": "(currency)"
+        },
+        "✏️ Company": {
+          "type": "text",
+          "default": "$owner"
+        },
+        "Message?": {
+          "type": "boolean",
+          "default": false
+        },
+        "Company?": {
+          "type": "boolean",
+          "default": true
+        },
+        "Select button?": {
+          "type": "boolean",
+          "default": true
+        },
+        "State": {
+          "type": "variant",
+          "options": [
+            "Enabled",
+            "Loading"
+          ],
+          "default": "Enabled"
+        },
+        "Size": {
+          "type": "variant",
+          "options": [
+            "Narrow",
+            "Wide"
+          ],
+          "default": "Wide"
+        }
+      }
+    },
+    {
+      "name": "CO Item Autocomplete / ⚠︎v5.0",
+      "page": "Items",
+      "status": "deprecated",
+      "type": "set",
+      "nodeId": "43581:215920",
+      "instances": 1,
+      "properties": {
+        "Label": {
+          "type": "text",
+          "default": "$label"
+        },
+        "Caption": {
+          "type": "text",
+          "default": "$caption"
+        },
+        "Show Caption": {
+          "type": "boolean",
+          "default": true
+        },
+        "State": {
+          "type": "variant",
+          "options": [
+            "Enabled",
+            "Focus",
+            "Loading"
+          ],
+          "default": "Enabled"
+        }
+      }
+    },
+    {
+      "name": "CO Item Chat / v5.0",
+      "page": "Items",
+      "status": "stable",
+      "type": "set",
+      "nodeId": "125955:170276",
+      "instances": 39,
+      "properties": {
+        "Label": {
+          "type": "text",
+          "default": "$label"
+        },
+        "Variant": {
+          "type": "variant",
+          "options": [
+            "Bank",
+            "Client",
+            "Loader"
+          ],
+          "default": "Bank"
+        }
+      }
+    },
+    {
+      "name": "CO Item CheckBox / v5.1",
+      "page": "Items",
+      "status": "stable",
+      "type": "set",
+      "nodeId": "44974:250117",
+      "instances": 144,
+      "properties": {
+        "Label": {
+          "type": "text",
+          "default": "$label"
+        },
+        "Caption": {
+          "type": "text",
+          "default": "$caption"
+        },
+        "Caption?": {
+          "type": "boolean",
+          "default": true
+        },
+        "Action icon?": {
+          "type": "boolean",
+          "default": false
+        },
+        "Action icon": {
+          "type": "instance_swap",
+          "default": "55748:73200"
+        },
+        "Message?": {
+          "type": "boolean",
+          "default": false
+        },
+        "s": {
+          "type": "variant",
+          "options": [
+            "responsive"
+          ],
+          "default": "responsive"
+        },
+        "Variant": {
+          "type": "variant",
+          "options": [
+            "Normal",
+            "TriState",
+            "Consent"
+          ],
+          "default": "Normal"
+        },
+        "State": {
+          "type": "variant",
+          "options": [
+            "False",
+            "Indeterminate",
+            "True",
+            "Loading"
+          ],
+          "default": "False"
+        }
+      }
+    },
+    {
+      "name": "CO Item Display / v5.3",
+      "page": "Items",
+      "status": "stable",
+      "type": "set",
+      "nodeId": "133908:3940",
+      "instances": 161,
+      "properties": {
+        "Caption": {
+          "type": "text",
+          "default": "$caption"
+        },
+        "Show Caption": {
+          "type": "boolean",
+          "default": true
+        },
+        "Label": {
+          "type": "text",
+          "default": "$label"
+        },
+        "Value": {
+          "type": "text",
+          "default": "$value"
+        },
+        "Show Left Icon": {
+          "type": "boolean",
+          "default": true
+        },
+        "Left Icon": {
+          "type": "instance_swap",
+          "default": "55748:73200"
+        },
+        "Action Icon": {
+          "type": "instance_swap",
+          "default": "55748:73200"
+        },
+        "Show Value": {
+          "type": "boolean",
+          "default": true
+        },
+        "Show Action Icon": {
+          "type": "boolean",
+          "default": true
+        },
+        "Show Message": {
+          "type": "boolean",
+          "default": false
+        },
+        "Show Secondary Value": {
+          "type": "boolean",
+          "default": false
+        },
+        "State": {
+          "type": "variant",
+          "options": [
+            "Enabled",
+            "Loading",
+            "LoadingPart"
+          ],
+          "default": "Enabled"
+        },
+        "Variant": {
+          "type": "variant",
+          "options": [
+            "ValueHorizontal",
+            "ValueVertical"
+          ],
+          "default": "ValueHorizontal"
+        },
+        "Action": {
+          "type": "variant",
+          "options": [
+            "No",
+            "Icon",
+            "Button"
+          ],
+          "default": "Icon"
+        },
+        "Left Icon size": {
+          "type": "variant",
+          "options": [
+            "32: Avatar or ES Icon Flag",
+            "24: ES Icon"
+          ],
+          "default": "24: ES Icon"
+        },
+        "BalanceValue": {
+          "type": "variant",
+          "options": [
+            "False",
+            "True"
+          ],
+          "default": "False"
+        }
+      }
+    },
+    {
+      "name": "CO Item Navigation / v5.2",
+      "page": "Items",
+      "status": "stable",
+      "type": "set",
+      "nodeId": "133921:4696",
+      "instances": 151,
+      "properties": {
+        "Label": {
+          "type": "text",
+          "default": "$label"
+        },
+        "Caption": {
+          "type": "text",
+          "default": "$caption"
+        },
+        "Show Left Icon": {
+          "type": "boolean",
+          "default": true
+        },
+        "Show Message": {
+          "type": "boolean",
+          "default": true
+        },
+        "Show Caption": {
+          "type": "boolean",
+          "default": true
+        },
+        "Left Icon": {
+          "type": "instance_swap",
+          "default": "55748:73200"
+        },
+        "State": {
+          "type": "variant",
+          "options": [
+            "Enabled",
+            "Loading"
+          ],
+          "default": "Enabled"
+        },
+        "Destructive": {
+          "type": "variant",
+          "options": [
+            "Off",
+            "On"
+          ],
+          "default": "Off"
+        },
+        "Left Icon size": {
+          "type": "variant",
+          "options": [
+            "24: ES Icon",
+            "32: Avatar or ES Icon Flag"
+          ],
+          "default": "24: ES Icon"
+        }
+      }
+    },
+    {
+      "name": "CO Item RadioButton / v5.0",
+      "page": "Items",
+      "status": "stable",
+      "type": "set",
+      "nodeId": "46567:217325",
+      "instances": 28,
+      "properties": {
+        "Label": {
+          "type": "text",
+          "default": "$label"
+        },
+        "Caption": {
+          "type": "text",
+          "default": "$caption"
+        },
+        "Show Caption": {
+          "type": "boolean",
+          "default": true
+        },
+        "s": {
+          "type": "variant",
+          "options": [
+            "responsive"
+          ],
+          "default": "responsive"
+        },
+        "State": {
+          "type": "variant",
+          "options": [
+            "On",
+            "Off",
+            "Loading"
+          ],
+          "default": "Off"
+        }
+      }
+    },
+    {
+      "name": "CO Item Switch / v4.1",
+      "page": "Items",
+      "status": "stable",
+      "type": "set",
+      "nodeId": "43500:214053",
+      "instances": 38,
+      "properties": {
+        "Label": {
+          "type": "text",
+          "default": "$itemLabel"
+        },
+        "Caption": {
+          "type": "text",
+          "default": "$caption"
+        },
+        "Show Caption": {
+          "type": "boolean",
+          "default": true
+        },
+        "Show Left Icon": {
+          "type": "boolean",
+          "default": false
+        },
+        "s": {
+          "type": "variant",
+          "options": [
+            "responsive-Android",
+            "responsive-iOS-IB",
+            "responsive"
+          ],
+          "default": "responsive-iOS-IB"
+        },
+        "State": {
+          "type": "variant",
+          "options": [
+            "On",
+            "Off",
+            "Loading"
+          ],
+          "default": "On"
+        }
+      }
+    },
+    {
+      "name": "CO Item Transaction / v5.2",
+      "page": "Items",
+      "status": "stable",
+      "type": "set",
+      "nodeId": "133927:5452",
+      "instances": 74,
+      "properties": {
+        "Caption?": {
+          "type": "boolean",
+          "default": true
+        },
+        "Tertiary Value?": {
+          "type": "boolean",
+          "default": true
+        },
+        "Tertiary Caption?": {
+          "type": "boolean",
+          "default": true
+        },
+        "Tertiary value?": {
+          "type": "boolean",
+          "default": true
+        },
+        "Tertiary caption?": {
+          "type": "boolean",
+          "default": true
+        },
+        "✏️ Tertiary Value": {
+          "type": "text",
+          "default": "$tertiaryValue"
+        },
+        "✏️ Tertiary Caption": {
+          "type": "text",
+          "default": "$tertiaryCaption"
+        },
+        "✏️ Secondary Value": {
+          "type": "text",
+          "default": "$secondaryValue"
+        },
+        "Secondary Value?": {
+          "type": "boolean",
+          "default": true
+        },
+        "✏️ Caption": {
+          "type": "text",
+          "default": "$caption"
+        },
+        "✏️ Label": {
+          "type": "text",
+          "default": "$label"
+        },
+        "✏️ Value": {
+          "type": "text",
+          "default": "$value"
+        },
+        "✏️ Message": {
+          "type": "text",
+          "default": "$message"
+        },
+        "Message?": {
+          "type": "boolean",
+          "default": false
+        },
+        "Variant (Situation)": {
+          "type": "variant",
+          "options": [
+            "Incoming",
+            "Outgoing",
+            "Error",
+            "Paused",
+            "Waiting",
+            "Done",
+            "Settlement",
+            "Inactive",
+            "General"
+          ],
+          "default": "Incoming"
+        },
+        "Columns": {
+          "type": "variant",
+          "options": [
+            "Two",
+            "Three"
+          ],
+          "default": "Two"
+        },
+        "State": {
+          "type": "variant",
+          "options": [
+            "Enabled",
+            "Loading"
+          ],
+          "default": "Enabled"
+        }
+      }
+    },
+    {
+      "name": "CO Item Transaction Select / v5.2",
+      "page": "Items",
+      "status": "stable",
+      "type": "set",
+      "nodeId": "9967:21818",
+      "instances": 143,
+      "properties": {
+        "Caption?": {
+          "type": "boolean",
+          "default": true
+        },
+        "Tertiary Value?": {
+          "type": "boolean",
+          "default": true
+        },
+        "Tertiary Caption?": {
+          "type": "boolean",
+          "default": true
+        },
+        "Tertiary value?": {
+          "type": "boolean",
+          "default": true
+        },
+        "Tertiary caption?": {
+          "type": "boolean",
+          "default": true
+        },
+        "✏️ Tertiary Value": {
+          "type": "text",
+          "default": "$tertiaryValue"
+        },
+        "✏️ Tertiary Caption": {
+          "type": "text",
+          "default": "$tertiaryCaption"
+        },
+        "✏️ Secondary Value": {
+          "type": "text",
+          "default": "$secondaryValue"
+        },
+        "Secondary Value?": {
+          "type": "boolean",
+          "default": true
+        },
+        "✏️ Caption": {
+          "type": "text",
+          "default": "$caption"
+        },
+        "✏️ Label": {
+          "type": "text",
+          "default": "$label"
+        },
+        "✏️ Value": {
+          "type": "text",
+          "default": "$value"
+        },
+        "Message?": {
+          "type": "boolean",
+          "default": false
+        },
+        "Checkbox": {
+          "type": "instance_swap",
+          "default": "59333:50384"
+        },
+        "State": {
+          "type": "variant",
+          "options": [
+            "Enabled",
+            "Loading"
+          ],
+          "default": "Enabled"
+        },
+        "Columns": {
+          "type": "variant",
+          "options": [
+            "Two",
+            "Three"
+          ],
+          "default": "Two"
+        }
+      }
+    },
+    {
+      "name": "_Cursor / Default",
+      "page": "Items",
+      "status": "internal",
+      "type": "component",
+      "nodeId": "7406:189266",
+      "instances": 0
+    },
+    {
+      "name": "_Message",
+      "page": "Items",
+      "status": "internal",
+      "type": "set",
+      "nodeId": "28503:78801",
+      "instances": 4,
+      "properties": {
+        "✏️ Message": {
+          "type": "text",
+          "default": "$message"
+        },
+        "State": {
+          "type": "variant",
+          "options": [
+            "Error",
+            "Warning",
+            "Success",
+            "Info"
+          ],
+          "default": "Error"
+        }
+      }
+    },
+    {
+      "name": "_⚠︎CO Item Navigation / v5.2 Payments (IB only)",
+      "page": "Items",
+      "status": "deprecated",
+      "type": "set",
+      "nodeId": "1448:49856",
+      "instances": 20,
+      "properties": {
+        "Show owner": {
+          "type": "boolean",
+          "default": true
+        },
+        "Owner": {
+          "type": "text",
+          "default": "$owner"
+        },
+        "Value": {
+          "type": "text",
+          "default": "$value"
+        },
+        "Value (after decimal)": {
+          "type": "text",
+          "default": "$value (after decimal)"
+        },
+        "Currency": {
+          "type": "text",
+          "default": "$currency"
+        },
+        "Label": {
+          "type": "text",
+          "default": "$label"
+        },
+        "Caption": {
+          "type": "text",
+          "default": "$caption"
+        },
+        "Show Left Icon": {
+          "type": "boolean",
+          "default": true
+        },
+        "Show Message": {
+          "type": "boolean",
+          "default": true
+        },
+        "Show Caption": {
+          "type": "boolean",
+          "default": true
+        },
+        "Left Icon": {
+          "type": "instance_swap",
+          "default": "55748:73200"
+        },
+        "State": {
+          "type": "variant",
+          "options": [
+            "Enabled",
+            "Loading"
+          ],
+          "default": "Enabled"
+        },
+        "Left Icon size": {
+          "type": "variant",
+          "options": [
+            "24: ES Icon",
+            "32: Avatar or ES Icon Flag"
+          ],
+          "default": "24: ES Icon"
+        }
+      }
+    },
+    {
+      "name": "_⚠️CO Item Transaction Batch / v5.2",
+      "page": "Items",
+      "status": "deprecated",
+      "type": "set",
+      "nodeId": "29881:27179",
+      "instances": 0,
+      "properties": {
+        "Caption?": {
+          "type": "boolean",
+          "default": true
+        },
+        "Tertiary Caption?": {
+          "type": "boolean",
+          "default": true
+        },
+        "✏️ Tertiary Caption": {
+          "type": "text",
+          "default": "$tertiaryCaption"
+        },
+        "✏️ Caption": {
+          "type": "text",
+          "default": "$caption"
+        },
+        "✏️ Label": {
+          "type": "text",
+          "default": "$label"
+        },
+        "✏️ Negative Value": {
+          "type": "text",
+          "default": "- $negativeValue"
+        },
+        "✏️ Message": {
+          "type": "text",
+          "default": "$message"
+        },
+        "✏️ PositiveValue": {
+          "type": "text",
+          "default": "$positiveValue"
+        },
+        "Positive Value?": {
+          "type": "boolean",
+          "default": true
+        },
+        "Negative Value?": {
+          "type": "boolean",
+          "default": true
+        },
+        "Message?": {
+          "type": "boolean",
+          "default": false
+        },
+        "Variant (Situation)": {
+          "type": "variant",
+          "options": [
+            "Incoming",
+            "Error",
+            "Waiting",
+            "Done"
+          ],
+          "default": "Done"
+        },
+        "Columns": {
+          "type": "variant",
+          "options": [
+            "Two",
+            "Three"
+          ],
+          "default": "Two"
+        },
+        "Loaded": {
+          "type": "variant",
+          "options": [
+            "Loading",
+            "Resting"
+          ],
+          "default": "Resting"
+        }
+      }
+    },
+    {
+      "name": "CO Product Card / v2.0 Detail",
+      "page": "Products",
+      "status": "stable",
+      "type": "set",
+      "nodeId": "61824:227332",
+      "instances": 2,
+      "properties": {
+        "Show Message": {
+          "type": "boolean",
+          "default": true
+        },
+        "Name": {
+          "type": "text",
+          "default": "$name"
+        },
+        "Show Tokens": {
+          "type": "boolean",
+          "default": true
+        },
+        "Number": {
+          "type": "text",
+          "default": "$num"
+        },
+        "Expiration": {
+          "type": "text",
+          "default": "$expiry"
+        },
+        "card state": {
+          "type": "variant",
+          "options": [
+            "EnabledAvtive",
+            "EnabledOther",
+            "EnabledNull",
+            "Loading"
+          ],
+          "default": "EnabledAvtive"
+        }
+      }
+    },
+    {
+      "name": "CO Product Card / v2.0 Homescreen",
+      "page": "Products",
+      "status": "stable",
+      "type": "set",
+      "nodeId": "55638:232541",
+      "instances": 9,
+      "properties": {
+        "Show Tokens": {
+          "type": "boolean",
+          "default": true
+        },
+        "Name": {
+          "type": "text",
+          "default": "$name"
+        },
+        "Number": {
+          "type": "text",
+          "default": "$num"
+        },
+        "Expiration": {
+          "type": "text",
+          "default": "$expiry"
+        },
+        "Show Message": {
+          "type": "boolean",
+          "default": true
+        },
+        "card state": {
+          "type": "variant",
+          "options": [
+            "EnabledActive",
+            "EnabledOther",
+            "HoverActive",
+            "HoverOther",
+            "FocusActive",
+            "FocusOther",
+            "Loading"
+          ],
+          "default": "EnabledActive"
+        }
+      }
+    },
+    {
+      "name": "CO Product CurrentAccount / v3.0 Detail",
+      "page": "Products",
+      "status": "stable",
+      "type": "set",
+      "nodeId": "64756:222319",
+      "instances": 1,
+      "properties": {
+        "Value before ,": {
+          "type": "text",
+          "default": "$value"
+        },
+        "Value after ,": {
+          "type": "text",
+          "default": "$value"
+        },
+        "Currency": {
+          "type": "text",
+          "default": "(currency)"
+        },
+        "Name": {
+          "type": "text",
+          "default": "$name"
+        },
+        "Number": {
+          "type": "text",
+          "default": "$num"
+        },
+        "Overdraft": {
+          "type": "text",
+          "default": "$overdraft"
+        },
+        "Show $overdraft": {
+          "type": "boolean",
+          "default": true
+        },
+        "Owner": {
+          "type": "text",
+          "default": "$owner"
+        },
+        "Show $owner": {
+          "type": "boolean",
+          "default": true
+        },
+        "Show after,": {
+          "type": "boolean",
+          "default": true
+        },
+        "Show Number": {
+          "type": "boolean",
+          "default": true
+        },
+        "Multicurrency": {
+          "type": "boolean",
+          "default": false
+        },
+        "Currency 03": {
+          "type": "boolean",
+          "default": false
+        },
+        "Currency 04": {
+          "type": "boolean",
+          "default": false
+        },
+        "Currency 05": {
+          "type": "boolean",
+          "default": false
+        },
+        "Currency 06": {
+          "type": "boolean",
+          "default": false
+        },
+        "Currency 07": {
+          "type": "boolean",
+          "default": false
+        },
+        "Currency 08": {
+          "type": "boolean",
+          "default": false
+        },
+        "Currency 09": {
+          "type": "boolean",
+          "default": false
+        },
+        "Currency 10": {
+          "type": "boolean",
+          "default": false
+        },
+        "Currency 11": {
+          "type": "boolean",
+          "default": false
+        },
+        "Currency 12": {
+          "type": "boolean",
+          "default": false
+        },
+        "Currency 13": {
+          "type": "boolean",
+          "default": false
+        },
+        "Currency 14": {
+          "type": "boolean",
+          "default": false
+        },
+        "Currency 15": {
+          "type": "boolean",
+          "default": false
+        },
+        "Currency 16": {
+          "type": "boolean",
+          "default": false
+        },
+        "Currency 17": {
+          "type": "boolean",
+          "default": false
+        },
+        "s": {
+          "type": "variant",
+          "options": [
+            "responsive-iOS-Android",
+            "responsive-IB"
+          ],
+          "default": "responsive-iOS-Android"
+        },
+        "State": {
+          "type": "variant",
+          "options": [
+            "EnabledNegative",
+            "EnabledPositive",
+            "Loading"
+          ],
+          "default": "EnabledPositive"
+        }
+      }
+    },
+    {
+      "name": "CO Product CurrentAccount / v3.0 Homescreen",
+      "page": "Products",
+      "status": "stable",
+      "type": "set",
+      "nodeId": "51408:216979",
+      "instances": 7,
+      "properties": {
+        "Value before ,": {
+          "type": "text",
+          "default": "$value"
+        },
+        "Value after ,": {
+          "type": "text",
+          "default": "$value"
+        },
+        "Currency": {
+          "type": "text",
+          "default": "(currency)"
+        },
+        "Name": {
+          "type": "text",
+          "default": "$name"
+        },
+        "Number": {
+          "type": "text",
+          "default": "$num"
+        },
+        "Overdraft": {
+          "type": "text",
+          "default": "$overdraft"
+        },
+        "Show $overdraft": {
+          "type": "boolean",
+          "default": true
+        },
+        "Show Message": {
+          "type": "boolean",
+          "default": true
+        },
+        "Owner": {
+          "type": "text",
+          "default": "$owner"
+        },
+        "Show $owner": {
+          "type": "boolean",
+          "default": true
+        },
+        "Show after,": {
+          "type": "boolean",
+          "default": true
+        },
+        "Show $number": {
+          "type": "boolean",
+          "default": true
+        },
+        "Multicurrency": {
+          "type": "boolean",
+          "default": true
+        },
+        "Currency 02": {
+          "type": "boolean",
+          "default": false
+        },
+        "Currency 03": {
+          "type": "boolean",
+          "default": false
+        },
+        "Currency 04": {
+          "type": "boolean",
+          "default": false
+        },
+        "Currency 06": {
+          "type": "boolean",
+          "default": false
+        },
+        "Currency 07": {
+          "type": "boolean",
+          "default": false
+        },
+        "Currency 08": {
+          "type": "boolean",
+          "default": false
+        },
+        "Divider Top": {
+          "type": "boolean",
+          "default": true
+        },
+        "Currency 05": {
+          "type": "boolean",
+          "default": false
+        },
+        "State": {
+          "type": "variant",
+          "options": [
+            "EnabledPositive",
+            "EnabledNegative",
+            "HoverPositive",
+            "HoverNegative",
+            "FocusPositive",
+            "FocusNegative",
+            "Loading"
+          ],
+          "default": "EnabledPositive"
+        }
+      }
+    },
+    {
+      "name": "CO Product Insurance / v3.0 Detail",
+      "page": "Products",
+      "status": "stable",
+      "type": "set",
+      "nodeId": "99914:732362",
+      "instances": 1,
+      "properties": {
+        "Caption": {
+          "type": "text",
+          "default": "$caption"
+        },
+        "Name": {
+          "type": "text",
+          "default": "$name"
+        },
+        "Show Caption": {
+          "type": "boolean",
+          "default": true
+        },
+        "State": {
+          "type": "variant",
+          "options": [
+            "Enabled",
+            "Loading"
+          ],
+          "default": "Enabled"
+        }
+      }
+    },
+    {
+      "name": "CO Product Insurance / v3.0 Homescreen",
+      "page": "Products",
+      "status": "stable",
+      "type": "set",
+      "nodeId": "58433:253391",
+      "instances": 0,
+      "properties": {
+        "Caption": {
+          "type": "text",
+          "default": "$caption"
+        },
+        "Show Message": {
+          "type": "boolean",
+          "default": true
+        },
+        "Divider Top": {
+          "type": "boolean",
+          "default": true
+        },
+        "Name": {
+          "type": "text",
+          "default": "$name"
+        },
+        "Show Caption": {
+          "type": "boolean",
+          "default": true
+        },
+        "State": {
+          "type": "variant",
+          "options": [
+            "Enabled",
+            "Hover",
+            "Focus",
+            "Loading"
+          ],
+          "default": "Enabled"
+        }
+      }
+    },
+    {
+      "name": "CO Product Investment / v4.0 Detail",
+      "page": "Products",
+      "status": "stable",
+      "type": "set",
+      "nodeId": "68653:238974",
+      "instances": 10,
+      "properties": {
+        "✏️InvestmentPerformance": {
+          "type": "text",
+          "default": "$yield"
+        },
+        "✏️Caption": {
+          "type": "text",
+          "default": "$caption"
+        },
+        "✏️PerformanceInPercentage": {
+          "type": "text",
+          "default": "($performance)"
+        },
+        "✏️Period": {
+          "type": "text",
+          "default": "$period"
+        },
+        "Performance?": {
+          "type": "boolean",
+          "default": true
+        },
+        "Caption?": {
+          "type": "boolean",
+          "default": true
+        },
+        "✏️Owner": {
+          "type": "text",
+          "default": "$owner"
+        },
+        "Owner?": {
+          "type": "boolean",
+          "default": false
+        },
+        "✏️Name": {
+          "type": "text",
+          "default": "$name"
+        },
+        "✏️Currency": {
+          "type": "text",
+          "default": "(currency)"
+        },
+        "✏️Value after ,": {
+          "type": "text",
+          "default": "$value"
+        },
+        "✏️Value before ,": {
+          "type": "text",
+          "default": "$value"
+        },
+        "After,?": {
+          "type": "boolean",
+          "default": true
+        },
+        "Name?": {
+          "type": "boolean",
+          "default": true
+        },
+        "State": {
+          "type": "variant",
+          "options": [
+            "EnabledPositive",
+            "EnabledNegative",
+            "EnabledNeutral",
+            "Loading"
+          ],
+          "default": "EnabledPositive"
+        }
+      }
+    },
+    {
+      "name": "CO Product Investment / v4.0 DetailInvestmentAndWallet",
+      "page": "Products",
+      "status": "stable",
+      "type": "set",
+      "nodeId": "21287:6892",
+      "instances": 1,
+      "properties": {
+        "Multicurrency?": {
+          "type": "boolean",
+          "default": false
+        },
+        "Currency 02?": {
+          "type": "boolean",
+          "default": false
+        },
+        "Currency 03?": {
+          "type": "boolean",
+          "default": false
+        },
+        "Currency 04?": {
+          "type": "boolean",
+          "default": false
+        },
+        "Currency 05?": {
+          "type": "boolean",
+          "default": false
+        },
+        "Currency 06?": {
+          "type": "boolean",
+          "default": false
+        },
+        "✏️Name": {
+          "type": "text",
+          "default": "$name"
+        },
+        "✏️Value before ,": {
+          "type": "text",
+          "default": "$value"
+        },
+        "✏️Value after ,": {
+          "type": "text",
+          "default": "$value"
+        },
+        "✏️Currency": {
+          "type": "text",
+          "default": "(currency)"
+        },
+        "After,?": {
+          "type": "boolean",
+          "default": true
+        },
+        "State": {
+          "type": "variant",
+          "options": [
+            "Enabled",
+            "Loading"
+          ],
+          "default": "Enabled"
+        }
+      }
+    },
+    {
+      "name": "CO Product Investment / v4.0 Homescreen",
+      "page": "Products",
+      "status": "stable",
+      "type": "set",
+      "nodeId": "57617:229851",
+      "instances": 6,
+      "properties": {
+        "Performance?": {
+          "type": "boolean",
+          "default": true
+        },
+        "✏️PerformanceInPercentage": {
+          "type": "text",
+          "default": "($performance)"
+        },
+        "✏️Caption": {
+          "type": "text",
+          "default": "$caption"
+        },
+        "✏️Period": {
+          "type": "text",
+          "default": "$period"
+        },
+        "✏️InvestmentPerformance": {
+          "type": "text",
+          "default": "$yield"
+        },
+        "Caption?": {
+          "type": "boolean",
+          "default": true
+        },
+        "Message?": {
+          "type": "boolean",
+          "default": true
+        },
+        "✏️Name": {
+          "type": "text",
+          "default": "$name"
+        },
+        "✏️Currency": {
+          "type": "text",
+          "default": "(currency)"
+        },
+        "✏️Value after ,": {
+          "type": "text",
+          "default": "$value"
+        },
+        "✏️Value before ,": {
+          "type": "text",
+          "default": "$value"
+        },
+        "Name?": {
+          "type": "boolean",
+          "default": true
+        },
+        "After,?": {
+          "type": "boolean",
+          "default": true
+        },
+        "Divider Top": {
+          "type": "boolean",
+          "default": true
+        },
+        "State": {
+          "type": "variant",
+          "options": [
+            "EnabledPositive",
+            "EnabledNegative",
+            "EnabledNeutral",
+            "HoverPositive",
+            "HoverNegative",
+            "HoverNeutral",
+            "FocusPositive",
+            "FocusNegative",
+            "FocusNeutral",
+            "Loading"
+          ],
+          "default": "EnabledPositive"
+        }
+      }
+    },
+    {
+      "name": "CO Product Investment / v4.0 HomescreenExternal",
+      "page": "Products",
+      "status": "stable",
+      "type": "set",
+      "nodeId": "26726:18835",
+      "instances": 42,
+      "properties": {
+        "✏️ Caption": {
+          "type": "text",
+          "default": "$caption"
+        },
+        "Caption?": {
+          "type": "boolean",
+          "default": true
+        },
+        "Message?": {
+          "type": "boolean",
+          "default": true
+        },
+        "Value?": {
+          "type": "boolean",
+          "default": false
+        },
+        "✏️ Value before": {
+          "type": "text",
+          "default": "$value"
+        },
+        "Value after?": {
+          "type": "boolean",
+          "default": true
+        },
+        "✏️ Value after ,": {
+          "type": "text",
+          "default": "$value"
+        },
+        "✏️ Currency": {
+          "type": "text",
+          "default": "(currency)"
+        },
+        "✏️ Name": {
+          "type": "text",
+          "default": "$name"
+        },
+        "Divider?": {
+          "type": "boolean",
+          "default": true
+        },
+        "State": {
+          "type": "variant",
+          "options": [
+            "Enabled",
+            "Hover",
+            "Focus",
+            "Loading"
+          ],
+          "default": "Enabled"
+        }
+      }
+    },
+    {
+      "name": "CO Product Loan / v3.0 Detail",
+      "page": "Products",
+      "status": "stable",
+      "type": "set",
+      "nodeId": "83017:297749",
+      "instances": 0,
+      "properties": {
+        "Value before ,": {
+          "type": "text",
+          "default": "$value"
+        },
+        "Value after ,": {
+          "type": "text",
+          "default": "$value"
+        },
+        "Currency": {
+          "type": "text",
+          "default": "(currency)"
+        },
+        "Name": {
+          "type": "text",
+          "default": "$name"
+        },
+        "Show after,": {
+          "type": "boolean",
+          "default": true
+        },
+        "Show $caption": {
+          "type": "boolean",
+          "default": true
+        },
+        "Caption": {
+          "type": "text",
+          "default": "$caption"
+        },
+        "Show $number": {
+          "type": "boolean",
+          "default": true
+        },
+        "Number": {
+          "type": "text",
+          "default": "$num"
+        },
+        "State": {
+          "type": "variant",
+          "options": [
+            "Enabled",
+            "Loading"
+          ],
+          "default": "Enabled"
+        }
+      }
+    },
+    {
+      "name": "CO Product Loan / v3.0 Homescreen",
+      "page": "Products",
+      "status": "stable",
+      "type": "set",
+      "nodeId": "58433:253291",
+      "instances": 0,
+      "properties": {
+        "Value before ,": {
+          "type": "text",
+          "default": "$value"
+        },
+        "Value after ,": {
+          "type": "text",
+          "default": "$value"
+        },
+        "Currency": {
+          "type": "text",
+          "default": "(currency)"
+        },
+        "Name": {
+          "type": "text",
+          "default": "$name"
+        },
+        "Caption": {
+          "type": "text",
+          "default": "$caption"
+        },
+        "Show $caption": {
+          "type": "boolean",
+          "default": true
+        },
+        "Show Message": {
+          "type": "boolean",
+          "default": true
+        },
+        "Show after,": {
+          "type": "boolean",
+          "default": true
+        },
+        "Divider Top": {
+          "type": "boolean",
+          "default": true
+        },
+        "Show $number": {
+          "type": "boolean",
+          "default": true
+        },
+        "Number": {
+          "type": "text",
+          "default": "$num"
+        },
+        "State": {
+          "type": "variant",
+          "options": [
+            "Enabled",
+            "Hover",
+            "Focus",
+            "Loading"
+          ],
+          "default": "Enabled"
+        }
+      }
+    },
+    {
+      "name": "CO Product Savings / v3.0 Detail",
+      "page": "Products",
+      "status": "stable",
+      "type": "set",
+      "nodeId": "70948:240470",
+      "instances": 0,
+      "properties": {
+        "Value before ,": {
+          "type": "text",
+          "default": "$value"
+        },
+        "Value after ,": {
+          "type": "text",
+          "default": "$value"
+        },
+        "Currency": {
+          "type": "text",
+          "default": "(currency)"
+        },
+        "Name": {
+          "type": "text",
+          "default": "$name"
+        },
+        "Number": {
+          "type": "text",
+          "default": "$num"
+        },
+        "Owner": {
+          "type": "text",
+          "default": "$owner"
+        },
+        "Show $owner": {
+          "type": "boolean",
+          "default": true
+        },
+        "Show after,": {
+          "type": "boolean",
+          "default": true
+        },
+        "Show Number": {
+          "type": "boolean",
+          "default": true
+        },
+        "Show $caption": {
+          "type": "boolean",
+          "default": true
+        },
+        "Caption": {
+          "type": "text",
+          "default": "$caption"
+        },
+        "State": {
+          "type": "variant",
+          "options": [
+            "EnabledPositive",
+            "EnabledNegative",
+            "Loading"
+          ],
+          "default": "EnabledPositive"
+        }
+      }
+    },
+    {
+      "name": "CO Product Savings / v3.0 DetailSavingsEnvelope",
+      "page": "Products",
+      "status": "stable",
+      "type": "set",
+      "nodeId": "70948:240574",
+      "instances": 0,
+      "properties": {
+        "Name": {
+          "type": "text",
+          "default": "$name"
+        },
+        "Value before ,": {
+          "type": "text",
+          "default": "$value"
+        },
+        "Value after ,": {
+          "type": "text",
+          "default": "$value"
+        },
+        "Currency": {
+          "type": "text",
+          "default": "(currency)"
+        },
+        "Show after,": {
+          "type": "boolean",
+          "default": true
+        },
+        "State": {
+          "type": "variant",
+          "options": [
+            "Enabled",
+            "Loading"
+          ],
+          "default": "Enabled"
+        }
+      }
+    },
+    {
+      "name": "CO Product Savings / v3.0 Homescreen",
+      "page": "Products",
+      "status": "stable",
+      "type": "set",
+      "nodeId": "72411:245681",
+      "instances": 1,
+      "properties": {
+        "Value before ,": {
+          "type": "text",
+          "default": "$value"
+        },
+        "Value after ,": {
+          "type": "text",
+          "default": "$value"
+        },
+        "Currency": {
+          "type": "text",
+          "default": "(currency)"
+        },
+        "Name": {
+          "type": "text",
+          "default": "$name"
+        },
+        "Number": {
+          "type": "text",
+          "default": "$num"
+        },
+        "Show Message": {
+          "type": "boolean",
+          "default": true
+        },
+        "Owner": {
+          "type": "text",
+          "default": "$owner"
+        },
+        "Show $owner": {
+          "type": "boolean",
+          "default": true
+        },
+        "Show after,": {
+          "type": "boolean",
+          "default": true
+        },
+        "Show $number": {
+          "type": "boolean",
+          "default": true
+        },
+        "Divider Top": {
+          "type": "boolean",
+          "default": true
+        },
+        "Caption": {
+          "type": "text",
+          "default": "$caption"
+        },
+        "Show $caption": {
+          "type": "boolean",
+          "default": true
+        },
+        "State": {
+          "type": "variant",
+          "options": [
+            "EnabledPositive",
+            "EnabledNegative",
+            "HoverPositive",
+            "HoverNegative",
+            "FocusPositive",
+            "FocusNegative",
+            "Loading"
+          ],
+          "default": "EnabledPositive"
+        }
+      }
+    },
+    {
+      "name": "CO Product Savings / v3.0 ItemSavingsEnvelope",
+      "page": "Products",
+      "status": "stable",
+      "type": "set",
+      "nodeId": "73661:246421",
+      "instances": 0,
+      "properties": {
+        "Name": {
+          "type": "text",
+          "default": "$name"
+        },
+        "Value": {
+          "type": "text",
+          "default": "$value, $value (currency)"
+        },
+        "State": {
+          "type": "variant",
+          "options": [
+            "Enabled",
+            "Hover",
+            "Focus",
+            "Loading"
+          ],
+          "default": "Enabled"
+        }
+      }
+    },
+    {
+      "name": "_Product Card Message",
+      "page": "Products",
+      "status": "internal",
+      "type": "set",
+      "nodeId": "57474:226934",
+      "instances": 3,
+      "properties": {
+        "Message": {
+          "type": "text",
+          "default": "$message"
+        },
+        "Type": {
+          "type": "variant",
+          "options": [
+            "Info",
+            "Warning",
+            "Error"
+          ],
+          "default": "Info"
+        }
+      }
+    },
+    {
+      "name": "_Product Card tokens",
+      "page": "Products",
+      "status": "internal",
+      "type": "set",
+      "nodeId": "107382:693191",
+      "instances": 0,
+      "properties": {
+        "Garmin pay": {
+          "type": "boolean",
+          "default": true
+        },
+        "Google pay": {
+          "type": "boolean",
+          "default": true
+        },
+        "Click to pay": {
+          "type": "boolean",
+          "default": true
+        },
+        "Apple pay": {
+          "type": "boolean",
+          "default": true
+        },
+        "Dark": {
+          "type": "variant",
+          "options": [
+            "no",
+            "yes"
+          ],
+          "default": "no"
+        },
+        "First Token": {
+          "type": "variant",
+          "options": [
+            "ApplePay",
+            "GooglePay"
+          ],
+          "default": "ApplePay"
+        }
+      }
+    },
+    {
+      "name": "_Product Message",
+      "page": "Products",
+      "status": "internal",
+      "type": "set",
+      "nodeId": "58231:253134",
+      "instances": 31,
+      "properties": {
+        "Message": {
+          "type": "text",
+          "default": "$message"
+        },
+        "State": {
+          "type": "variant",
+          "options": [
+            "Error",
+            "Warning",
+            "Success",
+            "Info"
+          ],
+          "default": "Error"
+        }
+      }
+    },
+    {
+      "name": "CO Text Heading / Group",
+      "page": "Texts",
+      "status": "stable",
+      "type": "set",
+      "nodeId": "57373:50774",
+      "instances": 14,
+      "properties": {
+        "✏️ Button label": {
+          "type": "text",
+          "default": "$label"
+        },
+        "✏️Text": {
+          "type": "text",
+          "default": "$text"
+        },
+        "Icon": {
+          "type": "boolean",
+          "default": false
+        },
+        "Button": {
+          "type": "boolean",
+          "default": false
+        },
+        "Left Icon": {
+          "type": "instance_swap",
+          "default": "55748:73200"
+        },
+        "Loaded": {
+          "type": "variant",
+          "options": [
+            "yes",
+            "no"
+          ],
+          "default": "yes"
+        }
+      }
+    },
+    {
+      "name": "CO Text Heading / v4.0 Hero",
+      "page": "Texts",
+      "status": "stable",
+      "type": "set",
+      "nodeId": "58651:253698",
+      "instances": 3,
+      "properties": {
+        "Text": {
+          "type": "text",
+          "default": "$text"
+        },
+        "Loaded": {
+          "type": "variant",
+          "options": [
+            "yes",
+            "no"
+          ],
+          "default": "yes"
+        }
+      }
+    },
+    {
+      "name": "CO Text Heading / v4.0 Page",
+      "page": "Texts",
+      "status": "stable",
+      "type": "set",
+      "nodeId": "58651:253810",
+      "instances": 21,
+      "properties": {
+        "Text": {
+          "type": "text",
+          "default": "$text"
+        },
+        "⚠︎Caret": {
+          "type": "boolean",
+          "default": false
+        },
+        "Loaded": {
+          "type": "variant",
+          "options": [
+            "yes",
+            "no"
+          ],
+          "default": "yes"
+        }
+      },
+      "doNotUse": [
+        "⚠︎Caret"
+      ]
+    },
+    {
+      "name": "CO Text Heading / v4.0 Section",
+      "page": "Texts",
+      "status": "stable",
+      "type": "set",
+      "nodeId": "58651:253801",
+      "instances": 121,
+      "properties": {
+        "✏️ Button label": {
+          "type": "text",
+          "default": "$label"
+        },
+        "Text": {
+          "type": "text",
+          "default": "$text"
+        },
+        "Icon": {
+          "type": "boolean",
+          "default": false
+        },
+        "Button": {
+          "type": "boolean",
+          "default": false
+        },
+        "Left Icon": {
+          "type": "instance_swap",
+          "default": "55748:73200"
+        },
+        "Loaded": {
+          "type": "variant",
+          "options": [
+            "yes",
+            "no"
+          ],
+          "default": "yes"
+        }
+      }
+    },
+    {
+      "name": "CO Text Paragraph / 4.0",
+      "page": "Texts",
+      "status": "stable",
+      "type": "set",
+      "nodeId": "58710:258833",
+      "instances": 85,
+      "properties": {
+        "Text": {
+          "type": "text",
+          "default": "$text"
+        },
+        "Variant": {
+          "type": "variant",
+          "options": [
+            "Basic",
+            "Small"
+          ],
+          "default": "Basic"
+        },
+        "Loaded": {
+          "type": "variant",
+          "options": [
+            "yes",
+            "no"
+          ],
+          "default": "yes"
+        }
+      }
+    }
+  ]
+}

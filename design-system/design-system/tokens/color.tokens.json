@@ -1,0 +1,92 @@
+{
+  "$schema": "https://tr.designtokens.org/format/",
+  "$description": "Golem (KB Design System) semantic colour. Names are the Figma variable names from '💠 ES Essentials', flattened from 'group/name' to 'color.group.name'. $value is the light mode. Other UI modes live in $extensions.golem.modes. Brand overrides live in $extensions.golem.brands. Never hard-code a hex anywhere else.",
+  "$extensions": {
+    "golem": {
+      "modes": ["light", "dark", "highContrastLight", "highContrastDark"],
+      "brands": ["default", "corporate", "internal"],
+      "brandOverrides": {
+        "corporate": {},
+        "internal": {
+          "light": {
+            "color.interactive.primary": "#1374cd",
+            "color.interactive.primaryAction": "#1061ad",
+            "color.attention.informationSurface": "#d9d9d9"
+          }
+        }
+      },
+      "source": "Figma variables read from '💠 CORE Components' nodes 2026-08-12; the chart series colours confirmed on _ChartLegend (node 53648:7334) and CO Chart / v4.0 Donut (node 75339:247899); full mode matrix from the Golem showcase snapshot 2026-08-11",
+      "darkModeVerification": "Figma resolves variables in the mode of the queried node, so dark values need a node inside a dark-mode frame. Two exist: _Product Card tokens Dark=yes (node 107382:693192) and ES SubIcon / Stopwatch dark=yes (node 8399:1272 in file xOURtHkYRN70tbZdQPWlw2). Both were read on 2026-08-12 and agreed with the snapshot exactly (content/primary #f9f9f9, background/body #0d0d0d). The rest of the dark column, and both high-contrast columns, remain snapshot-only."
+    }
+  },
+  "color": {
+    "content": {
+      "primary":         { "$type": "color", "$value": "#212121", "$description": "Default text. 15.9:1 on background.surface.", "$extensions": { "golem": { "modes": { "dark": "#f9f9f9", "highContrastLight": "#212121", "highContrastDark": "#f9f9f9" } } } },
+      "secondary":       { "$type": "color", "$value": "#454545", "$extensions": { "golem": { "modes": { "dark": "#d9d9d9", "highContrastLight": "#212121", "highContrastDark": "#f9f9f9" } } } },
+      "tertiary":        { "$type": "color", "$value": "#717171", "$description": "Captions and helper text. 4.9:1 on background.surface — never use below 12px.", "$extensions": { "golem": { "modes": { "dark": "#9e9e9e", "highContrastLight": "#212121", "highContrastDark": "#f9f9f9" } } } },
+      "quaternary":      { "$type": "color", "$value": "#adadad", "$description": "Disabled content only. Fails 4.5:1 — never carries meaning alone.", "$extensions": { "golem": { "modes": { "dark": "#656565", "highContrastLight": "#212121", "highContrastDark": "#f9f9f9" } } } },
+      "pentary":         { "$type": "color", "$value": "#f8f8f8", "$extensions": { "golem": { "modes": { "dark": "#f9f9f9", "highContrastLight": "#f8f8f8", "highContrastDark": "#f9f9f9" } } } },
+      "skeletonLoading": { "$type": "color", "$value": "#adadad80", "$description": "Loading placeholder fill.", "$extensions": { "golem": { "modes": { "dark": "#65656580", "highContrastLight": "#adadad", "highContrastDark": "#656565" } } } }
+    },
+    "background": {
+      "body":               { "$type": "color", "$value": "#f8f8f8", "$description": "Screen background behind cards.", "$extensions": { "golem": { "modes": { "dark": "#0d0d0d", "highContrastLight": "#f8f8f8", "highContrastDark": "#0d0d0d" } } } },
+      "surface":            { "$type": "color", "$value": "#ffffff", "$description": "Card and panel fill.", "$extensions": { "golem": { "modes": { "dark": "#1c1c1c", "highContrastLight": "#ffffff", "highContrastDark": "#1c1c1c" } } } },
+      "surfaceHighlighted": { "$type": "color", "$value": "#ffffff", "$extensions": { "golem": { "modes": { "dark": "#3b3b3b", "highContrastLight": "#ffffff", "highContrastDark": "#3b3b3b" } } } },
+      "surfaceAvatar":      { "$type": "color", "$value": "#21212114", "$extensions": { "golem": { "modes": { "dark": "#f9f9f91a", "highContrastLight": "#21212114", "highContrastDark": "#f9f9f924" } } } },
+      "tableZebra":         { "$type": "color", "$value": "#2121210a", "$extensions": { "golem": { "modes": { "dark": "#f9f9f924", "highContrastLight": "#2121210a", "highContrastDark": "#f9f9f924" } } } },
+      "divider":            { "$type": "color", "$value": "#adadad80", "$extensions": { "golem": { "modes": { "dark": "#65656580", "highContrastLight": "#adadad", "highContrastDark": "#656565" } } } },
+      "border":             { "$type": "color", "$value": "#adadad80", "$extensions": { "golem": { "modes": { "dark": "#65656580", "highContrastLight": "#adadad", "highContrastDark": "#656565" } } } },
+      "borderHighlighted":  { "$type": "color", "$value": "#717171", "$extensions": { "golem": { "modes": { "dark": "#9e9e9e", "highContrastLight": "#212121", "highContrastDark": "#f9f9f9" } } } }
+    },
+    "interactive": {
+      "primary":         { "$type": "color", "$value": "#e00000", "$description": "KB red. Primary action fill and the only brand accent in UI.", "$extensions": { "golem": { "modes": { "dark": "#e00000", "highContrastLight": "#b10317", "highContrastDark": "#b10317" } } } },
+      "primaryAction":   { "$type": "color", "$value": "#be0000", "$description": "Primary pressed/hover.", "$extensions": { "golem": { "modes": { "dark": "#be0000", "highContrastLight": "#960314", "highContrastDark": "#960314" } } } },
+      "onPrimary":       { "$type": "color", "$value": "#ffffff", "$extensions": { "golem": { "modes": { "dark": "#ffffff", "highContrastLight": "#ffffff", "highContrastDark": "#ffffff" } } } },
+      "secondary":       { "$type": "color", "$value": "#212121", "$extensions": { "golem": { "modes": { "dark": "#f9f9f9", "highContrastLight": "#212121", "highContrastDark": "#f9f9f9" } } } },
+      "secondaryAction": { "$type": "color", "$value": "#21212114", "$extensions": { "golem": { "modes": { "dark": "#f9f9f924", "highContrastLight": "#21212114", "highContrastDark": "#f9f9f924" } } } },
+      "secondaryActive": { "$type": "color", "$value": "#2121211f", "$extensions": { "golem": { "modes": { "dark": "#adadad80", "highContrastLight": "#2121211f", "highContrastDark": "#adadad80" } } } },
+      "onSecondary":     { "$type": "color", "$value": "#212121", "$extensions": { "golem": { "modes": { "dark": "#f9f9f9", "highContrastLight": "#212121", "highContrastDark": "#f9f9f9" } } } }
+    },
+    "attention": {
+      "alert":              { "$type": "color", "$value": "#b53022", "$description": "Error. Always paired with an icon and text — never colour alone.", "$extensions": { "golem": { "modes": { "dark": "#f66b65", "highContrastLight": "#9b281c", "highContrastDark": "#f88681" } } } },
+      "alertSurface":       { "$type": "color", "$value": "#ffede8", "$extensions": { "golem": { "modes": { "dark": "#60110a", "highContrastLight": "#ffede8", "highContrastDark": "#60110a" } } } },
+      "success":            { "$type": "color", "$value": "#267c29", "$extensions": { "golem": { "modes": { "dark": "#23af31", "highContrastLight": "#225f22", "highContrastDark": "#2fdb41" } } } },
+      "successSurface":     { "$type": "color", "$value": "#e2f5de", "$extensions": { "golem": { "modes": { "dark": "#05390a", "highContrastLight": "#e2f5de", "highContrastDark": "#05390a" } } } },
+      "processing":         { "$type": "color", "$value": "#7e6d19", "$extensions": { "golem": { "modes": { "dark": "#ae9701", "highContrastLight": "#7e6d19", "highContrastDark": "#ae9701" } } } },
+      "processingSurface":  { "$type": "color", "$value": "#fff1b6", "$extensions": { "golem": { "modes": { "dark": "#393000", "highContrastLight": "#fff1b6", "highContrastDark": "#393000" } } } },
+      "information":        { "$type": "color", "$value": "#212121", "$description": "Neutral information — Golem does not use blue for info.", "$extensions": { "golem": { "modes": { "dark": "#f9f9f9", "highContrastLight": "#212121", "highContrastDark": "#f9f9f9" } } } },
+      "informationSurface": { "$type": "color", "$value": "#ededed", "$extensions": { "golem": { "modes": { "dark": "#3b3b3b", "highContrastLight": "#ededed", "highContrastDark": "#3b3b3b" } } } }
+    },
+    "dialog": {
+      "overlay": { "$type": "color", "$value": "#21212166", "$extensions": { "golem": { "modes": { "dark": "#2f2f2f99", "highContrastLight": "#21212166", "highContrastDark": "#2f2f2f99" } } } },
+      "surface": { "$type": "color", "$value": "#ffffff", "$extensions": { "golem": { "modes": { "dark": "#212121", "highContrastLight": "#ffffff", "highContrastDark": "#212121" } } } }
+    },
+    "shadow": {
+      "panelTop":         { "$type": "color", "$value": "#21212105", "$extensions": { "golem": { "modes": { "dark": "#21212100" } } } },
+      "panelMiddle":      { "$type": "color", "$value": "#21212114", "$extensions": { "golem": { "modes": { "dark": "#21212100" } } } },
+      "panelBottom":      { "$type": "color", "$value": "#2121211f", "$extensions": { "golem": { "modes": { "dark": "#21212100" } } } },
+      "highlightedTop":    { "$type": "color", "$value": "#21212114", "$extensions": { "golem": { "modes": { "dark": "#21212100" } } } },
+      "highlightedMiddle": { "$type": "color", "$value": "#21212129", "$extensions": { "golem": { "modes": { "dark": "#21212100" } } } },
+      "highlightedBottom": { "$type": "color", "$value": "#21212152", "$extensions": { "golem": { "modes": { "dark": "#21212100" } } } },
+      "floatingTop":      { "$type": "color", "$value": "#2121210a", "$extensions": { "golem": { "modes": { "dark": "#21212100" } } } },
+      "floatingMiddle":   { "$type": "color", "$value": "#21212129", "$extensions": { "golem": { "modes": { "dark": "#21212100" } } } },
+      "floatingBottom":   { "$type": "color", "$value": "#2121213d", "$extensions": { "golem": { "modes": { "dark": "#21212100" } } } }
+    },
+    "chart": {
+      "in":         { "$type": "color", "$value": "#267c29", "$description": "Incoming money.", "$extensions": { "golem": { "modes": { "dark": "#23af31" } } } },
+      "out":        { "$type": "color", "$value": "#212121", "$description": "Outgoing money.", "$extensions": { "golem": { "modes": { "dark": "#f9f9f9" } } } },
+      "cool":       { "$type": "color", "$value": "#888eb1", "$description": "Neutral series. Read from CO Chart / Column IB in Figma; not present in the showcase snapshot." },
+      "evaluation": { "$type": "color", "$value": "#43167c", "$extensions": { "golem": { "modes": { "dark": "#b497f1" } } } },
+      "stocks":     { "$type": "color", "$value": "#f45b6d", "$extensions": { "golem": { "modes": { "dark": "#ac444f" } } } },
+      "bonds":      { "$type": "color", "$value": "#4e5571", "$extensions": { "golem": { "modes": { "dark": "#a0a5c1" } } } },
+      "funds":      { "$type": "color", "$value": "#02a473", "$extensions": { "golem": { "modes": { "dark": "#177553" } } } },
+      "neon":       { "$type": "color", "$value": "#9a2760", "$extensions": { "golem": { "modes": { "dark": "#ee78aa" } } } },
+      "rustyRed":   { "$type": "color", "$value": "#e26e52", "$extensions": { "golem": { "modes": { "dark": "#9a5437" } } } },
+      "orangish":   { "$type": "color", "$value": "#7e472f", "$extensions": { "golem": { "modes": { "dark": "#f48a5c" } } } },
+      "plotInBackgroundTop":     { "$type": "color", "$value": "#267c293d", "$extensions": { "golem": { "modes": { "dark": "#23af313d" } } } },
+      "plotInBackgroundBottom":  { "$type": "color", "$value": "#267c2900", "$extensions": { "golem": { "modes": { "dark": "#23af3100" } } } },
+      "plotOutBackgroundTop":    { "$type": "color", "$value": "#2121213d", "$extensions": { "golem": { "modes": { "dark": "#f9f9f93d" } } } },
+      "plotOutBackgroundBottom": { "$type": "color", "$value": "#21212100", "$extensions": { "golem": { "modes": { "dark": "#f9f9f900" } } } }
+    }
+  }
+}

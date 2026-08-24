@@ -1,0 +1,1834 @@
+{
+  "$description": "Inventory of every component published to the Figma library '💠 ES Icon'. Generated from the Figma library index, not hand-typed. status: stable = use it | deprecated = never use in new work | internal = private sub-part, do not place directly | snowflake = one-off exception, do not reuse | draft = unfinished. ES Icon draws at 24px by default; the Android shortcut icons are export assets, not UI icons.",
+  "library": "💠 ES Icon",
+  "fileKey": "QOUtQjwwGQvhuJv4kUbSTm",
+  "readAt": "2026-08-12",
+  "count": 364,
+  "statusCounts": {
+    "internal": 11,
+    "stable": 352,
+    "deprecated": 1
+  },
+  "icons": [
+    {
+      "name": "_ES Icon / Adaptive PayMe Background",
+      "page": "Android Adaptive Icons for Shortcuts",
+      "status": "internal"
+    },
+    {
+      "name": "_ES Icon / Adaptive PayMe Foreground",
+      "page": "Android Adaptive Icons for Shortcuts",
+      "status": "internal"
+    },
+    {
+      "name": "_ES Icon / Adaptive QRCode Background",
+      "page": "Android Adaptive Icons for Shortcuts",
+      "status": "internal"
+    },
+    {
+      "name": "_ES Icon / Adaptive QRCode Foreground",
+      "page": "Android Adaptive Icons for Shortcuts",
+      "status": "internal"
+    },
+    {
+      "name": "_ES Icon / Adaptive SendPayment Background",
+      "page": "Android Adaptive Icons for Shortcuts",
+      "status": "internal"
+    },
+    {
+      "name": "_ES Icon / Adaptive SendPayment Foreground",
+      "page": "Android Adaptive Icons for Shortcuts",
+      "status": "internal"
+    },
+    {
+      "name": "_ES Icon / Adaptive Settings Backgound",
+      "page": "Android Adaptive Icons for Shortcuts",
+      "status": "internal"
+    },
+    {
+      "name": "_ES Icon / Adaptive Settings Foreground",
+      "page": "Android Adaptive Icons for Shortcuts",
+      "status": "internal"
+    },
+    {
+      "name": "API",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "ATM",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "ATM200",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "ATM500",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "ATMBalance",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "ATMContactless",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "ATMDeposit",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "AcceptingCards",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Accessibility",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "ActivateCard",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Activity",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "AddKey",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "AddNewCard",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "AddPhoto",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "AddressBook",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "AppleWatch",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "ArrowDown",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "ArrowRight",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "ArrowUp",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "AutoupdateStart",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "AutoupdateStop",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Baby",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Backspace",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "BalanceDown",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "BalanceUp",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Bank",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "BankIDBICSWIFT",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "BankIDNCC",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "BarChart",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "BarChartSum",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "BatchPayment",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Bell",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "BigArrowRight",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Bike",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Branch",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "BrokenHand",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Brush",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Bullet",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Calculator",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Calendar",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Camera",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Car",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "CarAccident",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Card",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "CardCanceled",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "CashOrder",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "CashPayment",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "CashServices",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Cashback",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Charge",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "ChargingBattery",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Chart",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Chat",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Chatbot",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Check",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "CheckOff",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "CheckOn",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Checkmark",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "CheckmarkFilled",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Child",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "CircledDown",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "CircledDownOutlined",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "CircledLeft",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "CircledRight",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "CircledUp",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "CircledUpOutlined",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "ClickToPay",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Clock",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "CompanyBig",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "CompanyNadaceJistota",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "CompanySmall",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Compass",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Contacts",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Contracts",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "CookieConsent",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Copy",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "CounterForForeigners",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "CreditCardNew",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "CzechCheck",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "CzechCurrency",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "CzechEdit",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Damage",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Deactivate",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Delete",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "DepositWithdrawal",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Desktop",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Devices",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "DevicesTabletLandscape",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "DirectDebits",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "DomesticPayment",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Download",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "DriveUp",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "ESPremium",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Ear",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "EarCrossed",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Edit",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Education",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Ellipsis",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Email",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "EnglishCheck",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "EnglishEdit",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Error",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Exchange",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Exit",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Expired",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "ExtraSafety",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "ExtraServices",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "ExtraTravel",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "FaceID",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "FaceUnlock",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Facebook",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Feedback",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "File",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Filter",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Fingerprint",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Flag1",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Flag2",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Flash",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "FlashOff",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Folder",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "ForeignCurrency",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "ForeignPayment",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Friends",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Global",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Goal",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "GuideLine",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Hamburger",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "HandLanguage",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "HappyFace",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Health",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "History",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Home",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "House",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "IdCard",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Idea",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Image",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Inbound",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Info",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Instagram",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Insurance",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "KBPlus",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Kabka",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Kebab",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Key",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Language",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Letter",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Letter_a",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Letter_b",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Letter_c",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Letter_d",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Letter_e",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Letter_f",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Letter_g",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Letter_h",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Letter_i",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Letter_j",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Letter_k",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Letter_l",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Letter_m",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Letter_n",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Letter_o",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Letter_p",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Letter_q",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Letter_r",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Letter_s",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Letter_t",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Letter_u",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Letter_v",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Letter_w",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Letter_x",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Letter_y",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Letter_z",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "LinkedIn",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "ListedItems",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "LockClosed",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Magicpen",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Map",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "MapPin",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "MapPinLocation",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "MapPinLocationCentered",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Megaphone",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Minus",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "MoneyBox",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "NotDelivered",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Number_1",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Number_10",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Number_11",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Number_12",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Number_13",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Number_14",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Number_15",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Number_16",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Number_17",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Number_18",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Number_19",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Number_2",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Number_20",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Number_21",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Number_22",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Number_23",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Number_24",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Number_25",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Number_26",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Number_27",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Number_28",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Number_29",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Number_3",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Number_30",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Number_31",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Number_32",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Number_33",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Number_34",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Number_35",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Number_36",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Number_37",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Number_38",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Number_39",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Number_4",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Number_40",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Number_41",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Number_42",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Number_43",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Number_44",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Number_45",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Number_46",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Number_47",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Number_48",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Number_49",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Number_5",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Number_50",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Number_6",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Number_7",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Number_8",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Number_9",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Number_I",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Number_II",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Number_III",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Number_IV",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Number_IX",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Number_V",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Number_VI",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Number_VII",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Number_VIII",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Number_X",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Offline",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Onboarding",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "OpenInNew",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Outbound",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Overdraft",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "PDF",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "PIN",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Pause",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Pay",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "PayAContact",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "PayLeft",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "PayMe",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "PaymentAuthorization",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Pension",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "People",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Percent",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Person",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "PersonCompany",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "PersonOctagon",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Phone",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "PhoneNumberVerification",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "PhoneOnline",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "PhoneText",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "PieChart",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "PinCharts",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "PinInputEmpty",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "PinInputSet",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Plant",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Play",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Plural",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "PluralCrossed",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Plus",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "PremiumCenter",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "QRCode",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "QuestionLine",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Refresh",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Renovation",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "RequestForRefund",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "SadFace",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Safe",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "SafeDepositBox",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Safebox",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Savingsafe",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "SealedBag",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Search",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Selection",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "SendMail",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "SendPayment",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "SepaPayment",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Settings",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Shield",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "ShoppingCart",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Signpost",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "SmartPhone",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Star",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "StarFilled",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Stopwatch",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Subscription",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "SubsidyAdvisory",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Sun",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Swap",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "SwapBox",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "SwapBoxVertical",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Tag",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "TagDelete",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Target",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "TaxResidency",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "TextFile",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Themes",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "ThirdPartyAccess",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Time",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "TopUp",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Travel",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "TravelInsurance",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Truck",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Unlock",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Value",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Video",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "VisibilityOff",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "VisibilityOn",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Wallet",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "WalletCrossed",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Warning",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "WebCamera",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "WebCameraOnline",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Wedding",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Wheelchair",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "WiFi",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "WirelessPayments",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "Withdrawal",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "X",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "XML",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "YouTube",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "ZoomIn",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "ZoomOut",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "iPad",
+      "page": "ES Icon",
+      "status": "stable"
+    },
+    {
+      "name": "⚠︎Placeholder",
+      "page": "ES Icon",
+      "status": "deprecated"
+    },
+    {
+      "name": "MapIconAtm",
+      "page": "MapPin",
+      "status": "stable"
+    },
+    {
+      "name": "MapIconAtmDeposit",
+      "page": "MapPin",
+      "status": "stable"
+    },
+    {
+      "name": "MapIconAtmDepositMinFiveHundred",
+      "page": "MapPin",
+      "status": "stable"
+    },
+    {
+      "name": "MapIconAtmDepositMinTwoHundred",
+      "page": "MapPin",
+      "status": "stable"
+    },
+    {
+      "name": "MapIconAtmMinFiveHundred",
+      "page": "MapPin",
+      "status": "stable"
+    },
+    {
+      "name": "MapIconAtmMinTwoHundred",
+      "page": "MapPin",
+      "status": "stable"
+    },
+    {
+      "name": "MapIconBranch",
+      "page": "MapPin",
+      "status": "stable"
+    },
+    {
+      "name": "MapPin",
+      "page": "MapPin",
+      "status": "stable"
+    },
+    {
+      "name": "MapPinCluster",
+      "page": "MapPin",
+      "status": "stable"
+    },
+    {
+      "name": "MapPinInfo",
+      "page": "MapPin",
+      "status": "stable"
+    },
+    {
+      "name": "MapPinSelected",
+      "page": "MapPin",
+      "status": "stable"
+    },
+    {
+      "name": "MapPin_Button",
+      "page": "MapPin",
+      "status": "stable"
+    },
+    {
+      "name": "_MapPin",
+      "page": "MapPin",
+      "status": "internal"
+    },
+    {
+      "name": "_MapPinInfo",
+      "page": "MapPin",
+      "status": "internal"
+    },
+    {
+      "name": "_MapPinSelected",
+      "page": "MapPin",
+      "status": "internal"
+    }
+  ]
+}

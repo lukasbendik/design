@@ -1,0 +1,39 @@
+{
+  "$schema": "https://tr.designtokens.org/format/",
+  "$description": "Golem elevation. Three composite shadows, each built from three drop shadows. All shadow colours are zeroed in dark mode — in dark UI, hierarchy comes from surface and border, never from a shadow.",
+  "$extensions": {
+    "golem": {
+      "source": "Figma composite effect variables '✅ shadow/✅ panel' and '✅ shadow/✅ floating' read from CO Content Card, CO InLine Message, CO Snackbar and CO Segmented Control nodes 2026-08-12; 'highlighted' colours from the Golem showcase snapshot 2026-08-11, composite geometry assumed identical to panel",
+      "note": "Figma names the blur tokens by percentage of a 100 scale: blur/10 = 1px, blur/25 = 2px, blur/100 = 8px; offset/5 = 0.4px, offset/10 = 1px."
+    }
+  },
+  "shadow": {
+    "panel": {
+      "$type": "shadow",
+      "$description": "Cards, panels, inline messages. The default raised surface.",
+      "$value": [
+        { "color": "#2121211f", "offsetX": "0px", "offsetY": "0px",   "blur": "1px", "spread": "0px" },
+        { "color": "#21212114", "offsetX": "0px", "offsetY": "1px",   "blur": "8px", "spread": "0px" },
+        { "color": "#21212105", "offsetX": "0px", "offsetY": "0.4px", "blur": "2px", "spread": "0px" }
+      ]
+    },
+    "floating": {
+      "$type": "shadow",
+      "$description": "Floating toolbar, snackbar, segmented control thumb — anything that sits above scrolling content.",
+      "$value": [
+        { "color": "#2121213d", "offsetX": "0px", "offsetY": "0px",   "blur": "1px", "spread": "0px" },
+        { "color": "#21212129", "offsetX": "0px", "offsetY": "1px",   "blur": "8px", "spread": "0px" },
+        { "color": "#2121210a", "offsetX": "0px", "offsetY": "0.4px", "blur": "2px", "spread": "0px" }
+      ]
+    },
+    "highlighted": {
+      "$type": "shadow",
+      "$description": "Highlighted card. Colours verified; the offsets and blurs are assumed to match panel and are the one unverified value in this file.",
+      "$value": [
+        { "color": "#21212152", "offsetX": "0px", "offsetY": "0px",   "blur": "1px", "spread": "0px" },
+        { "color": "#21212129", "offsetX": "0px", "offsetY": "1px",   "blur": "8px", "spread": "0px" },
+        { "color": "#21212114", "offsetX": "0px", "offsetY": "0.4px", "blur": "2px", "spread": "0px" }
+      ]
+    }
+  }
+}

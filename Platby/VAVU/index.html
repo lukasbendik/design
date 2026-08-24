@@ -1,0 +1,3565 @@
+<!DOCTYPE html>
+<html lang="cs" data-platform="ib" data-theme="light">
+<head>
+  <script>
+  (function(){var H='4c129f69f551195cbc5e8b57cc5a0975b6efa1e8510573524d11df03c7d010c6',K='rozcestnik__auth';try{var p=new URLSearchParams(location.search);if(p.get('k')===H){localStorage.setItem(K,'1');p.delete('k');var q=p.toString();history.replaceState(history.state,'',location.pathname+(q?'?'+q:'')+location.hash);}if(localStorage.getItem(K)!=='1')location.replace('../../');}catch(e){}})();
+  </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  <title>VAVU – nová platba</title>
+  <link rel="stylesheet" href="../../design-system/design-system/prototype-kit/tokens.css?v=1">
+  <link rel="stylesheet" href="../../design-system/design-system/prototype-kit/fonts.css?v=1">
+  <link rel="stylesheet" href="../../design-system/design-system/prototype-kit/templates.css?v=1">
+  <link rel="stylesheet" href="../../design-system/design-system/prototype-kit/components.css?v=1">
+  <script src="../../design-system/design-system/prototype-kit/icons.js?v=1"></script>
+  
+  <style>
+    /* ---- KB Design System tokens (copied from tokens.css) ---- */
+    :root {
+      --font-family: Inter, system-ui, -apple-system, sans-serif;
+      --space-2: 2px;
+      --space-4: 4px;
+      --space-8: 8px;
+      --space-12: 12px;
+      --space-16: 16px;
+      --space-24: 24px;
+      --space-32: 32px;
+      --space-48: 48px;
+      --space-64: 64px;
+      --space-0: 0px;
+
+      --pad-xl: 16px;
+      --pad-4xl: 48px;
+      --pad-xs: 2px;
+      --pad-md: 8px;
+      --pad-lg: 12px;
+      --pad-sm: 4px;
+      --pad-2xl: 24px;
+      --pad-3xl: 32px;
+
+      --radius-full: 1024px;
+      --radius-sm: 4px;
+      --radius-md: 8px;
+      --radius-xl: 16px;
+      --radius-null: 0px;
+      --radius-segmentedControl-segmentRadius: 6px;
+      --radius-xs: 2px;
+
+      --border-lg: 3px;
+      --border-md: 2px;
+      --border-sm: 1px;
+
+      --color-content-primary: #212121;
+      --color-interactive-primary: #e00000;
+      --color-interactive-primary-action: #be0000;
+      --color-content-tertiary: #717171;
+      --color-background-border: #adadad80;
+      --color-interactive-secondary-active: #2121211f;
+      --color-attention-information: #212121;
+      --color-chart-in: #267c29;
+      --color-attention-alert: #b53022;
+      --color-interactive-on-primary: #ffffff;
+      --color-attention-processing: #7e6d19;
+      --color-background-divider: #adadad80;
+      --color-content-secondary: #454545;
+      --color-background-border-highlighted: #adadad;
+      --color-background-surface-highlighted: #ffffff;
+      --color-dialog-surface: #ffffff;
+      --color-attention-success: #267c29;
+      --color-content-quaternary: #adadad;
+      --color-background-surface: #ffffff;
+      --color-background-body: #f8f8f8;
+      --color-attention-success-surface: #e2f5de;
+      --color-attention-alert-surface: #ffede8;
+      --color-attention-information-surface: #ededed;
+      --color-dialog-overlay: #21212166;
+
+      --shadow-panel: 0px 0px 1px 0px #2121211f, 0px 1px 8px 0px #21212114, 0px 0.4px 2px 0px #21212105;
+      --shadow-floating: 0px 0px 1px 0px #2121213d, 0px 1px 8px 0px #21212129, 0px 0.4px 2px 0px #2121210a;
+      --shadow-highlighted: 0px 0px 1px 0px #21212152, 0px 4.4px 22px 0px #21212129, 0px 11px 88px 0px #21212114;
+    }
+
+    /* Starší obrazovky zachovat, hodnoty napojit na nový Golem DS. */
+    :root {
+      --color-content-primary: var(--content-primary);
+      --color-content-secondary: var(--content-secondary);
+      --color-content-tertiary: var(--content-tertiary);
+      --color-content-quaternary: var(--content-quaternary);
+      --color-interactive-primary: var(--interactive-primary);
+      --color-interactive-primary-action: var(--interactive-primary-action);
+      --color-interactive-on-primary: var(--interactive-on-primary);
+      --color-interactive-secondary-active: var(--interactive-secondary-active);
+      --color-attention-information: var(--attention-information);
+      --color-attention-alert: var(--attention-alert);
+      --color-attention-success: var(--attention-success);
+      --color-attention-processing: var(--attention-processing);
+      --color-background-body: var(--background-body);
+      --color-background-surface: var(--background-surface);
+      --color-background-surface-highlighted: var(--background-surface-highlighted);
+      --color-background-border: var(--background-border);
+      --color-background-border-highlighted: var(--background-border-highlighted);
+      --color-background-divider: var(--background-divider);
+      --color-dialog-surface: var(--dialog-surface);
+      --color-dialog-overlay: var(--dialog-overlay);
+      --color-chart-in: var(--chart-in);
+      --pad-xs: var(--padding-xs);
+      --pad-sm: var(--padding-sm);
+      --pad-md: var(--padding-md);
+      --pad-lg: var(--padding-lg);
+      --pad-xl: var(--padding-xl);
+      --pad-2xl: var(--padding-2xl);
+      --pad-3xl: var(--padding-3xl);
+      --pad-4xl: var(--padding-4xl);
+      --radius-sm: var(--border-radius-sm);
+      --radius-md: var(--border-radius-md);
+      --radius-xl: var(--border-radius-xl);
+      --radius-full: var(--border-radius-full);
+    }
+
+    /* ---- Typografické třídy ---- */
+    .t-headings-title-primary { font-family: var(--font-family); font-weight: 500; font-size: 42px; line-height: 52px; margin: 0; }
+    .t-headings-title-secondary { font-family: var(--font-family); font-weight: 500; font-size: 32px; line-height: 44px; margin: 0; }
+    .t-headings-title-tertiary { font-family: var(--font-family); font-weight: 500; font-size: 28px; line-height: 36px; margin: 0; }
+    .t-headings-title-quaternary { font-family: var(--font-family); font-weight: 500; font-size: 24px; line-height: 32px; margin: 0; }
+    .t-headings-headline-primary { font-family: var(--font-family); font-weight: 500; font-size: 20px; line-height: 28px; margin: 0; }
+    .t-headings-headline-secondary { font-family: var(--font-family); font-weight: 500; font-size: 18px; line-height: 24px; margin: 0; }
+    .t-headings-headline-secondary-bold { font-family: var(--font-family); font-weight: 600; font-size: 18px; line-height: 24px; margin: 0; }
+    .t-content-body-primary { font-family: var(--font-family); font-weight: 400; font-size: 16px; line-height: 24px; margin: 0; }
+    .t-content-body-primary-bold { font-family: var(--font-family); font-weight: 500; font-size: 16px; line-height: 24px; margin: 0; }
+    .t-content-button { font-family: var(--font-family); font-weight: 500; font-size: 16px; line-height: 24px; margin: 0; }
+    .t-content-body-secondary { font-family: var(--font-family); font-weight: 400; font-size: 14px; line-height: 20px; margin: 0; }
+    .t-content-body-secondary-bold { font-family: var(--font-family); font-weight: 500; font-size: 14px; line-height: 20px; margin: 0; }
+    .t-content-caption-primary { font-family: var(--font-family); font-weight: 400; font-size: 12px; line-height: 16px; margin: 0; }
+    .t-content-caption-primary-bold { font-family: var(--font-family); font-weight: 500; font-size: 12px; line-height: 16px; margin: 0; }
+
+    /* ---- Globální styly ---- */
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: var(--font-family);
+      background-color: var(--color-background-body);
+      color: var(--color-content-primary);
+      overflow: hidden;
+      height: 100vh;
+    }
+    
+    * {
+      box-sizing: border-box;
+    }
+
+    /* ---- Desktop Scaffold ---- */
+    .app-wrapper {
+      max-width: 1440px;
+      margin: 0 auto;
+      position: relative;
+      height: 100vh;
+      background-color: var(--color-background-body);
+      overflow: hidden;
+    }
+
+    .app-container {
+      display: flex;
+      height: 100vh;
+    }
+
+    /* Sidebar (levé menu) */
+    .sidebar {
+      width: var(--layout-nav-panel);
+      background-color: var(--color-background-body);
+      border-right: none;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 104px 0 24px 0;
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      z-index: 100;
+    }
+
+    .sidebar-menu {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      padding: 0 12px;
+    }
+
+    .menu-item {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 12px 16px;
+      border-radius: var(--radius-md);
+      text-decoration: none;
+      color: var(--color-content-primary);
+      transition: background-color 0.2s ease, color 0.2s ease;
+      cursor: pointer;
+    }
+
+    .menu-item svg {
+      width: 24px;
+      height: 24px;
+      stroke: var(--color-content-secondary);
+      fill: none;
+      transition: stroke 0.2s ease;
+    }
+
+    .menu-item:hover {
+      background-color: var(--color-interactive-secondary-active);
+    }
+
+    .menu-item.active {
+      background-color: var(--color-interactive-primary);
+      color: var(--color-interactive-on-primary);
+    }
+
+    .menu-item.active svg {
+      stroke: var(--color-interactive-on-primary);
+    }
+
+    .sidebar-footer {
+      padding: 0 28px;
+    }
+
+    /* Topbar (horní lišta) */
+    .topbar {
+      height: 48px;
+      background-color: var(--color-background-body);
+      border-bottom: none;
+      position: absolute;
+      top: 0;
+      left: var(--layout-nav-panel);
+      right: 0;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      padding: 0 var(--padding-xl);
+      gap: var(--padding-2xl);
+      z-index: 90;
+    }
+
+    .topbar-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--color-content-primary);
+      font-size: 14px;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .topbar-item svg {
+      width: 20px;
+      height: 20px;
+      stroke: var(--color-content-secondary);
+    }
+
+    .topbar-item:hover {
+      opacity: 0.8;
+    }
+
+    /* Profil s iniciály */
+    .user-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: var(--radius-full);
+      background-color: #e5e5e5;
+      color: var(--color-content-primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      font-size: 13px;
+    }
+
+    .badge-notification {
+      background-color: var(--color-interactive-primary);
+      color: white;
+      border-radius: var(--radius-full);
+      padding: 1px 6px;
+      font-size: 10px;
+      font-weight: 700;
+      margin-left: -4px;
+      margin-top: -10px;
+    }
+
+    /* Hlavní obsahová oblast */
+    .main-content {
+      margin-left: var(--layout-nav-panel);
+      margin-top: 48px;
+      padding: var(--padding-4xl) var(--padding-xl) var(--padding-xl);
+      display: flex;
+      gap: var(--padding-xl);
+      width: calc(100% - var(--layout-nav-panel));
+      height: calc(100vh - 48px);
+      overflow: hidden;
+    }
+
+    /* Středový sloupec */
+    .center-column {
+      flex: 1;
+      max-width: var(--layout-main-max);
+      display: flex;
+      flex-direction: column;
+      gap: var(--padding-xl);
+      height: 100%;
+      overflow-y: auto;
+      padding-right: 8px;
+    }
+
+    /* Pravý sloupec */
+    .right-column {
+      width: 320px;
+      display: flex;
+      flex-direction: column;
+      gap: var(--padding-xl);
+      flex-shrink: 0;
+      height: 100%;
+      overflow-y: auto;
+    }
+
+    /* ---- Komponenty / Karty (CO Content Card) ---- */
+    .card {
+      background-color: var(--color-background-surface);
+      border-radius: var(--radius-md);
+      border: 1px solid var(--color-background-border);
+      box-shadow: var(--shadow-panel);
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+
+    .card-secondary {
+      background-color: transparent;
+      border: 1px solid var(--color-background-border);
+      border-radius: var(--radius-md);
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .card-navigation {
+      background-color: var(--color-background-body);
+      border: 1px solid var(--color-background-border);
+      border-radius: var(--radius-md);
+      box-shadow: none;
+      padding: 0 20px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .card-title {
+      font-weight: 500;
+      font-size: 16px;
+      margin: 0 0 16px 0;
+      color: var(--color-content-primary);
+    }
+
+    /* Velká akční karta (červená, např. Nová platba) */
+    .card-action-red {
+      background-color: var(--color-interactive-primary);
+      color: var(--color-interactive-on-primary);
+      border-radius: var(--radius-md);
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      cursor: pointer;
+      transition: background-color 0.2s ease;
+      width: 100%;
+      box-shadow: var(--shadow-panel);
+      font-weight: 600;
+      font-size: 15px;
+    }
+
+    .card-action-red:hover {
+      background-color: var(--color-interactive-primary-action);
+    }
+
+    .card-action-red svg {
+      width: 24px;
+      height: 24px;
+      stroke: currentColor;
+      fill: none;
+    }
+
+    /* Tlačítka */
+    .btn {
+      height: 48px;
+      padding: 0 var(--pad-2xl);
+      border-radius: var(--radius-md);
+      border: none;
+      font-family: var(--font-family);
+      font-size: 16px;
+      font-weight: 500;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      cursor: pointer;
+      transition: background-color 0.2s ease, color 0.2s ease;
+      text-decoration: none;
+      width: 100%;
+    }
+
+    .btn-primary {
+      background-color: var(--color-interactive-primary);
+      color: var(--color-interactive-on-primary);
+    }
+
+    .btn-primary:hover {
+      background-color: var(--color-interactive-primary-action);
+    }
+
+    .btn-secondary {
+      background-color: var(--color-background-surface);
+      border: 1px solid var(--color-background-border-highlighted);
+      color: var(--color-content-primary);
+    }
+
+    .btn-secondary:hover {
+      background-color: var(--color-interactive-secondary-active);
+    }
+
+    /* Tlačítko zpět */
+    .back-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: none;
+      border: none;
+      color: var(--color-content-primary);
+      font-size: 16px;
+      font-weight: 500;
+      padding: 0;
+      margin-bottom: 8px;
+      cursor: pointer;
+      align-self: flex-start;
+    }
+
+    .back-btn svg {
+      width: 20px;
+      height: 20px;
+      stroke: currentColor;
+    }
+
+    /* Segmented Control / Taby */
+    .segmented-control {
+      background-color: #ededed;
+      padding: 3px;
+      border-radius: var(--radius-md);
+      display: flex;
+      margin-bottom: 8px;
+    }
+
+    .segment-btn {
+      flex: 1;
+      height: 36px;
+      border: none;
+      background: none;
+      border-radius: var(--radius-segmentedControl-segmentRadius);
+      font-family: var(--font-family);
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--color-content-secondary);
+      cursor: pointer;
+      transition: background-color 0.2s ease, color 0.2s ease;
+    }
+
+    .segment-btn.active {
+      background-color: var(--color-background-surface);
+      color: var(--color-content-primary);
+      box-shadow: 0px 1px 3px rgba(0,0,0,0.1);
+    }
+
+    /* Seznam transakcí / řádky */
+    .list-container {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .list-section-title {
+      font-size: 18px;
+      font-weight: 600;
+      margin: 24px 0 12px 0;
+      color: var(--color-content-primary);
+    }
+
+    .list-section-title:first-of-type {
+      margin-top: 0;
+    }
+
+    .list-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 0;
+      border-bottom: 1px solid var(--color-background-divider);
+      cursor: pointer;
+      transition: opacity 0.2s ease;
+    }
+
+    .list-item:hover {
+      opacity: 0.7;
+    }
+
+    .list-item:last-child {
+      border-bottom: none;
+    }
+
+    .list-item-left {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .item-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: var(--radius-full);
+      background-color: #ededed;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--color-content-secondary);
+      position: relative;
+    }
+
+    .item-icon svg {
+      width: 20px;
+      height: 20px;
+      stroke: currentColor;
+    }
+
+    .badge-icon {
+      position: absolute;
+      bottom: -2px;
+      right: -2px;
+      width: 18px;
+      height: 18px;
+      border-radius: var(--radius-full);
+      background-color: var(--color-background-surface);
+      border: 1px solid var(--color-background-border-highlighted);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .badge-icon svg {
+      width: 10px;
+      height: 10px;
+    }
+
+    .badge-success { background-color: var(--color-attention-success); color: white; border-color: var(--color-attention-success); }
+    .badge-alert { background-color: #212121; color: white; border-color: #212121; }
+
+    .item-details {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .item-title {
+      font-size: 16px;
+      font-weight: 500;
+      color: var(--color-content-primary);
+    }
+
+    .item-subtitle {
+      font-size: 14px;
+      color: var(--color-content-tertiary);
+    }
+
+    .item-error-msg {
+      font-size: 12px;
+      color: var(--color-attention-alert);
+      font-weight: 500;
+    }
+
+    .list-item-right {
+      text-align: right;
+      font-size: 16px;
+      font-weight: 600;
+    }
+
+    .amount-positive {
+      color: var(--color-attention-success);
+    }
+
+    /* Odkazy v pravém panelu */
+    .link-list {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .link-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 0;
+      border-bottom: 1px solid var(--color-background-divider);
+      color: var(--color-content-primary);
+      text-decoration: none;
+      font-weight: 500;
+      cursor: pointer;
+      transition: opacity 0.2s ease;
+    }
+
+    .link-item:hover {
+      opacity: 0.7;
+    }
+
+    .link-item:last-child {
+      border-bottom: none;
+    }
+
+    .link-item-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .link-item-left svg {
+      width: 20px;
+      height: 20px;
+      stroke: var(--color-interactive-primary);
+      fill: none;
+    }
+
+    .link-item-chevron {
+      width: 18px;
+      height: 18px;
+      stroke: var(--color-content-quaternary);
+    }
+
+    /* Progress bar widget (Souhrn) */
+    .summary-progress-group {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .progress-bar-container {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .progress-bar-labels {
+      display: flex;
+      justify-content: space-between;
+      font-size: 14px;
+    }
+
+    .progress-bar-title {
+      color: var(--color-content-secondary);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .progress-bar-value {
+      font-weight: 600;
+    }
+
+    .progress-bg {
+      height: 8px;
+      background-color: #ededed;
+      border-radius: var(--radius-full);
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      border-radius: var(--radius-full);
+    }
+
+    .progress-fill.expenses {
+      background-color: var(--color-content-primary);
+      width: 50%;
+    }
+
+    .progress-fill.allowance {
+      background-color: var(--color-attention-success);
+      width: 100%;
+    }
+
+    .summary-difference {
+      display: flex;
+      justify-content: space-between;
+      font-size: 14px;
+      font-weight: 500;
+      margin-top: 8px;
+      border-top: 1px solid var(--color-background-divider);
+      padding-top: 16px;
+    }
+
+    /* Plovoucí chatbot */
+    .chatbot-btn {
+      position: absolute;
+      bottom: 24px;
+      right: 24px;
+      background-color: #212121;
+      color: white;
+      padding: 12px 20px;
+      border-radius: var(--radius-full);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 500;
+      font-size: 14px;
+      box-shadow: var(--shadow-floating);
+      cursor: pointer;
+      z-index: 1000;
+      transition: background-color 0.2s ease;
+    }
+
+    .chatbot-btn:hover {
+      background-color: #333333;
+    }
+
+    .chatbot-btn svg {
+      width: 20px;
+      height: 20px;
+      stroke: currentColor;
+      fill: none;
+    }
+
+    /* Vyhledávání / Filtr */
+    .search-container {
+      position: relative;
+      width: 100%;
+      margin-bottom: 8px;
+    }
+
+    .search-input {
+      width: 100%;
+      height: 48px;
+      padding: 0 44px 0 16px;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--color-background-border);
+      background-color: var(--color-background-surface);
+      font-family: var(--font-family);
+      font-size: 16px;
+      color: var(--color-content-primary);
+      outline: none;
+    }
+
+    .search-input:focus {
+      border-color: var(--color-content-primary);
+    }
+
+    .search-icon-right {
+      position: absolute;
+      right: 16px;
+      top: 12px;
+      color: var(--color-interactive-primary);
+      cursor: pointer;
+    }
+
+    .search-icon-right svg {
+      width: 24px;
+      height: 24px;
+      stroke: currentColor;
+      fill: none;
+    }
+
+    /* ---- Celoobrazovkové Modální Dialogy ---- */
+    .modal-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: var(--color-background-body);
+      z-index: 2000;
+      display: none;
+      align-items: flex-start;
+      justify-content: center;
+      overflow-y: auto;
+    }
+
+    .modal-overlay.active {
+      display: flex;
+    }
+
+    .modal-content {
+      background-color: var(--color-background-body);
+      width: 100%;
+      min-height: 100vh;
+      height: auto;
+      padding: 80px 40px 40px 40px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      position: relative;
+    }
+
+    /* Poloprůhledný overlay pro menší dialogy */
+    .modal-overlay-popup {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      width: 100vw;
+      height: 100vh;
+      background-color: rgba(0, 0, 0, 0.4);
+      backdrop-filter: blur(4px);
+      z-index: 3000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .modal-overlay-popup.active {
+      display: flex;
+    }
+
+    .modal-content-popup {
+      background-color: var(--color-background-surface);
+      box-shadow: var(--shadow-panel);
+      border: 1px solid var(--color-background-border);
+      border-radius: var(--radius-lg);
+      width: 100%;
+      max-width: 440px;
+      padding: 32px 24px;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    .modal-form-wrap {
+      width: 100%;
+      max-width: 600px;
+      display: flex;
+      flex-direction: column;
+      min-height: calc(100vh - 120px);
+      justify-content: space-between;
+      position: relative;
+    }
+
+    .modal-form-top {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      width: 100%;
+    }
+
+    .modal-form-bottom {
+      margin-top: auto;
+      padding-top: 40px;
+      width: 100%;
+    }
+
+    .modal-close {
+      position: fixed;
+      top: 24px;
+      right: 24px;
+      border: none;
+      background: none;
+      cursor: pointer;
+      color: var(--color-content-tertiary);
+      padding: 8px;
+      z-index: 2100;
+      border-radius: var(--radius-full);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background-color 0.2s ease;
+    }
+
+    .modal-close:hover {
+      background-color: var(--color-interactive-secondary-active);
+    }
+
+    .modal-close svg {
+      width: 28px;
+      height: 28px;
+      stroke: currentColor;
+    }
+
+    /* SuperField (Floating Label Box) */
+    .super-field {
+      background-color: var(--color-background-surface);
+      border: 1px solid var(--color-background-border);
+      border-radius: var(--radius-md);
+      padding: 10px 16px;
+      display: flex;
+      flex-direction: column;
+      height: 64px;
+      justify-content: space-between;
+      width: 100%;
+      transition: border-color 0.2s;
+    }
+
+    .super-field:focus-within {
+      border-color: var(--color-content-primary);
+    }
+
+    .super-field-label {
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--color-content-tertiary);
+      text-transform: none;
+      margin: 0;
+    }
+
+    .super-field-input {
+      border: none;
+      background: none;
+      outline: none;
+      font-family: var(--font-family);
+      font-size: 16px;
+      color: var(--color-content-primary);
+      width: 100%;
+      padding: 0;
+      margin-top: 2px;
+    }
+
+    .super-field-input::placeholder {
+      color: var(--color-content-quaternary);
+    }
+
+    .form-row {
+      display: flex;
+      gap: 16px;
+      width: 100%;
+    }
+
+    /* Modal footer se šedým pozadím pro resultu */
+    .modal-footer-gray {
+      background-color: #ededed;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 88px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      padding: 0 40px;
+      border-top: 1px solid var(--color-background-divider);
+      z-index: 2050;
+    }
+
+    /* Box pro limity v autorizaci */
+    .limits-box {
+      background-color: var(--color-background-body);
+      border-radius: var(--radius-md);
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .limit-row {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    /* Zaškrtávací seznam v autorizaci */
+    .auth-actions-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+
+    .checkbox-container {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      cursor: pointer;
+      user-select: none;
+      width: 100%;
+    }
+
+    .checkbox-container input {
+      position: absolute;
+      opacity: 0;
+      cursor: pointer;
+      height: 0;
+      width: 0;
+    }
+
+    .checkmark {
+      height: 22px;
+      width: 22px;
+      background-color: var(--color-background-surface);
+      border: 1px solid var(--color-background-border-highlighted);
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background-color 0.2s ease, border-color 0.2s ease;
+    }
+
+    .checkbox-container:hover input ~ .checkmark {
+      background-color: var(--color-interactive-secondary-active);
+    }
+
+    .checkbox-container input:checked ~ .checkmark {
+      background-color: var(--color-interactive-primary);
+      border-color: var(--color-interactive-primary);
+    }
+
+    .checkmark svg {
+      display: none;
+      width: 14px;
+      height: 14px;
+      stroke: white;
+    }
+
+    .checkbox-container input:checked ~ .checkmark svg {
+      display: block;
+    }
+
+    .auth-item-card {
+      background-color: var(--color-background-surface);
+      border: 1px solid var(--color-background-border);
+      border-radius: var(--radius-md);
+      padding: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      transition: border-color 0.2s ease;
+    }
+
+    .auth-item-card:hover {
+      border-color: var(--color-background-border-highlighted);
+    }
+
+    .auth-item-card > .t-headings-headline-secondary-bold {
+      white-space: nowrap;
+      text-align: right;
+      flex-shrink: 0;
+    }
+
+    .delete-link {
+      color: var(--color-interactive-primary);
+      text-decoration: underline;
+      font-weight: 500;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    .delete-link.disabled {
+      color: var(--color-content-quaternary);
+      cursor: not-allowed;
+      text-decoration: none;
+    }
+
+    /* ---- Přepínání obrazovek ---- */
+    .screen {
+      display: none;
+      width: 100%;
+    }
+
+    .screen.active {
+      display: flex;
+      gap: 40px;
+    }
+
+    /* ---- VAVU: Flow / Narrow / IB podle nového Golem DS ---- */
+    body.flow-mode .sidebar,
+    body.flow-mode .topbar,
+    body.flow-mode .chatbot-btn {
+      display: none;
+    }
+
+    body.flow-mode .app-wrapper {
+      max-width: none;
+    }
+
+    body.flow-mode .main-content {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100vh;
+      display: block;
+    }
+
+    .payment-screen {
+      width: 100%;
+      height: 100%;
+      flex-direction: column;
+      gap: 0 !important;
+      overflow: hidden;
+      background: var(--background-body);
+    }
+
+    .payment-screen.active {
+      display: flex;
+    }
+
+    .payment-flow-header {
+      flex: none;
+      width: min(100%, var(--layout-narrow-column));
+      min-height: 48px;
+      margin: 0 auto;
+      padding: var(--padding-md) var(--padding-xl) var(--padding-sm);
+      display: flex;
+      align-items: center;
+    }
+
+    .payment-flow-header .header-spacer {
+      flex: 1;
+    }
+
+    .payment-header-action {
+      min-width: 48px;
+      min-height: 48px;
+      padding: 0 var(--padding-md);
+      border: 0;
+      border-radius: var(--border-radius-md);
+      background: transparent;
+      color: var(--content-primary);
+      font: var(--content-body-secondary-bold);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--padding-sm);
+    }
+
+    .payment-header-action:hover {
+      background: var(--interactive-secondary-action);
+    }
+
+    .payment-flow-content {
+      flex: 1 1 auto;
+      min-height: 0;
+      overflow-y: auto;
+      scrollbar-width: thin;
+    }
+
+    .payment-flow-column {
+      width: min(100%, var(--layout-narrow-column));
+      margin: 0 auto;
+      padding: var(--padding-xl) var(--padding-xl) var(--padding-4xl);
+      display: flex;
+      flex-direction: column;
+      gap: var(--padding-2xl);
+    }
+
+    .payment-flow-title {
+      font: var(--headings-title-secondary);
+      letter-spacing: var(--tracking-title-secondary);
+      margin: 0;
+    }
+
+    .payment-account-card {
+      padding: var(--padding-xl);
+      display: flex;
+      align-items: center;
+      gap: var(--padding-xl);
+      border: var(--border-sm) solid var(--background-border);
+      border-radius: var(--border-radius-md);
+      background: var(--background-surface);
+      cursor: pointer;
+    }
+
+    .payment-account-copy {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: var(--padding-xs);
+    }
+
+    .payment-account-name {
+      font: var(--content-body-primary-bold);
+    }
+
+    .payment-account-detail {
+      font: var(--content-body-secondary);
+      color: var(--content-tertiary);
+    }
+
+    .payment-field-row {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 104px;
+      gap: var(--padding-md);
+    }
+
+    .payment-field {
+      display: flex;
+      flex-direction: column;
+      gap: var(--padding-sm);
+    }
+
+    .payment-control {
+      position: relative;
+      min-height: 76px;
+      padding: var(--padding-md) var(--padding-lg) var(--padding-lg);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      border: var(--border-sm) solid var(--background-border-highlighted);
+      border-radius: var(--border-radius-md);
+      background: var(--background-surface);
+    }
+
+    .payment-control:hover {
+      border-color: var(--content-primary);
+    }
+
+    .payment-control:focus-within {
+      padding: calc(var(--padding-md) - 2px) calc(var(--padding-lg) - 2px) calc(var(--padding-lg) - 2px);
+      border: var(--border-lg) solid var(--interactive-secondary);
+    }
+
+    .payment-control.is-error {
+      border-color: var(--attention-alert);
+    }
+
+    .payment-control-label {
+      font: var(--content-caption-primary-bold);
+      color: var(--content-primary);
+    }
+
+    .payment-control input,
+    .payment-control textarea,
+    .payment-control select {
+      width: 100%;
+      min-width: 0;
+      padding: 0;
+      border: 0;
+      outline: 0;
+      resize: none;
+      appearance: none;
+      background: transparent;
+      color: var(--content-primary);
+      font: var(--content-body-primary-bold);
+      letter-spacing: var(--tracking-body-primary);
+    }
+
+    .payment-control input::placeholder,
+    .payment-control textarea::placeholder {
+      color: var(--content-tertiary);
+      opacity: 1;
+    }
+
+    .payment-control-select {
+      padding-right: var(--padding-2xl);
+    }
+
+    .payment-select-caret {
+      position: absolute;
+      right: var(--padding-xl);
+      bottom: 18px;
+      width: 8px;
+      height: 16px;
+      transform: rotate(90deg);
+      pointer-events: none;
+    }
+
+    .payment-field-message {
+      min-height: 16px;
+      font: var(--content-caption-primary-bold);
+      color: var(--attention-information);
+    }
+
+    .payment-field-message.error {
+      color: var(--attention-alert);
+    }
+
+    .qr-upload {
+      display: flex;
+      align-items: center;
+      gap: var(--padding-xl);
+      min-height: 88px;
+      padding: var(--padding-lg);
+      border: var(--border-sm) dashed var(--content-primary);
+      border-radius: var(--border-radius-md);
+      background: var(--background-body);
+      font: var(--content-body-secondary-bold);
+    }
+
+    .qr-upload-icon {
+      width: 56px;
+      height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: var(--border-radius-sm);
+      background: var(--attention-information-surface);
+      color: var(--content-tertiary);
+    }
+
+    .qr-upload-action {
+      align-self: flex-end;
+      padding: 0;
+      border: 0;
+      background: transparent;
+      color: var(--interactive-secondary);
+      font: var(--content-body-primary-bold);
+      text-decoration: underline;
+      text-underline-offset: 4px;
+      cursor: pointer;
+    }
+
+    .payment-segment-label {
+      margin: 0 0 var(--padding-md);
+      font: var(--content-body-primary);
+    }
+
+    .payment-segmented {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      padding: var(--padding-sm);
+      border-radius: var(--border-radius-md);
+      background: var(--attention-information-surface);
+    }
+
+    .payment-segmented button {
+      min-height: 44px;
+      padding: 0 var(--padding-xl);
+      border: 0;
+      border-radius: 6px;
+      background: transparent;
+      color: var(--content-primary);
+      font: var(--content-body-primary-bold);
+      cursor: pointer;
+    }
+
+    .payment-segmented button.active {
+      background: var(--background-surface-highlighted);
+      box-shadow: var(--shadow-floating);
+    }
+
+    .payment-buttonbar {
+      flex: none;
+      padding: var(--padding-xl);
+      background: var(--background-body);
+      box-shadow: var(--shadow-panel);
+    }
+
+    .payment-buttonbar-row {
+      width: min(100%, var(--layout-narrow-column));
+      margin: 0 auto;
+      display: flex;
+      justify-content: flex-end;
+      gap: var(--padding-xl);
+    }
+
+    .payment-buttonbar .btn {
+      width: auto;
+      min-width: 144px;
+      padding: 0 var(--padding-xl);
+    }
+
+    .signature-modal {
+      max-width: 720px;
+      padding: var(--padding-2xl) 0 0;
+      align-items: stretch;
+      text-align: left;
+      border: 0;
+      border-radius: var(--border-radius-xl);
+      overflow: hidden;
+      background: var(--dialog-surface);
+      box-shadow: var(--shadow-highlighted);
+    }
+
+    .signature-modal-header {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--padding-xl);
+      padding: 0 var(--padding-2xl) var(--padding-2xl);
+    }
+
+    .signature-modal-title {
+      flex: 1;
+      margin: 0;
+      font: var(--headings-title-secondary);
+      letter-spacing: var(--tracking-title-secondary);
+    }
+
+    .signature-close {
+      width: 48px;
+      height: 48px;
+      margin: -12px -12px 0 0;
+      border: 0;
+      border-radius: var(--border-radius-md);
+      background: transparent;
+      color: var(--content-primary);
+      cursor: pointer;
+    }
+
+    .signature-list {
+      margin: 0 var(--padding-2xl) var(--padding-2xl);
+      border-radius: var(--border-radius-md);
+      overflow: hidden;
+      background: var(--background-surface);
+      box-shadow: var(--shadow-panel);
+    }
+
+    .signature-option {
+      width: 100%;
+      min-height: 92px;
+      padding: var(--padding-xl);
+      display: grid;
+      grid-template-columns: 32px 1fr 24px;
+      align-items: center;
+      gap: var(--padding-xl);
+      border: 0;
+      background: transparent;
+      color: var(--content-primary);
+      text-align: left;
+      cursor: pointer;
+    }
+
+    .signature-option + .signature-option {
+      border-top: .5px solid var(--background-divider);
+    }
+
+    .signature-option:hover {
+      background: var(--interactive-secondary-action);
+    }
+
+    .signature-option-icon {
+      color: var(--interactive-primary);
+    }
+
+    .signature-option-copy {
+      display: flex;
+      flex-direction: column;
+      gap: var(--padding-xs);
+    }
+
+    .signature-option-title {
+      font: var(--content-body-primary-bold);
+    }
+
+    .signature-option-caption {
+      font: var(--content-body-secondary);
+      color: var(--content-tertiary);
+    }
+
+    .signature-modal-footer {
+      display: flex;
+      justify-content: flex-end;
+      padding: var(--padding-xl) var(--padding-2xl);
+      background: var(--background-body);
+      box-shadow: var(--shadow-panel);
+    }
+
+    .result-column {
+      justify-content: flex-start;
+      gap: var(--padding-xl);
+    }
+
+    .result-illustration {
+      width: 100%;
+      height: 212px;
+      object-fit: contain;
+    }
+
+    .result-heading {
+      margin: 0;
+      font: var(--headings-title-secondary);
+      letter-spacing: var(--tracking-title-secondary);
+    }
+
+    .result-lead {
+      margin: 0;
+      font: var(--headings-headline-primary);
+      letter-spacing: var(--tracking-headline-primary);
+    }
+
+    .result-copy {
+      margin: 0;
+      font: var(--content-body-primary);
+      color: var(--content-secondary);
+    }
+
+    @media (max-width: 767px) {
+      .payment-flow-column {
+        padding-top: var(--padding-md);
+      }
+
+      .payment-buttonbar-row {
+        flex-direction: column;
+      }
+
+      .payment-buttonbar .btn {
+        width: 100%;
+      }
+
+      .signature-modal {
+        max-width: 100%;
+      }
+
+      .signature-modal-header,
+      .signature-list {
+        margin-left: var(--padding-xl);
+        margin-right: var(--padding-xl);
+      }
+    }
+
+    /* Helper helper classes */
+    .flex-row-between {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .cursor-pointer {
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="app-wrapper">
+    <div class="app-container">
+    <!-- 1. LEVÝ PANEL (SIDEBAR) -->
+    <aside class="sidebar">
+      <div class="sidebar-menu">
+        <a class="menu-item" id="nav-prehled" onclick="goTo('prehled')">
+          <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          <span class="t-content-body-primary-bold">Přehled</span>
+        </a>
+        <a class="menu-item" id="nav-extra" onclick="goTo('extra')">
+          <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <span class="t-content-body-primary-bold">Extra</span>
+        </a>
+        <a class="menu-item" id="nav-karty" onclick="goTo('karty')">
+          <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="5" rx="2"/><line x1="2" x2="22" y1="10" y2="10"/></svg>
+          <span class="t-content-body-primary-bold">Karty</span>
+        </a>
+        <a class="menu-item" id="nav-pujcky" onclick="goTo('pujcky')">
+          <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+          <span class="t-content-body-primary-bold">Půjčky</span>
+        </a>
+        <a class="menu-item" id="nav-sporeni" onclick="goTo('sporeni')">
+          <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 5c-1.5 0-2.8 1.4-3 2-3.5-1.5-11-.3-11 5 0 1.8 0 3 2 4.5V20a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1v-1h4v1a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1v-3.5c2-1.5 2-2.7 2-4.5 0-2.4-.6-4-2-5z"/><path d="M16 10a1 1 0 1 0 0-2 1 1 0 0 0 0 2z"/></svg>
+          <span class="t-content-body-primary-bold">Spoření</span>
+        </a>
+        <a class="menu-item" id="nav-investice" onclick="goTo('investice')">
+          <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" x2="18" y1="20" y2="10"/><line x1="12" x2="12" y1="20" y2="4"/><line x1="6" x2="6" y1="20" y2="14"/></svg>
+          <span class="t-content-body-primary-bold">Investice</span>
+        </a>
+        <a class="menu-item" id="nav-pojisteni" onclick="goTo('pojisteni')">
+          <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22V12m0 0a8 8 0 0 0 8-8H4a8 8 0 0 0 8 8z"/></svg>
+          <span class="t-content-body-primary-bold">Pojištění</span>
+        </a>
+        <a class="menu-item" id="nav-ucy" onclick="goTo('ucet-detail')">
+          <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12V7a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2h-3a2 2 0 0 0 0 4h3"/></svg>
+          <span class="t-content-body-primary-bold">Účty</span>
+        </a>
+      </div>
+      
+      <div class="sidebar-footer">
+        <!-- Logo KB -->
+        <svg width="80" height="32" viewBox="0 0 80 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect y="4" width="24" height="12" fill="#E2001A"/>
+          <rect y="16" width="24" height="12" fill="#212121"/>
+          <text x="32" y="24" fill="#212121" font-family="Inter" font-weight="700" font-size="22" letter-spacing="-0.5px">KB</text>
+        </svg>
+      </div>
+    </aside>
+
+    <!-- 2. HORNÍ LIŠTA (TOPBAR) -->
+    <header class="topbar">
+      <div class="topbar-item">
+        <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"><path d="M3 21h18M3 10h18M5 10V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v5M10 5v5M14 5v5"/></svg>
+        <span class="t-content-body-secondary-bold">Centrum KB+</span>
+        <span class="badge-notification">1</span>
+      </div>
+      <div class="topbar-item">
+        <div class="user-avatar" id="avatar-letters">FK</div>
+        <span class="t-content-body-secondary-bold" id="topbar-user-name">František Koudelka</span>
+      </div>
+      <div class="topbar-item">
+        <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83 2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+        <span class="t-content-body-secondary">Nastavení</span>
+      </div>
+      <div class="topbar-item" onclick="localStorage.removeItem('rozcestnik__auth'); location.replace('../../');">
+        <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/></svg>
+        <span class="t-content-body-secondary">Odhlásit se</span>
+      </div>
+    </header>
+
+    <!-- 3. HLAVNÍ OBSAHOVÁ ČÁST -->
+    <main class="main-content">
+      
+      <!-- ================= SCREEN 1: PŘEHLED ================= -->
+      <div class="screen" id="screen-prehled">
+        <div class="center-column">
+          <h1 class="t-headings-title-secondary" style="margin-bottom: 24px;">Přehled</h1>
+          
+          <!-- Spojený widget Tarif Komfort a Běžný účet (Grouped widget pattern) -->
+          <div class="card-secondary" style="padding: 0; overflow: hidden; margin-bottom: 16px; box-shadow: var(--shadow-panel);">
+            <!-- Horní část (Tarif Komfort) na šedém pozadí -->
+            <div class="flex-row-between" style="padding: 16px 24px; cursor: pointer;" onclick="goTo('ucet-detail')">
+              <span class="t-headings-headline-secondary-bold" style="color: var(--color-content-primary);">Tarif Komfort</span>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--color-content-tertiary)" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg>
+            </div>
+            
+            <!-- Spodní část (Běžný účet) na bílém pozadí -->
+            <div style="background-color: var(--color-background-surface); border-top: 1px solid var(--color-background-border); padding: 24px; cursor: pointer;" onclick="goTo('ucet-detail')">
+              <div class="flex-row-between" style="margin-bottom: 12px;">
+                <span class="t-content-body-secondary-bold" style="color: var(--color-content-secondary);">Běžný účet</span>
+                <span class="t-content-body-secondary" style="color: var(--color-content-tertiary);">123456-4835477/0100</span>
+              </div>
+              <div class="flex-row-between">
+                <span class="t-headings-title-secondary" style="font-weight: 600; white-space: nowrap;">680 063<span class="t-headings-headline-primary">,38 Kč</span></span>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--color-content-tertiary)" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg>
+              </div>
+            </div>
+          </div>
+
+          <div class="card cursor-pointer" onclick="goTo('ucet-detail')">
+            <div class="flex-row-between" style="margin-bottom: 12px;">
+              <span class="t-content-body-secondary-bold" style="color: var(--color-content-secondary);">Spoření</span>
+              <span class="t-content-body-secondary" style="color: var(--color-content-tertiary);">326683764/0100</span>
+            </div>
+            <div class="flex-row-between">
+              <span class="t-headings-title-secondary" style="font-weight: 600; white-space: nowrap;">11 490<span class="t-headings-headline-primary">,20 Kč</span></span>
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--color-content-tertiary)" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg>
+            </div>
+          </div>
+        </div>
+
+        <div class="right-column">
+          <!-- Akční červená karta Nová platba -->
+          <div class="card-action-red" role="button" tabindex="0" onclick="goTo('nova-platba')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();goTo('nova-platba')}">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="3" y1="12" x2="17" y2="12"/>
+              <polyline points="13 8 17 12 13 16"/>
+              <circle cx="20" cy="12" r="2"/>
+            </svg>
+            <span>Nová platba</span>
+          </div>
+
+          <!-- Karta souhrn -->
+          <div class="card-secondary">
+            <div class="flex-row-between" style="margin-bottom: 16px;">
+              <div class="item-details">
+                <span class="t-headings-headline-secondary-bold">Souhrn za červenec</span>
+                <span class="t-content-caption-primary" style="color: var(--color-content-tertiary);">Běžný účet</span>
+              </div>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--color-content-tertiary)" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg>
+            </div>
+            
+            <div class="summary-progress-group">
+              <div class="progress-bar-container">
+                <div class="progress-bar-labels">
+                  <span class="progress-bar-title">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 16 16 12 12 8"/><line x1="8" x2="16" y1="12" y2="12"/></svg>
+                    Výdaje
+                  </span>
+                  <span class="progress-bar-value">-10 000,00 Kč</span>
+                </div>
+                <div class="progress-bg">
+                  <div class="progress-fill expenses"></div>
+                </div>
+              </div>
+
+              <div class="progress-bar-container">
+                <div class="progress-bar-labels">
+                  <span class="progress-bar-title">
+                    <span>&larr;</span> Kapesné 💰
+                  </span>
+                  <span class="progress-bar-value amount-positive">20 000,00 Kč</span>
+                </div>
+                <div class="progress-bg">
+                  <div class="progress-fill allowance"></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="summary-difference">
+              <span style="color: var(--color-content-secondary);">Rozdíl</span>
+              <span class="amount-positive" style="font-weight: 700;">10 000,00 Kč</span>
+            </div>
+          </div>
+
+          <!-- Tlačítko upravit přehled -->
+          <button class="btn btn-secondary" onclick="alert('Funkce není v prototypu implementována')" style="border-color: var(--color-content-primary); border-width: 1px; color: var(--color-content-primary); font-weight: 500;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+            Upravit přehled
+          </button>
+        </div>
+      </div>
+
+
+      <!-- ================= SCREEN 2: BĚŽNÝ ÚČET DETAIL ================= -->
+      <div class="screen" id="screen-ucet-detail">
+        <div class="center-column">
+          <button class="back-btn" onclick="goTo('prehled')">
+            <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"><path d="m15 19-7-7 7-7"/></svg>
+            Účty
+          </button>
+
+          <div style="margin-bottom: 8px;">
+            <div class="flex-row-between" style="align-items: baseline;">
+              <h1 class="t-headings-title-secondary" style="font-weight: 600;">Běžný účet</h1>
+              <span class="t-content-body-secondary" style="color: var(--color-content-tertiary);">123456-4835477/0100</span>
+            </div>
+            <div class="t-headings-title-primary" style="font-weight: 700; margin-top: 8px; white-space: nowrap;">
+              680 063<span class="t-headings-headline-primary">,38 Kč</span>
+            </div>
+          </div>
+
+          <!-- Vyhledávání / Filtr -->
+          <div class="search-container">
+            <input type="text" class="search-input" placeholder="Filtr">
+            <span class="search-icon-right">
+              <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="stroke: var(--color-interactive-primary); fill: none; width: 24px; height: 24px;"><path d="M4 21v-7M4 10V3M12 21v-9M12 8V3M20 21v-5M20 12V3M1 14h6M9 8h6M17 12h6"/></svg>
+            </span>
+          </div>
+
+          <!-- Transakce Dnes -->
+          <div class="card" style="margin-bottom: 16px;">
+            <div class="list-container">
+              <div class="list-section-title" style="margin-top: 0;">Dnes</div>
+              
+              <div class="list-item" onclick="viewDetail('Tesco', '123456-4835477/0100', '-2 430,30 Kč', 'Dnes', 'odchozi', 'Vršovická 3827/11, Praha 10')">
+                <div class="list-item-left">
+                  <div class="item-icon">
+                    <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                    <span class="badge-icon badge-alert" style="right: -4px; bottom: -4px; background-color: #212121; border-color: #212121; color: white;">&rarr;</span>
+                  </div>
+                  <div class="item-details">
+                    <span class="item-title">Tesco</span>
+                    <span class="item-subtitle">Vršovická 3827/11, Praha 10</span>
+                  </div>
+                </div>
+                <div class="list-item-right">-2 430,30 Kč</div>
+              </div>
+
+              <div class="list-item" onclick="viewDetail('Karel Kropáček', '3827897080/0100', '+2 000,00 Kč', 'Dnes', 'prichozi', 'Příspěvek na chatu')">
+                <div class="list-item-left">
+                  <div class="item-icon">
+                    <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                    <span class="badge-icon badge-success" style="right: -4px; bottom: -4px;">&larr;</span>
+                  </div>
+                  <div class="item-details">
+                    <span class="item-title">Karel Kropáček</span>
+                    <span class="item-subtitle">Příspěvek na chatu</span>
+                  </div>
+                </div>
+                <div class="list-item-right amount-positive">2 000,00 Kč</div>
+              </div>
+
+              <div class="list-item" onclick="viewDetail('Josef Pokorný', '12341234/0100', '-12 000,00 Kč', 'Dnes', 'odchozi', 'Nájem srpen 2022')">
+                <div class="list-item-left">
+                  <div class="item-icon">
+                    <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                    <span class="badge-icon badge-alert" style="right: -4px; bottom: -4px; background-color: var(--color-attention-alert); border-color: var(--color-attention-alert); color: white;">✕</span>
+                  </div>
+                  <div class="item-details">
+                    <span class="item-title">Josef Pokorný</span>
+                    <span class="item-subtitle">Nájem srpen 2022</span>
+                    <span class="item-error-msg">Platba neodešla</span>
+                  </div>
+                </div>
+                <div class="list-item-right">-12 000,00 Kč</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Transakce Včera -->
+          <div class="card" style="margin-bottom: 16px;">
+            <div class="list-container">
+              <div class="list-section-title" style="margin-top: 0;">Včera</div>
+
+              <div class="list-item">
+                <div class="list-item-left">
+                  <div class="item-icon">
+                    <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                    <span class="badge-icon badge-alert" style="right: -4px; bottom: -4px; background-color: #212121; border-color: #212121; color: white;">&rarr;</span>
+                  </div>
+                  <div class="item-details">
+                    <span class="item-title">Platba kartou</span>
+                    <span class="item-subtitle">Albert, Praha 5</span>
+                  </div>
+                </div>
+                <div class="list-item-right">-1 200,00 Kč</div>
+              </div>
+
+              <div class="list-item">
+                <div class="list-item-left">
+                  <div class="item-icon">
+                    <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                    <span class="badge-icon badge-alert" style="right: -4px; bottom: -4px; background-color: #212121; border-color: #212121; color: white;">&rarr;</span>
+                  </div>
+                  <div class="item-details">
+                    <span class="item-title">Výběr z bankomatu</span>
+                    <span class="item-subtitle">KB, Václavské nám.</span>
+                  </div>
+                </div>
+                <div class="list-item-right">-2 000,00 Kč</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Transakce 8. července -->
+          <div class="card">
+            <div class="list-container">
+              <div class="list-section-title" style="margin-top: 0;">8. července</div>
+
+              <div class="list-item">
+                <div class="list-item-left">
+                  <div class="item-icon">
+                    <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                    <span class="badge-icon badge-alert" style="right: -4px; bottom: -4px; background-color: #212121; border-color: #212121; color: white;">&rarr;</span>
+                  </div>
+                  <div class="item-details">
+                    <span class="item-title">Billa</span>
+                    <span class="item-subtitle">Nákup potravin</span>
+                  </div>
+                </div>
+                <div class="list-item-right">-890,00 Kč</div>
+              </div>
+
+              <div class="list-item">
+                <div class="list-item-left">
+                  <div class="item-icon">
+                    <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                    <span class="badge-icon badge-alert" style="right: -4px; bottom: -4px; background-color: #212121; border-color: #212121; color: white;">&rarr;</span>
+                  </div>
+                  <div class="item-details">
+                    <span class="item-title">Shell</span>
+                    <span class="item-subtitle">Čerpací stanice Praha</span>
+                  </div>
+                </div>
+                <div class="list-item-right">-1 500,00 Kč</div>
+              </div>
+
+              <div class="list-item">
+                <div class="list-item-left">
+                  <div class="item-icon">
+                    <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                    <span class="badge-icon badge-success" style="right: -4px; bottom: -4px;">&larr;</span>
+                  </div>
+                  <div class="item-details">
+                    <span class="item-title">Výplata</span>
+                    <span class="item-subtitle">Zaměstnavatel, s.r.o.</span>
+                  </div>
+                </div>
+                <div class="list-item-right amount-positive">58 000,00 Kč</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="right-column">
+          <!-- Akční červená karta Nová platba -->
+          <div class="card-action-red" role="button" tabindex="0" onclick="goTo('nova-platba')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();goTo('nova-platba')}">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="3" y1="12" x2="17" y2="12"/>
+              <polyline points="13 8 17 12 13 16"/>
+              <circle cx="20" cy="12" r="2"/>
+            </svg>
+            <span>Nová platba</span>
+          </div>
+
+          <!-- Odkazy -->
+          <div class="card-navigation">
+            <div class="link-list">
+              <a class="link-item" onclick="goTo('tp-inkasa')">
+                <div class="link-item-left">
+                  <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="stroke: var(--color-interactive-primary);"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>
+                  <span>Trvalé příkazy a Inkasa</span>
+                </div>
+                <svg class="link-item-chevron" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+              </a>
+              <a class="link-item" onclick="goTo('autorizace')">
+                <div class="link-item-left">
+                  <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="stroke: var(--color-interactive-primary);"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                  <span>Autorizace</span>
+                </div>
+                <svg class="link-item-chevron" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+              </a>
+              <a class="link-item" onclick="alert('Simulace: Odkaz není aktivní')">
+                <div class="link-item-left">
+                  <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="stroke: var(--color-interactive-primary);"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+                  <span>O účtu</span>
+                </div>
+                <svg class="link-item-chevron" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+              </a>
+              <a class="link-item" onclick="alert('Simulace: Odkaz není aktivní')">
+                <div class="link-item-left">
+                  <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="stroke: var(--color-interactive-primary);"><line x1="18" x2="18" y1="20" y2="10"/><line x1="12" x2="12" y1="20" y2="4"/><line x1="6" x2="6" y1="20" y2="14"/></svg>
+                  <span>Měsíční přehledy</span>
+                </div>
+                <svg class="link-item-chevron" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+              </a>
+              <a class="link-item" onclick="alert('Simulace: Odkaz není aktivní')">
+                <div class="link-item-left">
+                  <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="stroke: var(--color-interactive-primary);"><circle cx="12" cy="12" r="10"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/><path d="M2 12h20"/></svg>
+                  <span>Měny na účtu</span>
+                </div>
+                <svg class="link-item-chevron" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+              </a>
+              <a class="link-item" onclick="alert('Simulace: Odkaz není aktivní')">
+                <div class="link-item-left">
+                  <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="stroke: var(--color-interactive-primary);"><rect width="20" height="14" x="2" y="5" rx="2"/><line x1="2" x2="22" y1="10" y2="10"/></svg>
+                  <span>Karty</span>
+                </div>
+                <svg class="link-item-chevron" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+              </a>
+              <a class="link-item" onclick="alert('Simulace: Odkaz není aktivní')">
+                <div class="link-item-left">
+                  <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="stroke: var(--color-interactive-primary);"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                  <span>Výpisy a potvrzení</span>
+                </div>
+                <svg class="link-item-chevron" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+              </a>
+              <a class="link-item" onclick="alert('Simulace: Odkaz není aktivní')">
+                <div class="link-item-left">
+                  <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="stroke: var(--color-interactive-primary);"><path d="M12 22V12m0 0a8 8 0 0 0 8-8H4a8 8 0 0 0 8 8z"/></svg>
+                  <span>Kontokorent k účtu</span>
+                </div>
+                <svg class="link-item-chevron" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+              </a>
+              <a class="link-item" onclick="alert('Simulace: Odkaz není aktivní')">
+                <div class="link-item-left">
+                  <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="stroke: var(--color-interactive-primary);"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                  <span>Dobití kreditu</span>
+                </div>
+                <svg class="link-item-chevron" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+              </a>
+              <a class="link-item" onclick="alert('Simulace: Odkaz není aktivní')">
+                <div class="link-item-left">
+                  <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="stroke: var(--color-interactive-primary);"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                  <span>Oprávnění k účtu</span>
+                </div>
+                <svg class="link-item-chevron" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- ================= SCREEN 3 & 6: TRVALÉ PŘÍKAZY A INKASA ================= -->
+      <div class="screen" id="screen-tp-inkasa">
+        <div class="center-column">
+          <!-- Zpět z TP a Inkasa má vést na detail účtu -->
+          <button class="back-btn" onclick="goTo('ucet-detail')">
+            <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"><path d="m15 19-7-7 7-7"/></svg>
+            Zpět
+          </button>
+
+          <h1 class="t-headings-title-secondary" style="font-weight: 600; margin-bottom: 8px;">Trvalé příkazy a Inkasa</h1>
+
+          <!-- Segmented control -->
+          <div class="segmented-control">
+            <button class="segment-btn active" id="btn-tp-inkasa-tp" onclick="switchTpInkasaTab('tp')">Trvalé příkazy</button>
+            <button class="segment-btn" id="btn-tp-inkasa-inkasa" onclick="switchTpInkasaTab('inkasa')">Inkasa</button>
+            <button class="segment-btn" id="btn-tp-inkasa-sipo" onclick="switchTpInkasaTab('sipo')">SIPO</button>
+          </div>
+
+          <!-- Seznam inkas -->
+          <div class="card">
+            <div class="list-container" id="inkasa-list">
+              <!-- Dynamické a statické položky -->
+              <div class="list-item">
+                <div class="list-item-left">
+                  <div class="item-icon">
+                    <span class="t-headings-headline-secondary-bold" style="color: var(--color-content-secondary);">Č</span>
+                    <span class="badge-icon badge-success" style="right: -4px; bottom: -4px;">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+                    </span>
+                  </div>
+                  <div class="item-details">
+                    <span class="item-title">ČEZ</span>
+                    <span class="item-subtitle">Měsíčně</span>
+                  </div>
+                </div>
+                <div class="list-item-right">5 000,00 Kč</div>
+              </div>
+
+              <div class="list-item">
+                <div class="list-item-left">
+                  <div class="item-icon">
+                    <span class="t-headings-headline-secondary-bold" style="color: var(--color-content-secondary);">Š</span>
+                    <span class="badge-icon badge-success" style="right: -4px; bottom: -4px;">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+                    </span>
+                  </div>
+                  <div class="item-details">
+                    <span class="item-title">Školní jídelna</span>
+                    <span class="item-subtitle">Měsíčně</span>
+                  </div>
+                </div>
+                <div class="list-item-right">500,00 Kč</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="right-column">
+          <!-- Akční červená karta Nastavit inkaso / Vytvořit trvalý příkaz -->
+          <div class="card-action-red" id="btn-tp-inkasa-action" onclick="alert('Simulace: Vytvoření trvalého příkazu není v tomto prototypu aktivní.')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="12" y1="5" x2="12" y2="19"/>
+              <line x1="5" y1="12" x2="19" y2="12"/>
+            </svg>
+            <span>Vytvořit trvalý příkaz</span>
+          </div>
+
+          <!-- Karta Autorizace se zobrazí v pravém sloupci na screen-tp-inkasa, pokud je aktivní verze s autorizací -->
+          <div class="card-navigation" id="right-column-auth-card" style="display: none;">
+            <div class="link-list">
+              <a class="link-item" onclick="goTo('autorizace')">
+                <div class="link-item-left">
+                  <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="stroke: var(--color-interactive-primary); fill: none;"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                  <span>Autorizace</span>
+                </div>
+                <svg class="link-item-chevron" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- ================= SCREEN 7: AUTORIZACE ================= -->
+      <div class="screen" id="screen-autorizace">
+        <div class="center-column">
+          <!-- Zpět z Autorizace má vést na detail účtu (speciální zpětný flow z diagramu) -->
+          <button class="back-btn" onclick="goTo('ucet-detail')">
+            <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"><path d="m15 19-7-7 7-7"/></svg>
+            Zpět
+          </button>
+
+          <h1 class="t-headings-title-secondary" style="font-weight: 600; margin-bottom: 8px;">Autorizace</h1>
+
+          <!-- K dispozici box -->
+          <div class="limits-box">
+            <div class="limit-row">
+              <span class="t-content-body-secondary-bold" style="color: var(--color-content-primary);">K dispozici</span>
+              <span class="t-content-body-secondary" style="color: var(--color-content-tertiary);">Z limitu disponenta k účtu: 158 000,00 Kč</span>
+              <span class="t-content-body-secondary" style="color: var(--color-content-tertiary);">Z vlastního limitu subjektu: 258 000,00 Kč</span>
+            </div>
+          </div>
+
+          <!-- Segmented control -->
+          <div class="segmented-control" style="margin-top: 16px;">
+            <button class="segment-btn" id="btn-auth-platby" onclick="switchAuthTab('platby')">Platby</button>
+            <button class="segment-btn" id="btn-auth-tp" onclick="switchAuthTab('tp')">Trvalé příkazy</button>
+            <button class="segment-btn active" id="btn-auth-inkasa" onclick="switchAuthTab('inkasa')">Inkasa</button>
+          </div>
+
+          <!-- Akce (Označit vše, Smazat) -->
+          <div class="auth-actions-row">
+            <label class="checkbox-container" style="width: auto;">
+              <input type="checkbox" id="select-all-checkbox" onchange="toggleSelectAll(this)">
+              <span class="checkmark">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              </span>
+              <span class="t-content-body-primary-bold">Označit vše</span>
+            </label>
+            <span class="delete-link disabled" id="delete-selected-btn" onclick="deleteSelectedAuth()">Smazat vybrané</span>
+          </div>
+
+          <!-- Seznam položek k autorizaci -->
+          <div class="list-container" id="auth-items-list" style="gap: 12px;">
+            <!-- Výchozí statická položka -->
+            <div class="auth-item-card" id="auth-item-internet">
+              <label class="checkbox-container">
+                <input type="checkbox" class="auth-checkbox" value="internet" onchange="updateDeleteButtonState()">
+                <span class="checkmark">
+                  <svg viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                </span>
+                <div class="item-details" style="margin-left: 8px;">
+                  <span class="t-headings-headline-secondary-bold">Internet</span>
+                  <span class="t-content-body-secondary" style="color: var(--color-content-tertiary);">Měsíčně</span>
+                  <span class="t-content-caption-primary" style="color: var(--color-content-tertiary);">10. 7. 2026</span>
+                </div>
+              </label>
+              <div class="t-headings-headline-secondary-bold">1 000,00 Kč</div>
+            </div>
+
+            <!-- Dynamická položka bude vložena JS, pokud existuje v localStorage -->
+          </div>
+        </div>
+
+        <div class="right-column">
+          <!-- Částka k autorizaci bez pozadí -->
+          <div style="padding: 12px 0; margin-bottom: 8px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+              <span class="t-content-body-secondary-bold" style="color: var(--color-content-secondary); font-size: 15px;">Částka k autorizaci</span>
+              <span class="t-headings-headline-secondary-bold" id="auth-summary-amount" style="color: var(--color-content-primary); font-size: 16px;">0,00 Kč</span>
+            </div>
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <span class="t-content-caption-primary" id="auth-summary-count" style="color: var(--color-content-tertiary);">0 z 0 položek</span>
+            </div>
+          </div>
+
+          <!-- Tlačítko K autorizaci -->
+          <button class="btn btn-primary" id="btn-execute-auth" onclick="executeSelectedAuth()" style="height: 48px; border-radius: var(--radius-md); font-weight: 600; margin-bottom: 16px;">K autorizaci</button>
+
+          <!-- Odkazy -->
+          <div class="card-navigation">
+            <div class="link-list">
+              <a class="link-item" onclick="goTo('vsechny-platby')">
+                <div class="link-item-left">
+                  <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="stroke: var(--color-interactive-primary); fill: none;"><circle cx="8" cy="8" r="6"/><circle cx="18" cy="18" r="4"/><path d="M12 8a6 6 0 0 1 6 6M12 2v6M2 12h6"/></svg>
+                  <span>Všechny platby</span>
+                </div>
+                <svg class="link-item-chevron" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+              </a>
+              <a class="link-item" onclick="goTo('tp-inkasa')">
+                <div class="link-item-left">
+                  <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="stroke: var(--color-interactive-primary); fill: none;"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>
+                  <span>Trvalé příkazy a Inkasa</span>
+                </div>
+                <svg class="link-item-chevron" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- ================= SCREEN 8: VŠECHNY PLATBY ================= -->
+      <div class="screen" id="screen-vsechny-platby">
+        <div class="center-column">
+          <!-- Zpět z Všechny platby má vést na detail účtu (podle opravy uživatele) -->
+          <button class="back-btn" onclick="goTo('ucet-detail')">
+            <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"><path d="m15 19-7-7 7-7"/></svg>
+            Zpět
+          </button>
+
+          <h1 class="t-headings-title-secondary" style="font-weight: 600; margin-bottom: 16px;">Všechny platby</h1>
+
+          <!-- Vyhledávání / Filtr -->
+          <div class="search-container">
+            <input type="text" class="search-input" placeholder="Filtr">
+            <span class="search-icon-right">
+              <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="stroke: var(--color-interactive-primary); fill: none; width: 24px; height: 24px;"><path d="M4 21v-7M4 10V3M12 21v-9M12 8V3M20 21v-5M20 12V3M1 14h6M9 8h6M17 12h6"/></svg>
+            </span>
+          </div>
+
+          <!-- Seznam transakcí Dnes -->
+          <div class="card" style="margin-bottom: 16px;">
+            <div class="list-container">
+              <div class="list-section-title" style="margin-top: 0;">Dnes</div>
+              
+              <div class="list-item">
+                <div class="list-item-left">
+                  <div class="item-icon">
+                    <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                    <span class="badge-icon badge-alert" style="right: -4px; bottom: -4px; background-color: #212121; border-color: #212121; color: white;">&rarr;</span>
+                  </div>
+                  <div class="item-details">
+                    <span class="item-title">Jitka Nováková</span>
+                    <span class="item-subtitle">Na lyže</span>
+                  </div>
+                </div>
+                <div class="list-item-right">-5 000,00 Kč</div>
+              </div>
+
+              <div class="list-item">
+                <div class="list-item-left">
+                  <div class="item-icon">
+                    <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                    <span class="badge-icon badge-success" style="right: -4px; bottom: -4px;">&larr;</span>
+                  </div>
+                  <div class="item-details">
+                    <span class="item-title">3827897080/0100</span>
+                    <span class="item-subtitle">Splátka za kolo</span>
+                  </div>
+                </div>
+                <div class="list-item-right amount-positive">3 000,00 Kč</div>
+              </div>
+
+              <div class="list-item">
+                <div class="list-item-left">
+                  <div class="item-icon">
+                    <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                    <span class="badge-icon badge-alert" style="right: -4px; bottom: -4px; background-color: #212121; border-color: #212121; color: white;">&rarr;</span>
+                  </div>
+                  <div class="item-details">
+                    <span class="item-title">O2</span>
+                    <span class="item-subtitle">O2 - Telefon měsíčně</span>
+                  </div>
+                </div>
+                <div class="list-item-right">-1 000,00 Kč</div>
+              </div>
+
+              <div class="list-item">
+                <div class="list-item-left">
+                  <div class="item-icon">
+                    <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                    <span class="badge-icon badge-alert" style="right: -4px; bottom: -4px; background-color: #212121; border-color: #212121; color: white;">&rarr;</span>
+                  </div>
+                  <div class="item-details">
+                    <span class="item-title">Česká pošta</span>
+                    <span class="item-subtitle">Byt Novodvorská</span>
+                  </div>
+                </div>
+                <div class="list-item-right">-8 243,37 Kč</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Seznam transakcí 14. 5. -->
+          <div class="card" style="margin-bottom: 16px;">
+            <div class="list-container">
+              <div class="list-section-title" style="margin-top: 0;">14. 5.</div>
+
+              <div class="list-item">
+                <div class="list-item-left">
+                  <div class="item-icon">
+                    <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                    <span class="badge-icon badge-alert" style="right: -4px; bottom: -4px; background-color: #212121; border-color: #212121; color: white;">&rarr;</span>
+                  </div>
+                  <div class="item-details">
+                    <span class="item-title">František Koudelka</span>
+                    <span class="item-subtitle">Směna peněz</span>
+                    <span class="item-subtitle" style="font-size: 12px; color: var(--color-content-tertiary);">-1 000,00 EUR (SEPA platba poplatek: 0,00 Kč)</span>
+                  </div>
+                </div>
+                <div class="list-item-right">-1 000,00 Kč</div>
+              </div>
+
+              <div class="list-item">
+                <div class="list-item-left">
+                  <div class="item-icon">
+                    <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                    <span class="badge-icon badge-success" style="right: -4px; bottom: -4px;">&larr;</span>
+                  </div>
+                  <div class="item-details">
+                    <span class="item-title">Helmut Schwarz</span>
+                    <span class="item-subtitle">Směna peněz</span>
+                    <span class="item-subtitle" style="font-size: 12px; color: var(--color-content-tertiary);">1 500,00 EUR (SEPA platba poplatek: 0,00 Kč)</span>
+                  </div>
+                </div>
+                <div class="list-item-right amount-positive">43,42 EUR</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Seznam transakcí 13. 5. -->
+          <div class="card">
+            <div class="list-container">
+              <div class="list-section-title" style="margin-top: 0;">13. 5.</div>
+
+              <div class="list-item">
+                <div class="list-item-left">
+                  <div class="item-icon">
+                    <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                    <span class="badge-icon badge-alert" style="right: -4px; bottom: -4px; background-color: #212121; border-color: #212121; color: white;">&rarr;</span>
+                  </div>
+                  <div class="item-details">
+                    <span class="item-title">Netflix, Inc.</span>
+                    <span class="item-subtitle">Předplatné Premium</span>
+                  </div>
+                </div>
+                <div class="list-item-right">-250,00 Kč</div>
+              </div>
+
+              <div class="list-item">
+                <div class="list-item-left">
+                  <div class="item-icon">
+                    <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                    <span class="badge-icon badge-alert" style="right: -4px; bottom: -4px; background-color: #212121; border-color: #212121; color: white;">&rarr;</span>
+                  </div>
+                  <div class="item-details">
+                    <span class="item-title">Lidl</span>
+                    <span class="item-subtitle">Nákup Lidl Praha</span>
+                  </div>
+                </div>
+                <div class="list-item-right">-1 420,00 Kč</div>
+              </div>
+
+              <div class="list-item">
+                <div class="list-item-left">
+                  <div class="item-icon">
+                    <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                    <span class="badge-icon badge-alert" style="right: -4px; bottom: -4px; background-color: #212121; border-color: #212121; color: white;">&rarr;</span>
+                  </div>
+                  <div class="item-details">
+                    <span class="item-title">Alza.cz</span>
+                    <span class="item-subtitle">Elektronika</span>
+                  </div>
+                </div>
+                <div class="list-item-right">-3 400,00 Kč</div>
+              </div>
+
+              <div class="list-item">
+                <div class="list-item-left">
+                  <div class="item-icon">
+                    <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                    <span class="badge-icon badge-alert" style="right: -4px; bottom: -4px; background-color: #212121; border-color: #212121; color: white;">&rarr;</span>
+                  </div>
+                  <div class="item-details">
+                    <span class="item-title">Kavárna Místo</span>
+                    <span class="item-subtitle">Občerstvení</span>
+                  </div>
+                </div>
+                <div class="list-item-right">-180,00 Kč</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="right-column">
+          <!-- Karta Autorizace s ikonou zámku -->
+          <div class="card-navigation">
+            <div class="link-list">
+              <a class="link-item" onclick="goTo('autorizace')">
+                <div class="link-item-left">
+                  <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="stroke: var(--color-interactive-primary); fill: none;"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                  <span>Autorizace</span>
+                </div>
+                <svg class="link-item-chevron" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ================= SCREEN 8: DETAIL PLATBY ================= -->
+      <div class="screen" id="screen-platba-detail">
+        <div class="center-column">
+          <!-- Zpět na předchozí obrazovku -->
+          <button class="back-btn" onclick="goBack()">
+            <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"><path d="m15 19-7-7 7-7"/></svg>
+            Zpět
+          </button>
+
+          <h1 class="t-headings-title-secondary" id="detail-type-title" style="font-weight: 600; margin-bottom: 16px;">Odchozí platba</h1>
+
+          <!-- Karta 1: Hlavní vizuální info -->
+          <div class="card" style="align-items: center; text-align: center; padding: 32px 24px; margin-bottom: 16px;">
+            <!-- Iniciála a ikona -->
+            <div style="position: relative; width: 64px; height: 64px; background-color: #ededed; border-radius: var(--radius-full); display: flex; align-items: center; justify-content: center; margin-bottom: 16px;">
+              <span id="detail-initial" style="font-size: 28px; font-weight: 600; color: var(--color-content-secondary);">F</span>
+              <!-- Kolečko s ikonou (směr platby) -->
+              <div id="detail-direction-badge" style="position: absolute; bottom: -4px; right: -4px; width: 24px; height: 24px; border-radius: var(--radius-full); background-color: #212121; border: 2px solid white; display: flex; align-items: center; justify-content: center; color: white;">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+              </div>
+            </div>
+
+            <!-- Jméno a účet -->
+            <h2 id="detail-name" class="t-headings-title-secondary" style="font-weight: 600; font-size: 24px; margin: 0 0 8px 0; color: var(--color-content-primary);">František Koudelka</h2>
+            <span id="detail-account" class="t-content-body-secondary" style="color: var(--color-content-tertiary); margin-bottom: 20px;">344026789/0100</span>
+
+            <!-- Částka a datum -->
+            <div id="detail-amount" class="t-headings-title-secondary" style="font-weight: 700; font-size: 28px; margin-bottom: 8px;">- 2 000,00 Kč</div>
+            <span id="detail-date" class="t-content-caption-primary" style="color: var(--color-content-tertiary);">neděle 17. 1. 2021</span>
+          </div>
+
+          <!-- Karta 2: Detaily -->
+          <div class="card" style="padding: 0; overflow: hidden;">
+            <div class="detail-rows-container">
+              
+              <div class="detail-row" style="padding: 16px 24px; border-bottom: 1px solid var(--color-background-divider); display: flex; flex-direction: column; gap: 4px;">
+                <span class="t-content-caption-primary" style="color: var(--color-content-tertiary); font-size: 12px;">Z účtu</span>
+                <span class="t-content-body-primary-bold" id="detail-from-account" style="color: var(--color-content-primary);">Můj KB účet<br><span style="font-weight: 400; color: var(--color-content-secondary);">3827897080/0100</span></span>
+              </div>
+
+              <div class="detail-row" style="padding: 16px 24px; border-bottom: 1px solid var(--color-background-divider); display: flex; flex-direction: column; gap: 4px;">
+                <span class="t-content-caption-primary" style="color: var(--color-content-tertiary); font-size: 12px;">Zpráva pro příjemce</span>
+                <span class="t-content-body-primary-bold" id="detail-msg-recipient" style="color: var(--color-content-primary); font-weight: 500;">Ahoj a díky.</span>
+              </div>
+
+              <div class="detail-row" style="padding: 16px 24px; border-bottom: 1px solid var(--color-background-divider); display: flex; flex-direction: column; gap: 4px;">
+                <span class="t-content-caption-primary" style="color: var(--color-content-tertiary); font-size: 12px;">Popis pro mě</span>
+                <span class="t-content-body-primary-bold" id="detail-msg-me" style="color: var(--color-content-primary); font-weight: 500;">Za benzín</span>
+              </div>
+
+              <div class="detail-row" style="padding: 16px 24px; border-bottom: 1px solid var(--color-background-divider); display: flex; flex-direction: column; gap: 4px;">
+                <span class="t-content-caption-primary" style="color: var(--color-content-tertiary); font-size: 12px;">Variabilní symbol</span>
+                <span class="t-content-body-primary-bold" id="detail-vs" style="color: var(--color-content-primary); font-weight: 500;">1352568798</span>
+              </div>
+
+              <div class="detail-row" style="padding: 16px 24px; border-bottom: 1px solid var(--color-background-divider); display: flex; flex-direction: column; gap: 4px;">
+                <span class="t-content-caption-primary" style="color: var(--color-content-tertiary); font-size: 12px;">Konstantní symbol</span>
+                <span class="t-content-body-primary-bold" id="detail-ks" style="color: var(--color-content-primary); font-weight: 500;">333</span>
+              </div>
+
+              <div class="detail-row" style="padding: 16px 24px; border-bottom: 1px solid var(--color-background-divider); display: flex; flex-direction: column; gap: 4px;">
+                <span class="t-content-caption-primary" style="color: var(--color-content-tertiary); font-size: 12px;">Specifický symbol</span>
+                <span class="t-content-body-primary-bold" id="detail-ss" style="color: var(--color-content-primary); font-weight: 500;">777</span>
+              </div>
+
+              <div class="detail-row" style="padding: 16px 24px; border-bottom: 1px solid var(--color-background-divider); display: flex; flex-direction: column; gap: 4px;">
+                <span class="t-content-caption-primary" style="color: var(--color-content-tertiary); font-size: 12px;">ID platby</span>
+                <span class="t-content-body-primary-bold" id="detail-id" style="color: var(--color-content-primary); font-weight: 500;">12341234</span>
+              </div>
+
+              <div class="detail-row" style="padding: 16px 24px; display: flex; align-items: center; justify-content: space-between;">
+                <div style="display: flex; flex-direction: column; gap: 4px;">
+                  <span class="t-content-caption-primary" style="color: var(--color-content-tertiary); font-size: 12px;">Kategorie</span>
+                  <span class="t-content-body-primary-bold" id="detail-category" style="color: var(--color-content-primary); font-weight: 500;">Nezatříděné</span>
+                </div>
+                <span class="cursor-pointer" style="color: var(--color-content-primary); text-decoration: underline; font-weight: 500; font-size: 14px;" onclick="alert('Změna kategorie není v tomto prototypu funkční.')">Změnit</span>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <div class="right-column">
+          <!-- Karta s akcemi -->
+          <div class="card-navigation">
+            <div class="link-list">
+              <a class="link-item" onclick="alert('Opakování platby v tomto prototypu není aktivní.')">
+                <div class="link-item-left">
+                  <span>Opakovat platbu</span>
+                </div>
+                <!-- Ikona reload -->
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--color-content-secondary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 4px;"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>
+              </a>
+              <a class="link-item" onclick="alert('Generování PDF potvrzení v tomto prototypu není aktivní.')">
+                <div class="link-item-left">
+                  <span>Potvrzení</span>
+                </div>
+                <!-- Ikona PDF -->
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--color-content-secondary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 4px;"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><path d="M10 12h2a2 2 0 1 0 0-4h-2v8"/><path d="M10 12v-4"/></svg>
+              </a>
+              <a class="link-item" onclick="alert('Odkaz na novou platbu pro tento účet v tomto prototypu není aktivní.')">
+                <div class="link-item-left">
+                  <span>Poslat peníze na tento účet</span>
+                </div>
+                <!-- Ikona nová platba (→o) -->
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--color-content-secondary)" stroke-width="2" style="margin-right: 4px;"><line x1="3" y1="12" x2="17" y2="12"/><polyline points="13 8 17 12 13 16"/><circle cx="20" cy="12" r="2"/></svg>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ================= VAVU: NOVÁ PLATBA – KROK 1 ================= -->
+      <section class="screen payment-screen" id="screen-nova-platba" aria-labelledby="nova-platba-title">
+        <header class="payment-flow-header">
+          <span class="header-spacer"></span>
+          <button class="payment-header-action" type="button" onclick="goTo('prehled')" aria-label="Zavřít novou platbu">
+            <svg class="icon icon--close" aria-hidden="true"><use href="#es-close"></use></svg>
+          </button>
+        </header>
+
+        <div class="payment-flow-content">
+          <form class="payment-flow-column" id="payment-basic-form" onsubmit="event.preventDefault(); continuePayment();">
+            <h1 class="payment-flow-title" id="nova-platba-title">Nová platba</h1>
+
+            <button class="payment-account-card" type="button" onclick="alert('V tomto prototypu je dostupný jen Běžný účet.')">
+              <span class="payment-account-copy">
+                <span class="payment-account-name">Běžný účet</span>
+                <span class="payment-account-detail">122000/0100</span>
+                <span class="payment-account-detail">František Koudelka</span>
+              </span>
+              <svg class="icon icon--caret" aria-hidden="true"><use href="#es-caret-right"></use></svg>
+            </button>
+
+            <div class="payment-field">
+              <label class="payment-control" id="payment-recipient-control">
+                <span class="payment-control-label">Komu</span>
+                <input id="payment-recipient" name="recipient" type="text" autocomplete="off" placeholder="Číslo účtu, IBAN, šablona nebo příjemce" data-payment-key="recipient" aria-describedby="payment-recipient-message">
+              </label>
+              <span class="payment-field-message" id="payment-recipient-message" aria-live="polite"></span>
+            </div>
+
+            <div class="payment-field-row">
+              <div class="payment-field">
+                <label class="payment-control" id="payment-amount-control">
+                  <span class="payment-control-label">Částka</span>
+                  <input id="payment-amount" name="amount" type="number" min="0.01" step="0.01" inputmode="decimal" value="500" data-payment-key="amount" aria-describedby="payment-amount-message">
+                </label>
+                <span class="payment-field-message" id="payment-amount-message">Na účtu vám zůstane 18 063,38 Kč</span>
+              </div>
+
+              <label class="payment-control">
+                <span class="payment-control-label">Měna</span>
+                <select id="payment-currency" class="payment-control-select" data-payment-key="currency" aria-label="Měna">
+                  <option value="Kč">Kč</option>
+                  <option value="EUR">EUR</option>
+                </select>
+                <svg class="icon payment-select-caret" aria-hidden="true"><use href="#es-caret-right"></use></svg>
+              </label>
+            </div>
+
+            <div class="payment-field">
+              <button class="qr-upload" type="button" onclick="document.getElementById('payment-qr-file').click()">
+                <span class="qr-upload-icon"><svg class="icon" aria-hidden="true"><use href="#es-text-file"></use></svg></span>
+                <span>Přetáhněte sem QR kód nebo ho nahrajte pomocí tlačítka.</span>
+              </button>
+              <input id="payment-qr-file" type="file" accept="image/*" hidden onchange="handleQrFile(this)">
+              <button class="qr-upload-action" type="button" onclick="document.getElementById('payment-qr-file').click()">Nahrát QR kód</button>
+            </div>
+          </form>
+        </div>
+
+        <footer class="payment-buttonbar">
+          <div class="payment-buttonbar-row">
+            <button class="btn btn--primary" type="submit" form="payment-basic-form">Pokračovat</button>
+          </div>
+        </footer>
+      </section>
+
+      <!-- ================= VAVU: NOVÁ PLATBA – KROK 2 ================= -->
+      <section class="screen payment-screen" id="screen-nova-platba-detaily" aria-labelledby="nova-platba-detaily-title">
+        <header class="payment-flow-header">
+          <button class="payment-header-action" type="button" onclick="goTo('nova-platba')">
+            <svg class="icon icon--caret" style="transform:rotate(180deg)" aria-hidden="true"><use href="#es-caret-right"></use></svg>
+            Zpět
+          </button>
+          <span class="header-spacer"></span>
+          <button class="payment-header-action" type="button" onclick="goTo('prehled')" aria-label="Zavřít novou platbu">
+            <svg class="icon icon--close" aria-hidden="true"><use href="#es-close"></use></svg>
+          </button>
+        </header>
+
+        <div class="payment-flow-content">
+          <form class="payment-flow-column" id="payment-details-form" onsubmit="event.preventDefault(); openModal('payment-signature-modal');">
+            <h1 class="payment-flow-title" id="nova-platba-detaily-title">Nová platba</h1>
+
+            <label class="payment-control">
+              <span class="payment-control-label">Zpráva pro příjemce</span>
+              <input type="text" maxlength="140" data-payment-key="messageRecipient">
+            </label>
+
+            <label class="payment-control">
+              <span class="payment-control-label">Variabilní symbol</span>
+              <input type="text" inputmode="numeric" maxlength="10" data-payment-key="variableSymbol">
+            </label>
+
+            <label class="payment-control">
+              <span class="payment-control-label">Popis pro mě</span>
+              <input type="text" maxlength="140" data-payment-key="description">
+            </label>
+
+            <label class="payment-control">
+              <span class="payment-control-label">Konstantní symbol</span>
+              <input type="text" inputmode="numeric" maxlength="4" data-payment-key="constantSymbol">
+            </label>
+
+            <label class="payment-control">
+              <span class="payment-control-label">Specifický symbol</span>
+              <input type="text" inputmode="numeric" maxlength="10" data-payment-key="specificSymbol">
+            </label>
+
+            <div>
+              <p class="payment-segment-label">Odeslat platbu</p>
+              <div class="payment-segmented" role="group" aria-label="Termín odeslání">
+                <button class="active" type="button" data-payment-timing="now" aria-pressed="true" onclick="setPaymentTiming('now')">Co nejdříve</button>
+                <button type="button" data-payment-timing="later" aria-pressed="false" onclick="setPaymentTiming('later')">Později</button>
+              </div>
+            </div>
+          </form>
+        </div>
+
+        <footer class="payment-buttonbar">
+          <div class="payment-buttonbar-row">
+            <button class="btn btn--primary" type="submit" form="payment-details-form">Pokračovat</button>
+            <button class="btn btn--secondary" type="button" onclick="alert('Uložení k autorizaci není součástí tohoto testovacího scénáře.')">Uložit k autorizaci</button>
+          </div>
+        </footer>
+      </section>
+
+      <!-- ================= VAVU: RESULT ================= -->
+      <section class="screen payment-screen" id="screen-platba-vysledek" aria-labelledby="platba-vysledek-title">
+        <header class="payment-flow-header">
+          <button class="payment-header-action" type="button" onclick="finishPayment()">Zavřít</button>
+        </header>
+
+        <div class="payment-flow-content">
+          <div class="payment-flow-column result-column">
+            <img class="result-illustration" src="../../design-system/design-system/assets/illustrations/success-light.png" alt="Platba autorizována">
+            <h1 class="result-heading" id="platba-vysledek-title">Autorizovali jste platbu</h1>
+            <p class="result-lead">Musí ji autorizovat ještě ostatní.</p>
+            <p class="result-copy">Nemáte dostatečný dispoziční limit pro odeslání.</p>
+          </div>
+        </div>
+
+        <footer class="payment-buttonbar">
+          <div class="payment-buttonbar-row">
+            <button class="btn btn--secondary" type="button" onclick="finishPayment()">Zavřít</button>
+          </div>
+        </footer>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- 4. PLOVOUCÍ CHATBOT -->
+  <div class="chatbot-btn" onclick="alert('Dobrý den! Jak Vám mohu pomoci?')">
+    <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+    <span>Chcete poradit?</span>
+  </div>
+
+  <!-- ================= VAVU: VOLBA ZPŮSOBU PODPISU ================= -->
+  <div class="modal-overlay-popup" id="modal-payment-signature-modal" role="dialog" aria-modal="true" aria-labelledby="signature-modal-title">
+    <div class="modal-content-popup signature-modal">
+      <div class="signature-modal-header">
+        <h2 class="signature-modal-title" id="signature-modal-title">Vyberte způsob podpisu</h2>
+        <button class="signature-close" type="button" onclick="closeModal()" aria-label="Zavřít dialog">
+          <svg class="icon icon--close" aria-hidden="true"><use href="#es-close"></use></svg>
+        </button>
+      </div>
+
+      <div class="signature-list">
+        <button class="signature-option" type="button" onclick="authorizePayment()">
+          <svg class="icon signature-option-icon" aria-hidden="true"><use href="#es-key"></use></svg>
+          <span class="signature-option-copy">
+            <span class="signature-option-title">Elektronicky KB Klíčem</span>
+            <span class="signature-option-caption">Potvrzení požadavku na zařízení klienta</span>
+          </span>
+          <svg class="icon icon--caret" aria-hidden="true"><use href="#es-caret-right"></use></svg>
+        </button>
+
+        <button class="signature-option" type="button" onclick="alert('Tato metoda podpisu není v prototypu rozpracovaná.')">
+          <svg class="icon signature-option-icon" aria-hidden="true"><use href="#es-text-file"></use></svg>
+          <span class="signature-option-copy">
+            <span class="signature-option-title">Vlastnoručně na telefonu poradce</span>
+            <span class="signature-option-caption">Vlastnoruční elektronický podpis v mobilní aplikaci inSign</span>
+          </span>
+          <svg class="icon icon--caret" aria-hidden="true"><use href="#es-caret-right"></use></svg>
+        </button>
+      </div>
+
+      <div class="signature-modal-footer">
+        <button class="btn btn--secondary" type="button" onclick="closeModal()">Zrušit</button>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ================= MODAL 1: FORMULÁŘ POVOLENÍ INKASA ================= -->
+  <div class="modal-overlay" id="modal-povoleni-inkasa-modal">
+    <div class="modal-content">
+      <button class="modal-close" onclick="closeModal()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" x2="6" y1="6" y2="18"/><line x1="6" x2="18" y1="6" y2="18"/></svg>
+      </button>
+
+      <div class="modal-form-wrap">
+        <!-- Horní část (nadpis a obsah) -->
+        <div class="modal-form-top">
+          <h2 class="t-headings-title-secondary" style="font-weight: 600; margin-bottom: 0;">Povolení inkasa</h2>
+          
+          <!-- Informace o účtu (jak je na screenshotu 4 - jeden řádek se šipkou a číslem účtu) -->
+          <div style="display: flex; align-items: center; gap: 8px; color: var(--color-content-secondary); font-size: 16px; margin-bottom: 12px; cursor: pointer;" onclick="alert('Účet nelze v tomto prototypu změnit')">
+            <span style="font-weight: 500;">Běžný účet</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="stroke: var(--color-content-tertiary);"><path d="m9 18 6-6-6-6"/></svg>
+            <span style="color: var(--color-content-tertiary);">123456-4835477/0100</span>
+          </div>
+
+          <!-- Formulářová pole (SuperField styl) -->
+          <div class="super-field">
+            <label class="super-field-label" for="inp-prijemce">Kdo může inkasovat</label>
+            <input type="text" class="super-field-input" id="inp-prijemce" placeholder="Příjemce nebo číslo účtu">
+          </div>
+
+          <div class="super-field">
+            <label class="super-field-label" for="inp-nazev">Název inkasa</label>
+            <input type="text" class="super-field-input" id="inp-nazev" placeholder="Např. ČEZ, Internet...">
+          </div>
+
+          <div class="form-row">
+            <div class="super-field" style="flex: 1;">
+              <label class="super-field-label" for="inp-limit">Limit</label>
+              <div style="position: relative; width: 100%;">
+                <input type="number" class="super-field-input" id="inp-limit" placeholder="Limit v Kč" style="padding-right: 32px;">
+                <span style="position: absolute; right: 0; bottom: 0; font-weight: 500; color: var(--color-content-secondary);">Kč</span>
+              </div>
+            </div>
+            <div class="super-field" style="flex: 1;">
+              <label class="super-field-label" for="sel-obdobi">Za období</label>
+              <select class="super-field-input" id="sel-obdobi" style="cursor: pointer; appearance: none; background-image: url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23717171' stroke-width='2'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E&quot;); background-repeat: no-repeat; background-position: right 0 center; background-size: 16px;">
+                <option value="Měsíčně" selected>Měsíčně</option>
+                <option value="Týdně">Týdně</option>
+                <option value="Čtvrtletně">Čtvrtletně</option>
+                <option value="Ročně">Ročně</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="super-field" style="flex: 1;">
+              <label class="super-field-label" for="inp-platnost-od">Platnost od</label>
+              <input type="text" class="super-field-input" id="inp-platnost-od" value="1. 5. 2022">
+            </div>
+            <div class="super-field" style="flex: 1;">
+              <label class="super-field-label" for="inp-platnost-do">Platnost do</label>
+              <input type="text" class="super-field-input" id="inp-platnost-do" placeholder="neomezeně">
+            </div>
+          </div>
+        </div>
+
+        <!-- Spodní část (tlačítka) -->
+        <div class="modal-form-bottom">
+          <div class="flex-row-between" style="gap: 16px; width: 100%;">
+            <button class="btn btn-primary" onclick="alert('Tlačítko Pokračovat není v tomto flow aktivní. Klikněte prosím na Uložit k autorizaci.')" style="flex: 1; height: 52px;">Pokračovat</button>
+            <button class="btn btn-secondary" onclick="saveToAuthorization()" style="flex: 1; height: 52px; border-color: var(--color-content-primary); border-width: 1.5px; color: var(--color-content-primary); font-weight: 600;">Uložit k autorizaci</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ================= MODAL 2: RESULTA (ULOŽENO K AUTORIZACI) ================= -->
+  <div class="modal-overlay" id="modal-autorizace-potvrzeni-modal">
+    <div class="modal-content" style="padding-bottom: 120px;">
+      <button class="modal-close" onclick="closeModalAndGoTo('tp-inkasa-s-autorizaci')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" x2="6" y1="6" y2="18"/><line x1="6" x2="18" y1="6" y2="18"/></svg>
+      </button>
+
+      <div style="display: flex; flex-direction: column; align-items: center; text-align: center; gap: 24px; padding: 20px 0 0 0;">
+        <!-- 3D Ilustrace fajfky -->
+        <div style="width: 120px; height: 120px; background-color: var(--color-background-surface); border-radius: var(--radius-xl); display: flex; align-items: center; justify-content: center; box-shadow: var(--shadow-panel); position: relative;">
+          <!-- Nakloněná fajfka ve 3D stylu -->
+          <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" style="transform: rotate(5deg) translateY(-4px);">
+            <path d="M12 36 L24 48 L52 16" stroke="#E2001A" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+
+        <h3 class="t-headings-title-secondary" style="font-weight: 600; font-size: 24px; line-height: 34px; max-width: 480px;">
+          Povolení inkasa jste uložili k autorizaci
+        </h3>
+      </div>
+
+      <!-- Šedý footer s tlačítky (fixed dole) -->
+      <div class="modal-footer-gray">
+        <!-- Zelená šipka z diagramu: Na autorizace vede na autorizace -->
+        <button class="btn btn-primary" onclick="closeModalAndGoTo('autorizace')" style="width: auto; height: 48px; padding: 0 32px;">Na autorizace</button>
+        <!-- Červená šipka z diagramu: Zavřít vede na trvalé příkazy a inkasa s kartou -->
+        <button class="btn btn-secondary" onclick="closeModalAndGoTo('tp-inkasa-s-autorizaci')" style="width: auto; height: 48px; padding: 0 32px; border-color: var(--color-content-primary); border-width: 1.5px; color: var(--color-content-primary); font-weight: 600;">Zavřít</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= MODAL 3: ŽÁDNÉ POLOŽKY K AUTORIZACI ================= -->
+  <div class="modal-overlay-popup" id="modal-no-items-modal">
+    <div class="modal-content-popup">
+      <button class="modal-close" onclick="closeModal()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" x2="6" y1="6" y2="18"/><line x1="6" x2="18" y1="6" y2="18"/></svg>
+      </button>
+      
+      <div style="margin-bottom: 20px; display: flex; justify-content: center;">
+        <svg viewBox="0 0 24 24" stroke="var(--color-interactive-primary)" stroke-width="2" fill="none" style="width: 56px; height: 56px;"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+      </div>
+      
+      <h3 class="t-headings-headline-secondary-bold" style="margin-bottom: 12px; font-size: 20px; color: var(--color-content-primary);">Žádné označené položky</h3>
+      <p class="t-content-body-secondary" style="margin-bottom: 28px; color: var(--color-content-tertiary); font-size: 14px; line-height: 20px;">Pro autorizaci musíte nejprve zaškrtnout alespoň jednu položku v seznamu.</p>
+      
+      <button class="btn btn-primary" onclick="closeModal()" style="height: 48px; font-size: 15px; font-weight: 600; width: 100%;">Rozumím</button>
+    </div>
+  </div>
+
+  </div> <!-- Konec app-wrapper -->
+
+
+  <!-- ================= JS LOGIKA ================= -->
+  <script>
+    // Seznam podporovaných hlavních obrazovek
+    const SCREENS = ['prehled', 'ucet-detail', 'tp-inkasa', 'tp-inkasa-s-autorizaci', 'autorizace', 'vsechny-platby', 'platba-detail', 'nova-platba', 'nova-platba-detaily', 'platba-vysledek'];
+    // Seznam modálních hashů
+    const MODALS = ['povoleni-inkasa-modal', 'autorizace-potvrzeni-modal', 'no-items-modal', 'payment-signature-modal'];
+
+    // Globální stav prototypu
+    let currentScreen = 'prehled';
+    let previousScreen = 'prehled';
+    let currentAuthTab = 'inkasa';
+    let currentTpInkasaTab = 'tp';
+
+    // Inicializace aplikace
+    document.addEventListener('DOMContentLoaded', () => {
+      // Obnovit formulář z localStorage při načtení
+      restoreFormValues();
+      restorePaymentValues();
+      bindPaymentPersistence();
+      // Aktualizovat seznamy (inkasa a položky k autorizaci)
+      renderDynamicContent();
+      renderTpInkasaList();
+      
+      // Zpracování výchozího hashe
+      const hash = window.location.hash.replace('#', '');
+      if (!hash) {
+        window.location.hash = 'prehled';
+      } else {
+        handleRouting();
+      }
+    });
+
+    // Sledování změn hash v URL
+    window.addEventListener('hashchange', handleRouting);
+
+    function handleRouting() {
+      const hash = window.location.hash.replace('#', '');
+      
+      if (!hash) {
+        window.location.hash = 'prehled';
+        return;
+      }
+
+      // 1. Zpracování pokud jde o MODAL
+      if (MODALS.includes(hash)) {
+        if (hash === 'payment-signature-modal') {
+          currentScreen = 'nova-platba-detaily';
+        }
+        // Modal chceme otevřít nad stávající obrazovkou
+        // (Pokud jsme přímo refreshnuli na modal, nastavíme jako podklad 'tp-inkasa')
+        if (!SCREENS.includes(currentScreen)) {
+          currentScreen = 'tp-inkasa';
+        }
+        
+        // Zobrazíme podkladovou obrazovku
+        showScreenElements(currentScreen);
+        // Otevřeme modal
+        showModalElement(hash);
+      } 
+      // 2. Zpracování pokud jde o STANDARDNÍ OBRAZOVKU
+      else if (SCREENS.includes(hash)) {
+        // Zavřeme případné otevřené modaly
+        closeAllModalsElements();
+        
+        previousScreen = currentScreen;
+        currentScreen = hash;
+        
+        showScreenElements(currentScreen);
+      } 
+      // Pokud je hash 'tp-inkasa-s-autorizaci', chová se to jako tp-inkasa, ale s flagem
+      else if (hash === 'tp-inkasa-s-autorizaci') {
+        closeAllModalsElements();
+        previousScreen = currentScreen;
+        currentScreen = 'tp-inkasa';
+        
+        showScreenElements('tp-inkasa', true);
+      }
+      else {
+        // Neplatný hash -> na přehled
+        goTo('prehled', true);
+      }
+    }
+
+    // Přejít na obrazovku (změnit URL hash)
+    function goTo(screenName, replace = false) {
+      if (replace) {
+        history.replaceState(null, '', '#' + screenName);
+      } else {
+        window.location.hash = screenName;
+      }
+    }
+
+    // Zobrazit konkrétní div obrazovky a upravit stav v menu
+    function showScreenElements(screenId, forceAuthCard = false) {
+      // Skrýt všechny obrazovky
+      document.querySelectorAll('.screen').forEach(el => el.classList.remove('active'));
+      
+      // Zobrazit vybranou obrazovku
+      const targetScreenId = screenId === 'tp-inkasa-s-autorizaci' ? 'tp-inkasa' : screenId;
+      const screenEl = document.getElementById('screen-' + targetScreenId);
+      if (screenEl) {
+        screenEl.classList.add('active');
+      }
+
+      const paymentFlowScreens = ['nova-platba', 'nova-platba-detaily', 'platba-vysledek'];
+      document.body.classList.toggle('flow-mode', paymentFlowScreens.includes(targetScreenId));
+
+      // Aktualizovat aktivní třídu v levém menu
+      document.querySelectorAll('.menu-item').forEach(el => el.classList.remove('active'));
+      
+      // Mapování obrazovek na menu položky
+      let menuId = 'nav-prehled';
+      if (screenId === 'ucet-detail' || screenId === 'tp-inkasa' || screenId === 'tp-inkasa-s-autorizaci' || screenId === 'autorizace' || screenId === 'vsechny-platby' || screenId === 'platba-detail') {
+        menuId = 'nav-ucy';
+      } else if (screenId === 'extra') {
+        menuId = 'nav-extra';
+      } else if (screenId === 'karty') {
+        menuId = 'nav-karty';
+      } else if (screenId === 'pujcky') {
+        menuId = 'nav-pujcky';
+      } else if (screenId === 'sporeni') {
+        menuId = 'nav-sporeni';
+      } else if (screenId === 'investice') {
+        menuId = 'nav-investice';
+      } else if (screenId === 'pojisteni') {
+        menuId = 'nav-pojisteni';
+      }
+      
+      const menuEl = document.getElementById(menuId);
+      if (menuEl) {
+        menuEl.classList.add('active');
+      }
+
+      // Speciální chování pro obrazovku Trvalé příkazy a Inkasa (obr. 3 vs obr. 6)
+      const authCard = document.getElementById('right-column-auth-card');
+      if (authCard) {
+        const hasAuthItem = localStorage.getItem('inkaso_saved_for_auth') === '1';
+        if (screenId === 'tp-inkasa-s-autorizaci' || window.location.hash === '#tp-inkasa-s-autorizaci' || forceAuthCard || hasAuthItem) {
+          authCard.style.display = 'block';
+        } else {
+          authCard.style.display = 'none';
+        }
+      }
+      
+      if (screenId === 'tp-inkasa' || screenId === 'tp-inkasa-s-autorizaci') {
+        renderTpInkasaList();
+      }
+      
+      // Posunout scroll na začátek
+      window.scrollTo(0, 0);
+    }
+
+    // Otevřít modal změnou hash
+    function openModal(modalId) {
+      goTo(modalId);
+    }
+
+    // Zavřít modal návratem na podkladovou obrazovku
+    function closeModal() {
+      // Pokud máme uloženou informaci o tom, že máme zobrazit kartu autorizace, skočíme tam
+      const wasSaved = localStorage.getItem('inkaso_saved_for_auth') === '1';
+      if (wasSaved && currentScreen === 'tp-inkasa') {
+        goTo('tp-inkasa-s-autorizaci');
+      } else {
+        goTo(currentScreen);
+      }
+    }
+
+    // Zavřít modal a skočit na jiný screen
+    function closeModalAndGoTo(targetScreen) {
+      closeAllModalsElements();
+      goTo(targetScreen);
+    }
+
+    // Fyzické zobrazení modalu v DOMu
+    function showModalElement(modalId) {
+      closeAllModalsElements();
+      const modalEl = document.getElementById('modal-' + modalId);
+      if (modalEl) {
+        modalEl.classList.add('active');
+      }
+    }
+
+    // Fyzické skrytí všech modalů v DOMu
+    function closeAllModalsElements() {
+      document.querySelectorAll('.modal-overlay, .modal-overlay-popup').forEach(el => el.classList.remove('active'));
+    }
+
+    // Uložit vyplněná data z formuláře k autorizaci
+    function saveToAuthorization() {
+      const prijemce = document.getElementById('inp-prijemce').value || 'Neznámý příjemce';
+      const nazev = document.getElementById('inp-nazev').value || 'Bez názvu';
+      const limit = document.getElementById('inp-limit').value || '0';
+      const obdobi = document.getElementById('sel-obdobi').value || 'Měsíčně';
+      const platnostOd = document.getElementById('inp-platnost-od').value || '1. 5. 2022';
+      
+      // Uložení do localStorage
+      localStorage.setItem('inkaso_prijemce', prijemce);
+      localStorage.setItem('inkaso_nazev', nazev);
+      localStorage.setItem('inkaso_limit', parseFloat(limit).toLocaleString('cs-CZ', { minimumFractionDigits: 2 }) + ' Kč');
+      localStorage.setItem('inkaso_obdobi', obdobi);
+      localStorage.setItem('inkaso_platnost_od', platnostOd);
+      localStorage.setItem('inkaso_saved_for_auth', '1'); // Flag, že máme novou položku k autorizaci
+
+      // Překreslit dynamický obsah
+      renderDynamicContent();
+
+      // Vyčistit formulář
+      clearFormFields();
+
+      // Přejít na modal s potvrzením (resultu)
+      goTo('autorizace-potvrzeni-modal');
+    }
+
+    // Přepínání tabů v Autorizaci
+    function switchAuthTab(tabName) {
+      currentAuthTab = tabName;
+      
+      // Změnit aktivní stav na tlačítkách segment controlu
+      document.querySelectorAll('.segmented-control .segment-btn').forEach(btn => {
+        btn.classList.remove('active');
+      });
+      if (tabName === 'platby') document.getElementById('btn-auth-platby').classList.add('active');
+      if (tabName === 'tp') document.getElementById('btn-auth-tp').classList.add('active');
+      if (tabName === 'inkasa') document.getElementById('btn-auth-inkasa').classList.add('active');
+
+      // Odškrtnout 'Označit vše' checkbox
+      const selectAllCb = document.getElementById('select-all-checkbox');
+      if (selectAllCb) selectAllCb.checked = false;
+
+      // Překreslit položky k autorizaci
+      renderDynamicContent();
+    }
+
+    // Vykreslit dynamicky přidanou položku k autorizaci nebo do seznamu inkas
+    function renderDynamicContent() {
+      const authList = document.getElementById('auth-items-list');
+      if (!authList) return;
+
+      // Vyčistit celý seznam
+      authList.innerHTML = '';
+
+      // Získat seznam smazaných položek z localStorage
+      const deletedPlatby = JSON.parse(localStorage.getItem('deleted_platby') || '[]');
+      const deletedTp = JSON.parse(localStorage.getItem('deleted_tp') || '[]');
+      const isInternetDeleted = localStorage.getItem('inkaso_internet_deleted') === '1';
+
+      if (currentAuthTab === 'platby') {
+        // Vykreslit platby k autorizaci
+        const platbyData = [
+          { id: 'platba_auth_1', name: 'Tesco', desc: 'Vršovická 3827/11, Praha 10', date: '10. 7. 2026', amount: '2 430,30 Kč' },
+          { id: 'platba_auth_2', name: 'Alza.cz', desc: 'Nákup elektroniky', date: '9. 7. 2026', amount: '15 800,00 Kč' },
+          { id: 'platba_auth_3', name: 'Shell Praha', desc: 'Čerpací stanice Shell', date: '8. 7. 2026', amount: '1 500,00 Kč' }
+        ];
+
+        platbyData.forEach(item => {
+          if (!deletedPlatby.includes(item.id)) {
+            const card = document.createElement('div');
+            card.className = 'auth-item-card';
+            card.id = 'auth-item-' + item.id;
+            card.innerHTML = `
+              <label class="checkbox-container">
+                <input type="checkbox" class="auth-checkbox" value="${item.id}" onchange="updateDeleteButtonState()">
+                <span class="checkmark">
+                  <svg viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                </span>
+                <div class="item-details" style="margin-left: 8px;">
+                  <span class="t-headings-headline-secondary-bold">${item.name}</span>
+                  <span class="t-content-body-secondary" style="color: var(--color-content-tertiary);">${item.desc}</span>
+                  <span class="t-content-caption-primary" style="color: var(--color-content-tertiary);">${item.date}</span>
+                </div>
+              </label>
+              <div class="t-headings-headline-secondary-bold">${item.amount}</div>
+            `;
+            authList.appendChild(card);
+          }
+        });
+      } else if (currentAuthTab === 'tp') {
+        // Vykreslit trvalé příkazy k autorizaci
+        const tpData = [
+          { id: 'tp_auth_1', name: 'Nájem bytu', desc: 'Měsíčně', date: '10. 7. 2026', amount: '15 000,00 Kč' },
+          { id: 'tp_auth_2', name: 'ČEZ Distribuce', desc: 'Měsíčně', date: '8. 7. 2026', amount: '3 200,00 Kč' },
+          { id: 'tp_auth_3', name: 'Stavební spoření', desc: 'Měsíčně', date: '5. 7. 2026', amount: '2 000,00 Kč' }
+        ];
+
+        tpData.forEach(item => {
+          if (!deletedTp.includes(item.id)) {
+            const card = document.createElement('div');
+            card.className = 'auth-item-card';
+            card.id = 'auth-item-' + item.id;
+            card.innerHTML = `
+              <label class="checkbox-container">
+                <input type="checkbox" class="auth-checkbox" value="${item.id}" onchange="updateDeleteButtonState()">
+                <span class="checkmark">
+                  <svg viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                </span>
+                <div class="item-details" style="margin-left: 8px;">
+                  <span class="t-headings-headline-secondary-bold">${item.name}</span>
+                  <span class="t-content-body-secondary" style="color: var(--color-content-tertiary);">${item.desc}</span>
+                  <span class="t-content-caption-primary" style="color: var(--color-content-tertiary);">${item.date}</span>
+                </div>
+              </label>
+              <div class="t-headings-headline-secondary-bold">${item.amount}</div>
+            `;
+            authList.appendChild(card);
+          }
+        });
+      } else if (currentAuthTab === 'inkasa') {
+        // Vykreslit dynamicky přidanou položku inkasa, pokud existuje v localStorage
+        const hasAuthItem = localStorage.getItem('inkaso_saved_for_auth') === '1';
+        if (hasAuthItem) {
+          const nazev = localStorage.getItem('inkaso_nazev');
+          const obdobi = localStorage.getItem('inkaso_obdobi');
+          const platnostOd = localStorage.getItem('inkaso_platnost_od');
+          const limit = localStorage.getItem('inkaso_limit');
+
+          const dynamicCard = document.createElement('div');
+          dynamicCard.className = 'auth-item-card';
+          dynamicCard.id = 'auth-item-dynamic';
+          dynamicCard.innerHTML = `
+            <label class="checkbox-container">
+              <input type="checkbox" class="auth-checkbox" value="dynamic" onchange="updateDeleteButtonState()">
+              <span class="checkmark">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              </span>
+              <div class="item-details" style="margin-left: 8px;">
+                <span class="t-headings-headline-secondary-bold">${nazev}</span>
+                <span class="t-content-body-secondary" style="color: var(--color-content-tertiary);">${obdobi}</span>
+                <span class="t-content-caption-primary" style="color: var(--color-content-tertiary);">${platnostOd}</span>
+              </div>
+            </label>
+            <div class="t-headings-headline-secondary-bold">${limit}</div>
+          `;
+          authList.appendChild(dynamicCard);
+        }
+
+        // Vykreslit výchozí "Internet" inkaso
+        if (!isInternetDeleted) {
+          const internetCard = document.createElement('div');
+          internetCard.className = 'auth-item-card';
+          internetCard.id = 'auth-item-internet';
+          internetCard.innerHTML = `
+            <label class="checkbox-container">
+              <input type="checkbox" class="auth-checkbox" value="internet" onchange="updateDeleteButtonState()">
+              <span class="checkmark">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              </span>
+              <div class="item-details" style="margin-left: 8px;">
+                <span class="t-headings-headline-secondary-bold">Internet</span>
+                <span class="t-content-body-secondary" style="color: var(--color-content-tertiary);">Měsíčně</span>
+                <span class="t-content-caption-primary" style="color: var(--color-content-tertiary);">10. 7. 2026</span>
+              </div>
+            </label>
+            <div class="t-headings-headline-secondary-bold">350,00 Kč</div>
+          `;
+          authList.appendChild(internetCard);
+        }
+      }
+
+      // Aktualizovat stav tlačítka smazat a přehled v pravém sloupci
+      updateDeleteButtonState();
+    }
+
+    // Zaškrtnout nebo odškrtnout vše
+    function toggleSelectAll(checkbox) {
+      const isChecked = checkbox.checked;
+      document.querySelectorAll('.auth-checkbox').forEach(cb => {
+        cb.checked = isChecked;
+      });
+      updateDeleteButtonState();
+    }
+
+    // Aktualizace tlačítka "Smazat vybrané" a přehledu podle zaškrtnutých checkboxů
+    function updateDeleteButtonState() {
+      const deleteBtn = document.getElementById('delete-selected-btn');
+      if (deleteBtn) {
+        const checkedCount = document.querySelectorAll('.auth-checkbox:checked').length;
+        if (checkedCount > 0) {
+          deleteBtn.classList.remove('disabled');
+        } else {
+          deleteBtn.classList.add('disabled');
+        }
+      }
+      
+      // Přepočítat přehled pro pravý sloupec
+      updateAuthSummary();
+    }
+
+    // Spočítat částku a počet vybraných položek pro pravý sloupec
+    function updateAuthSummary() {
+      const checkboxes = document.querySelectorAll('.auth-checkbox');
+      const totalCount = checkboxes.length;
+      
+      const checkedBoxes = document.querySelectorAll('.auth-checkbox:checked');
+      const checkedCount = checkedBoxes.length;
+
+      let totalAmount = 0;
+      checkedBoxes.forEach(cb => {
+        const card = cb.closest('.auth-item-card');
+        if (card) {
+          const amountDiv = card.querySelector('.t-headings-headline-secondary-bold:last-child');
+          if (amountDiv) {
+            const amountText = amountDiv.textContent;
+            const cleanNumberText = amountText.replace(/[^\d,.-]/g, '').replace(',', '.');
+            const num = parseFloat(cleanNumberText);
+            if (!isNaN(num)) {
+              totalAmount += num;
+            }
+          }
+        }
+      });
+
+      const summaryAmountEl = document.getElementById('auth-summary-amount');
+      const summaryCountEl = document.getElementById('auth-summary-count');
+      const executeBtn = document.getElementById('btn-execute-auth');
+
+      if (summaryAmountEl) {
+        summaryAmountEl.textContent = totalAmount.toLocaleString('cs-CZ', { minimumFractionDigits: 2 }) + ' Kč';
+      }
+      if (summaryCountEl) {
+        summaryCountEl.textContent = `${checkedCount} z ${totalCount} položek`;
+      }
+
+      if (executeBtn) {
+        executeBtn.removeAttribute('disabled');
+        executeBtn.style.opacity = '1';
+        executeBtn.style.cursor = 'pointer';
+      }
+    }
+
+    // Tlačítko K autorizaci v pravém sloupci
+    function executeSelectedAuth() {
+      const checkedCount = document.querySelectorAll('.auth-checkbox:checked').length;
+      if (checkedCount === 0) {
+        openModal('no-items-modal');
+        return;
+      }
+      deleteSelectedAuth();
+    }
+
+    // Smazat vybrané položky z autorizace
+    function deleteSelectedAuth() {
+      const selected = document.querySelectorAll('.auth-checkbox:checked');
+      if (selected.length === 0) return;
+
+      const deletedPlatby = JSON.parse(localStorage.getItem('deleted_platby') || '[]');
+      const deletedTp = JSON.parse(localStorage.getItem('deleted_tp') || '[]');
+
+      selected.forEach(cb => {
+        const val = cb.value;
+        if (val === 'dynamic') {
+          localStorage.removeItem('inkaso_prijemce');
+          localStorage.removeItem('inkaso_nazev');
+          localStorage.removeItem('inkaso_limit');
+          localStorage.removeItem('inkaso_obdobi');
+          localStorage.removeItem('inkaso_platnost_od');
+          localStorage.removeItem('inkaso_saved_for_auth');
+        } else if (val === 'internet') {
+          localStorage.setItem('inkaso_internet_deleted', '1');
+        } else if (val.startsWith('platba_auth')) {
+          deletedPlatby.push(val);
+        } else if (val.startsWith('tp_auth')) {
+          deletedTp.push(val);
+        }
+      });
+
+      localStorage.setItem('deleted_platby', JSON.stringify(deletedPlatby));
+      localStorage.setItem('deleted_tp', JSON.stringify(deletedTp));
+
+      // Překreslit seznam
+      renderDynamicContent();
+
+      // Pokud se smazalo vše, odškrtneme "Označit vše"
+      const selectAll = document.getElementById('select-all-checkbox');
+      if (selectAll) selectAll.checked = false;
+      
+      updateDeleteButtonState();
+
+      // Zobrazit potvrzení
+      alert('Vybrané položky byly úspěšně autorizovány.');
+    }
+
+    // Obnovit hodnoty ve formuláři, pokud jsou v localStorage (např. při rozpracovanosti a zavření)
+    function restoreFormValues() {
+      const prijemce = localStorage.getItem('form_prijemce');
+      const nazev = localStorage.getItem('form_nazev');
+      const limit = localStorage.getItem('form_limit');
+      const obdobi = localStorage.getItem('form_obdobi');
+
+      if (prijemce) document.getElementById('inp-prijemce').value = prijemce;
+      if (nazev) document.getElementById('inp-nazev').value = nazev;
+      if (limit) document.getElementById('inp-limit').value = limit;
+      if (obdobi) document.getElementById('sel-obdobi').value = obdobi;
+
+      // Nastavit listenery pro ukládání rozpracovaného formuláře
+      document.getElementById('inp-prijemce').addEventListener('input', e => localStorage.setItem('form_prijemce', e.target.value));
+      document.getElementById('inp-nazev').addEventListener('input', e => localStorage.setItem('form_nazev', e.target.value));
+      document.getElementById('inp-limit').addEventListener('input', e => localStorage.setItem('form_limit', e.target.value));
+      document.getElementById('sel-obdobi').addEventListener('change', e => localStorage.setItem('form_obdobi', e.target.value));
+    }
+
+    // Vyčistit pole formuláře a localStorage drafty
+    function clearFormFields() {
+      document.getElementById('inp-prijemce').value = '';
+      document.getElementById('inp-nazev').value = '';
+      document.getElementById('inp-limit').value = '';
+      document.getElementById('sel-obdobi').value = 'Měsíčně';
+      
+      localStorage.removeItem('form_prijemce');
+      localStorage.removeItem('form_nazev');
+      localStorage.removeItem('form_limit');
+      localStorage.removeItem('form_obdobi');
+    }
+
+    function viewDetail(name, account, amount, date, direction, note) {
+      // 1. Nastavit typ platby (Odchozí / Příchozí)
+      const isPrichozi = direction === 'prichozi';
+      document.getElementById('detail-type-title').textContent = isPrichozi ? 'Příchozí platba' : 'Odchozí platba';
+      
+      // 2. Nastavit iniciálu a ikonu směru
+      document.getElementById('detail-initial').textContent = name.trim().charAt(0).toUpperCase();
+      const badge = document.getElementById('detail-direction-badge');
+      if (isPrichozi) {
+        badge.style.backgroundColor = 'var(--color-attention-success)';
+        badge.innerHTML = `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" style="transform: rotate(180deg);"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>`;
+      } else {
+        badge.style.backgroundColor = '#212121';
+        badge.innerHTML = `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>`;
+      }
+
+      // 3. Nastavit hlavní údaje
+      document.getElementById('detail-name').textContent = name;
+      document.getElementById('detail-account').textContent = account;
+      
+      const amountEl = document.getElementById('detail-amount');
+      amountEl.textContent = amount;
+      if (isPrichozi) {
+        amountEl.style.color = 'var(--color-attention-success)';
+      } else {
+        amountEl.style.color = 'var(--color-content-primary)';
+      }
+      
+      // Formátovat datum
+      document.getElementById('detail-date').textContent = date;
+
+      // 4. Nastavit doplňující tabulkové údaje
+      document.getElementById('detail-from-account').innerHTML = `Můj KB účet<br><span style="font-weight: 400; color: var(--color-content-secondary);">3827897080/0100</span>`;
+      document.getElementById('detail-msg-recipient').textContent = note || 'Bez zprávy';
+      document.getElementById('detail-msg-me').textContent = isPrichozi ? 'Příchozí platba' : 'Za nákup';
+      
+      // Vygenerovat náhodné / fiktivní symboly
+      document.getElementById('detail-vs').textContent = isPrichozi ? '192837465' : '1352568798';
+      document.getElementById('detail-ks').textContent = '308';
+      document.getElementById('detail-ss').textContent = '777';
+      document.getElementById('detail-id').textContent = Math.floor(10000000 + Math.random() * 90000000).toString();
+      document.getElementById('detail-category').textContent = 'Nezatříděné';
+
+      // 5. Přejít na obrazovku
+      goTo('platba-detail');
+    }
+
+    function goBack() {
+      if (previousScreen === 'platba-detail' || !previousScreen) {
+        goTo('ucet-detail');
+      } else {
+        goTo(previousScreen);
+      }
+    }
+
+    function switchTpInkasaTab(tabName) {
+      currentTpInkasaTab = tabName;
+      
+      // Změnit aktivní stav tlačítek
+      document.querySelectorAll('#screen-tp-inkasa .segmented-control .segment-btn').forEach(btn => {
+        btn.classList.remove('active');
+      });
+      if (tabName === 'tp') document.getElementById('btn-tp-inkasa-tp').classList.add('active');
+      if (tabName === 'inkasa') document.getElementById('btn-tp-inkasa-inkasa').classList.add('active');
+      if (tabName === 'sipo') document.getElementById('btn-tp-inkasa-sipo').classList.add('active');
+
+      // Změnit text a akci na tlačítku v pravém sloupci
+      const actionBtn = document.getElementById('btn-tp-inkasa-action');
+      if (actionBtn) {
+        if (tabName === 'tp') {
+          actionBtn.querySelector('span').textContent = 'Vytvořit trvalý příkaz';
+          actionBtn.setAttribute('onclick', "alert('Simulace: Vytvoření trvalého příkazu není v tomto prototypu aktivní.')");
+        } else if (tabName === 'inkasa') {
+          actionBtn.querySelector('span').textContent = 'Nastavit inkaso';
+          actionBtn.setAttribute('onclick', "openModal('povoleni-inkasa-modal')");
+        } else if (tabName === 'sipo') {
+          actionBtn.querySelector('span').textContent = 'Nové SIPO';
+          actionBtn.setAttribute('onclick', "alert('Simulace: Nastavení nového SIPO není v tomto prototypu aktivní.')");
+        }
+      }
+
+      // Překreslit seznam
+      renderTpInkasaList();
+    }
+
+    function renderTpInkasaList() {
+      const listEl = document.getElementById('inkasa-list');
+      if (!listEl) return;
+
+      listEl.innerHTML = '';
+
+      if (currentTpInkasaTab === 'tp') {
+        const tpData = [
+          { name: 'ČEZ', period: 'Měsíčně', amount: '5 000,00 Kč', initial: 'Č' },
+          { name: 'Školní jídelna', period: 'Měsíčně', amount: '500,00 Kč', initial: 'Š' }
+        ];
+
+        tpData.forEach(item => {
+          const div = document.createElement('div');
+          div.className = 'list-item';
+          div.innerHTML = `
+            <div class="list-item-left">
+              <div class="item-icon">
+                <span class="t-headings-headline-secondary-bold" style="color: var(--color-content-secondary);">${item.initial}</span>
+                <span class="badge-icon badge-success" style="right: -4px; bottom: -4px;">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+                </span>
+              </div>
+              <div class="item-details">
+                <span class="item-title">${item.name}</span>
+                <span class="item-subtitle">${item.period}</span>
+              </div>
+            </div>
+            <div class="list-item-right">${item.amount}</div>
+          `;
+          listEl.appendChild(div);
+        });
+      } else if (currentTpInkasaTab === 'inkasa') {
+        const inkasaData = [
+          { name: 'T-Mobile', period: 'Měsíčně', amount: '650,00 Kč', initial: 'T' },
+          { name: 'O2 Internet', period: 'Měsíčně', amount: '450,00 Kč', initial: 'O' }
+        ];
+
+        const isApproved = localStorage.getItem('inkaso_approved') === '1';
+        if (isApproved) {
+          const name = localStorage.getItem('inkaso_nazev') || 'Nové inkaso';
+          const period = localStorage.getItem('inkaso_obdobi') || 'Měsíčně';
+          const limit = localStorage.getItem('inkaso_limit') || '0,00 Kč';
+          inkasaData.push({ name: name, period: period, amount: limit, initial: name.charAt(0).toUpperCase() });
+        }
+
+        inkasaData.forEach(item => {
+          const div = document.createElement('div');
+          div.className = 'list-item';
+          div.innerHTML = `
+            <div class="list-item-left">
+              <div class="item-icon">
+                <span class="t-headings-headline-secondary-bold" style="color: var(--color-content-secondary);">${item.initial}</span>
+                <span class="badge-icon badge-success" style="right: -4px; bottom: -4px;">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+                </span>
+              </div>
+              <div class="item-details">
+                <span class="item-title">${item.name}</span>
+                <span class="item-subtitle">${item.period}</span>
+              </div>
+            </div>
+            <div class="list-item-right">${item.amount}</div>
+          `;
+          listEl.appendChild(div);
+        });
+      } else if (currentTpInkasaTab === 'sipo') {
+        const sipoData = [
+          { name: 'SIPO platba', period: 'Měsíčně', amount: '4 800,00 Kč', initial: 'S' }
+        ];
+
+        sipoData.forEach(item => {
+          const div = document.createElement('div');
+          div.className = 'list-item';
+          div.innerHTML = `
+            <div class="list-item-left">
+              <div class="item-icon">
+                <span class="t-headings-headline-secondary-bold" style="color: var(--color-content-secondary);">${item.initial}</span>
+                <span class="badge-icon badge-success" style="right: -4px; bottom: -4px;">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+                </span>
+              </div>
+              <div class="item-details">
+                <span class="item-title">${item.name}</span>
+                <span class="item-subtitle">${item.period}</span>
+              </div>
+            </div>
+            <div class="list-item-right">${item.amount}</div>
+          `;
+          listEl.appendChild(div);
+        });
+      }
+    }
+
+    function paymentStorageKey(key) {
+      return 'vavu_payment_' + key;
+    }
+
+    function bindPaymentPersistence() {
+      document.querySelectorAll('[data-payment-key]').forEach(field => {
+        const save = () => localStorage.setItem(paymentStorageKey(field.dataset.paymentKey), field.value);
+        field.addEventListener('input', save);
+        field.addEventListener('change', save);
+      });
+    }
+
+    function restorePaymentValues() {
+      document.querySelectorAll('[data-payment-key]').forEach(field => {
+        const saved = localStorage.getItem(paymentStorageKey(field.dataset.paymentKey));
+        if (saved !== null) field.value = saved;
+      });
+      const timing = localStorage.getItem(paymentStorageKey('timing')) || 'now';
+      setPaymentTiming(timing, false);
+    }
+
+    function continuePayment() {
+      const recipient = document.getElementById('payment-recipient');
+      const amount = document.getElementById('payment-amount');
+      const recipientControl = document.getElementById('payment-recipient-control');
+      const amountControl = document.getElementById('payment-amount-control');
+      const recipientMessage = document.getElementById('payment-recipient-message');
+      const amountMessage = document.getElementById('payment-amount-message');
+      let valid = true;
+
+      recipientControl.classList.remove('is-error');
+      amountControl.classList.remove('is-error');
+      recipientMessage.classList.remove('error');
+      amountMessage.classList.remove('error');
+      recipientMessage.textContent = '';
+      amountMessage.textContent = 'Na účtu vám zůstane 18 063,38 Kč';
+
+      if (!recipient.value.trim()) {
+        recipientControl.classList.add('is-error');
+        recipientMessage.classList.add('error');
+        recipientMessage.textContent = 'Zadejte příjemce nebo číslo účtu.';
+        valid = false;
+      }
+
+      if (!amount.value || Number(amount.value) <= 0) {
+        amountControl.classList.add('is-error');
+        amountMessage.classList.add('error');
+        amountMessage.textContent = 'Zadejte částku vyšší než 0.';
+        valid = false;
+      }
+
+      if (!valid) return;
+      goTo('nova-platba-detaily');
+    }
+
+    function setPaymentTiming(value, persist = true) {
+      document.querySelectorAll('[data-payment-timing]').forEach(button => {
+        const active = button.dataset.paymentTiming === value;
+        button.classList.toggle('active', active);
+        button.setAttribute('aria-pressed', String(active));
+      });
+      if (persist) localStorage.setItem(paymentStorageKey('timing'), value);
+    }
+
+    function handleQrFile(input) {
+      if (!input.files || !input.files[0]) return;
+      const label = document.querySelector('.qr-upload span:last-child');
+      if (label) label.textContent = 'Nahraný soubor: ' + input.files[0].name;
+    }
+
+    function authorizePayment() {
+      closeAllModalsElements();
+      goTo('platba-vysledek');
+    }
+
+    function finishPayment() {
+      goTo('prehled');
+    }
+  </script>
+
+  <!-- Obnova obrazovky z URL hash při refresh (podle CLAUDE.md) -->
+  <script>
+  (function() {
+    const hash = window.location.hash.replace('#', '');
+    if (hash) {
+      // Zpracování speciálního stavu s autorizací
+      if (hash === 'tp-inkasa-s-autorizaci') {
+        showScreenElements('tp-inkasa', true);
+        history.replaceState({ screen: 'tp-inkasa-s-autorizaci' }, '', window.location.hash);
+      } else if (MODALS.includes(hash)) {
+        // Modal podpisu patří k platbě, původní modaly k inkasům.
+        currentScreen = hash === 'payment-signature-modal' ? 'nova-platba-detaily' : 'tp-inkasa';
+        showScreenElements(currentScreen);
+        showModalElement(hash);
+      } else {
+        const screenId = 'screen-' + hash;
+        const el = document.getElementById(screenId);
+        if (el) {
+          showScreenElements(hash);
+          history.replaceState({ screen: hash }, '', window.location.hash);
+        }
+      }
+    }
+  })();
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,35 @@
+{
+  "$schema": "https://tr.designtokens.org/format/",
+  "$description": "Golem spacing, border width and sizing. Golem calls its spacing scale 'padding' — there is no separate margin scale, because layout gaps are auto-layout padding/gap, never margins. The ES Spacing spacer component is deprecated: use auto-layout with these values instead.",
+  "$extensions": {
+    "golem": {
+      "source": "Figma variables read from CO Button, CO Item Display, CO Table, CO Product and CO Snackbar nodes 2026-08-12; padding/3xl confirmed on the ES Design tokens node 15635:10523 in file xOURtHkYRN70tbZdQPWlw2; numeric scale cross-checked against the Golem showcase snapshot 2026-08-11",
+      "unobservedInThisPass": ["padding.5xl"],
+      "deprecated": ["ES Spacing (spacer component, '⚠︎ ES Spacing' page in 💠 ES Essentials)"]
+    }
+  },
+  "padding": {
+    "null": { "$type": "dimension", "$value": "0px" },
+    "xs":   { "$type": "dimension", "$value": "2px" },
+    "sm":   { "$type": "dimension", "$value": "4px" },
+    "md":   { "$type": "dimension", "$value": "8px" },
+    "lg":   { "$type": "dimension", "$value": "12px" },
+    "xl":   { "$type": "dimension", "$value": "16px", "$description": "Standard screen side padding on all breakpoints." },
+    "2xl":  { "$type": "dimension", "$value": "24px" },
+    "3xl":  { "$type": "dimension", "$value": "32px" },
+    "4xl":  { "$type": "dimension", "$value": "48px" },
+    "5xl":  { "$type": "dimension", "$value": "64px", "$description": "Name inferred from the scale, as for 3xl." }
+  },
+  "border": {
+    "sm": { "$type": "dimension", "$value": "1px", "$description": "Dividers, input outlines." },
+    "md": { "$type": "dimension", "$value": "2px", "$description": "Secondary button outline, focus ring." },
+    "lg": { "$type": "dimension", "$value": "3px" }
+  },
+  "sizing": {
+    "buttonHeight": { "$type": "dimension", "$value": "48px", "$description": "Also the minimum touch target height for every interactive row." },
+    "iconSmall":    { "$type": "dimension", "$value": "24px", "$description": "ES Icon default in list items." },
+    "iconLarge":    { "$type": "dimension", "$value": "32px" },
+    "subIconSmall": { "$type": "dimension", "$value": "14px", "$description": "ES SubIcon on a 24px avatar." },
+    "subIconLarge": { "$type": "dimension", "$value": "28px" }
+  }
+}
