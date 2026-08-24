@@ -492,9 +492,9 @@
     /* Středový sloupec */
     .center-column {
       flex: 1;
-      /* Původní rámec přehledu: široký desktopový střed. Platební flow
-         používá vlastní .payment-flow-column a zůstává v DS narrow šířce. */
-      max-width: 720px;
+      /* Střed vyplní prostor mezi levým menu a pravým sloupcem.
+         Platební flow používá vlastní .payment-flow-column a zůstává narrow. */
+      max-width: none;
       display: flex;
       flex-direction: column;
       gap: var(--padding-xl);
