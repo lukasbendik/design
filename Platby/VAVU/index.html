@@ -1455,8 +1455,8 @@
 
     .toast-notification {
       position: fixed;
-      right: 24px;
-      bottom: 24px;
+      top: 64px;
+      left: 50%;
       z-index: 3000;
       max-width: min(420px, calc(100vw - 48px));
       padding: 14px 16px;
@@ -1467,14 +1467,14 @@
       font: var(--content-body-primary);
       line-height: 24px;
       opacity: 0;
-      transform: translateY(12px);
+      transform: translate(-50%, -12px);
       pointer-events: none;
       transition: opacity 180ms ease, transform 180ms ease;
     }
 
     .toast-notification.is-visible {
       opacity: 1;
-      transform: translateY(0);
+      transform: translate(-50%, 0);
     }
 
     .modal-content-popup {
