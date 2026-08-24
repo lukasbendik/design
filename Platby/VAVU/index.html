@@ -382,32 +382,28 @@
 
     /* Velká akční karta (červená, např. Nová platba) */
     .card-action-red {
-      background-color: var(--color-interactive-primary);
+      background: transparent;
       color: var(--color-interactive-on-primary);
-      border-radius: var(--radius-md);
-      padding: 16px;
+      border-radius: 0;
+      padding: 0;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      gap: 8px;
       cursor: pointer;
-      transition: background-color 0.2s ease;
+      transition: opacity 0.2s ease;
       width: 100%;
-      box-shadow: var(--shadow-panel);
-      font-weight: 600;
-      font-size: 15px;
+      box-shadow: none;
     }
 
     .card-action-red:hover {
-      background-color: var(--color-interactive-primary-action);
+      opacity: 0.9;
     }
 
-    .card-action-red svg {
-      width: 24px;
-      height: 24px;
-      stroke: currentColor;
-      fill: none;
+    .card-action-red img {
+      display: block;
+      width: 100%;
+      height: auto;
     }
 
     /* Tlačítka */
@@ -1657,12 +1653,7 @@
         <div class="right-column">
           <!-- Akční červená karta Nová platba -->
           <div class="card-action-red" role="button" tabindex="0" onclick="goTo('nova-platba')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();goTo('nova-platba')}">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <line x1="3" y1="12" x2="17" y2="12"/>
-              <polyline points="13 8 17 12 13 16"/>
-              <circle cx="20" cy="12" r="2"/>
-            </svg>
-            <span>Nová platba</span>
+            <img src="assets/new-payment.png" alt="Nová platba">
           </div>
 
           <!-- Karta souhrn -->
@@ -1881,12 +1872,7 @@
         <div class="right-column">
           <!-- Akční červená karta Nová platba -->
           <div class="card-action-red" role="button" tabindex="0" onclick="goTo('nova-platba')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();goTo('nova-platba')}">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <line x1="3" y1="12" x2="17" y2="12"/>
-              <polyline points="13 8 17 12 13 16"/>
-              <circle cx="20" cy="12" r="2"/>
-            </svg>
-            <span>Nová platba</span>
+            <img src="assets/new-payment.png" alt="Nová platba">
           </div>
 
           <!-- Odkazy -->
