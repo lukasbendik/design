@@ -615,6 +615,18 @@
       background-color: var(--color-interactive-secondary-active);
     }
 
+    .overview-edit-button {
+      min-height: 56px;
+      border: 1.5px solid var(--color-content-primary);
+      border-radius: var(--radius-xl);
+      font-weight: 500;
+    }
+
+    .overview-edit-button svg {
+      width: 24px;
+      height: 24px;
+    }
+
     /* Tlačítko zpět */
     .back-btn {
       display: inline-flex;
@@ -1950,7 +1962,7 @@
           </div>
 
           <!-- Tlačítko upravit přehled -->
-          <button class="btn btn-secondary" onclick="alert('Funkce není v prototypu implementována')" style="border-color: var(--color-content-primary); border-width: 1px; color: var(--color-content-primary); font-weight: 500;">
+          <button class="btn btn-secondary overview-edit-button" onclick="alert('Funkce není v prototypu implementována')">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
             Upravit přehled
           </button>
