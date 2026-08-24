@@ -908,6 +908,150 @@
       height: 24px;
     }
 
+    .screen.savings-overview-screen.active {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 320px;
+      align-items: start;
+      gap: var(--padding-2xl);
+      overflow: hidden;
+    }
+
+    .savings-overview-column {
+      width: 100%;
+      height: 100%;
+      overflow-y: auto;
+      padding-right: 8px;
+    }
+
+    .savings-card {
+      padding: 0;
+      overflow: hidden;
+    }
+
+    .savings-card + .savings-card {
+      margin-top: var(--padding-xl);
+    }
+
+    .savings-heading {
+      padding: var(--padding-xl);
+      border-bottom: 1px solid var(--background-divider);
+      font: var(--headings-headline-secondary-bold);
+    }
+
+    .savings-account-row {
+      min-height: 120px;
+      padding: var(--padding-xl);
+      display: flex;
+      align-items: center;
+      gap: var(--padding-xl);
+      border-bottom: 1px solid var(--background-divider);
+      cursor: pointer;
+    }
+
+    .savings-account-copy {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: var(--padding-xs);
+    }
+
+    .savings-account-name {
+      font: var(--content-body-primary-bold);
+    }
+
+    .savings-account-number {
+      margin-left: auto;
+      color: var(--content-tertiary);
+      font: var(--content-body-primary);
+    }
+
+    .savings-account-balance {
+      font: var(--headings-title-tertiary);
+      color: var(--content-primary);
+    }
+
+    .savings-account-balance small {
+      font: var(--headings-headline-primary);
+    }
+
+    .savings-x-sell {
+      min-height: 68px;
+      padding: var(--padding-xl);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+    }
+
+    .savings-term-row {
+      min-height: 120px;
+      padding: var(--padding-xl);
+      display: flex;
+      align-items: center;
+      gap: var(--padding-xl);
+      cursor: pointer;
+    }
+
+    .savings-term-copy {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: var(--padding-xs);
+    }
+
+    .savings-term-name {
+      font: var(--content-body-primary-bold);
+    }
+
+    .savings-term-number {
+      margin-left: auto;
+      color: var(--content-tertiary);
+      font: var(--content-body-primary);
+    }
+
+    .savings-term-detail {
+      color: var(--content-tertiary);
+      font: var(--content-body-primary);
+    }
+
+    .savings-chevron {
+      width: 24px;
+      height: 24px;
+      color: var(--content-primary);
+      flex: 0 0 24px;
+    }
+
+    .savings-closed-card {
+      padding: var(--padding-xl);
+      display: flex;
+      align-items: center;
+      gap: var(--padding-xl);
+      cursor: pointer;
+    }
+
+    .savings-closed-icon {
+      width: 24px;
+      height: 24px;
+      color: var(--interactive-primary);
+      flex: 0 0 24px;
+    }
+
+    .savings-closed-copy {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: var(--padding-xs);
+    }
+
+    .savings-closed-title {
+      font: var(--content-body-primary-bold);
+    }
+
+    .savings-closed-count {
+      color: var(--content-tertiary);
+      font: var(--content-body-primary);
+    }
+
     /* Tlačítko zpět */
     .back-btn {
       display: inline-flex;
@@ -2341,7 +2485,36 @@
         <button class="new-insurance-button" type="button" onclick="alert('Nové pojištění není v tomto prototypu rozpracované.')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>Nové pojištění</button>
       </div>
 
-      <!-- ================= SCREEN 6: EXTRA ================= -->
+      <!-- ================= SCREEN 6: SPOŘENÍ ================= -->
+      <div class="screen savings-overview-screen" id="screen-sporeni">
+        <div class="savings-overview-column">
+          <section class="card savings-card">
+            <h1 class="savings-heading">Spořicí účet</h1>
+            <div class="savings-account-row" role="button" tabindex="0" onclick="goTo('ucet-detail')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.click()}">
+              <div class="savings-account-copy"><span class="savings-account-name">Spoření</span><span class="savings-account-balance">11 490<small>,20 Kč</small></span></div>
+              <span class="savings-account-number">326683764/0100</span><svg class="savings-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
+            </div>
+            <div class="savings-x-sell" role="button" tabindex="0" onclick="alert('Detail nabídky není v tomto prototypu rozpracovaný.')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.click()}"><span>$Xsell Content</span><svg class="savings-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></div>
+          </section>
+          <section class="card savings-card">
+            <h1 class="savings-heading">Termínované účty</h1>
+            <div class="savings-term-row" role="button" tabindex="0" onclick="alert('Detail termínovaného účtu není v tomto prototypu rozpracovaný.')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.click()}">
+              <div class="savings-term-copy"><span class="savings-term-name">Termínovaný účet</span><span class="savings-account-balance">100 000<small>,00 Kč</small></span><span class="savings-term-detail">Doba vkladu do $Date</span></div>
+              <span class="savings-term-number">1234567/0100</span><svg class="savings-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
+            </div>
+          </section>
+        </div>
+        <div class="right-column">
+          <button class="new-insurance-button" type="button" onclick="alert('Nové spoření není v tomto prototypu rozpracované.')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>Nové spoření</button>
+          <div class="card savings-closed-card" role="button" tabindex="0" onclick="alert('Zrušená spoření nejsou v tomto prototypu rozpracovaná.')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.click()}">
+            <svg class="savings-closed-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 7h14M9 7V4h6v3M7 7l1 13h8l1-13M10 11v5M14 11v5"/></svg>
+            <div class="savings-closed-copy"><span class="savings-closed-title">Zrušená a ukončená spoření</span><span class="savings-closed-count">1 spoření</span></div>
+            <svg class="savings-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- ================= SCREEN 7: EXTRA ================= -->
       <div class="screen extra-overview-screen" id="screen-extra">
         <div class="extra-overview-column">
           <div class="extra-service-list">
