@@ -1676,10 +1676,11 @@
     transform-origin: center center;
   }
   .statement-sheet.statement-image { display: block; height: auto; padding: 0; }
-  .statement-sheet.focus-acc { transform: scale(2.1); transform-origin: 78% 39%; }
-  .statement-sheet.focus-amount { transform: translate(155px, 0) scale(2.1); }
-  .statement-sheet.focus-vs { transform: scale(2.1); transform-origin: 78% 42%; }
-  .statement-sheet.focus-message { transform: scale(1.7) translate(0, -18%); }
+  #ocr-success-stage.focused { background: #FFF; }
+  .statement-sheet.focus-acc { transform: translate(-340px, 96px) scale(3.2); }
+  .statement-sheet.focus-amount { transform: translate(376px, 74px) scale(3.2); }
+  .statement-sheet.focus-vs { transform: translate(-340px, 74px) scale(3.2); }
+  .statement-sheet.focus-message { transform: translate(360px, 74px) scale(3.2); }
   .statement-head { display: flex; justify-content: space-between; border-bottom: 4px solid #F1F1F1; padding-bottom: 5px; font-weight: 700; }
   .statement-logo { font-size: 17px; letter-spacing: 1px; }
   .statement-meta { text-align: center; font-size: 6px; }
@@ -2924,6 +2925,8 @@ let noQrModalShown = lsGet('no_qr_modal_shown') === '1';
   function focusOCRField(field) {
     const documentEl = document.getElementById('ocr-success-document');
     if (!documentEl) return;
+    const stage = document.getElementById('ocr-success-stage');
+    if (stage) stage.classList.add('focused');
     documentEl.classList.remove('focus-acc', 'focus-amount', 'focus-vs', 'focus-message');
     document.querySelectorAll('.ocr-field-card').forEach(card => card.classList.remove('selected'));
     const card = document.querySelector('.ocr-field-card[data-field="' + field + '"]');
