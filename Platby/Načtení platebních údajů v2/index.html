@@ -2521,23 +2521,7 @@
     </div>
   </div>
 
-  <!-- 3. Bottom Sheet: Consent for data processing -->
-  <div class="sheet-overlay" id="sheet-consent">
-    <div class="bottom-sheet">
-      <div class="sheet-handle"></div>
-      <button class="sheet-close-btn" onclick="closeConsentSheet()">✕</button>
-      <h3 class="sheet-title">Souhlas se zpracováním údajů</h3>
-      <div class="sheet-scroll-content">
-        <p class="sheet-text">Pro vyčtení platebních údajů z nahraného dokumentu budeme dokument zpracovávat. Vaše data jsou zabezpečena a slouží výhradně pro vyplnění tohoto platebního příkazu.</p>
-      </div>
-      <div class="sheet-actions">
-        <button class="primary-btn red" onclick="acceptConsent()">Souhlasím</button>
-        <button class="secondary-btn-outline" style="border: 1px solid #1A1A1A;" onclick="closeConsentSheet()">Zavřít</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- 4. Bottom Sheet: Select Source Account -->
+  <!-- 3. Bottom Sheet: Select Source Account -->
   <div class="sheet-overlay" id="sheet-source-acc">
     <div class="bottom-sheet">
       <div class="sheet-handle"></div>
@@ -2724,7 +2708,6 @@ let noQrModalShown = lsGet('no_qr_modal_shown') === '1';
       clearNoQRAlertTimer();
       closeNoQRAlert();
       closeOCRFailAlert();
-      closeConsentSheet();
       closeSourceAccSheet();
       closeCurrencySheet();
     }
@@ -2896,13 +2879,9 @@ let noQrModalShown = lsGet('no_qr_modal_shown') === '1';
       showLoader('Rozpoznávám QR kód…');
       setTimeout(() => { hideLoader(); go('screen-review-qr'); }, 900);
     } else {
-      if (lsGet('ocr_consent_approved') === '1') {
-        cameFromFlow = true;
-        go('screen-ocr-loading');
-        startLoadingSimulation();
-      } else {
-        openConsentSheet();
-      }
+      cameFromFlow = true;
+      go('screen-ocr-loading');
+      startLoadingSimulation();
     }
   }
 
@@ -2918,21 +2897,7 @@ let noQrModalShown = lsGet('no_qr_modal_shown') === '1';
   function openSheet() { document.getElementById('sheet').classList.add('show'); }
   function closeSheet() { document.getElementById('sheet').classList.remove('show'); }
 
-  // Consent & OCR loading simulation
-  function openConsentSheet() {
-    document.getElementById('sheet-consent').classList.add('show');
-  }
-  function closeConsentSheet() {
-    document.getElementById('sheet-consent').classList.remove('show');
-  }
-  function acceptConsent() {
-    closeConsentSheet();
-    lsSet('ocr_consent_approved', '1');
-    cameFromFlow = true;
-    go('screen-ocr-loading');
-    startLoadingSimulation();
-  }
-
+  // OCR loading simulation
   function startLoadingSimulation() {
     clearOcrTimers();
     ocrTimers.push(setTimeout(() => {
@@ -3539,7 +3504,6 @@ let noQrModalShown = lsGet('no_qr_modal_shown') === '1';
 
   function resetTooltips() {
     lsRemove(TOOLTIP_KEY);
-    lsRemove('ocr_consent_approved');
     lsRemove('no_qr_modal_shown');
     noQrModalShown = false;
     tooltipSeenOnPayment = false;
