@@ -2927,6 +2927,8 @@ let noQrModalShown = lsGet('no_qr_modal_shown') === '1';
   function focusOCRField(field) {
     const documentEl = document.getElementById('ocr-success-document');
     if (!documentEl) return;
+    // Ruční pinch/pan transform nesmí přebít přesný fokus na vybranou hodnotu.
+    resetOCRFocus();
     const stage = document.getElementById('ocr-success-stage');
     if (stage) stage.classList.add('focused');
     documentEl.classList.remove('focus-acc', 'focus-amount', 'focus-vs');
