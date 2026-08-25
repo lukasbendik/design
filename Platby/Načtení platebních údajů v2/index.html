@@ -333,9 +333,10 @@
     position: absolute;
     top: 50%; left: 50%;
     transform: translate(-50%, -50%);
-    width: 240px; height: 240px;
-    border-radius: 12px;
-    box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.55);
+    width: 280px; height: 280px;
+    border-radius: 0;
+    background: rgba(255,255,255,0.18);
+    box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.22);
     pointer-events: none;
     z-index: 1;
   }
@@ -343,9 +344,9 @@
   .scan-frame > span::before, .scan-frame > span::after {
     content: '';
     position: absolute;
-    width: 28px; height: 28px;
-    border: 3.5px solid #fff;
-    border-radius: 2.5px;
+    width: 45px; height: 45px;
+    border: 4px solid #fff;
+    border-radius: 0;
   }
   .scan-frame::before { top: 0; left: 0; border-right: none; border-bottom: none; }
   .scan-frame::after { top: 0; right: 0; border-left: none; border-bottom: none; }
@@ -357,24 +358,24 @@
     top: 18px;
     left: 78px;
     right: auto;
-    width: 220px;
+    width: 236px;
     font-size: 16px;
     line-height: 1.4;
     background: rgba(45,45,45,0.95);
     color: #FFF;
-    padding: 9px 14px;
-    border-radius: 9px;
+    padding: 15px 16px;
+    border-radius: 72px;
     z-index: 5;
     pointer-events: none;
     text-align: left;
   }
 
   .cam-bottom {
-    padding: 20px 16px 24px;
+    padding: 28px 16px 30px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 24px;
+    gap: 0;
     background: #FFF;
     border-top: 1px solid #E5E5E5;
     position: relative; z-index: 10;
@@ -2001,7 +2002,7 @@
           <button class="cam-close-txt" onclick="closeFlow()">Zavřít</button>
         </div>
         <div class="mode-segment">
-          <button id="mode-qr" class="active" onclick="setMode('qr')">QR kód</button>
+          <button id="mode-qr" class="active" onclick="setMode('qr')">QR platba</button>
           <button id="mode-inv" onclick="setMode('inv')">Platební údaje</button>
         </div>
       </div>
@@ -2848,20 +2849,23 @@ let noQrModalShown = lsGet('no_qr_modal_shown') === '1';
     const hint = document.getElementById('hint');
     const scanFrame = document.querySelector('.scan-frame');
     const shutter = document.getElementById('shutter');
+    const aiScanCopy = document.querySelector('.ai-scan-copy');
     const simQR = document.getElementById('sim-qr');
     const simPlain = document.getElementById('sim-plain');
     
     if (m === 'qr') {
-      if (hint) { hint.textContent = 'Namiřte fotoaparát na QR kód, vyfotí se automaticky.'; hint.style.top = 'auto'; hint.style.bottom = '104px'; }
+      if (hint) { hint.textContent = 'Namiřte fotoaparát na QR kód, vyfotí se automaticky.'; hint.style.top = '18px'; hint.style.bottom = 'auto'; }
       if (scanFrame) scanFrame.style.display = 'block';
       if (shutter) shutter.style.display = 'none';
-      if (simQR) simQR.classList.add('show');
+      if (aiScanCopy) aiScanCopy.style.display = 'none';
+      if (simQR) simQR.classList.remove('show');
       if (simPlain) simPlain.classList.remove('show');
       startNoQRAlertTimer();
     } else {
       if (hint) { hint.textContent = 'Vyfoťte SMS nebo fakturu.'; hint.style.top = '18px'; hint.style.bottom = 'auto'; }
       if (scanFrame) scanFrame.style.display = 'none';
       if (shutter) shutter.style.display = 'flex';
+      if (aiScanCopy) aiScanCopy.style.display = 'block';
       if (simQR) simQR.classList.remove('show');
       if (simPlain) simPlain.classList.remove('show');
       clearNoQRAlertTimer();
