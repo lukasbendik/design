@@ -1676,6 +1676,8 @@
     transform-origin: center center;
   }
   .statement-sheet.statement-image { display: block; height: auto; padding: 0; }
+  .statement-sheet.statement-image { touch-action: none; user-select: none; -webkit-user-select: none; }
+  .statement-sheet.statement-image.gesture-active { transition: none; cursor: grabbing; }
   #ocr-success-stage.focused { background: #FFF; }
   .statement-sheet.focus-acc { transform: translate(-340px, 96px) scale(3.2); }
   .statement-sheet.focus-amount { transform: translate(376px, 74px) scale(3.2); }
@@ -2943,9 +2945,99 @@ let noQrModalShown = lsGet('no_qr_modal_shown') === '1';
     const documentEl = document.getElementById('ocr-success-document');
     const stage = document.getElementById('ocr-success-stage');
     if (stage) stage.classList.remove('focused');
-    if (documentEl) documentEl.classList.remove('focus-acc', 'focus-amount', 'focus-vs');
+    if (documentEl) {
+      documentEl.classList.remove('focus-acc', 'focus-amount', 'focus-vs', 'gesture-active');
+      documentEl.style.transform = '';
+      documentEl._ocrGesture = { scale: 1, x: 0, y: 0 };
+    }
     document.querySelectorAll('.ocr-field-card').forEach(card => card.classList.remove('selected'));
     document.querySelectorAll('.statement-row.focus-target').forEach(row => row.classList.remove('focus-target'));
+  }
+
+  function initOCRImageGestures() {
+    const image = document.getElementById('ocr-success-document');
+    const stage = document.getElementById('ocr-success-stage');
+    if (!image || !stage || image._ocrGestureBound) return;
+    image._ocrGestureBound = true;
+    image._ocrGesture = { scale: 1, x: 0, y: 0 };
+    let gesture = null;
+    let lastTap = 0;
+
+    const clampPosition = (x, y, scale) => {
+      const maxX = Math.max(0, (image.offsetWidth * scale - stage.clientWidth) / 2);
+      const maxY = Math.max(0, (image.offsetHeight * scale - stage.clientHeight) / 2);
+      return {
+        x: Math.max(-maxX, Math.min(maxX, x)),
+        y: Math.max(-maxY, Math.min(maxY, y))
+      };
+    };
+    const apply = () => {
+      const s = image._ocrGesture;
+      const pos = clampPosition(s.x, s.y, s.scale);
+      s.x = pos.x;
+      s.y = pos.y;
+      image.style.transform = `translate3d(${s.x}px, ${s.y}px, 0) scale(${s.scale})`;
+    };
+    const point = touch => ({ x: touch.clientX, y: touch.clientY });
+    const midpoint = (a, b) => ({ x: (a.x + b.x) / 2, y: (a.y + b.y) / 2 });
+    const distance = (a, b) => Math.hypot(a.x - b.x, a.y - b.y);
+
+    image.addEventListener('touchstart', event => {
+      event.preventDefault();
+      const now = Date.now();
+      if (event.touches.length === 1 && now - lastTap < 280) {
+        resetOCRFocus();
+        lastTap = 0;
+        return;
+      }
+      lastTap = now;
+      const s = image._ocrGesture;
+      image.classList.add('gesture-active');
+      document.querySelectorAll('.ocr-field-card').forEach(card => card.classList.remove('selected'));
+      if (event.touches.length >= 2) {
+        const a = point(event.touches[0]);
+        const b = point(event.touches[1]);
+        gesture = { type: 'pinch', startDistance: distance(a, b), startMid: midpoint(a, b), startScale: s.scale, startX: s.x, startY: s.y };
+      } else {
+        const p = point(event.touches[0]);
+        gesture = { type: 'pan', startX: s.x, startY: s.y, startPoint: p };
+      }
+    }, { passive: false });
+
+    image.addEventListener('touchmove', event => {
+      event.preventDefault();
+      if (!gesture) return;
+      const s = image._ocrGesture;
+      if (event.touches.length >= 2 && gesture.type === 'pinch') {
+        const a = point(event.touches[0]);
+        const b = point(event.touches[1]);
+        const mid = midpoint(a, b);
+        const nextScale = Math.max(1, Math.min(5, gesture.startScale * distance(a, b) / gesture.startDistance));
+        const stageRect = stage.getBoundingClientRect();
+        const centerX = stageRect.left + stageRect.width / 2;
+        const centerY = stageRect.top + stageRect.height / 2;
+        s.scale = nextScale;
+        s.x = gesture.startX + (mid.x - gesture.startMid.x) + (1 - nextScale / gesture.startScale) * (gesture.startMid.x - centerX);
+        s.y = gesture.startY + (mid.y - gesture.startMid.y) + (1 - nextScale / gesture.startScale) * (gesture.startMid.y - centerY);
+      } else if (event.touches.length === 1 && gesture.type === 'pan' && s.scale > 1) {
+        const p = point(event.touches[0]);
+        s.x = gesture.startX + p.x - gesture.startPoint.x;
+        s.y = gesture.startY + p.y - gesture.startPoint.y;
+      }
+      apply();
+    }, { passive: false });
+
+    image.addEventListener('touchend', event => {
+      if (event.touches.length >= 2) return;
+      if (event.touches.length === 1 && image._ocrGesture.scale > 1) {
+        const p = point(event.touches[0]);
+        gesture = { type: 'pan', startX: image._ocrGesture.x, startY: image._ocrGesture.y, startPoint: p };
+        return;
+      }
+      if (image._ocrGesture.scale <= 1.01) resetOCRFocus();
+      else image.classList.remove('gesture-active');
+      gesture = null;
+    });
   }
 
   function openOCRFailAlert() {
@@ -3523,6 +3615,8 @@ let noQrModalShown = lsGet('no_qr_modal_shown') === '1';
     go('screen-dashboard');
     showToast('Nápověda byla resetována');
   }
+
+  initOCRImageGestures();
 
   // Reset nápovědy trojklikem
   (function() {
