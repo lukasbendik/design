@@ -1651,6 +1651,62 @@
     background: var(--ocr-warn-bg);
   }
 
+  /* OCR statement preview and horizontally scrolling extracted values */
+  .statement-stage {
+    flex: 1;
+    min-height: 0;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #0D0D0E;
+  }
+  .statement-sheet {
+    width: 260px;
+    max-width: 82%;
+    padding: 8px;
+    border-radius: 14px;
+    background: #FFF;
+    color: #1C1C1E;
+    box-shadow: 0 8px 28px rgba(0,0,0,0.5);
+    font-size: 7px;
+    line-height: 1.25;
+    transition: transform 0.45s cubic-bezier(.22,.8,.46,1);
+    transform-origin: center center;
+  }
+  .statement-sheet.focus-acc { transform: scale(1.65) translate(4%, 18%); }
+  .statement-sheet.focus-amount { transform: scale(1.8) translate(-5%, -10%); }
+  .statement-sheet.focus-vs { transform: scale(1.85) translate(-10%, -22%); }
+  .statement-sheet.focus-message { transform: scale(1.7) translate(0, -18%); }
+  .statement-head { display: flex; justify-content: space-between; border-bottom: 4px solid #F1F1F1; padding-bottom: 5px; font-weight: 700; }
+  .statement-logo { font-size: 17px; letter-spacing: 1px; }
+  .statement-meta { text-align: center; font-size: 6px; }
+  .statement-date { text-align: right; color: #777; font-weight: 400; }
+  .statement-account { display: grid; grid-template-columns: 1.3fr 1fr 1fr; gap: 5px; background: #FAFAFA; border-radius: 6px; padding: 7px; margin: 6px 0; }
+  .statement-account span { display: block; color: #777; font-size: 5px; }
+  .statement-account strong { display: block; font-size: 6px; }
+  .statement-title { padding: 3px 0; border-top: 4px solid #F1F1F1; border-bottom: 4px solid #F1F1F1; text-align: center; font-size: 9px; font-weight: 700; }
+  .statement-row { padding: 5px 3px; border-bottom: 2px solid #F1F1F1; }
+  .statement-row-top { display: flex; justify-content: space-between; font-weight: 700; }
+  .statement-row-detail { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 3px; margin-top: 4px; color: #777; font-size: 5px; }
+  .statement-row-detail strong { display: block; color: #1C1C1E; font-size: 5px; }
+  .statement-row.focus-target { outline: 2px solid var(--red); background: #FFF0F0; }
+  .statement-page { text-align: center; padding-top: 4px; font-size: 6px; }
+  .ocr-loading-badge { position: absolute; top: 14px; left: 50%; transform: translateX(-50%); z-index: 2; background: #4A4A4C; color: #FFF; padding: 14px 18px; border-radius: 44px; font-size: 16px; white-space: nowrap; }
+  .ocr-loading-footer { padding: 16px 16px 24px; background: #F4F4F4; overflow: hidden; }
+  .ocr-skeleton-scroll, .ocr-fields-scroll { display: flex; gap: 8px; overflow-x: auto; padding: 0 0 2px; scrollbar-width: none; }
+  .ocr-skeleton-scroll::-webkit-scrollbar, .ocr-fields-scroll::-webkit-scrollbar { display: none; }
+  .ocr-skeleton-card { flex: 0 0 116px; height: 52px; border-radius: 6px; background: #D1D1D6; position: relative; overflow: hidden; }
+  .ocr-skeleton-card.wide { flex-basis: 150px; }
+  .ocr-skeleton-card::after { content: ''; position: absolute; inset: 0; background: linear-gradient(100deg, transparent 20%, rgba(255,255,255,0.45) 50%, transparent 80%); transform: translateX(-100%); animation: skeleton-shimmer 1.2s infinite; }
+  @keyframes skeleton-shimmer { to { transform: translateX(100%); } }
+  .ocr-field-card { flex: 0 0 auto; min-width: 118px; padding: 9px 10px; border: 1px solid #777; border-radius: 6px; background: #FFF; color: #1C1C1E; cursor: pointer; text-align: left; }
+  .ocr-field-card.wide { min-width: 190px; }
+  .ocr-field-card.selected { color: #FFF; background: var(--red); border-color: var(--red); }
+  .ocr-field-card-label { font-size: 12px; line-height: 1.1; }
+  .ocr-field-card-value { font-size: 15px; margin-top: 4px; white-space: nowrap; }
+
   /* ══════════════════════════
      DETAIL ÚČTU (screen-account-detail)
      ══════════════════════════ */
@@ -2124,62 +2180,22 @@
       <button class="back-txt-btn" onclick="go('screen-scan')"><span style="font-size: 20px; line-height: 1; font-weight: 300;">‹</span> Zpět</button>
       <div class="title" style="margin-left: 12px;">Načtené údaje</div>
     </div>
-    
-    <div class="ocr-loading-body">
-      <!-- Loading badge at the top of the dark viewport -->
-      <div class="loading-badge">Hledáme platební údaje</div>
-      
-      <!-- Náhled zprávy z Messengeru -->
-      <div class="sim-msg" style="transform: scale(0.95); margin-top: 0;">
-        <div class="sim-msg-head">
-          <span class="sim-msg-avatar">P</span>
-          <span class="sim-msg-name">Petr Novák</span>
-        </div>
-        <div class="sim-msg-bubble">
-          <div class="sim-msg-text">Ahoj, zaplať prosím dětský tábor 🙏</div>
-          <div class="stmt-tr msg-row"><span>Č. účtu</span><strong>123456789/0100</strong></div>
-          <div class="stmt-tr msg-row highlight-amount"><span>Částka</span><strong>3 500 Kč</strong></div>
-          <div class="stmt-tr msg-row highlight-vs"><span>VS</span><strong>987564566778</strong></div>
-        </div>
-        <div class="sim-msg-time">9:41</div>
+    <div class="statement-stage">
+      <div class="ocr-loading-badge">Hledáme platební údaje…</div>
+      <div class="statement-sheet" aria-label="Náhled výpisu z účtu">
+        <div class="statement-head"><span class="statement-logo">KB</span><span class="statement-meta">Výpis z účtu<br>1.1.2022 – 31.1.2022</span><span class="statement-date">Datum výpisu<br>18.2.2022</span></div>
+        <div class="statement-account"><div><span>Jméno účtu</span><strong>PETRA</strong><span>Číslo účtu</span><strong>0000000021022102/0100</strong></div><div><span>IBAN</span><strong>CZ1100000000021022102</strong></div><div><span>Měna účtu</span><strong>CZK</strong></div></div>
+        <div class="statement-title">Transakce</div>
+        <div class="statement-row"><div class="statement-row-top"><span>28.1.2022 MILAN</span><strong>1,87 Kč</strong></div><div class="statement-row-detail"><span>Typ transakce<strong>Příchozí úhrada</strong></span><span id="loading-statement-vs">Variabilní symbol<strong>0</strong></span><span>Specifický symbol<strong>0</strong></span><span>Konstantní symbol<strong>0</strong></span></div></div>
+        <div class="statement-row"><div class="statement-row-top"><span>28.1.2022 MILAN</span><strong>-1,30 Kč</strong></div><div class="statement-row-detail"><span>Typ transakce<strong>Odchozí úhrada</strong></span><span>Variabilní symbol<strong>0</strong></span><span>Specifický symbol<strong>0</strong></span><span>Konstantní symbol<strong>0</strong></span></div></div>
+        <div class="statement-row"><div class="statement-row-top"><span>28.1.2022 MILAN</span><strong>1,30 Kč</strong></div><div class="statement-row-detail"><span>Typ transakce<strong>Příchozí úhrada</strong></span><span>Variabilní symbol<strong>0</strong></span><span>Specifický symbol<strong>0</strong></span><span>Konstantní symbol<strong>0</strong></span></div></div>
+        <div class="statement-row"><div class="statement-row-top"><span>5.1.2022 SEGI</span><strong>-0,10 Kč</strong></div><div class="statement-row-detail"><span>Typ transakce<strong>Odchozí úhrada</strong></span><span>Variabilní symbol<strong>0</strong></span><span>Specifický symbol<strong>0</strong></span><span>Konstantní symbol<strong>0</strong></span></div></div>
+        <div class="statement-page">Strana 1/2</div>
       </div>
     </div>
-    
-    <div class="loading-footer" style="background: #F4F4F4; border-top: none; padding: 16px 20px 24px; display: flex; flex-direction: column; gap: 14px;">
-      <!-- Field 1: Z účtu (skeleton initially, then active) -->
-      <div id="loading-field-acc" class="loading-footer-field">
-        <div class="skeleton-group">
-          <div class="skeleton-line skeleton-label" style="margin-top: 2px;"></div>
-          <div class="skeleton-line skeleton-val" style="margin-top: 6px;"></div>
-        </div>
-        <div class="real-content" style="display: none;">
-          <div style="font-size: 12px; color: #8E8E93; font-weight: 500;">Z účtu</div>
-          <div class="loading-detected-box">123456789/0100</div>
-        </div>
-      </div>
-      
-      <!-- Field 2: Částka (skeleton initially, then active) -->
-      <div id="loading-field-amt" class="loading-footer-field">
-        <div class="skeleton-group">
-          <div class="skeleton-line skeleton-label" style="margin-top: 2px;"></div>
-          <div class="skeleton-line skeleton-val" style="margin-top: 6px;"></div>
-        </div>
-        <div class="real-content" style="display: none;">
-          <div style="font-size: 12px; color: #8E8E93; font-weight: 500;">Částka</div>
-          <div class="loading-detected-box">3 500 Kč</div>
-        </div>
-      </div>
-
-      <!-- Field 3: Variabilní symbol (skeleton initially, then active) -->
-      <div id="loading-field-vs" class="loading-footer-field">
-        <div class="skeleton-group">
-          <div class="skeleton-line skeleton-label" style="margin-top: 2px;"></div>
-          <div class="skeleton-line skeleton-val" style="margin-top: 6px;"></div>
-        </div>
-        <div class="real-content" style="display: none;">
-          <div style="font-size: 12px; color: #8E8E93; font-weight: 500;">Variabilní symbol</div>
-          <div class="loading-detected-box warn">987564566778</div>
-        </div>
+    <div class="ocr-loading-footer">
+      <div class="ocr-skeleton-scroll" aria-label="Načítané údaje">
+        <div class="ocr-skeleton-card wide"></div><div class="ocr-skeleton-card"></div><div class="ocr-skeleton-card wide"></div><div class="ocr-skeleton-card"></div>
       </div>
     </div>
   </section>
@@ -2192,47 +2208,25 @@
       <div style="width: 44px;"></div>
     </div>
     
-    <!-- Dark viewport containing the statement with warning badge -->
-    <div class="ocr-loading-body" style="flex: 1; min-height: 0;">
-      <!-- Warning badge at the top -->
-      <div class="warning-badge">
-        <svg class="warning-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#FF9500" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-          <circle cx="12" cy="12" r="10"></circle>
-          <line x1="12" y1="8" x2="12" y2="12"></line>
-          <line x1="12" y1="16" x2="12.01" y2="16"></line>
-        </svg>
-        Načtené údaje nemusí být správné. Věnujte pozornost kontrole.
-      </div>
-      
-      <!-- Náhled zprávy z Messengeru -->
-      <div class="sim-msg" style="transform: scale(1.05);">
-        <div class="sim-msg-head">
-          <span class="sim-msg-avatar">P</span>
-          <span class="sim-msg-name">Petr Novák</span>
-        </div>
-        <div class="sim-msg-bubble">
-          <div class="sim-msg-text">Ahoj, zaplať prosím dětský tábor 🙏</div>
-          <div class="stmt-tr msg-row highlight-acc"><span>Č. účtu</span><strong>123456789/0100</strong></div>
-          <div class="stmt-tr msg-row highlight-amount"><span>Částka</span><strong>3 500 Kč</strong></div>
-          <div class="stmt-tr msg-row highlight-vs"><span>VS</span><strong>987564566778</strong></div>
-        </div>
-        <div class="sim-msg-time">9:41</div>
+    <div class="source-strip"><span style="font-size:20px;color:#C25B00;">△</span> Zkontrolujte údaje, nemusí být správně.</div>
+    <div class="statement-stage" id="ocr-success-stage">
+      <div class="statement-sheet" id="ocr-success-document" aria-label="Načtený výpis z účtu">
+        <div class="statement-head"><span class="statement-logo">KB</span><span class="statement-meta">Výpis z účtu<br>1.1.2022 – 31.1.2022</span><span class="statement-date">Datum výpisu<br>18.2.2022</span></div>
+        <div class="statement-account"><div id="statement-acc"><span>Jméno účtu</span><strong>PETRA</strong><span>Číslo účtu</span><strong>0000000021022102/0100</strong></div><div><span>IBAN</span><strong>CZ1100000000021022102</strong></div><div><span>Měna účtu</span><strong>CZK</strong></div></div>
+        <div class="statement-title">Transakce</div>
+        <div class="statement-row" id="statement-amount"><div class="statement-row-top"><span>28.1.2022 MILAN</span><strong>1,87 Kč</strong></div><div class="statement-row-detail"><span>Typ transakce<strong>Příchozí úhrada</strong></span><span>Variabilní symbol<strong>0</strong></span><span>Specifický symbol<strong>0</strong></span><span>Konstantní symbol<strong>0</strong></span></div></div>
+        <div class="statement-row"><div class="statement-row-top"><span>28.1.2022 MILAN</span><strong>-1,30 Kč</strong></div><div class="statement-row-detail"><span>Typ transakce<strong>Odchozí úhrada</strong></span><span>Variabilní symbol<strong>0</strong></span><span>Specifický symbol<strong>0</strong></span><span>Konstantní symbol<strong>0</strong></span></div></div>
+        <div class="statement-row" id="statement-vs"><div class="statement-row-top"><span>28.1.2022 MILAN</span><strong>1,30 Kč</strong></div><div class="statement-row-detail"><span>Typ transakce<strong>Příchozí úhrada</strong></span><span>Variabilní symbol<strong>987564566778</strong></span><span>Specifický symbol<strong>0</strong></span><span>Konstantní symbol<strong>0</strong></span></div></div>
+        <div class="statement-row" id="statement-message"><div class="statement-row-top"><span>5.1.2022 SEGI</span><strong>-0,10 Kč</strong></div><div class="statement-row-detail"><span>Typ transakce<strong>Odchozí úhrada</strong></span><span>Variabilní symbol<strong>0</strong></span><span>Specifický symbol<strong>0</strong></span><span>Konstantní symbol<strong>0</strong></span></div></div>
+        <div class="statement-page">Strana 1/2</div>
       </div>
     </div>
-    
-    <div class="scroll" style="background: #F4F4F4; padding: 14px 20px 0; overflow: visible; flex: none; display: flex; flex-direction: column; gap: 8px;">
-      <!-- Results text blocks on gray background - Stacked vertically at the top -->
-      <div>
-        <div style="font-size: 11px; color: #8E8E93; font-weight: 500; text-transform: uppercase; letter-spacing: 0.5px;">Z účtu</div>
-        <div style="font-size: 16px; color: #1C1C1E; font-weight: 700; margin-top: 2px;" id="ocr-success-from-acc">123456789/0100</div>
-      </div>
-      <div>
-        <div style="font-size: 11px; color: #8E8E93; font-weight: 500; text-transform: uppercase; letter-spacing: 0.5px;">Částka</div>
-        <div style="font-size: 16px; color: #1C1C1E; font-weight: 700; margin-top: 2px;" id="ocr-success-amount">3 500 Kč</div>
-      </div>
-      <div>
-        <div style="font-size: 11px; color: #8E8E93; font-weight: 500; text-transform: uppercase; letter-spacing: 0.5px;">Variabilní symbol</div>
-        <div style="font-size: 16px; color: #1C1C1E; font-weight: 700; margin-top: 2px;" id="ocr-success-vs">987564566778</div>
+    <div class="ocr-loading-footer">
+      <div class="ocr-fields-scroll" aria-label="Načtené údaje">
+        <button class="ocr-field-card" data-field="acc" onclick="focusOCRField('acc')"><div class="ocr-field-card-label">Číslo účtu</div><div class="ocr-field-card-value" id="ocr-success-from-acc">123456789/0100</div></button>
+        <button class="ocr-field-card" data-field="amount" onclick="focusOCRField('amount')"><div class="ocr-field-card-label">Částka</div><div class="ocr-field-card-value" id="ocr-success-amount">100,00 Kč</div></button>
+        <button class="ocr-field-card wide" data-field="vs" onclick="focusOCRField('vs')"><div class="ocr-field-card-label">Variabilní symbol</div><div class="ocr-field-card-value" id="ocr-success-vs">987564566778</div></button>
+        <button class="ocr-field-card wide" data-field="message" onclick="focusOCRField('message')"><div class="ocr-field-card-label">Zpráva pro příjemce</div><div class="ocr-field-card-value">Pojistka za auto č. 987564</div></button>
       </div>
     </div>
     
@@ -2940,97 +2934,15 @@ let noQrModalShown = lsGet('no_qr_modal_shown') === '1';
   }
 
   function startLoadingSimulation() {
-    // Clean up first
     clearOcrTimers();
-    
-    // Set initial values
-    let fromAcc = lsGet('payment_from_acc') || '123456789/0100';
-    if (fromAcc.includes('<br>')) {
-      fromAcc = fromAcc.split('<br>')[1];
-    }
-    const accBox = document.querySelector('#loading-field-acc .loading-detected-box');
-    if (accBox) accBox.textContent = fromAcc;
-    
-    // Hide real contents, show skeletons
-    document.getElementById('loading-field-acc').classList.remove('active');
-    document.getElementById('loading-field-amt').classList.remove('active');
-    document.getElementById('loading-field-vs').classList.remove('active');
-    
-    // Timer 0.5s: označ účet v náhledu AŽ ve chvíli vyčtení + spusť pád hodnoty
     ocrTimers.push(setTimeout(() => {
-      const accTr = document.querySelector('#screen-ocr-loading .sim-msg .stmt-tr strong');
-      if (accTr && accTr.parentElement) {
-        accTr.parentElement.style.outline = '2px dashed #0E8A4F';
-        accTr.parentElement.style.background = 'rgba(14, 138, 79, 0.15)';
-        accTr.parentElement.style.borderRadius = '2px';
-        accTr.parentElement.style.padding = '2px';
-      }
-      const fallingAcc = document.createElement('div');
-      fallingAcc.className = 'falling-value animate-acc';
-      fallingAcc.textContent = fromAcc;
-      fallingAcc.style.left = '35%';
-      fallingAcc.style.top = '190px';
-      document.querySelector('.ocr-loading-body').appendChild(fallingAcc);
-    }, 500));
-
-    // Timer 1.8s: Land account number
-    ocrTimers.push(setTimeout(() => {
-      document.getElementById('loading-field-acc').classList.add('active');
-      document.querySelectorAll('.falling-value.animate-acc').forEach(el => el.remove());
-    }, 1800));
-
-    // Timer 1: Highlight amount and trigger falling animation at 3.0s
-    ocrTimers.push(setTimeout(() => {
-      const amtRow = document.querySelector('.stmt-tr.highlight-amount');
-      if (amtRow) amtRow.classList.add('active-highlight');
-      
-      // Create falling element
-      const fallingAmt = document.createElement('div');
-      fallingAmt.className = 'falling-value animate-amt';
-      fallingAmt.textContent = '3 500 Kč';
-      fallingAmt.style.left = '45%';
-      fallingAmt.style.top = '280px';
-      document.querySelector('.ocr-loading-body').appendChild(fallingAmt);
-    }, 3000));
-
-    // Timer 2: Land amount at 4.3s
-    ocrTimers.push(setTimeout(() => {
-      document.getElementById('loading-field-amt').classList.add('active');
-      document.querySelectorAll('.falling-value.animate-amt').forEach(el => el.remove());
-    }, 4300));
-
-    // Timer 3: Highlight VS and trigger falling animation at 6.5s
-    ocrTimers.push(setTimeout(() => {
-      const vsRow = document.querySelector('.stmt-tr.highlight-vs');
-      if (vsRow) vsRow.classList.add('active-highlight');
-      
-      // Create falling element
-      const fallingVs = document.createElement('div');
-      fallingVs.className = 'falling-value animate-vs';
-      fallingVs.textContent = '987564566778';
-      fallingVs.style.left = '55%';
-      fallingVs.style.top = '300px';
-      document.querySelector('.ocr-loading-body').appendChild(fallingVs);
-    }, 6500));
-
-    // Timer 4: Land VS at 7.8s
-    ocrTimers.push(setTimeout(() => {
-      document.getElementById('loading-field-vs').classList.add('active');
-      document.querySelectorAll('.falling-value.animate-vs').forEach(el => el.remove());
-    }, 7800));
-
-    // Timer 5: Complete simulation and redirect at 10.0s
-    ocrTimers.push(setTimeout(() => {
-      // Clean up highlights in statement
-      document.querySelectorAll('.active-highlight').forEach(el => el.classList.remove('active-highlight'));
-      
       if (ocrShouldFail) {
         go('screen-scan');
         openOCRFailAlert();
       } else {
         lsSet('payment_from_acc', '123456789/0100');
         lsSet('payment_to_acc', '987-654321/0100');
-        lsSet('payment_amount', '3 500 Kč');
+        lsSet('payment_amount', '100,00 Kč');
         lsSet('payment_vs', '987564566778');
         lsSet('payment_msg', '');
         lsSet('payment_desc', '');
@@ -3042,6 +2954,22 @@ let noQrModalShown = lsGet('no_qr_modal_shown') === '1';
         go('screen-ocr-success');
       }
     }, 10000));
+  }
+
+  function focusOCRField(field) {
+    const documentEl = document.getElementById('ocr-success-document');
+    if (!documentEl) return;
+    documentEl.classList.remove('focus-acc', 'focus-amount', 'focus-vs', 'focus-message');
+    document.querySelectorAll('.ocr-field-card').forEach(card => card.classList.remove('selected'));
+    const card = document.querySelector('.ocr-field-card[data-field="' + field + '"]');
+    if (card) card.classList.add('selected');
+    const target = document.getElementById('statement-' + field);
+    document.querySelectorAll('.statement-row.focus-target').forEach(row => row.classList.remove('focus-target'));
+    if (target) target.classList.add('focus-target');
+    if (field === 'acc') documentEl.classList.add('focus-acc');
+    if (field === 'amount') documentEl.classList.add('focus-amount');
+    if (field === 'vs') documentEl.classList.add('focus-vs');
+    if (field === 'message') documentEl.classList.add('focus-message');
   }
 
   function openOCRFailAlert() {
@@ -3267,7 +3195,7 @@ let noQrModalShown = lsGet('no_qr_modal_shown') === '1';
       }
       fromAccEl.textContent = val;
     }
-    if (amtEl) amtEl.textContent = lsGet('payment_amount') || '3 500 Kč';
+    if (amtEl) amtEl.textContent = lsGet('payment_amount') || '100,00 Kč';
     if (vsEl) vsEl.textContent = lsGet('payment_vs') || '987564566778';
   }
 
