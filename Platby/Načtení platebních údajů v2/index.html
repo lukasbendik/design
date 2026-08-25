@@ -1695,12 +1695,17 @@
   .statement-page { text-align: center; padding-top: 4px; font-size: 6px; }
   .ocr-loading-badge { position: absolute; top: 14px; left: 50%; transform: translateX(-50%); z-index: 2; background: #4A4A4C; color: #FFF; padding: 14px 18px; border-radius: 44px; font-size: 16px; white-space: nowrap; }
   .ocr-loading-footer { padding: 16px 16px 24px; background: #F4F4F4; overflow: hidden; }
+  .ocr-loading-footer.complete .ocr-skeleton-scroll { display: none; }
+  .ocr-loaded-scroll { display: none; }
+  .ocr-loading-footer.complete .ocr-loaded-scroll { display: flex; }
   .ocr-skeleton-scroll, .ocr-fields-scroll { display: flex; gap: 8px; overflow-x: auto; padding: 0 0 2px; scrollbar-width: none; }
   .ocr-skeleton-scroll::-webkit-scrollbar, .ocr-fields-scroll::-webkit-scrollbar { display: none; }
   .ocr-skeleton-card { flex: 0 0 116px; height: 52px; border-radius: 6px; background: #D1D1D6; position: relative; overflow: hidden; }
   .ocr-skeleton-card.wide { flex-basis: 150px; }
   .ocr-skeleton-card::after { content: ''; position: absolute; inset: 0; background: linear-gradient(100deg, transparent 20%, rgba(255,255,255,0.45) 50%, transparent 80%); transform: translateX(-100%); animation: skeleton-shimmer 1.2s infinite; }
   @keyframes skeleton-shimmer { to { transform: translateX(100%); } }
+  .ocr-flying-value { position: absolute; top: 45%; z-index: 4; padding: 7px 10px; border-radius: 6px; background: #FFF; color: #1C1C1E; font-size: 13px; font-weight: 700; box-shadow: 0 4px 14px rgba(0,0,0,0.35); pointer-events: none; animation: ocr-value-drop 1.5s cubic-bezier(.22,.8,.46,1) forwards; }
+  @keyframes ocr-value-drop { 0% { opacity: 0; transform: translate(-50%, -10px) scale(.9); } 12% { opacity: 1; transform: translate(-50%, 0) scale(1); } 78% { opacity: 1; transform: translate(-50%, 250px) scale(.96); } 100% { opacity: 0; transform: translate(-50%, 300px) scale(.9); } }
   .ocr-field-card { flex: 0 0 auto; min-width: 118px; padding: 9px 10px; border: 1px solid #777; border-radius: 6px; background: #FFF; color: #1C1C1E; cursor: pointer; text-align: left; }
   .ocr-field-card.wide { min-width: 190px; }
   .ocr-field-card.selected { color: #FFF; background: var(--red); border-color: var(--red); }
@@ -2197,6 +2202,11 @@
       <div class="ocr-skeleton-scroll" aria-label="Načítané údaje">
         <div class="ocr-skeleton-card wide"></div><div class="ocr-skeleton-card"></div><div class="ocr-skeleton-card wide"></div><div class="ocr-skeleton-card"></div>
       </div>
+      <div class="ocr-fields-scroll ocr-loaded-scroll" id="ocr-loading-values" aria-label="Načtené údaje">
+        <div class="ocr-field-card wide"><div class="ocr-field-card-label">Číslo účtu</div><div class="ocr-field-card-value">123456789/0100</div></div>
+        <div class="ocr-field-card"><div class="ocr-field-card-label">Částka</div><div class="ocr-field-card-value">100,00 Kč</div></div>
+        <div class="ocr-field-card wide"><div class="ocr-field-card-label">Variabilní symbol</div><div class="ocr-field-card-value">987564566778</div></div>
+      </div>
     </div>
   </section>
 
@@ -2675,6 +2685,7 @@ let noQrModalShown = lsGet('no_qr_modal_shown') === '1';
     ocrTimers = [];
     document.querySelectorAll('.active-highlight').forEach(el => el.classList.remove('active-highlight'));
     document.querySelectorAll('.falling-value').forEach(el => el.remove());
+    document.querySelectorAll('.ocr-flying-value').forEach(el => el.remove());
     
     // Reset any manual inline style updates
     const accTr = document.querySelector('.sim-msg .stmt-tr strong');
@@ -2900,6 +2911,27 @@ let noQrModalShown = lsGet('no_qr_modal_shown') === '1';
   // OCR loading simulation
   function startLoadingSimulation() {
     clearOcrTimers();
+    const footer = document.querySelector('#screen-ocr-loading .ocr-loading-footer');
+    if (footer) footer.classList.remove('complete');
+
+    const launchValue = (value, left) => {
+      const stage = document.querySelector('#screen-ocr-loading .statement-stage');
+      if (!stage) return;
+      const el = document.createElement('div');
+      el.className = 'ocr-flying-value';
+      el.textContent = value;
+      el.style.left = left;
+      stage.appendChild(el);
+      setTimeout(() => el.remove(), 1600);
+    };
+
+    ocrTimers.push(setTimeout(() => launchValue('123456789/0100', '34%'), 700));
+    ocrTimers.push(setTimeout(() => launchValue('100,00 Kč', '50%'), 3200));
+    ocrTimers.push(setTimeout(() => launchValue('987564566778', '66%'), 5700));
+    ocrTimers.push(setTimeout(() => {
+      if (footer) footer.classList.add('complete');
+    }, 8200));
+
     ocrTimers.push(setTimeout(() => {
       if (ocrShouldFail) {
         go('screen-scan');
@@ -2918,7 +2950,7 @@ let noQrModalShown = lsGet('no_qr_modal_shown') === '1';
         updateOCRSuccessUI();
         go('screen-ocr-success');
       }
-    }, 10000));
+    }, 10500));
   }
 
   function focusOCRField(field) {
