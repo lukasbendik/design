@@ -2342,7 +2342,7 @@
         </div>
         <div class="summary-item" style="padding: 14px 16px; border-bottom: 1px solid #E5E5EA;">
           <div class="summary-label" style="font-size: 11px; color: #8E8E93; font-weight: 500; margin-bottom: 4px;">Na účet</div>
-          <div class="summary-val" id="sum-to-acc" style="font-size: 14px; color: #1C1C1E; font-weight: 600; line-height: 1.4;">987-654321/0100</div>
+          <div class="summary-val" id="sum-to-acc" style="font-size: 14px; color: #1C1C1E; font-weight: 600; line-height: 1.4;">670100-2202019884/6210</div>
         </div>
         <div class="summary-item" style="padding: 14px 16px; border-bottom: 1px solid #E5E5EA;">
           <div class="summary-label" style="font-size: 11px; color: #8E8E93; font-weight: 500; margin-bottom: 4px;">Částka</div>
@@ -2904,8 +2904,9 @@ let noQrModalShown = lsGet('no_qr_modal_shown') === '1';
         go('screen-scan');
         openOCRFailAlert();
       } else {
-        lsSet('payment_from_acc', '670100-2202019884/6210');
-        lsSet('payment_to_acc', '987-654321/0100');
+        lsSet('ocr_extracted_acc', '670100-2202019884/6210');
+        lsSet('payment_from_acc', 'Můj běžný účet<br>122000/0100');
+        lsSet('payment_to_acc', '670100-2202019884/6210');
         lsSet('payment_amount', '22 Kč');
         lsSet('payment_vs', '6160115590');
         lsSet('payment_msg', '');
@@ -3154,7 +3155,7 @@ let noQrModalShown = lsGet('no_qr_modal_shown') === '1';
     const vsEl = document.getElementById('ocr-success-vs');
     
     if (fromAccEl) {
-      let val = lsGet('payment_from_acc') || '670100-2202019884/6210';
+      let val = lsGet('ocr_extracted_acc') || '670100-2202019884/6210';
       if (val.includes('<br>')) {
         val = val.split('<br>')[1];
       }
@@ -3397,9 +3398,9 @@ let noQrModalShown = lsGet('no_qr_modal_shown') === '1';
   function updateSummaryScreen(useMockupValues = false) {
     if (useMockupValues) {
       lsSet('payment_from_acc', 'Můj běžný účet<br>122000/0100');
-      lsSet('payment_to_acc', '987-654321/0100');
-      lsSet('payment_amount', '2 495,00 Kč');
-      lsSet('payment_vs', '123456789');
+      lsSet('payment_to_acc', '670100-2202019884/6210');
+      lsSet('payment_amount', '22 Kč');
+      lsSet('payment_vs', '6160115590');
       lsSet('payment_desc', 'Za internet');
       lsSet('payment_ks', '123456789');
       lsSet('payment_ss', '123456789');
@@ -3411,7 +3412,7 @@ let noQrModalShown = lsGet('no_qr_modal_shown') === '1';
       fromAccVal = 'Můj běžný účet<br>' + fromAccVal;
     }
     document.getElementById('sum-from-acc').innerHTML = fromAccVal;
-    document.getElementById('sum-to-acc').textContent = lsGet('payment_to_acc') || '987-654321/0100';
+    document.getElementById('sum-to-acc').textContent = lsGet('payment_to_acc') || '670100-2202019884/6210';
     document.getElementById('sum-amount').textContent = lsGet('payment_amount') || '2 495,00 Kč';
     document.getElementById('sum-vs').textContent = lsGet('payment_vs') || '123456789';
     
