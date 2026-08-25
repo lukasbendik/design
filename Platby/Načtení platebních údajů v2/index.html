@@ -1680,7 +1680,6 @@
   .statement-sheet.focus-acc { transform: translate(-340px, 96px) scale(3.2); }
   .statement-sheet.focus-amount { transform: translate(376px, 74px) scale(3.2); }
   .statement-sheet.focus-vs { transform: translate(-340px, 74px) scale(3.2); }
-  .statement-sheet.focus-message { transform: translate(360px, 74px) scale(3.2); }
   .statement-head { display: flex; justify-content: space-between; border-bottom: 4px solid #F1F1F1; padding-bottom: 5px; font-weight: 700; }
   .statement-logo { font-size: 17px; letter-spacing: 1px; }
   .statement-meta { text-align: center; font-size: 6px; }
@@ -2212,7 +2211,6 @@
         <button class="ocr-field-card wide" data-field="acc" onclick="focusOCRField('acc')"><div class="ocr-field-card-label">Číslo účtu</div><div class="ocr-field-card-value" id="ocr-success-from-acc">670100-2202019884/6210</div></button>
         <button class="ocr-field-card" data-field="amount" onclick="focusOCRField('amount')"><div class="ocr-field-card-label">Částka</div><div class="ocr-field-card-value" id="ocr-success-amount">22 Kč</div></button>
         <button class="ocr-field-card wide" data-field="vs" onclick="focusOCRField('vs')"><div class="ocr-field-card-label">Variabilní symbol</div><div class="ocr-field-card-value" id="ocr-success-vs">6160115590</div></button>
-        <button class="ocr-field-card wide" data-field="message" onclick="focusOCRField('message')"><div class="ocr-field-card-label">Zpráva pro příjemce</div><div class="ocr-field-card-value">Nedoplatek za elektřinu</div></button>
       </div>
     </div>
     
@@ -2927,7 +2925,7 @@ let noQrModalShown = lsGet('no_qr_modal_shown') === '1';
     if (!documentEl) return;
     const stage = document.getElementById('ocr-success-stage');
     if (stage) stage.classList.add('focused');
-    documentEl.classList.remove('focus-acc', 'focus-amount', 'focus-vs', 'focus-message');
+    documentEl.classList.remove('focus-acc', 'focus-amount', 'focus-vs');
     document.querySelectorAll('.ocr-field-card').forEach(card => card.classList.remove('selected'));
     const card = document.querySelector('.ocr-field-card[data-field="' + field + '"]');
     if (card) card.classList.add('selected');
@@ -2937,7 +2935,6 @@ let noQrModalShown = lsGet('no_qr_modal_shown') === '1';
     if (field === 'acc') documentEl.classList.add('focus-acc');
     if (field === 'amount') documentEl.classList.add('focus-amount');
     if (field === 'vs') documentEl.classList.add('focus-vs');
-    if (field === 'message') documentEl.classList.add('focus-message');
   }
 
   function openOCRFailAlert() {
