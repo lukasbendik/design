@@ -1695,9 +1695,6 @@
   .statement-page { text-align: center; padding-top: 4px; font-size: 6px; }
   .ocr-loading-badge { position: absolute; top: 14px; left: 50%; transform: translateX(-50%); z-index: 2; background: #4A4A4C; color: #FFF; padding: 14px 18px; border-radius: 44px; font-size: 16px; white-space: nowrap; }
   .ocr-loading-footer { padding: 16px 16px 24px; background: #F4F4F4; overflow: hidden; }
-  .ocr-loading-footer.complete .ocr-skeleton-scroll { display: none; }
-  .ocr-loaded-scroll { display: none; }
-  .ocr-loading-footer.complete .ocr-loaded-scroll { display: flex; }
   .ocr-skeleton-scroll, .ocr-fields-scroll { display: flex; gap: 8px; overflow-x: auto; padding: 0 0 2px; scrollbar-width: none; }
   .ocr-skeleton-scroll::-webkit-scrollbar, .ocr-fields-scroll::-webkit-scrollbar { display: none; }
   .ocr-skeleton-card { flex: 0 0 116px; height: 52px; border-radius: 6px; background: #D1D1D6; position: relative; overflow: hidden; }
@@ -2201,11 +2198,6 @@
     <div class="ocr-loading-footer">
       <div class="ocr-skeleton-scroll" aria-label="Načítané údaje">
         <div class="ocr-skeleton-card wide"></div><div class="ocr-skeleton-card"></div><div class="ocr-skeleton-card wide"></div><div class="ocr-skeleton-card"></div>
-      </div>
-      <div class="ocr-fields-scroll ocr-loaded-scroll" id="ocr-loading-values" aria-label="Načtené údaje">
-        <div class="ocr-field-card wide"><div class="ocr-field-card-label">Číslo účtu</div><div class="ocr-field-card-value">123456789/0100</div></div>
-        <div class="ocr-field-card"><div class="ocr-field-card-label">Částka</div><div class="ocr-field-card-value">100,00 Kč</div></div>
-        <div class="ocr-field-card wide"><div class="ocr-field-card-label">Variabilní symbol</div><div class="ocr-field-card-value">987564566778</div></div>
       </div>
     </div>
   </section>
@@ -2911,9 +2903,6 @@ let noQrModalShown = lsGet('no_qr_modal_shown') === '1';
   // OCR loading simulation
   function startLoadingSimulation() {
     clearOcrTimers();
-    const footer = document.querySelector('#screen-ocr-loading .ocr-loading-footer');
-    if (footer) footer.classList.remove('complete');
-
     const launchValue = (value, left) => {
       const stage = document.querySelector('#screen-ocr-loading .statement-stage');
       if (!stage) return;
@@ -2928,10 +2917,6 @@ let noQrModalShown = lsGet('no_qr_modal_shown') === '1';
     ocrTimers.push(setTimeout(() => launchValue('123456789/0100', '34%'), 700));
     ocrTimers.push(setTimeout(() => launchValue('100,00 Kč', '50%'), 3200));
     ocrTimers.push(setTimeout(() => launchValue('987564566778', '66%'), 5700));
-    ocrTimers.push(setTimeout(() => {
-      if (footer) footer.classList.add('complete');
-    }, 8200));
-
     ocrTimers.push(setTimeout(() => {
       if (ocrShouldFail) {
         go('screen-scan');
@@ -2950,7 +2935,7 @@ let noQrModalShown = lsGet('no_qr_modal_shown') === '1';
         updateOCRSuccessUI();
         go('screen-ocr-success');
       }
-    }, 10500));
+    }, 7600));
   }
 
   function focusOCRField(field) {
