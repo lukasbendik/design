@@ -1399,6 +1399,110 @@
       fill: none;
     }
 
+    /* CO Item Navigation — filtr účtu */
+    .filter-navigation-item {
+      align-items: center;
+      min-height: 64px;
+      margin-bottom: 8px;
+      padding: 16px;
+      background: var(--color-background-surface);
+      border: 1px solid var(--color-background-border);
+      box-shadow: var(--shadow-panel);
+      cursor: pointer;
+    }
+
+    .filter-navigation-item:hover,
+    .filter-navigation-item:focus-visible {
+      background: var(--color-interactive-secondary-active);
+      outline: none;
+    }
+
+    .filter-navigation-item__label {
+      font: var(--content-body-primary);
+      color: var(--color-content-primary);
+    }
+
+    .filter-sliders-icon {
+      width: 32px;
+      height: 32px;
+      flex: none;
+    }
+
+    .filter-sliders-icon line,
+    .filter-sliders-icon circle {
+      stroke: var(--color-interactive-primary);
+      stroke-width: 2;
+      fill: var(--color-background-surface);
+    }
+
+    /* PA dialog / full-screen filter */
+    .filter-modal-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 2500;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 32px;
+      background: var(--color-dialog-overlay);
+    }
+
+    .filter-modal-overlay.active { display: flex; }
+
+    .filter-modal {
+      position: relative;
+      width: min(1144px, 100%);
+      min-height: 660px;
+      padding: 104px 36px 56px;
+      overflow: hidden;
+      background: var(--color-dialog-surface);
+      border-radius: 32px;
+      box-shadow: var(--shadow-highlighted);
+    }
+
+    .filter-modal__close {
+      position: absolute;
+      top: 32px;
+      right: 32px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 48px;
+      height: 48px;
+      padding: 0;
+      border: 0;
+      background: transparent;
+      color: var(--color-content-primary);
+      cursor: pointer;
+    }
+
+    .filter-modal__close .icon { width: 32px; height: 32px; }
+
+    .filter-modal__title {
+      margin: 0 0 48px;
+      font-size: 56px;
+      line-height: 64px;
+      font-weight: 500;
+    }
+
+    .filter-modal__list { display: flex; flex-direction: column; }
+    .filter-modal__item { align-items: center; min-height: 122px; padding: 24px 12px; }
+    .filter-modal__item + .divider { margin-inline: 0; }
+    .filter-modal__item .item__icon { width: 64px; height: 40px; color: var(--color-interactive-primary); }
+    .filter-modal__item .item__icon .icon { width: 40px; height: 40px; }
+    .filter-modal__item .item__label { font-size: 36px; line-height: 44px; font-weight: 400; }
+    .filter-modal__item .item__caret { color: var(--color-content-primary); }
+    .filter-modal__item .item__caret .icon { width: 16px; height: 32px; }
+
+    @media (max-width: 720px) {
+      .filter-modal-overlay { padding: 0; }
+      .filter-modal { min-height: 100%; padding: 88px 16px 32px; border-radius: 0; }
+      .filter-modal__close { top: 16px; right: 12px; }
+      .filter-modal__title { margin-bottom: 24px; font-size: 36px; line-height: 44px; }
+      .filter-modal__item { min-height: 88px; padding: 16px 0; }
+      .filter-modal__item .item__label { font-size: 20px; line-height: 28px; }
+    }
+
     /* ---- Celoobrazovkové Modální Dialogy ---- */
     .modal-overlay {
       position: absolute;
@@ -2703,13 +2807,16 @@
             </div>
           </div>
 
-          <!-- Vyhledávání / Filtr -->
-          <div class="search-container">
-            <input type="text" class="search-input" placeholder="Filtr">
-            <span class="search-icon-right">
-              <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="stroke: var(--color-interactive-primary); fill: none; width: 24px; height: 24px;"><path d="M4 21v-7M4 10V3M12 21v-9M12 8V3M20 21v-5M20 12V3M1 14h6M9 8h6M17 12h6"/></svg>
-            </span>
-          </div>
+          <!-- CO Item Navigation: Filtr -->
+          <button class="item filter-navigation-item" type="button" onclick="openModal('filter-modal')" aria-haspopup="dialog" aria-controls="modal-filter-modal">
+            <svg class="filter-sliders-icon" viewBox="0 0 32 32" aria-hidden="true">
+              <line x1="3" y1="10" x2="29" y2="10"></line>
+              <circle cx="14" cy="10" r="6"></circle>
+              <line x1="3" y1="22" x2="29" y2="22"></line>
+              <circle cx="22" cy="22" r="6"></circle>
+            </svg>
+            <span class="item__text"><span class="filter-navigation-item__label">Filtr</span></span>
+          </button>
 
           <!-- Transakce Dnes -->
           <div class="card" style="margin-bottom: 16px;">
@@ -3722,6 +3829,37 @@
     </div>
   </div>
 
+  <!-- ================= MODAL: FILTR ÚČTU ================= -->
+  <div class="filter-modal-overlay" id="modal-filter-modal" role="dialog" aria-modal="true" aria-labelledby="filter-modal-title">
+    <div class="filter-modal">
+      <button class="filter-modal__close" type="button" onclick="closeModal()" aria-label="Zavřít filtr">
+        <svg class="icon" aria-hidden="true"><use href="#es-close"></use></svg>
+      </button>
+      <h2 class="filter-modal__title" id="filter-modal-title">Zobrazit platby</h2>
+      <div class="filter-modal__list">
+        <button class="item filter-modal__item" type="button" onclick="showToast('Podrobné hledání není v tomto prototypu rozpracované.')">
+          <span class="item__icon item__icon--action" aria-hidden="true">
+            <svg class="icon" viewBox="0 0 24 24"><circle cx="10" cy="10" r="6.5" fill="none" stroke="currentColor" stroke-width="1.8"></circle><path d="m15 15 5 5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"></path></svg>
+          </span>
+          <span class="item__text"><span class="item__label">Podrobné hledání</span></span>
+          <span class="item__caret" aria-hidden="true"><svg class="icon"><use href="#es-caret-right"></use></svg></span>
+        </button>
+        <div class="divider"></div>
+        <button class="item filter-modal__item" type="button" onclick="showToast('Filtr neúspěšných plateb není v tomto prototypu rozpracovaný.')">
+          <span class="item__icon item__icon--action" aria-hidden="true"><svg class="icon"><use href="#es-error"></use></svg></span>
+          <span class="item__text"><span class="item__label">Neúspěšné</span></span>
+          <span class="item__caret" aria-hidden="true"><svg class="icon"><use href="#es-caret-right"></use></svg></span>
+        </button>
+        <div class="divider"></div>
+        <button class="item filter-modal__item" type="button" onclick="showToast('Filtr budoucích plateb není v tomto prototypu rozpracovaný.')">
+          <span class="item__icon item__icon--action" aria-hidden="true"><svg class="icon"><use href="#es-calendar"></use></svg></span>
+          <span class="item__text"><span class="item__label">Budoucí</span></span>
+          <span class="item__caret" aria-hidden="true"><svg class="icon"><use href="#es-caret-right"></use></svg></span>
+        </button>
+      </div>
+    </div>
+  </div>
+
   </div> <!-- Konec app-wrapper -->
 
   <div class="toast-notification" id="toast-notification" role="status" aria-live="polite" aria-atomic="true"></div>
@@ -3732,7 +3870,7 @@
     // Seznam podporovaných hlavních obrazovek
     const SCREENS = ['login', 'prehled', 'extra', 'karty', 'pujcky', 'sporeni', 'investice', 'pojisteni', 'ucet-detail', 'tp-inkasa', 'tp-inkasa-s-autorizaci', 'autorizace', 'vsechny-platby', 'platba-detail', 'nova-platba', 'nova-platba-detaily', 'platba-vysledek'];
     // Seznam modálních hashů
-    const MODALS = ['povoleni-inkasa-modal', 'autorizace-potvrzeni-modal', 'no-items-modal', 'payment-signature-modal'];
+    const MODALS = ['povoleni-inkasa-modal', 'autorizace-potvrzeni-modal', 'no-items-modal', 'payment-signature-modal', 'filter-modal'];
 
     // Globální stav prototypu
     let currentScreen = 'prehled';
@@ -3798,6 +3936,8 @@
       if (MODALS.includes(hash)) {
         if (hash === 'payment-signature-modal') {
           currentScreen = 'nova-platba-detaily';
+        } else if (hash === 'filter-modal') {
+          currentScreen = 'ucet-detail';
         }
         // Modal chceme otevřít nad stávající obrazovkou
         // (Pokud jsme přímo refreshnuli na modal, nastavíme jako podklad 'tp-inkasa')
@@ -3958,7 +4098,7 @@
 
     // Fyzické skrytí všech modalů v DOMu
     function closeAllModalsElements() {
-      document.querySelectorAll('.modal-overlay, .modal-overlay-popup').forEach(el => el.classList.remove('active'));
+      document.querySelectorAll('.modal-overlay, .modal-overlay-popup, .filter-modal-overlay').forEach(el => el.classList.remove('active'));
     }
 
     // Uložit vyplněná data z formuláře k autorizaci
