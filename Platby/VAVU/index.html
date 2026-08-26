@@ -1445,19 +1445,20 @@
       justify-content: center;
       padding: 32px;
       background: var(--color-dialog-overlay);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
     }
 
     .filter-modal-overlay.active { display: flex; }
 
     .filter-modal {
       position: relative;
-      width: min(1144px, 100%);
-      min-height: 660px;
-      padding: 104px 36px 56px;
+      width: min(520px, 100%);
+      padding: 48px 16px 24px;
       overflow: hidden;
       background: var(--color-dialog-surface);
-      border-radius: 32px;
-      box-shadow: var(--shadow-highlighted);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-panel);
     }
 
     .filter-modal__close {
@@ -1476,31 +1477,27 @@
       cursor: pointer;
     }
 
-    .filter-modal__close .icon { width: 32px; height: 32px; }
+    .filter-modal__close .icon { width: 24px; height: 24px; }
 
     .filter-modal__title {
-      margin: 0 0 48px;
-      font-size: 56px;
-      line-height: 64px;
-      font-weight: 500;
+      margin: 0 0 24px;
+      font: var(--headings-title-secondary);
     }
 
     .filter-modal__list { display: flex; flex-direction: column; }
-    .filter-modal__item { align-items: center; min-height: 122px; padding: 24px 12px; }
+    .filter-modal__item { align-items: center; min-height: 64px; padding: 16px; }
     .filter-modal__item + .divider { margin-inline: 0; }
-    .filter-modal__item .item__icon { width: 64px; height: 40px; color: var(--color-interactive-primary); }
-    .filter-modal__item .item__icon .icon { width: 40px; height: 40px; }
-    .filter-modal__item .item__label { font-size: 36px; line-height: 44px; font-weight: 400; }
+    .filter-modal__item .item__icon { width: 32px; height: 24px; color: var(--color-interactive-primary); }
+    .filter-modal__item .item__icon .icon { width: 24px; height: 24px; }
     .filter-modal__item .item__caret { color: var(--color-content-primary); }
-    .filter-modal__item .item__caret .icon { width: 16px; height: 32px; }
+    .filter-modal__item .item__caret .icon { width: 8px; height: 16px; }
 
     @media (max-width: 720px) {
       .filter-modal-overlay { padding: 0; }
-      .filter-modal { min-height: 100%; padding: 88px 16px 32px; border-radius: 0; }
+      .filter-modal { width: 100%; padding: 48px 0 24px; border-radius: 0; }
       .filter-modal__close { top: 16px; right: 12px; }
-      .filter-modal__title { margin-bottom: 24px; font-size: 36px; line-height: 44px; }
-      .filter-modal__item { min-height: 88px; padding: 16px 0; }
-      .filter-modal__item .item__label { font-size: 20px; line-height: 28px; }
+      .filter-modal__title { margin-inline: 16px; }
+      .filter-modal__item { padding-inline: 16px; }
     }
 
     /* ---- Celoobrazovkové Modální Dialogy ---- */
@@ -3835,7 +3832,7 @@
       <button class="filter-modal__close" type="button" onclick="closeModal()" aria-label="Zavřít filtr">
         <svg class="icon" aria-hidden="true"><use href="#es-close"></use></svg>
       </button>
-      <h2 class="filter-modal__title" id="filter-modal-title">Zobrazit platby</h2>
+      <h2 class="filter-modal__title t-headings-title-secondary" id="filter-modal-title">Zobrazit platby</h2>
       <div class="filter-modal__list">
         <button class="item filter-modal__item" type="button" onclick="showToast('Podrobné hledání není v tomto prototypu rozpracované.')">
           <span class="item__icon item__icon--action" aria-hidden="true">
