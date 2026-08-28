@@ -3838,7 +3838,7 @@
   </div>
 
   <!-- ================= MODAL: FILTR ÚČTU ================= -->
-  <div class="filter-modal-overlay" id="modal-filter-modal" role="dialog" aria-modal="true" aria-labelledby="filter-modal-title">
+  <div class="filter-modal-overlay" id="modal-filter-modal" role="dialog" aria-modal="true" aria-labelledby="filter-modal-title" onclick="if (event.target === event.currentTarget) closeModal()">
     <div class="filter-modal">
       <button class="filter-modal__close" type="button" onclick="closeModal()" aria-label="Zavřít filtr">
         <svg class="icon" aria-hidden="true"><use href="#es-close"></use></svg>
