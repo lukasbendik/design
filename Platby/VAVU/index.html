@@ -314,7 +314,8 @@
       gap: var(--padding-xl);
       width: calc(100% - var(--layout-nav-panel));
       height: calc(100vh - 48px);
-      overflow: hidden;
+      overflow-x: hidden;
+      overflow-y: auto;
     }
 
     /* ---- VAVU: úvodní výběr uživatele ---- */
@@ -498,8 +499,7 @@
       display: flex;
       flex-direction: column;
       gap: var(--padding-xl);
-      height: 100%;
-      overflow-y: auto;
+      height: auto;
       padding-right: 8px;
     }
 
@@ -510,8 +510,7 @@
       flex-direction: column;
       gap: var(--padding-xl);
       flex-shrink: 0;
-      height: 100%;
-      overflow-y: auto;
+      height: auto;
     }
 
     /* ---- Komponenty / Karty (CO Content Card) ---- */
