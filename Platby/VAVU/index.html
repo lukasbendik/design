@@ -2019,6 +2019,130 @@
       white-space: nowrap;
     }
 
+    .batch-tab-panel {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-12);
+    }
+
+    .batch-tab-panel[hidden] {
+      display: none;
+    }
+
+    .batch-overview-list {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-12);
+    }
+
+    .batch-overview-group {
+      overflow: hidden;
+      background: var(--color-background-surface);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-panel);
+    }
+
+    .batch-overview-date {
+      margin: 0;
+      padding: var(--pad-xl);
+      font: var(--content-body-primary-bold);
+    }
+
+    .batch-overview-item {
+      min-height: 72px;
+      padding: var(--pad-md) var(--pad-xl);
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 110px 140px;
+      align-items: center;
+      gap: var(--space-16);
+      position: relative;
+    }
+
+    .batch-overview-item::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: var(--pad-xl);
+      right: var(--pad-xl);
+      height: var(--border-sm);
+      background: var(--color-background-divider);
+    }
+
+    .batch-overview-main {
+      min-width: 0;
+      display: grid;
+      grid-template-columns: 24px minmax(0, 1fr);
+      align-items: center;
+      gap: var(--space-12);
+    }
+
+    .batch-overview-icon {
+      width: 24px;
+      height: 24px;
+      position: relative;
+      color: var(--color-content-secondary);
+    }
+
+    .batch-overview-icon .icon {
+      width: 24px;
+      height: 24px;
+    }
+
+    .batch-status-dot {
+      width: 10px;
+      height: 10px;
+      position: absolute;
+      right: -3px;
+      bottom: -3px;
+      display: grid;
+      place-items: center;
+      border: 2px solid var(--color-background-surface);
+      border-radius: var(--radius-full);
+      background: var(--color-content-primary);
+      color: var(--color-interactive-on-primary);
+      font-size: 7px;
+      line-height: 1;
+    }
+
+    .batch-status-dot--success {
+      background: var(--color-attention-success);
+    }
+
+    .batch-status-dot--alert {
+      background: var(--color-attention-alert);
+    }
+
+    .batch-overview-copy {
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-2);
+    }
+
+    .batch-overview-copy > * {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .batch-overview-status--alert {
+      color: var(--color-attention-alert);
+    }
+
+    .batch-overview-count {
+      color: var(--color-content-tertiary);
+    }
+
+    .batch-overview-amount {
+      text-align: right;
+      white-space: nowrap;
+    }
+
+    .batch-overview-note {
+      margin: 0;
+      color: var(--color-content-secondary);
+    }
+
     .batch-upload-zone {
       height: 216px;
       min-height: 216px;
@@ -2288,6 +2412,22 @@
 
       .batch-amount {
         text-align: left;
+      }
+
+      .batch-overview-item {
+        grid-template-columns: minmax(0, 1fr) auto;
+        gap: var(--space-8) var(--space-12);
+        padding-block: var(--pad-lg);
+      }
+
+      .batch-overview-count {
+        grid-column: 1;
+        padding-left: 36px;
+      }
+
+      .batch-overview-amount {
+        grid-column: 2;
+        grid-row: 1 / span 2;
       }
     }
 
@@ -4035,39 +4175,45 @@
           <div class="batch-flow-column">
             <h1 class="payment-flow-title" id="davkove-platby-title">Dávkové platby</h1>
             <div class="payment-segmented batch-tabs" role="tablist" aria-label="Dávkové platby">
-              <button class="active" type="button" role="tab" aria-selected="true">Nová dávka</button>
-              <button type="button" role="tab" aria-selected="false" onclick="showToast('Přehled dávek není v tomto prototypu rozpracovaný.')">Přehled dávek</button>
+              <button class="active" id="batch-tab-new" type="button" role="tab" aria-selected="true" aria-controls="batch-panel-new" onclick="switchBatchTab('new')">Nová dávka</button>
+              <button id="batch-tab-overview" type="button" role="tab" aria-selected="false" aria-controls="batch-panel-overview" onclick="switchBatchTab('overview')">Přehled dávek</button>
             </div>
-            <div class="batch-upload-zone" id="batch-upload-zone">
-              <svg class="icon" aria-hidden="true"><use href="#es-text-file"></use></svg>
-              <strong class="t-content-body-primary">Přetáhnutím nahrajte soubor</strong>
-              <span class="t-content-body-secondary">Dávka může obsahovat maximálně 200 plateb.<br>Denně můžete nahrát až 400 plateb za jeden subjekt.</span>
-              <button class="btn btn--secondary" type="button" onclick="document.getElementById('batch-file-input').click()">Vybrat soubor</button>
-              <input id="batch-file-input" type="file" hidden accept=".kpc,.xml,.txt" onchange="handleBatchFile(this)">
+            <div class="batch-tab-panel" id="batch-panel-new" role="tabpanel" aria-labelledby="batch-tab-new">
+              <div class="batch-upload-zone" id="batch-upload-zone">
+                <svg class="icon" aria-hidden="true"><use href="#es-text-file"></use></svg>
+                <strong class="t-content-body-primary">Přetáhnutím nahrajte soubor</strong>
+                <span class="t-content-body-secondary">Dávka může obsahovat maximálně 200 plateb.<br>Denně můžete nahrát až 400 plateb za jeden subjekt.</span>
+                <button class="btn btn--secondary" type="button" onclick="document.getElementById('batch-file-input').click()">Vybrat soubor</button>
+                <input id="batch-file-input" type="file" hidden accept=".kpc,.xml,.txt" onchange="handleBatchFile(this)">
+              </div>
+              <div class="batch-uploaded-content" id="batch-uploaded-content" hidden>
+                <div class="batch-file-row">
+                  <svg class="icon batch-file-icon" aria-hidden="true"><use href="#es-text-file"></use></svg>
+                  <div class="batch-file-copy">
+                    <strong class="t-content-body-primary" id="batch-file-name">Faktury_11_2026.kpc</strong>
+                    <span class="t-content-caption-primary" id="batch-file-size" style="color: var(--color-content-tertiary);">2 KB</span>
+                  </div>
+                  <button class="icon-button batch-delete" type="button" onclick="resetBatchFile()" aria-label="Odstranit soubor">
+                    <svg class="icon" aria-hidden="true"><use href="#es-delete"></use></svg>
+                  </button>
+                </div>
+                <div class="batch-parameter-card">
+                  <strong class="batch-card-title t-content-body-primary">Parametry dávky</strong>
+                  <div class="batch-field-grid">
+                    <label class="payment-control"><span class="payment-control-label">Název</span><input id="batch-name-input" type="text" value="Faktury_11/2026" oninput="updateBatchName(this.value)"></label>
+                    <label class="payment-control"><span class="payment-control-label">Formát</span><select class="payment-control-select"><option>Kompatibilní média</option></select><svg class="icon payment-select-caret" aria-hidden="true"><use href="#es-caret-right"></use></svg></label>
+                  </div>
+                  <p class="batch-parameter-note t-content-body-secondary">Platby z dávky zpracováváme v reálném čase (online režim) dle data splatnosti.</p>
+                </div>
+              </div>
             </div>
-            <div class="batch-uploaded-content" id="batch-uploaded-content" hidden>
-              <div class="batch-file-row">
-                <svg class="icon batch-file-icon" aria-hidden="true"><use href="#es-text-file"></use></svg>
-                <div class="batch-file-copy">
-                  <strong class="t-content-body-primary">Faktury_11_2026.kpc</strong>
-                  <span class="t-content-caption-primary" style="color: var(--color-content-tertiary);">2 KB</span>
-                </div>
-                <button class="icon-button batch-delete" type="button" onclick="resetBatchFile()" aria-label="Odstranit soubor">
-                  <svg class="icon" aria-hidden="true"><use href="#es-delete"></use></svg>
-                </button>
-              </div>
-              <div class="batch-parameter-card">
-                <strong class="batch-card-title t-content-body-primary">Parametry dávky</strong>
-                <div class="batch-field-grid">
-                  <label class="payment-control"><span class="payment-control-label">Název</span><input id="batch-name-input" type="text" value="Faktury_11/2026" oninput="updateBatchName(this.value)"></label>
-                  <label class="payment-control"><span class="payment-control-label">Formát</span><select class="payment-control-select"><option>Kompatibilní média</option></select><svg class="icon payment-select-caret" aria-hidden="true"><use href="#es-caret-right"></use></svg></label>
-                </div>
-                <p class="batch-parameter-note t-content-body-secondary">Platby z dávky zpracováváme v reálném čase (online režim) dle data splatnosti.</p>
-              </div>
+            <div class="batch-tab-panel" id="batch-panel-overview" role="tabpanel" aria-labelledby="batch-tab-overview" hidden>
+              <div class="batch-overview-list" id="batch-overview-list"></div>
+              <p class="batch-overview-note t-content-caption-primary">Dávky z přehledu smažeme po 30 dnech od jejich vyřízení. Jednotlivé platby nadále uvidíte v historii plateb.</p>
             </div>
           </div>
         </div>
-        <footer class="payment-buttonbar">
+        <footer class="payment-buttonbar" id="batch-upload-footer">
           <div class="payment-buttonbar-row"><button class="btn btn--primary" id="batch-upload-continue" type="button" disabled onclick="goTo('davkove-platby-detail')">Pokračovat</button></div>
         </footer>
       </section>
@@ -4129,7 +4275,7 @@
       <section class="screen payment-screen batch-screen" id="screen-davkove-platby-vysledek" aria-labelledby="davkove-platby-vysledek-title">
         <header class="payment-flow-header"><span class="header-spacer"></span><button class="payment-header-action" type="button" onclick="finishBatchPayment()" aria-label="Zavřít"><svg class="icon icon--close" aria-hidden="true"><use href="#es-close"></use></svg></button></header>
         <div class="payment-flow-content"><div class="batch-flow-column batch-result-column"><img class="result-illustration" src="../../design-system/design-system/assets/illustrations/success-light.png" alt="Dávka autorizována"><h1 class="result-heading" id="davkove-platby-vysledek-title">Autorizovali jste dávku</h1><p class="result-lead">Musí ji ještě autorizovat ostatní.</p><p class="result-copy">Nemáte dostatečný dispoziční limit pro odeslání.</p></div></div>
-        <footer class="payment-buttonbar"><div class="payment-buttonbar-row"><button class="btn btn--primary" type="button" onclick="startBatchFlow()">Přehled dávek</button><button class="btn btn--secondary" type="button" onclick="finishBatchPayment()">Zavřít</button></div></footer>
+        <footer class="payment-buttonbar"><div class="payment-buttonbar-row"><button class="btn btn--primary" type="button" onclick="startBatchFlow('overview')">Přehled dávek</button><button class="btn btn--secondary" type="button" onclick="finishBatchPayment()">Zavřít</button></div></footer>
       </section>
 
       <!-- ================= VAVU: RESULT ================= -->
@@ -4372,6 +4518,13 @@
     let currentTpInkasaTab = 'tp';
     let toastTimer = null;
     let batchFlowActive = localStorage.getItem('vavu_batch_flow_active') === '1';
+    const BATCH_OVERVIEW_STORAGE_KEY = 'vavu_imported_batches';
+    const DEFAULT_BATCHES = [
+      { date: '10. 9.', name: 'Faktury_8/2026', id: '12DE4125GW', status: 'K autorizaci', statusType: 'pending', payments: 48, amount: '327 239,00 Kč' },
+      { date: '10. 9.', name: '20250421', id: 'SFAW5124', status: '', statusType: 'success', payments: 150, amount: '58 267,00 Kč' },
+      { date: '3. 9.', name: '2026_Doplatky', id: '13IH512D2', status: 'Čekající', statusType: 'pending', payments: 24, amount: '41 000,00 Kč' },
+      { date: '3. 9.', name: '20260903-fakturace', id: '1025I252M', status: 'Zrušeno', statusType: 'alert', payments: 50, amount: '20 525,12 Kč' }
+    ];
 
     function buildTransactionHistory(currency) {
       const isEur = currency === 'EUR';
@@ -4660,6 +4813,7 @@
         batchFlowActive = true;
         localStorage.setItem('vavu_batch_flow_active', '1');
         restoreBatchName();
+        if (targetScreenId === 'davkove-platby') restoreBatchTab();
       }
 
       const paymentFlowScreens = ['nova-platba', 'nova-platba-detaily', 'platba-vysledek', 'davkove-platby', 'davkove-platby-detail', 'davkove-platby-souhrn', 'davkove-platby-vysledek'];
@@ -5339,9 +5493,10 @@
       if (label) label.textContent = 'Nahraný soubor: ' + input.files[0].name;
     }
 
-    function startBatchFlow() {
+    function startBatchFlow(tab = 'new') {
       batchFlowActive = true;
       localStorage.setItem('vavu_batch_flow_active', '1');
+      localStorage.setItem('vavu_batch_tab', tab);
       goTo('davkove-platby');
     }
 
@@ -5353,8 +5508,27 @@
 
     function handleBatchFile(input) {
       if (!input.files || !input.files[0]) return;
+      const file = input.files[0];
+      const batchName = file.name.replace(/\.[^.]+$/, '') || 'Nová dávka';
+      const fileName = document.getElementById('batch-file-name');
+      const fileSize = document.getElementById('batch-file-size');
+      const batchNameInput = document.getElementById('batch-name-input');
+      if (fileName) fileName.textContent = file.name;
+      if (fileSize) fileSize.textContent = Math.max(1, Math.ceil(file.size / 1024)) + ' KB';
+      if (batchNameInput) batchNameInput.value = batchName;
       document.getElementById('batch-uploaded-content').hidden = false;
       document.getElementById('batch-upload-continue').disabled = false;
+      saveImportedBatch({
+        sourceFile: file.name,
+        date: new Intl.DateTimeFormat('cs-CZ', { day: 'numeric', month: 'numeric' }).format(new Date()),
+        name: batchName,
+        id: '12GHE21XA',
+        status: 'K autorizaci',
+        statusType: 'pending',
+        payments: 8,
+        amount: '433 000,51 Kč'
+      });
+      updateBatchName(batchName);
       showToast('Nahráli jste soubor. Parametry dávky jsme doplnili.');
     }
 
@@ -5362,6 +5536,11 @@
       const batchName = value || 'Faktury_11/2026';
       localStorage.setItem('vavu_batch_name', batchName);
       document.querySelectorAll('[data-batch-name]').forEach(element => element.textContent = batchName);
+      const importedBatches = getImportedBatches();
+      if (importedBatches.length) {
+        importedBatches[0].name = batchName;
+        localStorage.setItem(BATCH_OVERVIEW_STORAGE_KEY, JSON.stringify(importedBatches));
+      }
     }
 
     function restoreBatchName() {
@@ -5375,6 +5554,102 @@
       document.getElementById('batch-file-input').value = '';
       document.getElementById('batch-uploaded-content').hidden = true;
       document.getElementById('batch-upload-continue').disabled = true;
+    }
+
+    function getImportedBatches() {
+      try {
+        const batches = JSON.parse(localStorage.getItem(BATCH_OVERVIEW_STORAGE_KEY) || '[]');
+        return Array.isArray(batches) ? batches : [];
+      } catch (error) {
+        return [];
+      }
+    }
+
+    function saveImportedBatch(batch) {
+      const batches = getImportedBatches().filter(item => item.sourceFile !== batch.sourceFile);
+      batches.unshift(batch);
+      localStorage.setItem(BATCH_OVERVIEW_STORAGE_KEY, JSON.stringify(batches));
+      renderBatchOverview();
+    }
+
+    function switchBatchTab(tab, persist = true) {
+      const showOverview = tab === 'overview';
+      document.getElementById('batch-panel-new').hidden = showOverview;
+      document.getElementById('batch-panel-overview').hidden = !showOverview;
+      document.getElementById('batch-upload-footer').hidden = showOverview;
+      ['new', 'overview'].forEach(tabName => {
+        const button = document.getElementById('batch-tab-' + tabName);
+        const active = tabName === tab;
+        button.classList.toggle('active', active);
+        button.setAttribute('aria-selected', String(active));
+      });
+      if (showOverview) renderBatchOverview();
+      if (persist) localStorage.setItem('vavu_batch_tab', tab);
+    }
+
+    function restoreBatchTab() {
+      switchBatchTab(localStorage.getItem('vavu_batch_tab') === 'overview' ? 'overview' : 'new', false);
+    }
+
+    function renderBatchOverview() {
+      const list = document.getElementById('batch-overview-list');
+      if (!list) return;
+      const groups = new Map();
+      [...getImportedBatches(), ...DEFAULT_BATCHES].forEach(batch => {
+        if (!groups.has(batch.date)) groups.set(batch.date, []);
+        groups.get(batch.date).push(batch);
+      });
+      list.replaceChildren(...Array.from(groups, ([date, batches]) => {
+        const group = document.createElement('section');
+        group.className = 'batch-overview-group';
+        const title = document.createElement('h2');
+        title.className = 'batch-overview-date';
+        title.textContent = 'Datum zadání ' + date;
+        group.append(title, ...batches.map(createBatchOverviewItem));
+        return group;
+      }));
+    }
+
+    function createBatchOverviewItem(batch) {
+      const item = document.createElement('div');
+      item.className = 'batch-overview-item';
+
+      const main = document.createElement('div');
+      main.className = 'batch-overview-main';
+      const icon = document.createElement('span');
+      icon.className = 'batch-overview-icon';
+      icon.innerHTML = '<svg class="icon" aria-hidden="true"><use href="#es-text-file"></use></svg>';
+      const statusDot = document.createElement('span');
+      statusDot.className = 'batch-status-dot batch-status-dot--' + batch.statusType;
+      statusDot.textContent = batch.statusType === 'success' ? '✓' : batch.statusType === 'alert' ? '×' : '•';
+      icon.append(statusDot);
+
+      const copy = document.createElement('span');
+      copy.className = 'batch-overview-copy';
+      const name = document.createElement('strong');
+      name.className = 't-content-body-secondary-bold';
+      name.textContent = batch.name;
+      const id = document.createElement('span');
+      id.className = 't-content-caption-primary';
+      id.style.color = 'var(--color-content-tertiary)';
+      id.textContent = batch.id;
+      copy.append(name, id);
+      if (batch.status) {
+        const status = document.createElement('span');
+        status.className = 't-content-caption-primary batch-overview-status--' + batch.statusType;
+        status.textContent = batch.status;
+        copy.append(status);
+      }
+      main.append(icon, copy);
+
+      const count = document.createElement('span');
+      count.className = 'batch-overview-count t-content-body-secondary';
+      count.textContent = batch.payments + ' plateb';
+      const amount = document.createElement('strong');
+      amount.className = 'batch-overview-amount t-content-body-secondary-bold';
+      amount.textContent = batch.amount;
+      item.append(main, count, amount);
+      return item;
     }
 
     function finishBatchPayment() {
