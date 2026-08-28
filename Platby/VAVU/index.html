@@ -4289,6 +4289,46 @@
         <footer class="payment-buttonbar"><div class="payment-buttonbar-row"><button class="btn btn--secondary" type="button" onclick="finishStandingOrder()">Zavřít</button></div></footer>
       </section>
 
+      <!-- ================= VAVU: NOVÉ POVOLENÍ INKASA ================= -->
+      <section class="screen payment-screen batch-screen standing-order-screen" id="screen-inkaso-nove" aria-labelledby="inkaso-nove-title">
+        <header class="payment-flow-header"><span class="header-spacer"></span><button class="payment-header-action" type="button" onclick="closeDirectDebitFlow()">Zavřít</button></header>
+        <div class="payment-flow-content">
+          <form class="batch-flow-column" id="direct-debit-form" onsubmit="event.preventDefault(); showDirectDebitSummary();">
+            <h1 class="payment-flow-title" id="inkaso-nove-title">Nové povolení inkasa</h1>
+            <button class="payment-account-card" type="button" onclick="showToast('V tomto prototypu je dostupný jen Účet CZK.')"><span class="payment-account-copy"><span class="payment-account-name">Účet CZK</span><span class="payment-account-detail">123456-4835477/0100</span></span><svg class="icon icon--caret" aria-hidden="true"><use href="#es-caret-right"></use></svg></button>
+            <div class="standing-order-grid">
+              <label class="payment-control payment-field--wide"><span class="payment-control-label">Kdo může inkasovat</span><input id="direct-debit-recipient" type="text" required autocomplete="off" placeholder="Příjemce nebo číslo účtu" data-direct-debit-key="recipient"></label>
+              <label class="payment-control payment-field--wide"><span class="payment-control-label">Název inkasa</span><input id="direct-debit-name" type="text" required maxlength="80" data-direct-debit-key="name"></label>
+              <label class="payment-control"><span class="payment-control-label">Limit</span><input id="direct-debit-limit" type="number" required min="0.01" step="0.01" inputmode="decimal" data-direct-debit-key="limit"></label>
+              <label class="payment-control"><span class="payment-control-label">Za období</span><select id="direct-debit-period" class="payment-control-select" data-direct-debit-key="period"><option>Měsíčně</option><option>Týdně</option><option>Čtvrtletně</option><option>Ročně</option></select><svg class="icon payment-select-caret" aria-hidden="true"><use href="#es-caret-right"></use></svg></label>
+              <label class="payment-control"><span class="payment-control-label">Platnost od</span><input id="direct-debit-start" type="date" required data-direct-debit-key="startDate"></label>
+              <label class="payment-control"><span class="payment-control-label">Platnost do</span><input id="direct-debit-end" type="date" data-direct-debit-key="endDate"></label>
+            </div>
+          </form>
+        </div>
+        <footer class="payment-buttonbar"><div class="payment-buttonbar-row"><button class="btn btn--primary" type="submit" form="direct-debit-form">Pokračovat</button></div></footer>
+      </section>
+
+      <section class="screen payment-screen batch-screen standing-order-screen" id="screen-inkaso-souhrn" aria-labelledby="inkaso-souhrn-title">
+        <header class="payment-flow-header"><button class="payment-header-action" type="button" onclick="goTo('inkaso-nove')"><svg class="icon icon--caret" style="transform:rotate(180deg)" aria-hidden="true"><use href="#es-caret-right"></use></svg>Zpět</button><span class="header-spacer"></span></header>
+        <div class="payment-flow-content"><div class="batch-flow-column"><h1 class="payment-flow-title" id="inkaso-souhrn-title">Souhrn</h1><div class="batch-summary-card" id="direct-debit-summary">
+          <div class="batch-summary-row"><span class="t-content-caption-primary" style="color:var(--color-content-tertiary)">Z účtu</span><strong class="t-content-body-primary">Účet CZK</strong><span class="t-content-caption-primary">123456-4835477/0100</span></div>
+          <div class="batch-summary-row"><span class="t-content-caption-primary" style="color:var(--color-content-tertiary)">Kdo může inkasovat</span><strong class="t-content-body-primary standing-order-summary-value" data-direct-debit-summary="recipient"></strong></div>
+          <div class="batch-summary-row"><span class="t-content-caption-primary" style="color:var(--color-content-tertiary)">Název inkasa</span><strong class="t-content-body-primary" data-direct-debit-summary="name"></strong></div>
+          <div class="batch-summary-row"><span class="t-content-caption-primary" style="color:var(--color-content-tertiary)">Limit pro platby</span><strong class="t-content-body-primary" data-direct-debit-summary="formattedLimit"></strong></div>
+          <div class="batch-summary-row"><span class="t-content-caption-primary" style="color:var(--color-content-tertiary)">Za období</span><strong class="t-content-body-primary" data-direct-debit-summary="period"></strong></div>
+          <div class="batch-summary-row"><span class="t-content-caption-primary" style="color:var(--color-content-tertiary)">Platnost od</span><strong class="t-content-body-primary" data-direct-debit-summary="startDate"></strong></div>
+          <div class="batch-summary-row"><span class="t-content-caption-primary" style="color:var(--color-content-tertiary)">Platnost do</span><strong class="t-content-body-primary" data-direct-debit-summary="endDate"></strong></div>
+        </div></div></div>
+        <footer class="payment-buttonbar"><div class="payment-buttonbar-row"><button class="btn btn--primary" type="button" onclick="openDirectDebitAuthorization()">Uložit k autorizaci</button><button class="btn btn--secondary" type="button" onclick="closeDirectDebitFlow()">Zavřít</button></div></footer>
+      </section>
+
+      <section class="screen payment-screen batch-screen standing-order-screen" id="screen-inkaso-vysledek" aria-labelledby="inkaso-vysledek-title">
+        <header class="payment-flow-header"><button class="payment-header-action" type="button" onclick="finishDirectDebit()">Zavřít</button><span class="header-spacer"></span></header>
+        <div class="payment-flow-content"><div class="batch-flow-column batch-result-column"><img class="result-illustration" src="../../design-system/design-system/assets/illustrations/success-light.png" alt="Povolení inkasa autorizováno"><h1 class="result-heading" id="inkaso-vysledek-title">Autorizovali jste povolení inkasa</h1><p class="result-lead">Musí ho ještě autorizovat ostatní.</p><p class="result-copy">Nemáte dostatečný dispoziční limit pro odeslání.</p></div></div>
+        <footer class="payment-buttonbar"><div class="payment-buttonbar-row"><button class="btn btn--secondary" type="button" onclick="finishDirectDebit()">Zavřít</button></div></footer>
+      </section>
+
       <!-- ================= VAVU: DÁVKOVÉ PLATBY ================= -->
       <section class="screen payment-screen batch-screen" id="screen-davkove-platby" aria-labelledby="davkove-platby-title">
         <header class="payment-flow-header">
@@ -4633,7 +4673,7 @@
   <!-- ================= JS LOGIKA ================= -->
   <script>
     // Seznam podporovaných hlavních obrazovek
-    const SCREENS = ['login', 'prehled', 'extra', 'karty', 'pujcky', 'sporeni', 'investice', 'pojisteni', 'ucet-detail', 'tp-inkasa', 'tp-inkasa-s-autorizaci', 'autorizace', 'vsechny-platby', 'platba-detail', 'nova-platba', 'nova-platba-detaily', 'platba-vysledek', 'tp-novy', 'tp-detaily', 'tp-souhrn', 'tp-vysledek', 'davkove-platby', 'davkove-platby-detail', 'davkove-platby-souhrn', 'davkove-platby-vysledek'];
+    const SCREENS = ['login', 'prehled', 'extra', 'karty', 'pujcky', 'sporeni', 'investice', 'pojisteni', 'ucet-detail', 'tp-inkasa', 'tp-inkasa-s-autorizaci', 'autorizace', 'vsechny-platby', 'platba-detail', 'nova-platba', 'nova-platba-detaily', 'platba-vysledek', 'tp-novy', 'tp-detaily', 'tp-souhrn', 'tp-vysledek', 'inkaso-nove', 'inkaso-souhrn', 'inkaso-vysledek', 'davkove-platby', 'davkove-platby-detail', 'davkove-platby-souhrn', 'davkove-platby-vysledek'];
     // Seznam modálních hashů
     const MODALS = ['povoleni-inkasa-modal', 'autorizace-potvrzeni-modal', 'no-items-modal', 'payment-signature-modal', 'filter-modal'];
 
@@ -4645,7 +4685,9 @@
     let toastTimer = null;
     let batchFlowActive = localStorage.getItem('vavu_batch_flow_active') === '1';
     let standingOrderFlowActive = localStorage.getItem('vavu_standing_order_flow_active') === '1';
+    let directDebitFlowActive = localStorage.getItem('vavu_direct_debit_flow_active') === '1';
     const STANDING_ORDER_STORAGE_KEY = 'vavu_standing_order_draft';
+    const DIRECT_DEBIT_STORAGE_KEY = 'vavu_direct_debit_draft';
     const BATCH_OVERVIEW_STORAGE_KEY = 'vavu_imported_batches';
     const DEFAULT_BATCHES = [
       { date: '10. 9.', name: 'Faktury_8/2026', id: '12DE4125GW', status: 'K autorizaci', statusType: 'pending', payments: 48, amount: '327 239,00 Kč' },
@@ -4834,6 +4876,8 @@
       bindPaymentPersistence();
       restoreStandingOrderValues();
       bindStandingOrderPersistence();
+      restoreDirectDebitValues();
+      bindDirectDebitPersistence();
       renderCurrentUser();
       // Aktualizovat seznamy (inkasa a položky k autorizaci)
       renderDynamicContent();
@@ -4873,7 +4917,7 @@
       // 1. Zpracování pokud jde o MODAL
       if (MODALS.includes(hash)) {
         if (hash === 'payment-signature-modal') {
-          currentScreen = standingOrderFlowActive ? 'tp-souhrn' : batchFlowActive ? 'davkove-platby-souhrn' : 'nova-platba-detaily';
+          currentScreen = directDebitFlowActive ? 'inkaso-souhrn' : standingOrderFlowActive ? 'tp-souhrn' : batchFlowActive ? 'davkove-platby-souhrn' : 'nova-platba-detaily';
         } else if (hash === 'filter-modal') {
           currentScreen = 'ucet-detail';
         }
@@ -4942,27 +4986,43 @@
       if (targetScreenId.startsWith('davkove-platby')) {
         batchFlowActive = true;
         standingOrderFlowActive = false;
+        directDebitFlowActive = false;
         localStorage.setItem('vavu_batch_flow_active', '1');
         localStorage.removeItem('vavu_standing_order_flow_active');
+        localStorage.removeItem('vavu_direct_debit_flow_active');
         restoreBatchName();
         if (targetScreenId === 'davkove-platby') restoreBatchTab();
       }
       if (targetScreenId === 'nova-platba' || targetScreenId === 'nova-platba-detaily') {
         batchFlowActive = false;
         standingOrderFlowActive = false;
+        directDebitFlowActive = false;
         localStorage.removeItem('vavu_batch_flow_active');
         localStorage.removeItem('vavu_standing_order_flow_active');
+        localStorage.removeItem('vavu_direct_debit_flow_active');
       }
       if (['tp-novy', 'tp-detaily', 'tp-souhrn', 'tp-vysledek'].includes(targetScreenId)) {
         standingOrderFlowActive = true;
         batchFlowActive = false;
+        directDebitFlowActive = false;
         localStorage.setItem('vavu_standing_order_flow_active', '1');
         localStorage.removeItem('vavu_batch_flow_active');
+        localStorage.removeItem('vavu_direct_debit_flow_active');
         restoreStandingOrderValues();
         if (targetScreenId === 'tp-souhrn') renderStandingOrderSummary();
       }
+      if (['inkaso-nove', 'inkaso-souhrn', 'inkaso-vysledek'].includes(targetScreenId)) {
+        directDebitFlowActive = true;
+        standingOrderFlowActive = false;
+        batchFlowActive = false;
+        localStorage.setItem('vavu_direct_debit_flow_active', '1');
+        localStorage.removeItem('vavu_standing_order_flow_active');
+        localStorage.removeItem('vavu_batch_flow_active');
+        restoreDirectDebitValues();
+        if (targetScreenId === 'inkaso-souhrn') renderDirectDebitSummary();
+      }
 
-      const paymentFlowScreens = ['nova-platba', 'nova-platba-detaily', 'platba-vysledek', 'tp-novy', 'tp-detaily', 'tp-souhrn', 'tp-vysledek', 'davkove-platby', 'davkove-platby-detail', 'davkove-platby-souhrn', 'davkove-platby-vysledek'];
+      const paymentFlowScreens = ['nova-platba', 'nova-platba-detaily', 'platba-vysledek', 'tp-novy', 'tp-detaily', 'tp-souhrn', 'tp-vysledek', 'inkaso-nove', 'inkaso-souhrn', 'inkaso-vysledek', 'davkove-platby', 'davkove-platby-detail', 'davkove-platby-souhrn', 'davkove-platby-vysledek'];
       document.body.classList.toggle('flow-mode', paymentFlowScreens.includes(targetScreenId));
       document.body.classList.toggle('login-mode', targetScreenId === 'login');
 
@@ -5131,6 +5191,13 @@
           { id: 'platba_auth_3', name: 'Shell Praha', desc: 'Čerpací stanice Shell', date: '8. 7. 2026', amount: '1 500,00 Kč' }
         ];
 
+        try {
+          const pendingPayment = JSON.parse(localStorage.getItem('vavu_pending_payment') || 'null');
+          if (pendingPayment) platbyData.unshift({ id: 'platba_auth_created', ...pendingPayment });
+        } catch (error) {
+          localStorage.removeItem('vavu_pending_payment');
+        }
+
         platbyData.forEach(item => {
           if (!deletedPlatby.includes(item.id)) {
             const card = document.createElement('div');
@@ -5143,12 +5210,12 @@
                   <svg viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
                 </span>
                 <div class="item-details" style="margin-left: 8px;">
-                  <span class="t-headings-headline-secondary-bold">${item.name}</span>
-                  <span class="t-content-body-secondary" style="color: var(--color-content-tertiary);">${item.desc}</span>
-                  <span class="t-content-caption-primary" style="color: var(--color-content-tertiary);">${item.date}</span>
+                  <span class="t-headings-headline-secondary-bold">${escapeHtml(item.name)}</span>
+                  <span class="t-content-body-secondary" style="color: var(--color-content-tertiary);">${escapeHtml(item.desc)}</span>
+                  <span class="t-content-caption-primary" style="color: var(--color-content-tertiary);">${escapeHtml(item.date)}</span>
                 </div>
               </label>
-              <div class="t-headings-headline-secondary-bold">${item.amount}</div>
+              <div class="t-headings-headline-secondary-bold">${escapeHtml(item.amount)}</div>
             `;
             authList.appendChild(card);
           }
@@ -5217,12 +5284,12 @@
                 <svg viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
               </span>
               <div class="item-details" style="margin-left: 8px;">
-                <span class="t-headings-headline-secondary-bold">${nazev}</span>
-                <span class="t-content-body-secondary" style="color: var(--color-content-tertiary);">${obdobi}</span>
-                <span class="t-content-caption-primary" style="color: var(--color-content-tertiary);">${platnostOd}</span>
+                <span class="t-headings-headline-secondary-bold">${escapeHtml(nazev)}</span>
+                <span class="t-content-body-secondary" style="color: var(--color-content-tertiary);">${escapeHtml(obdobi)}</span>
+                <span class="t-content-caption-primary" style="color: var(--color-content-tertiary);">${escapeHtml(platnostOd)}</span>
               </div>
             </label>
-            <div class="t-headings-headline-secondary-bold">${limit}</div>
+            <div class="t-headings-headline-secondary-bold">${escapeHtml(limit)}</div>
           `;
           authList.appendChild(dynamicCard);
         }
@@ -5350,6 +5417,8 @@
           localStorage.removeItem('inkaso_saved_for_auth');
         } else if (val === 'internet') {
           localStorage.setItem('inkaso_internet_deleted', '1');
+        } else if (val === 'platba_auth_created') {
+          localStorage.removeItem('vavu_pending_payment');
         } else if (val.startsWith('platba_auth')) {
           deletedPlatby.push(val);
         } else if (val === 'tp_auth_created') {
@@ -5481,7 +5550,7 @@
           actionBtn.setAttribute('onclick', 'startStandingOrderFlow()');
         } else if (tabName === 'inkasa') {
           actionBtn.querySelector('span').textContent = 'Nastavit inkaso';
-          actionBtn.setAttribute('onclick', "openModal('povoleni-inkasa-modal')");
+          actionBtn.setAttribute('onclick', 'startDirectDebitFlow()');
         } else if (tabName === 'sipo') {
           actionBtn.querySelector('span').textContent = 'Nové SIPO';
           actionBtn.setAttribute('onclick', "alert('Simulace: Nastavení nového SIPO není v tomto prototypu aktivní.')");
@@ -5933,12 +6002,123 @@
       goTo('tp-inkasa');
     }
 
+    function getDirectDebitData() {
+      const defaults = { recipient: '', name: '', limit: '', period: 'Měsíčně', startDate: '2026-09-09', endDate: '' };
+      try {
+        return { ...defaults, ...JSON.parse(localStorage.getItem(DIRECT_DEBIT_STORAGE_KEY) || '{}') };
+      } catch (error) {
+        return defaults;
+      }
+    }
+
+    function saveDirectDebitData() {
+      const data = getDirectDebitData();
+      document.querySelectorAll('[data-direct-debit-key]').forEach(control => {
+        data[control.dataset.directDebitKey] = control.value;
+      });
+      localStorage.setItem(DIRECT_DEBIT_STORAGE_KEY, JSON.stringify(data));
+      return data;
+    }
+
+    function restoreDirectDebitValues() {
+      const data = getDirectDebitData();
+      document.querySelectorAll('[data-direct-debit-key]').forEach(control => {
+        const value = data[control.dataset.directDebitKey];
+        if (value !== undefined) control.value = value;
+      });
+    }
+
+    function bindDirectDebitPersistence() {
+      document.querySelectorAll('[data-direct-debit-key]').forEach(control => {
+        control.addEventListener('input', saveDirectDebitData);
+        control.addEventListener('change', saveDirectDebitData);
+      });
+    }
+
+    function renderDirectDebitSummary() {
+      const data = saveDirectDebitData();
+      const values = {
+        recipient: data.recipient,
+        name: data.name,
+        formattedLimit: formatStandingOrderAmount(data.limit, 'Kč'),
+        period: data.period,
+        startDate: formatStandingOrderDate(data.startDate),
+        endDate: data.endDate ? formatStandingOrderDate(data.endDate) : 'Neomezeně'
+      };
+      Object.entries(values).forEach(([key, value]) => {
+        const element = document.querySelector(`[data-direct-debit-summary="${key}"]`);
+        if (element) element.textContent = value;
+      });
+    }
+
+    function startDirectDebitFlow() {
+      directDebitFlowActive = true;
+      standingOrderFlowActive = false;
+      batchFlowActive = false;
+      localStorage.setItem('vavu_direct_debit_flow_active', '1');
+      localStorage.removeItem('vavu_standing_order_flow_active');
+      localStorage.removeItem('vavu_batch_flow_active');
+      restoreDirectDebitValues();
+      goTo('inkaso-nove');
+    }
+
+    function showDirectDebitSummary() {
+      const form = document.getElementById('direct-debit-form');
+      if (!form.reportValidity()) return;
+      saveDirectDebitData();
+      renderDirectDebitSummary();
+      goTo('inkaso-souhrn');
+    }
+
+    function openDirectDebitAuthorization() {
+      renderDirectDebitSummary();
+      directDebitFlowActive = true;
+      localStorage.setItem('vavu_direct_debit_flow_active', '1');
+      openModal('payment-signature-modal');
+    }
+
+    function closeDirectDebitFlow() {
+      directDebitFlowActive = false;
+      localStorage.removeItem('vavu_direct_debit_flow_active');
+      currentTpInkasaTab = 'inkasa';
+      goTo('tp-inkasa');
+    }
+
+    function finishDirectDebit() {
+      directDebitFlowActive = false;
+      localStorage.removeItem('vavu_direct_debit_flow_active');
+      currentTpInkasaTab = 'inkasa';
+      goTo('tp-inkasa');
+    }
+
     function authorizePayment() {
       closeAllModalsElements();
-      if (standingOrderFlowActive) {
+      if (directDebitFlowActive) {
+        const data = getDirectDebitData();
+        localStorage.setItem('inkaso_prijemce', data.recipient);
+        localStorage.setItem('inkaso_nazev', data.name);
+        localStorage.setItem('inkaso_limit', formatStandingOrderAmount(data.limit, 'Kč'));
+        localStorage.setItem('inkaso_obdobi', data.period);
+        localStorage.setItem('inkaso_platnost_od', formatStandingOrderDate(data.startDate));
+        localStorage.setItem('inkaso_platnost_do', data.endDate ? formatStandingOrderDate(data.endDate) : 'Neomezeně');
+        localStorage.setItem('inkaso_saved_for_auth', '1');
+        goTo('inkaso-vysledek');
+      } else if (standingOrderFlowActive) {
         localStorage.setItem('vavu_pending_standing_order', JSON.stringify({ ...getStandingOrderData(), status: 'K autorizaci' }));
         goTo('tp-vysledek');
       } else {
+        if (!batchFlowActive) {
+          const recipient = localStorage.getItem(paymentStorageKey('recipient')) || 'Nová platba';
+          const description = localStorage.getItem(paymentStorageKey('description')) || localStorage.getItem(paymentStorageKey('messageRecipient')) || 'Platba čeká na další autorizaci';
+          const amount = localStorage.getItem(paymentStorageKey('amount')) || '0';
+          const currency = localStorage.getItem(paymentStorageKey('currency')) || 'Kč';
+          localStorage.setItem('vavu_pending_payment', JSON.stringify({
+            name: recipient,
+            desc: description,
+            date: '28. 8. 2026',
+            amount: formatStandingOrderAmount(amount, currency)
+          }));
+        }
         goTo(batchFlowActive ? 'davkove-platby-vysledek' : 'platba-vysledek');
       }
     }
@@ -5959,7 +6139,7 @@
         history.replaceState({ screen: 'tp-inkasa-s-autorizaci' }, '', window.location.hash);
       } else if (MODALS.includes(hash)) {
         // Modal podpisu patří k platbě, původní modaly k inkasům.
-        currentScreen = hash === 'payment-signature-modal' ? (standingOrderFlowActive ? 'tp-souhrn' : batchFlowActive ? 'davkove-platby-souhrn' : 'nova-platba-detaily') : 'tp-inkasa';
+        currentScreen = hash === 'payment-signature-modal' ? (directDebitFlowActive ? 'inkaso-souhrn' : standingOrderFlowActive ? 'tp-souhrn' : batchFlowActive ? 'davkove-platby-souhrn' : 'nova-platba-detaily') : 'tp-inkasa';
         showScreenElements(currentScreen);
         showModalElement(hash);
       } else {
