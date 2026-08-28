@@ -5161,6 +5161,21 @@
           { id: 'tp_auth_3', name: 'Stavební spoření', desc: 'Měsíčně', date: '5. 7. 2026', amount: '2 000,00 Kč' }
         ];
 
+        try {
+          const pendingStandingOrder = JSON.parse(localStorage.getItem('vavu_pending_standing_order') || 'null');
+          if (pendingStandingOrder) {
+            tpData.unshift({
+              id: 'tp_auth_created',
+              name: pendingStandingOrder.name || 'Nový trvalý příkaz',
+              desc: pendingStandingOrder.frequency || 'Měsíčně',
+              date: formatStandingOrderDate(pendingStandingOrder.startDate),
+              amount: formatStandingOrderAmount(pendingStandingOrder.amount, pendingStandingOrder.currency)
+            });
+          }
+        } catch (error) {
+          localStorage.removeItem('vavu_pending_standing_order');
+        }
+
         tpData.forEach(item => {
           if (!deletedTp.includes(item.id)) {
             const card = document.createElement('div');
@@ -5173,12 +5188,12 @@
                   <svg viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
                 </span>
                 <div class="item-details" style="margin-left: 8px;">
-                  <span class="t-headings-headline-secondary-bold">${item.name}</span>
-                  <span class="t-content-body-secondary" style="color: var(--color-content-tertiary);">${item.desc}</span>
-                  <span class="t-content-caption-primary" style="color: var(--color-content-tertiary);">${item.date}</span>
+                  <span class="t-headings-headline-secondary-bold">${escapeHtml(item.name)}</span>
+                  <span class="t-content-body-secondary" style="color: var(--color-content-tertiary);">${escapeHtml(item.desc)}</span>
+                  <span class="t-content-caption-primary" style="color: var(--color-content-tertiary);">${escapeHtml(item.date)}</span>
                 </div>
               </label>
-              <div class="t-headings-headline-secondary-bold">${item.amount}</div>
+              <div class="t-headings-headline-secondary-bold">${escapeHtml(item.amount)}</div>
             `;
             authList.appendChild(card);
           }
@@ -5337,6 +5352,8 @@
           localStorage.setItem('inkaso_internet_deleted', '1');
         } else if (val.startsWith('platba_auth')) {
           deletedPlatby.push(val);
+        } else if (val === 'tp_auth_created') {
+          localStorage.removeItem('vavu_pending_standing_order');
         } else if (val.startsWith('tp_auth')) {
           deletedTp.push(val);
         }
@@ -5815,6 +5832,12 @@
       } catch (error) {
         return defaults;
       }
+    }
+
+    function escapeHtml(value) {
+      const element = document.createElement('div');
+      element.textContent = String(value ?? '');
+      return element.innerHTML;
     }
 
     function saveStandingOrderData() {
