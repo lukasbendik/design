@@ -3621,7 +3621,7 @@
                     </span>
                   </div>
                   <div class="item-details">
-                    <span class="item-title">ČEZ</span>
+                    <span class="item-title">Nájem provozovny</span>
                     <span class="item-subtitle">Měsíčně</span>
                   </div>
                 </div>
@@ -3637,7 +3637,7 @@
                     </span>
                   </div>
                   <div class="item-details">
-                    <span class="item-title">Školní jídelna</span>
+                    <span class="item-title">Zálohy na energie</span>
                     <span class="item-subtitle">Měsíčně</span>
                   </div>
                 </div>
@@ -5365,8 +5365,8 @@
 
       if (currentTpInkasaTab === 'tp') {
         const tpData = [
-          { name: 'ČEZ', period: 'Měsíčně', amount: '5 000,00 Kč', initial: 'Č' },
-          { name: 'Školní jídelna', period: 'Měsíčně', amount: '500,00 Kč', initial: 'Š' }
+          { name: 'Nájem provozovny', period: 'Měsíčně', amount: '28 000,00 Kč', initial: 'N' },
+          { name: 'Zálohy na energie', period: 'Měsíčně', amount: '12 500,00 Kč', initial: 'Z' }
         ];
 
         tpData.forEach(item => {
@@ -5391,8 +5391,8 @@
         });
       } else if (currentTpInkasaTab === 'inkasa') {
         const inkasaData = [
-          { name: 'T-Mobile', period: 'Měsíčně', amount: '650,00 Kč', initial: 'T' },
-          { name: 'O2 Internet', period: 'Měsíčně', amount: '450,00 Kč', initial: 'O' }
+          { name: 'Vodafone Business', period: 'Měsíčně', amount: '1 890,00 Kč', initial: 'V' },
+          { name: 'ČEZ Distribuce', period: 'Měsíčně', amount: '8 750,00 Kč', initial: 'Č' }
         ];
 
         const isApproved = localStorage.getItem('inkaso_approved') === '1';
@@ -5425,7 +5425,7 @@
         });
       } else if (currentTpInkasaTab === 'sipo') {
         const sipoData = [
-          { name: 'SIPO platba', period: 'Měsíčně', amount: '4 800,00 Kč', initial: 'S' }
+          { name: 'SIPO za provozovnu', period: 'Měsíčně', amount: '4 800,00 Kč', initial: 'S' }
         ];
 
         sipoData.forEach(item => {
