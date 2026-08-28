@@ -3888,28 +3888,64 @@
     let currentTpInkasaTab = 'tp';
     let toastTimer = null;
 
+    function buildTransactionHistory(currency) {
+      const isEur = currency === 'EUR';
+      const dates = ['Dnes', 'Včera', '26. 8.', '25. 8.', '22. 8.', '21. 8.', '20. 8.', '19. 8.', '18. 8.', '15. 8.'];
+      const czkTransactions = [
+        ['Vodárna Kárany', 'Údržba čerpací stanice'],
+        ['Povodí Vltavy, s. p.', 'Fakturace za odběr vody'],
+        ['Grundfos s.r.o.', 'Servis kalového čerpadla'],
+        ['ČEVAK a.s.', 'Laboratorní rozbor vody'],
+        ['Hydroservis Praha s.r.o.', 'Dodávka armatur DN 200'],
+        ['Státní fond životního prostředí', 'Dotace na modernizaci ČOV'],
+        ['AQUA-THERM servis', 'Revize technologie úpravny'],
+        ['Pražské vodovody a kanalizace', 'Poplatek za odběr vody'],
+        ['EnviroTech CZ', 'Monitoring kvality vody'],
+        ['Kovošrot Vltava', 'Likvidace kovového odpadu']
+      ];
+      const eurTransactions = [
+        ['Wilo SE', 'Náhradní díly pro čerpadla'],
+        ['Xylem Water Solutions', 'Technologie pro úpravnu vody'],
+        ['Aquaconsult Anlagenbau', 'Záloha na filtrační jednotku'],
+        ['Veolia Water Technologies', 'Konzultace projektu ČOV'],
+        ['Sensus GmbH', 'Vodárenské měřiče'],
+        ['AQUA Engineering GmbH', 'Projektová dokumentace'],
+        ['Hach Lange GmbH', 'Analyzátory kvality vody'],
+        ['KSB SE & Co. KGaA', 'Servisní práce na čerpadlech'],
+        ['Evoqua Water Technologies', 'Membránová filtrace'],
+        ['VAG-Armaturen GmbH', 'Průmyslové armatury']
+      ];
+      const transactions = isEur ? eurTransactions : czkTransactions;
+      const unit = isEur ? 'EUR' : 'Kč';
+
+      return Array.from({ length: 50 }, (_, index) => {
+        const transaction = transactions[index % transactions.length];
+        const isIncome = index % 7 === 1 || index % 11 === 4;
+        const baseAmount = isEur ? 780 + ((index * 347) % 5600) : 18500 + ((index * 13750) % 92000);
+        const amount = isIncome ? baseAmount * 2 : baseAmount;
+        const formattedAmount = new Intl.NumberFormat('cs-CZ', {
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2
+        }).format(amount);
+
+        return [
+          dates[Math.floor(index / 5)],
+          transaction[0],
+          transaction[1],
+          `${isIncome ? '' : '-'}${formattedAmount} ${unit}`,
+          isIncome ? 'prichozi' : 'odchozi'
+        ];
+      });
+    }
+
     const ACCOUNT_DATA = {
       czk: {
         name: 'Účet CZK', number: '123456-4835477/0100', balance: '680 063,38 Kč',
-        transactions: [
-          ['Dnes', 'Vodárna Kárany', 'Údržba čerpací stanice', '-84 500,00 Kč', 'odchozi'],
-          ['Dnes', 'Povodí Vltavy, s. p.', 'Fakturace za odběr vody', '126 800,00 Kč', 'prichozi'],
-          ['Včera', 'Grundfos s.r.o.', 'Servis kalového čerpadla', '-32 480,00 Kč', 'odchozi'],
-          ['Včera', 'ČEVAK a.s.', 'Laboratorní rozbor vody', '-18 950,00 Kč', 'odchozi'],
-          ['26. 8.', 'Hydroservis Praha s.r.o.', 'Dodávka armatur DN 200', '-67 320,00 Kč', 'odchozi'],
-          ['26. 8.', 'Státní fond životního prostředí', 'Dotace na modernizaci ČOV', '245 000,00 Kč', 'prichozi']
-        ]
+        transactions: buildTransactionHistory('CZK')
       },
       eur: {
         name: 'Účet EUR', number: 'CZ6501000000001234567890', balance: '24 850,42 EUR',
-        transactions: [
-          ['Dnes', 'Wilo SE', 'Náhradní díly pro čerpadla', '-2 840,00 EUR', 'odchozi'],
-          ['Dnes', 'Xylem Water Solutions', 'Technologie pro úpravnu vody', '-4 260,50 EUR', 'odchozi'],
-          ['Včera', 'Aquaconsult Anlagenbau', 'Záloha na filtrační jednotku', '-6 500,00 EUR', 'odchozi'],
-          ['Včera', 'Veolia Water Technologies', 'Konzultace projektu ČOV', '3 200,00 EUR', 'prichozi'],
-          ['26. 8.', 'Sensus GmbH', 'Vodárenské měřiče', '-1 875,40 EUR', 'odchozi'],
-          ['25. 8.', 'AQUA Engineering GmbH', 'Projektová dokumentace', '8 750,00 EUR', 'prichozi']
-        ]
+        transactions: buildTransactionHistory('EUR')
       }
     };
 
