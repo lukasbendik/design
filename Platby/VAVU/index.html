@@ -577,6 +577,34 @@
       height: auto;
     }
 
+    .card-action-red--control {
+      min-height: 82px;
+      gap: var(--space-8);
+      padding: var(--padding-xl);
+      border: 0;
+      border-radius: var(--radius-md);
+      background: var(--color-interactive-primary);
+      box-shadow: var(--shadow-panel);
+      color: var(--color-interactive-on-primary);
+      font: var(--content-body-secondary-bold);
+    }
+
+    .card-action-red--control:hover {
+      opacity: 1;
+      background: var(--color-interactive-primary-action);
+    }
+
+    .card-action-red--control:focus-visible {
+      outline: 2px solid var(--color-content-primary);
+      outline-offset: 2px;
+    }
+
+    .card-action-red--control svg {
+      width: 24px;
+      height: 24px;
+      flex: 0 0 auto;
+    }
+
     /* Tlačítka */
     .btn {
       height: 48px;
@@ -3621,13 +3649,13 @@
 
         <div class="right-column">
           <!-- Akční červená karta Nastavit inkaso / Vytvořit trvalý příkaz -->
-          <div class="card-action-red" id="btn-tp-inkasa-action" onclick="alert('Simulace: Vytvoření trvalého příkazu není v tomto prototypu aktivní.')">
+          <button type="button" class="card-action-red card-action-red--control" id="btn-tp-inkasa-action" onclick="alert('Simulace: Vytvoření trvalého příkazu není v tomto prototypu aktivní.')">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <line x1="12" y1="5" x2="12" y2="19"/>
               <line x1="5" y1="12" x2="19" y2="12"/>
             </svg>
             <span>Vytvořit trvalý příkaz</span>
-          </div>
+          </button>
 
           <!-- Karta Autorizace se zobrazí v pravém sloupci na screen-tp-inkasa, pokud je aktivní verze s autorizací -->
           <div class="card-navigation" id="right-column-auth-card" style="display: none;">
