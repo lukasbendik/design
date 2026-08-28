@@ -3984,9 +3984,10 @@
         return result;
       }, {});
       container.innerHTML = Object.entries(groups).map(([date, transactions]) => `
-        <div class="card" style="margin-bottom: 16px;">
+        <div class="account-transaction-group">
+          <div class="account-transaction-date t-content-body-secondary">${date}</div>
+          <div class="card">
           <div class="list-container">
-            <div class="list-section-title" style="margin-top: 0;">${date}</div>
             ${transactions.map(([group, name, note, amount, direction]) => {
               const isIncome = direction === 'prichozi';
               const amountClass = isIncome ? ' amount-positive' : '';
