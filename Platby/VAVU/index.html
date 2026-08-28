@@ -2482,33 +2482,6 @@
       }
     }
 
-    .payment-account-card {
-      padding: var(--padding-xl);
-      display: flex;
-      align-items: center;
-      gap: var(--padding-xl);
-      border: var(--border-sm) solid var(--background-border);
-      border-radius: var(--border-radius-md);
-      background: var(--background-surface);
-      cursor: pointer;
-    }
-
-    .payment-account-copy {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      gap: var(--padding-xs);
-    }
-
-    .payment-account-name {
-      font: var(--content-body-primary-bold);
-    }
-
-    .payment-account-detail {
-      font: var(--content-body-secondary);
-      color: var(--content-tertiary);
-    }
-
     .payment-field-row {
       display: grid;
       grid-template-columns: minmax(0, 1fr) 104px;
@@ -4100,13 +4073,13 @@
           <form class="payment-flow-column" id="payment-basic-form" onsubmit="event.preventDefault(); continuePayment();">
             <h1 class="payment-flow-title" id="nova-platba-title">Nová platba</h1>
 
-            <button class="payment-account-card" type="button" onclick="alert('V tomto prototypu je dostupný jen Běžný účet.')">
-              <span class="payment-account-copy">
-                <span class="payment-account-name">Běžný účet</span>
-                <span class="payment-account-detail">122000/0100</span>
-                <span class="payment-account-detail">František Koudelka</span>
+            <button class="item" type="button" onclick="alert('V tomto prototypu je dostupný jen Běžný účet.')">
+              <span class="item__text">
+                <span class="item__label">Běžný účet</span>
+                <span class="item__caption">122000/0100</span>
+                <span class="item__caption">František Koudelka</span>
               </span>
-              <svg class="icon icon--caret" aria-hidden="true"><use href="#es-caret-right"></use></svg>
+              <span class="item__caret"><svg class="icon icon--caret" aria-hidden="true"><use href="#es-caret-right"></use></svg></span>
             </button>
 
             <div class="payment-field">
@@ -4223,9 +4196,9 @@
         <div class="payment-flow-content">
           <form class="batch-flow-column" id="standing-order-basic-form" onsubmit="event.preventDefault(); continueStandingOrder();">
             <h1 class="payment-flow-title" id="tp-novy-title">Vytvořit trvalý příkaz</h1>
-            <button class="payment-account-card" type="button" onclick="showToast('V tomto prototypu je dostupný jen Účet CZK.')">
-              <span class="payment-account-copy"><span class="payment-account-name">Účet CZK</span><span class="payment-account-detail">123456-4835477/0100</span></span>
-              <svg class="icon icon--caret" aria-hidden="true"><use href="#es-caret-right"></use></svg>
+            <button class="item" type="button" onclick="showToast('V tomto prototypu je dostupný jen Účet CZK.')">
+              <span class="item__text"><span class="item__label">Účet CZK</span><span class="item__caption">123456-4835477/0100</span></span>
+              <span class="item__caret"><svg class="icon icon--caret" aria-hidden="true"><use href="#es-caret-right"></use></svg></span>
             </button>
             <div class="standing-order-grid">
               <div class="payment-field payment-field--wide">
@@ -4295,7 +4268,7 @@
         <div class="payment-flow-content">
           <form class="batch-flow-column" id="direct-debit-form" onsubmit="event.preventDefault(); showDirectDebitSummary();">
             <h1 class="payment-flow-title" id="inkaso-nove-title">Nové povolení inkasa</h1>
-            <button class="payment-account-card" type="button" onclick="showToast('V tomto prototypu je dostupný jen Účet CZK.')"><span class="payment-account-copy"><span class="payment-account-name">Účet CZK</span><span class="payment-account-detail">123456-4835477/0100</span></span><svg class="icon icon--caret" aria-hidden="true"><use href="#es-caret-right"></use></svg></button>
+            <button class="item" type="button" onclick="showToast('V tomto prototypu je dostupný jen Účet CZK.')"><span class="item__text"><span class="item__label">Účet CZK</span><span class="item__caption">123456-4835477/0100</span></span><span class="item__caret"><svg class="icon icon--caret" aria-hidden="true"><use href="#es-caret-right"></use></svg></span></button>
             <div class="standing-order-grid">
               <label class="payment-control payment-field--wide"><span class="payment-control-label">Kdo může inkasovat</span><input id="direct-debit-recipient" type="text" required autocomplete="off" placeholder="Příjemce nebo číslo účtu" data-direct-debit-key="recipient"></label>
               <label class="payment-control payment-field--wide"><span class="payment-control-label">Název inkasa</span><input id="direct-debit-name" type="text" required maxlength="80" data-direct-debit-key="name"></label>
