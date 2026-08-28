@@ -1122,6 +1122,20 @@
       margin-top: 0;
     }
 
+    .account-transaction-group {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .account-transaction-date {
+      margin: var(--space-24) 0 var(--space-8);
+      color: var(--color-content-tertiary);
+    }
+
+    .account-transaction-group:first-child .account-transaction-date {
+      margin-top: 0;
+    }
+
     .list-item {
       display: flex;
       align-items: center;
@@ -1132,9 +1146,10 @@
       transition: opacity 0.2s ease;
     }
 
-    .list-item:hover {
+        <div class="account-transaction-group">
+          <div class="account-transaction-date t-content-body-secondary">${date}</div>
+          <div class="card">
       opacity: 0.7;
-    }
 
     .list-item:last-child {
       border-bottom: none;
@@ -3984,6 +3999,7 @@
               </div>`;
             }).join('')}
           </div>
+          </div>
         </div>`).join('');
     }
 
@@ -4009,6 +4025,7 @@
       // Aktualizovat seznamy (inkasa a položky k autorizaci)
       renderDynamicContent();
       renderTpInkasaList();
+      renderAccountDetail();
       
       // Zpracování výchozího hashe
       const hash = window.location.hash.replace('#', '');
