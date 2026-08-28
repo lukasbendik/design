@@ -1962,7 +1962,65 @@
       margin: 0;
     }
 
+    .batch-screen {
+      --batch-width: 620px;
+    }
+
+    .batch-screen .payment-flow-header,
+    .batch-screen .payment-buttonbar-row,
+    .batch-flow-column {
+      width: min(100%, var(--batch-width));
+    }
+
+    .batch-flow-column {
+      margin: 0 auto;
+      padding: var(--padding-md) 0 var(--padding-4xl);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-12);
+    }
+
+    .batch-screen .payment-flow-header {
+      min-height: 32px;
+      padding: 0;
+    }
+
+    .batch-screen .payment-flow-header .payment-header-action {
+      min-width: 32px;
+      min-height: 32px;
+      padding: 0 var(--pad-sm);
+    }
+
+    .batch-screen .payment-flow-title {
+      font: var(--headings-title-quaternary);
+    }
+
+    .batch-screen .payment-buttonbar .btn {
+      min-width: auto;
+    }
+
+    .batch-screen .payment-buttonbar .btn--secondary {
+      border: var(--border-sm) solid var(--color-background-border-highlighted);
+      background: var(--color-background-body);
+    }
+
+    .batch-screen .payment-segmented.batch-tabs {
+      width: 270px;
+      min-height: 32px;
+      margin: 0 auto;
+      padding: 2px;
+    }
+
+    .batch-screen .payment-segmented.batch-tabs button {
+      flex: 1;
+      min-height: 28px;
+      padding: 0 var(--pad-xl);
+      font: var(--content-caption-primary-bold);
+      white-space: nowrap;
+    }
+
     .batch-upload-zone {
+      height: 216px;
       min-height: 216px;
       padding: var(--pad-3xl);
       border: var(--border-sm) dashed var(--color-content-secondary);
@@ -1970,36 +2028,70 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      gap: var(--space-16);
+      gap: var(--space-12);
       text-align: center;
-      background: var(--color-background-surface);
+      background: transparent;
     }
 
     .batch-upload-zone .icon {
-      width: 40px;
-      height: 40px;
+      width: 56px;
+      height: 56px;
       color: var(--color-content-quaternary);
     }
 
+    .batch-upload-zone .btn {
+      width: auto;
+      margin-top: var(--space-4);
+      border: var(--border-sm) solid var(--color-background-border-highlighted);
+    }
+
+    .batch-uploaded-content {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-12);
+    }
+
+    .batch-uploaded-content[hidden] {
+      display: none;
+    }
+
     .batch-file-row {
+      min-height: 58px;
       display: flex;
       align-items: center;
-      justify-content: space-between;
       gap: var(--space-16);
-      padding: var(--pad-xl);
+      padding: var(--pad-md) var(--pad-xl);
       background: var(--color-background-surface);
       box-shadow: var(--shadow-panel);
       border-radius: var(--radius-md);
     }
 
+    .batch-file-icon {
+      width: 24px;
+      height: 24px;
+      flex: 0 0 24px;
+      color: var(--color-content-secondary);
+    }
+
     .batch-file-copy {
+      flex: 1;
       display: flex;
       flex-direction: column;
-      gap: var(--space-4);
+      gap: var(--space-2);
+    }
+
+    .batch-delete {
+      color: var(--color-interactive-primary);
+    }
+
+    .batch-delete.icon-button {
+      width: 32px;
+      height: 32px;
     }
 
     .batch-parameter-card,
-    .batch-summary-card {
+    .batch-summary-card,
+    .batch-payments-card {
       background: var(--color-background-surface);
       box-shadow: var(--shadow-panel);
       border-radius: var(--radius-md);
@@ -2007,6 +2099,7 @@
     }
 
     .batch-card-title {
+      display: block;
       padding: var(--pad-xl);
       border-bottom: var(--border-sm) solid var(--color-background-divider);
     }
@@ -2018,29 +2111,183 @@
       padding: var(--pad-xl);
     }
 
-    .batch-summary-row {
+    .batch-field-grid .payment-control {
+      min-height: 45px;
+      padding: var(--pad-sm) var(--pad-md) var(--pad-md);
+    }
+
+    .batch-field-grid .payment-control:focus-within {
+      padding: calc(var(--pad-sm) - 2px) calc(var(--pad-md) - 2px) calc(var(--pad-md) - 2px);
+    }
+
+    .batch-field-grid .payment-control-label {
+      font: var(--content-caption-primary);
+    }
+
+    .batch-field-grid .payment-control input,
+    .batch-field-grid .payment-control select {
+      font: var(--content-body-secondary-bold);
+    }
+
+    .batch-field-grid .payment-select-caret {
+      right: var(--pad-lg);
+      bottom: 14px;
+    }
+
+    .batch-parameter-note {
+      margin: 0;
+      padding: 0 var(--pad-xl) var(--pad-xl);
+    }
+
+    .batch-info-message {
+      min-height: 40px;
+      padding: var(--pad-md) var(--pad-xl);
       display: flex;
-      flex-direction: column;
-      gap: var(--space-4);
-      padding: var(--pad-xl);
-      border-bottom: var(--border-sm) solid var(--color-background-divider);
-    }
-
-    .batch-summary-row:last-child {
-      border-bottom: 0;
-    }
-
-    .batch-payment-row {
-      display: grid;
-      grid-template-columns: minmax(0, 1fr) 120px;
       align-items: center;
       gap: var(--space-16);
+      border-radius: var(--radius-md);
+      background: var(--color-attention-information-surface);
+      color: var(--color-content-secondary);
     }
 
-    @media (max-width: 640px) {
+    .batch-info-message .icon {
+      width: 20px;
+      height: 20px;
+      flex: 0 0 20px;
+      color: var(--color-content-primary);
+    }
+
+    .batch-summary-row {
+      min-height: 56px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: var(--space-2);
+      padding: var(--pad-xl);
+      position: relative;
+    }
+
+    .batch-summary-row + .batch-summary-row::before,
+    .batch-transaction + .batch-transaction::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: var(--pad-xl);
+      right: var(--pad-xl);
+      height: var(--border-sm);
+      background: var(--color-background-divider);
+    }
+
+    .batch-section-title {
+      margin: 0;
+      padding: var(--space-4) var(--pad-xl) 0;
+      font: var(--headings-headline-secondary);
+    }
+
+    .batch-date-title {
+      padding: var(--pad-xl);
+      font: var(--content-body-primary-bold);
+    }
+
+    .batch-transaction {
+      min-height: 60px;
+      padding: var(--pad-md) var(--pad-xl);
+      display: grid;
+      grid-template-columns: minmax(0, 1.35fr) minmax(150px, 1fr) auto;
+      align-items: center;
+      gap: var(--space-16);
+      position: relative;
+    }
+
+    .batch-recipient {
+      min-width: 0;
+      display: grid;
+      grid-template-columns: 28px minmax(0, 1fr);
+      align-items: center;
+      gap: var(--space-12);
+    }
+
+    .batch-avatar {
+      width: 28px;
+      height: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--color-background-surface-highlighted);
+      color: var(--color-content-secondary);
+      border-radius: var(--radius-sm);
+    }
+
+    .batch-avatar .icon {
+      width: 20px;
+      height: 20px;
+    }
+
+    .batch-transaction-copy {
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-2);
+    }
+
+    .batch-transaction-copy > * {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .batch-amount {
+      text-align: right;
+      white-space: nowrap;
+    }
+
+    .batch-authorization-row {
+      min-height: 58px;
+      padding: var(--pad-xl);
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: center;
+      gap: var(--space-16);
+      border: var(--border-sm) solid var(--color-background-border);
+      border-radius: var(--radius-md);
+    }
+
+    .batch-result-column {
+      width: min(100%, 366px);
+      padding-top: 0;
+      gap: var(--space-12);
+    }
+
+    .batch-result-column .result-illustration {
+      height: 176px;
+      margin-bottom: 0;
+    }
+
+    .batch-result-column .result-heading {
+      font: var(--headings-title-quaternary);
+    }
+
+    .batch-result-column .result-lead {
+      font: var(--content-body-primary-bold);
+    }
+
+    .batch-result-column .result-copy {
+      font: var(--content-body-secondary);
+    }
+
+    @media (max-width: 680px) {
+      .batch-flow-column,
+      .batch-screen .payment-flow-header {
+        padding-inline: var(--pad-xl);
+      }
+
       .batch-field-grid,
-      .batch-payment-row {
+      .batch-transaction {
         grid-template-columns: 1fr;
+      }
+
+      .batch-amount {
+        text-align: left;
       }
     }
 
@@ -3777,18 +4024,19 @@
       </section>
 
       <!-- ================= VAVU: DÁVKOVÉ PLATBY ================= -->
-      <section class="screen payment-screen" id="screen-davkove-platby" aria-labelledby="davkove-platby-title">
+      <section class="screen payment-screen batch-screen" id="screen-davkove-platby" aria-labelledby="davkove-platby-title">
         <header class="payment-flow-header">
-          <button class="payment-header-action" type="button" onclick="goTo('ucet-detail')">Zpět</button>
           <span class="header-spacer"></span>
-          <button class="payment-header-action" type="button" onclick="goTo('ucet-detail')" aria-label="Zavřít dávkové platby"><svg class="icon icon--close" aria-hidden="true"><use href="#es-close"></use></svg></button>
+          <button class="payment-header-action" type="button" onclick="closeBatchFlow()" aria-label="Zavřít dávkové platby">
+            <svg class="icon icon--close" aria-hidden="true"><use href="#es-close"></use></svg>
+          </button>
         </header>
         <div class="payment-flow-content">
-          <div class="payment-flow-column">
+          <div class="batch-flow-column">
             <h1 class="payment-flow-title" id="davkove-platby-title">Dávkové platby</h1>
-            <div class="payment-segmented" role="tablist" aria-label="Dávkové platby">
+            <div class="payment-segmented batch-tabs" role="tablist" aria-label="Dávkové platby">
               <button class="active" type="button" role="tab" aria-selected="true">Nová dávka</button>
-              <button type="button" role="tab" aria-selected="false" onclick="alert('Přehled dávek není v tomto prototypu rozpracovaný.')">Přehled dávek</button>
+              <button type="button" role="tab" aria-selected="false" onclick="showToast('Přehled dávek není v tomto prototypu rozpracovaný.')">Přehled dávek</button>
             </div>
             <div class="batch-upload-zone" id="batch-upload-zone">
               <svg class="icon" aria-hidden="true"><use href="#es-text-file"></use></svg>
@@ -3797,41 +4045,91 @@
               <button class="btn btn--secondary" type="button" onclick="document.getElementById('batch-file-input').click()">Vybrat soubor</button>
               <input id="batch-file-input" type="file" hidden accept=".kpc,.xml,.txt" onchange="handleBatchFile(this)">
             </div>
-            <div id="batch-uploaded-content" hidden>
+            <div class="batch-uploaded-content" id="batch-uploaded-content" hidden>
               <div class="batch-file-row">
-                <div class="batch-file-copy"><strong class="t-content-body-primary">Faktury_11_2026.kpc</strong><span class="t-content-caption-primary" style="color: var(--color-content-tertiary);">2 KB</span></div>
-                <button class="icon-button" type="button" onclick="resetBatchFile()" aria-label="Odstranit soubor"><svg class="icon" aria-hidden="true"><use href="#es-trash"></use></svg></button>
+                <svg class="icon batch-file-icon" aria-hidden="true"><use href="#es-text-file"></use></svg>
+                <div class="batch-file-copy">
+                  <strong class="t-content-body-primary">Faktury_11_2026.kpc</strong>
+                  <span class="t-content-caption-primary" style="color: var(--color-content-tertiary);">2 KB</span>
+                </div>
+                <button class="icon-button batch-delete" type="button" onclick="resetBatchFile()" aria-label="Odstranit soubor">
+                  <svg class="icon" aria-hidden="true"><use href="#es-delete"></use></svg>
+                </button>
               </div>
               <div class="batch-parameter-card">
                 <strong class="batch-card-title t-content-body-primary">Parametry dávky</strong>
                 <div class="batch-field-grid">
-                  <label class="payment-control"><span class="payment-control-label">Název</span><input type="text" value="Faktury_11_2026"></label>
-                  <label class="payment-control"><span class="payment-control-label">Formát</span><select class="payment-control-select"><option>Kompatibilní média</option></select></label>
+                  <label class="payment-control"><span class="payment-control-label">Název</span><input id="batch-name-input" type="text" value="Faktury_11/2026" oninput="updateBatchName(this.value)"></label>
+                  <label class="payment-control"><span class="payment-control-label">Formát</span><select class="payment-control-select"><option>Kompatibilní média</option></select><svg class="icon payment-select-caret" aria-hidden="true"><use href="#es-caret-right"></use></svg></label>
                 </div>
-                <p class="t-content-body-secondary" style="padding: 0 var(--pad-xl) var(--pad-xl); margin: 0;">Platby z dávky zpracováváme v reálném čase (online režim) dle data splatnosti.</p>
+                <p class="batch-parameter-note t-content-body-secondary">Platby z dávky zpracováváme v reálném čase (online režim) dle data splatnosti.</p>
               </div>
             </div>
           </div>
         </div>
-        <footer class="payment-buttonbar"><div class="payment-buttonbar-row"><button class="btn btn--primary" id="batch-upload-continue" type="button" disabled onclick="goTo('davkove-platby-detail')">Pokračovat</button></div></footer>
+        <footer class="payment-buttonbar">
+          <div class="payment-buttonbar-row"><button class="btn btn--primary" id="batch-upload-continue" type="button" disabled onclick="goTo('davkove-platby-detail')">Pokračovat</button></div>
+        </footer>
       </section>
 
-      <section class="screen payment-screen" id="screen-davkove-platby-detail" aria-labelledby="davkove-platby-detail-title">
-        <header class="payment-flow-header"><button class="payment-header-action" type="button" onclick="goTo('davkove-platby')">Zpět</button><span class="header-spacer"></span><button class="payment-header-action" type="button" onclick="goTo('ucet-detail')" aria-label="Zavřít dávku"><svg class="icon icon--close" aria-hidden="true"><use href="#es-close"></use></svg></button></header>
-        <div class="payment-flow-content"><div class="payment-flow-column"><h1 class="payment-flow-title" id="davkove-platby-detail-title">Nová dávka</h1><div class="batch-summary-card"><div class="batch-summary-row"><span class="t-content-caption-primary" style="color: var(--color-content-tertiary);">Název dávky</span><strong class="t-content-body-primary">Faktury_11_2026</strong><span class="t-content-caption-primary">KB ID dávky: 12GHE21XA</span></div><div class="batch-summary-row"><span class="t-content-caption-primary" style="color: var(--color-content-tertiary);">Celkem plateb</span><strong class="t-content-body-primary">8</strong></div><div class="batch-summary-row"><span class="t-content-caption-primary" style="color: var(--color-content-tertiary);">Celková částka</span><strong class="t-content-body-primary">433 000,51 Kč</strong></div></div><h2 class="t-headings-headline-secondary" style="margin: 0;">Platby v dávce</h2><div class="batch-summary-card"><div class="batch-card-title t-content-body-primary">Datum splatnosti 11. 11.</div><div class="batch-summary-row batch-payment-row"><div><strong class="t-content-body-primary">4835477/0300</strong><span class="t-content-caption-primary" style="display:block;color:var(--color-content-tertiary);">Z účtu: 327867841/0100</span></div><strong class="t-content-body-primary">30 000,00 Kč</strong></div><div class="batch-summary-row batch-payment-row"><div><strong class="t-content-body-primary">Adam Šťastný</strong><span class="t-content-caption-primary" style="display:block;color:var(--color-content-tertiary);">Faktura 60%</span></div><strong class="t-content-body-primary">20 211,30 Kč</strong></div><div class="batch-summary-row batch-payment-row"><div><strong class="t-content-body-primary">51255/0800</strong><span class="t-content-caption-primary" style="display:block;color:var(--color-content-tertiary);">Faktura 100%</span></div><strong class="t-content-body-primary">63 221,00 Kč</strong></div></div><div class="batch-summary-card"><div class="batch-card-title t-content-body-primary">Datum splatnosti 9. 11.</div><div class="batch-summary-row batch-payment-row"><strong class="t-content-body-primary">623423/0100</strong><strong class="t-content-body-primary">5 000,00 Kč</strong></div></div></div></div>
-        <footer class="payment-buttonbar"><div class="payment-buttonbar-row"><button class="btn btn--primary" type="button" onclick="goTo('davkove-platby-souhrn')">Pokračovat k autorizaci</button><button class="btn btn--secondary" type="button" onclick="alert('Uložení k autorizaci není součástí tohoto prototypu.')">Uložit k autorizaci</button></div></footer>
+      <section class="screen payment-screen batch-screen" id="screen-davkove-platby-detail" aria-labelledby="davkove-platby-detail-title">
+        <header class="payment-flow-header">
+          <button class="payment-header-action" type="button" onclick="goTo('davkove-platby')">
+            <svg class="icon icon--caret" style="transform: rotate(180deg)" aria-hidden="true"><use href="#es-caret-right"></use></svg>Zpět
+          </button>
+          <span class="header-spacer"></span>
+        </header>
+        <div class="payment-flow-content">
+          <div class="batch-flow-column">
+            <h1 class="payment-flow-title" id="davkove-platby-detail-title">Nová dávka</h1>
+            <div class="batch-info-message">
+              <svg class="icon" aria-hidden="true"><use href="#es-info"></use></svg>
+              <span class="t-content-body-secondary">Datum splatnosti jsme upravili na nejbližší obchodní den.</span>
+            </div>
+            <div class="batch-summary-card">
+              <div class="batch-summary-row"><span class="t-content-caption-primary" style="color: var(--color-content-tertiary);">Název dávky</span><strong class="t-content-body-primary" data-batch-name>Faktury_11/2026</strong><span class="t-content-caption-primary">KB ID dávky: 12GHE21XA</span></div>
+              <div class="batch-summary-row"><span class="t-content-caption-primary" style="color: var(--color-content-tertiary);">Celkem plateb</span><strong class="t-content-body-primary">8</strong></div>
+              <div class="batch-summary-row"><span class="t-content-caption-primary" style="color: var(--color-content-tertiary);">Celková částka</span><strong class="t-content-body-primary">433 000,51 Kč</strong></div>
+            </div>
+            <h2 class="batch-section-title">Platby v dávce</h2>
+            <div class="batch-payments-card">
+              <div class="batch-date-title">Datum splatnosti 11. 11.</div>
+              <div class="batch-transaction"><div class="batch-recipient"><span class="batch-avatar"><svg class="icon" aria-hidden="true"><use href="#es-person"></use></svg></span><div class="batch-transaction-copy"><strong class="t-content-body-primary">4835477/0300</strong><span class="t-content-caption-primary" style="color:var(--color-content-tertiary);">Z účtu: 327867841/0100</span></div></div><div class="batch-transaction-copy"><span class="t-content-body-secondary" style="color:var(--color-content-tertiary);">VS: 5856214</span></div><strong class="batch-amount t-content-body-primary">30 000,00 Kč</strong></div>
+              <div class="batch-transaction"><div class="batch-recipient"><span class="batch-avatar">AŠ</span><div class="batch-transaction-copy"><strong class="t-content-body-primary">Adam Šťastný</strong><span class="t-content-caption-primary" style="color:var(--color-content-tertiary);">Z účtu: 327867841/0100</span></div></div><div class="batch-transaction-copy"><span class="t-content-body-secondary" style="color:var(--color-content-tertiary);">VS: 516666</span><span class="t-content-caption-primary" style="color:var(--color-content-tertiary);">Faktura 60%</span></div><strong class="batch-amount t-content-body-primary">20 211,30 Kč</strong></div>
+              <div class="batch-transaction"><div class="batch-recipient"><span class="batch-avatar"><svg class="icon" aria-hidden="true"><use href="#es-person"></use></svg></span><div class="batch-transaction-copy"><strong class="t-content-body-primary">51255/0800</strong><span class="t-content-caption-primary" style="color:var(--color-content-tertiary);">Z účtu: 76234523/0100</span></div></div><div class="batch-transaction-copy"><span class="t-content-body-secondary" style="color:var(--color-content-tertiary);">VS: 516666</span><span class="t-content-caption-primary" style="color:var(--color-content-tertiary);">Faktura 100%</span></div><strong class="batch-amount t-content-body-primary">63 221,00 Kč</strong></div>
+              <div class="batch-transaction"><div class="batch-recipient"><span class="batch-avatar">T</span><div class="batch-transaction-copy"><strong class="t-content-body-primary">T-Mobile</strong><span class="t-content-caption-primary" style="color:var(--color-content-tertiary);">Z účtu: 327867841/0100</span></div></div><div class="batch-transaction-copy"><span class="t-content-body-secondary" style="color:var(--color-content-tertiary);">VS: 5856214</span><span class="t-content-caption-primary" style="color:var(--color-content-tertiary);">Zálohy</span></div><strong class="batch-amount t-content-body-primary">30 000,00 Kč</strong></div>
+            </div>
+            <div class="batch-payments-card">
+              <div class="batch-date-title">Datum splatnosti 9. 11.</div>
+              <div class="batch-transaction"><div class="batch-recipient"><span class="batch-avatar"><svg class="icon" aria-hidden="true"><use href="#es-person"></use></svg></span><div class="batch-transaction-copy"><strong class="t-content-body-primary">623423/0100</strong><span class="t-content-caption-primary" style="color:var(--color-content-tertiary);">Z účtu: 327867841/0100</span></div></div><div class="batch-transaction-copy"><span class="t-content-body-secondary" style="color:var(--color-content-tertiary);">VS: 485214</span></div><strong class="batch-amount t-content-body-primary">5 000,00 Kč</strong></div>
+              <div class="batch-transaction"><div class="batch-recipient"><span class="batch-avatar"><svg class="icon" aria-hidden="true"><use href="#es-person"></use></svg></span><div class="batch-transaction-copy"><strong class="t-content-body-primary">Vodárna Kárany</strong><span class="t-content-caption-primary" style="color:var(--color-content-tertiary);">Z účtu: 327867841/0100</span></div></div><div class="batch-transaction-copy"><span class="t-content-body-secondary" style="color:var(--color-content-tertiary);">VS: 112026</span><span class="t-content-caption-primary" style="color:var(--color-content-tertiary);">Provozní záloha</span></div><strong class="batch-amount t-content-body-primary">84 500,00 Kč</strong></div>
+              <div class="batch-transaction"><div class="batch-recipient"><span class="batch-avatar"><svg class="icon" aria-hidden="true"><use href="#es-person"></use></svg></span><div class="batch-transaction-copy"><strong class="t-content-body-primary">ČEVAK a.s.</strong><span class="t-content-caption-primary" style="color:var(--color-content-tertiary);">Z účtu: 76234523/0100</span></div></div><div class="batch-transaction-copy"><span class="t-content-body-secondary" style="color:var(--color-content-tertiary);">VS: 905522</span><span class="t-content-caption-primary" style="color:var(--color-content-tertiary);">Rozbor vody</span></div><strong class="batch-amount t-content-body-primary">72 068,21 Kč</strong></div>
+              <div class="batch-transaction"><div class="batch-recipient"><span class="batch-avatar"><svg class="icon" aria-hidden="true"><use href="#es-person"></use></svg></span><div class="batch-transaction-copy"><strong class="t-content-body-primary">Povodí Vltavy</strong><span class="t-content-caption-primary" style="color:var(--color-content-tertiary);">Z účtu: 327867841/0100</span></div></div><div class="batch-transaction-copy"><span class="t-content-body-secondary" style="color:var(--color-content-tertiary);">VS: 20261109</span><span class="t-content-caption-primary" style="color:var(--color-content-tertiary);">Odběr vody</span></div><strong class="batch-amount t-content-body-primary">128 000,00 Kč</strong></div>
+            </div>
+          </div>
+        </div>
+        <footer class="payment-buttonbar"><div class="payment-buttonbar-row"><button class="btn btn--primary" type="button" onclick="goTo('davkove-platby-souhrn')">Pokračovat k autorizaci</button><button class="btn btn--secondary" type="button" onclick="showToast('Dávku jsme uložili k autorizaci.')">Uložit k autorizaci</button></div></footer>
       </section>
 
-      <section class="screen payment-screen" id="screen-davkove-platby-souhrn" aria-labelledby="davkove-platby-souhrn-title">
-        <header class="payment-flow-header"><button class="payment-header-action" type="button" onclick="goTo('davkove-platby-detail')">Zpět</button><span class="header-spacer"></span><button class="payment-header-action" type="button" onclick="goTo('ucet-detail')" aria-label="Zavřít souhrn"><svg class="icon icon--close" aria-hidden="true"><use href="#es-close"></use></svg></button></header>
-        <div class="payment-flow-content"><div class="payment-flow-column"><h1 class="payment-flow-title" id="davkove-platby-souhrn-title">Souhrn</h1><div class="batch-summary-card"><div class="batch-summary-row"><span class="t-content-caption-primary" style="color: var(--color-content-tertiary);">Název dávky</span><strong class="t-content-body-primary">Faktury_11_2026</strong><span class="t-content-caption-primary">KB ID dávky: 12GHE21XA</span></div><div class="batch-summary-row"><span class="t-content-caption-primary" style="color: var(--color-content-tertiary);">Režim zpracování</span><strong class="t-content-body-primary">Online</strong></div></div><div class="batch-summary-card"><div class="batch-summary-row batch-payment-row"><div><strong class="t-content-body-primary">Částka k autorizaci</strong><span class="t-content-caption-primary" style="display:block;color:var(--color-content-tertiary);">Celkem 8 plateb</span></div><strong class="t-content-body-primary">433 000,51 Kč</strong></div></div></div></div>
-        <footer class="payment-buttonbar"><div class="payment-buttonbar-row"><button class="btn btn--primary" type="button" onclick="openModal('payment-signature-modal')">Autorizovat</button><button class="btn btn--secondary" type="button" onclick="goTo('ucet-detail')">Zavřít</button></div></footer>
+      <section class="screen payment-screen batch-screen" id="screen-davkove-platby-souhrn" aria-labelledby="davkove-platby-souhrn-title">
+        <header class="payment-flow-header"><button class="payment-header-action" type="button" onclick="goTo('davkove-platby-detail')"><svg class="icon icon--caret" style="transform: rotate(180deg)" aria-hidden="true"><use href="#es-caret-right"></use></svg>Zpět</button><span class="header-spacer"></span></header>
+        <div class="payment-flow-content">
+          <div class="batch-flow-column">
+            <h1 class="payment-flow-title" id="davkove-platby-souhrn-title">Souhrn</h1>
+            <div class="batch-summary-card">
+              <div class="batch-summary-row"><span class="t-content-caption-primary" style="color: var(--color-content-tertiary);">Název dávky</span><strong class="t-content-body-primary" data-batch-name>Faktury_11/2026</strong><span class="t-content-caption-primary">KB ID dávky: 12GHE21XA</span></div>
+              <div class="batch-summary-row"><span class="t-content-caption-primary" style="color: var(--color-content-tertiary);">Režim zpracování</span><strong class="t-content-body-primary">Online</strong></div>
+            </div>
+            <div class="batch-authorization-row"><div class="batch-transaction-copy"><strong class="t-content-body-primary">Částka k autorizaci</strong><span class="t-content-caption-primary" style="color:var(--color-content-tertiary);">Celkem 8 plateb</span></div><strong class="batch-amount t-content-body-primary">433 000,51 Kč</strong></div>
+          </div>
+        </div>
+        <footer class="payment-buttonbar"><div class="payment-buttonbar-row"><button class="btn btn--primary" type="button" onclick="openModal('payment-signature-modal')">Autorizovat</button><button class="btn btn--secondary" type="button" onclick="closeBatchFlow()">Zavřít</button></div></footer>
       </section>
 
-      <section class="screen payment-screen" id="screen-davkove-platby-vysledek" aria-labelledby="davkove-platby-vysledek-title">
-        <header class="payment-flow-header"><button class="payment-header-action" type="button" onclick="finishBatchPayment()">Zavřít</button></header>
-        <div class="payment-flow-content"><div class="payment-flow-column result-column"><img class="result-illustration" src="../../design-system/design-system/assets/illustrations/success-light.png" alt="Dávka autorizována"><h1 class="result-heading" id="davkove-platby-vysledek-title">Autorizovali jste dávku</h1><p class="result-lead">Dávka byla přijata ke zpracování.</p><p class="result-copy">Platby budou zpracovány podle data splatnosti.</p></div></div>
-        <footer class="payment-buttonbar"><div class="payment-buttonbar-row"><button class="btn btn--secondary" type="button" onclick="finishBatchPayment()">Zavřít</button></div></footer>
+      <section class="screen payment-screen batch-screen" id="screen-davkove-platby-vysledek" aria-labelledby="davkove-platby-vysledek-title">
+        <header class="payment-flow-header"><span class="header-spacer"></span><button class="payment-header-action" type="button" onclick="finishBatchPayment()" aria-label="Zavřít"><svg class="icon icon--close" aria-hidden="true"><use href="#es-close"></use></svg></button></header>
+        <div class="payment-flow-content"><div class="batch-flow-column batch-result-column"><img class="result-illustration" src="../../design-system/design-system/assets/illustrations/success-light.png" alt="Dávka autorizována"><h1 class="result-heading" id="davkove-platby-vysledek-title">Autorizovali jste dávku</h1><p class="result-lead">Musí ji ještě autorizovat ostatní.</p><p class="result-copy">Nemáte dostatečný dispoziční limit pro odeslání.</p></div></div>
+        <footer class="payment-buttonbar"><div class="payment-buttonbar-row"><button class="btn btn--primary" type="button" onclick="startBatchFlow()">Přehled dávek</button><button class="btn btn--secondary" type="button" onclick="finishBatchPayment()">Zavřít</button></div></footer>
       </section>
 
       <!-- ================= VAVU: RESULT ================= -->
@@ -4073,7 +4371,7 @@
     let currentAuthTab = 'platby';
     let currentTpInkasaTab = 'tp';
     let toastTimer = null;
-    let batchFlowActive = false;
+    let batchFlowActive = localStorage.getItem('vavu_batch_flow_active') === '1';
 
     function buildTransactionHistory(currency) {
       const isEur = currency === 'EUR';
@@ -4292,9 +4590,7 @@
       // 1. Zpracování pokud jde o MODAL
       if (MODALS.includes(hash)) {
         if (hash === 'payment-signature-modal') {
-          if (!['davkove-platby-souhrn', 'davkove-platby-detail'].includes(currentScreen)) {
-            currentScreen = 'nova-platba-detaily';
-          }
+          currentScreen = batchFlowActive ? 'davkove-platby-souhrn' : 'nova-platba-detaily';
         } else if (hash === 'filter-modal') {
           currentScreen = 'ucet-detail';
         }
@@ -4362,6 +4658,8 @@
       }
       if (targetScreenId.startsWith('davkove-platby')) {
         batchFlowActive = true;
+        localStorage.setItem('vavu_batch_flow_active', '1');
+        restoreBatchName();
       }
 
       const paymentFlowScreens = ['nova-platba', 'nova-platba-detaily', 'platba-vysledek', 'davkove-platby', 'davkove-platby-detail', 'davkove-platby-souhrn', 'davkove-platby-vysledek'];
@@ -5043,25 +5341,45 @@
 
     function startBatchFlow() {
       batchFlowActive = true;
+      localStorage.setItem('vavu_batch_flow_active', '1');
       goTo('davkove-platby');
+    }
+
+    function closeBatchFlow() {
+      batchFlowActive = false;
+      localStorage.removeItem('vavu_batch_flow_active');
+      goTo('ucet-detail');
     }
 
     function handleBatchFile(input) {
       if (!input.files || !input.files[0]) return;
-      document.getElementById('batch-upload-zone').hidden = true;
       document.getElementById('batch-uploaded-content').hidden = false;
       document.getElementById('batch-upload-continue').disabled = false;
+      showToast('Nahráli jste soubor. Parametry dávky jsme doplnili.');
+    }
+
+    function updateBatchName(value) {
+      const batchName = value || 'Faktury_11/2026';
+      localStorage.setItem('vavu_batch_name', batchName);
+      document.querySelectorAll('[data-batch-name]').forEach(element => element.textContent = batchName);
+    }
+
+    function restoreBatchName() {
+      const batchName = localStorage.getItem('vavu_batch_name') || 'Faktury_11/2026';
+      const input = document.getElementById('batch-name-input');
+      if (input) input.value = batchName;
+      document.querySelectorAll('[data-batch-name]').forEach(element => element.textContent = batchName);
     }
 
     function resetBatchFile() {
       document.getElementById('batch-file-input').value = '';
-      document.getElementById('batch-upload-zone').hidden = false;
       document.getElementById('batch-uploaded-content').hidden = true;
       document.getElementById('batch-upload-continue').disabled = true;
     }
 
     function finishBatchPayment() {
       batchFlowActive = false;
+      localStorage.removeItem('vavu_batch_flow_active');
       goTo('prehled');
     }
 
@@ -5086,7 +5404,7 @@
         history.replaceState({ screen: 'tp-inkasa-s-autorizaci' }, '', window.location.hash);
       } else if (MODALS.includes(hash)) {
         // Modal podpisu patří k platbě, původní modaly k inkasům.
-        currentScreen = hash === 'payment-signature-modal' && !['davkove-platby-souhrn', 'davkove-platby-detail'].includes(currentScreen) ? 'nova-platba-detaily' : 'tp-inkasa';
+        currentScreen = hash === 'payment-signature-modal' ? (batchFlowActive ? 'davkove-platby-souhrn' : 'nova-platba-detaily') : 'tp-inkasa';
         showScreenElements(currentScreen);
         showModalElement(hash);
       } else {
