@@ -3235,7 +3235,7 @@
           </div>
 
           <!-- Tlačítko upravit přehled -->
-          <button class="btn btn-secondary overview-edit-button" onclick="alert('Funkce není v prototypu implementována')">
+          <button class="btn btn--secondary btn-secondary overview-edit-button" onclick="alert('Funkce není v prototypu implementována')">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
             Upravit přehled
           </button>
@@ -3743,7 +3743,7 @@
           </div>
 
           <!-- Tlačítko K autorizaci -->
-          <button class="btn btn-primary" id="btn-execute-auth" onclick="executeSelectedAuth()" style="height: 48px; border-radius: var(--radius-md); font-weight: 600; margin-bottom: 16px;">K autorizaci</button>
+          <button class="btn btn--primary btn-primary" id="btn-execute-auth" onclick="executeSelectedAuth()" style="height: 48px; border-radius: var(--radius-md); font-weight: 600; margin-bottom: 16px;">K autorizaci</button>
 
         </div>
       </div>
@@ -4549,8 +4549,8 @@
         <!-- Spodní část (tlačítka) -->
         <div class="modal-form-bottom">
           <div class="flex-row-between" style="gap: 16px; width: 100%;">
-            <button class="btn btn-primary" onclick="alert('Tlačítko Pokračovat není v tomto flow aktivní. Klikněte prosím na Uložit k autorizaci.')" style="flex: 1; height: 52px;">Pokračovat</button>
-            <button class="btn btn-secondary" onclick="saveToAuthorization()" style="flex: 1; height: 52px; border-color: var(--color-content-primary); border-width: 1.5px; color: var(--color-content-primary); font-weight: 600;">Uložit k autorizaci</button>
+            <button class="btn btn--primary btn-primary" onclick="alert('Tlačítko Pokračovat není v tomto flow aktivní. Klikněte prosím na Uložit k autorizaci.')" style="flex: 1; height: 52px;">Pokračovat</button>
+            <button class="btn btn--secondary btn-secondary" onclick="saveToAuthorization()" style="flex: 1; height: 52px; border-color: var(--color-content-primary); border-width: 1.5px; color: var(--color-content-primary); font-weight: 600;">Uložit k autorizaci</button>
           </div>
         </div>
       </div>
@@ -4582,9 +4582,9 @@
       <!-- Šedý footer s tlačítky (fixed dole) -->
       <div class="modal-footer-gray">
         <!-- Zelená šipka z diagramu: Na autorizace vede na autorizace -->
-        <button class="btn btn-primary" onclick="closeModalAndGoTo('autorizace')" style="width: auto; height: 48px; padding: 0 32px;">Na autorizace</button>
+        <button class="btn btn--primary btn-primary" onclick="closeModalAndGoTo('autorizace')" style="width: auto; height: 48px; padding: 0 32px;">Na autorizace</button>
         <!-- Červená šipka z diagramu: Zavřít vede na trvalé příkazy a inkasa s kartou -->
-        <button class="btn btn-secondary" onclick="closeModalAndGoTo('tp-inkasa-s-autorizaci')" style="width: auto; height: 48px; padding: 0 32px; border-color: var(--color-content-primary); border-width: 1.5px; color: var(--color-content-primary); font-weight: 600;">Zavřít</button>
+        <button class="btn btn--secondary btn-secondary" onclick="closeModalAndGoTo('tp-inkasa-s-autorizaci')" style="width: auto; height: 48px; padding: 0 32px; border-color: var(--color-content-primary); border-width: 1.5px; color: var(--color-content-primary); font-weight: 600;">Zavřít</button>
       </div>
     </div>
   </div>
@@ -4603,7 +4603,7 @@
       <h3 class="t-headings-headline-secondary-bold" style="margin-bottom: 12px; font-size: 20px; color: var(--color-content-primary);">Žádné označené položky</h3>
       <p class="t-content-body-secondary" style="margin-bottom: 28px; color: var(--color-content-tertiary); font-size: 14px; line-height: 20px;">Pro autorizaci musíte nejprve zaškrtnout alespoň jednu položku v seznamu.</p>
       
-      <button class="btn btn-primary" onclick="closeModal()" style="height: 48px; font-size: 15px; font-weight: 600; width: 100%;">Rozumím</button>
+      <button class="btn btn--primary btn-primary" onclick="closeModal()" style="height: 48px; font-size: 15px; font-weight: 600; width: 100%;">Rozumím</button>
     </div>
   </div>
 
@@ -4841,6 +4841,48 @@
 
     window.alert = showToast;
 
+    // DS normalization layer: keep the proven VAVU geometry, but expose every
+    // reusable control through the canonical prototype-kit component names.
+    function applyDesignSystemComponents(root = document) {
+      const mark = (selector, component) => {
+        root.querySelectorAll(selector).forEach(element => {
+          if (component) element.dataset.dsComponent = component;
+        });
+      };
+
+      mark('.payment-flow-header', 'CO Header');
+      mark('.payment-header-action, .back-btn', 'CO Header Action');
+      mark('.payment-buttonbar, .modal-footer-gray', 'CO Button Bar Bottom');
+
+      mark('.payment-control, .super-field', 'CO Input SuperField');
+      mark('.list-item', 'CO Item Transaction');
+      mark('.link-item, .reference-item, .reference-action-item, .login-user, .login-other-user, .signature-option, .filter-modal__item', 'CO Item Navigation');
+      mark('.checkbox-container', 'CO Item CheckBox');
+      mark('.reference-product', 'CO Product');
+
+      mark('.segmented-control, .payment-segmented', 'CO Tab');
+      root.querySelectorAll('.segmented-control, .payment-segmented').forEach(group => {
+        group.setAttribute('role', 'tablist');
+        group.querySelectorAll(':scope > button').forEach(button => {
+          button.setAttribute('role', 'tab');
+          button.setAttribute('aria-selected', button.classList.contains('active') ? 'true' : 'false');
+          if (!button.dataset.dsTabBound) {
+            button.dataset.dsTabBound = '1';
+            button.addEventListener('click', () => {
+              queueMicrotask(() => group.querySelectorAll(':scope > button').forEach(tab => {
+                tab.setAttribute('aria-selected', tab.classList.contains('active') ? 'true' : 'false');
+              }));
+            });
+          }
+        });
+      });
+
+      mark('.modal-overlay, .modal-overlay-popup, .filter-modal-overlay', 'CO Dialog Overlay');
+      mark('.modal-content, .modal-content-popup, .filter-modal', 'CO Dialog');
+      mark('.toast-notification', 'CO Snackbar');
+      mark('.badge-success, .badge-alert', 'CO Tag');
+    }
+
     // Inicializace aplikace
     document.addEventListener('DOMContentLoaded', () => {
       // Obnovit formulář z localStorage při načtení
@@ -4856,6 +4898,7 @@
       renderDynamicContent();
       renderTpInkasaList();
       renderAccountDetail();
+      applyDesignSystemComponents();
       
       // Zpracování výchozího hashe
       const hash = window.location.hash.replace('#', '');
@@ -5039,6 +5082,8 @@
       if (screenId === 'tp-inkasa' || screenId === 'tp-inkasa-s-autorizaci') {
         renderTpInkasaList();
       }
+
+      applyDesignSystemComponents(screenEl || document);
       
       // Posunout scroll na začátek
       window.scrollTo(0, 0);
@@ -5292,6 +5337,7 @@
 
       // Aktualizovat stav tlačítka smazat a přehled v pravém sloupci
       updateDeleteButtonState();
+      applyDesignSystemComponents(authList);
     }
 
     // Zaškrtnout nebo odškrtnout vše
