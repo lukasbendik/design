@@ -237,7 +237,7 @@ body{min-height:100dvh;}
 .retention-sheet h2{font:500 24px/32px var(--font-family);text-align:center;margin-top:0;}
 .retention-sheet p{font:400 16px/24px var(--font-family);color:var(--color-content-secondary);text-align:center;margin:6px 8px 8px;}
 .retention-sheet .benefit{text-align:center;margin-bottom:8px;color:var(--color-content-primary);padding-top:12px;}
-.retention-sheet__tertiary{width:auto;min-height:40px;border:0;background:transparent;color:var(--color-interactive-secondary);font:500 14px/20px var(--font-family);text-decoration:underline;text-underline-offset:3px;cursor:pointer;text-align:center;padding:8px 16px;align-self:center;}
+.retention-sheet__tertiary{display:block;width:max-content;min-height:40px;margin:12px auto 16px;border:0;background:transparent;color:var(--color-interactive-secondary);font:500 14px/20px var(--font-family);text-decoration:underline;text-underline-offset:3px;cursor:pointer;text-align:center;padding:8px 16px;}
 .retention-sheet__actions{display:flex;flex-direction:column;gap:var(--space-8);}
 
 /* reference-faithful payment entry */
@@ -679,12 +679,16 @@ function continueFromStep1(){
 function dismissRetentionSheet(continuePayment){
   lsSet(P+'sheetSeen','1');
   hideRetentionSheet();
-  goTo(continuePayment ? 'step2' : 'step1');
+  var destination=continuePayment ? 'step2' : 'step1';
+  // Sheet hash nesmí zůstat v historii; Zpět z kroku 2 by sheet znovu otevřel.
+  history.replaceState({},'', '#'+destination);
+  goTo(destination,{skipHistory:true});
 }
 function goToStep1FromSheet(){
   lsSet(P+'sheetSeen','1');
   hideRetentionSheet();
-  goTo('step1');
+  history.replaceState({},'', '#step1');
+  goTo('step1',{skipHistory:true});
 }
 function acceptRetentionOffer(){
   lsSet(P+'promoAccepted','1');
