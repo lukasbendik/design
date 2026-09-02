@@ -686,8 +686,7 @@ function dismissRetentionSheet(continuePayment){
 function goToStep1FromSheet(){
   lsSet(P+'sheetSeen','1');
   hideRetentionSheet();
-  history.replaceState({},'', '#step1');
-  goTo('step1',{skipHistory:true});
+  openRetentionDetail('step1');
 }
 function acceptRetentionOffer(){
   lsSet(P+'promoAccepted','1');
