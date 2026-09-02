@@ -235,8 +235,8 @@ body{min-height:100dvh;}
 .retention-sheet__close{position:absolute;right:0;top:4px;width:32px;height:32px;border:0;border-radius:var(--radius-full);background:var(--color-background-surface);display:flex;align-items:center;justify-content:center;cursor:pointer;}
 .retention-sheet__illustration{display:block;width:96px;height:72px;object-fit:contain;margin:0 auto;}
 .retention-sheet h2{font:500 24px/32px var(--font-family);text-align:center;margin-top:0;}
-.retention-sheet p{font:400 16px/24px var(--font-family);color:var(--color-content-secondary);text-align:center;margin:6px 8px 8px;}
-.retention-sheet .benefit{text-align:center;margin-bottom:8px;color:var(--color-content-primary);padding-top:12px;}
+.retention-sheet p{font:400 16px/24px var(--font-family);color:var(--color-content-secondary);text-align:center;margin:6px 8px 20px;}
+#sheet-benefit{color:var(--color-content-primary);}
 .retention-sheet__tertiary{display:block;width:max-content;min-height:40px;margin:12px auto 16px;border:0;background:transparent;color:var(--color-interactive-secondary);font:500 14px/20px var(--font-family);text-decoration:underline;text-underline-offset:3px;cursor:pointer;text-align:center;padding:8px 16px;}
 .retention-sheet__actions{display:flex;flex-direction:column;gap:var(--space-8);}
 
@@ -562,9 +562,8 @@ body{min-height:100dvh;}
       </div>
       <img class="retention-sheet__illustration" src="../../design-system/design-system/assets/illustrations/savings-offer-light.png" alt="">
       <h2 id="retention-sheet-title">Nechte své peníze vydělávat více</h2>
-      <p>Aktivujte si sazbu 3,5 % p. a. na spořicím účtu. Peníze zůstávají kdykoliv dostupné.</p>
+      <p>Aktivujte si sazbu 3,5 % p. a. na spořicím účtu. Peníze zůstávají kdykoliv dostupné. Získáte přibližně o <span id="sheet-benefit">2 600 Kč</span> ročně více.</p>
       <button class="retention-sheet__tertiary" type="button" onclick="goToStep1FromSheet()">Získat vyšší sazbu</button>
-      <div class="benefit" id="sheet-benefit">Získáte přibližně o 2 500 Kč ročně více.</div>
       <div class="retention-sheet__actions">
         <button class="btn btn-primary" type="button" onclick="dismissRetentionSheet(true)">Pokračovat k platbě</button>
       </div>
@@ -652,7 +651,7 @@ function updateRetentionEligibility(){
   var detailBenefit=document.getElementById('detail-benefit');
   var sheetBenefit=document.getElementById('sheet-benefit');
   if(detailBenefit) detailBenefit.textContent=benefit;
-  if(sheetBenefit) sheetBenefit.textContent=benefit;
+  if(sheetBenefit) sheetBenefit.textContent=annualBenefit();
 }
 function openRetentionDetail(from){
   lsSet(P+'offerReturn',from||'step1');
