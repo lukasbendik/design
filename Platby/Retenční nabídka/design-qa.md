@@ -29,7 +29,7 @@
 
 - Standard payment in CZK to an external bank.
 - Amount 250 001 Kč: retention eligibility active.
-- Source account balance: 750 000 Kč; balance hint dynamically subtracts the entered amount.
+- Source account balance: 748 320 Kč; balance hint dynamically subtracts the entered amount.
 - Offer ignored in step 1 and bottom sheet; promo remains visible on result.
 - Bottom sheet uses requested hierarchy: primary `Pokračovat`, tertiary `Získat vyšší sazbu` in content, black benefit text.
 
@@ -46,7 +46,7 @@
 
 1. First pass found P2 drift in step 1: close icon instead of `Zavřít`, bordered account selector and elevated contact row. Fixed with reference-faithful header text, transparent account selector and flat contact navigation. Post-fix evidence: `07-step1-final.png`, `qa-step1-full.png`, `qa-step1-focus.png`.
 2. First result pass found P2 illustration scale drift: success motif appeared too small. Fixed by using the repository `success-light.png` asset in a centered 212 × 142 crop slot. Post-fix evidence: `08-result-final.png`, `qa-result-full.png`, `qa-result-focus.png`.
-3. Updated source banner comparison found P2 drift in promo height and copy hierarchy: an extra kicker increased the card and did not match the supplied banner. Fixed with standard item-navigation row geometry, no kicker, 102 px card height, 24/16 horizontal padding and 750 000 Kč dynamic balance. Post-fix evidence: `11-banner-final.png` and the supplied banner source.
+3. Updated source banner comparison found P2 drift in promo height and copy hierarchy: an extra kicker increased the card and did not match the supplied banner. Fixed with standard item-navigation row geometry, no kicker, 102 px card height, 24/16 horizontal padding and 748 320 Kč dynamic balance. Post-fix evidence: `11-banner-final.png` and the supplied banner source.
 4. New bottom-sheet request found P2 action hierarchy drift: primary action was retention activation and benefit was green. Fixed by moving activation to a tertiary content action, making `Pokračovat` the only primary action, returning activation to step 1 and using black benefit text. Post-fix evidence: `12-bottom-sheet-final.png`, `qa-bottom-sheet-final.png`. Difference from the attached source is intentional per the explicit request.
 
 **Primary interactions tested**

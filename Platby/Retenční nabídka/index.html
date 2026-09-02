@@ -301,7 +301,7 @@ body{min-height:100dvh;}
           <div class="arow" onclick="startPayment()">
             <div class="body">
               <div class="topline"><span class="nm">Běžný účet</span><span class="no">122000/0100</span></div>
-              <div class="bal">750 000<small>,00 Kč</small></div>
+              <div class="bal">748 320<small>,00 Kč</small></div>
             </div>
             <svg class="icn" width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M9 6l6 6-6 6" stroke="#717171" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </div>
@@ -406,7 +406,7 @@ body{min-height:100dvh;}
           </select>
         </label>
       </div>
-      <div class="hint" id="balance-hint">Na účtu máte 750 000,00 Kč.</div>
+      <div class="hint" id="balance-hint">Na účtu máte 748 320,00 Kč.</div>
 
       <div class="card promo-nav-card" id="retention-nav" hidden>
         <button class="itemnav itemnav-button" type="button" onclick="openRetentionDetail('step1')">
@@ -580,7 +580,7 @@ function lsSet(k,v){ try { localStorage.setItem(k,v); } catch(e){} }
 function lsDel(k){ try { localStorage.removeItem(k); } catch(e){} }
 var P='retention_a__';
 var RETENTION_LIMIT=250000;
-var ACCOUNT_BALANCE=750000;
+var ACCOUNT_BALANCE=748320;
 
 /* ===== state persistence ===== */
 function saveField(el){ if(el.dataset.k){ lsSet(P+el.dataset.k, el.value); } }
