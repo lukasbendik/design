@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<script>
+(function(){var H='4c129f69f551195cbc5e8b57cc5a0975b6efa1e8510573524d11df03c7d010c6',K='rozcestnik__auth';try{var p=new URLSearchParams(location.search);if(p.get('k')===H){localStorage.setItem(K,'1');p.delete('k');var q=p.toString();history.replaceState(history.state,'',location.pathname+(q?'?'+q:'')+location.hash);}if(localStorage.getItem(K)!=='1')location.replace('../../');}catch(e){}})();
+</script>
+<meta charset="UTF-8">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>Prototyp: Retenční nabídka při nové platbě</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+/* ===== Design tokens (z ux/design-system/tokens.css – LIGHT) ===== */
+:root{
+  --font-family: Inter, system-ui, -apple-system, sans-serif;
+  /* spacing */
+  --space-2:2px; --space-4:4px; --space-8:8px; --space-12:12px; --space-16:16px; --space-24:24px; --space-32:32px; --space-48:48px;
+  /* padding */
+  --pad-xs:2px; --pad-sm:4px; --pad-md:8px; --pad-lg:12px; --pad-xl:16px; --pad-2xl:24px;
+  /* radius */
+  --radius-xs:2px; --radius-sm:4px; --radius-md:8px; --radius-xl:16px; --radius-full:1024px;
+  /* border */
+  --border-sm:1px; --border-md:2px; --border-lg:3px;
+  /* color semantic (light) */
+  --color-content-primary:#212121;
+  --color-content-secondary:#454545;
+  --color-content-tertiary:#717171;
+  --color-content-quaternary:#adadad;
+  --color-interactive-primary:#e00000;
+  --color-interactive-primary-action:#be0000;
+  --color-interactive-on-primary:#ffffff;
+  --color-interactive-secondary:#212121;
+  --color-interactive-secondary-active:#2121211f;
+  --color-background-body:#f8f8f8;
+  --color-background-surface:#ffffff;
+  --color-background-surface-highlighted:#ffffff;
+  --color-background-border:#adadad80;
+  --color-background-border-highlighted:#adadad;
+  --color-background-divider:#adadad80;
+  --color-attention-success:#267c29;
+  --color-attention-success-surface:#e2f5de;
+  --color-attention-alert:#b53022;
+  --color-attention-alert-surface:#ffede8;
+  --shadow-panel:0 0 1px 0 #2121211f, 0 1px 8px 0 #21212114, 0 .4px 2px 0 #21212105;
+  --shadow-floating:0 0 1px 0 #2121213d, 0 1px 8px 0 #21212129, 0 .4px 2px 0 #2121210a;
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+/* type classes */
+.t-title-secondary{font:500 32px/40px var(--font-family);}
+.t-title-quaternary{font:500 24px/32px var(--font-family);}
+.t-headline-primary{font:500 20px/28px var(--font-family);}
+.t-headline-secondary{font:500 18px/24px var(--font-family);}
+.t-body{font:400 16px/24px var(--font-family);}
+.t-body-bold{font:500 16px/24px var(--font-family);}
+.t-body-sec{font:400 14px/20px var(--font-family);}
+.t-caption{font:400 12px/16px var(--font-family);}
+
+html,body{font-family:var(--font-family);color:var(--color-content-primary);background:#2a2a2a;-webkit-font-smoothing:antialiased;}
+body{min-height:100dvh;}
+
+/* MOBILE: document scrolls, content is hug. DESKTOP: phone frame scrolls internally. */
+.phone{position:relative;width:100%;max-width:390px;margin:0 auto;background:var(--color-background-body);}
+@media(min-width:480px){
+  body{display:flex;align-items:center;justify-content:center;padding:24px;}
+  .phone{height:min(844px,calc(100dvh - 48px));overflow-y:auto;-webkit-overflow-scrolling:touch;border-radius:40px;box-shadow:0 24px 70px rgba(0,0,0,.5);}
+  .phone::-webkit-scrollbar{display:none;}
+}
+
+/* screens: each fills viewport at minimum but grows with content (hug) → page scrolls */
+.screen{display:none;}
+.screen.active{display:flex;flex-direction:column;min-height:100dvh;background:var(--color-background-body);}
+@media(min-width:480px){ .screen.active{min-height:100%;} }
+
+/* header (CO Header 48) — sticky top */
+.hdr{position:sticky;top:0;z-index:10;flex:0 0 auto;min-height:48px;padding-top:env(safe-area-inset-top);display:flex;align-items:center;gap:var(--space-8);padding-left:var(--pad-xl);padding-right:var(--pad-xl);background:var(--color-background-body);}
+.hdr .title{flex:1;text-align:center;font:500 17px/24px var(--font-family);}
+.hdr .ic{width:40px;height:40px;display:flex;align-items:center;justify-content:center;margin:0 -8px;cursor:pointer;border-radius:var(--radius-full);}
+.hdr .ic:active{background:var(--color-interactive-secondary-active);}
+.hdr .back{display:flex;align-items:center;gap:4px;cursor:pointer;font:400 16px/24px var(--font-family);}
+.hdr.lg{flex-direction:column;align-items:stretch;min-height:auto;padding-top:0;padding-bottom:4px;}
+.hdr.lg .row{display:flex;align-items:center;min-height:44px;}
+.hdr.lg .big{padding:0 var(--pad-xl) 4px 0;}
+
+/* content: hug (natural height), grows to push footer down; page scrolls (pad 16, gap 16) */
+.content{flex:1 0 auto;display:flex;flex-direction:column;gap:var(--space-16);padding:var(--space-16);}
+.content.flush{padding:0;}
+
+/* bottom bar — sticky bottom (CO Button Bar 80) */
+.bottombar{position:sticky;bottom:0;z-index:10;flex:0 0 auto;padding:var(--pad-xl);padding-bottom:max(var(--pad-xl),env(safe-area-inset-bottom));background:var(--color-background-body);display:flex;flex-direction:column;gap:var(--space-8);}
+
+/* CO Button */
+.btn{height:48px;border:none;border-radius:var(--radius-md);font:500 16px/24px var(--font-family);cursor:pointer;display:flex;align-items:center;justify-content:center;gap:var(--space-8);width:100%;transition:background .12s;}
+.btn-primary{background:var(--color-interactive-primary);color:var(--color-interactive-on-primary);}
+.btn-primary:active{background:var(--color-interactive-primary-action);}
+.btn-secondary{background:transparent;color:var(--color-content-primary);border:var(--border-sm) solid var(--color-background-border-highlighted);}
+.btn-secondary:active{background:var(--color-interactive-secondary-active);}
+
+/* card / surface — CO Content Card: radius-md (8), ne xl! */
+.card{background:var(--color-background-surface);border-radius:var(--radius-md);box-shadow:var(--shadow-panel);overflow:hidden;}
+.card.pad{padding:var(--pad-2xl);}
+
+/* CO Input (float-ish label) */
+.field{background:var(--color-background-surface);border:var(--border-sm) solid var(--color-background-border-highlighted);border-radius:var(--radius-md);padding:var(--pad-md) var(--pad-lg);display:flex;flex-direction:column;gap:2px;transition:border-color .12s;}
+.field:focus-within{border-color:var(--color-content-primary);}
+.field .lbl{font:400 12px/16px var(--font-family);color:var(--color-content-tertiary);}
+.field input,.field textarea{border:none;outline:none;background:transparent;font:400 16px/24px var(--font-family);color:var(--color-content-primary);width:100%;resize:none;}
+.field input::placeholder,.field textarea::placeholder{color:var(--color-content-quaternary);}
+.field.minh{min-height:60px;justify-content:center;}
+.field textarea{min-height:24px;}
+.hint{font:400 12px/16px var(--font-family);color:var(--color-content-tertiary);padding:0 var(--pad-xs);}
+
+/* row item (CO Item Navigation 48/64) */
+.itemnav{display:flex;align-items:center;gap:var(--space-16);background:var(--color-background-surface);border-radius:var(--radius-md);padding:var(--pad-xl);cursor:pointer;box-shadow:var(--shadow-panel);}
+.itemnav:active{background:#fafafa;}
+.itemnav .lead{flex:0 0 auto;display:flex;align-items:center;justify-content:center;}
+.itemnav .body{flex:1;min-width:0;display:flex;flex-direction:column;}
+.itemnav .body .t{font:500 16px/24px var(--font-family);}
+.itemnav .body .s{font:400 14px/20px var(--font-family);color:var(--color-content-tertiary);}
+.itemnav .amt{margin-left:auto;font:500 16px/24px var(--font-family);text-align:right;}
+.itemnav-button{width:100%;border:0;text-align:left;color:inherit;font:inherit;}
+.promo-nav-card{padding:0;overflow:hidden;}
+.promo-nav-card .itemnav{box-shadow:none;border-radius:0;}
+.promo-nav-card .lead img{width:24px;height:24px;display:block;filter:invert(12%) sepia(99%) saturate(7450%) hue-rotate(2deg) brightness(93%) contrast(120%);}
+.promo-kicker{font:500 12px/16px var(--font-family);color:var(--color-interactive-primary);margin-bottom:2px;}
+
+/* account selector card (step1) */
+.acctsel{display:flex;align-items:center;gap:var(--space-12);background:var(--color-background-surface);border:var(--border-sm) solid var(--color-background-border);border-radius:var(--radius-md);padding:var(--pad-xl);cursor:pointer;}
+.acctsel .body{flex:1;}
+.acctsel .body .t{font:500 18px/24px var(--font-family);}
+.acctsel .body .s{font:400 16px/24px var(--font-family);color:var(--color-content-tertiary);}
+
+/* CO Item Display list (summary/auth) */
+.list{background:var(--color-background-surface);border-radius:var(--radius-md);box-shadow:var(--shadow-panel);overflow:hidden;}
+.list .row{padding:var(--pad-xl);display:flex;flex-direction:column;gap:2px;position:relative;}
+.list .row+.row::before{content:"";position:absolute;left:var(--pad-xl);right:var(--pad-xl);top:0;height:1px;background:var(--color-background-divider);}
+.list .row .k{font:400 14px/20px var(--font-family);color:var(--color-content-tertiary);}
+.list .row .v{font:400 16px/24px var(--font-family);color:var(--color-content-primary);}
+
+/* segmented control */
+.seg{display:flex;background:var(--color-interactive-secondary-active);border-radius:var(--radius-md);padding:3px;}
+.seg button{flex:1;height:40px;border:none;background:transparent;border-radius:6px;font:500 15px/20px var(--font-family);color:var(--color-content-secondary);cursor:pointer;}
+.seg button.on{background:var(--color-background-surface);color:var(--color-content-primary);box-shadow:var(--shadow-panel);}
+
+/* section heading */
+.sect{font:500 18px/24px var(--font-family);padding:4px var(--pad-xs);}
+
+/* CO Content Card — Secondary (transparent + border, bez shadow) */
+.card-secondary{background:transparent;border:var(--border-sm) solid var(--color-background-border);border-radius:var(--radius-md);box-shadow:none;overflow:hidden;}
+/* product group: secondary obal + bílá vnitřní karta (Tarif + účty) */
+.prodgroup{padding:0;}
+.tarifrow{display:flex;align-items:center;gap:var(--space-8);padding:var(--pad-xl);cursor:pointer;}
+.tarifrow .t{flex:1;font:500 16px/24px var(--font-family);}
+.prodgroup .acctcard{margin:0;border-radius:0;box-shadow:none;}
+
+/* HOME ----------------------------------------------------------- */
+.tabs{display:flex;gap:var(--space-8);overflow-x:auto;padding:8px var(--pad-xl) 4px;scrollbar-width:none;}
+.tabs::-webkit-scrollbar{display:none;}
+/* CO Tab v5.0 — tab item: h32, padding 8/12, radius-sm (4), gap 8 (z Figmy) */
+.tab{flex:0 0 auto;padding:8px 12px;border-radius:var(--radius-sm);border:var(--border-sm) solid var(--color-background-border);background:var(--color-background-surface);font:400 15px/20px var(--font-family);color:var(--color-content-primary);cursor:pointer;display:flex;align-items:center;}
+.tab.on{background:var(--color-interactive-primary);color:#fff;border-color:var(--color-interactive-primary);font-weight:500;}
+.homehdr{display:flex;align-items:center;justify-content:flex-end;gap:18px;padding:10px var(--pad-xl) 0;}
+.homehdr .av{width:34px;height:34px;border-radius:var(--radius-full);background:#cdd3e0 url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="34" height="34"><circle cx="17" cy="13" r="7" fill="%23939bb0"/><path d="M4 34c0-8 7-12 13-12s13 4 13 12" fill="%23939bb0"/></svg>') center/cover;}
+.acctcard .arow{display:flex;align-items:center;padding:var(--pad-xl);gap:var(--space-16);position:relative;}
+.acctcard .arow+.arow::before{content:"";position:absolute;left:var(--pad-xl);right:var(--pad-xl);top:0;height:1px;background:var(--color-background-divider);}
+.acctcard .arow .body{flex:1;}
+.acctcard .topline{display:flex;justify-content:space-between;align-items:baseline;}
+.acctcard .nm{font:400 16px/24px var(--font-family);}
+.acctcard .no{font:400 14px/20px var(--font-family);color:var(--color-content-tertiary);}
+.acctcard .bal{font:500 26px/32px var(--font-family);margin-top:2px;}
+.acctcard .bal small{font:500 16px/20px var(--font-family);color:var(--color-content-secondary);}
+.curtags{display:flex;gap:var(--space-8);margin-top:8px;flex-wrap:nowrap;}
+.curtag{display:flex;align-items:center;gap:6px;height:32px;padding:0 10px;border:var(--border-sm) solid var(--color-background-border);border-radius:var(--radius-sm);font:400 14px/20px var(--font-family);white-space:nowrap;}
+.curtag .dot{width:18px;height:18px;border-radius:var(--radius-full);overflow:hidden;flex:0 0 auto;display:block;}
+.curtag .dot svg{display:block;width:18px;height:18px;}
+.summ .barwrap{height:8px;border-radius:var(--radius-full);background:#e2e2e2;overflow:hidden;margin:4px 0;}
+.summ .bar{height:100%;background:var(--color-content-primary);}
+.summ .bar.green{background:var(--color-attention-success);}
+.summ .sr{display:flex;align-items:center;justify-content:space-between;padding:6px 0;}
+.summ .sr .lab{display:flex;align-items:center;gap:8px;font:400 16px/24px var(--font-family);}
+.summ .sr .val{font:500 16px/24px var(--font-family);}
+.summ .sr .val.green{color:var(--color-attention-success);}
+
+/* floating toolbar (home bottom) */
+.toolbar{position:sticky;bottom:16px;z-index:10;align-self:center;margin-top:auto;display:flex;gap:6px;background:var(--color-interactive-primary);border-radius:var(--radius-xl);padding:10px 6px;box-shadow:var(--shadow-floating);}
+.toolbar .tb{display:flex;flex-direction:column;align-items:center;gap:4px;color:#fff;padding:4px 14px;cursor:pointer;font:400 12px/14px var(--font-family);white-space:nowrap;}
+.toolbar .tb:active{opacity:.8;}
+
+/* result */
+.result-wrap{flex:1 0 auto;display:flex;flex-direction:column;align-items:stretch;}
+.result-ill{align-self:center;width:212px;height:142px;margin:40px 0 24px;display:flex;align-items:center;justify-content:center;overflow:hidden;}
+.result-title{font:500 28px/36px var(--font-family);text-align:left;padding:0 var(--pad-xl);margin-bottom:16px;}
+/* akční řádek na výsledkové obrazovce — CO Item Navigation BEZ karty (na body) */
+.actionrow{display:flex;align-items:center;gap:var(--space-16);padding:var(--pad-xl);cursor:pointer;position:relative;}
+.actionrow::before,.actionrow::after{content:"";position:absolute;left:var(--pad-xl);right:var(--pad-xl);height:1px;background:var(--color-background-divider);}
+.actionrow::before{top:0;}
+.actionrow::after{bottom:0;}
+.actionrow .lead{flex:0 0 auto;display:flex;}
+.actionrow .t{flex:1;font:400 16px/24px var(--font-family);color:var(--color-content-primary);}
+
+/* CO Content Card / v6.2 Promo */
+.promo-card{display:flex;align-items:center;width:calc(100% - 32px);min-height:128px;margin:16px;border:0;border-radius:var(--radius-md);padding:var(--pad-xl);background:var(--color-background-surface);box-shadow:var(--shadow-panel);text-align:left;color:inherit;cursor:pointer;overflow:hidden;}
+.promo-card__content{flex:1;min-width:0;display:flex;flex-direction:column;gap:var(--space-4);}
+.promo-card__title{font:600 18px/24px var(--font-family);}
+.promo-card__caption{font:500 14px/20px var(--font-family);color:var(--color-content-secondary);}
+.promo-card__illustration{width:104px;height:80px;object-fit:contain;flex:0 0 auto;}
+.promo-card__caret{width:20px;height:20px;flex:0 0 auto;}
+.promo-card[hidden]{display:none;}
+
+/* detail retenční nabídky */
+.offer-hero{width:100%;height:176px;object-fit:contain;display:block;margin:-8px 0 0;}
+.offer-copy{display:flex;flex-direction:column;gap:var(--space-8);}
+.offer-copy h2{font:500 24px/32px var(--font-family);}
+.offer-copy p{font:400 16px/24px var(--font-family);color:var(--color-content-secondary);}
+.rate-card{padding:var(--pad-2xl);display:flex;flex-direction:column;gap:var(--space-16);}
+.rate-row{display:grid;grid-template-columns:1fr 24px 1fr;align-items:end;gap:var(--space-8);}
+.rate-value{font:500 24px/32px var(--font-family);}
+.rate-value strong{color:var(--color-attention-success);font-weight:500;}
+.rate-label{font:400 12px/16px var(--font-family);color:var(--color-content-tertiary);}
+.rate-arrow{align-self:center;text-align:center;color:var(--color-content-tertiary);font:400 20px/24px var(--font-family);}
+.benefit{padding-top:var(--space-16);border-top:1px solid var(--color-background-divider);font:500 14px/20px var(--font-family);color:var(--color-attention-success);}
+
+/* retenční bottom sheet nad krokem 1 */
+.retention-overlay[hidden]{display:none;}
+.retention-overlay{position:fixed;inset:0;z-index:40;display:flex;align-items:flex-end;justify-content:center;background:rgba(33,33,33,.45);}
+@media(min-width:480px){.retention-overlay{position:absolute;border-radius:40px;overflow:hidden;}}
+.retention-sheet{width:100%;max-width:390px;background:var(--color-background-body);border-radius:var(--radius-xl) var(--radius-xl) 0 0;padding:8px var(--pad-xl) max(var(--pad-xl),env(safe-area-inset-bottom));box-shadow:var(--shadow-floating);animation:sheetUp .25s ease;}
+.retention-sheet__top{display:flex;justify-content:center;position:relative;}
+.retention-sheet__close{position:absolute;right:0;top:4px;width:32px;height:32px;border:0;border-radius:var(--radius-full);background:var(--color-background-surface);display:flex;align-items:center;justify-content:center;cursor:pointer;}
+.retention-sheet__illustration{display:block;width:125px;height:96px;object-fit:contain;margin:4px auto 0;}
+.retention-sheet h2{font:500 24px/32px var(--font-family);text-align:center;margin-top:4px;}
+.retention-sheet p{font:400 16px/24px var(--font-family);color:var(--color-content-secondary);text-align:center;margin:8px 8px 16px;}
+.retention-sheet .benefit{text-align:center;margin-bottom:16px;}
+.retention-sheet__actions{display:flex;flex-direction:column;gap:var(--space-8);}
+
+/* reference-faithful payment entry */
+#screen-step1 .acctsel{min-height:72px;padding:0;background:transparent;border:0;border-radius:0;}
+#screen-step1 .contact-item{padding:var(--pad-xl) var(--pad-md);background:transparent;box-shadow:none;}
+#screen-result .result-ill img{width:212px;height:212px;max-width:none;flex:0 0 auto;}
+
+/* ===== PIN autorizace — bottom sheet ===== */
+.sheet-screen{justify-content:flex-end;background:transparent;}
+.sheet-dim{position:absolute;inset:0;background:rgba(33,33,33,.45);}
+.sheet{position:relative;z-index:1;background:var(--color-background-body);border-radius:var(--radius-xl) var(--radius-xl) 0 0;padding:8px var(--pad-xl) max(var(--pad-xl),env(safe-area-inset-bottom));box-shadow:var(--shadow-floating);display:flex;flex-direction:column;align-items:center;animation:sheetUp .25s ease;}
+@keyframes sheetUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
+.sheet-handle{width:40px;height:4px;border-radius:2px;background:var(--color-background-border-highlighted);margin:4px 0 12px;}
+.sheet-close{position:absolute;top:14px;right:16px;width:32px;height:32px;border:none;border-radius:var(--radius-full);background:var(--color-content-quaternary);display:flex;align-items:center;justify-content:center;cursor:pointer;}
+.sheet-title{font:500 17px/24px var(--font-family);color:var(--color-content-primary);}
+.sheet-sub{font:400 16px/24px var(--font-family);color:var(--color-content-secondary);margin-top:8px;}
+.pin-dots{display:flex;gap:var(--space-16);margin:24px 0 8px;}
+.pin-dots .d{width:14px;height:14px;border-radius:var(--radius-full);border:1.5px solid var(--color-content-tertiary);}
+.pin-dots .d.on{background:var(--color-content-primary);border-color:var(--color-content-primary);}
+.numpad{display:grid;grid-template-columns:repeat(3,1fr);gap:16px 24px;width:100%;max-width:340px;margin-top:8px;justify-items:center;}
+.numkey{width:72px;height:72px;border-radius:var(--radius-full);border:1px solid var(--color-background-border);background:var(--color-background-surface);font:400 28px/1 var(--font-family);color:var(--color-content-primary);cursor:pointer;display:flex;align-items:center;justify-content:center;}
+.numkey:active{background:var(--color-interactive-secondary-active);}
+.numkey.ghost{background:transparent;border:none;}
+.numkey.ghost:active{background:var(--color-interactive-secondary-active);}
+
+.icn{display:block;}
+.spacer{flex:1;}
+</style>
+</head>
+<body>
+<div class="phone">
+
+  <!-- ============ HOME ============ -->
+  <section class="screen" id="screen-home">
+    <div class="homehdr">
+      <svg class="icn" width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M14 7a4 4 0 11-5.5 3.7L4 15v3h3l1-1h2v-2h2l1.2-1.2A4 4 0 0114 7z" stroke="#212121" stroke-width="1.7" stroke-linejoin="round"/><circle cx="15.5" cy="8.5" r="1.1" fill="#212121"/></svg>
+      <div style="position:relative">
+        <svg class="icn" width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M4 10l8-5 8 5M5 10v8h14v-8M9 18v-4h6v4" stroke="#212121" stroke-width="1.7" stroke-linejoin="round"/></svg>
+        <span style="position:absolute;top:-4px;right:-6px;background:var(--color-interactive-primary);color:#fff;font:600 10px/16px var(--font-family);min-width:16px;height:16px;border-radius:8px;text-align:center;padding:0 3px;">1</span>
+      </div>
+      <div class="av"></div>
+    </div>
+    <div class="tabs">
+      <button class="tab on">Přehled</button>
+      <button class="tab">Extra</button>
+      <button class="tab">Karty</button>
+      <button class="tab">Půjčky</button>
+      <button class="tab">Spoření</button>
+      <button class="tab">Investice</button>
+      <button class="tab">Pojištění</button>
+      <button class="tab">Účty</button>
+    </div>
+    <div class="content" style="flex:0 0 auto;padding-bottom:96px;">
+      <!-- Tariff badge widget + Main product widget = secondary group card -->
+      <div class="card-secondary prodgroup">
+        <div class="tarifrow">
+          <div class="t">Tarif Komfort</div>
+          <svg class="icn" width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M9 6l6 6-6 6" stroke="#717171" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div class="card acctcard">
+          <div class="arow" onclick="startPayment()">
+            <div class="body">
+              <div class="topline"><span class="nm">Běžný účet</span><span class="no">122000/0100</span></div>
+              <div class="bal">18 063<small>,38 Kč</small></div>
+            </div>
+            <svg class="icn" width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M9 6l6 6-6 6" stroke="#717171" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div class="arow" onclick="startPayment()">
+            <div class="body">
+              <div class="topline"><span class="nm">Běžný účet 2</span><span class="no">326683762/0100</span></div>
+              <div class="bal">48 490<small>,20 Kč</small></div>
+              <div class="curtags">
+                <span class="curtag"><span class="dot"><svg viewBox="0 0 18 18"><rect width="18" height="9" fill="#fff"/><rect y="9" width="18" height="9" fill="#d7141a"/><path d="M0 0L9 9L0 18Z" fill="#11457e"/></svg></span>40 000,00 Kč</span>
+                <span class="curtag"><span class="dot"><svg viewBox="0 0 18 18"><rect width="18" height="18" fill="#039"/><g fill="#fc0"><circle cx="9" cy="3.2" r="0.9"/><circle cx="9" cy="14.8" r="0.9"/><circle cx="3.2" cy="9" r="0.9"/><circle cx="14.8" cy="9" r="0.9"/><circle cx="5" cy="5" r="0.9"/><circle cx="13" cy="5" r="0.9"/><circle cx="5" cy="13" r="0.9"/><circle cx="13" cy="13" r="0.9"/></g></svg></span>334,26 EUR</span>
+              </div>
+            </div>
+            <svg class="icn" width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M9 6l6 6-6 6" stroke="#717171" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+        </div>
+      </div>
+
+      <div class="card acctcard">
+        <div class="arow">
+          <div class="body">
+            <div class="topline"><span class="nm">Spoření</span><span class="no">326683764/0100</span></div>
+            <div class="bal">11 490<small>,20 Kč</small></div>
+          </div>
+          <svg class="icn" width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M9 6l6 6-6 6" stroke="#717171" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+      </div>
+
+      <div class="card-secondary summ" style="padding:var(--pad-2xl)">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;">
+          <div>
+            <div class="t-headline-secondary">Souhrn za červen</div>
+            <div class="t-body-sec" style="color:var(--color-content-tertiary)">Běžný účet</div>
+          </div>
+          <svg class="icn" width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M9 6l6 6-6 6" stroke="#717171" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div style="margin-top:12px">
+          <div class="barwrap"><div class="bar" style="width:42%"></div></div>
+          <div class="sr"><span class="lab"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="#212121" stroke-width="1.6"/><path d="M9 12h6m0 0l-2-2m2 2l-2 2" stroke="#212121" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>Výdaje</span><span class="val">-10 000,00 Kč</span></div>
+          <div class="barwrap"><div class="bar green" style="width:100%"></div></div>
+          <div class="sr"><span class="lab"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="#267c29" stroke-width="1.6"/><path d="M15 12H9m0 0l2-2m-2 2l2 2" stroke="#267c29" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>Příjmy</span><span class="val green">20 000,00 Kč</span></div>
+          <div class="sr" style="border-top:1px solid var(--color-background-divider);margin-top:4px"><span class="lab">Rozdíl</span><span class="val">10 000,00 Kč</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="toolbar">
+      <div class="tb" onclick="startPayment()">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><circle cx="17" cy="8" r="3" stroke="#fff" stroke-width="1.7"/><path d="M4 8h8M4 16h16M19 16a3 3 0 10-6 0" stroke="#fff" stroke-width="1.7" stroke-linecap="round"/></svg>
+        <span>Nová platba</span>
+      </div>
+      <div class="tb">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M4 4h6v6H4zM14 4h6v6h-6zM4 14h6v6H4zM14 14h2v2h-2zM18 14h2v2h-2zM14 18h2v2h-2zM18 18h2v2h-2z" stroke="#fff" stroke-width="1.5"/></svg>
+        <span>QR platba</span>
+      </div>
+      <div class="tb">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M12 14c3 0 5-2 5-5s-2-4-5-4-5 1-5 4 2 5 5 5z" stroke="#fff" stroke-width="1.6"/><path d="M4 21c1.5-3 4.5-4 8-4s6.5 1 8 4" stroke="#fff" stroke-width="1.6" stroke-linecap="round"/></svg>
+        <span>Zaplať mi</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ STEP 1 ============ -->
+  <section class="screen" id="screen-step1">
+    <div class="hdr">
+      <span class="back" onclick="goTo('home')">Zavřít</span>
+      <span class="title">Nová platba</span>
+      <span class="ic">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M4 4h6v6H4zM14 4h6v6h-6zM4 14h6v6H4zM14 14h2v2h-2zM18 14h2v2h-2zM14 18h2v2h-2zM18 18h2v2h-2z" stroke="#212121" stroke-width="1.5"/></svg>
+      </span>
+    </div>
+    <div class="content">
+      <div class="acctsel" onclick="return false">
+        <div class="body">
+          <div class="t">Běžný účet</div>
+          <div class="s">122000/0100</div>
+        </div>
+        <svg class="icn" width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M9 6l6 6-6 6" stroke="#717171" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+
+      <label class="field" style="min-height:84px;justify-content:flex-start;">
+        <span class="lbl">Komu</span>
+        <input id="f_komu" type="text" placeholder="Číslo účtu, IBAN, šablona nebo příjemce" data-k="komu">
+      </label>
+
+      <div class="itemnav contact-item">
+        <span class="lead">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none"><path d="M5 7c2.5 1.5 2.5 4.5 5 6M8 6c2.5 1.5 2.5 4.5 5 6" stroke="#e00000" stroke-width="1.7" stroke-linecap="round"/><circle cx="16" cy="14" r="3" stroke="#e00000" stroke-width="1.7"/><path d="M12 21c.6-2 2-3 4-3s3.4 1 4 3" stroke="#e00000" stroke-width="1.7" stroke-linecap="round"/></svg>
+        </span>
+        <div class="body"><div class="t">Platba na kontakt</div></div>
+        <svg class="icn" width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M9 6l6 6-6 6" stroke="#717171" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+
+      <div style="display:flex;gap:var(--space-8);">
+        <label class="field minh" style="flex:1;">
+          <span class="lbl">Částka</span>
+          <input id="f_amount" type="text" inputmode="decimal" placeholder="0" data-k="amount" oninput="onAmount(this)">
+        </label>
+        <label class="field minh" style="width:104px;cursor:pointer;">
+          <span class="lbl">Měna</span>
+          <select id="f_currency" data-k="currency" style="border:none;outline:none;background:transparent;font:400 16px/24px var(--font-family);color:var(--color-content-primary);appearance:none;">
+            <option>Kč</option><option>EUR</option><option>USD</option>
+          </select>
+        </label>
+      </div>
+      <div class="hint">Na účtu máte 18 063,38 Kč.</div>
+
+      <div class="card promo-nav-card" id="retention-nav" hidden>
+        <button class="itemnav itemnav-button" type="button" onclick="openRetentionDetail('step1')">
+          <span class="lead"><img src="../../design-system/design-system/assets/icons/moneybox.svg" alt=""></span>
+          <span class="body">
+            <span class="promo-kicker">Tip pro vás</span>
+            <span class="t">Vaše peníze mohou vydělávat více</span>
+            <span class="s">Získejte sazbu 3,5 % p. a.</span>
+          </span>
+          <img class="icn" width="20" height="20" src="../../design-system/design-system/assets/icons/caret-right.svg" alt="">
+        </button>
+      </div>
+    </div>
+    <div class="bottombar">
+      <button class="btn btn-primary" onclick="continueFromStep1()">Pokračovat</button>
+    </div>
+  </section>
+
+  <!-- ============ DETAIL RETENČNÍ NABÍDKY ============ -->
+  <section class="screen" id="screen-retention-detail">
+    <div class="hdr lg">
+      <div class="row"><span class="back" onclick="returnFromRetentionDetail()"><img width="22" height="22" src="../../design-system/design-system/assets/icons/caret-left.svg" alt="">Zpět</span></div>
+      <div class="big t-title-secondary">Výhodnější spoření</div>
+    </div>
+    <div class="content">
+      <img class="offer-hero" src="../../design-system/design-system/assets/illustrations/savings-offer-light.png" alt="Ilustrace spoření">
+      <div class="offer-copy">
+        <h2>Nenechte své úspory odejít</h2>
+        <p>Aktivujte si zvýhodněnou sazbu na spořicím účtu. Peníze zůstávají kdykoliv dostupné.</p>
+      </div>
+      <div class="card rate-card">
+        <div class="rate-row">
+          <div><div class="rate-label">Současný úrok</div><div class="rate-value">2,5 % p. a.</div></div>
+          <div class="rate-arrow" aria-hidden="true">→</div>
+          <div><div class="rate-label">Nový úrok</div><div class="rate-value"><strong>3,5 % p. a.</strong></div></div>
+        </div>
+        <div class="benefit" id="detail-benefit">Získáte přibližně o 2 500 Kč ročně více.</div>
+      </div>
+      <p class="hint">Sazba se vztahuje na zůstatek do 500 000 Kč. Podmínky nabídky uvidíte před aktivací.</p>
+    </div>
+    <div class="bottombar">
+      <button class="btn btn-primary" onclick="acceptRetentionOffer()">Aktivovat vyšší sazbu</button>
+      <button class="btn btn-secondary" onclick="returnFromRetentionDetail()">Teď ne</button>
+    </div>
+  </section>
+
+  <!-- ============ STEP 2 ============ -->
+  <section class="screen" id="screen-step2">
+    <div class="hdr">
+      <span class="back" onclick="history.back()">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M15 6l-6 6 6 6" stroke="#212121" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Zpět
+      </span>
+      <span class="title" style="margin-right:48px">Nová platba</span>
+    </div>
+    <div class="content">
+      <label class="field" style="min-height:72px;justify-content:flex-start;"><span class="lbl">Zpráva pro příjemce</span><textarea id="f_msg" data-k="msg" rows="2"></textarea></label>
+      <label class="field minh"><span class="lbl">Variabilní symbol</span><input id="f_vs" type="text" inputmode="numeric" data-k="vs"></label>
+      <label class="field minh"><span class="lbl">Popis pro mě</span><input id="f_popis" type="text" data-k="popis"></label>
+      <label class="field minh"><span class="lbl">Konstantní symbol</span><input id="f_ks" type="text" inputmode="numeric" data-k="ks"></label>
+      <label class="field minh"><span class="lbl">Specifický symbol</span><input id="f_ss" type="text" inputmode="numeric" data-k="ss"></label>
+      <div class="sect">Odeslat platbu</div>
+      <div class="seg">
+        <button id="seg-asap" class="on" onclick="setTiming('asap')">Co nejdříve</button>
+        <button id="seg-later" onclick="setTiming('later')">Později</button>
+      </div>
+    </div>
+    <div class="bottombar">
+      <button class="btn btn-primary" onclick="goTo('summary')">Pokračovat</button>
+    </div>
+  </section>
+
+  <!-- ============ SUMMARY ============ -->
+  <section class="screen" id="screen-summary">
+    <div class="hdr lg">
+      <div class="row"><span class="back" onclick="history.back()"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M15 6l-6 6 6 6" stroke="#212121" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Zpět</span></div>
+      <div class="big t-title-secondary">Souhrn</div>
+    </div>
+    <div class="content">
+      <div class="list" id="summary-list"></div>
+    </div>
+    <div class="bottombar">
+      <button class="btn btn-primary" onclick="goTo('pin')">Potvrdit platbu</button>
+    </div>
+  </section>
+
+  <!-- ============ AUTORIZACE — PIN (bottom sheet) ============ -->
+  <section class="screen sheet-screen" id="screen-pin">
+    <div class="sheet-dim" onclick="history.back()"></div>
+    <div class="sheet">
+      <div class="sheet-handle"></div>
+      <button class="sheet-close" onclick="history.back()" aria-label="Zavřít">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg>
+      </button>
+      <div class="sheet-title">Potvrzení platby</div>
+      <div class="sheet-sub">Potvrďte ji PIN kódem.</div>
+      <div class="pin-dots" id="pin-dots"></div>
+      <div class="numpad">
+        <button class="numkey" onclick="pinPress('1')">1</button>
+        <button class="numkey" onclick="pinPress('2')">2</button>
+        <button class="numkey" onclick="pinPress('3')">3</button>
+        <button class="numkey" onclick="pinPress('4')">4</button>
+        <button class="numkey" onclick="pinPress('5')">5</button>
+        <button class="numkey" onclick="pinPress('6')">6</button>
+        <button class="numkey" onclick="pinPress('7')">7</button>
+        <button class="numkey" onclick="pinPress('8')">8</button>
+        <button class="numkey" onclick="pinPress('9')">9</button>
+        <button class="numkey ghost" onclick="pinFace()" aria-label="Face ID">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none"><path d="M4 8V6a2 2 0 012-2h2M16 4h2a2 2 0 012 2v2M20 16v2a2 2 0 01-2 2h-2M8 20H6a2 2 0 01-2-2v-2" stroke="#212121" stroke-width="1.6" stroke-linecap="round"/><path d="M9 10v1M15 10v1M12 9v3l-1 1M9.5 15c1.5 1 3.5 1 5 0" stroke="#212121" stroke-width="1.5" stroke-linecap="round"/></svg>
+        </button>
+        <button class="numkey" onclick="pinPress('0')">0</button>
+        <button class="numkey ghost" onclick="pinBack()" aria-label="Smazat">
+          <svg width="30" height="30" viewBox="0 0 24 24" fill="none"><path d="M9 6h11a1 1 0 011 1v10a1 1 0 01-1 1H9l-6-6 6-6z" stroke="#212121" stroke-width="1.5" stroke-linejoin="round"/><path d="M13 10l4 4M17 10l-4 4" stroke="#212121" stroke-width="1.5" stroke-linecap="round"/></svg>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ RESULT ============ -->
+  <section class="screen" id="screen-result">
+    <div class="hdr"><span class="back" onclick="goTo('home')">Zavřít</span></div>
+    <div class="result-wrap">
+      <div class="result-ill">
+        <img style="object-fit:contain" src="../../design-system/design-system/assets/illustrations/success-light.png" alt="Platba byla zadána">
+      </div>
+      <div class="result-title">Zadali jste platbu</div>
+      <div class="actionrow">
+        <span class="lead"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M3 7a2 2 0 012-2h4l2 2h8a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2V7z" stroke="#e00000" stroke-width="1.6" stroke-linejoin="round"/></svg></span>
+        <div class="t">Uložit šablonu</div>
+        <svg class="icn" width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M9 6l6 6-6 6" stroke="#717171" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <button class="promo-card" id="result-promo" type="button" onclick="openRetentionDetail('result')" hidden>
+        <span class="promo-card__content">
+          <span class="promo-card__title">Peníze mohou vydělávat více</span>
+          <span class="promo-card__caption">Získejte na spoření sazbu 3,5 % p. a.</span>
+        </span>
+        <img class="promo-card__illustration" src="../../design-system/design-system/assets/illustrations/savings-offer-light.png" alt="">
+        <img class="promo-card__caret" src="../../design-system/design-system/assets/icons/caret-right.svg" alt="">
+      </button>
+    </div>
+    <div class="bottombar">
+      <button class="btn btn-primary" onclick="resetAndNew()">Zadat další</button>
+      <button class="btn btn-secondary" onclick="goTo('home')">Zavřít</button>
+    </div>
+  </section>
+
+  <!-- CO Bottom Sheet: druhý kontakt s nabídkou -->
+  <div class="retention-overlay" id="retention-overlay" hidden>
+    <div class="retention-sheet" role="dialog" aria-modal="true" aria-labelledby="retention-sheet-title">
+      <div class="retention-sheet__top">
+        <div class="sheet-handle"></div>
+        <button class="retention-sheet__close" type="button" onclick="dismissRetentionSheet(true)" aria-label="Zavřít">
+          <img width="18" height="18" src="../../design-system/design-system/assets/icons/close.svg" alt="">
+        </button>
+      </div>
+      <img class="retention-sheet__illustration" src="../../design-system/design-system/assets/illustrations/savings-offer-light.png" alt="">
+      <h2 id="retention-sheet-title">Nechte své peníze vydělávat více</h2>
+      <p>Aktivujte si sazbu 3,5 % p. a. na spořicím účtu. Peníze zůstávají kdykoliv dostupné.</p>
+      <div class="benefit" id="sheet-benefit">Získáte přibližně o 2 500 Kč ročně více.</div>
+      <div class="retention-sheet__actions">
+        <button class="btn btn-primary" type="button" onclick="acceptRetentionOffer()">Získat vyšší sazbu</button>
+        <button class="btn btn-secondary" type="button" onclick="dismissRetentionSheet(true)">Pokračovat v platbě</button>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+/* ===== localStorage helpers (sandbox-safe) ===== */
+function lsGet(k){ try { return localStorage.getItem(k); } catch(e){ return null; } }
+function lsSet(k,v){ try { localStorage.setItem(k,v); } catch(e){} }
+function lsDel(k){ try { localStorage.removeItem(k); } catch(e){} }
+var P='retention_a__';
+var RETENTION_LIMIT=250000;
+
+/* ===== state persistence ===== */
+function saveField(el){ if(el.dataset.k){ lsSet(P+el.dataset.k, el.value); } }
+function restoreFields(){
+  document.querySelectorAll('[data-k]').forEach(function(el){
+    var v=lsGet(P+el.dataset.k); if(v!==null) el.value=v;
+  });
+  var tm=lsGet(P+'timing')||'asap'; setTiming(tm,true);
+  updateRetentionEligibility();
+}
+document.addEventListener('input', function(e){ if(e.target.dataset && e.target.dataset.k) saveField(e.target); });
+document.addEventListener('change', function(e){
+  if(e.target.dataset && e.target.dataset.k){ saveField(e.target); }
+  if(e.target.id==='f_currency') updateRetentionEligibility();
+});
+
+function onAmount(el){
+  var raw=el.value.replace(/[^0-9.,\s]/g,''); el.value=raw; saveField(el); updateRetentionEligibility();
+}
+function setTiming(t, silent){
+  lsSet(P+'timing', t);
+  var a=document.getElementById('seg-asap'), l=document.getElementById('seg-later');
+  if(a&&l){ a.classList.toggle('on', t==='asap'); l.classList.toggle('on', t==='later'); }
+}
+
+/* ===== formatting ===== */
+function fmtAmount(){
+  var raw=(lsGet(P+'amount')||'').replace(/\s/g,'').replace(',', '.');
+  var n=parseFloat(raw);
+  var cur=lsGet(P+'currency')||'Kč';
+  if(isNaN(n)||n<=0) return '0 '+cur;
+  var s=n.toLocaleString('cs-CZ',{minimumFractionDigits:2,maximumFractionDigits:2});
+  return s+' '+cur;
+}
+function val(k, def){ var v=lsGet(P+k); return (v&&v.trim())? v.trim() : (def||''); }
+
+/* ===== retenční nabídka ===== */
+function amountNumber(){
+  var raw=(val('amount')||'').replace(/[\s\u00a0]/g,'');
+  if(raw.indexOf(',')>-1 && raw.indexOf('.')>-1) raw=raw.replace(/\./g,'').replace(',','.');
+  else raw=raw.replace(',','.');
+  var n=parseFloat(raw);
+  return isNaN(n) ? 0 : n;
+}
+function retentionEligible(){
+  return amountNumber()>RETENTION_LIMIT && (val('currency','Kč')==='Kč');
+}
+function annualBenefit(){
+  return Math.round(Math.min(amountNumber(),500000)*0.01).toLocaleString('cs-CZ')+' Kč';
+}
+function updateRetentionEligibility(){
+  var eligible=retentionEligible(), accepted=lsGet(P+'promoAccepted')==='1';
+  var nav=document.getElementById('retention-nav');
+  var result=document.getElementById('result-promo');
+  if(nav) nav.hidden=!eligible || accepted;
+  if(result) result.hidden=!eligible || accepted;
+  var benefit='Získáte přibližně o '+annualBenefit()+' ročně více.';
+  var detailBenefit=document.getElementById('detail-benefit');
+  var sheetBenefit=document.getElementById('sheet-benefit');
+  if(detailBenefit) detailBenefit.textContent=benefit;
+  if(sheetBenefit) sheetBenefit.textContent=benefit;
+}
+function openRetentionDetail(from){
+  lsSet(P+'offerReturn',from||'step1');
+  updateRetentionEligibility();
+  goTo('retention-detail');
+}
+function returnFromRetentionDetail(){
+  goTo(lsGet(P+'offerReturn')||'step1');
+}
+function showRetentionSheet(skipHistory){
+  var overlay=document.getElementById('retention-overlay');
+  if(overlay) overlay.hidden=false;
+  updateRetentionEligibility();
+  if(!skipHistory && location.hash!=='#retention-sheet') location.hash='retention-sheet';
+}
+function hideRetentionSheet(){
+  var overlay=document.getElementById('retention-overlay');
+  if(overlay) overlay.hidden=true;
+}
+function continueFromStep1(){
+  if(retentionEligible() && lsGet(P+'promoAccepted')!=='1' && lsGet(P+'sheetSeen')!=='1') showRetentionSheet(false);
+  else goTo('step2');
+}
+function dismissRetentionSheet(continuePayment){
+  lsSet(P+'sheetSeen','1');
+  hideRetentionSheet();
+  goTo(continuePayment ? 'step2' : 'step1');
+}
+function acceptRetentionOffer(){
+  lsSet(P+'promoAccepted','1');
+  updateRetentionEligibility();
+  var overlay=document.getElementById('retention-overlay');
+  if(overlay && !overlay.hidden){ hideRetentionSheet(); goTo('step2'); }
+  else returnFromRetentionDetail();
+}
+
+/* ===== render summary + auth from state ===== */
+function renderSummary(){
+  var komu=val('komu','—');
+  var rows=[
+    ['Z účtu','FRANTIŠEK KOUDELKA\n122000/0100'],
+    ['Na účet', komu],
+    ['Částka', fmtAmount()],
+    ['Poplatek','Zdarma'],
+    ['Přesný název příjemce','Jan Novák'],
+    ['Ověření názvu','Název odpovídá číslu účtu'],
+    ['Datum platby', val('timing')==='later' ? 'Naplánováno později' : new Date().toLocaleDateString('cs-CZ')]
+  ];
+  document.getElementById('summary-list').innerHTML = rows.map(function(r){
+    return '<div class="row"><span class="k">'+r[0]+'</span><span class="v">'+esc(r[1]).replace(/\n/g,'<br>')+'</span></div>';
+  }).join('');
+}
+function esc(s){ return (s+'').replace(/[&<>]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;'}[c];}); }
+
+/* ===== PIN autorizace ===== */
+var PIN_LEN=6, pin='';
+function renderPin(){
+  var w=document.getElementById('pin-dots'); if(!w)return;
+  var h=''; for(var i=0;i<PIN_LEN;i++) h+='<span class="d'+(i<pin.length?' on':'')+'"></span>';
+  w.innerHTML=h;
+}
+function pinPress(d){
+  if(pin.length>=PIN_LEN) return;
+  pin+=d; renderPin();
+  if(pin.length===PIN_LEN){ setTimeout(function(){ pin=''; goTo('result'); }, 220); }
+}
+function pinBack(){ pin=pin.slice(0,-1); renderPin(); }
+function pinFace(){ pin=''; renderPin(); setTimeout(function(){ goTo('result'); }, 300); }
+
+/* ===== navigation (hash SPA) ===== */
+function clearRetentionState(){
+  ['promoAccepted','sheetSeen','offerReturn'].forEach(function(k){ lsDel(P+k); });
+  hideRetentionSheet();
+}
+function startPayment(){ clearRetentionState(); updateRetentionEligibility(); goTo('step1'); }
+function resetAndNew(){
+  ['komu','amount','currency','msg','vs','popis','ks','ss','timing','promoAccepted','sheetSeen','offerReturn'].forEach(function(k){ lsDel(P+k); });
+  document.querySelectorAll('[data-k]').forEach(function(el){ el.value = el.tagName==='SELECT'? 'Kč' : ''; });
+  setTiming('asap', true);
+  updateRetentionEligibility();
+  goTo('step1');
+}
+
+function goTo(id, opt){
+  opt = opt || {};
+  document.querySelectorAll('.screen').forEach(function(s){ s.classList.remove('active'); });
+  var t=document.getElementById('screen-'+id);
+  if(t) t.classList.add('active');
+  if(id==='summary') renderSummary();
+  if(id==='pin'){ pin=''; renderPin(); }
+  if(id==='result' || id==='step1' || id==='retention-detail') updateRetentionEligibility();
+  var c=t&&t.querySelector('.content'); if(c) c.scrollTop=0;
+  if(!opt.skipHistory && location.hash.replace('#','')!==id){ location.hash = id; }
+}
+
+/* back / hash restore */
+window.addEventListener('popstate', function(){
+  var h=location.hash.replace('#','');
+  if(h==='retention-sheet'){ goTo('step1',{skipHistory:true}); showRetentionSheet(true); return; }
+  hideRetentionSheet();
+  goTo(h && document.getElementById('screen-'+h) ? h : 'home', { skipHistory:true });
+});
+window.addEventListener('hashchange', function(){
+  var h=location.hash.replace('#','');
+  if(h==='retention-sheet'){ goTo('step1',{skipHistory:true}); showRetentionSheet(true); return; }
+  hideRetentionSheet();
+  if(h && document.getElementById('screen-'+h)){
+    var cur=document.querySelector('.screen.active');
+    if(!cur || cur.id!=='screen-'+h) goTo(h,{skipHistory:true});
+  }
+});
+
+document.addEventListener('DOMContentLoaded', function(){
+  restoreFields();
+  var h=location.hash.replace('#','');
+  if(h==='retention-sheet'){ goTo('step1',{skipHistory:true}); showRetentionSheet(true); }
+  else if(h && document.getElementById('screen-'+h)){ goTo(h,{skipHistory:true}); history.replaceState({},'',location.hash); }
+  else { goTo('home',{skipHistory:true}); }
+});
+</script>
+</body>
+</html>
