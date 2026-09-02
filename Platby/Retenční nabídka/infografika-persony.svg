@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1100" viewBox="0 0 1600 1100">
+  <rect width="1600" height="1100" fill="#f7f7f7"/>
+  <text x="80" y="92" font-family="Arial, sans-serif" font-size="52" font-weight="700" fill="#212121">Persony scénáře</text>
+  <text x="80" y="142" font-family="Arial, sans-serif" font-size="24" fill="#666">Retenční nabídka při vysoké odchozí platbě</text>
+  <rect x="80" y="180" width="1440" height="3" fill="#e30613"/>
+
+  <g font-family="Arial, sans-serif">
+    <rect x="80" y="230" width="690" height="370" rx="24" fill="#fff" stroke="#d6d6d6" stroke-width="2"/>
+    <circle cx="145" cy="300" r="42" fill="#212121"/><text x="145" y="314" text-anchor="middle" font-size="34" font-weight="700" fill="#fff">P</text>
+    <text x="215" y="292" font-size="30" font-weight="700" fill="#212121">Petr, 58 let</text>
+    <text x="215" y="330" font-size="22" fill="#666">Bezpečnost na prvním místě</text>
+    <text x="120" y="405" font-size="23" font-weight="700" fill="#212121">Chování</text>
+    <text x="120" y="442" font-size="22" fill="#444">Velkou částku posílá jen občas.</text>
+    <text x="120" y="475" font-size="22" fill="#444">Kontroluje zůstatek a příjemce.</text>
+    <text x="120" y="530" font-size="23" font-weight="700" fill="#212121">Potřebuje</text>
+    <text x="120" y="567" font-size="22" fill="#444">Jasně oddělit nabídku od bezpečnostní kontroly.</text>
+
+    <rect x="830" y="230" width="690" height="370" rx="24" fill="#fff" stroke="#d6d6d6" stroke-width="2"/>
+    <circle cx="895" cy="300" r="42" fill="#e30613"/><text x="895" y="314" text-anchor="middle" font-size="34" font-weight="700" fill="#fff">J</text>
+    <text x="965" y="292" font-size="30" font-weight="700" fill="#212121">Jana, 34 let</text>
+    <text x="965" y="330" font-size="22" fill="#666">Optimalizuje výnos</text>
+    <text x="870" y="405" font-size="23" font-weight="700" fill="#212121">Chování</text>
+    <text x="870" y="442" font-size="22" fill="#444">Sleduje sazby a aktivně přesouvá peníze.</text>
+    <text x="870" y="475" font-size="22" fill="#444">Chce konkrétní přínos v korunách.</text>
+    <text x="870" y="530" font-size="23" font-weight="700" fill="#212121">Potřebuje</text>
+    <text x="870" y="567" font-size="22" fill="#444">Sazbu, výnos, podmínky a okamžitou aktivaci.</text>
+
+    <rect x="80" y="660" width="690" height="370" rx="24" fill="#fff" stroke="#d6d6d6" stroke-width="2"/>
+    <circle cx="145" cy="730" r="42" fill="#666"/><text x="145" y="744" text-anchor="middle" font-size="34" font-weight="700" fill="#fff">M</text>
+    <text x="215" y="722" font-size="30" font-weight="700" fill="#212121">Martin, 29 let</text>
+    <text x="215" y="760" font-size="22" fill="#666">Chce platbu vyřídit rychle</text>
+    <text x="120" y="835" font-size="23" font-weight="700" fill="#212121">Chování</text>
+    <text x="120" y="872" font-size="22" fill="#444">Platby řeší mezi dalšími aktivitami.</text>
+    <text x="120" y="905" font-size="22" fill="#444">Přerušení vnímá jako překážku.</text>
+    <text x="120" y="960" font-size="23" font-weight="700" fill="#212121">Potřebuje</text>
+    <text x="120" y="997" font-size="22" fill="#444">Ignorovat nabídku bez ztráty kontextu.</text>
+
+    <rect x="830" y="660" width="690" height="370" rx="24" fill="#fff" stroke="#d6d6d6" stroke-width="2"/>
+    <circle cx="895" cy="730" r="42" fill="#218739"/><text x="895" y="744" text-anchor="middle" font-size="34" font-weight="700" fill="#fff">A</text>
+    <text x="965" y="722" font-size="30" font-weight="700" fill="#212121">Alena, 46 let</text>
+    <text x="965" y="760" font-size="22" fill="#666">Opatrná, méně finančně jistá</text>
+    <text x="870" y="835" font-size="23" font-weight="700" fill="#212121">Chování</text>
+    <text x="870" y="872" font-size="22" fill="#444">Sazby a podmínky si nepočítá sama.</text>
+    <text x="870" y="905" font-size="22" fill="#444">Citlivě reaguje na nejasná tlačítka.</text>
+    <text x="870" y="960" font-size="23" font-weight="700" fill="#212121">Potřebuje</text>
+    <text x="870" y="997" font-size="22" fill="#444">Jednoduchý benefit a jednoznačné akce.</text>
+  </g>
+</svg>

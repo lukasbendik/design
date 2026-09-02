@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1100" viewBox="0 0 1600 1100">
+  <rect width="1600" height="1100" fill="#f7f7f7"/>
+  <g font-family="Arial, sans-serif">
+    <text x="80" y="92" font-size="52" font-weight="700" fill="#212121">Výstupy z konceptového testu</text>
+    <text x="80" y="142" font-size="24" fill="#666">Předpokládané reakce person na varianty retenční nabídky</text>
+    <rect x="80" y="180" width="1440" height="3" fill="#e30613"/>
+
+    <text x="80" y="245" font-size="24" font-weight="700" fill="#666">VARIANTA</text>
+    <text x="470" y="245" font-size="24" font-weight="700" fill="#666">CO UŽIVATEL UDĚLÁ</text>
+    <text x="1110" y="245" font-size="24" font-weight="700" fill="#666">HODNOCENÍ</text>
+
+    <g font-size="25" fill="#212121">
+      <rect x="80" y="275" width="1440" height="130" rx="18" fill="#fff" stroke="#d6d6d6" stroke-width="2"/>
+      <circle cx="140" cy="340" r="32" fill="#e30613"/><text x="140" y="350" text-anchor="middle" font-size="28" font-weight="700" fill="#fff">A</text>
+      <text x="200" y="328" font-weight="700">Inline karta</text><text x="200" y="363" fill="#666">po zadání částky</text>
+      <text x="470" y="328">Petr zkontroluje. Jana otevře detail.</text><text x="470" y="363">Martin ignoruje, Alena rozumí titulku.</text>
+      <rect x="1110" y="312" width="330" height="52" rx="26" fill="#e7f4ea"/><text x="1275" y="347" text-anchor="middle" font-weight="700" fill="#218739">DOPORUČENÁ</text>
+
+      <rect x="80" y="430" width="1440" height="130" rx="18" fill="#fff" stroke="#d6d6d6" stroke-width="2"/>
+      <circle cx="140" cy="495" r="32" fill="#e30613"/><text x="140" y="505" text-anchor="middle" font-size="28" font-weight="700" fill="#fff">B</text>
+      <text x="200" y="483" font-weight="700">Bottom sheet</text><text x="200" y="518" fill="#666">po „Pokračovat“</text>
+      <text x="470" y="483">Jana aktivuje. Petr ověřuje, zda nejde o blokaci.</text><text x="470" y="518">Martin je frustrovaný, Alena váhá nad CTA.</text>
+      <rect x="1110" y="467" width="330" height="52" rx="26" fill="#fff3db"/><text x="1275" y="502" text-anchor="middle" font-weight="700" fill="#a45a00">EXPERIMENT</text>
+
+      <rect x="80" y="585" width="1440" height="130" rx="18" fill="#fff" stroke="#d6d6d6" stroke-width="2"/>
+      <circle cx="140" cy="650" r="32" fill="#666"/><text x="140" y="660" text-anchor="middle" font-size="28" font-weight="700" fill="#fff">C</text>
+      <text x="200" y="638" font-weight="700">Karta v rekapitulaci</text><text x="200" y="673" fill="#666">před autorizací</text>
+      <text x="470" y="638">Petr ocení kontext částky a zůstatku.</text><text x="470" y="673">Martin už chce potvrdit, nabídka přichází pozdě.</text>
+      <rect x="1110" y="622" width="330" height="52" rx="26" fill="#eef1f4"/><text x="1275" y="657" text-anchor="middle" font-weight="700" fill="#4d5964">KONTROLNÍ</text>
+
+      <rect x="80" y="740" width="1440" height="130" rx="18" fill="#fff" stroke="#d6d6d6" stroke-width="2"/>
+      <circle cx="140" cy="805" r="32" fill="#218739"/><text x="140" y="815" text-anchor="middle" font-size="28" font-weight="700" fill="#fff">D</text>
+      <text x="200" y="793" font-weight="700">Promo po platbě</text><text x="200" y="828" fill="#666">na výsledku</text>
+      <text x="470" y="793">Všichni dokončí platbu bez přerušení.</text><text x="470" y="828">Aktivace sazby je ale nejslabší.</text>
+      <rect x="1110" y="777" width="330" height="52" rx="26" fill="#e7f4ea"/><text x="1275" y="812" text-anchor="middle" font-weight="700" fill="#218739">NEJBEZPEČNĚJŠÍ</text>
+    </g>
+
+    <rect x="80" y="925" width="1440" height="110" rx="22" fill="#212121"/>
+    <text x="120" y="972" font-size="25" font-weight="700" fill="#fff">DOPORUČENÍ</text>
+    <text x="120" y="1010" font-size="24" fill="#fff">A jako default · B jen při silném signálu · C jako kontrola · D jako follow-up</text>
+  </g>
+</svg>
