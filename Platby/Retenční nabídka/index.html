@@ -236,7 +236,8 @@ body{min-height:100dvh;}
 .retention-sheet__illustration{display:block;width:125px;height:96px;object-fit:contain;margin:4px auto 0;}
 .retention-sheet h2{font:500 24px/32px var(--font-family);text-align:center;margin-top:4px;}
 .retention-sheet p{font:400 16px/24px var(--font-family);color:var(--color-content-secondary);text-align:center;margin:8px 8px 16px;}
-.retention-sheet .benefit{text-align:center;margin-bottom:16px;}
+.retention-sheet .benefit{text-align:center;margin-bottom:16px;color:var(--color-content-primary);}
+.retention-sheet__tertiary{width:100%;min-height:48px;border:0;background:transparent;color:var(--color-interactive-primary);font:500 16px/24px var(--font-family);cursor:pointer;text-align:center;padding:8px 16px;}
 .retention-sheet__actions{display:flex;flex-direction:column;gap:var(--space-8);}
 
 /* reference-faithful payment entry */
@@ -562,10 +563,10 @@ body{min-height:100dvh;}
       <img class="retention-sheet__illustration" src="../../design-system/design-system/assets/illustrations/savings-offer-light.png" alt="">
       <h2 id="retention-sheet-title">Nechte své peníze vydělávat více</h2>
       <p>Aktivujte si sazbu 3,5 % p. a. na spořicím účtu. Peníze zůstávají kdykoliv dostupné.</p>
+      <button class="retention-sheet__tertiary" type="button" onclick="goToStep1FromSheet()">Získat vyšší sazbu</button>
       <div class="benefit" id="sheet-benefit">Získáte přibližně o 2 500 Kč ročně více.</div>
       <div class="retention-sheet__actions">
-        <button class="btn btn-primary" type="button" onclick="acceptRetentionOffer()">Získat vyšší sazbu</button>
-        <button class="btn btn-secondary" type="button" onclick="dismissRetentionSheet(true)">Pokračovat v platbě</button>
+        <button class="btn btn-primary" type="button" onclick="dismissRetentionSheet(true)">Pokračovat</button>
       </div>
     </div>
   </div>
@@ -679,6 +680,11 @@ function dismissRetentionSheet(continuePayment){
   lsSet(P+'sheetSeen','1');
   hideRetentionSheet();
   goTo(continuePayment ? 'step2' : 'step1');
+}
+function goToStep1FromSheet(){
+  lsSet(P+'sheetSeen','1');
+  hideRetentionSheet();
+  goTo('step1');
 }
 function acceptRetentionOffer(){
   lsSet(P+'promoAccepted','1');
