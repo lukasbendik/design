@@ -715,7 +715,7 @@ function renderSummary(){
 function esc(s){ return (s+'').replace(/[&<>]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;'}[c];}); }
 
 /* ===== PIN autorizace ===== */
-var PIN_LEN=6, pin='';
+var PIN_LEN=4, pin='';
 function renderPin(){
   var w=document.getElementById('pin-dots'); if(!w)return;
   var h=''; for(var i=0;i<PIN_LEN;i++) h+='<span class="d'+(i<pin.length?' on':'')+'"></span>';
