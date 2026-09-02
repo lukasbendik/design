@@ -126,7 +126,7 @@ body{min-height:100dvh;}
 .itemnav .amt{margin-left:auto;font:500 16px/24px var(--font-family);text-align:right;}
 .itemnav-button{width:100%;border:0;text-align:left;color:inherit;font:inherit;}
 .promo-nav-card{padding:0;overflow:hidden;}
-.promo-nav-card .itemnav{box-shadow:none;border-radius:0;}
+.promo-nav-card .itemnav{box-shadow:none;border-radius:0;min-height:102px;padding:17px 16px 17px 24px;}
 .promo-nav-card .lead img{width:24px;height:24px;display:block;filter:invert(12%) sepia(99%) saturate(7450%) hue-rotate(2deg) brightness(93%) contrast(120%);}
 .promo-kicker{font:500 12px/16px var(--font-family);color:var(--color-interactive-primary);margin-bottom:2px;}
 
@@ -300,7 +300,7 @@ body{min-height:100dvh;}
           <div class="arow" onclick="startPayment()">
             <div class="body">
               <div class="topline"><span class="nm">Běžný účet</span><span class="no">122000/0100</span></div>
-              <div class="bal">18 063<small>,38 Kč</small></div>
+              <div class="bal">750 000<small>,00 Kč</small></div>
             </div>
             <svg class="icn" width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M9 6l6 6-6 6" stroke="#717171" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </div>
@@ -405,13 +405,12 @@ body{min-height:100dvh;}
           </select>
         </label>
       </div>
-      <div class="hint">Na účtu máte 18 063,38 Kč.</div>
+      <div class="hint" id="balance-hint">Na účtu máte 750 000,00 Kč.</div>
 
       <div class="card promo-nav-card" id="retention-nav" hidden>
         <button class="itemnav itemnav-button" type="button" onclick="openRetentionDetail('step1')">
           <span class="lead"><img src="../../design-system/design-system/assets/icons/moneybox.svg" alt=""></span>
           <span class="body">
-            <span class="promo-kicker">Tip pro vás</span>
             <span class="t">Vaše peníze mohou vydělávat více</span>
             <span class="s">Získejte sazbu 3,5 % p. a.</span>
           </span>
@@ -580,6 +579,7 @@ function lsSet(k,v){ try { localStorage.setItem(k,v); } catch(e){} }
 function lsDel(k){ try { localStorage.removeItem(k); } catch(e){} }
 var P='retention_a__';
 var RETENTION_LIMIT=250000;
+var ACCOUNT_BALANCE=750000;
 
 /* ===== state persistence ===== */
 function saveField(el){ if(el.dataset.k){ lsSet(P+el.dataset.k, el.value); } }
@@ -588,16 +588,17 @@ function restoreFields(){
     var v=lsGet(P+el.dataset.k); if(v!==null) el.value=v;
   });
   var tm=lsGet(P+'timing')||'asap'; setTiming(tm,true);
+  renderBalanceHint();
   updateRetentionEligibility();
 }
 document.addEventListener('input', function(e){ if(e.target.dataset && e.target.dataset.k) saveField(e.target); });
 document.addEventListener('change', function(e){
   if(e.target.dataset && e.target.dataset.k){ saveField(e.target); }
-  if(e.target.id==='f_currency') updateRetentionEligibility();
+  if(e.target.id==='f_currency'){ renderBalanceHint(); updateRetentionEligibility(); }
 });
 
 function onAmount(el){
-  var raw=el.value.replace(/[^0-9.,\s]/g,''); el.value=raw; saveField(el); updateRetentionEligibility();
+  var raw=el.value.replace(/[^0-9.,\s]/g,''); el.value=raw; saveField(el); renderBalanceHint(); updateRetentionEligibility();
 }
 function setTiming(t, silent){
   lsSet(P+'timing', t);
@@ -623,6 +624,16 @@ function amountNumber(){
   else raw=raw.replace(',','.');
   var n=parseFloat(raw);
   return isNaN(n) ? 0 : n;
+}
+function formatCzk(n){
+  return n.toLocaleString('cs-CZ',{minimumFractionDigits:2,maximumFractionDigits:2})+' Kč';
+}
+function renderBalanceHint(){
+  var hint=document.getElementById('balance-hint');
+  if(!hint) return;
+  var n=amountNumber();
+  if(val('currency','Kč')!=='Kč' || n<=0){ hint.textContent='Na účtu máte '+formatCzk(ACCOUNT_BALANCE)+'.'; return; }
+  hint.textContent=n<=ACCOUNT_BALANCE ? 'Po platbě zůstane na účtu '+formatCzk(ACCOUNT_BALANCE-n)+'.' : 'Částka převyšuje zůstatek na účtu.';
 }
 function retentionEligible(){
   return amountNumber()>RETENTION_LIMIT && (val('currency','Kč')==='Kč');
@@ -731,7 +742,7 @@ function goTo(id, opt){
   if(t) t.classList.add('active');
   if(id==='summary') renderSummary();
   if(id==='pin'){ pin=''; renderPin(); }
-  if(id==='result' || id==='step1' || id==='retention-detail') updateRetentionEligibility();
+  if(id==='result' || id==='step1' || id==='retention-detail'){ renderBalanceHint(); updateRetentionEligibility(); }
   var c=t&&t.querySelector('.content'); if(c) c.scrollTop=0;
   if(!opt.skipHistory && location.hash.replace('#','')!==id){ location.hash = id; }
 }

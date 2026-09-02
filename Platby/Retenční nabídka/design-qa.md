@@ -2,7 +2,8 @@
 
 **Source visual truth**
 
-- Krok 1: `/home/lukinab/.codex/attachments/c1c963b8-c5b0-4329-9a15-606d15a83c79/codex-clipboard-f23ad8d4-599d-4fbc-9584-ce9159e3e5f7.png`
+- Krok 1 / banner: `/home/lukinab/.codex/attachments/c1a89f7f-9086-443b-aed8-15b1062f8782/codex-clipboard-9d1d390f-56a3-48d5-b779-6d66928b9085.png`
+- Krok 1 / částka a zůstatek: `/home/lukinab/.codex/attachments/05d46105-1bf5-40ed-ae4b-77b7c6f0dd27/codex-clipboard-fa5f601f-2922-41c7-bb75-7a804496caae.png`
 - Výsledek: `/home/lukinab/.codex/attachments/60acde5f-9bab-4f68-b6d3-4aee11c0425a/codex-clipboard-0c91f81c-7076-47f4-bb7c-afb6c9028e7c.png`
 
 **Implementation evidence**
@@ -19,12 +20,14 @@
 - Source result: 782 × 1642 px including source capture edge; normalized with centered fit to 390 × 844 px.
 - Implementation captures: 390 × 844 px.
 - Full comparisons: `qa-step1-full.png`, `qa-result-full.png`.
+- Latest banner comparison: `qa-banner-full-final.png` against the updated supplied screenshot.
 - Focused comparisons: `qa-step1-focus.png`, `qa-result-focus.png`.
 
 **State**
 
 - Standard payment in CZK to an external bank.
 - Amount 250 001 Kč: retention eligibility active.
+- Source account balance: 750 000 Kč; balance hint dynamically subtracts the entered amount.
 - Offer ignored in step 1 and bottom sheet; promo remains visible on result.
 
 **Findings**
@@ -40,6 +43,7 @@
 
 1. First pass found P2 drift in step 1: close icon instead of `Zavřít`, bordered account selector and elevated contact row. Fixed with reference-faithful header text, transparent account selector and flat contact navigation. Post-fix evidence: `07-step1-final.png`, `qa-step1-full.png`, `qa-step1-focus.png`.
 2. First result pass found P2 illustration scale drift: success motif appeared too small. Fixed by using the repository `success-light.png` asset in a centered 212 × 142 crop slot. Post-fix evidence: `08-result-final.png`, `qa-result-full.png`, `qa-result-focus.png`.
+3. Updated source banner comparison found P2 drift in promo height and copy hierarchy: an extra kicker increased the card and did not match the supplied banner. Fixed with standard item-navigation row geometry, no kicker, 102 px card height, 24/16 horizontal padding and 750 000 Kč dynamic balance. Post-fix evidence: `11-banner-final.png` and the supplied banner source.
 
 **Primary interactions tested**
 
