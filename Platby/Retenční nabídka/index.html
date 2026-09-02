@@ -233,11 +233,11 @@ body{min-height:100dvh;}
 .retention-sheet{width:100%;max-width:390px;background:var(--color-background-body);border-radius:var(--radius-xl) var(--radius-xl) 0 0;padding:8px var(--pad-xl) max(var(--pad-xl),env(safe-area-inset-bottom));box-shadow:var(--shadow-floating);animation:sheetUp .25s ease;}
 .retention-sheet__top{display:flex;justify-content:center;position:relative;}
 .retention-sheet__close{position:absolute;right:0;top:4px;width:32px;height:32px;border:0;border-radius:var(--radius-full);background:var(--color-background-surface);display:flex;align-items:center;justify-content:center;cursor:pointer;}
-.retention-sheet__illustration{display:block;width:125px;height:96px;object-fit:contain;margin:4px auto 0;}
-.retention-sheet h2{font:500 24px/32px var(--font-family);text-align:center;margin-top:4px;}
-.retention-sheet p{font:400 16px/24px var(--font-family);color:var(--color-content-secondary);text-align:center;margin:8px 8px 16px;}
-.retention-sheet .benefit{text-align:center;margin-bottom:16px;color:var(--color-content-primary);}
-.retention-sheet__tertiary{width:100%;min-height:48px;border:0;background:transparent;color:var(--color-interactive-primary);font:500 16px/24px var(--font-family);cursor:pointer;text-align:center;padding:8px 16px;}
+.retention-sheet__illustration{display:block;width:96px;height:72px;object-fit:contain;margin:0 auto;}
+.retention-sheet h2{font:500 24px/32px var(--font-family);text-align:center;margin-top:0;}
+.retention-sheet p{font:400 16px/24px var(--font-family);color:var(--color-content-secondary);text-align:center;margin:6px 8px 8px;}
+.retention-sheet .benefit{text-align:center;margin-bottom:8px;color:var(--color-content-primary);padding-top:12px;}
+.retention-sheet__tertiary{width:auto;min-height:40px;border:0;background:transparent;color:var(--color-interactive-secondary);font:500 14px/20px var(--font-family);text-decoration:underline;text-underline-offset:3px;cursor:pointer;text-align:center;padding:8px 16px;align-self:center;}
 .retention-sheet__actions{display:flex;flex-direction:column;gap:var(--space-8);}
 
 /* reference-faithful payment entry */
@@ -566,7 +566,7 @@ body{min-height:100dvh;}
       <button class="retention-sheet__tertiary" type="button" onclick="goToStep1FromSheet()">Získat vyšší sazbu</button>
       <div class="benefit" id="sheet-benefit">Získáte přibližně o 2 500 Kč ročně více.</div>
       <div class="retention-sheet__actions">
-        <button class="btn btn-primary" type="button" onclick="dismissRetentionSheet(true)">Pokračovat</button>
+        <button class="btn btn-primary" type="button" onclick="dismissRetentionSheet(true)">Pokračovat k platbě</button>
       </div>
     </div>
   </div>
@@ -640,7 +640,7 @@ function retentionEligible(){
   return amountNumber()>RETENTION_LIMIT && (val('currency','Kč')==='Kč');
 }
 function annualBenefit(){
-  return Math.round(Math.min(amountNumber(),500000)*0.01).toLocaleString('cs-CZ')+' Kč';
+  return Math.max(2600,Math.min(5000,Math.round(Math.min(amountNumber(),500000)*0.01))).toLocaleString('cs-CZ')+' Kč';
 }
 function updateRetentionEligibility(){
   var eligible=retentionEligible(), accepted=lsGet(P+'promoAccepted')==='1';
