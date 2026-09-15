@@ -205,39 +205,19 @@ body{min-height:100dvh;}
 .actionrow .t{flex:1;font:400 16px/24px var(--font-family);color:var(--color-content-primary);}
 
 /* CO Content Card / v6.2 Promo */
-.promo-card{display:flex;align-items:center;width:calc(100% - 32px);min-height:128px;margin:16px;border:0;border-radius:var(--radius-md);padding:var(--pad-xl);background:var(--color-background-surface);box-shadow:var(--shadow-panel);text-align:left;color:inherit;cursor:pointer;overflow:hidden;}
-.promo-card__content{flex:1;min-width:0;display:flex;flex-direction:column;gap:var(--space-4);}
-.promo-card__title{font:600 18px/24px var(--font-family);}
-.promo-card__caption{font:500 14px/20px var(--font-family);color:var(--color-content-secondary);}
-.promo-card__illustration{width:104px;height:80px;object-fit:contain;flex:0 0 auto;}
-.promo-card__caret{width:20px;height:20px;flex:0 0 auto;}
-.promo-card[hidden]{display:none;}
-
-/* detail retenční nabídky */
-.offer-hero{width:100%;height:176px;object-fit:contain;display:block;margin:-8px 0 0;}
-.offer-copy{display:flex;flex-direction:column;gap:var(--space-8);}
-.offer-copy h2{font:500 24px/32px var(--font-family);}
-.offer-copy p{font:400 16px/24px var(--font-family);color:var(--color-content-secondary);}
-.rate-card{padding:var(--pad-2xl);display:flex;flex-direction:column;gap:var(--space-16);}
-.rate-row{display:grid;grid-template-columns:1fr 24px 1fr;align-items:end;gap:var(--space-8);}
-.rate-value{font:500 24px/32px var(--font-family);}
-.rate-value strong{color:var(--color-attention-success);font-weight:500;}
-.rate-label{font:400 12px/16px var(--font-family);color:var(--color-content-tertiary);}
-.rate-arrow{align-self:center;text-align:center;color:var(--color-content-tertiary);font:400 20px/24px var(--font-family);}
-.benefit{padding-top:var(--space-16);border-top:1px solid var(--color-background-divider);font:500 14px/20px var(--font-family);color:var(--color-attention-success);}
-
 /* retenční bottom sheet nad krokem 1 */
 .retention-overlay[hidden]{display:none;}
 .retention-overlay{position:fixed;inset:0;z-index:40;display:flex;align-items:flex-end;justify-content:center;background:rgba(33,33,33,.45);}
 @media(min-width:480px){.retention-overlay{position:absolute;border-radius:40px;overflow:hidden;}}
-.retention-sheet{width:100%;max-width:390px;background:var(--color-background-body);border-radius:var(--radius-xl) var(--radius-xl) 0 0;padding:8px var(--pad-xl) max(var(--pad-xl),env(safe-area-inset-bottom));box-shadow:var(--shadow-floating);animation:sheetUp .25s ease;}
+.retention-sheet{width:100%;max-width:390px;height:364px;background:var(--color-background-body);border-radius:var(--radius-xl) var(--radius-xl) 0 0;padding:8px var(--pad-xl) max(var(--pad-xl),env(safe-area-inset-bottom));box-shadow:var(--shadow-floating);animation:sheetUp .25s ease;}
 .retention-sheet__top{display:flex;justify-content:center;position:relative;}
-.retention-sheet__close{position:absolute;right:0;top:4px;width:32px;height:32px;border:0;border-radius:var(--radius-full);background:var(--color-background-surface);display:flex;align-items:center;justify-content:center;cursor:pointer;}
-.retention-sheet__illustration{display:block;width:96px;height:72px;object-fit:contain;margin:0 auto;}
-.retention-sheet h2{font:500 24px/32px var(--font-family);text-align:center;margin-top:0;}
-.retention-sheet p{font:400 16px/24px var(--font-family);color:var(--color-content-secondary);text-align:center;margin:6px 8px 20px;}
-#sheet-benefit{color:var(--color-content-primary);}
-.retention-sheet__tertiary{display:block;width:max-content;min-height:40px;margin:12px auto 16px;border:0;background:transparent;color:var(--color-interactive-secondary);font:500 14px/20px var(--font-family);text-decoration:underline;text-underline-offset:3px;cursor:pointer;text-align:center;padding:8px 16px;}
+.retention-sheet__close{position:absolute;right:-2px;top:6px;width:28px;height:28px;border:0;border-radius:var(--radius-full);background:#adadad;display:flex;align-items:center;justify-content:center;cursor:pointer;}
+.retention-sheet__close img{width:16px;height:16px;filter:brightness(0) invert(1);}
+.retention-sheet__illustration{position:absolute;top:48px;left:50%;display:block;width:160px;height:120px;object-fit:contain;transform:translateX(-50%);}
+.retention-sheet .sheet-handle{width:48px;height:4px;margin:0 0 12px;}
+.retention-sheet h2{font:500 24px/32px var(--font-family);text-align:center;margin-top:137px;}
+.retention-sheet p{font:400 16px/24px var(--font-family);color:var(--color-content-primary);text-align:center;margin:8px 8px 0;}
+.retention-sheet__tertiary{display:block;width:max-content;min-height:40px;margin:0 auto 4px;border:0;background:transparent;color:var(--color-interactive-secondary);font:400 16px/24px var(--font-family);text-decoration:underline;text-underline-offset:5px;cursor:pointer;text-align:center;padding:8px 16px;}
 .retention-sheet__actions{display:flex;flex-direction:column;gap:var(--space-8);}
 
 /* reference-faithful payment entry */
@@ -408,47 +388,9 @@ body{min-height:100dvh;}
       </div>
       <div class="hint" id="balance-hint">Na účtu máte 748 320,00 Kč.</div>
 
-      <div class="card promo-nav-card" id="retention-nav" hidden>
-        <button class="itemnav itemnav-button" type="button" onclick="openRetentionDetail('step1')">
-          <span class="lead"><img src="../../design-system/design-system/assets/icons/moneybox.svg" alt=""></span>
-          <span class="body">
-            <span class="t">Vaše peníze mohou vydělávat více</span>
-            <span class="s">Získejte sazbu 3,5 % p. a.</span>
-          </span>
-          <img class="icn" width="20" height="20" src="../../design-system/design-system/assets/icons/caret-right.svg" alt="">
-        </button>
-      </div>
     </div>
     <div class="bottombar">
       <button class="btn btn-primary" onclick="continueFromStep1()">Pokračovat</button>
-    </div>
-  </section>
-
-  <!-- ============ DETAIL RETENČNÍ NABÍDKY ============ -->
-  <section class="screen" id="screen-retention-detail">
-    <div class="hdr lg">
-      <div class="row"><span class="back" onclick="returnFromRetentionDetail()"><img width="22" height="22" src="../../design-system/design-system/assets/icons/caret-left.svg" alt="">Zpět</span></div>
-      <div class="big t-title-secondary">Výhodnější spoření</div>
-    </div>
-    <div class="content">
-      <img class="offer-hero" src="../../design-system/design-system/assets/illustrations/savings-offer-light.png" alt="Ilustrace spoření">
-      <div class="offer-copy">
-        <h2>Nenechte své úspory odejít</h2>
-        <p>Aktivujte si zvýhodněnou sazbu na spořicím účtu. Peníze zůstávají kdykoliv dostupné.</p>
-      </div>
-      <div class="card rate-card">
-        <div class="rate-row">
-          <div><div class="rate-label">Současný úrok</div><div class="rate-value">2,5 % p. a.</div></div>
-          <div class="rate-arrow" aria-hidden="true">→</div>
-          <div><div class="rate-label">Nový úrok</div><div class="rate-value"><strong>3,5 % p. a.</strong></div></div>
-        </div>
-        <div class="benefit" id="detail-benefit">Získáte přibližně o 2 500 Kč ročně více.</div>
-      </div>
-      <p class="hint">Sazba se vztahuje na zůstatek do 500 000 Kč. Podmínky nabídky uvidíte před aktivací.</p>
-    </div>
-    <div class="bottombar">
-      <button class="btn btn-primary" onclick="acceptRetentionOffer()">Aktivovat vyšší sazbu</button>
-      <button class="btn btn-secondary" onclick="returnFromRetentionDetail()">Teď ne</button>
     </div>
   </section>
 
@@ -536,14 +478,6 @@ body{min-height:100dvh;}
         <div class="t">Uložit šablonu</div>
         <svg class="icn" width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M9 6l6 6-6 6" stroke="#717171" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </div>
-      <button class="promo-card" id="result-promo" type="button" onclick="openRetentionDetail('result')" hidden>
-        <span class="promo-card__content">
-          <span class="promo-card__title">Peníze mohou vydělávat více</span>
-          <span class="promo-card__caption">Získejte na spoření sazbu 3,5 % p. a.</span>
-        </span>
-        <img class="promo-card__illustration" src="../../design-system/design-system/assets/illustrations/savings-offer-light.png" alt="">
-        <img class="promo-card__caret" src="../../design-system/design-system/assets/icons/caret-right.svg" alt="">
-      </button>
     </div>
     <div class="bottombar">
       <button class="btn btn-primary" onclick="resetAndNew()">Zadat další</button>
@@ -561,9 +495,9 @@ body{min-height:100dvh;}
         </button>
       </div>
       <img class="retention-sheet__illustration" src="../../design-system/design-system/assets/illustrations/savings-offer-light.png" alt="">
-      <h2 id="retention-sheet-title">Nechte své peníze vydělávat více</h2>
-      <p>Aktivujte si sazbu 3,5 % p. a. na spořicím účtu. Peníze zůstávají kdykoliv dostupné. Získáte přibližně o <span id="sheet-benefit">2 600 Kč</span> ročně více.</p>
-      <button class="retention-sheet__tertiary" type="button" onclick="goToStep1FromSheet()">Získat vyšší sazbu</button>
+      <h2 id="retention-sheet-title">Zhodnocujte 3,5 % p. a.</h2>
+      <p>Vložte si peníze na termínovaný účet na 6 měsíců.</p>
+      <button class="retention-sheet__tertiary" type="button" onclick="dismissRetentionSheet(false)">Sjednat termínovaný účet</button>
       <div class="retention-sheet__actions">
         <button class="btn btn-primary" type="button" onclick="dismissRetentionSheet(true)">Pokračovat k platbě</button>
       </div>
@@ -642,24 +576,7 @@ function annualBenefit(){
   return Math.max(2600,Math.min(5000,Math.round(Math.min(amountNumber(),500000)*0.01))).toLocaleString('cs-CZ')+' Kč';
 }
 function updateRetentionEligibility(){
-  var eligible=retentionEligible(), accepted=lsGet(P+'promoAccepted')==='1';
-  var nav=document.getElementById('retention-nav');
-  var result=document.getElementById('result-promo');
-  if(nav) nav.hidden=!eligible || accepted;
-  if(result) result.hidden=!eligible || accepted;
-  var benefit='Získáte přibližně o '+annualBenefit()+' ročně více.';
-  var detailBenefit=document.getElementById('detail-benefit');
-  var sheetBenefit=document.getElementById('sheet-benefit');
-  if(detailBenefit) detailBenefit.textContent=benefit;
-  if(sheetBenefit) sheetBenefit.textContent=annualBenefit();
-}
-function openRetentionDetail(from){
-  lsSet(P+'offerReturn',from||'step1');
-  updateRetentionEligibility();
-  goTo('retention-detail');
-}
-function returnFromRetentionDetail(){
-  goTo(lsGet(P+'offerReturn')||'step1');
+  /* Retenční nabídka existuje pouze jako bottom sheet. */
 }
 function showRetentionSheet(skipHistory){
   var overlay=document.getElementById('retention-overlay');
@@ -683,19 +600,6 @@ function dismissRetentionSheet(continuePayment){
   history.replaceState({},'', '#'+destination);
   goTo(destination,{skipHistory:true});
 }
-function goToStep1FromSheet(){
-  lsSet(P+'sheetSeen','1');
-  hideRetentionSheet();
-  openRetentionDetail('step1');
-}
-function acceptRetentionOffer(){
-  lsSet(P+'promoAccepted','1');
-  updateRetentionEligibility();
-  var overlay=document.getElementById('retention-overlay');
-  if(overlay && !overlay.hidden){ hideRetentionSheet(); goTo('step2'); }
-  else returnFromRetentionDetail();
-}
-
 /* ===== render summary + auth from state ===== */
 function renderSummary(){
   var komu=val('komu','—');
@@ -750,7 +654,7 @@ function goTo(id, opt){
   if(t) t.classList.add('active');
   if(id==='summary') renderSummary();
   if(id==='pin'){ pin=''; renderPin(); }
-  if(id==='result' || id==='step1' || id==='retention-detail'){ renderBalanceHint(); updateRetentionEligibility(); }
+  if(id==='result' || id==='step1'){ renderBalanceHint(); updateRetentionEligibility(); }
   var c=t&&t.querySelector('.content'); if(c) c.scrollTop=0;
   if(!opt.skipHistory && location.hash.replace('#','')!==id){ location.hash = id; }
 }
