@@ -69,14 +69,14 @@ html,body{font-family:var(--font-family);color:var(--color-content-primary);back
 body{min-height:100dvh;}
 
 /* MOBILE: document scrolls, content is hug. DESKTOP: phone frame scrolls internally. */
-.phone{position:relative;width:100%;max-width:480px;margin:0 auto;background:var(--color-background-body);}
+.phone{position:relative;width:100%;max-width:390px;margin:0 auto;background:var(--color-background-body);}
 @media(min-width:420px){
   body{display:flex;align-items:center;justify-content:center;padding:8px;}
   .phone{height:calc(100dvh - 16px);overflow-y:auto;-webkit-overflow-scrolling:touch;border-radius:40px;box-shadow:0 24px 70px rgba(0,0,0,.5);}
   .phone::-webkit-scrollbar{display:none;}
   .screen.active{min-height:100%;}
 }
-@media(min-width:600px){
+@media(min-width:480px){
   body{display:flex;align-items:center;justify-content:center;padding:24px;}
   .phone{height:min(844px,calc(100dvh - 48px));overflow-y:auto;-webkit-overflow-scrolling:touch;border-radius:40px;box-shadow:0 24px 70px rgba(0,0,0,.5);}
   .phone::-webkit-scrollbar{display:none;}
@@ -218,7 +218,7 @@ body{min-height:100dvh;}
 .retention-overlay[hidden]{display:none;}
 .retention-overlay{position:fixed;inset:0;z-index:40;display:flex;align-items:flex-end;justify-content:center;background:rgba(33,33,33,.45);}
 @media(min-width:420px){.retention-overlay{position:absolute;border-radius:40px;overflow:hidden;}}
-.retention-sheet{position:relative;width:100%;max-width:480px;height:364px;background:var(--color-background-body);border-radius:var(--radius-xl) var(--radius-xl) 0 0;padding:8px var(--pad-xl) max(var(--pad-xl),env(safe-area-inset-bottom));box-shadow:var(--shadow-floating);animation:sheetUp .25s ease;}
+.retention-sheet{position:relative;width:100%;max-width:390px;height:364px;background:var(--color-background-body);border-radius:var(--radius-xl) var(--radius-xl) 0 0;padding:8px var(--pad-xl) max(var(--pad-xl),env(safe-area-inset-bottom));box-shadow:var(--shadow-floating);animation:sheetUp .25s ease;}
 .retention-sheet__top{display:flex;justify-content:center;position:relative;}
 .retention-sheet__close{position:absolute;right:-2px;top:6px;width:28px;height:28px;border:0;border-radius:var(--radius-full);background:#adadad;display:flex;align-items:center;justify-content:center;cursor:pointer;}
 .retention-sheet__close img{width:16px;height:16px;filter:brightness(0) invert(1);}
