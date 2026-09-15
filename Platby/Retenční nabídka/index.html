@@ -61,6 +61,9 @@
 .t-body-bold{font:500 16px/24px var(--font-family);}
 .t-body-sec{font:400 14px/20px var(--font-family);}
 .t-caption{font:400 12px/16px var(--font-family);}
+.t-content-body-primary{font:400 16px/24px var(--font-family);}
+.t-content-button{font:500 16px/24px var(--font-family);}
+.t-headings-title-secondary{font:500 32px/44px var(--font-family);}
 
 html,body{font-family:var(--font-family);color:var(--color-content-primary);background:#2a2a2a;-webkit-font-smoothing:antialiased;}
 body{min-height:100dvh;}
@@ -230,15 +233,15 @@ body{min-height:100dvh;}
 .term-account-screen.active{position:relative;height:100dvh;min-height:100dvh;overflow:hidden;background:var(--color-background-body);}
 @media(min-width:420px){.term-account-screen.active{height:100%;min-height:100%;}}
 .term-account-header{min-height:74px;padding:34px var(--pad-xl) 8px;display:flex;align-items:flex-start;}
-.term-account-close{border:0;background:transparent;color:var(--color-content-primary);font:400 24px/32px var(--font-family);cursor:pointer;}
+.term-account-close{border:0;background:transparent;color:var(--color-content-primary);cursor:pointer;}
 .term-account-content{flex:1 1 auto;min-height:0;display:flex;flex-direction:column;overflow-y:auto;padding:0 var(--pad-xl) 96px;}
 .term-account-illustration{display:block;width:230px;height:217px;object-fit:fill;margin:61px auto 30px;transform:translateY(13px);}
-.term-account-title{max-width:340px;font:500 32px/40px var(--font-family);letter-spacing:-.6px;margin-bottom:45px;}
-.term-account-lead{font:400 16px/24px var(--font-family);margin-bottom:58px;}
+.term-account-title{max-width:340px;margin-bottom:45px;}
+.term-account-lead{margin-bottom:58px;}
 .term-account-benefits{display:flex;flex-direction:column;gap:45px;}
 .term-account-benefit{display:grid;grid-template-columns:48px 1fr;gap:24px;align-items:start;}
 .term-account-benefit img{width:32px;height:32px;object-fit:contain;color:var(--color-content-primary);}
-.term-account-benefit span{max-width:330px;font:400 20px/28px var(--font-family);}
+.term-account-benefit span{max-width:330px;}
 .term-account-footer{position:absolute;bottom:0;left:0;width:100%;padding:24px var(--pad-xl) max(0px,env(safe-area-inset-bottom));background:var(--color-background-body);border-top:1px solid rgba(173,173,173,.18);display:flex;flex-direction:column;}
 .term-account-footer .btn{height:48px;}
 
@@ -444,24 +447,24 @@ body{min-height:100dvh;}
   <!-- ============ TERMÍNOVANÝ ÚČET ============ -->
   <section class="screen term-account-screen" id="screen-term-account">
     <div class="term-account-header">
-      <button class="term-account-close" type="button" onclick="goTo('step1')">Zavřít</button>
+      <button class="term-account-close t-content-body-primary" type="button" onclick="goTo('step1')">Zavřít</button>
     </div>
     <main class="term-account-content">
       <img class="term-account-illustration" src="../../design-system/design-system/assets/illustrations/term-accounts-light.png" alt="">
-      <h1 class="term-account-title">Sjednejte si termínovaný účet</h1>
-      <p class="term-account-lead">Výhodné úročení vkladů až do 10 000 000 Kč.</p>
+      <h1 class="term-account-title t-headings-title-secondary">Sjednejte si termínovaný účet</h1>
+      <p class="term-account-lead t-content-body-primary">Výhodné úročení vkladů až do 10 000 000 Kč.</p>
       <div class="term-account-benefits">
         <div class="term-account-benefit">
           <img src="../../design-system/design-system/assets/icons/percent.svg" alt="">
-          <span>Garantujeme vám úrokovou sazbu až 3,5 % ročně.</span>
+          <span class="t-content-body-primary">Garantujeme vám úrokovou sazbu až 3,5 % ročně.</span>
         </div>
         <div class="term-account-benefit">
           <img src="../../design-system/design-system/assets/icons/calendar.svg" alt="">
-          <span>Vklad na termínovaný účet převedeme z běžného nebo spořicího účtu v KB+.</span>
+          <span class="t-content-body-primary">Vklad na termínovaný účet převedeme z běžného nebo spořicího účtu v KB+.</span>
         </div>
         <div class="term-account-benefit">
           <img src="../../design-system/design-system/assets/icons/key.svg" alt="">
-          <span>Minimální vklad je 5 000 Kč.</span>
+          <span class="t-content-body-primary">Minimální vklad je 5 000 Kč.</span>
         </div>
       </div>
     </main>
