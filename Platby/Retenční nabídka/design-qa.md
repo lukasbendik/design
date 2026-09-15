@@ -1,44 +1,40 @@
 # Design QA — Retenční nabídka při nové platbě
 
-## Source visual truth
+## Zdrojová vizuální pravda
 
-- Bottom sheet: `/home/lukinab/.codex/attachments/141f147d-01b7-4208-a0b9-eb50bbda542d/codex-clipboard-f29a1a08-96a9-4695-9731-da70dbd5bb3a.png`
-- Termínovaný účet: `/home/lukinab/.codex/attachments/3fa58b5e-4ae0-4673-b676-47818f0d732e/codex-clipboard-945d8a85-f4f2-4dfb-bb89-32a862906d2e.png`
-- Viewport: 455 × 916 CSS px; mobilní rámec 430 px, scale 1.
+- Bottom sheet: `/home/lukinab/.codex/attachments/8fae7624-50e6-45e8-a231-592c4d73c87f/codex-clipboard-06d5ee4b-5e8e-4149-a15b-96610958037c.png` (750 × 1624 px, normalizováno na 375 × 812 CSS px, DPR 2 → 1).
+- Termínovaný účet: `/home/lukinab/.codex/attachments/7c69fb54-d879-4d34-bbbe-b8cff513ccf7/codex-clipboard-255adcea-e41c-4bce-ab6b-549458be05d8.png` (496 × 920 px, 496 × 920 CSS px, DPR 1).
 
-## Implemented state
+## Implementační důkazy
 
-- Retenční nabídka existuje pouze jako bottom sheet po zadání částky nad 250 000 Kč v CZK.
-- Odstraněn promo banner z kroku 1.
-- Odstraněna promo karta z result obrazovky.
-- Odstraněn samostatný detail retenční nabídky.
-- Sheet copy odpovídá příloze:
-  - `Zhodnocujte 3,5 % p. a.`
-  - `Vložte si peníze na termínovaný účet na 6 měsíců.`
-  - `Sjednat termínovaný účet`
-  - `Pokračovat k platbě`
-- Zachována navigace do dalšího kroku platby přes primární CTA.
-- Odkaz `Sjednat termínovaný účet` otevírá novou obrazovku termínovaného účtu podle dodané reference.
-- Obrazovka obsahuje `Zavřít`, ilustraci `term-accounts-light.png`, tři benefit řádky a CTA `Pokračovat` / `Jak to funguje?`.
+- Bottom sheet: `/tmp/retention-qa/implementation-sheet.png` (375 × 812 px, viewport 375 × 812 CSS px, DPR 1, `#retention-sheet`).
+- Termínovaný účet: `/tmp/retention-qa/implementation-term-account.png` (496 × 920 px, viewport 496 × 920 CSS px, DPR 1, `#term-account`).
+- Společné full-view porovnání: `/tmp/retention-qa/comparison-sheet.png` a `/tmp/retention-qa/comparison-term.png`.
+- Focused region nebyl potřebný: full-view porovnání zobrazuje text, ilustrace, ikonografii, CTA i rozestupy v čitelné velikosti 1:1.
 
-## Visual QA
+## Kontrola fidelity
 
-- Sheet výška: 399 px; horní hrana 509 px.
-- Handle: 48 × 4 px, centrovaný.
-- Close: šedý kruh 28 × 28 px s bílým křížem.
-- Ilustrace sheetu: repository asset `savings-offer-light.png`, ukotvená nad sheetem podle reference.
-- Text sheetu: titulek 693 px, copy 737 px, odkaz 797 px a CTA 833 px.
-- Termínovaný účet: titulkový blok, tři benefit řádky a sticky patička porovnány na stejném viewportu; použita ilustrace `term-accounts-light.png`.
-- Fonty a copy: Inter, tokenové barvy a přesné znění z referencí.
-- Spacing/layout, barvy, image assety a CTA: bez rozdílů P0/P1/P2.
-- Bez rozdílů P0/P1/P2 proti dodané referenci.
+- Typografie: Inter, nadpis sheetu 20/28, detail 32/40, benefit 20/28, CTA 16/24; zalomení odpovídá referencím.
+- Rozložení: sheet 364 px, horní hrana 448 px, handle 48 × 4, CTA 16 px od spodní hrany. Detail drží mobilní rám, interní scroll a footer na referenčních souřadnicích.
+- Barvy: tokenové body/surface, overlay `rgba(33,33,33,.45)`, primární červená a šedý close odpovídají zdroji.
+- Obrázky: použity původní repository assety `savings-offer-light.png` a `term-accounts-light.png`; žádné náhražky nebo CSS kresby.
+- Copy: nadpisy, popis, benefity a CTA odpovídají přílohám.
+- Vnější horní odsazení desktopového telefonního rámu se mezi referenčním exportem a browser capture liší o 3 px; app-owned obsah uvnitř rámu sedí. Přijato jako rozdíl exportního canvasu, ne produktového UI.
 
-## Primary interactions tested
+## Historie porovnání
 
-- Částka 250 001 Kč → otevře bottom sheet.
-- `Pokračovat k platbě` → pokračuje do kroku 2, souhrnu, PIN a resultu.
-- Result neobsahuje retenční nabídku.
-- `Sjednat termínovaný účet` → `#term-account`; `Zavřít` → `#step1`.
-- Console errors: žádné.
+1. P1: ilustrace sheetu měla absolutní souřadnice vůči stránce a nebyla uvnitř sheetu. Oprava: `position:relative` na sheetu a referenční pozice ilustrace.
+2. P1: detail narostl na 988 px, CTA zůstala pod viewportem. Oprava: pevná výška mobilního rámu, interní scroll a jediná referenční sticky akce.
+3. P2: sheet měl 399 px, příliš velký nadpis a vertikální rozestupy mimo referenci. Oprava: 364 px, 20/28 nadpis, absolutní umístění tertiary a primary CTA.
+4. P2: detail měl jiné zalomení benefitů a měřítko ilustrace. Oprava: sloupec textu 330 px, gap 24/45 px a přizpůsobení ilustrace podle společného 1:1 porovnání.
+5. Post-fix evidence: obě společná porovnání bez akčních P0/P1/P2 rozdílů.
+
+## Interakce a runtime
+
+- `Sjednat termínovaný účet` → `#term-account`.
+- `Zavřít` → `#step1`.
+- `Pokračovat k platbě` → `#step2`.
+- Obnova obou stavů z URL hashe ověřena.
+- Browser console: bez warningů a errorů.
 
 final result: passed
