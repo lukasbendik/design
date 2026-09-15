@@ -2,8 +2,9 @@
 
 ## Source visual truth
 
-- Bottom sheet: `/home/lukinab/.codex/attachments/38c4e353-cc6e-4c8f-8683-7510a9df5b6a/codex-clipboard-0d1f3909-514e-40cb-b9f2-8301400e961f.png`
-- Viewport reference: 375 × 812 CSS px, light sheet over darkened payment screen.
+- Bottom sheet: `/home/lukinab/.codex/attachments/141f147d-01b7-4208-a0b9-eb50bbda542d/codex-clipboard-f29a1a08-96a9-4695-9731-da70dbd5bb3a.png`
+- Termínovaný účet: `/home/lukinab/.codex/attachments/3fa58b5e-4ae0-4673-b676-47818f0d732e/codex-clipboard-945d8a85-f4f2-4dfb-bb89-32a862906d2e.png`
+- Viewport: 455 × 916 CSS px; mobilní rámec 430 px, scale 1.
 
 ## Implemented state
 
@@ -22,10 +23,14 @@
 
 ## Visual QA
 
-- Sheet výška: 364 px.
+- Sheet výška: 399 px; horní hrana 509 px.
 - Handle: 48 × 4 px, centrovaný.
 - Close: šedý kruh 28 × 28 px s bílým křížem.
-- Ilustrace: repository asset `savings-offer-light.png`, zvětšený podle reference.
+- Ilustrace sheetu: repository asset `savings-offer-light.png`, ukotvená nad sheetem podle reference.
+- Text sheetu: titulek 693 px, copy 737 px, odkaz 797 px a CTA 833 px.
+- Termínovaný účet: titulkový blok, tři benefit řádky a sticky patička porovnány na stejném viewportu; použita ilustrace `term-accounts-light.png`.
+- Fonty a copy: Inter, tokenové barvy a přesné znění z referencí.
+- Spacing/layout, barvy, image assety a CTA: bez rozdílů P0/P1/P2.
 - Bez rozdílů P0/P1/P2 proti dodané referenci.
 
 ## Primary interactions tested
