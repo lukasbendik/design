@@ -17,6 +17,8 @@
   - `Sjednat termínovaný účet`
   - `Pokračovat k platbě`
 - Zachována navigace do dalšího kroku platby přes primární CTA.
+- Odkaz `Sjednat termínovaný účet` otevírá novou obrazovku termínovaného účtu podle dodané reference.
+- Obrazovka obsahuje `Zavřít`, ilustraci `term-accounts-light.png`, tři benefit řádky a CTA `Pokračovat` / `Jak to funguje?`.
 
 ## Visual QA
 
@@ -31,6 +33,7 @@
 - Částka 250 001 Kč → otevře bottom sheet.
 - `Pokračovat k platbě` → pokračuje do kroku 2, souhrnu, PIN a resultu.
 - Result neobsahuje retenční nabídku.
+- `Sjednat termínovaný účet` → `#term-account`; `Zavřít` → `#step1`.
 - Console errors: žádné.
 
 final result: passed

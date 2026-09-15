@@ -220,6 +220,22 @@ body{min-height:100dvh;}
 .retention-sheet__tertiary{display:block;width:max-content;min-height:40px;margin:0 auto 4px;border:0;background:transparent;color:var(--color-interactive-secondary);font:400 16px/24px var(--font-family);text-decoration:underline;text-underline-offset:5px;cursor:pointer;text-align:center;padding:8px 16px;}
 .retention-sheet__actions{display:flex;flex-direction:column;gap:var(--space-8);}
 
+/* detail termínovaného účtu */
+.term-account-screen{background:var(--color-background-body);}
+.term-account-header{min-height:64px;padding:16px var(--pad-xl) 8px;display:flex;align-items:flex-start;}
+.term-account-close{border:0;background:transparent;color:var(--color-content-primary);font:400 24px/32px var(--font-family);cursor:pointer;}
+.term-account-content{flex:1;display:flex;flex-direction:column;padding:0 var(--pad-xl) 112px;}
+.term-account-illustration{display:block;width:210px;height:180px;object-fit:contain;margin:44px auto 12px;}
+.term-account-title{font:500 32px/40px var(--font-family);letter-spacing:-.6px;margin-bottom:24px;}
+.term-account-lead{font:400 16px/24px var(--font-family);margin-bottom:48px;}
+.term-account-benefits{display:flex;flex-direction:column;gap:32px;}
+.term-account-benefit{display:grid;grid-template-columns:48px 1fr;gap:16px;align-items:start;}
+.term-account-benefit img{width:32px;height:32px;object-fit:contain;color:var(--color-content-primary);}
+.term-account-benefit span{font:400 18px/24px var(--font-family);}
+.term-account-footer{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:390px;padding:16px var(--pad-xl) max(16px,env(safe-area-inset-bottom));background:var(--color-background-body);border-top:1px solid rgba(173,173,173,.18);display:flex;flex-direction:column;gap:16px;}
+.term-account-footer .btn{height:48px;}
+@media(min-width:480px){.term-account-footer{position:absolute;}}
+
 /* reference-faithful payment entry */
 #screen-step1 .acctsel{min-height:72px;padding:0;background:transparent;border:0;border-radius:0;}
 #screen-step1 .contact-item{padding:var(--pad-xl) var(--pad-md);background:transparent;box-shadow:none;}
@@ -419,6 +435,36 @@ body{min-height:100dvh;}
     </div>
   </section>
 
+  <!-- ============ TERMÍNOVANÝ ÚČET ============ -->
+  <section class="screen term-account-screen" id="screen-term-account">
+    <div class="term-account-header">
+      <button class="term-account-close" type="button" onclick="goTo('step1')">Zavřít</button>
+    </div>
+    <main class="term-account-content">
+      <img class="term-account-illustration" src="../../design-system/design-system/assets/illustrations/term-accounts-light.png" alt="">
+      <h1 class="term-account-title">Sjednejte si termínovaný účet</h1>
+      <p class="term-account-lead">Výhodné úročení vkladů až do 10 000 000 Kč.</p>
+      <div class="term-account-benefits">
+        <div class="term-account-benefit">
+          <img src="../../design-system/design-system/assets/icons/percent.svg" alt="">
+          <span>Garantujeme vám úrokovou sazbu až 3,5 % ročně.</span>
+        </div>
+        <div class="term-account-benefit">
+          <img src="../../design-system/design-system/assets/icons/calendar.svg" alt="">
+          <span>Vklad na termínovaný účet převedeme z běžného nebo spořicího účtu v KB+.</span>
+        </div>
+        <div class="term-account-benefit">
+          <img src="../../design-system/design-system/assets/icons/key.svg" alt="">
+          <span>Minimální vklad je 5 000 Kč.</span>
+        </div>
+      </div>
+    </main>
+    <div class="term-account-footer">
+      <button class="btn btn-primary" type="button" onclick="goTo('step1')">Pokračovat</button>
+      <button class="btn btn-secondary" type="button" onclick="goTo('step1')">Jak to funguje?</button>
+    </div>
+  </section>
+
   <!-- ============ SUMMARY ============ -->
   <section class="screen" id="screen-summary">
     <div class="hdr lg">
@@ -497,7 +543,7 @@ body{min-height:100dvh;}
       <img class="retention-sheet__illustration" src="../../design-system/design-system/assets/illustrations/savings-offer-light.png" alt="">
       <h2 id="retention-sheet-title">Zhodnocujte 3,5 % p. a.</h2>
       <p>Vložte si peníze na termínovaný účet na 6 měsíců.</p>
-      <button class="retention-sheet__tertiary" type="button" onclick="dismissRetentionSheet(false)">Sjednat termínovaný účet</button>
+      <button class="retention-sheet__tertiary" type="button" onclick="openTermAccount()">Sjednat termínovaný účet</button>
       <div class="retention-sheet__actions">
         <button class="btn btn-primary" type="button" onclick="dismissRetentionSheet(true)">Pokračovat k platbě</button>
       </div>
@@ -599,6 +645,12 @@ function dismissRetentionSheet(continuePayment){
   // Sheet hash nesmí zůstat v historii; Zpět z kroku 2 by sheet znovu otevřel.
   history.replaceState({},'', '#'+destination);
   goTo(destination,{skipHistory:true});
+}
+function openTermAccount(){
+  lsSet(P+'sheetSeen','1');
+  hideRetentionSheet();
+  history.replaceState({},'', '#term-account');
+  goTo('term-account',{skipHistory:true});
 }
 /* ===== render summary + auth from state ===== */
 function renderSummary(){
