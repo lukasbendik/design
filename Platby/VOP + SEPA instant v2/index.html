@@ -1759,20 +1759,20 @@
       <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"><line x1="2" y1="2" x2="12" y2="12"/><line x1="12" y1="2" x2="2" y2="12"/></svg>
     </button>
     <img class="recipient-sheet-illustration" src="assets/recipient-partial.png" alt="">
-    <div class="recipient-sheet-title" id="partial-sheet-title">Název částečně odpovídá číslu účtu</div>
-    <div class="recipient-sheet-subtitle">Doporučujeme použít název z návrhu.</div>
+    <div class="recipient-sheet-title" id="partial-sheet-title">Název se částečně shoduje s účtem</div>
+    <div class="recipient-sheet-subtitle">Nalezený název se liší. Vyberte, který název chcete použít.</div>
     <div class="recipient-sheet-actions">
       <button class="recipient-sheet-action is-detail" type="button" onclick="choosePartialSuggested()">
         <span>
           <span class="recipient-sheet-action-main" id="partial-suggested-name">Alpenpanorama Gasstehaus</span>
-          <span class="recipient-sheet-action-meta">Nalezený název</span>
+          <span class="recipient-sheet-action-meta">Použít nalezený název</span>
         </span>
         <svg class="recipient-sheet-chevron" width="8" height="14" viewBox="0 0 8 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 1L7 7L1 13"/></svg>
       </button>
       <button class="recipient-sheet-action is-detail" type="button" onclick="choosePartialUser()">
         <span>
           <span class="recipient-sheet-action-main" id="partial-user-name">–</span>
-          <span class="recipient-sheet-action-meta">Vámi zadaný název</span>
+          <span class="recipient-sheet-action-meta">Ponechat zadaný název</span>
         </span>
         <svg class="recipient-sheet-chevron" width="8" height="14" viewBox="0 0 8 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 1L7 7L1 13"/></svg>
       </button>
@@ -1787,11 +1787,11 @@
       <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"><line x1="2" y1="2" x2="12" y2="12"/><line x1="12" y1="2" x2="2" y2="12"/></svg>
     </button>
     <img class="recipient-sheet-illustration" src="assets/recipient-nomatch.png" alt="">
-    <div class="recipient-sheet-title" id="nomatch-sheet-title">Název neodpovídá číslu účtu</div>
-    <div class="recipient-sheet-subtitle">Doporučujeme zkontrolovat údaje příjemce. Platbu můžete i tak odeslat.</div>
+    <div class="recipient-sheet-title" id="nomatch-sheet-title">Název neodpovídá účtu</div>
+    <div class="recipient-sheet-subtitle">Zkontrolujte údaje příjemce. Pokud budete pokračovat, platba může odejít někomu jinému.</div>
     <div class="recipient-sheet-actions">
       <button class="recipient-sheet-action" type="button" onclick="confirmNomatch()">
-        <span>Přesto pokračovat</span>
+        <span>Pokračovat i tak</span>
         <svg class="recipient-sheet-chevron" width="8" height="14" viewBox="0 0 8 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 1L7 7L1 13"/></svg>
       </button>
     </div>
@@ -1806,7 +1806,7 @@
     </button>
     <img class="recipient-sheet-illustration" src="assets/recipient-unverifiable.png" alt="">
     <div class="recipient-sheet-title" id="unverifiable-sheet-title">Název nelze ověřit</div>
-    <div class="recipient-sheet-subtitle">Platbu můžete odeslat bez ověření nebo ji odložit na později.</div>
+    <div class="recipient-sheet-subtitle">Příjemce se nepodařilo ověřit. Zkontrolujte údaje, nebo pokračujte bez ověření.</div>
     <div class="recipient-sheet-actions">
       <button class="recipient-sheet-action" type="button" onclick="confirmUnverifiable()">
         <span>Pokračovat bez ověření</span>
