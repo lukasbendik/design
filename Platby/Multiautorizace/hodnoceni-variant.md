@@ -79,30 +79,15 @@ Schvaluje méně často, nezná všechny příjemce a může přidávat jen svů
 
 Relativní odborný odhad: **silná** = dobře podporuje úkol v dané struktuře; **podmíněná** = závisí na upřesnění chování; **slabší** = očekávaná větší námaha. Bez číselného skóre, které by předstíralo uživatelská data.
 
-Úkol / kritérium | V1 · Rozbalování | V2 · Oddělené oblasti | V3 · Společný seznam + filtr | 
-
-
-Vybrat vše za subjekt / účet | Silná: přímo v přehledu | Silná: přímo v přehledu | Silná: přímo v přehledu | 
-
-
-Zkontrolovat několik položek jednoho typu | Silná při krátké frontě | Silná: soustředěný seznam | Silná: při viditelném filtru | 
-
-
-Postupně projít desítky položek | Slabší: dlouhá stránka s hierarchií | Silná: jeden kontext na stránce | Podmíněná: typ a účet musí zůstat čitelné | 
-
-
-Přidat jednotlivosti z více typů | Podmíněná: méně navigace, více scrollu | Slabší: návraty do přehledu | Silná, pokud filtr zachová výběr | 
-
-
-Orientace občasného schvalovatele | Podmíněná: hierarchie na jedné stránce | Silná: konkrétní název oblasti | Podmíněná: filtr a skrytý výběr | 
-
-
-Viditelnost všech vybraných záznamů | Podmíněná: výběr může být ve sbalené části | Podmíněná: výběr může být na jiné stránce | Podmíněná: výběr může být odfiltrovaný | 
-
-
-Škálování na více účtů | Slabší po rozbalení více skupin | Podmíněná: více přechodů, jasný kontext | Podmíněná: nejasný rozsah společného seznamu | 
-
-
+| Úkol / kritérium | V1 · Rozbalování | V2 · Oddělené oblasti | V3 · Společný seznam + filtr |
+| --- | --- | --- | --- |
+| Vybrat vše za subjekt / účet | Silná: přímo v přehledu | Silná: přímo v přehledu | Silná: přímo v přehledu |
+| Zkontrolovat několik položek jednoho typu | Silná při krátké frontě | Silná: soustředěný seznam | Silná: při viditelném filtru |
+| Postupně projít desítky položek | Slabší: dlouhá stránka s hierarchií | Silná: jeden kontext na stránce | Podmíněná: typ a účet musí zůstat čitelné |
+| Přidat jednotlivosti z více typů | Podmíněná: méně navigace, více scrollu | Slabší: návraty do přehledu | Silná, pokud filtr zachová výběr |
+| Orientace občasného schvalovatele | Podmíněná: hierarchie na jedné stránce | Silná: konkrétní název oblasti | Podmíněná: filtr a skrytý výběr |
+| Viditelnost všech vybraných záznamů | Podmíněná: výběr může být ve sbalené části | Podmíněná: výběr může být na jiné stránce | Podmíněná: výběr může být odfiltrovaný |
+| Škálování na více účtů | Slabší po rozbalení více skupin | Podmíněná: více přechodů, jasný kontext | Podmíněná: nejasný rozsah společného seznamu |
 
 **Společný závěr:** samotné hromadné označení nerozhoduje mezi variantami, protože jej mají všechny. Rozdíl je hlavně v práci s výjimkami a jednotlivými položkami.
 
@@ -292,27 +277,14 @@ Předchozí návrh uvádí hromadné potvrzení u RB a Payment Summary / dávky 
 
 Navrhuji moderovaný test na mobilu s 6–8 lidmi pokrývajícími výše uvedené role. Výsledek bude kvalitativní; z takového vzorku nelze odhadovat procenta celé klientské populace. Pořadí variant střídat a používat srovnatelná data.
 
-Úkol | Co sledovat | 
-
-
-Vybrat vše za subjekt včetně dvou dávek; vysvětlit vynechanou blokovanou platbu. | Správný rozsah, porozumění dávkám a způsobilosti. | 
-
-
-Vybrat všechny platby účtu, jednu odebrat a přidat jeden trvalý příkaz. | Návraty, scroll, ztráta místa a zachování výběru. | 
-
-
-Po výběru změnit typ / filtr a říci, co se podepíše. | Rozlišení zobrazených a celkem vybraných záznamů. | 
-
-
-Otevřít detail EUR platby a autorizovat pouze ji při existujícím jiném výběru. | Nechtěné rozšíření podpisu; porozumění měnám. | 
-
-
-Zpracovat 30 položek na 3 účtech; obnovit stránku a vrátit se. | Ztráta kontextu, persistence, orientace v delší frontě. | 
-
-
-Přečíst částečný výsledek s druhým podpisem a jednou chybou. | Rozlišení dokončených a nedokončených záznamů. | 
-
-
+| Úkol | Co sledovat |
+| --- | --- |
+| Vybrat vše za subjekt včetně dvou dávek; vysvětlit vynechanou blokovanou platbu. | Správný rozsah, porozumění dávkám a způsobilosti. |
+| Vybrat všechny platby účtu, jednu odebrat a přidat jeden trvalý příkaz. | Návraty, scroll, ztráta místa a zachování výběru. |
+| Po výběru změnit typ / filtr a říci, co se podepíše. | Rozlišení zobrazených a celkem vybraných záznamů. |
+| Otevřít detail EUR platby a autorizovat pouze ji při existujícím jiném výběru. | Nechtěné rozšíření podpisu; porozumění měnám. |
+| Zpracovat 30 položek na 3 účtech; obnovit stránku a vrátit se. | Ztráta kontextu, persistence, orientace v delší frontě. |
+| Přečíst částečný výsledek s druhým podpisem a jednou chybou. | Rozlišení dokončených a nedokončených záznamů. |
 
 **Rozhodovací priorita:** nejdřív správný rozsah podpisu a žádné nechtěné záznamy, potom porozumění souhrnu, nakonec čas, počet klepnutí a preference. Variantu nepřijmout pouze proto, že je rychlejší, pokud uživatel nerozumí skrytému výběru.
 
