@@ -113,3 +113,7 @@ První kontrola odhalila nadbytečný padding hlaviček karet, větší mezeru p
 - Refresh a návrat z detailu p1 zachovají výběr a rozbalený účet.
 - Mobilní šířky 320/375 bez horizontálního přetékání, obrázky načteny. Na úzkém mobilu názvy mohou přirozeně zalomit, částky zůstanou vpravo.
 - Konzole bez zachycených chyb/varování. JavaScript node --check a git diff --check prošly.
+
+## Oprava směru šipek při rozbalení
+
+Sbalené účty a dávky: caret doprava (0°); rozbalené: dolů (90°). Ověřeno v prohlížeči rozbalením a opětovným sbalením Business 1; computed transform identity → matrix(0,1,-1,0,0,0) → identity. Lokální evidence: arrow-expanded.png. final result: passed.
