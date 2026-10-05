@@ -296,6 +296,7 @@
 .subject-switch .icon:last-child{width:16px;height:16px}
 .subject-select{font-size:14px;line-height:20px;min-height:48px;max-width:96px;padding:var(--space-4);text-decoration:underline;text-underline-offset:4px}
 .overview-count{font-size:14px;line-height:20px;color:var(--color-content-tertiary)}
+.account-card .group-head{padding-left:var(--space-16);padding-right:var(--space-16)}
 .account-heading{flex:1;min-width:0;font-size:16px;line-height:24px}
 .account-toggle{display:flex;align-items:center;gap:var(--space-8);width:100%;text-align:left;padding:var(--space-4) 0;min-height:64px;font-weight:400}
 .account-name{display:block;font-size:16px;line-height:24px;font-weight:500}
@@ -305,14 +306,13 @@
 .account-toggle>.icon,.type-toggle>.icon{transform:rotate(90deg);transition:transform .15s}
 .account-toggle[aria-expanded=true]>.icon,.type-toggle[aria-expanded=true]>.icon{transform:rotate(-90deg)}
 .account-body{border-top:1px solid var(--color-background-divider)}
-.account-body>.type{margin-left:var(--space-8);padding-left:var(--space-8)}
+.account-body>.type{margin-left:0;padding-left:var(--space-16);padding-right:var(--space-16)}
 .account-body>.instruments{border-top:0}
-.account-body>.type+.instruments{border-left:var(--border-md) solid var(--color-background-divider);margin-left:var(--space-16)}
-.account-body>.type+.instruments .instrument{padding-left:var(--space-8);padding-right:var(--space-12)}
+.account-body>.type+.instruments{border-left:0;margin-left:0}
+.account-body .instrument{padding-left:var(--space-16);padding-right:var(--space-16)}
 .account-body .instrument .nav{flex-wrap:wrap}
 .account-body .instrument .grow{flex-basis:100%}
 .account-body .instrument .amount{margin-left:auto}
-.account-body .instrument .nav>.icon{width:20px;height:20px}
 .account-card .selected-caption{display:block}
 @media(prefers-reduced-motion:reduce){.account-toggle>.icon,.type-toggle>.icon{transition:none}}
 </style></head><body><main class="phone" id="app"></main><aside class="desktop-tools"><h3>Multiautorizace</h3><p>Interaktivní návrh podle CORE design systému.</p><a href="#home">Začít na přehledu</a><a href="#overview">Přehled autorizací</a><a href="navrh.md" target="_blank">Výzkum a rozhodnutí</a><button class="secondary-btn" id="reset">Obnovit ukázková data</button><small>Testovací data. Autorizace je simulovaná.</small></aside>
@@ -342,7 +342,7 @@ const header=(title,back='overview',close=false)=>`<header class="hdr"><button c
 function cb(xs,label,key){let valid=selectable(xs),n=valid.filter(x=>state.selected.includes(x.id)).length;return `<label class="check check-only"><input type="checkbox" data-select="${key}" data-ids="${valid.map(x=>x.id).join(',')}" aria-label="${esc(label)}" ${valid.length&&n===valid.length?'checked':''} ${!valid.length?'disabled':''} data-mixed="${n>0&&n<valid.length}"></label>`}
 function sumBlock(xs){let totals={};xs.forEach(x=>{let category={payments:'Platby',batches:'Platby v dávkách',standing:'Pravidelné částky',mandates:'Limity inkas',collections:'K inkasu'}[x.type],k=category+'|'+x.currency;totals[k]=(totals[k]||0)+x.amount});return Object.entries(totals).map(([k,v])=>`<div class="total-row"><span>${k.split('|')[0]}</span><strong>${money(v,k.split('|')[1])}</strong></div>`).join('')||'<small>Žádné vybrané položky</small>'}
 function bottom(){let xs=chosen(),payments=xs.filter(x=>['payments','batches'].includes(x.type)),sums={};payments.forEach(x=>sums[x.currency]=(sums[x.currency]||0)+x.amount);let total=Object.entries(sums).sort(([a],[b])=>a.localeCompare(b)).map(([c,n])=>money(n,c)).join(' + ');return `<footer class="bottom"><div aria-live="polite"><div class="summary-line"><strong>${xs.length===1?'1 vybraný záznam':xs.length>=2&&xs.length<=4?xs.length+' vybrané záznamy':xs.length+' vybraných záznamů'}</strong>${xs.length?'<button class="link" data-action="clear">Zrušit výběr</button>':''}</div><p class="muted">${total?'Platby: '+total:xs.length?'Vybrány pravidelné příkazy nebo inkasa':'Vyberte položky k autorizaci'}</p>${xs.some(x=>!['payments','batches'].includes(x.type))?'<p class="muted">Pravidelné částky a limity jsou v souhrnu zvlášť.</p>':''}</div><button class="primary" data-action="review" ${!xs.length?'disabled':''}>${xs.length?'K autorizaci ('+xs.length+')':'K autorizaci'}</button></footer>`}
-function item(x){return `<div class="instrument">${cb([x],x.name+' — '+money(x.amount,x.currency),x.id)}<button class="nav" data-go="detail/${x.id}"><span class="grow"><span>${esc(x.name)}</span><span class="muted">${x.date}${x.vs?' · VS '+x.vs:''}</span>${x.error?`<span class="error">${x.error}</span>`:x.type==='batches'?`<span class="muted">3 platby · dávka jako celek</span>`:''}${x.type==='standing'?'<span class="muted">Nový příkaz · měsíčně</span>':x.type==='mandates'?'<span class="muted">Nové svolení k inkasu</span>':''}</span><span class="amount">${money(x.amount,x.currency)}</span>${icon('caret-right')}</button></div>`}
+function item(x){return `<div class="instrument">${cb([x],x.name+' — '+money(x.amount,x.currency),x.id)}<button class="nav" data-go="detail/${x.id}"><span class="grow"><span>${esc(x.name)}</span><span class="muted">${x.date}${x.vs?' · VS '+x.vs:''}</span>${x.error?`<span class="error">${x.error}</span>`:x.type==='batches'?`<span class="muted">3 platby · dávka jako celek</span>`:''}${x.type==='standing'?'<span class="muted">Nový příkaz · měsíčně</span>':x.type==='mandates'?'<span class="muted">Nové svolení k inkasu</span>':''}</span><span class="amount">${money(x.amount,x.currency)}</span></button></div>`}
 function selectionCaption(xs){let valid=selectable(xs),n=valid.filter(x=>state.selected.includes(x.id)).length;return n?`<span class="selected-caption">Vybráno ${n}</span>`:''}
 function typeRow(account,type,xs){let key=account+'-'+type,open=state.expanded.includes(key);return `<div class="type">${cb(xs,'Vybrat '+types[type]+' — '+accounts[account].name,key)}<button class="type-toggle" data-expand="${key}" aria-expanded="${open}" aria-controls="items-${key}"><span class="grow type-title">${types[type]}<small>${authorizationItems(xs.length)}${xs.some(x=>x.error)?' · '+xs.filter(x=>x.error).length+' nelze vybrat':''}</small>${selectionCaption(xs)}</span>${icon('caret-right')}</button></div><div class="instruments" id="items-${key}" ${open?'':'hidden'}>${xs.map(item).join('')}</div>`}
 function groupSummary(xs){const names={payments:['platba','platby','plateb'],standing:['trvalý příkaz','trvalé příkazy','trvalých příkazů'],mandates:['inkaso','inkasa','inkas'],collections:['příkaz k inkasu','příkazy k inkasu','příkazů k inkasu']};return [...new Set(xs.map(x=>x.type))].map(t=>{let n=xs.filter(x=>x.type===t).length;return n+' '+names[t][n===1?0:n<=4?1:2]}).join(' · ')}

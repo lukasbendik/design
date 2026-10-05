@@ -78,3 +78,13 @@ In-app browser, mobil 375 × 812 a 320 × 740:
 - Konzole bez zachycených varování/chyb. JavaScript node --check a git diff --check prošly.
 
 Vizuálně prohlédnuty finální snímky uložené pouze lokálně v /Users/lukasbendik/Projects/UX/.multiautorizace-qa/: overview-collapsed-v2.png a overview-expanded-v2.png. Plný snímek rozbalené stránky zachycuje sticky footer v poloze viewportu; při běžném scrollování lišta zůstává dole. Hierarchie rozlišena kartou účtu, řádky typů, jemným odsazením a podkladem položek. Bez nalezených P0/P1/P2 závad v rozsahu změny.
+
+## Zarovnání bez odsazení a šipky položek — 5. 10. 2026
+
+final result: passed
+
+Odstraněno vnořené odsazení a levá svislá čára položek. Účet, typ i jednotlivé položky mají společné zarovnání checkboxů a textu. Položky používají jemně šedou plochu přes celou šířku účtové karty; strukturu zachovává bílá plocha hlaviček, typografie a oddělovače. Z jednotlivých položek odstraněny šipky, tlačítko pro otevření detailu zachováno. Šipky rozbalení účtů a typů zachovány.
+
+Vizuální princip ověřen: https://www.nngroup.com/articles/visual-hierarchy-ux-definition/ — hierarchii lze vyjádřit kontrastem, typografií a seskupením.
+
+Ověřeno in-app browserem: checkboxy všech tří úrovní mají x=35 px při viewportu 375 px a x=31 px při viewportu 320 px. Bez horizontálního přetékání, 0 šipek v jednotlivých položkách. Kliknutí na platbu otevřelo detail p1, návrat obnovil rozbalený přehled. Finální mobilní snímek vizuálně prohlédnut, uložen pouze lokálně: /Users/lukasbendik/Projects/UX/.multiautorizace-qa/overview-flat-v3.png. JavaScript syntax a git diff validní. V rozsahu změny bez P0/P1/P2 závad.
