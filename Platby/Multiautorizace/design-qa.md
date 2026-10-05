@@ -34,3 +34,13 @@ Zachováno: velký titul se Zpět, kontext subjektu, samostatná bílá karta d�
 ## Limity ověření a další iterace
 
 Neproběhl test s reálnými uživateli ani skutečný backendový podpis. Atomická dávka a jediný podpis jsou pracovní předpoklady. Bankovní limity jsou pouze demonstrace pro jednorázové CZK platby. Produkce musí samostatně řešit oprávnění, limity, FX, částečné neúspěchy a druhý podpis. Desktop export plné stránky zachycuje sticky footer v poloze viewportu; pro vizuální srovnání byl proto použit viewport screenshot.
+
+## Úprava počtu položek — 5. 10. 2026
+
+final result: passed
+
+Rozsah: pouze zobrazení počtu na obrazovce `#subjects`. Reference uživatele 750 × 1624 px normalizována na CSS viewport 375 × 812 px. Reference a aktuální render otevřeny ve společném srovnání: lokální evidence `/Users/lukasbendik/Projects/UX/.multiautorizace-qa/subjects-comparison.jpg`.
+
+Počet má vlastní řádek pod názvem osoby nebo pod IČO firmy, primární barvu textu, 12/16 px a odstup 4 px. Text „položka / položky / položek k autorizaci“ nahrazuje „záznamy“. Počet zůstává odvozený z čekajících dat (výchozí 2 a 19), reference 5 a 21 neurčuje změnu testovacích dat. Ostatní geometrie, typografie a ikony stávajícího prototypu zachovány dle rozsahu zadání.
+
+Ověřeno v in-app browseru: oba popisky, vypočtená barva rgb(33,33,33), velikost 12 px, line-height 16 px, scrollWidth = viewport = 375 px; kliknutí na osobní subjekt otevřelo přehled se 2 položkami. JavaScript prošel `node --check`, diff prošel `git diff --check`. V rozsahu změny bez P0/P1/P2 závad.
