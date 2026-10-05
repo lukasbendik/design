@@ -88,3 +88,28 @@ Odstraněno vnořené odsazení a levá svislá čára položek. Účet, typ i j
 Vizuální princip ověřen: https://www.nngroup.com/articles/visual-hierarchy-ux-definition/ — hierarchii lze vyjádřit kontrastem, typografií a seskupením.
 
 Ověřeno in-app browserem: checkboxy všech tří úrovní mají x=35 px při viewportu 375 px a x=31 px při viewportu 320 px. Bez horizontálního přetékání, 0 šipek v jednotlivých položkách. Kliknutí na platbu otevřelo detail p1, návrat obnovil rozbalený přehled. Finální mobilní snímek vizuálně prohlédnut, uložen pouze lokálně: /Users/lukasbendik/Projects/UX/.multiautorizace-qa/overview-flat-v3.png. JavaScript syntax a git diff validní. V rozsahu změny bez P0/P1/P2 závad.
+
+## Nová varianta podle dvou návrhů — 5. 10. 2026
+
+final result: passed
+
+### Implementace
+
+Přehled převeden na nový návrh: subjekt bez ikony a šipky, Označit vše v jeho kontextu, tři sbalené bílé karty s počty 6 / 11 / 4. Rozbalují se pouze účty a dávky, typy jsou běžné sekce s nadpisem a samostatným Označit vše / Zrušit výběr. Odstraněn druhý accordion a jeho checkbox. Kompaktní položky zobrazují název a částku na jedné řádce, případné VS/chybu pod ní; trvalé příkazy mají periodu vlevo a datum vpravo. Bez šipek jednotlivých položek, detaily nadále klikatelné. Červené checkboxy s tickem/pomlčkou, sticky souhrn Částka k autorizaci a X z 21 položek, červená akce K autorizaci i při prázdném výběru (aria-disabled a handler nedovolí pokračovat bez výběru). Font Roboto pouze pro přehled, ostatní obrazovky zachovány.
+
+Ukázková data upravena podle reference: tři CZK platby 30 000 + 30 000 + 1 000 = 61 000 Kč, EUR instrumenty a trvalé příkazy dle obrázku, počty celkem 21. Reference uvádí Business 1 = 11, ale rozbalený obrázek ukazuje 8 plateb + 2 trvalé příkazy = 10. Zachováno stávající inkaso jako jedenáctá položka; tím jsou skutečná data konzistentní s hlavičkou a souhrnem. Dávky mají šest autorizačních záznamů (každý reprezentuje celou dávku), související podkladové platby se nezapočítávají podruhé do 21. Nová ukázková sada používá vlastní storage klíč multiautorizace_navrh_v2, původní lokální stav předchozí sady zůstává uložen.
+
+### Vizuální porovnání a iterace
+
+Reference 1 normalizována z 750 × 1624 na 375 × 812 a porovnána se shodným viewportem a nulovým výběrem. Reference 2 normalizována na šířku 375, porovnána shodná horní oblast 0–980 px s rozbaleným prvním účtem a označenými p1/p4/p7. Celý render rozbaleného účtu pořízen při 375 × 1600, protože dodatečné inkaso prodlužuje obsah oproti nekonzistentní referenci. Oba zdroje a render byly vloženy do společných srovnání a otevřeny. Evidence pouze lokálně v /Users/lukasbendik/Projects/UX/.multiautorizace-qa/: design-v4-comparison-collapsed.jpg, design-v4-comparison-expanded.jpg, design-v4-collapsed.png a design-v4-expanded.png.
+
+První kontrola odhalila nadbytečný padding hlaviček karet, větší mezeru pod titulem, příliš silnou typografii a zalomená data trvalých příkazů. Opraveno: padding vnitřního grow 0, horní mezera snížena, Roboto a pravidelná váha textů přehledu, datum nowrap a meta grow bez flex-basis 100 %. Finální snímky znovu zachyceny a porovnány. Bez P0/P1/P2 vizuální závady; drobná odchylka velikosti CORE chevronu a vykreslení titulu zůstává P3. Screenshoty zachycují barevnost nativního prohlížeče; primární barva v DOM ověřena rgb(224,0,0).
+
+### Funkční kontrola
+
+- p1/p4/p7: 3 z 21, 61 000 Kč; souhrn odpovídá stejným třem platbám.
+- Označit vše v Platbách: 6 z 21, 61 000 Kč + 600 EUR; dvě blokované platby zůstávají disabled a nevybrané. Zrušit výběr sekce odstraní pouze její položky.
+- Označit vše za subjekt: 19 z 21; Zrušit výběr = 0 z 21. Skupinové checkboxy mají stav částečného výběru.
+- Refresh a návrat z detailu p1 zachovají výběr a rozbalený účet.
+- Mobilní šířky 320/375 bez horizontálního přetékání, obrázky načteny. Na úzkém mobilu názvy mohou přirozeně zalomit, částky zůstanou vpravo.
+- Konzole bez zachycených chyb/varování. JavaScript node --check a git diff --check prošly.
