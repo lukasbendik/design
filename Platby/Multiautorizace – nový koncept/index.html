@@ -1,0 +1,430 @@
+<!doctype html><html lang="cs"><head>
+<script>(function(){var H='4c129f69f551195cbc5e8b57cc5a0975b6efa1e8510573524d11df03c7d010c6',K='rozcestnik__auth';try{var p=new URLSearchParams(location.search);if(p.get('k')===H){localStorage.setItem(K,'1');p.delete('k');history.replaceState(history.state,'',location.pathname+(p.size?'?'+p:'')+location.hash);}if(localStorage.getItem(K)!=='1')location.replace('../../');}catch(e){}})();</script>
+<meta charset="utf-8"><link rel="icon" href="../../favicon-32.png"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta http-equiv="Cache-Control" content="no-store"><title>Multiautorizace – nový koncept</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+<style>/* KB Design System — auto-generated from 💠 CORE Components.fig (2026-06-20) */
+/* NEMĚNIT RUČNĚ — regeneruj generátorem z Figmy. Viz README.md */
+
+:root{
+  /* ---- Brand / font ---- */
+  --font-family: Inter, system-ui, -apple-system, sans-serif;
+
+  /* ---- Spacing scale (px) ---- */
+  --space-2: 2px;
+  --space-4: 4px;
+  --space-8: 8px;
+  --space-12: 12px;
+  --space-16: 16px;
+  --space-24: 24px;
+  --space-32: 32px;
+  --space-48: 48px;
+  --space-64: 64px;
+  --space-0: 0px;
+
+  /* ---- Padding (semantic) ---- */
+  --pad-xl: 16px;
+  --pad-4xl: 48px;
+  --pad-xs: 2px;
+  --pad-md: 8px;
+  --pad-lg: 12px;
+  --pad-sm: 4px;
+  --pad-2xl: 24px;
+  --pad-3xl: 32px;
+
+  /* ---- Radius ---- */
+  --radius-full: 1024px;
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-xl: 16px;
+  --radius-null: 0px;
+  --radius-segmentedControl-segmentRadius: 6px;
+  --radius-xs: 2px;
+
+  /* ---- Border width ---- */
+  --border-lg: 3px;
+  --border-md: 2px;
+  --border-sm: 1px;
+
+  /* ---- Color: semantic (LIGHT) ---- */
+  --color-content-primary: #212121;
+  --color-interactive-primary: #e00000;
+  --color-content-tertiary: #717171;
+  --color-background-border: #adadad80;
+  --color-interactive-secondary-active: #2121211f;
+  --color-attention-information: #212121;
+  --color-chart-in: #267c29;
+  --color-attention-alert: #b53022;
+  --color-interactive-on-primary: #ffffff;
+  --color-shadow-panel-top: #21212105;
+  --color-attention-processing: #7e6d19;
+  --color-shadow-panel-middle: #21212114;
+  --color-chart-evaluation: #43167c;
+  --color-content-pentary: #f8f8f8;
+  --color-chart-funds: #02a473;
+  --color-interactive-secondary: #212121;
+  --color-attention-alert-surface: #ffede8;
+  --color-chart-bonds: #4e5571;
+  --color-background-divider: #adadad80;
+  --color-content-secondary: #454545;
+  --color-background-border-highlighted: #adadad;
+  --color-background-surface-highlighted: #ffffff;
+  --color-shadow-floating-middle: #21212129;
+  --color-dialog-surface: #ffffff;
+  --color-attention-success: #267c29;
+  --color-content-quaternary: #adadad;
+  --color-background-surface: #ffffff;
+  --color-chart-neon: #9a2760;
+  --color-background-body: #f8f8f8;
+  --color-attention-success-surface: #e2f5de;
+  --color-chart-out: #212121;
+  --color-chart-cool: #888eb1;
+  --color-chart-stocks: #f45b6d;
+  --color-shadow-panel-bottom: #2121211f;
+  --color-content-skeleton-loading: #adadad80;
+  --color-shadow-floating-bottom: #2121213d;
+  --color-shadow-floating-top: #2121210a;
+  --color-interactive-primary-action: #be0000;
+  --color-attention-information-surface: #ededed;
+  --color-dialog-overlay: #21212166;
+  --color-background-surface-avatar: #21212114;
+  --color-background-table-zebra: #2121210a;
+  --color-shadow-highlighted-middle: #21212129;
+  --color-shadow-highlighted-top: #21212114;
+  --color-shadow-highlighted-bottom: #21212152;
+  --color-interactive-secondary-action: #21212114;
+  --color-chart-plot-in-background-top: #267c293d;
+  --color-chart-plot-in-background-bottom: #267c2900;
+  --color-chart-plot-out-background-top: #2121213d;
+  --color-chart-plot-out-background-bottom: #21212100;
+  --color-chart-rusty-red: #e26e52;
+
+  /* ---- Shadow (light) ---- */
+  --shadow-panel: 0px 0px 1px 0px #2121211f, 0px 1px 8px 0px #21212114, 0px 0.4px 2px 0px #21212105;
+  --shadow-floating: 0px 0px 1px 0px #2121213d, 0px 1px 8px 0px #21212129, 0px 0.4px 2px 0px #2121210a;
+  --shadow-highlighted: 0px 0px 1px 0px #21212152, 0px 4.4px 22px 0px #21212129, 0px 11px 88px 0px #21212114;
+}
+
+/* ---- Color: semantic (DARK) ---- */
+[data-theme="dark"]{
+  --color-content-primary: #f9f9f9;
+  --color-interactive-primary: #e00000;
+  --color-content-tertiary: #9e9e9e;
+  --color-background-border: #65656580;
+  --color-interactive-secondary-active: #adadad80;
+  --color-attention-information: #f9f9f9;
+  --color-chart-in: #23af31;
+  --color-attention-alert: #f66b65;
+  --color-interactive-on-primary: #f9f9f9;
+  --color-shadow-panel-top: #21212100;
+  --color-attention-processing: #ae9701;
+  --color-shadow-panel-middle: #21212100;
+  --color-chart-evaluation: #b497f1;
+  --color-content-pentary: #f9f9f9;
+  --color-chart-funds: #177553;
+  --color-interactive-secondary: #f9f9f9;
+  --color-attention-alert-surface: #60110a;
+  --color-chart-bonds: #a0a5c1;
+  --color-background-divider: #65656580;
+  --color-content-secondary: #d9d9d9;
+  --color-background-border-highlighted: #656565;
+  --color-background-surface-highlighted: #3b3b3b;
+  --color-shadow-floating-middle: #21212100;
+  --color-dialog-surface: #212121;
+  --color-attention-success: #23af31;
+  --color-content-quaternary: #656565;
+  --color-background-surface: #1c1c1c;
+  --color-chart-neon: #ee78aa;
+  --color-background-body: #0d0d0d;
+  --color-attention-success-surface: #05390a;
+  --color-chart-out: #f9f9f9;
+  --color-chart-cool: #5d6689;
+  --color-chart-stocks: #ac444f;
+  --color-shadow-panel-bottom: #21212100;
+  --color-content-skeleton-loading: #65656580;
+  --color-shadow-floating-bottom: #21212100;
+  --color-shadow-floating-top: #21212100;
+  --color-interactive-primary-action: #be0000;
+  --color-attention-information-surface: #3b3b3b;
+  --color-dialog-overlay: #2f2f2f99;
+  --color-background-surface-avatar: #f9f9f91a;
+  --color-background-table-zebra: #f9f9f924;
+  --color-shadow-highlighted-middle: #21212100;
+  --color-shadow-highlighted-top: #21212100;
+  --color-shadow-highlighted-bottom: #21212100;
+  --color-interactive-secondary-action: #f9f9f924;
+  --color-chart-plot-in-background-top: #23af313d;
+  --color-chart-plot-in-background-bottom: #23af3100;
+  --color-chart-plot-out-background-top: #f9f9f93d;
+  --color-chart-plot-out-background-bottom: #f9f9f900;
+  --color-chart-rusty-red: #9a5437;
+  --shadow-panel: 0px 8px 48px 0px #00000026, 0px 4px 8px 0px #00000026, 0px 0px 1px 0px #00000070;
+}
+
+/* ---- Color: semantic (LIGHT HIGH CONTRAST) ---- */
+[data-theme="light-hc"]{
+  --color-content-primary: #212121;
+  --color-interactive-primary: #b10317;
+  --color-content-tertiary: #212121;
+  --color-background-border: #adadad;
+  --color-interactive-secondary-active: #2121211f;
+  --color-attention-information: #212121;
+  --color-chart-in: #267c29;
+  --color-attention-alert: #9b281c;
+  --color-interactive-on-primary: #f8f8f8;
+  --color-shadow-panel-top: #21212105;
+  --color-attention-processing: #7e6d19;
+  --color-shadow-panel-middle: #21212114;
+  --color-chart-evaluation: #43167c;
+  --color-content-pentary: #f8f8f8;
+  --color-chart-funds: #02a473;
+  --color-interactive-secondary: #212121;
+  --color-attention-alert-surface: #ffede8;
+  --color-chart-bonds: #4e5571;
+  --color-background-divider: #adadad;
+  --color-content-secondary: #212121;
+  --color-background-border-highlighted: #212121;
+  --color-background-surface-highlighted: #ffffff;
+  --color-shadow-floating-middle: #21212129;
+  --color-dialog-surface: #ffffff;
+  --color-attention-success: #225f22;
+  --color-content-quaternary: #212121;
+  --color-background-surface: #ffffff;
+  --color-chart-neon: #9a2760;
+  --color-background-body: #f8f8f8;
+  --color-attention-success-surface: #e2f5de;
+  --color-chart-out: #212121;
+  --color-chart-cool: #888eb1;
+  --color-chart-stocks: #f45b6d;
+  --color-shadow-panel-bottom: #2121211f;
+  --color-content-skeleton-loading: #adadad;
+  --color-shadow-floating-bottom: #2121213d;
+  --color-shadow-floating-top: #2121210a;
+  --color-interactive-primary-action: #960314;
+  --color-attention-information-surface: #ededed;
+  --color-dialog-overlay: #21212166;
+  --color-background-surface-avatar: #21212114;
+  --color-background-table-zebra: #2121210a;
+  --color-shadow-highlighted-middle: #21212129;
+  --color-shadow-highlighted-top: #21212114;
+  --color-shadow-highlighted-bottom: #21212152;
+  --color-interactive-secondary-action: #21212114;
+  --color-chart-plot-in-background-top: #267c293d;
+  --color-chart-plot-in-background-bottom: #267c2900;
+  --color-chart-plot-out-background-top: #2121213d;
+  --color-chart-plot-out-background-bottom: #21212100;
+  --color-chart-rusty-red: #e26e52;
+}
+/* ---- Color: semantic (DARK HIGH CONTRAST) ---- */
+[data-theme="dark-hc"]{
+  --color-content-primary: #f9f9f9;
+  --color-interactive-primary: #b10317;
+  --color-content-tertiary: #f9f9f9;
+  --color-background-border: #656565;
+  --color-interactive-secondary-active: #adadad80;
+  --color-attention-information: #f9f9f9;
+  --color-chart-in: #23af31;
+  --color-attention-alert: #f88681;
+  --color-interactive-on-primary: #ffffff;
+  --color-shadow-panel-top: #21212100;
+  --color-attention-processing: #ae9701;
+  --color-shadow-panel-middle: #21212100;
+  --color-chart-evaluation: #b497f1;
+  --color-content-pentary: #f9f9f9;
+  --color-chart-funds: #177553;
+  --color-interactive-secondary: #f9f9f9;
+  --color-attention-alert-surface: #60110a;
+  --color-chart-bonds: #a0a5c1;
+  --color-background-divider: #656565;
+  --color-content-secondary: #f9f9f9;
+  --color-background-border-highlighted: #f9f9f9;
+  --color-background-surface-highlighted: #3b3b3b;
+  --color-shadow-floating-middle: #21212100;
+  --color-dialog-surface: #212121;
+  --color-attention-success: #2fdb41;
+  --color-content-quaternary: #f9f9f9;
+  --color-background-surface: #1c1c1c;
+  --color-chart-neon: #ee78aa;
+  --color-background-body: #0d0d0d;
+  --color-attention-success-surface: #05390a;
+  --color-chart-out: #f9f9f9;
+  --color-chart-cool: #5d6689;
+  --color-chart-stocks: #ac444f;
+  --color-shadow-panel-bottom: #21212100;
+  --color-content-skeleton-loading: #656565;
+  --color-shadow-floating-bottom: #21212100;
+  --color-shadow-floating-top: #21212100;
+  --color-interactive-primary-action: #960314;
+  --color-attention-information-surface: #3b3b3b;
+  --color-dialog-overlay: #2f2f2f99;
+  --color-background-surface-avatar: #f9f9f91a;
+  --color-background-table-zebra: #f9f9f924;
+  --color-shadow-highlighted-middle: #21212100;
+  --color-shadow-highlighted-top: #21212100;
+  --color-shadow-highlighted-bottom: #21212100;
+  --color-interactive-secondary-action: #f9f9f924;
+  --color-chart-plot-in-background-top: #23af313d;
+  --color-chart-plot-in-background-bottom: #23af3100;
+  --color-chart-plot-out-background-top: #f9f9f93d;
+  --color-chart-plot-out-background-bottom: #f9f9f900;
+  --color-chart-rusty-red: #9a5437;
+}
+
+/* ---- Typography utility classes ---- */
+.t-content-body-primary{font:400 16px/24px Inter,system-ui,sans-serif;}
+.t-content-button{font:500 16px/24px Inter,system-ui,sans-serif;}
+.t-content-body-secondary-bold{font:500 14px/20px Inter,system-ui,sans-serif;}
+.t-content-caption-primary-bold{font:500 12px/16px Inter,system-ui,sans-serif;}
+.t-content-body-secondary{font:400 14px/20px Inter,system-ui,sans-serif;}
+.t-content-body-primary-bold{font:500 16px/24px Inter,system-ui,sans-serif;}
+.t-content-caption-primary{font:400 12px/16px Inter,system-ui,sans-serif;}
+.t-content-caption-secondary-bold{font:500 10px/16px Inter,system-ui,sans-serif;}
+.t-headings-headline-secondary-bold{font:600 18px/24px Inter,system-ui,sans-serif;}
+.t-headings-headline-primary{font:500 20px/28px Inter,system-ui,sans-serif;}
+.t-headings-title-tertiary{font:500 28px/36px Inter,system-ui,sans-serif;}
+.t-headings-headline-secondary{font:500 18px/24px Inter,system-ui,sans-serif;}
+.t-headings-title-secondary{font:500 32px/44px Inter,system-ui,sans-serif;}
+.t-content-caption-secondary{font:400 10px/16px Inter,system-ui,sans-serif;}
+.t-headings-title-quaternary{font:500 24px/32px Inter,system-ui,sans-serif;}
+.t-headings-title-primary{font:500 42px/52px Inter,system-ui,sans-serif;}
+
+*{box-sizing:border-box}body{margin:0;background:var(--color-attention-information-surface);font-family:var(--font-family);color:var(--color-content-primary)}button,input{font:inherit}button{color:inherit;cursor:pointer}button:disabled{cursor:default}button:focus-visible,input:focus-visible,a:focus-visible{outline:3px solid var(--color-content-primary);outline-offset:3px}button{border:0;background:none}p,h1,h2,h3{margin:0}h1{font-size:32px;line-height:40px;font-weight:500;letter-spacing:-.7px}h2{font-size:20px;line-height:27px;font-weight:500}h3{font-size:17px;line-height:25px;font-weight:500}small,.muted{color:var(--color-content-tertiary);font-size:14px;line-height:20px}.phone{max-width:430px;margin:auto;background:var(--color-background-body);min-height:100dvh}.screen{display:flex;flex-direction:column;min-height:100dvh}.hdr{background:var(--color-background-body);padding:0 var(--space-16) var(--space-4)}.back{display:flex;align-items:center;gap:4px;height:48px;padding:0;font-size:16px}.icon{width:24px;height:24px;flex:none}.content{display:flex;flex-direction:column;gap:var(--space-16);padding:var(--space-16);flex:1 0 auto}.card{background:var(--color-background-surface);border-radius:var(--radius-md);box-shadow:var(--shadow-panel);overflow:hidden}.secondary{border:1px solid var(--color-background-border);border-radius:var(--radius-md);padding:var(--space-16)}.row{display:flex;align-items:center;gap:var(--space-12);padding:var(--space-16);min-height:64px}.row+.row,.divide{border-top:1px solid var(--color-background-divider)}.grow{flex:1;min-width:0}.nav{width:100%;text-align:left}.avatar{background:var(--color-background-surface-avatar);padding:8px;border-radius:var(--radius-md);display:flex}.avatar .icon{width:24px;height:24px}.amount{font-size:18px;line-height:26px;font-weight:500}.primary,.secondary-btn{min-height:48px;width:100%;border-radius:var(--radius-md);padding:12px var(--space-16);font-weight:500;font-size:16px}.primary{background:var(--color-interactive-primary);color:var(--color-interactive-on-primary)}.primary:active{background:var(--color-interactive-primary-action)}.primary:disabled{background:var(--color-interactive-secondary-active);color:var(--color-content-tertiary)}.secondary-btn{background:var(--color-interactive-secondary-active)}.bottom{position:sticky;bottom:0;background:var(--color-background-surface);box-shadow:var(--shadow-panel);padding:var(--space-16);padding-bottom:max(16px,env(safe-area-inset-bottom));display:grid;gap:var(--space-12);z-index:5}.bottom strong{font-size:18px;font-weight:500}.summary-line{display:flex;justify-content:space-between;gap:8px}.link{text-decoration:underline;text-underline-offset:4px;padding:0;min-height:44px;font-size:14px}.selection{display:flex;align-items:center;justify-content:space-between;gap:8px}.check{display:flex;align-items:center;gap:var(--space-12);min-height:44px;cursor:pointer}.check input{width:22px;height:22px;accent-color:var(--color-interactive-primary);margin:0;flex:none;cursor:pointer}.check-only{padding:8px;min-width:44px;justify-content:center;margin-left:-8px}.group-head{display:flex;align-items:center;gap:8px;padding:var(--space-12) var(--space-16)}.group-head .grow{padding:4px 0}.group-head small{display:block}.type{display:flex;align-items:center;gap:8px;padding:8px 16px;border-top:1px solid var(--color-background-divider)}.type-toggle{display:flex;align-items:center;text-align:left;gap:8px;flex:1;min-height:56px;padding:4px 0;min-width:0}.type-toggle .icon{transition:transform .15s}.type-toggle[aria-expanded=true] .icon{transform:rotate(90deg)}.type:first-child{border-top:0}.type-title{font-size:16px;line-height:24px}.type-title small{display:block}.selected-caption{color:var(--color-interactive-primary);font-size:12px;line-height:18px}.instruments{background:var(--color-background-body);border-top:1px solid var(--color-background-divider)}.instrument{display:flex;gap:8px;padding:8px 16px;align-items:center}.instrument+.instrument{border-top:1px solid var(--color-background-divider)}.instrument .nav{padding:8px 0;display:flex;align-items:center;gap:8px;flex:1;min-width:0}.instrument .amount{font-size:16px}.instrument .grow>span{display:block}.instrument .muted{font-size:12px;line-height:18px}.error{color:var(--color-attention-alert);font-size:13px;line-height:20px}.message{padding:12px 16px;background:var(--color-attention-information-surface);border-radius:var(--radius-md);font-size:14px;line-height:21px}.message.alert{background:var(--color-attention-alert-surface);color:var(--color-attention-alert)}.message.success{background:var(--color-attention-success-surface)}.tabs{display:flex;overflow:auto;gap:8px;scrollbar-width:none}.tab{white-space:nowrap;border:1px solid var(--color-background-border);border-radius:var(--radius-sm);min-height:36px;padding:8px 12px;font-size:14px}.tab[aria-pressed=true]{background:var(--color-interactive-primary);border-color:var(--color-interactive-primary);color:var(--color-interactive-on-primary)}.detail-hero{padding:24px 16px;text-align:center;display:grid;justify-items:center;gap:12px}.detail-hero h2{overflow-wrap:anywhere;font-size:24px;line-height:32px}.detail-hero .amount{font-size:28px;line-height:36px}.label-value{padding:16px}.label-value+.label-value{border-top:1px solid var(--color-background-divider)}.label-value small{display:block;margin-bottom:2px}.label-value p{font-size:16px;line-height:24px;overflow-wrap:anywhere}.totals{display:grid;gap:8px}.total-row{display:flex;justify-content:space-between;gap:12px;font-size:14px;line-height:21px}.total-row strong{font-size:16px;white-space:nowrap}.review-item{padding:16px;border-top:1px solid var(--color-background-divider)}.review-item small{display:block}.review-item:first-child{border-top:0}.toolbar{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;background:var(--color-interactive-primary);color:white;gap:4px;padding:16px 8px;border-radius:var(--radius-xl)}.toolbar button{font-size:12px;display:grid;justify-items:center;gap:8px;min-height:48px;color:inherit}.toolbar .icon{filter:brightness(0) invert(1)}.balance{font-size:28px;line-height:36px;margin-top:12px}.home-tabs{padding:8px 0}.desktop-tools{position:fixed;top:24px;left:calc(50% + 240px);max-width:240px;font-size:14px;line-height:22px;display:grid;gap:12px}.desktop-tools a{color:inherit}.pin{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;padding:16px 24px}.pin button{min-height:56px;border:1px solid var(--color-background-border);border-radius:var(--radius-full);background:var(--color-background-surface);font-size:22px}.pin-preview{font-size:26px;letter-spacing:12px;text-align:center;min-height:44px}.center{align-items:center;text-align:center}.all-selected{font-size:12px}.subject-count{margin-top:var(--space-4);color:var(--color-content-primary);font-size:12px;line-height:16px}.badge{padding:3px 7px;border-radius:var(--radius-sm);background:var(--color-attention-information-surface);font-size:12px}.empty{padding:24px 16px;display:grid;gap:12px}.sums-mini{font-size:12px;line-height:18px}.bottom .muted{font-size:13px}.compact-title{font-size:28px}@media(max-width:950px){.desktop-tools{display:none}}@media(max-width:360px){h1{font-size:27px}.instrument .nav{flex-wrap:wrap}.instrument .amount{font-size:15px}.content{padding:12px}.type,.group-head{padding-left:12px;padding-right:12px}}
+
+.subject-context{display:flex;align-items:center;gap:var(--space-8);padding:var(--space-16)}
+.subject-switch{display:flex;align-items:center;gap:var(--space-8);flex:1;min-width:0;text-align:left;min-height:48px;padding:0}
+.subject-switch .subject-name{display:block;font-size:16px;line-height:24px;font-weight:500}
+.subject-switch small{display:block}
+.subject-switch .icon:last-child{width:16px;height:16px}
+.subject-select{font-size:14px;line-height:20px;min-height:48px;max-width:96px;padding:var(--space-4);text-decoration:underline;text-underline-offset:4px}
+.overview-count{font-size:14px;line-height:20px;color:var(--color-content-tertiary)}
+.account-card .group-head{padding-left:var(--space-16);padding-right:var(--space-16)}
+.account-heading{flex:1;min-width:0;font-size:16px;line-height:24px}
+.account-toggle{display:flex;align-items:center;gap:var(--space-8);width:100%;text-align:left;padding:var(--space-4) 0;min-height:64px;font-weight:400}
+.account-name{display:block;font-size:16px;line-height:24px;font-weight:500}
+.account-number{display:block;font-size:12px;line-height:18px;color:var(--color-content-tertiary)}
+.account-count{display:block;font-size:14px;line-height:20px;margin-top:var(--space-4)}
+.account-summary{display:block;font-size:12px;line-height:18px;color:var(--color-content-tertiary);margin-top:var(--space-4)}
+.account-toggle>.icon,.type-toggle>.icon{transform:rotate(90deg);transition:transform .15s}
+.account-toggle[aria-expanded=true]>.icon,.type-toggle[aria-expanded=true]>.icon{transform:rotate(-90deg)}
+.account-body{border-top:1px solid var(--color-background-divider)}
+.account-body>.type{margin-left:0;padding-left:var(--space-16);padding-right:var(--space-16)}
+.account-body>.instruments{border-top:0}
+.account-body>.type+.instruments{border-left:0;margin-left:0}
+.account-body .instrument{padding-left:var(--space-16);padding-right:var(--space-16)}
+.account-body .instrument .nav{flex-wrap:wrap}
+.account-body .instrument .grow{flex-basis:100%}
+.account-body .instrument .amount{margin-left:auto}
+.account-card .selected-caption{display:block}
+@media(prefers-reduced-motion:reduce){.account-toggle>.icon,.type-toggle>.icon{transition:none}}
+
+/* Lokální koncept: společný výběr, účet, typ, položky */
+.overview-screen{font-family:var(--font-family)}
+.overview-screen .hdr h1{font-size:32px;line-height:40px}
+.overview-screen .content{gap:var(--space-12);padding-top:var(--space-12)}
+.concept-subject{border-bottom:var(--border-sm) solid var(--color-background-divider);padding-bottom:var(--space-12)}
+.concept-subject .subject-switch{justify-content:space-between;width:100%;font-size:16px}
+.concept-subject .subject-switch .icon{width:24px;height:24px}
+.concept-subject .subject-name{font-size:18px;font-weight:500}
+.selection-overview{display:grid;gap:var(--space-8)}
+.selection-overview .check{font-weight:500;min-height:44px}
+.selection-overview small{padding-left:34px;display:block;margin-top:-8px}
+.overview-toolbar{display:flex;justify-content:space-between;align-items:center;gap:var(--space-8)}
+.overview-toolbar p{font-size:14px;line-height:20px;color:var(--color-content-secondary)}
+.overview-toolbar .link{white-space:nowrap;font-weight:500;min-height:32px}
+.usage-hint{font-size:12px;line-height:18px;color:var(--color-content-tertiary)}
+.overview-screen .group-head{padding:var(--space-12) var(--space-16);gap:var(--space-8);align-items:flex-start}
+.overview-screen .group-head>.check{margin-top:var(--space-4)}
+.overview-screen .account-toggle{min-height:68px;align-items:flex-start;padding:0;gap:var(--space-8)}
+.overview-screen .account-toggle .grow{padding:0}
+.overview-screen .account-name{font-size:17px;line-height:24px;font-weight:500}
+.overview-screen .account-number{font-size:12px;line-height:18px}
+.overview-screen .account-count{font-size:13px;line-height:20px;margin-top:var(--space-4);color:var(--color-content-secondary)}
+.overview-screen .account-summary{font-size:12px;line-height:18px}
+.overview-screen .account-toggle>.icon,.overview-screen .type-toggle>.icon{transform:rotate(0deg);margin-top:var(--space-4);transition:transform .15s}
+.overview-screen .account-toggle[aria-expanded=true]>.icon,.overview-screen .type-toggle[aria-expanded=true]>.icon{transform:rotate(90deg)}
+.selection-status{display:block;font-size:12px;line-height:18px;color:var(--color-content-secondary);margin-top:var(--space-4)}
+.selection-status.active{font-weight:500;color:var(--color-interactive-primary)}
+.concept-type+.concept-type{border-top:var(--border-sm) solid var(--color-background-divider)}
+.concept-type .type{border:0;background:var(--color-background-body);padding:var(--space-8) var(--space-16);align-items:flex-start}
+.concept-type .type>.check{margin-top:var(--space-4)}
+.type-heading{flex:1;min-width:0;font-size:16px}
+.overview-screen .type-toggle{width:100%;min-height:56px;align-items:flex-start;padding:var(--space-4) 0}
+.type-title{display:block;font-weight:500;font-size:16px;line-height:24px}
+.type-count{display:block;font-size:12px;line-height:18px;color:var(--color-content-secondary)}
+.type-meta{display:flex;gap:var(--space-8);flex-wrap:wrap}
+.type-meta .selection-status{margin:0}
+.unavailable-count{color:var(--color-attention-alert);font-size:12px;line-height:18px;display:block}
+.overview-screen .instruments{background:var(--color-background-surface);border-top:var(--border-sm) solid var(--color-background-divider)}
+.overview-screen .instrument{padding:var(--space-8) var(--space-16);gap:var(--space-8);align-items:flex-start}
+.overview-screen .instrument>.check{margin-top:var(--space-4)}
+.overview-screen .instrument .nav{display:block;padding:var(--space-8) 0;min-height:56px}
+.item-top{display:flex;justify-content:space-between;gap:var(--space-8);align-items:baseline}
+.item-name{font-size:14px;line-height:20px;overflow-wrap:anywhere;min-width:0}
+.overview-screen .instrument .amount{font-size:14px;line-height:20px;white-space:nowrap;font-weight:500}
+.item-meta{display:flex;justify-content:space-between;gap:var(--space-8);margin-top:var(--space-4);font-size:12px;line-height:18px}
+.item-meta .muted{font-size:12px;line-height:18px}
+.item-meta>.muted{white-space:nowrap}
+.overview-screen .check input{appearance:none;width:22px;height:22px;border:var(--border-md) solid var(--color-background-border-highlighted);border-radius:var(--radius-sm);background:var(--color-background-surface);position:relative;display:grid;place-content:center}
+.overview-screen .check input:checked,.overview-screen .check input:indeterminate{border-color:var(--color-interactive-primary);background:var(--color-interactive-primary);color:var(--color-interactive-on-primary)}
+.overview-screen .check input:checked::before{content:'';width:10px;height:6px;border-left:2px solid currentColor;border-bottom:2px solid currentColor;transform:translateY(-2px) rotate(-45deg)}
+.overview-screen .check input:indeterminate::before{content:'';width:10px;height:2px;background:currentColor}
+.overview-screen .check input:disabled{border-color:var(--color-content-quaternary);background:var(--color-background-body);opacity:.5;cursor:default}
+.overview-screen .authorization-bottom{gap:var(--space-12)}
+.selection-total{display:flex;justify-content:space-between;align-items:baseline;gap:var(--space-8)}
+.selection-total strong{font-size:16px}
+.payment-total{font-size:13px;line-height:20px;color:var(--color-content-secondary);margin-top:var(--space-4)}
+.concept-footer-note{font-size:12px;line-height:18px;color:var(--color-content-tertiary)}
+@media(max-width:360px){.overview-screen .content{padding:var(--space-12)}.overview-screen .hdr h1{font-size:28px;line-height:36px}.overview-screen .group-head,.overview-screen .type,.overview-screen .instrument{padding-left:var(--space-12);padding-right:var(--space-12)}.item-top{flex-wrap:wrap}.overview-screen .instrument .amount{margin-left:auto}.overview-toolbar{align-items:flex-start}}
+@media(prefers-reduced-motion:reduce){.overview-screen .account-toggle>.icon,.overview-screen .type-toggle>.icon{transition:none}}
+.selection-dialog{border:0;border-radius:var(--radius-md);padding:0;width:calc(100% - 24px);max-width:430px;max-height:calc(100dvh - 32px);background:var(--color-background-body);color:var(--color-content-primary);box-shadow:var(--shadow-floating)}.selection-dialog::backdrop{background:var(--color-dialog-overlay)}.selection-dialog .hdr{padding-top:var(--space-8)}.selection-dialog .hdr h1{font-size:28px;line-height:36px}.selection-dialog .content{flex:initial}.selection-dialog .bottom{position:sticky;bottom:0}
+</style></head><body><main class="phone" id="app"></main><aside class="desktop-tools"><h3>Nový koncept multiautorizace</h3><p>Subjekt → účet → typ → položky. Výběr na každé úrovni.</p><a href="#subjects">Výběr subjektu</a><a href="#overview">Přehled autorizací</a><a href="rozhodnuti.md" target="_blank">Výzkum a rozhodnutí</a><button class="secondary-btn" id="reset">Obnovit ukázková data</button><small>Testovací data. Autorizace je simulovaná.</small></aside>
+<script>
+const KEY='multiautorizace_local_concept_v1';
+const accounts={a1:{name:'Běžný účet Business 1',number:'125000/0100',limit:158000},a2:{name:'Běžný účet Business 2',number:'137000/0100',limit:90000},personal:{name:'Běžný účet',number:'122000/0100',limit:100000}};
+const types={payments:'Platby',standing:'Trvalé příkazy',mandates:'Inkasa',collections:'Příkazy k inkasu',batches:'Dávkové platby'};
+const seed=[
+['p1','a1','payments','4835477/0100',30000,'CZK','2. 10. 2025','5856214'],['p2','a1','payments','BE48354778985142',300,'EUR','2. 10. 2025',''],['p3','a1','payments','122000/0100',800,'EUR','2. 10. 2025','','Blokovaná měna'],['p4','a1','payments','48354324/0100',30000,'CZK','5. 10. 2025','5856214'],['p5','a1','payments','BE48354778981652',100,'EUR','5. 10. 2025',''],['p6','a1','payments','BE48354778982923',200,'EUR','5. 10. 2025',''],['p7','a1','payments','654653/3030',1000,'CZK','6. 10. 2025',''],['p8','a1','payments','122000/0100',800,'EUR','6. 10. 2025','','Blokovaná měna'],
+['s1','a1','standing','Spoření',300,'EUR','2. 10. 2025',''],['s2','a1','standing','Záloha',16000,'CZK','5. 10. 2025',''],['m1','a1','mandates','ČEZ Prodej',6500,'CZK','Měsíční limit',''],
+['q1','a2','payments','4835477/0100',30000,'CZK','2. 10. 2025','756589870144'],['q2','a2','payments','Účetní služby',4500,'CZK','5. 10. 2025','202610'],['q3','a2','payments','Nájem skladu',18000,'CZK','5. 10. 2025',''],['q4','a2','payments','Obaly a spol.',4200,'CZK','6. 10. 2025',''],
+['b1','batch','batches','Mzdy — září',45000,'CZK','5. 10. 2025',''],['b2','batch','batches','Dodavatelé — říjen',24000,'CZK','5. 10. 2025',''],['b3','batch','batches','Zálohy zaměstnancům',12000,'CZK','5. 10. 2025',''],['b4','batch','batches','Provozní náklady',9800,'CZK','6. 10. 2025',''],['b5','batch','batches','Doprava',5400,'CZK','6. 10. 2025',''],['b6','batch','batches','Služby',3200,'CZK','6. 10. 2025',''],
+['r1','personal','payments','Nájem bytu',15000,'CZK','5. 10. 2026',''],['r2','personal','standing','Spoření',3000,'CZK','Od 10. 10. 2026','']
+].map(([id,account,type,name,amount,currency,date,vs,error])=>({id,account,type,name,amount,currency,date,vs,error,subject:account==='personal'?'person':'company',children:account==='batch'?3:0,frequency:id==='s2'?'Pololetně':'Měsíčně'}));
+let state;try{state=JSON.parse(localStorage.getItem(KEY)||'null')}catch{}state=Object.assign({subject:'company',selected:[],expanded:[],done:[],review:[],returnRoute:'overview',detailBack:'overview',reviewBack:'overview',result:[],filter:'all'},state||{});
+const app=document.getElementById('app');const save=()=>localStorage.setItem(KEY,JSON.stringify(state));const money=(n,c='CZK')=>new Intl.NumberFormat('cs-CZ',{style:'currency',currency:c}).format(n);
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const icon=n=>`<img class="icon" src="../../design-system/design-system/assets/icons/${n}.svg" alt="">`;
+const records=n=>n===1?'1 záznam':n>=2&&n<=4?n+' záznamy':n+' záznamů';
+const authorizationItems=n=>n===1?'1 položka':n>=2&&n<=4?n+' položky':n+' položek';
+const subjectName=()=>state.subject==='company'?'Ostružiny s.r.o.':'Řehoř Koudelka';
+const available=()=>seed.filter(x=>x.subject===state.subject&&!state.done.includes(x.id));const selectable=xs=>xs.filter(x=>!x.error);const chosen=()=>selectable(available()).filter(x=>state.selected.includes(x.id));
+const byIds=ids=>seed.filter(x=>ids.includes(x.id));
+const go=r=>{if(location.hash.slice(1)===r){render();return}location.hash=r};
+const header=(title,back='overview',close=false)=>`<header class="hdr"><button class="back" data-go="${back}">${close?'':icon('caret-left')}${close?'Zavřít':'Zpět'}</button><h1>${title}</h1></header>`;
+const typeShort={payments:'plateb',standing:'trvalé příkazy',mandates:'inkaso',collections:'příkazy k inkasu',batches:'dávek'};
+function typeSummary(t,n){let words={payments:['platba','platby','plateb'],standing:['trvalý příkaz','trvalé příkazy','trvalých příkazů'],mandates:['inkaso','inkasa','inkas'],collections:['příkaz k inkasu','příkazy k inkasu','příkazů k inkasu'],batches:['dávka','dávky','dávek']}[t];return n+' '+words[n===1?0:n>=2&&n<=4?1:2]}
+function selectedStatus(xs){let valid=selectable(xs),n=valid.filter(x=>state.selected.includes(x.id)).length;return n?`<span class="selection-status active">Vybráno ${n} z ${valid.length}</span>`:''}
+function panelKeys(){let xs=available(),as=[...new Set(xs.map(x=>x.account))];return as.flatMap(a=>['account-'+a,...(a==='batch'?[]:[...new Set(xs.filter(x=>x.account===a).map(x=>x.type))].map(t=>a+'-'+t))])}
+function allPanelsOpen(){let keys=panelKeys();return keys.length&&keys.every(k=>state.expanded.includes(k))}
+function cb(xs,label,key){let valid=selectable(xs),n=valid.filter(x=>state.selected.includes(x.id)).length;return `<label class="check check-only"><input type="checkbox" data-select="${key}" data-ids="${valid.map(x=>x.id).join(',')}" aria-label="${esc(label)}" ${valid.length&&n===valid.length?'checked':''} ${!valid.length?'disabled':''} data-mixed="${n>0&&n<valid.length}"></label>`}
+function sumBlock(xs){let totals={};xs.forEach(x=>{let category={payments:'Platby',batches:'Platby v dávkách',standing:'Pravidelné částky',mandates:'Limity inkas',collections:'K inkasu'}[x.type],k=category+'|'+x.currency;totals[k]=(totals[k]||0)+x.amount});return Object.entries(totals).map(([k,v])=>`<div class="total-row"><span>${k.split('|')[0]}</span><strong>${money(v,k.split('|')[1])}</strong></div>`).join('')||'<small>Žádné vybrané položky</small>'}
+const overviewMoney=(n,c='CZK')=>new Intl.NumberFormat('cs-CZ',{minimumFractionDigits:2,maximumFractionDigits:2}).format(n)+' '+(c==='CZK'?'Kč':c);
+function bottom(){let xs=chosen(),sums={};xs.filter(x=>['payments','batches'].includes(x.type)).forEach(x=>sums[x.currency]=(sums[x.currency]||0)+x.amount);let total=Object.entries(sums).map(([c,n])=>overviewMoney(n,c)).join(' + ');return `<footer class="bottom authorization-bottom"><div aria-live="polite"><div class="selection-total"><strong>Vybráno ${xs.length} z ${selectable(available()).length}</strong><span class="muted">k autorizaci</span></div>${total?`<p class="payment-total">Platby k odeslání: ${total}</p>`:`<p class="payment-total">${xs.length?'Vybrané příkazy a limity uvidíte v kontrole.':'Vyberte položky nebo celé skupiny.'}</p>`}</div><button class="primary" data-action="review" ${xs.length?'':'disabled'}>Zkontrolovat výběr${xs.length?' ('+xs.length+')':''}</button></footer>`}
+function item(x){let regular=x.type==='standing',sub=x.error?`<span><span class="muted">${x.date}</span><span class="error" style="display:block">${x.error}</span></span>`:regular?`<span class="muted">${x.frequency}</span>`:x.type==='payments'?`<span class="muted">${x.date}${x.vs?' · VS: '+x.vs:''}</span>`:x.type==='batches'?'<span class="muted">3 platby · dávka jako celek</span>':x.type==='mandates'?'<span class="muted">Měsíční limit</span>':'';return `<div class="instrument">${cb([x],x.name+' — '+overviewMoney(x.amount,x.currency),x.id)}<button class="nav" data-go="detail/${x.id}"><span class="item-top"><span class="item-name">${esc(x.name)}</span><span class="amount">${overviewMoney(x.amount,x.currency)}</span></span>${sub||regular?`<span class="item-meta"><span class="grow">${sub}</span>${regular?`<span class="muted">${x.date.replace(/^Od /,'')}</span>`:''}</span>`:''}</button></div>`}
+function groupAction(xs,label,key){let valid=selectable(xs),all=valid.length>0&&valid.every(x=>state.selected.includes(x.id));return `<button class="group-select link" data-group-select="${key}" data-ids="${valid.map(x=>x.id).join(',')}" aria-label="${all?'Zrušit výběr':'Označit vše'} — ${label}" ${!valid.length?'disabled':''}>${all?'Zrušit výběr':'Označit vše'}</button>`}
+function typeRow(account,type,xs){let key=account+'-'+type,open=state.expanded.includes(key);return `<section class="concept-type"><div class="type">${cb(xs,'Vybrat všechny položky: '+types[type]+' na '+accounts[account].name,key)}<h3 class="type-heading"><button class="type-toggle" id="toggle-${key}" data-expand="${key}" aria-expanded="${open}" aria-controls="items-${key}"><span class="grow"><span class="type-title">${types[type]}</span><span class="type-meta"><span class="type-count">${authorizationItems(xs.length)}</span>${selectedStatus(xs)}</span>${xs.some(x=>x.error)?`<span class="unavailable-count">${xs.filter(x=>x.error).length} nelze vybrat</span>`:''}</span>${icon('caret-right')}</button></h3></div><div id="items-${key}" class="instruments" role="group" aria-labelledby="toggle-${key}" ${open?'':'hidden'}>${xs.map(item).join('')}</div></section>`}
+function accountRow(a,xs){let key='account-'+a,open=state.expanded.includes(key),batch=a==='batch',name=batch?'Dávkové platby':accounts[a].name,ts=[...new Set(xs.map(x=>x.type))];let summary=ts.map(t=>typeSummary(t,xs.filter(x=>x.type===t).length)).join(' · ');return `<section class="card account-card" aria-label="${name}"><div class="group-head">${cb(xs,'Vybrat všechny položky: '+name,a)}<h2 class="account-heading"><button id="toggle-${key}" class="account-toggle" data-expand="${key}" aria-expanded="${open}" aria-controls="items-${key}"><span class="grow"><span class="account-name">${name}</span>${batch?'':`<span class="account-number">${accounts[a].number}</span>`}<span class="account-count">${authorizationItems(xs.length)}</span>${batch?'':`<span class="account-summary">${summary}</span>`}${selectedStatus(xs)}${xs.some(x=>x.error)?`<span class="unavailable-count">${xs.filter(x=>x.error).length} nelze vybrat</span>`:''}</span>${icon('caret-right')}</button></h2></div><div class="account-body" id="items-${key}" role="group" aria-labelledby="toggle-${key}" ${open?'':'hidden'}>${batch?`<div class="instruments">${xs.map(item).join('')}</div>`:ts.map(t=>typeRow(a,t,xs.filter(x=>x.type===t))).join('')}</div></section>`}
+function overview(){let xs=available(),valid=selectable(xs),all=valid.length>0&&chosen().length===valid.length;return header('Přehled autorizací','subjects')+`<div class="content"><div class="concept-subject"><button class="subject-switch" data-go="subjects" aria-label="Změnit subjekt: ${subjectName()}"><span><span class="subject-name">${subjectName()}</span><small>${state.subject==='company'?'IČO: 123456789':'Osobní finance'}</small></span>${icon('caret-right')}</button></div><div class="selection-overview"><label class="check">${cb(xs,'Vybrat všechny dostupné položky subjektu','subject-all').match(/<input.*?>/)[0]}<span>${all?'Zrušit celý výběr':'Označit vše k autorizaci'}</span></label><small>Lze vybrat ${valid.length} z ${xs.length} položek</small></div><div><div class="overview-toolbar"><p>${authorizationItems(xs.length)} k autorizaci</p><button class="link" data-action="toggle-all-panels">${allPanelsOpen()?'Sbalit vše':'Rozbalit vše'}</button></div><p class="usage-hint">Políčko vybírá, šipka rozbaluje.</p></div>${xs.length?['batch',...Object.keys(accounts)].map(a=>{let group=xs.filter(x=>x.account===a);return group.length?accountRow(a,group):''}).join(''):'<div class="card empty"><h2>Vše je vyřízené</h2><p class="muted">Nemáte další položky k autorizaci.</p></div>'}</div>`+bottom()}
+function subjects(){return header('Vyberte subjekt','home',true)+`<div class="content"><p>U těchto máte požadavek k autorizaci.</p><div class="card">${[['person','Řehoř Koudelka',''],['company','Ostružiny s.r.o.','IČO: 123456789']].map(([s,n,desc])=>`<button class="row nav" data-subject="${s}"><span class="avatar">${icon(s==='company'?'bank':'person')}</span><span class="grow"><h3>${n}</h3>${desc?`<small>${desc}</small>`:''}<p class="subject-count">${authorizationItems(seed.filter(x=>x.subject===s&&!state.done.includes(x.id)).length)} k autorizaci</p></span>${icon('caret-right')}</button>`).join('')}</div></div>`}
+function home(){return `<header class="hdr"><div class="row" style="justify-content:flex-end;padding:12px 0">${icon('key')}${icon('bank')}<span class="avatar">ŘK</span></div><div class="tabs home-tabs">${['Přehled','Extra','Karty','Spoření','Investice'].map((t,i)=>`<span class="tab" aria-pressed="${!i}">${t}</span>`).join('')}</div></header><div class="content">${[['Běžný účet','122000/0100',48490.2],['Běžný účet Business','125000/0100',1848490.2],['Běžný účet Business 2','137000/0100',486000.8]].map(([n,num,b],i)=>`${i?`<div class="row">${icon('bank')}<h3>Ostružiny s.r.o.</h3></div>`:''}<div class="secondary" style="padding:0;overflow:hidden"><div class="row">Tarif Komfort${i?' Business':''}<span class="grow"></span>${icon('caret-right')}</div><div class="card" style="padding:16px;box-shadow:none;border-radius:0"><div class="summary-line"><span>${n}</span><small>${num}</small></div><p class="balance">${money(b)}</p></div></div>`).join('')}</div><footer class="bottom" style="background:transparent;box-shadow:none"><div class="toolbar"><button disabled>${icon('send-payment')}Nová platba</button><button disabled>${icon('listed-items')}QR platba</button><button disabled>${icon('pay-me')}Zaplať mi</button><button data-go="subjects">${icon('key')}Autorizace</button></div></footer>`}
+function detail(id){let x=seed.find(x=>x.id===id&&x.subject===state.subject);if(!x)return header('Záznam nenalezen')+'<div class="content"><p>Vraťte se do přehledu autorizací.</p></div>';let done=state.done.includes(id);return header(x.type==='payments'?'Platba k autorizaci':types[x.type],(state.detailBack||'overview'))+`<div class="content"><div class="card detail-hero"><span class="avatar">${icon(x.type==='batches'?'text-file':'person')}</span><h2>${esc(x.name)}</h2><p class="amount">${money(x.amount,x.currency)}</p><p class="muted">${x.type==='mandates'?'Limit inkasa':x.type==='standing'?'Pravidelná částka · '+x.frequency.toLocaleLowerCase('cs-CZ'):x.date}</p></div><p class="message ${x.error?'alert':done?'success':''}">${done?'Autorizováno v prototypu':x.error?x.error+'. Tento záznam nelze autorizovat.':'Čeká se na autorizaci.'}</p><div class="card">${[['Subjekt',subjectName()],['Z účtu',accounts[x.account]?accounts[x.account].name+' · '+accounts[x.account].number:'Více účtů v rámci subjektu'],['Typ požadavku',x.type==='standing'?'Založení trvalého příkazu':x.type==='mandates'?'Založení svolení k inkasu':types[x.type]],['Datum',x.date],...(x.vs?[['Variabilní symbol',x.vs]]:[]),...(x.type==='batches'?[['Obsah dávky','3 platby · autorizuje se celá dávka']]:[]),['Zadal','Řehoř Koudelka · '+(x.subject==='company'?'2. 10. 2025':'2. 10. 2026')],['Autorizace','V tomto scénáři stačí jeden podpis']].map(([l,v])=>`<div class="label-value"><small>${l}</small><p>${esc(v)}</p></div>`).join('')}</div>${x.type==='batches'?`<div class="card"><div class="row"><h3>Platby v dávce</h3></div>${['První platba','Druhá platba','Třetí platba'].map((n,i)=>`<div class="row"><span class="grow">${n}<small style="display:block">${i?'137000/0100':'125000/0100'}</small></span><span>${money(x.amount/3)}</span></div>`).join('')}</div>`:''}</div><footer class="bottom">${!done?`<div style="display:flex;align-items:center;gap:8px">${cb([x],'Označit k autorizaci',id)}<span>Označit k autorizaci</span></div><button class="primary" data-single="${id}" ${x.error?'disabled':''}>Autorizovat tento záznam</button>`:'<button class="primary" data-go="overview">Zpět na přehled</button>'}</footer>`}
+function limits(xs){let messages=[];for(let [a,acct] of Object.entries(accounts)){let total=xs.filter(x=>x.account===a&&x.type==='payments'&&x.currency==='CZK').reduce((s,x)=>s+x.amount,0);let remaining=acct.limit-(state.spent?.[a]||0);if(total>remaining)messages.push(`${acct.name}: vybráno ${money(total)}, zbývající limit ${money(remaining)}.`)}return messages}
+function review(){let xs=byIds(state.review).filter(x=>!x.error&&!state.done.includes(x.id)&&x.subject===state.subject),filtered=state.filter==='all'?xs:xs.filter(x=>x.type===state.filter),issues=limits(xs);return header('Zkontrolujte výběr',state.reviewBack||'overview')+`<div class="content"><div class="secondary"><h3>${subjectName()}</h3><small>${xs.length===1?'1 autorizační záznam':xs.length>=2&&xs.length<=4?xs.length+' autorizační záznamy':xs.length+' autorizačních záznamů'}${xs.some(x=>x.children)?' · včetně '+xs.filter(x=>x.children).reduce((s,x)=>s+x.children,0)+' plateb v dávkách':''}</small><div class="totals" style="margin-top:16px">${sumBlock(xs)}</div></div><p class="message">${xs.some(x=>['standing','mandates','collections'].includes(x.type))?'Částky trvalých příkazů, limity inkas a příkazy k inkasu nejsou součástí částky plateb.':'Autorizujete pouze záznamy uvedené níže.'}</p>${issues.map(m=>`<p class="message alert">${m}</p>`).join('')}<div class="tabs" aria-label="Filtrovat vybrané záznamy"><button class="tab" aria-pressed="${state.filter==='all'}" data-filter="all">Vše (${xs.length})</button>${[...new Set(xs.map(x=>x.type))].map(t=>`<button class="tab" aria-pressed="${state.filter===t}" data-filter="${t}">${types[t]} (${xs.filter(x=>x.type===t).length})</button>`).join('')}</div><div class="card">${filtered.length?filtered.map(x=>`<div class="review-item"><button class="nav" data-go="detail/${x.id}"><div class="summary-line"><h3>${esc(x.name)}</h3><span>${icon('caret-right')}</span></div><small>${accounts[x.account]?.number||'Dávka · 3 platby'} · ${types[x.type]}</small><p class="amount">${money(x.amount,x.currency)}</p></button><button class="link" data-remove="${x.id}">Odebrat z výběru</button></div>`).join(''):'<div class="empty">Žádné záznamy v tomto filtru.</div>'}</div><small>Limity a podpisové podmínky jsou v prototypu ukázkové.</small></div><footer class="bottom"><p class="muted">${records(xs.length)} · ${subjectName()}</p><button class="primary" data-go="pin" ${!xs.length||issues.length?'disabled':''}>Potvrdit autorizaci (${xs.length})</button></footer>`}
+let pinValue='';function pin(){return header('Potvrzení autorizace','review',true)+`<div class="content"><div class="secondary"><h3>${subjectName()}</h3><p>${records(state.review.length)} k autorizaci</p></div><p>Zadejte ukázkový PIN pro potvrzení.</p><p class="muted">Jde o simulaci. Použijte libovolných 6 číslic, ne svůj skutečný PIN.</p><p class="pin-preview" aria-live="polite" aria-label="Zadáno ${pinValue.length} číslic">${'•'.repeat(pinValue.length)}${'○'.repeat(6-pinValue.length)}</p><div class="pin">${['1','2','3','4','5','6','7','8','9','Smazat','0',''].map(v=>v?`<button data-digit="${v}" ${v==='Smazat'?'style="font-size:14px"':''}>${v}</button>`:'<span></span>').join('')}</div></div>`}
+function result(){let xs=byIds(state.result);return header('Autorizace dokončena','overview',true)+`<div class="content"><p class="message success">Autorizovali jste ${records(xs.length)}.</p><div class="secondary"><h3>${subjectName()}</h3><div class="totals" style="margin-top:16px">${sumBlock(xs)}</div></div><p>Tyto položky už nenajdete mezi čekajícími autorizacemi.</p><p class="muted">Výsledek je simulovaný. Neproběhla žádná skutečná bankovní operace.</p></div><footer class="bottom"><button class="primary" data-go="overview">Zpět na přehled autorizací</button></footer>`}
+let selectionReviewOpen=false;
+function openSelectionReview(){selectionReviewOpen=true;render()}
+function closeSelectionReview(){selectionReviewOpen=false;render();app.querySelector('[data-action=review]')?.focus({preventScroll:true})}
+function render(){let route=location.hash.slice(1)||'subjects';if(route==='pin'&&!state.review.length)route='overview';let body=route==='home'?home():route==='subjects'?subjects():route==='overview'?overview():route==='review'?review():route==='pin'?pin():route==='result'?result():route.startsWith('detail/')?detail(route.split('/')[1]):overview();app.innerHTML='<div class="screen'+(route==='overview'?' overview-screen':'')+'">'+body+'</div>';app.querySelectorAll('[data-mixed=true]').forEach(el=>el.indeterminate=true);if(selectionReviewOpen&&route==='overview'){let dialog=document.createElement('dialog');dialog.className='selection-dialog';dialog.setAttribute('aria-label','Zkontrolujte výběr');dialog.innerHTML=review().replace('data-go="'+(state.reviewBack||'overview')+'"','data-action="close-review"').replace('>Zpět</button>','>Zavřít kontrolu</button>');dialog.addEventListener('cancel',e=>{e.preventDefault();closeSelectionReview()});app.append(dialog);dialog.showModal()}document.title=(route==='overview'?'Přehled autorizací':route==='review'?'Zkontrolujte výběr':'Multiautorizace')+' · Multiautorizace'}
+app.addEventListener('change',e=>{let el=e.target;if(el.matches('[data-select]')){let ids=el.dataset.ids.split(',').filter(Boolean);state.selected=el.checked?[...new Set([...state.selected,...ids])]:state.selected.filter(id=>!ids.includes(id));if(location.hash.startsWith('#detail/')&&state.detailBack==='review'){state.review=state.review.filter(id=>!ids.includes(id));if(el.checked)state.review=[...new Set([...state.review,...ids])]}save();render();app.querySelector('[data-select="'+el.dataset.select+'"]')?.focus({preventScroll:true})}});
+app.addEventListener('click',e=>{let el=e.target.closest('button');if(el?.dataset.action==='close-review'){closeSelectionReview();return}if(el?.dataset.action==='toggle-all-panels'){state.expanded=allPanelsOpen()?[]:panelKeys();save();render();app.querySelector('[data-action=toggle-all-panels]')?.focus({preventScroll:true});return}if(!el||el.disabled||el.getAttribute('aria-disabled')==='true')return;let r=location.hash.slice(1)||'home';if(el.dataset.go){if(el.dataset.go.startsWith('detail/')){state.detailBack=r;save()}if(el.dataset.go==='pin'){pinValue='';selectionReviewOpen=false;}go(el.dataset.go)}if(el.dataset.subject){selectionReviewOpen=false;state.subject=el.dataset.subject;state.selected=[];state.review=[];state.expanded=[];save();go('overview')}if(el.dataset.groupSelect){let ids=el.dataset.ids.split(',').filter(Boolean),all=ids.every(id=>state.selected.includes(id));state.selected=all?state.selected.filter(id=>!ids.includes(id)):[...new Set([...state.selected,...ids])];save();render();app.querySelector('[data-group-select="'+el.dataset.groupSelect+'"]')?.focus({preventScroll:true})}if(el.dataset.expand){let key=el.dataset.expand;state.expanded=state.expanded.includes(key)?state.expanded.filter(x=>x!==key):[...state.expanded,key];save();render();app.querySelector('[data-expand="'+key+'"]')?.focus({preventScroll:true})}if(el.dataset.action==='select-all'){state.selected=selectable(available()).map(x=>x.id);save();render();app.querySelector('.subject-select')?.focus({preventScroll:true})}if(el.dataset.action==='clear'){state.selected=[];save();render();app.querySelector('.subject-select')?.focus({preventScroll:true})}if(el.dataset.action==='review'||el.dataset.single){state.review=el.dataset.single?[el.dataset.single]:chosen().map(x=>x.id);if(el.dataset.single)state.selected=[...new Set([...state.selected,el.dataset.single])];state.reviewBack=r;state.filter='all';save();if(r==='overview')openSelectionReview();else go('review')}if(el.dataset.filter){state.filter=el.dataset.filter;save();render()}if(el.dataset.remove){state.selected=state.selected.filter(id=>id!==el.dataset.remove);state.review=state.review.filter(id=>id!==el.dataset.remove);save();render()}if(el.dataset.digit){pinValue=el.dataset.digit==='Smazat'?pinValue.slice(0,-1):(pinValue+el.dataset.digit).slice(0,6);if(pinValue.length===6){let xs=byIds(state.review).filter(x=>!x.error&&!state.done.includes(x.id)&&x.subject===state.subject);if(limits(xs).length){go('review');return}state.result=xs.map(x=>x.id);state.done=[...new Set([...state.done,...state.result])];for(const [a,acct] of Object.entries(accounts)){let spent=xs.filter(x=>x.account===a&&x.type==='payments'&&x.currency==='CZK').reduce((s,x)=>s+x.amount,0);state.spent=state.spent||{};state.spent[a]=(state.spent[a]||0)+spent;}state.selected=state.selected.filter(x=>!state.result.includes(x));state.review=[];save();pinValue='';go('result')}else render()}});
+document.getElementById('reset').onclick=()=>{state={subject:'company',selected:[],expanded:[],done:[],review:[],returnRoute:'overview',detailBack:'overview',reviewBack:'overview',result:[],filter:'all'};save();go('subjects');render()};window.addEventListener('hashchange',()=>{render();window.scrollTo(0,0);let h=app.querySelector('h1');if(h){h.tabIndex=-1;h.focus({preventScroll:true})}});render();
+</script></body></html>
