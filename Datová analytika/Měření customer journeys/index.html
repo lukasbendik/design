@@ -135,7 +135,7 @@
 <li><strong>Ověřit změnu.</strong> Předem jedna hlavní metrika, ochranné metriky a minimální potřebný vzorek. Randomizovat stabilně na úrovni klienta a předem určit okno. Srovnání před/po nebo mezi odlišnými klienty je signál, nikoli důkaz příčiny.</li>
 </ol><p>Konkrétní cílové hodnoty doplnit až po kvalitní výchozí periodě (pracovní návrh 2–4 týdny podle objemu) a požadované změně. Není důvod všem CJ dávat stejnou „správnou“ konverzi nebo čas.</p></div></details>
 <details><summary>Co ověřit před spuštěním měření</summary><div class="detail-body"><ul><li>Deterministické scénáře všech větví na Androidu/iOS: zpět, X, refresh, návrat z pozadí, opakovaný klik, offline a opožděný výsledek.</li><li>Retence: spořicí vs. jiný účet; částka pod / přesně / nad 50 000 Kč; podíl pod / přesně / nad 50 % zůstatku před platbou; všechny podmínky současně, chybějící zůstatek, potlačení, X vs. CTA, produktová odbočka a návrat. Příklady: ze spořicího účtu se zůstatkem 100 000 Kč platba 50 000 Kč nabídku nespustí, 50 001 Kč ano; při zůstatku 200 000 Kč ji 100 000 Kč nespustí, 100 001 Kč ano. Z běžného účtu ji nespustí ani splnění obou částkových podmínek. VoP: všechny čtyři výsledky, změna vstupu za běhu, instant dostupný i nedostupný, volba Později a autorizační overlay.</li><li>QR: kamera granted/denied/unknown, jednorázové oprávnění, návrat z nastavení, zrušení pickeru, validní i neplatební QR, nečitelný a chybný import, svítilna nedostupná. Dialogy OS měřit jen přes skutečně dostupné callbacky.</li><li>Po každém scénáři read-back posloupnosti událostí, ID, deduplikace a výsledku. Ověřit, že se neodesílá obsah platebních ani bezpečnostních polí.</li><li>Potvrdit vlastníka metrik, zdroj výsledku, režim dostupnosti měření a verzi kontraktu. Tento dokument je specifikace; měření zde není nasazené ani napojené na Techney.</li></ul></div></details>
-</section><footer><p><strong>Podklady a metodická opora.</strong> Retenční nabídka a VoP / SEPA: živé prototypy a aktuální zdrojový kód, prohlédnuté 7. 10. 2026. QR: dodaný obrázek. Návrh není audit produkční telemetrie, výsledky uživatelského výzkumu ani právní interpretace VoP.</p><p>Pravidla pro pořadí, jednotku a okno funnelu: <a href="https://amplitude.com/docs/analytics/charts/funnel-analysis/funnel-analysis-how-amplitude-computes" target="_blank" rel="noopener">Amplitude · výpočet funnelů</a>. Spojení analytiky s výzkumem a srovnávacím měřením: <a href="https://www.nngroup.com/articles/benchmarking-ux/" target="_blank" rel="noopener">Nielsen Norman Group · benchmarking UX</a>. Obojí použito jako metodická opora, nikoli potvrzení funkcí Techney.</p><p>Další journey lze přidat do stejného katalogu se shodnou strukturou: cíl → větve → metriky → obrazovky → hypotézy. Nejdřív doplnit zdroj a hranici úspěchu.</p></footer></main><script>
+</section><footer><p><strong>Podklady a metodická opora.</strong> Retenční nabídka a VoP / SEPA: živé prototypy a aktuální zdrojový kód, prohlédnuté 7. 10. 2026. QR: dodaný obrázek. Návrh není audit produkční telemetrie, výsledky uživatelského výzkumu ani právní interpretace VoP.</p><p>Pravidla pro pořadí, jednotku a okno funnelu: <a href="https://amplitude.com/docs/analytics/charts/funnel-analysis/funnel-analysis-how-amplitude-computes" target="_blank" rel="noopener">Amplitude · výpočet funnelů</a>. Spojení analytiky s výzkumem a srovnávacím měřením: <a href="https://www.nngroup.com/articles/benchmarking-ux/" target="_blank" rel="noopener">Nielsen Norman Group · benchmarking UX</a>. Rozdělení KPI na hlavní, podpůrné a ochranné: <a href="https://www.amplitude.com/docs/feature-experiment/workflow/define-goals" target="_blank" rel="noopener">Amplitude · cíle a ochranné metriky</a>. Metodická opora nepředstavuje potvrzení funkcí Techney.</p><p>Další journey lze přidat do stejného katalogu se shodnou strukturou: cíl → KPI → větve → metriky → obrazovky → hypotézy. Nejdřív doplnit zdroj a hranici úspěchu.</p></footer></main><script>
 const DATA=[
   {
     "id": "retence",
@@ -316,6 +316,74 @@ const DATA=[
         "signal": "Opakované kontakty mají více rychlých zavření.",
         "hypothesis": "Nabídka může být zobrazována příliš často.",
         "check": "Porovnat expozice a otestovat frekvenční limit; zohlednit rozdíl mezi klienty, kteří se vrací, a nově oslovenými."
+      }
+    ],
+    "kpis": [
+      {
+        "role": "Hlavní",
+        "name": "Udržení prostředků po 30 dnech",
+        "formula": "Průměr čistého odtoku mimo banku za 30 dnů v kontrolní skupině − stejný průměr v nabídkové skupině. Čistý odtok = odchozí prostředky mimo banku − příchozí prostředky zvenku; přesuny mezi vlastními účty uvnitř banky se nezapočítávají.",
+        "unit": "Kč na způsobilého klienta",
+        "window": "30 dnů od prvního způsobilého pokusu; jen uzavřená okna.",
+        "source": "Agregovaná bankovní data + stabilní přiřazení do experimentu; doplnit.",
+        "direction": "Vyšší kladný rozdíl.",
+        "interpretation": "Náhodně přiřadit klienta před rozhodnutím o zobrazení a zahrnout všechny přiřazené způsobilé klienty, i když nabídku neuviděli. Jeden klient jednou; způsobilost = spořicí účet AND > 50 000 Kč AND > 50 % zůstatku před platbou. Jde o proxy přínosu pro udržení prostředků, nikoli důkaz zachování konkrétního původního vkladu. Bez kontrolní skupiny reportovat popisnou hodnotu, ne účinek nabídky.",
+        "target": "Doplnit po ověření výchozí hodnoty a schválení cíle."
+      },
+      {
+        "role": "Podpůrné",
+        "name": "Konverze nabídky do sjednání",
+        "formula": "Unikátní oslovené pokusy s potvrzeným sjednáním do 7 dnů / všechny oslovené pokusy s uzavřeným 7denním oknem × 100.",
+        "unit": "% pokusů",
+        "window": "7 dnů od první expozice, pracovní okno.",
+        "source": "surface_view nabídky + produktový backend; doplnit.",
+        "direction": "Růst.",
+        "interpretation": "Sjednání připsat pouze jednomu relevantnímu pokusu podle schválené atribuce. Klik ani otevření detailu není sjednání; zvýšení konverze posuzovat s hlavním KPI a ochrannými metrikami.",
+        "target": "Doplnit po ověření výchozí hodnoty a schválení cíle."
+      },
+      {
+        "role": "Podpůrné",
+        "name": "Přechod z detailu do sjednání",
+        "formula": "Pokusy se skutečně zahájeným sjednáním / pokusy s otevřeným produktovým detailem × 100.",
+        "unit": "% pokusů",
+        "window": "V propojeném pokusu; sjednání s parent_attempt_id.",
+        "source": "UI detailu + potvrzený vstup do produktové CJ; doplnit.",
+        "direction": "Růst.",
+        "interpretation": "Ukáže, zda detail pomáhá k dalšímu kroku. V podkladu tlačítko Pokračovat vrací do platby, a proto jeho klik nesmí tento KPI naplnit.",
+        "target": "Doplnit po ověření výchozí hodnoty a schválení cíle."
+      },
+      {
+        "role": "Ochranné",
+        "name": "Dokončení původní platby",
+        "formula": "Pokusy s backendově přijatým příkazem / zahájené způsobilé platební pokusy × 100, samostatně pro nabídkovou a kontrolní skupinu.",
+        "unit": "% pokusů; rozdíl v procentních bodech",
+        "window": "Uzavřená platební okna dle metodiky.",
+        "source": "Platební backend + příslušnost klienta ke skupině; doplnit.",
+        "direction": "Bez nežádoucího poklesu.",
+        "interpretation": "Rozdělit platební a produktovou větev; užitečný přechod do sjednání není automaticky selhání. Přípustnou změnu a klasifikaci výsledku schválit před testem.",
+        "target": "Doplnit po ověření výchozí hodnoty a schválení cíle."
+      },
+      {
+        "role": "Ochranné",
+        "name": "P90 času původní platby",
+        "formula": "90. percentil aktivního času Nová platba → backendové přijetí příkazu; rozdíl nabídková vs. kontrolní skupina.",
+        "unit": "Sekundy na dokončený pokus",
+        "window": "Platební okno, stejná větev a srovnatelný technický kontext.",
+        "source": "UI časování + přijetí příkazu; doplnit.",
+        "direction": "Bez nežádoucího prodloužení.",
+        "interpretation": "Uvést i P50 a podíl nedokončených pokusů: samotné zrychlení dokončených může skrývat odchody pomalejších klientů. Čas produktu vyhodnotit zvlášť.",
+        "target": "Doplnit po ověření výchozí hodnoty a schválení cíle."
+      },
+      {
+        "role": "Ochranné",
+        "name": "Vnímaná užitečnost nabídky",
+        "formula": "Součet odpovědí na „Jak užitečná pro vás byla tato nabídka?“ / počet platných odpovědí na stejné škále 1–7.",
+        "unit": "Průměr 1–7; rozdělení odpovědí a N",
+        "window": "Dobrovolná otázka po ukončení vybrané větve; pravidelný výzkum.",
+        "source": "Dotazník / uživatelský výzkum; doplnit.",
+        "direction": "Růst nebo zachování.",
+        "interpretation": "Oslovovat konzistentně i klienty, kteří nabídku zavřeli. Uvést míru odpovědí; nereprezentativní odpovědi nevydávat za názor všech klientů.",
+        "target": "Doplnit po ověření výchozí hodnoty a schválení cíle."
       }
     ]
   },
@@ -560,6 +628,74 @@ const DATA=[
         "hypothesis": "Příčinou může být služba nebo chybějící srozumitelný další krok.",
         "check": "Nejdřív rozdělit latenci a chyby služby od chování UI. Pak otestovat zotavení a vysvětlení možností."
       }
+    ],
+    "kpis": [
+      {
+        "role": "Hlavní",
+        "name": "Dokončení zadání při shodě příjemce",
+        "formula": "Pokusy této kohorty s backendově přijatým příkazem / uzavřené SEPA pokusy s prvním skutečně zobrazeným konečným výsledkem VoP match × 100.",
+        "unit": "% pokusů",
+        "window": "Uzavřená platební okna dle metodiky.",
+        "source": "vop_status_view + platební backend; doplnit.",
+        "direction": "Růst bez zhoršení ochranných KPI.",
+        "interpretation": "Kohortu určit prvním výsledkem před rozhodnutím uživatele, nikoli konečným stavem po opravě. Vedle hlavního KPI reportovat dokončení všech SEPA pokusů a jednotlivých VoP větví; změna skladby výsledků nesmí vysvětlovat zdánlivé zlepšení.",
+        "target": "Doplnit po ověření výchozí hodnoty a schválení cíle."
+      },
+      {
+        "role": "Podpůrné",
+        "name": "Zotavení po nedostupném ověření",
+        "formula": "Pokusy, které po zobrazeném unverifiable dosáhly úspěšného nového ověření nebo přijetí příkazu / pokusy se zobrazeným unverifiable × 100.",
+        "unit": "% pokusů",
+        "window": "Stejný uzavřený platební pokus.",
+        "source": "VoP služba + UI + platební backend; doplnit.",
+        "direction": "Růst informovaného zotavení.",
+        "interpretation": "Oddělit nové ověření od vědomého pokračování bez ověření a od bezpečného zastavení. Vyšší pokračování bez ověření samo o sobě není zlepšení.",
+        "target": "Doplnit po ověření výchozí hodnoty a schválení cíle."
+      },
+      {
+        "role": "Podpůrné",
+        "name": "Úspěšnost zvolené okamžité platby",
+        "formula": "Příkazy provedené skutečně jako instant / přijaté příkazy, u nichž klient na souhrnu zvolil dostupné instant × 100.",
+        "unit": "% jedinečných příkazů",
+        "window": "Po autoritativním výsledku zpracování; neuzavřené uvést zvlášť.",
+        "source": "Platební služba: zvolený a skutečný typ, výsledek; doplnit.",
+        "direction": "Růst.",
+        "interpretation": "Přijetí příkazu není jeho provedení. Fallback do standardní platby, odmítnutí a neznámý výsledek reportovat samostatně. Neplést s počtem kliků na Okamžitě.",
+        "target": "Doplnit po ověření výchozí hodnoty a schválení cíle."
+      },
+      {
+        "role": "Ochranné",
+        "name": "Porozumění výsledkům VoP",
+        "formula": "Účastníci, kteří správně vysvětlí daný výsledek i možnosti dalšího postupu / účastníci testující tento scénář × 100.",
+        "unit": "% účastníků; N pro každý stav",
+        "window": "Opakovaný uživatelský test před a po významné změně.",
+        "source": "Výzkum se stejným scénářem a předem definovaným hodnocením.",
+        "direction": "Růst nebo zachování.",
+        "interpretation": "Match, partial, nomatch a unverifiable hodnotit odděleně. Žádoucí může být oprava i zastavení. Kliky a krátký čas porozumění nedokazují; pokračování po nomatch nemá cíl růstu.",
+        "target": "Doplnit po ověření výchozí hodnoty a schválení cíle."
+      },
+      {
+        "role": "Ochranné",
+        "name": "Technická dostupnost VoP",
+        "formula": "Ověřovací pokusy s použitelným výsledkem match / partial / nomatch / všechny zahájené ověřovací pokusy s uzavřeným technickým oknem včetně timeoutů a neznámých výsledků × 100.",
+        "unit": "% verification_attempt_id",
+        "window": "Průběžně a týdenně; uzavřené ověřovací pokusy.",
+        "source": "Autoritativní odpovědi VoP služby; doplnit.",
+        "direction": "Bez poklesu; růst.",
+        "interpretation": "Nesoulad není technická chyba. Vedle výsledku uvést P90 latence request → odpověď, timeouty a podíl neznámých výsledků. Chybějící výsledek není sám o sobě důkaz selhání služby; při neúplné telemetrii nejprve ověřit pokrytí. Technické okno a definici unverifiable sjednotit s reálnou službou.",
+        "target": "Doplnit po ověření výchozí hodnoty a schválení cíle."
+      },
+      {
+        "role": "Ochranné",
+        "name": "Úspěšná autorizace",
+        "formula": "Pokusy s autoritativně úspěšnou autorizací / pokusy se skutečně zobrazeným autorizačním sheetem × 100.",
+        "unit": "% platebních pokusů",
+        "window": "Uzavřené platební okno.",
+        "source": "Explicitní surface_view overlaye + autorizační služba; doplnit.",
+        "direction": "Bez poklesu.",
+        "interpretation": "Oddělit vědomé zrušení, chybu a timeout. Následně hlídat i přijetí příkazu; úspěšný PIN ani úspěšný text v prototypu skutečný výsledek nedokazuje.",
+        "target": "Doplnit po ověření výchozí hodnoty a schválení cíle."
+      }
     ]
   },
   {
@@ -753,14 +889,83 @@ const DATA=[
         "hypothesis": "Načtení může být neúplné nebo se mění platební záměr.",
         "check": "Porovnat typ upraveného pole a validační chyby; výzkum rozliší chybu dekódování od záměrné změny částky."
       }
+    ],
+    "kpis": [
+      {
+        "role": "Hlavní",
+        "name": "Úspěšné načtení platebních údajů",
+        "formula": "QR pokusy s validními platebními údaji skutečně převzatými do formuláře / zahájené QR pokusy × 100.",
+        "unit": "% journey_attempt_id",
+        "window": "Uzavřený QR pokus; návrat z nastavení zachovává jeho ID.",
+        "source": "journey_started + validní qr_decode_result + prefill_applied; doplnit.",
+        "direction": "Růst.",
+        "interpretation": "Rozdělit kameru a import, výchozí oprávnění a první / opakované použití. Detekce QR bez validního předvyplnění není úspěch.",
+        "target": "Doplnit po ověření výchozí hodnoty a schválení cíle."
+      },
+      {
+        "role": "Podpůrné",
+        "name": "Dokončení platby po QR",
+        "formula": "QR pokusy s předvyplněným formulářem a backendově přijatým příkazem / QR pokusy s předvyplněným formulářem × 100.",
+        "unit": "% propojených QR pokusů",
+        "window": "Uzavřené platební okno; zachovat origin = qr.",
+        "source": "Propojení QR a platebního pokusu + backend; doplnit.",
+        "direction": "Růst.",
+        "interpretation": "Vedle toho uvést end-to-end přijetí příkazu / všechny zahájené QR pokusy. Deduplikovat příkazy, pokud před jejich zadáním proběhlo více načtení.",
+        "target": "Doplnit po ověření výchozí hodnoty a schválení cíle."
+      },
+      {
+        "role": "Podpůrné",
+        "name": "Zotavení po blokované kameře",
+        "formula": "Pokusy s validním předvyplněním z kamery nebo importu / pokusy se zobrazeným nepovoleným stavem × 100.",
+        "unit": "% pokusů",
+        "window": "Stejný pokus včetně externího handoffu, dle metodiky.",
+        "source": "Nepovolený stav + read-back OS + dekodér a UI; doplnit.",
+        "direction": "Růst.",
+        "interpretation": "Oddělit nastavení → povoleno → kamera a přímý import. Klik na Přejít do nastavení ani udělení oprávnění samy o sobě nejsou zotavení.",
+        "target": "Doplnit po ověření výchozí hodnoty a schválení cíle."
+      },
+      {
+        "role": "Ochranné",
+        "name": "P90 času do předvyplnění",
+        "formula": "90. percentil aktivního času od otevření QR funkce po validní prefill_applied.",
+        "unit": "Sekundy na úspěšný QR pokus",
+        "window": "Stejný pokus; nepočítat čas v pozadí jako aktivní čas.",
+        "source": "UI časování + dekodér; doplnit.",
+        "direction": "Klesat při zachování úspěšnosti.",
+        "interpretation": "Uvést i P50, nedokončené pokusy a zvlášť technickou latenci, kamerovou cestu a import. Zrychlení menšího počtu úspěšných nesmí zakrýt více odchodů.",
+        "target": "Doplnit po ověření výchozí hodnoty a schválení cíle."
+      },
+      {
+        "role": "Ochranné",
+        "name": "Technická selhání načtení",
+        "formula": "Ukončené scan_attempt_id s technical_error / ukončené rozpoznávací pokusy se známým výsledkem × 100.",
+        "unit": "% scan_attempt_id",
+        "window": "Ukončené rozpoznávací pokusy; kontinuální sken deduplikovat.",
+        "source": "Kamera / picker / dekodér podle schválených kódů; doplnit.",
+        "direction": "Klesat.",
+        "interpretation": "Nečitelný nebo neplatební QR není automaticky technické selhání. Vedle míry uvést důvody, chyby spuštění kamery a podíl neznámých výsledků.",
+        "target": "Doplnit po ověření výchozí hodnoty a schválení cíle."
+      },
+      {
+        "role": "Ochranné",
+        "name": "Opravy převzatých platebních údajů",
+        "formula": "Pokusy s opravou alespoň jednoho převzatého pole / QR pokusy s předvyplněným formulářem × 100.",
+        "unit": "% pokusů; rozdělení podle field_id",
+        "window": "Navazující platební pokus před potvrzením.",
+        "source": "prefill_applied + prefilled_field_edited; doplnit.",
+        "direction": "Sledovat; snižovat jen chyby načtení.",
+        "interpretation": "Oprava částky může být legitimní změna záměru. Celkovou míru oprav proto slepě neminimalizovat; příčinu ověřit výzkumem, žádná hodnotová data polí do UI analytiky.",
+        "target": "Doplnit po ověření výchozí hodnoty a schválení cíle."
+      }
     ]
   }
 ];
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 function render(j){
+const kpiRows=j.kpis.map(k=>`<tr><td><span class="badge">${esc(k.role)}</span><p><strong>${esc(k.name)}</strong></p><span class="data-source">${esc(k.unit)}</span></td><td>${esc(k.formula)}<span class="data-source">Okno: ${esc(k.window)}</span></td><td><strong>${esc(k.direction)}</strong><p>${esc(k.interpretation)}</p><span class="data-source">Zdroj: ${esc(k.source)}</span></td></tr>`).join('');
 const metrics=j.metrics.map(m=>`<tr><td><strong>${esc(m.name)}</strong><span class="data-source">${esc(m.source)}</span></td><td>${esc(m.formula)}</td><td>${esc(m.meaning)}</td></tr>`).join('');
 const screens=j.screens.map((s,i)=>`<details><summary>${String(i+1).padStart(2,'0')} · ${esc(s.name)}<span class="screen-type">${esc(s.kind)} · ${esc(s.scope)}</span></summary><div class="detail-body"><dl><dt>Zobrazení</dt><dd><code>surface_view · ${esc(s.id)}</code>. Platí společná pravidla skutečné viditelnosti a deduplikace; systémové a navazující povrchy mají uvedené limity.</dd><dt>Interakce</dt><dd>${esc(s.actions)}</dd><dt>Výsledky / další události</dt><dd>${esc(s.events)}</dd><dt>Kontext měření</dt><dd><code>${esc(s.params)}</code></dd><dt>Co vyhodnocovat</dt><dd>${esc(s.insight)}</dd></dl></div></details>`).join('');
-return `<section class="tab-panel" id="panel-${j.id}" role="tabpanel" aria-labelledby="tab-${j.id}" tabindex="-1" hidden><div class="section-label"><div><p class="eyebrow">Customer journey</p><h2>${esc(j.name)}</h2></div>${j.url?`<a class="button" href="${esc(j.url)}" target="_blank" rel="noopener">Otevřít podklad ↗</a>`:'<span class="badge">Podklad: dodaný obrázek</span>'}</div><p class="lead">${esc(j.goal)}</p><div class="cards"><article class="card"><p class="label">Hlavní UX otázka</p><h3>${esc(j.question)}</h3></article><article class="card"><p class="label">Jak výsledek číst</p><h3>Průchod + čas + zotavení</h3><p>Úspěšný úkol sledovat společně s chybami, návraty a informovaným rozhodnutím.</p></article><article class="card"><p class="label">Stav reportu</p><h3>Návrh měření</h3><p>Bez produkčních hodnot. Výsledky a cíle doplníme až po ověření telemetrie.</p></article></div><div class="subnav" aria-label="Obsah journey"><a href="#${j.id}-cesta">Celá journey</a><a href="#${j.id}-metriky">Metriky</a><a href="#${j.id}-obrazovky">Obrazovky a sheety</a><a href="#${j.id}-hypotezy">Náměty na zlepšení</a></div><div class="callout source"><strong>Rozsah podkladů</strong><p>${esc(j.source)}</p></div><section class="section" id="${j.id}-cesta"><h2>Celá journey a její větve</h2><p class="meta">Mapa měření. Navazující výsledky služby je třeba doplnit; schéma není ukázka naměřených dat.</p><ol class="flow">${j.flow.map((f,i)=>`<li><b>KROK ${i+1}</b>${esc(f)}</li>`).join('')}</ol><div class="branches">${j.branches.map(b=>`<p>${esc(b)}</p>`).join('')}</div></section><section class="section" id="${j.id}-metriky"><h2>Co vyhodnocovat na úrovni CJ</h2><p class="meta">Pokus = unikátní journey_attempt_id, pokud není výslovně uvedena jiná jednotka. Poměry zobrazovat v % společně s N; používat uzavřená pozorovací okna.</p><div class="tablewrap" role="region" aria-label="Metriky ${esc(j.name)}" tabindex="0"><table><thead><tr><th>Metrika / zdroj</th><th>Jak ji spočítat</th><th>Co nám řekne a jak ji interpretovat</th></tr></thead><tbody>${metrics}</tbody></table></div><h3>Doporučené řezy dat</h3><div class="chips">${j.segments.map(s=>`<span class="chip">${esc(s)}</span>`).join('')}</div></section><section class="section" id="${j.id}-obrazovky"><div class="section-label"><div><h2>Obrazovky, sheety a interakce</h2><p class="meta">U každého povrchu měřit zobrazení, bezpečné akce a výsledek. Rozklikněte detail.</p></div><div class="actions"><button class="button expand" data-journey="${j.id}">Rozbalit vše</button></div></div><div class="screen-list">${screens}</div></section><section class="section" id="${j.id}-hypotezy"><h2>Z dat k nápadům na zlepšení</h2><p class="meta">Podmíněné hypotézy. Z podkladů nelze tvrdit, že tyto problémy skutečně nastávají.</p><div class="ideas">${j.ideas.map(i=>`<article class="card"><p class="eyebrow">Pokud v datech uvidíme</p><h3>${esc(i.signal)}</h3><p><strong>Možné vysvětlení:</strong> ${esc(i.hypothesis)}</p><p><strong>Jak ověřit:</strong> ${esc(i.check)}</p></article>`).join('')}</div></section><section class="section"><h3>První verze dashboardu</h3><p>Začít hlavním výsledkem a objemem pokusů. Pod něj dát průchod větvemi, časy P50/P90 a tabulku chyb se zotavením. Přidat řezy dat výše a podíl pokusů s neznámým výsledkem. U změn sledovat týdenní trend a verzi aplikace; žádná prázdná buňka se nezaměňuje za nulu.</p><div class="actions"><button class="button export" data-journey="${j.id}">Stáhnout specifikaci této CJ (JSON)</button><button class="button print" data-journey="${j.id}">Tisk / uložit jako PDF</button><a class="button" href="#metodika">Společná pravidla měření</a></div></section></section>`;
+return `<section class="tab-panel" id="panel-${j.id}" role="tabpanel" aria-labelledby="tab-${j.id}" tabindex="-1" hidden><div class="section-label"><div><p class="eyebrow">Customer journey</p><h2>${esc(j.name)}</h2></div>${j.url?`<a class="button" href="${esc(j.url)}" target="_blank" rel="noopener">Otevřít podklad ↗</a>`:'<span class="badge">Podklad: dodaný obrázek</span>'}</div><p class="lead">${esc(j.goal)}</p><div class="cards"><article class="card"><p class="label">Hlavní UX otázka</p><h3>${esc(j.question)}</h3></article><article class="card"><p class="label">Hlavní KPI</p><h3>${esc(j.kpis[0].name)}</h3><p>${esc(j.kpis[0].direction)}</p></article><article class="card"><p class="label">Stav reportu</p><h3>Návrh měření</h3><p>Bez produkčních hodnot. Výsledky a cíle doplníme až po ověření telemetrie.</p></article></div><div class="subnav" aria-label="Obsah journey"><a href="#${j.id}-kpi">KPI</a><a href="#${j.id}-cesta">Celá journey</a><a href="#${j.id}-metriky">Metriky</a><a href="#${j.id}-obrazovky">Obrazovky a sheety</a><a href="#${j.id}-hypotezy">Náměty na zlepšení</a></div><div class="callout source"><strong>Rozsah podkladů</strong><p>${esc(j.source)}</p></div><section class="section" id="${j.id}-kpi"><p class="eyebrow">Prioritní ukazatele výkonu</p><h2>KPI této customer journey</h2><p>Hlavní KPI říká, zda CJ plní svůj cíl. Podpůrné ukazatele vysvětlují cestu k výsledku; ochranné hlídají, aby zlepšení nezhoršovalo jinou část zkušenosti. Podrobné diagnostické metriky jsou níže.</p><div class="tablewrap" role="region" aria-label="KPI ${esc(j.name)}" tabindex="0"><table><thead><tr><th>KPI / priorita / jednotka</th><th>Přesný výpočet a okno</th><th>Žádoucí směr, interpretace a zdroj</th></tr></thead><tbody>${kpiRows}</tbody></table></div><div class="callout"><strong>Cílové hodnoty stanovíme podle skutečných dat</strong><p>Pro každý KPI doplnit výchozí hodnotu, cíl a mez přípustného zhoršení ochranných ukazatelů. Nejprve ověřit telemetrii a dostatečný vzorek; samotný žádoucí směr není schválený číselný cíl. Přehled vyhodnocovat týdně, technické chyby průběžně. U 7/30denních oken používat jen dozrálé kohorty.</p><p>Každá hodnota má období, N, pokrytí měřením, srovnatelnou výchozí periodu a vlastníka. Chybějící data označit „nelze vyhodnotit“. <strong>Tyto KPI jsou návrh pro měření, nikoli naměřené výsledky.</strong></p></div></section><section class="section" id="${j.id}-cesta"><h2>Celá journey a její větve</h2><p class="meta">Mapa měření. Navazující výsledky služby je třeba doplnit; schéma není ukázka naměřených dat.</p><ol class="flow">${j.flow.map((f,i)=>`<li><b>KROK ${i+1}</b>${esc(f)}</li>`).join('')}</ol><div class="branches">${j.branches.map(b=>`<p>${esc(b)}</p>`).join('')}</div></section><section class="section" id="${j.id}-metriky"><h2>Co vyhodnocovat na úrovni CJ</h2><p class="meta">Pokus = unikátní journey_attempt_id, pokud není výslovně uvedena jiná jednotka. Poměry zobrazovat v % společně s N; používat uzavřená pozorovací okna.</p><div class="tablewrap" role="region" aria-label="Metriky ${esc(j.name)}" tabindex="0"><table><thead><tr><th>Metrika / zdroj</th><th>Jak ji spočítat</th><th>Co nám řekne a jak ji interpretovat</th></tr></thead><tbody>${metrics}</tbody></table></div><h3>Doporučené řezy dat</h3><div class="chips">${j.segments.map(s=>`<span class="chip">${esc(s)}</span>`).join('')}</div></section><section class="section" id="${j.id}-obrazovky"><div class="section-label"><div><h2>Obrazovky, sheety a interakce</h2><p class="meta">U každého povrchu měřit zobrazení, bezpečné akce a výsledek. Rozklikněte detail.</p></div><div class="actions"><button class="button expand" data-journey="${j.id}">Rozbalit vše</button></div></div><div class="screen-list">${screens}</div></section><section class="section" id="${j.id}-hypotezy"><h2>Z dat k nápadům na zlepšení</h2><p class="meta">Podmíněné hypotézy. Z podkladů nelze tvrdit, že tyto problémy skutečně nastávají.</p><div class="ideas">${j.ideas.map(i=>`<article class="card"><p class="eyebrow">Pokud v datech uvidíme</p><h3>${esc(i.signal)}</h3><p><strong>Možné vysvětlení:</strong> ${esc(i.hypothesis)}</p><p><strong>Jak ověřit:</strong> ${esc(i.check)}</p></article>`).join('')}</div></section><section class="section"><h3>První verze dashboardu</h3><p>Začít hlavním výsledkem a objemem pokusů. Pod něj dát průchod větvemi, časy P50/P90 a tabulku chyb se zotavením. Přidat řezy dat výše a podíl pokusů s neznámým výsledkem. U změn sledovat týdenní trend a verzi aplikace; žádná prázdná buňka se nezaměňuje za nulu.</p><div class="actions"><button class="button export" data-journey="${j.id}">Stáhnout specifikaci této CJ (JSON)</button><button class="button print" data-journey="${j.id}">Tisk / uložit jako PDF</button><a class="button" href="#metodika">Společná pravidla měření</a></div></section></section>`;
 }
 document.querySelector('#journeys').innerHTML=DATA.map(render).join('');
 const tabs=[...document.querySelectorAll('[role=tab]')];
