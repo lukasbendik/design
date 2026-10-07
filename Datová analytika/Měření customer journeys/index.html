@@ -1,0 +1,767 @@
+<!doctype html><html lang="cs"><head><script>(function(){var H='4c129f69f551195cbc5e8b57cc5a0975b6efa1e8510573524d11df03c7d010c6',K='rozcestnik__auth';try{var p=new URLSearchParams(location.search);if(p.get('k')===H){localStorage.setItem(K,'1');p.delete('k');var q=p.toString();history.replaceState(history.state,'',location.pathname+(q?'?'+q:'')+location.hash);}if(localStorage.getItem(K)!=='1')location.replace('../../');}catch(e){}})();</script><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><meta http-equiv="Cache-Control" content="no-store"><title>Měření customer journeys · Datová analytika</title><style>:root{
+  /* ---- Brand / font ---- */
+  --font-family: Inter, system-ui, -apple-system, sans-serif;
+
+  /* ---- Spacing scale (px) ---- */
+  --space-2: 2px;
+  --space-4: 4px;
+  --space-8: 8px;
+  --space-12: 12px;
+  --space-16: 16px;
+  --space-24: 24px;
+  --space-32: 32px;
+  --space-48: 48px;
+  --space-64: 64px;
+  --space-0: 0px;
+
+  /* ---- Padding (semantic) ---- */
+  --pad-xl: 16px;
+  --pad-4xl: 48px;
+  --pad-xs: 2px;
+  --pad-md: 8px;
+  --pad-lg: 12px;
+  --pad-sm: 4px;
+  --pad-2xl: 24px;
+  --pad-3xl: 32px;
+
+  /* ---- Radius ---- */
+  --radius-full: 1024px;
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-xl: 16px;
+  --radius-null: 0px;
+  --radius-segmentedControl-segmentRadius: 6px;
+  --radius-xs: 2px;
+
+  /* ---- Border width ---- */
+  --border-lg: 3px;
+  --border-md: 2px;
+  --border-sm: 1px;
+
+  /* ---- Color: semantic (LIGHT) ---- */
+  --color-content-primary: #212121;
+  --color-interactive-primary: #e00000;
+  --color-content-tertiary: #717171;
+  --color-background-border: #adadad80;
+  --color-interactive-secondary-active: #2121211f;
+  --color-attention-information: #212121;
+  --color-chart-in: #267c29;
+  --color-attention-alert: #b53022;
+  --color-interactive-on-primary: #ffffff;
+  --color-shadow-panel-top: #21212105;
+  --color-attention-processing: #7e6d19;
+  --color-shadow-panel-middle: #21212114;
+  --color-chart-evaluation: #43167c;
+  --color-content-pentary: #f8f8f8;
+  --color-chart-funds: #02a473;
+  --color-interactive-secondary: #212121;
+  --color-attention-alert-surface: #ffede8;
+  --color-chart-bonds: #4e5571;
+  --color-background-divider: #adadad80;
+  --color-content-secondary: #454545;
+  --color-background-border-highlighted: #adadad;
+  --color-background-surface-highlighted: #ffffff;
+  --color-shadow-floating-middle: #21212129;
+  --color-dialog-surface: #ffffff;
+  --color-attention-success: #267c29;
+  --color-content-quaternary: #adadad;
+  --color-background-surface: #ffffff;
+  --color-chart-neon: #9a2760;
+  --color-background-body: #f8f8f8;
+  --color-attention-success-surface: #e2f5de;
+  --color-chart-out: #212121;
+  --color-chart-cool: #888eb1;
+  --color-chart-stocks: #f45b6d;
+  --color-shadow-panel-bottom: #2121211f;
+  --color-content-skeleton-loading: #adadad80;
+  --color-shadow-floating-bottom: #2121213d;
+  --color-shadow-floating-top: #2121210a;
+  --color-interactive-primary-action: #be0000;
+  --color-attention-information-surface: #ededed;
+  --color-dialog-overlay: #21212166;
+  --color-background-surface-avatar: #21212114;
+  --color-background-table-zebra: #2121210a;
+  --color-shadow-highlighted-middle: #21212129;
+  --color-shadow-highlighted-top: #21212114;
+  --color-shadow-highlighted-bottom: #21212152;
+  --color-interactive-secondary-action: #21212114;
+  --color-chart-plot-in-background-top: #267c293d;
+  --color-chart-plot-in-background-bottom: #267c2900;
+  --color-chart-plot-out-background-top: #2121213d;
+  --color-chart-plot-out-background-bottom: #21212100;
+  --color-chart-rusty-red: #e26e52;
+
+  /* ---- Shadow (light) ---- */
+  --shadow-panel: 0px 0px 1px 0px #2121211f, 0px 1px 8px 0px #21212114, 0px 0.4px 2px 0px #21212105;
+  --shadow-floating: 0px 0px 1px 0px #2121213d, 0px 1px 8px 0px #21212129, 0px 0.4px 2px 0px #2121210a;
+  --shadow-highlighted: 0px 0px 1px 0px #21212152, 0px 4.4px 22px 0px #21212129, 0px 11px 88px 0px #21212114;
+}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:100px}body{margin:0;background:var(--color-background-body);color:var(--color-content-primary);font:400 16px/1.6 var(--font-family)}main,.nav-inner{max-width:1160px;margin:auto;padding:0 var(--space-24)}main{padding-bottom:var(--space-64)}main.masthead{padding-bottom:0}a{color:var(--color-interactive-secondary);text-underline-offset:4px}a:hover{color:var(--color-interactive-primary)}h1{font-size:clamp(32px,5vw,48px);line-height:1.14;font-weight:500;letter-spacing:-.025em;margin:var(--space-16) 0}h2{font-size:28px;line-height:1.3;font-weight:500;margin:0 0 var(--space-12)}h3{font-size:19px;line-height:1.4;margin:0 0 var(--space-8);font-weight:600}p{margin:var(--space-8) 0 var(--space-16)}.muted,.meta{color:var(--color-content-secondary)}.meta{font-size:14px}.eyebrow{font-size:13px;font-weight:600;letter-spacing:.05em;color:var(--color-interactive-primary);text-transform:uppercase}.top{display:flex;justify-content:space-between;align-items:center;gap:var(--space-16);padding-top:var(--space-24);flex-wrap:wrap}.top a{font-size:14px}.intro{max-width:800px;margin:var(--space-32) 0 var(--space-24)}.intro .lead{font-size:20px;line-height:1.5;color:var(--color-content-secondary)}.badge{display:inline-block;padding:var(--space-4) var(--space-8);background:var(--color-attention-information-surface);border-radius:var(--radius-sm);font-size:12px;font-weight:600}.navigation{position:sticky;top:0;z-index:5;background:var(--color-background-body);border-bottom:1px solid var(--color-background-divider);padding:var(--space-12) 0}.nav-inner{display:flex;gap:var(--space-16);align-items:center;justify-content:space-between}.tabs{display:flex;gap:var(--space-4);padding:var(--space-4);border-radius:var(--radius-md);background:var(--color-attention-information-surface);max-width:100%;overflow-x:auto}button{font:inherit;cursor:pointer}.tabs button{border:0;background:transparent;border-radius:var(--radius-segmentedControl-segmentRadius);padding:var(--space-8) var(--space-16);min-height:44px;white-space:nowrap;color:var(--color-content-secondary);font-size:15px}.tabs button[aria-selected=true]{background:var(--color-background-surface);color:var(--color-content-primary);box-shadow:var(--shadow-panel);font-weight:600}button:hover{color:var(--color-interactive-primary)}a:focus-visible,button:focus-visible,summary:focus-visible,.tablewrap:focus-visible{outline:3px solid var(--color-interactive-primary);outline-offset:3px}.skip{position:absolute;left:-9999px}.skip:focus{left:16px;top:16px;z-index:20;background:var(--color-background-surface);padding:16px}.tab-panel{padding-top:var(--space-32)}[hidden]{display:none!important}.section{margin:var(--space-32) 0}.section-label{display:flex;align-items:flex-start;justify-content:space-between;gap:var(--space-16)}.cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--space-16)}.card{background:var(--color-background-surface);border-radius:var(--radius-md);padding:var(--space-24);box-shadow:var(--shadow-panel)}.card p:last-child{margin-bottom:0}.card .label{font-size:13px;color:var(--color-content-tertiary);margin-bottom:var(--space-8)}.callout{padding:var(--space-16) var(--space-24);border-radius:var(--radius-md);border-left:var(--border-lg) solid var(--color-interactive-primary);background:var(--color-background-surface);margin:var(--space-24) 0}.callout p:last-child{margin-bottom:0}.source{font-size:14px;color:var(--color-content-secondary)}.subnav{display:flex;gap:var(--space-8);flex-wrap:wrap;margin:var(--space-24) 0}.subnav a{font-size:14px;padding:var(--space-8) var(--space-12);border:var(--border-sm) solid var(--color-background-border);border-radius:var(--radius-sm);text-decoration:none;background:var(--color-background-surface)}.flow{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:var(--space-8);list-style:none;padding:0;margin:var(--space-24) 0}.flow li{padding:var(--space-16);border:var(--border-sm) solid var(--color-background-border);border-radius:var(--radius-md);background:var(--color-background-surface);font-size:14px;line-height:1.45}.flow b{display:block;font-size:12px;color:var(--color-content-tertiary);margin-bottom:var(--space-8)}.branches{display:grid;gap:var(--space-12)}.branches p{margin:0;border-left:var(--border-md) solid var(--color-background-border-highlighted);padding-left:var(--space-16)}.tablewrap{overflow:auto;border:var(--border-sm) solid var(--color-background-border);border-radius:var(--radius-md);margin:var(--space-16) 0}table{border-collapse:collapse;width:100%;background:var(--color-background-surface);font-size:14px;min-width:760px}th,td{padding:var(--space-16);text-align:left;vertical-align:top;border-bottom:var(--border-sm) solid var(--color-background-divider)}th{background:var(--color-attention-information-surface);font-weight:600}tr:last-child td{border-bottom:0}td:first-child{width:21%}td:nth-child(2){width:35%}.data-source{display:block;font-size:12px;color:var(--color-content-tertiary);margin-top:var(--space-8)}.chips{display:flex;flex-wrap:wrap;gap:var(--space-8)}.chip{padding:var(--space-8) var(--space-12);border-radius:var(--radius-sm);border:var(--border-sm) solid var(--color-background-border);font-size:14px;background:var(--color-background-surface)}details{border:var(--border-sm) solid var(--color-background-border);background:var(--color-background-surface);border-radius:var(--radius-md);margin:var(--space-12) 0}summary{cursor:pointer;padding:var(--space-16);font-weight:600}summary .screen-type{font-size:12px;font-weight:400;color:var(--color-content-secondary);display:block;margin:var(--space-4) 0 0 var(--space-16)}.detail-body{padding:0 var(--space-24) var(--space-24)}.detail-body dl{margin:0;display:grid;grid-template-columns:180px minmax(0,1fr);gap:var(--space-12) var(--space-24);font-size:14px}.detail-body dt{color:var(--color-content-secondary);font-weight:600}.detail-body dd{margin:0;overflow-wrap:anywhere}.detail-body code,code{font-size:.9em;overflow-wrap:anywhere}.actions{display:flex;flex-wrap:wrap;gap:var(--space-8);align-items:center}.button{min-height:44px;padding:var(--space-8) var(--space-16);border:var(--border-sm) solid var(--color-background-border);border-radius:var(--radius-md);background:var(--color-background-surface);color:var(--color-content-primary);text-decoration:none;font-size:14px}.ideas{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--space-16)}.ideas .card{box-shadow:none;border:var(--border-sm) solid var(--color-background-border)}.ideas p{font-size:14px}.ideas h3{font-size:17px}.method{border-top:var(--border-sm) solid var(--color-background-divider);padding-top:var(--space-32);margin-top:var(--space-48)}.rules{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--space-16)}.rules .card{box-shadow:none;border:var(--border-sm) solid var(--color-background-border)}ul,ol{padding-left:var(--space-24)}li{margin:var(--space-8) 0}.method p,.method li{font-size:15px}footer{border-top:var(--border-sm) solid var(--color-background-divider);margin-top:var(--space-48);padding-top:var(--space-24);font-size:13px;color:var(--color-content-secondary)}.nojs{margin:24px;padding:24px;background:var(--color-attention-alert-surface)}@media(max-width:900px){.flow{grid-template-columns:repeat(3,minmax(0,1fr))}.cards{grid-template-columns:1fr}.nav-inner{display:block}.nav-inner>a{display:none}}@media(max-width:600px){main,.nav-inner{padding-left:var(--space-16);padding-right:var(--space-16)}h2{font-size:24px}.intro{margin-top:24px}.intro .lead{font-size:18px}.tabs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));width:100%;gap:2px}.tabs button{padding:8px 6px;font-size:13px}.ideas,.rules{grid-template-columns:1fr}.flow{grid-template-columns:repeat(2,minmax(0,1fr))}.card{padding:var(--space-16)}.detail-body{padding:0 var(--space-16) var(--space-16)}.detail-body dl{grid-template-columns:1fr;gap:var(--space-4)}.detail-body dd{margin-bottom:var(--space-12)}.section-label{display:block}.callout{padding:16px}.source{font-size:13px}}@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}@media print{.navigation,.subnav,.actions,.top,.skip{display:none}main{max-width:none;padding:0}.intro{margin:16px 0}body{background:white;font-size:12px}.tab-panel[hidden]{display:none!important}.flow li,.card,details{break-inside:avoid;box-shadow:none}.tablewrap{overflow:visible}table{min-width:0;font-size:11px}td,th{padding:8px}details summary{padding:8px}.detail-body{padding:8px}.section{margin:24px 0}.method{break-before:page}}
+</style></head><body><a class="skip" href="#journeys">Přejít na report</a><main class="masthead"><div class="top"><a href="../../">← Rozcestník</a><span class="badge">DATOVÁ ANALYTIKA · VERZE 1</span></div><header class="intro"><p class="eyebrow">UX a výkon customer journeys</p><h1>Měření customer journeys</h1><p class="lead">Co klient vidí. Co udělá. Jaký je výsledek.<br>Společný plán měření pro lepší rozhodování o UX.</p><p class="meta">7. října 2026 · 3 customer journeys · návrh pro Techney</p></header></main><nav class="navigation" aria-label="Výběr customer journey"><div class="nav-inner"><div class="tabs" role="tablist" aria-label="Customer journeys"><button id="tab-retence" role="tab" aria-controls="panel-retence" aria-selected="false" tabindex="-1" data-journey="retence">Retence</button><button id="tab-vop-sepa" role="tab" aria-controls="panel-vop-sepa" aria-selected="false" tabindex="-1" data-journey="vop-sepa">VoP / SEPA</button><button id="tab-qr-platba" role="tab" aria-controls="panel-qr-platba" aria-selected="false" tabindex="-1" data-journey="qr-platba">QR platba</button></div><a href="#metodika">Společná pravidla ↓</a></div></nav><main><noscript><p class="nojs">Pro přepínání reportů zapněte JavaScript. Společná metodika měření je dostupná níže.</p></noscript><div id="journeys"></div>
+<section class="method" id="metodika" aria-labelledby="method-title"><p class="eyebrow">Společný základ pro další journey</p><h2 id="method-title">Co a jak měřit napříč aplikací</h2><p>Požadavek na Techney: zachytit skutečné zobrazení obrazovky, bottom sheetu, dialogu či významného stavu a bezpečné interakce. Níže jsou <strong>návrhy analytického kontraktu</strong>, nikoli názvy existujících API. Možnosti Techney, propojení identifikátorů, systémových callbacků a backendu musí potvrdit implementační tým.</p>
+<div class="rules"><article class="card"><h3>01 · Zobrazení</h3><p><code>surface_view</code> po skutečném otevření v popředí. Poslat <code>surface_id</code>, typ screen/sheet/dialog/inline_state a jedinečné <code>occurrence_id</code>. Refresh, render a návrat z pozadí nesmí samovolně vyrábět další expozice.</p><p>Sheet má vlastní identitu a odkaz na podkladový screen. Při jeho otevření nedvojit zobrazení screen; jeho aktivní čas se pozastaví. U inline obsahu nastavit jednotné pravidlo viditelnosti, např. 50 % po 500 ms jako návrh k ověření, a evidovat verzi tohoto pravidla.</p></article>
+<article class="card"><h3>02 · Interakce</h3><p><code>ui_interaction</code> po aktivaci člověkem: <code>element_id</code>, <code>interaction_type</code>, umístění a stav před akcí. Pro navigaci měřit zvlášť, zda se cílový screen opravdu otevřel.</p><p>Rozlišit výchozí hodnotu, uživatelský výběr a programovou změnu. U formulářů měřit dokončení úpravy či validační chybu bez obsahu. Bezpečnostní vstupy jako PIN a biometrie jsou výjimka z měření jednotlivých stisků.</p></article>
+<article class="card"><h3>03 · Stav a skutečný výsledek</h3><p><code>domain_result</code> z příslušné služby doplní UI měření: ověření příjemce, autorizace, rozpoznání QR, přijetí platebního příkazu či sjednání. Každý opakovaný technický pokus má vlastní ID.</p><p>Klik, zobrazená výsledková obrazovka, přijetí příkazu a skutečné provedení platby jsou odlišné události. Uchovat původní i výsledný stav; opožděnou nebo duplicitní odpověď deduplikovat.</p></article>
+<article class="card"><h3>04 · Odchody a čas</h3><p><code>surface_closed</code> s důvodem X / CTA / okolí / gesto / systémové zpět, pokud jej lze rozlišit. <code>journey_ended</code> s výsledkem dokončeno / zrušeno / technická chyba / přerušeno / bez známého výsledku.</p><p>Čas měřit v popředí, zvlášť aktivní čas a čekání služby. P50 a P90 uvést pro dokončené i přerušené pokusy zvlášť. Čas do kliknutí neznamená dobu čtení ani porozumění.</p></article></div>
+<details><summary>Jednotka měření, funnel a výpočet metrik</summary><div class="detail-body"><ul>
+<li><strong>Základ je jeden pokus o CJ.</strong> <code>journey_attempt_id</code> vznikne při úspěšném vstupu. Vstupní klik může mít <code>entry_interaction_id</code>, aby šel měřit neúspěšný vstup. Nová platba založí nový pokus; Zpět, nové ověření a návrat z nastavení jej zachovají.</li>
+<li><strong>Jedna metrika = definované události a okno.</strong> Čitatele i jmenovatele počítat z unikátních pokusů stejné kohorty a větve, ve správném pořadí. U technické úspěšnosti VoP je jednotkou ověřovací pokus. U experimentu a retence prostředků je jednotkou klient.</li>
+<li><strong>Nedvojit návraty.</strong> Opakované views a kliky mají význam pro hledání tření, ale nezvyšují unikátní počet pokusů v kroku. Počty různých větví nemusí být disjunktní; celkový výsledek z jejich součtu neodvozovat.</li>
+<li><strong>Okna jsou pracovní návrh.</strong> Platba: uzavřít neaktivní pokus po 30 minutách; při externím handoffu do nastavení/pickeru návrh prodloužit na 24 hodin. Přiměřenost ověřit z distribuce návratů a sjednotit s technickým session modelem. Zveřejnit jen kohorty s uzavřeným oknem; ostatní uvést jako čekající.</li>
+<li><strong>Neúplný funnel není automaticky odchod.</strong> 1 − průchod znamená nedosažení dalšího kroku v definovaném okně. Rozdělit dokončení jiné větve, vědomé zrušení, chybu, přerušení a chybějící měření. Pád aplikace či chybějící end event vést jako neznámý výsledek.</li>
+<li><strong>Sjednání po nabídce.</strong> Pro přímý report použít vazbu <code>parent_attempt_id</code>. Pro konverzi do 7 dnů bez přímé vazby předem schválit atribuci první relevantní expozici a konverzi započítat jednou. Nezaměňovat atribuci s prokázaným vlivem nabídky.</li>
+</ul></div></details>
+<details><summary>Události a společné parametry pro Techney</summary><div class="detail-body"><div class="tablewrap" role="region" aria-label="Společné události" tabindex="0"><table><thead><tr><th>Událost</th><th>Spuštění</th><th>Doplňující parametry</th></tr></thead><tbody>
+<tr><td><code>journey_started</code></td><td>Úspěšně otevřený první screen CJ.</td><td>entry_point, origin, parent_attempt_id</td></tr>
+<tr><td><code>surface_view</code></td><td>Skutečné nové zobrazení povrchu nebo stavu.</td><td>surface_id, surface_type, parent_surface_id, occurrence_id, visibility_rule_version</td></tr>
+<tr><td><code>ui_interaction</code></td><td>Uživatelská aktivace bezpečného interaktivního prvku.</td><td>element_id, placement, interaction_type, change_origin, from_state, to_state</td></tr>
+<tr><td><code>surface_closed</code></td><td>Uzavření měřeného povrchu.</td><td>occurrence_id, close_reason, active_duration_ms, next_surface_id</td></tr>
+<tr><td><code>validation_shown / resolved</code></td><td>Viditelná chyba / prokazatelná náprava.</td><td>field_id, error_code, validation_attempt_id</td></tr>
+<tr><td><code>domain_result</code></td><td>Autoritativní výsledek služby.</td><td>operation_type, operation_attempt_id, result, error_code, latency_ms</td></tr>
+<tr><td><code>journey_ended</code></td><td>Známý konec či klasifikace uzavřeného okna.</td><td>outcome, final_branch, outcome_source, active_duration_ms</td></tr>
+</tbody></table></div><p><strong>Společně:</strong> event_id pro deduplikaci, timestamp UTC, journey_id, journey_attempt_id, session_id, screen/surface_id, schema_version, app_version, platform a dostupnost měření. Technické výsledky spojit pomocí řízených neprůhledných identifikátorů. Parametry neodvozovat z textů tlačítek nebo pořadí v UI.</p><p>Události uvedené u obrazovek jsou sémantická rozšíření tohoto kontraktu. Tým může použít <code>domain_result</code> s operation_type, nebo samostatný název; volbu sjednotit, aby se stejný výsledek nepočítal dvakrát.</p><p><strong>Do UI analytiky neposílat:</strong> jména, IBAN / čísla účtů, PIN, symboly a zprávy, obsah QR, fotky, názvy souborů ani přesnou částku. Pro segmentaci předem schválená pásma a stavové kódy. Obchodní výsledky spojovat v řízené datové vrstvě; v reportu agregace, nikoli klientské řádky.</p></div></details>
+<details><summary>Jak z dat rozhodovat o UX změnách</summary><div class="detail-body"><ol>
+<li><strong>Nejdřív ověřit kvalitu dat.</strong> Zda fungují všechny stavy a větve, nevznikají duplicity, nechybí autorizační overlay a propojení výsledků. Porovnat přijaté příkazy se službou; uvést podíl spárovaných výsledků a neznámých pokusů. Rozdíl počtů není sám o sobě behaviorální problém.</li>
+<li><strong>Každý týden stejný pohled.</strong> Objem pokusů i unikátních klientů, výsledek CJ, průchod kroky, P50/P90, chyby, zotavení a ochranné metriky. U každé hodnoty období, N, úplnost a zdroj; při změně verze definice přerušit srovnatelnou časovou řadu.</li>
+<li><strong>Najít konkrétní situaci.</strong> Segmentovat podle stavu a technického kontextu, nikoli pouze celkovým průměrem. Ukázat podíl i absolutní počet; u malého vzorku nevyvozovat pořadí variant. Neagregovat částečné období jako kompletní.</li>
+<li><strong>Vysvětlit chování výzkumem.</strong> Analytika ukáže kde a jak často, test nebo rozhovor může vysvětlit proč. Krátká otázka po úkolu může doplnit snadnost, např. škála 1–7. U VoP testovat porozumění, u QR schopnost zotavení a u retence vnímanou užitečnost.</li>
+<li><strong>Ověřit změnu.</strong> Předem jedna hlavní metrika, ochranné metriky a minimální potřebný vzorek. Randomizovat stabilně na úrovni klienta a předem určit okno. Srovnání před/po nebo mezi odlišnými klienty je signál, nikoli důkaz příčiny.</li>
+</ol><p>Konkrétní cílové hodnoty doplnit až po kvalitní výchozí periodě (pracovní návrh 2–4 týdny podle objemu) a požadované změně. Není důvod všem CJ dávat stejnou „správnou“ konverzi nebo čas.</p></div></details>
+<details><summary>Co ověřit před spuštěním měření</summary><div class="detail-body"><ul><li>Deterministické scénáře všech větví na Androidu/iOS: zpět, X, refresh, návrat z pozadí, opakovaný klik, offline a opožděný výsledek.</li><li>Retence: pod / přes limit, jiná měna, potlačení, X vs. CTA, produktová odbočka a návrat. VoP: všechny čtyři výsledky, změna vstupu za běhu, instant dostupný i nedostupný, volba Později a autorizační overlay.</li><li>QR: kamera granted/denied/unknown, jednorázové oprávnění, návrat z nastavení, zrušení pickeru, validní i neplatební QR, nečitelný a chybný import, svítilna nedostupná. Dialogy OS měřit jen přes skutečně dostupné callbacky.</li><li>Po každém scénáři read-back posloupnosti událostí, ID, deduplikace a výsledku. Ověřit, že se neodesílá obsah platebních ani bezpečnostních polí.</li><li>Potvrdit vlastníka metrik, zdroj výsledku, režim dostupnosti měření a verzi kontraktu. Tento dokument je specifikace; měření zde není nasazené ani napojené na Techney.</li></ul></div></details>
+</section><footer><p><strong>Podklady a metodická opora.</strong> Retenční nabídka a VoP / SEPA: živé prototypy a aktuální zdrojový kód, prohlédnuté 7. 10. 2026. QR: dodaný obrázek. Návrh není audit produkční telemetrie, výsledky uživatelského výzkumu ani právní interpretace VoP.</p><p>Pravidla pro pořadí, jednotku a okno funnelu: <a href="https://amplitude.com/docs/analytics/charts/funnel-analysis/funnel-analysis-how-amplitude-computes" target="_blank" rel="noopener">Amplitude · výpočet funnelů</a>. Spojení analytiky s výzkumem a srovnávacím měřením: <a href="https://www.nngroup.com/articles/benchmarking-ux/" target="_blank" rel="noopener">Nielsen Norman Group · benchmarking UX</a>. Obojí použito jako metodická opora, nikoli potvrzení funkcí Techney.</p><p>Další journey lze přidat do stejného katalogu se shodnou strukturou: cíl → větve → metriky → obrazovky → hypotézy. Nejdřív doplnit zdroj a hranici úspěchu.</p></footer></main><script>
+const DATA=[
+  {
+    "id": "retence",
+    "name": "Retenční nabídka",
+    "short": "Retence",
+    "goal": "Nabídnout užitečnou alternativu a umožnit snadno dokončit původní platbu.",
+    "question": "Pomáhá nabídka klientovi, aniž zbytečně narušuje jeho platbu?",
+    "source": "Aktuální prototyp: nabídka se otevře po „Pokračovat“ pro částku vyšší než 250 000 Kč v CZK. Detail termínovaného účtu je odbočka; jeho „Pokračovat“ v prototypu vrací do platby. Sjednání produktu ani skutečné udržení peněz nejsou v podkladu dokončeny.",
+    "url": "https://lukasbendik.github.io/design/Platby/Reten%C4%8Dn%C3%AD%20nab%C3%ADdka/index.html?k=4c129f69f551195cbc5e8b57cc5a0975b6efa1e8510573524d11df03c7d010c6",
+    "flow": [
+      "Nová platba",
+      "Vyhodnocení nabídky",
+      "Retenční sheet",
+      "Pokračování platby / detail produktu",
+      "Souhrn → autorizace",
+      "Přijetí příkazu"
+    ],
+    "branches": [
+      "Platební větev: sheet → Pokračovat k platbě nebo X → další údaje → souhrn → autorizace → přijetí příkazu. X v aktuálním prototypu také pokračuje k platbě; není to odchod z CJ.",
+      "Produktová větev: sheet → Sjednat termínovaný účet → detail → zahájení a dokončení sjednání. Poslední dva kroky je třeba doplnit v produkční CJ.",
+      "Bez nabídky: nezpůsobilé / potlačené zobrazení → běžná platba. Eligibility vyhodnocovat při pokusu pokračovat; opakované otevření nezvyšuje počet unikátně oslovených pokusů."
+    ],
+    "metrics": [
+      {
+        "name": "Dosah nabídky",
+        "formula": "Pokusy se zobrazeným sheetem / pokusy způsobilé k zobrazení po uplatnění pravidel potlačení.",
+        "meaning": "Odhalí rozdíl mezi rozhodnutím nabídku zobrazit a jejím skutečným zobrazením. Zvlášť uvést všechny způsobilé a potlačené pokusy.",
+        "source": "UI + rozhodnutí o způsobilosti"
+      },
+      {
+        "name": "Zájem o produkt",
+        "formula": "Pokusy s klikem na Sjednat termínovaný účet / pokusy se zobrazeným sheetem.",
+        "meaning": "Klik je zájem. Vedle něj měřit úspěšné načtení detailu; jejich rozdíl může být technický problém.",
+        "source": "UI"
+      },
+      {
+        "name": "Sjednání po nabídce",
+        "formula": "Pokusy s potvrzeným sjednáním do 7 dnů od prvního zobrazení / oslovené pokusy s uzavřeným 7denním oknem.",
+        "meaning": "Zvlášť také sjednání / zahájená sjednání. Okno 7 dnů je návrh; schválit podle reálné délky sjednání.",
+        "source": "Produktový backend; doplnit"
+      },
+      {
+        "name": "Dokončení původní platby",
+        "formula": "Pokusy s přijatým platebním příkazem / pokusy, které viděly nabídku.",
+        "meaning": "Současně rozdělit produktovou a platební větev. Přechod do sjednání není automaticky selhání.",
+        "source": "Platební backend; doplnit"
+      },
+      {
+        "name": "Zdržení původního úkolu",
+        "formula": "P50 / P90 aktivního času od prvního zobrazení Nové platby po přijetí příkazu; zvlášť čas od sheetu po návrat do platby.",
+        "meaning": "Porovnat jen stejné typy pokusů a uvést i nedokončené. Pro dopad nabídky použít náhodnou kontrolní skupinu způsobilých klientů.",
+        "source": "UI časování + backend"
+      },
+      {
+        "name": "Zavření a pokračování",
+        "formula": "Pokusy s X a následným návratem do platební větve / pokusy se sheetem; zvlášť primární Pokračovat k platbě.",
+        "meaning": "Rozliší ignorování nabídky od odchodu. Krátké zobrazení samo o sobě nedokazuje nepochopení.",
+        "source": "UI"
+      },
+      {
+        "name": "Udržení prostředků",
+        "formula": "Agregovaný rozdíl v definovaném odtoku / zůstatku po 7 a 30 dnech mezi náhodně přiřazenou nabídkovou a kontrolní skupinou.",
+        "meaning": "Sjednaný účet není důkaz udržení peněz. Vymezit odtok mimo banku, nové vklady a přesuny uvnitř banky; hodnotit na úrovni klienta.",
+        "source": "Agregovaná bankovní data; doplnit"
+      }
+    ],
+    "segments": [
+      "Nový vs. opakovaný kontakt s touto nabídkou",
+      "Způsobilost, potlačení a důvod nezobrazení",
+      "Částkové pásmo, měna a vstupní místo",
+      "Nabídková / kontrolní skupina, verze nabídky",
+      "Platební / produktová větev, platforma a verze aplikace"
+    ],
+    "screens": [
+      {
+        "id": "ret.home",
+        "name": "Přehled a vstup do platby",
+        "kind": "Obrazovka",
+        "actions": "Nová platba; jiný vstup měřit odděleně.",
+        "events": "journey_started po úspěšném otevření formuláře.",
+        "params": "entry_point",
+        "insight": "Klik vs. otevřený formulář ukáže, zda funguje vstup. Domovský přehled není povinný krok pro klienta, který přijde jinou cestou.",
+        "scope": "V podkladu"
+      },
+      {
+        "id": "ret.payment_details",
+        "name": "Nová platba · komu, částka, měna",
+        "kind": "Obrazovka",
+        "actions": "Zavřít; Pokračovat; změna měny; dokončení úpravy příjemce a částky.",
+        "events": "eligibility_evaluated při Pokračovat; validation_shown a validation_resolved tam, kde validace v reálné aplikaci existuje.",
+        "params": "eligible, suppression_reason, amount_band, currency, field_id, error_code",
+        "insight": "Rozlišit klienty mimo podmínky nabídky od způsobilých. Účet, Platba na kontakt a QR ikona jsou zde jen vizuální / nefunkční: produkční odbočky doplnit samostatně.",
+        "scope": "V podkladu"
+      },
+      {
+        "id": "ret.offer",
+        "name": "Zhodnocujte 3,5 % p. a.",
+        "kind": "Bottom sheet",
+        "actions": "Pokračovat k platbě; Sjednat termínovaný účet; X; systémové zpět, případné gesto či okolí pouze pokud je implementované.",
+        "events": "offer_decision = continue_payment / product_detail / dismiss; surface_closed s důvodem.",
+        "params": "offer_id, offer_version, exposure_index, close_reason, decision",
+        "insight": "Měřit čas do první akce a návrat k platbě. X je jiná akce než CTA, i když obě v podkladu vedou do dalšího kroku. Nepočítat vykreslení podkladové obrazovky jako nové zobrazení.",
+        "scope": "V podkladu"
+      },
+      {
+        "id": "ret.term_account",
+        "name": "Sjednejte si termínovaný účet",
+        "kind": "Obrazovka",
+        "actions": "Zavřít; Pokračovat.",
+        "events": "product_detail_opened; product_application_started až po skutečném otevření sjednání.",
+        "params": "product_id, return_destination",
+        "insight": "Sledovat návrat do platby a přechod do sjednání. V prototypu obě akce vrací na první formulář: klik na Pokračovat neoznačovat jako sjednání.",
+        "scope": "V podkladu"
+      },
+      {
+        "id": "ret.additional",
+        "name": "Nová platba · doplňující údaje",
+        "kind": "Obrazovka",
+        "actions": "Pokračovat; Zpět; Co nejdříve / Později; dokončení úprav zprávy, symbolů a popisu.",
+        "events": "field_completed bez obsahu; payment_timing_changed pouze po změně člověkem.",
+        "params": "field_id, from_type, to_type, change_origin",
+        "insight": "Která pole prodlužují cestu a jak často se lidé vrací? Obsahem zpráv ani symbolů report nenaplňovat.",
+        "scope": "V podkladu"
+      },
+      {
+        "id": "ret.summary",
+        "name": "Souhrn",
+        "kind": "Obrazovka",
+        "actions": "Potvrdit platbu; Zpět do formuláře.",
+        "events": "payment_confirmation_requested; summary_returned.",
+        "params": "payment_timing, return_destination",
+        "insight": "Vysoký počet návratů může znamenat potřebnou kontrolu i nejasné údaje. Spojit s následnou úpravou konkrétního pole a dokončením.",
+        "scope": "V podkladu"
+      },
+      {
+        "id": "ret.authorization",
+        "name": "Potvrzení platby",
+        "kind": "Autorizační sheet",
+        "actions": "Zavřít; okolí; systémové zpět; volba Face ID. Zadání PIN zaznamenat pouze jako zahájení pokusu.",
+        "events": "authorization_started / result = success / failed / cancelled / timeout.",
+        "params": "auth_method, result, error_code",
+        "insight": "Zvlášť zobrazení, pokus o autorizaci a její skutečný výsledek. Číslice, délku rozpracovaného PIN ani biometrická data neměřit.",
+        "scope": "V podkladu"
+      },
+      {
+        "id": "ret.result",
+        "name": "Zadali jste platbu",
+        "kind": "Výsledková obrazovka",
+        "actions": "Zadat další; Zavřít nahoře i dole. Uložit šablonu je v podkladu pouze vizuální řádek.",
+        "events": "payment_order_result z backendu; result_view z UI; další platba založí nový pokus.",
+        "params": "result, payment_status, action_placement",
+        "insight": "Zobrazení úspěšného textu porovnat s přijetím příkazu. „Zadali jste platbu“ není potvrzení doručení příjemci.",
+        "scope": "V podkladu"
+      },
+      {
+        "id": "ret.application",
+        "name": "Sjednání a stav prostředků",
+        "kind": "Navazující CJ",
+        "actions": "Zahájit / opustit sjednání; návrat k platbě podle skutečného produkčního procesu.",
+        "events": "product_application_result; agregovaná retence prostředků po 7/30 dnech.",
+        "params": "parent_attempt_id, application_id, result, experiment_group",
+        "insight": "Vyhodnotit zájem → začátek → dokončení → skutečný přínos. Připisování více kontaktům definovat předem; nekopírovat stejnou konverzi ke všem expozicím.",
+        "scope": "Doplnit mimo podklad"
+      }
+    ],
+    "ideas": [
+      {
+        "signal": "Hodně otevření detailu, málo zahájených sjednání.",
+        "hypothesis": "Podmínky nebo další krok nemusí odpovídat očekávání.",
+        "check": "Rozhovory po přečtení detailu a test vysvětlení podmínek; sledovat přechod i dokončení, ne jen klik."
+      },
+      {
+        "signal": "Nabídková skupina platí pomaleji nebo méně často.",
+        "hypothesis": "Nabídka může přerušovat hlavní úkol.",
+        "check": "Randomizovaný test u způsobilých klientů. Primární přínos: retence; ochranné metriky: dokončení platby, čas a opakované kontakty."
+      },
+      {
+        "signal": "Opakované kontakty mají více rychlých zavření.",
+        "hypothesis": "Nabídka může být zobrazována příliš často.",
+        "check": "Porovnat expozice a otestovat frekvenční limit; zohlednit rozdíl mezi klienty, kteří se vrací, a nově oslovenými."
+      }
+    ]
+  },
+  {
+    "id": "vop-sepa",
+    "name": "VoP a SEPA instant",
+    "short": "VoP / SEPA",
+    "goal": "Umožnit informované rozhodnutí o příjemci a způsobu odeslání, potom spolehlivě zadat platbu.",
+    "question": "Rozumí klient výsledku ověření a dokáže bezpečně pokračovat?",
+    "source": "Aktuální prototyp obsahuje čtyři výsledky VoP, vysvětlující sheety a volbu Okamžitě / Standardně / Později. VoP i autorizace jsou simulované. Stav „Zadali jste platbu“ nedokazuje přijetí ani doručení platby. V dodaném odkazu je hash zdvojený; zde je použit platný začátek #05-prehled.",
+    "url": "https://lukasbendik.github.io/design/Platby/VOP%20%2B%20SEPA%20instant%20v2/index.html?k=4c129f69f551195cbc5e8b57cc5a0975b6efa1e8510573524d11df03c7d010c6#05-prehled",
+    "flow": [
+      "Nová platba",
+      "SEPA údaje",
+      "Výsledek VoP + rozhodnutí",
+      "Způsob odeslání",
+      "Souhrn → autorizace",
+      "Přijetí příkazu"
+    ],
+    "branches": [
+      "match → pokračování; partial → nalezený nebo vlastní název; nomatch → oprava nebo Přesto pokračovat; unverifiable → nové ověření / návrat / Pokračovat bez ověření. Sheety nejsou povinným krokem pro každý pokus.",
+      "Odeslání: dostupná okamžitá / standardní / pozdější platba. Nedostupnost okamžité platby analyzovat podle důvodu. Vysvětlení VoP a změna měny jsou volitelné odbočky.",
+      "Bezpečné zastavení či oprava při varování může být žádoucí výsledek. Vyšší průchod varováním sám o sobě neznamená lepší UX."
+    ],
+    "metrics": [
+      {
+        "name": "Dokončení zadání",
+        "formula": "SEPA pokusy s backendově přijatým platebním příkazem / zahájené SEPA pokusy s prvním zobrazením Nové platby.",
+        "meaning": "Rozdělit podle výsledku VoP, zvolené větve a dostupnosti instant. Navazující provedení reportovat samostatně.",
+        "source": "Platební backend; doplnit"
+      },
+      {
+        "name": "Průchod jednotlivými kroky",
+        "formula": "Pokusy, které dosáhly dalšího kroku v dané větvi / pokusy, které viděly předchozí krok této větve.",
+        "meaning": "U každého kroku uvést N, čas P50/P90, zrušení, technické chyby a pokusy bez dalšího výsledku.",
+        "source": "UI"
+      },
+      {
+        "name": "Náprava po varování",
+        "formula": "Pokusy s opravou názvu či účtu a následným match / pokusy se zobrazeným partial nebo nomatch; každý stav zvlášť.",
+        "meaning": "Vedle toho uvést pokračování s původním stavem a zastavení. Nelze z kliků určit, zda je příjemce skutečně správný.",
+        "source": "UI + VoP odpovědi"
+      },
+      {
+        "name": "Přijetí nalezeného názvu",
+        "formula": "Pokusy se zvoleným návrhem / pokusy, které viděly dostupný návrh při partial.",
+        "meaning": "Rozdělit inline / sheet a následné dokončení. Stejný pokus se dvěma umístěními nedvojit v celkovém výsledku.",
+        "source": "UI"
+      },
+      {
+        "name": "Pokračování po varování",
+        "formula": "Pokusy s explicitním pokračováním / pokusy se zobrazeným příslušným varováním; zvlášť partial, nomatch, unverifiable.",
+        "meaning": "Interpretovat společně s opravou, opuštěním a kvalitativním ověřením porozumění. Nemá mít cíl „co nejvyšší“.",
+        "source": "UI"
+      },
+      {
+        "name": "Rychlost a dostupnost VoP",
+        "formula": "P50/P90 času request → odpověď; ověření s unverifiable / ukončená ověření.",
+        "meaning": "Technickou latenci měřit podle verification_attempt_id. Uživatelsky přidat čas do zobrazení výsledku a úspěšný nový pokus po nedostupnosti.",
+        "source": "VoP služba + UI"
+      },
+      {
+        "name": "Volba okamžité platby",
+        "formula": "Pokusy s uživatelskou volbou Okamžitě / pokusy s viditelnou a dostupnou volbou Okamžitě.",
+        "meaning": "Zvlášť konečný způsob na souhrnu / dostupné pokusy. Inicializace výchozí volby není uživatelská interakce.",
+        "source": "UI + pravidla dostupnosti"
+      },
+      {
+        "name": "Úspěšná autorizace",
+        "formula": "Pokusy s úspěšnou autorizací / pokusy se zobrazeným autorizačním sheetem.",
+        "meaning": "Rozdělit zrušení, chybu a timeout. Po úspěšné autorizaci stále může selhat přijetí příkazu.",
+        "source": "Autorizační služba + UI"
+      }
+    ],
+    "segments": [
+      "match / partial / nomatch / unverifiable a počet opakovaných ověření",
+      "Instant dostupný / nedostupný + důvod",
+      "Výchozí, uživatelem zvolený a skutečně použitý způsob platby",
+      "Ruční zadání / vložení, oprava názvu nebo účtu",
+      "Platforma, verze aplikace, vstup z přehledu / detailu účtu"
+    ],
+    "screens": [
+      {
+        "id": "vop.entry",
+        "name": "Přehled / detail běžného účtu",
+        "kind": "Vstupní obrazovky",
+        "actions": "Nová platba.",
+        "events": "journey_started až při zobrazení formuláře.",
+        "params": "entry_point = homescreen / account_detail",
+        "insight": "Vstupy porovnat samostatně; přihlášení ani jiné účty nevkládat do povinného SEPA funnelu. Z generické platby zachovat payment_attempt_id a do této CJ zařadit jen pokusy směrované do SEPA, ne domácí platby.",
+        "scope": "V podkladu"
+      },
+      {
+        "id": "vop.payment_details",
+        "name": "Nová platba",
+        "kind": "Obrazovka",
+        "actions": "Pokračovat; Zavřít; otevření měny; dokončení zadání protiúčtu a částky.",
+        "events": "validation_shown / resolved pro chybějící nebo neplatný protiúčet a částku.",
+        "params": "field_id, input_method, currency, amount_band, error_code",
+        "insight": "Pokusy s chybou → oprava → úspěšné pokračování. Obsah IBAN ani částku neposílat do UI analytiky.",
+        "scope": "V podkladu"
+      },
+      {
+        "id": "vop.currency",
+        "name": "Výběr měny",
+        "kind": "Bottom sheet",
+        "actions": "Výběr měny; X; okolí; systémové zpět.",
+        "events": "currency_changed po skutečné změně.",
+        "params": "from_currency, to_currency, close_reason",
+        "insight": "Otevření bez změny a návraty mohou signalizovat hledání či kontrolu. Volbu spojit s dalším krokem.",
+        "scope": "V podkladu"
+      },
+      {
+        "id": "vop.sepa_details",
+        "name": "SEPA platba",
+        "kind": "Obrazovka",
+        "actions": "Pokračovat; Zpět; úprava názvu; přijetí inline návrhu; vysvětlení přes ikonu/hint; zpráva, reference a popis.",
+        "events": "field_completed; recipient_edited; suggestion_selected; verification_started / result.",
+        "params": "field_id, verification_attempt_id, vop_status, suggestion_placement",
+        "insight": "Měřit vyplnění a chyby bez hodnot polí. Přepočet a marži měřit jako viditelný obsah, pokud chceme znát jejich expozici; pro porozumění je potřeba test.",
+        "scope": "V podkladu"
+      },
+      {
+        "id": "vop.checking",
+        "name": "Ověřování příjemce",
+        "kind": "Inline stav / blokující overlay",
+        "actions": "Případné opakování; pokus Pokračovat během čekání.",
+        "events": "verification_started / result; surface_view pro loading a verify-loader odděleně.",
+        "params": "verification_attempt_id, latency_ms, request_version, error_code",
+        "insight": "Loading není výsledkem VoP. Odpověď staršího požadavku po změně vstupu nesmí být přiřazena novému názvu; měřit zastaralé odpovědi odděleně.",
+        "scope": "V podkladu"
+      },
+      {
+        "id": "vop.status",
+        "name": "Výsledek ověření příjemce",
+        "kind": "Inline zobrazený prvek",
+        "actions": "Otevření vysvětlení; oprava; přijetí návrhu; Pokračovat.",
+        "events": "vop_status_view při skutečném zobrazení match / partial / nomatch / unverifiable; required jako validace.",
+        "params": "vop_status, verification_attempt_id, occurrence_id",
+        "insight": "Oddělit odpověď služby od toho, co klient viděl. Doba, opravy a rozhodnutí pomohou posoudit reakci; z textového stavu se neodvozuje porozumění.",
+        "scope": "V podkladu"
+      },
+      {
+        "id": "vop.explanation",
+        "name": "Ověření příjemce",
+        "kind": "Vysvětlující sheet",
+        "actions": "Otevřít přes ikonu či text; zavřít X / okolím / zpět.",
+        "events": "surface_closed; následná oprava nebo pokračování v rámci stejného pokusu.",
+        "params": "opening_element, vop_status, close_reason",
+        "insight": "Používají lidé nápovědu? Porovnat následné akce, ale rozdíl návštěvníků nápovědy není důkaz jejího účinku.",
+        "scope": "V podkladu"
+      },
+      {
+        "id": "vop.partial",
+        "name": "Název částečně odpovídá",
+        "kind": "Rozhodovací sheet",
+        "actions": "Vybrat nalezený název; vybrat vlastní název; zavřít.",
+        "events": "vop_decision = use_suggestion / keep_original / return_to_edit.",
+        "params": "vop_status = partial, suggestion_placement = sheet, decision",
+        "insight": "Zvolený návrh v prototypu vede na souhrn s match. Neplést tuto simulaci s novou nezávislou odpovědí služby; původní výsledek zachovat.",
+        "scope": "V podkladu"
+      },
+      {
+        "id": "vop.nomatch",
+        "name": "Název neodpovídá",
+        "kind": "Varovný sheet",
+        "actions": "Přesto pokračovat; zavřít a případně opravit údaje.",
+        "events": "vop_decision = continue_anyway / return_to_edit.",
+        "params": "vop_status = nomatch, decision, close_reason",
+        "insight": "Sledovat vědomé pokračování, opravy, stop a čas do rozhodnutí. Rychlý klik je hypotéza pro test, nikoli důkaz ignorování rizika.",
+        "scope": "V podkladu"
+      },
+      {
+        "id": "vop.unverifiable",
+        "name": "Název nelze ověřit",
+        "kind": "Varovný sheet",
+        "actions": "Pokračovat bez ověření; zavřít. Text zmiňuje odložení, sheet pro něj nemá samostatné tlačítko.",
+        "events": "vop_decision = continue_unverified / return_to_edit; další verification_result.",
+        "params": "vop_status = unverifiable, error_code, decision",
+        "insight": "Odloučit technickou nedostupnost od nesouladu. Měřit návrat a úspěšné opakování; nepřičítat textovou zmínku odložení jako klik.",
+        "scope": "V podkladu"
+      },
+      {
+        "id": "vop.timing",
+        "name": "Odeslat platbu",
+        "kind": "Segment a podmíněné pole data",
+        "actions": "Okamžitě / Standardně / Později; datum při Později.",
+        "events": "payment_type_changed; instant_availability_view; field_completed pro datum.",
+        "params": "from_type, to_type, change_origin = user / system, available, availability_reason",
+        "insight": "Výchozí Standardně není klik. Nedostupné Okamžitě vyhodnotit podle vystavení a následné volby, protože disabled tlačítko klik často neposkytne. Datum není samostatný sheet v podkladu.",
+        "scope": "V podkladu"
+      },
+      {
+        "id": "vop.summary",
+        "name": "Souhrn",
+        "kind": "Obrazovka",
+        "actions": "Potvrdit platbu; Zpět.",
+        "events": "payment_confirmation_requested; summary_returned.",
+        "params": "selected_type, scheduled = true / false, vop_status, instant_available",
+        "insight": "Pozdější platba je v podkladu popsána jako Standardně + datum. Zachovat analytickou kategorii later; porovnat výběr a konečný stav.",
+        "scope": "V podkladu"
+      },
+      {
+        "id": "vop.authorization",
+        "name": "Potvrzení platby",
+        "kind": "PIN overlay",
+        "actions": "Zavřít; zahájit autorizaci bez zaznamenání číslic PIN.",
+        "events": "surface_view explicitně pro overlay; authorization_started / result.",
+        "params": "auth_method, result, error_code",
+        "insight": "Overlay může být mimo navigaci: samotný page_view hlavní obrazovky jeho zobrazení nepokrývá. Měřit skutečné otevření a uzavření.",
+        "scope": "V podkladu"
+      },
+      {
+        "id": "vop.result",
+        "name": "Zadali jste platbu",
+        "kind": "Výsledková obrazovka",
+        "actions": "Zadat další; Zavřít nahoře / dole. Uložit šablonu nemá ve zdroji handler.",
+        "events": "result_view; payment_order_result z backendu.",
+        "params": "order_status, selected_type, actual_type, fallback_reason",
+        "insight": "Oddělit zadání, přijetí, zamítnutí a pozdější provedení. Případný fallback instant → standard reportovat podle skutečné služby.",
+        "scope": "UI v podkladu; backend doplnit"
+      }
+    ],
+    "ideas": [
+      {
+        "signal": "Časté opravy po nápovědě nebo dlouhé rozhodování u partial.",
+        "hypothesis": "Rozdíl mezi zadaným a nalezeným názvem nemusí být jasný.",
+        "check": "Test porozumění oběma volbám; měřit přijetí návrhu i výsledný stav a dokončení."
+      },
+      {
+        "signal": "Mnoho krátkých zobrazení nomatch s Přesto pokračovat.",
+        "hypothesis": "Klienti mohou text přehlížet, ale mohou také znát správný účet.",
+        "check": "Kvalitativní test s bezpečnými scénáři; cílem je informované rozhodnutí, nikoli maximalizace průchodu."
+      },
+      {
+        "signal": "Dostupná okamžitá platba je málo využívaná.",
+        "hypothesis": "Rozdíl způsobů odeslání nebo dostupnost nemusí být patrné.",
+        "check": "Test srozumitelnosti a umístění; oddělit skutečnou preferenci od vlivu výchozí Standardně."
+      },
+      {
+        "signal": "Ztráty a dlouhé čekání u unverifiable.",
+        "hypothesis": "Příčinou může být služba nebo chybějící srozumitelný další krok.",
+        "check": "Nejdřív rozdělit latenci a chyby služby od chování UI. Pak otestovat zotavení a vysvětlení možností."
+      }
+    ]
+  },
+  {
+    "id": "qr-platba",
+    "name": "QR platba",
+    "short": "QR platba",
+    "goal": "Rychle a spolehlivě načíst platební údaje i bez povolené kamery.",
+    "question": "Dostane se klient od vstupu ke správně předvyplněné platbě?",
+    "source": "Dodaný obrázek zachycuje vstup z Přehledu, skener se zapnutou / vypnutou svítilnou, systémové oprávnění a nepovolený stav s akcemi Přejít do nastavení a Načíst z fotek nebo souboru. Úspěšné načtení, chyby dekódování, formulář a zadání platby v obrázku nejsou.",
+    "url": null,
+    "flow": [
+      "Klik na QR platbu",
+      "Stav oprávnění",
+      "Skener / import / nastavení",
+      "Rozpoznání QR",
+      "Předvyplněná platba",
+      "Přijetí příkazu"
+    ],
+    "branches": [
+      "Kamera povolena → skener → rozpoznání. Svítilna on/off je stav jedné obrazovky, nikoli povinný krok funnelu.",
+      "Oprávnění neznámé → systémová žádost → povolení / odmítnutí. Po odmítnutí → nastavení nebo import. U již zamítnutého oprávnění nemusí OS znovu nabídnout dialog.",
+      "Import z fotek nebo souboru může být běžná volba i záchrana po odmítnutí kamery. Návrat z nastavení zachovává tentýž pokus. Rozpoznání a platební část jsou navržené rozšíření."
+    ],
+    "metrics": [
+      {
+        "name": "Otevření QR funkce",
+        "formula": "Pokusy se zobrazenou QR obrazovkou / zaznamenané vstupní pokusy po kliknutí na QR platbu.",
+        "meaning": "Když chybí journey_attempt_id před otevřením, použít entry_interaction_id a spojit ho s novým pokusem.",
+        "source": "UI"
+      },
+      {
+        "name": "Úspěšné načtení údajů",
+        "formula": "Pokusy s validními údaji převzatými do formuláře / zahájené QR pokusy.",
+        "meaning": "Hlavní úspěch QR úseku. Samotná detekce QR nestačí: musí jít o podporovaný platební QR a platná data.",
+        "source": "Dekodér + UI; doplnit"
+      },
+      {
+        "name": "Povolení kamery",
+        "formula": "Pokusy s granted po ukončené žádosti / pokusy se žádostí o oprávnění a známým výsledkem.",
+        "meaning": "Uvést i neznámé výsledky a initial granted/denied zvlášť. Žádost API není důkaz, že OS dialog ukázal.",
+        "source": "OS API stav, bez kliků uvnitř dialogu"
+      },
+      {
+        "name": "Zotavení po blokované kameře",
+        "formula": "Pokusy s validním načtením z libovolné cesty / pokusy se zobrazeným nepovoleným stavem.",
+        "meaning": "Rozdělit nastavení → povoleno → sken a import → validní údaje. Sledovat i uzavření a návrat bez změny.",
+        "source": "OS stav + dekodér; doplnit"
+      },
+      {
+        "name": "Úspěšnost kamerové cesty",
+        "formula": "Pokusy s validními údaji z kamery / pokusy s kamerou skutečně připravenou.",
+        "meaning": "P50/P90 času ready → validní převzetí, chybové důvody, opakování. Technické spuštění kamery oddělit od hledání QR.",
+        "source": "Kamera + dekodér; doplnit"
+      },
+      {
+        "name": "Úspěšnost importu",
+        "formula": "Pokusy s validními údaji z importu / pokusy se skutečně vybraným souborem.",
+        "meaning": "Vedle toho vybraný soubor / otevřený picker a zrušený picker / otevřený picker. Oba jmenovatele odpovídají jiné otázce.",
+        "source": "OS picker + dekodér; doplnit"
+      },
+      {
+        "name": "Potřeba opravy předvyplnění",
+        "formula": "Pokusy s opravou alespoň jednoho převzatého platebního pole / pokusy s předvyplněným formulářem.",
+        "meaning": "Zvlášť účet, částka, symbol a měna. Oprava může být legitimní změna záměru; ne každá je chyba načtení.",
+        "source": "UI; doplnit"
+      },
+      {
+        "name": "Dokončení QR platby",
+        "formula": "Pokusy s přijatým příkazem / zahájené QR pokusy; zvlášť přijaté / předvyplněné.",
+        "meaning": "Rozliší problém s načtením od problému navazující platby. Platby po více pokusech deduplikovat dle příkazu.",
+        "source": "Platební backend; doplnit"
+      }
+    ],
+    "segments": [
+      "Výchozí oprávnění kamery a stav po návratu",
+      "Kamera / fotky / soubor; běžný import vs. záchranná cesta",
+      "První použití QR vs. opakované použití",
+      "OS, verze aplikace, dostupnost kamery a svítilny",
+      "Podporovaný / neplatební / neplatný QR, validační důvod"
+    ],
+    "screens": [
+      {
+        "id": "qr.entry",
+        "name": "Přehled · QR platba",
+        "kind": "Vstupní obrazovka",
+        "actions": "QR platba v dolní liště.",
+        "events": "entry_interaction a journey_started po otevření.",
+        "params": "entry_point, entry_interaction_id",
+        "insight": "Měřit také zobrazení vstupního prvku, pokud chceme zjistit jeho objevitelnost. Vysoký podíl vstupů sám o sobě nedokazuje snadné nalezení.",
+        "scope": "V podkladu"
+      },
+      {
+        "id": "qr.permission_request",
+        "name": "Žádost o kameru",
+        "kind": "Systémový dialog",
+        "actions": "Volby OS: při používání aplikace / pouze tentokrát / nepovolovat podle platformy.",
+        "events": "permission_requested; permission_result po callbacku nebo read-backu.",
+        "params": "permission_before, permission_after, result_known, os",
+        "insight": "Interní kliky OS dialogu nelze obecně měřit jako kliky v aplikaci. surface_view dialogu jen tehdy, pokud OS jeho zobrazení spolehlivě poskytuje; jinak uvést „zobrazení neověřeno“.",
+        "scope": "V podkladu"
+      },
+      {
+        "id": "qr.scanner",
+        "name": "Namířit fotoaparát na QR kód",
+        "kind": "Obrazovka · svítilna vypnuta / zapnuta",
+        "actions": "Zavřít; zapnout / vypnout svítilnu; Načíst z fotek nebo souboru.",
+        "events": "camera_ready / failed; flashlight_changed po potvrzené změně; qr_decode_result.",
+        "params": "permission_state, flashlight_available, flashlight_state, source = camera",
+        "insight": "Oddělit čas otevření, připravenost kamery a rozpoznání. Přepnutí svítilny je ui_interaction + stav změny; novou expozici screen nedvojit. Nedostatek světla nelze odvodit jen z kliknutí.",
+        "scope": "V podkladu"
+      },
+      {
+        "id": "qr.camera_denied",
+        "name": "Povolte přístup k fotoaparátu",
+        "kind": "Nepovolený stav",
+        "actions": "Přejít do nastavení; Načíst z fotek nebo souboru; Zavřít. Ikona svítilny v tomto stavu: ověřit skutečnou aktivnost.",
+        "events": "settings_handoff; import_requested; surface_closed.",
+        "params": "permission_state, fallback_source, close_reason",
+        "insight": "Sledovat funkční alternativu ke kameře. Vysoké uzavírání může být nedostatek alternativy i změna záměru; ověřit rozhovorem.",
+        "scope": "V podkladu"
+      },
+      {
+        "id": "qr.settings_return",
+        "name": "Nastavení a návrat do aplikace",
+        "kind": "Externí přechod / obnovený stav",
+        "actions": "Přejít do nastavení; návrat do aplikace.",
+        "events": "app_resumed; permission_checked; camera_ready po povolení.",
+        "params": "handoff_id, permission_before, permission_after, resume_reason",
+        "insight": "Klik neznamená povolení. Na návratu číst reálné oprávnění; nepředpokládat návštěvu konkrétní stránky nastavení. Vnější handoff neposuzovat automaticky jako opuštění.",
+        "scope": "Přechod v podkladu; návrat doplnit"
+      },
+      {
+        "id": "qr.import",
+        "name": "Fotky nebo soubor",
+        "kind": "Systémový picker",
+        "actions": "Otevření; vybrat; zrušit; případné oprávnění k fotkám podle platformy.",
+        "events": "picker_opened pouze pokud je potvrzeno; file_selected / picker_cancelled; qr_decode_result.",
+        "params": "source = photo / file / unknown, file_type_category, decode_result",
+        "insight": "Neměřit názvy ani obsah souboru. Rozlišit zrušení od chyby a od výběru bez platebního QR. Co picker neposkytuje, označit unknown.",
+        "scope": "V podkladu jen vstup; doplnit"
+      },
+      {
+        "id": "qr.decode",
+        "name": "Rozpoznání a chyby načtení",
+        "kind": "Automatický výsledek / chybový stav",
+        "actions": "Zkusit znovu; přepnout na import / kameru; Zavřít podle finálního řešení.",
+        "events": "qr_decode_result = valid_payment / unsupported / unreadable / invalid_data / technical_error.",
+        "params": "scan_attempt_id, source, error_code, schema_version",
+        "insight": "Deduplikovat výsledky stejného QR v kontinuálním skenu. Neposílat každou kamerovou snímku; jeden výsledek na rozpoznávací pokus. Viditelnou chybu měřit zvlášť od interního selhání dekodéru.",
+        "scope": "Doplnit mimo obrázek"
+      },
+      {
+        "id": "qr.prefilled",
+        "name": "Předvyplněná platba",
+        "kind": "Navazující obrazovka",
+        "actions": "Zkontrolovat; opravit platební pole; Pokračovat; Zpět / zrušit.",
+        "events": "prefill_applied; prefilled_field_edited; validation_shown / resolved.",
+        "params": "origin = qr, source, field_id, edited = true / false",
+        "insight": "Jde o konec QR úseku: validní údaje skutečně dorazily do formuláře. Zachovat původ qr a propojení na platební pokus.",
+        "scope": "Doplnit mimo obrázek"
+      },
+      {
+        "id": "qr.payment_result",
+        "name": "Souhrn, autorizace a výsledek platby",
+        "kind": "Navazující CJ",
+        "actions": "Potvrdit; autorizovat; zrušit; Zavřít nebo další platba podle skutečné CJ.",
+        "events": "surface_view každého screen/sheet; authorization_result; payment_order_result.",
+        "params": "parent_attempt_id, payment_attempt_id, origin = qr, result",
+        "insight": "QR úspěch oddělit od zadání platby. Konkrétní obrazovky v příloze chybí; převzít katalog z reálné platební CJ a zachovat původ načtení.",
+        "scope": "Doplnit mimo obrázek"
+      }
+    ],
+    "ideas": [
+      {
+        "signal": "Hodně odmítnutí oprávnění při prvním použití.",
+        "hypothesis": "Klient nemusí rozumět, proč aplikace kameru potřebuje.",
+        "check": "Test vysvětlení před systémovou žádostí, bez opakovaného nátlaku; hlídat úspěšnost alternativy přes import."
+      },
+      {
+        "signal": "Kliky do nastavení, ale málo návratů s povolenou kamerou.",
+        "hypothesis": "Přechod a návrat nemusí být srozumitelný.",
+        "check": "Ověřit read-back oprávnění a zachování rozpracovaného pokusu; test instrukcí na Androidu i iOS."
+      },
+      {
+        "signal": "Dlouhý čas ready → validní údaje a časté přepnutí na import.",
+        "hypothesis": "Sken může selhávat v některých podmínkách nebo na určitém zařízení.",
+        "check": "Rozdělit technické chyby, QR typy a zařízení; otestovat papír, monitor a horší světlo. Svítilnu nevydávat za důkaz špatného světla."
+      },
+      {
+        "signal": "Mnoho oprav polí po úspěšném QR.",
+        "hypothesis": "Načtení může být neúplné nebo se mění platební záměr.",
+        "check": "Porovnat typ upraveného pole a validační chyby; výzkum rozliší chybu dekódování od záměrné změny částky."
+      }
+    ]
+  }
+];
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+function render(j){
+const metrics=j.metrics.map(m=>`<tr><td><strong>${esc(m.name)}</strong><span class="data-source">${esc(m.source)}</span></td><td>${esc(m.formula)}</td><td>${esc(m.meaning)}</td></tr>`).join('');
+const screens=j.screens.map((s,i)=>`<details><summary>${String(i+1).padStart(2,'0')} · ${esc(s.name)}<span class="screen-type">${esc(s.kind)} · ${esc(s.scope)}</span></summary><div class="detail-body"><dl><dt>Zobrazení</dt><dd><code>surface_view · ${esc(s.id)}</code>. Platí společná pravidla skutečné viditelnosti a deduplikace; systémové a navazující povrchy mají uvedené limity.</dd><dt>Interakce</dt><dd>${esc(s.actions)}</dd><dt>Výsledky / další události</dt><dd>${esc(s.events)}</dd><dt>Kontext měření</dt><dd><code>${esc(s.params)}</code></dd><dt>Co vyhodnocovat</dt><dd>${esc(s.insight)}</dd></dl></div></details>`).join('');
+return `<section class="tab-panel" id="panel-${j.id}" role="tabpanel" aria-labelledby="tab-${j.id}" tabindex="-1" hidden><div class="section-label"><div><p class="eyebrow">Customer journey</p><h2>${esc(j.name)}</h2></div>${j.url?`<a class="button" href="${esc(j.url)}" target="_blank" rel="noopener">Otevřít podklad ↗</a>`:'<span class="badge">Podklad: dodaný obrázek</span>'}</div><p class="lead">${esc(j.goal)}</p><div class="cards"><article class="card"><p class="label">Hlavní UX otázka</p><h3>${esc(j.question)}</h3></article><article class="card"><p class="label">Jak výsledek číst</p><h3>Průchod + čas + zotavení</h3><p>Úspěšný úkol sledovat společně s chybami, návraty a informovaným rozhodnutím.</p></article><article class="card"><p class="label">Stav reportu</p><h3>Návrh měření</h3><p>Bez produkčních hodnot. Výsledky a cíle doplníme až po ověření telemetrie.</p></article></div><div class="subnav" aria-label="Obsah journey"><a href="#${j.id}-cesta">Celá journey</a><a href="#${j.id}-metriky">Metriky</a><a href="#${j.id}-obrazovky">Obrazovky a sheety</a><a href="#${j.id}-hypotezy">Náměty na zlepšení</a></div><div class="callout source"><strong>Rozsah podkladů</strong><p>${esc(j.source)}</p></div><section class="section" id="${j.id}-cesta"><h2>Celá journey a její větve</h2><p class="meta">Mapa měření. Navazující výsledky služby je třeba doplnit; schéma není ukázka naměřených dat.</p><ol class="flow">${j.flow.map((f,i)=>`<li><b>KROK ${i+1}</b>${esc(f)}</li>`).join('')}</ol><div class="branches">${j.branches.map(b=>`<p>${esc(b)}</p>`).join('')}</div></section><section class="section" id="${j.id}-metriky"><h2>Co vyhodnocovat na úrovni CJ</h2><p class="meta">Pokus = unikátní journey_attempt_id, pokud není výslovně uvedena jiná jednotka. Poměry zobrazovat v % společně s N; používat uzavřená pozorovací okna.</p><div class="tablewrap" role="region" aria-label="Metriky ${esc(j.name)}" tabindex="0"><table><thead><tr><th>Metrika / zdroj</th><th>Jak ji spočítat</th><th>Co nám řekne a jak ji interpretovat</th></tr></thead><tbody>${metrics}</tbody></table></div><h3>Doporučené řezy dat</h3><div class="chips">${j.segments.map(s=>`<span class="chip">${esc(s)}</span>`).join('')}</div></section><section class="section" id="${j.id}-obrazovky"><div class="section-label"><div><h2>Obrazovky, sheety a interakce</h2><p class="meta">U každého povrchu měřit zobrazení, bezpečné akce a výsledek. Rozklikněte detail.</p></div><div class="actions"><button class="button expand" data-journey="${j.id}">Rozbalit vše</button></div></div><div class="screen-list">${screens}</div></section><section class="section" id="${j.id}-hypotezy"><h2>Z dat k nápadům na zlepšení</h2><p class="meta">Podmíněné hypotézy. Z podkladů nelze tvrdit, že tyto problémy skutečně nastávají.</p><div class="ideas">${j.ideas.map(i=>`<article class="card"><p class="eyebrow">Pokud v datech uvidíme</p><h3>${esc(i.signal)}</h3><p><strong>Možné vysvětlení:</strong> ${esc(i.hypothesis)}</p><p><strong>Jak ověřit:</strong> ${esc(i.check)}</p></article>`).join('')}</div></section><section class="section"><h3>První verze dashboardu</h3><p>Začít hlavním výsledkem a objemem pokusů. Pod něj dát průchod větvemi, časy P50/P90 a tabulku chyb se zotavením. Přidat řezy dat výše a podíl pokusů s neznámým výsledkem. U změn sledovat týdenní trend a verzi aplikace; žádná prázdná buňka se nezaměňuje za nulu.</p><div class="actions"><button class="button export" data-journey="${j.id}">Stáhnout specifikaci této CJ (JSON)</button><button class="button print" data-journey="${j.id}">Tisk / uložit jako PDF</button><a class="button" href="#metodika">Společná pravidla měření</a></div></section></section>`;
+}
+document.querySelector('#journeys').innerHTML=DATA.map(render).join('');
+const tabs=[...document.querySelectorAll('[role=tab]')];
+const valid=id=>DATA.some(j=>j.id===id);
+function route(){const hash=decodeURIComponent(location.hash.slice(1));let id=DATA.find(j=>hash===j.id||hash.startsWith(j.id+'-'))?.id;if(!id){try{id=localStorage.getItem('cj_analytics__journey')}catch{} }if(!valid(id))id=DATA[0].id;tabs.forEach(t=>{const active=t.dataset.journey===id;t.setAttribute('aria-selected',active);t.tabIndex=active?0:-1;document.getElementById('panel-'+t.dataset.journey).hidden=!active});try{localStorage.setItem('cj_analytics__journey',id)}catch{}return id;}
+tabs.forEach((t,i)=>{t.addEventListener('click',()=>{if(location.hash!== '#'+t.dataset.journey)location.hash=t.dataset.journey;route()});t.addEventListener('keydown',e=>{let n;if(e.key==='ArrowRight')n=(i+1)%tabs.length;if(e.key==='ArrowLeft')n=(i+tabs.length-1)%tabs.length;if(e.key==='Home')n=0;if(e.key==='End')n=tabs.length-1;if(n!==undefined){e.preventDefault();tabs[n].focus();tabs[n].click()}})});
+window.addEventListener('hashchange',route);route();
+document.querySelectorAll('.expand').forEach(b=>b.addEventListener('click',()=>{const ds=[...document.querySelectorAll('#panel-'+b.dataset.journey+' .screen-list details')];const open=ds.some(d=>!d.open);ds.forEach(d=>d.open=open);b.textContent=open?'Sbalit vše':'Rozbalit vše'}));
+document.querySelectorAll('.export').forEach(b=>b.addEventListener('click',()=>{const j=DATA.find(j=>j.id===b.dataset.journey);const spec={schema_version:'proposal-1',status:'measurement_plan_not_implemented',updated:'2026-10-07',common_events:['journey_started','surface_view','ui_interaction','surface_closed','validation_shown','validation_resolved','domain_result','journey_ended'],common_properties:['event_id','timestamp_utc','journey_id','journey_attempt_id','session_id','surface_id','schema_version','app_version','platform','measurement_available'],unit:'unique_journey_attempt_unless_defined_otherwise',windows:{payment_idle_proposal_minutes:30,external_handoff_proposal_hours:24,product_conversion_proposal_days:7},journey:j};const u=URL.createObjectURL(new Blob([JSON.stringify(spec,null,2)],{type:'application/json'}));const a=document.createElement('a');a.href=u;a.download='mereni-'+j.id+'.json';a.click();setTimeout(()=>URL.revokeObjectURL(u),1000)}));
+let printState=[];window.addEventListener('beforeprint',()=>{printState=[...document.querySelectorAll('details')].map(d=>[d,d.open]);printState.forEach(([d])=>d.open=true)});window.addEventListener('afterprint',()=>{printState.forEach(([d,o])=>d.open=o)});document.querySelectorAll('.print').forEach(b=>b.addEventListener('click',()=>window.print()));
+</script></body></html>
