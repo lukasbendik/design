@@ -134,7 +134,7 @@
 <li><strong>Vysvětlit chování výzkumem.</strong> Analytika ukáže kde a jak často, test nebo rozhovor může vysvětlit proč. Krátká otázka po úkolu může doplnit snadnost, např. škála 1–7. U VoP testovat porozumění, u QR schopnost zotavení a u retence vnímanou užitečnost.</li>
 <li><strong>Ověřit změnu.</strong> Předem jedna hlavní metrika, ochranné metriky a minimální potřebný vzorek. Randomizovat stabilně na úrovni klienta a předem určit okno. Srovnání před/po nebo mezi odlišnými klienty je signál, nikoli důkaz příčiny.</li>
 </ol><p>Konkrétní cílové hodnoty doplnit až po kvalitní výchozí periodě (pracovní návrh 2–4 týdny podle objemu) a požadované změně. Není důvod všem CJ dávat stejnou „správnou“ konverzi nebo čas.</p></div></details>
-<details><summary>Co ověřit před spuštěním měření</summary><div class="detail-body"><ul><li>Deterministické scénáře všech větví na Androidu/iOS: zpět, X, refresh, návrat z pozadí, opakovaný klik, offline a opožděný výsledek.</li><li>Retence: pod / přes limit, jiná měna, potlačení, X vs. CTA, produktová odbočka a návrat. VoP: všechny čtyři výsledky, změna vstupu za běhu, instant dostupný i nedostupný, volba Později a autorizační overlay.</li><li>QR: kamera granted/denied/unknown, jednorázové oprávnění, návrat z nastavení, zrušení pickeru, validní i neplatební QR, nečitelný a chybný import, svítilna nedostupná. Dialogy OS měřit jen přes skutečně dostupné callbacky.</li><li>Po každém scénáři read-back posloupnosti událostí, ID, deduplikace a výsledku. Ověřit, že se neodesílá obsah platebních ani bezpečnostních polí.</li><li>Potvrdit vlastníka metrik, zdroj výsledku, režim dostupnosti měření a verzi kontraktu. Tento dokument je specifikace; měření zde není nasazené ani napojené na Techney.</li></ul></div></details>
+<details><summary>Co ověřit před spuštěním měření</summary><div class="detail-body"><ul><li>Deterministické scénáře všech větví na Androidu/iOS: zpět, X, refresh, návrat z pozadí, opakovaný klik, offline a opožděný výsledek.</li><li>Retence: spořicí vs. jiný účet; částka pod / přesně / nad 50 000 Kč; podíl pod / přesně / nad 50 % zůstatku před platbou; všechny podmínky současně, chybějící zůstatek, potlačení, X vs. CTA, produktová odbočka a návrat. Příklady: ze spořicího účtu se zůstatkem 100 000 Kč platba 50 000 Kč nabídku nespustí, 50 001 Kč ano; při zůstatku 200 000 Kč ji 100 000 Kč nespustí, 100 001 Kč ano. Z běžného účtu ji nespustí ani splnění obou částkových podmínek. VoP: všechny čtyři výsledky, změna vstupu za běhu, instant dostupný i nedostupný, volba Později a autorizační overlay.</li><li>QR: kamera granted/denied/unknown, jednorázové oprávnění, návrat z nastavení, zrušení pickeru, validní i neplatební QR, nečitelný a chybný import, svítilna nedostupná. Dialogy OS měřit jen přes skutečně dostupné callbacky.</li><li>Po každém scénáři read-back posloupnosti událostí, ID, deduplikace a výsledku. Ověřit, že se neodesílá obsah platebních ani bezpečnostních polí.</li><li>Potvrdit vlastníka metrik, zdroj výsledku, režim dostupnosti měření a verzi kontraktu. Tento dokument je specifikace; měření zde není nasazené ani napojené na Techney.</li></ul></div></details>
 </section><footer><p><strong>Podklady a metodická opora.</strong> Retenční nabídka a VoP / SEPA: živé prototypy a aktuální zdrojový kód, prohlédnuté 7. 10. 2026. QR: dodaný obrázek. Návrh není audit produkční telemetrie, výsledky uživatelského výzkumu ani právní interpretace VoP.</p><p>Pravidla pro pořadí, jednotku a okno funnelu: <a href="https://amplitude.com/docs/analytics/charts/funnel-analysis/funnel-analysis-how-amplitude-computes" target="_blank" rel="noopener">Amplitude · výpočet funnelů</a>. Spojení analytiky s výzkumem a srovnávacím měřením: <a href="https://www.nngroup.com/articles/benchmarking-ux/" target="_blank" rel="noopener">Nielsen Norman Group · benchmarking UX</a>. Obojí použito jako metodická opora, nikoli potvrzení funkcí Techney.</p><p>Další journey lze přidat do stejného katalogu se shodnou strukturou: cíl → větve → metriky → obrazovky → hypotézy. Nejdřív doplnit zdroj a hranici úspěchu.</p></footer></main><script>
 const DATA=[
   {
@@ -143,7 +143,7 @@ const DATA=[
     "short": "Retence",
     "goal": "Nabídnout užitečnou alternativu a umožnit snadno dokončit původní platbu.",
     "question": "Pomáhá nabídka klientovi, aniž zbytečně narušuje jeho platbu?",
-    "source": "Aktuální prototyp: nabídka se otevře po „Pokračovat“ pro částku vyšší než 250 000 Kč v CZK. Detail termínovaného účtu je odbočka; jeho „Pokračovat“ v prototypu vrací do platby. Sjednání produktu ani skutečné udržení peněz nejsou v podkladu dokončeny.",
+    "source": "Podmínka zobrazení podle upřesněného zadání: platba ze spořicího účtu, částka vyšší než 50 000 Kč a zároveň vyšší než 50 % zůstatku tohoto účtu před platbou. Všechny tři podmínky musí platit současně; přesně 50 000 Kč ani přesně 50 % zůstatku nestačí. Podmínka v tomto reportu vychází ze zadání, nikoli z ověření její implementace v odkazovaném prototypu. Detail termínovaného účtu je odbočka; jeho „Pokračovat“ v prototypu vrací do platby. Sjednání produktu ani skutečné udržení peněz nejsou v podkladu dokončeny.",
     "url": "https://lukasbendik.github.io/design/Platby/Reten%C4%8Dn%C3%AD%20nab%C3%ADdka/index.html?k=4c129f69f551195cbc5e8b57cc5a0975b6efa1e8510573524d11df03c7d010c6",
     "flow": [
       "Nová platba",
@@ -156,13 +156,13 @@ const DATA=[
     "branches": [
       "Platební větev: sheet → Pokračovat k platbě nebo X → další údaje → souhrn → autorizace → přijetí příkazu. X v aktuálním prototypu také pokračuje k platbě; není to odchod z CJ.",
       "Produktová větev: sheet → Sjednat termínovaný účet → detail → zahájení a dokončení sjednání. Poslední dva kroky je třeba doplnit v produkční CJ.",
-      "Bez nabídky: nezpůsobilé / potlačené zobrazení → běžná platba. Eligibility vyhodnocovat při pokusu pokračovat; opakované otevření nezvyšuje počet unikátně oslovených pokusů."
+      "Bez nabídky: platba z jiného než spořicího účtu, částka nejvýše 50 000 Kč, částka nejvýše 50 % zůstatku nebo potlačené zobrazení → běžná platba. Všechny tři podmínky způsobilosti vyhodnotit současně při pokusu pokračovat, ze zůstatku zdrojového účtu před platbou. Opakované otevření nezvyšuje počet unikátně oslovených pokusů."
     ],
     "metrics": [
       {
         "name": "Dosah nabídky",
-        "formula": "Pokusy se zobrazeným sheetem / pokusy způsobilé k zobrazení po uplatnění pravidel potlačení.",
-        "meaning": "Odhalí rozdíl mezi rozhodnutím nabídku zobrazit a jejím skutečným zobrazením. Zvlášť uvést všechny způsobilé a potlačené pokusy.",
+        "formula": "Pokusy se zobrazeným sheetem / pokusy ze spořicího účtu s částkou > 50 000 Kč a zároveň > 50 % zůstatku před platbou, po uplatnění pravidel potlačení.",
+        "meaning": "Odhalí rozdíl mezi rozhodnutím nabídku zobrazit a jejím skutečným zobrazením. Zvlášť uvést všechny pokusy splňující trojici podmínek, potlačené pokusy a důvody nezpůsobilosti. Neznámý zůstatek či typ účtu vést jako nevyhodnocenou způsobilost, ne jako nesplněnou podmínku.",
         "source": "UI + rozhodnutí o způsobilosti"
       },
       {
@@ -205,7 +205,7 @@ const DATA=[
     "segments": [
       "Nový vs. opakovaný kontakt s touto nabídkou",
       "Způsobilost, potlačení a důvod nezobrazení",
-      "Částkové pásmo, měna a vstupní místo",
+      "Typ zdrojového účtu, částkové pásmo, pásmo podílu částky na zůstatku a vstupní místo",
       "Nabídková / kontrolní skupina, verze nabídky",
       "Platební / produktová větev, platforma a verze aplikace"
     ],
@@ -225,9 +225,9 @@ const DATA=[
         "name": "Nová platba · komu, částka, měna",
         "kind": "Obrazovka",
         "actions": "Zavřít; Pokračovat; změna měny; dokončení úpravy příjemce a částky.",
-        "events": "eligibility_evaluated při Pokračovat; validation_shown a validation_resolved tam, kde validace v reálné aplikaci existuje.",
-        "params": "eligible, suppression_reason, amount_band, currency, field_id, error_code",
-        "insight": "Rozlišit klienty mimo podmínky nabídky od způsobilých. Účet, Platba na kontakt a QR ikona jsou zde jen vizuální / nefunkční: produkční odbočky doplnit samostatně.",
+        "events": "eligibility_evaluated při Pokračovat: spořicí účet AND částka > 50 000 Kč AND částka > 0,5 × zůstatek před platbou; validation_shown a validation_resolved tam, kde validace v reálné aplikaci existuje.",
+        "params": "eligibility_status = eligible / ineligible / unknown, source_account_type, above_amount_threshold, above_balance_share_threshold, balance_basis, eligibility_rule_version, ineligibility_reasons, suppression_reason, amount_band, balance_share_band, currency, field_id, error_code",
+        "insight": "Vyhodnotit všechny tři podmínky ze stejného okamžiku a uložit jednotlivé důvody nesplnění bez přesné částky a zůstatku. Definici zůstatku (disponibilní / účetní) sjednotit s produktovým pravidlem. Ověřit hranice 50 000 Kč a 50 %: rovnost nabídku nespouští. Účet, Platba na kontakt a QR ikona jsou v podkladu jen vizuální / nefunkční: produkční odbočky doplnit samostatně.",
         "scope": "V podkladu"
       },
       {
