@@ -149,3 +149,20 @@ Odstraněn border-top na .account-body. Mezi bílou hlavičkou karty a šedým r
 final result: passed
 
 Dávkové platby nemají mezilehlý nadpis typu; horní čáru proto kreslila první .instrument. Doplněno cílené pravidlo .account-body > .instruments > .instrument:first-child s border-top:0. V prohlížeči ověřeno rozbalení dávek: okraje položek 0/1/1/1/1/1 px; oddělovač první platby pod nadpisem Platby u účtu zůstává 1px. git diff --check prošel.
+
+
+## Nová cesta K autorizaci — 12. 10. 2026
+
+final result: passed
+
+Cesta podle reference: Souhrn → Vyčkejte… (1 s) → PIN bottom sheet → Vyčkejte… (1 s) → Výsledek autorizace. Souhrn obsahuje zdrojové účty a seskupené počty/částky podle typu a měny. Výsledek obsahuje každou skutečně potvrzenou položku, VS a stav Autorizováno; akce Autorizovat další vede do autorizací, obě Zavřít do home. Výsledková ilustrace používá sdílený DS asset success-light.png (reference obsahuje jiné vyobrazení). PIN a čekací sheet používají nativní modal dialog, gray backdrop, CO DigitPicker 3×4 a 6 teček. PIN se neukládá. Biometrické tlačítko pouze simuluje potvrzení.
+
+Ověření v prohlížeči, nikoli na fyzickém mobilu:
+- p1/p4/p7: souhrn Business 1 / 125000/0100 / 3 platby / 61 000 Kč; obě čekací fáze, šest číslic, výsledek se třemi přesnými položkami. Po návratu zůstává 18 čekajících položek.
+- Mazání číslice, zavření PINu, Escape z čekání vrací souhrn bez autorizace; refresh obnoví souhrn i PIN obrazovku (PIN je prázdný).
+- Smíšený výběr p2/s1/q1/b1: tři kontexty účtů, oddělené EUR/CZK a pravidelná částka, čtyři výsledkové položky; simulovaná biometrie funguje.
+- Refresh výsledku zachová výsledkové položky; vstup do starého souhrnu po dokončení vrací přehled.
+- Šířky 375 a 320 bez horizontálního přetékání. PIN sheet 516 px se vejde do 812 px. Konzole bez zachycených warn/error.
+- node --check a git diff --check prošly.
+
+Lokální screenshoty v /home/lukinab/Projects/UX/.multiautorizace-qa/: flow-summary.jpg, flow-wait-before.jpg, flow-pin.jpg, flow-wait-after.jpg, flow-result.jpg.
