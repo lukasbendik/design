@@ -142,3 +142,10 @@ Screenshot: /home/lukinab/Projects/UX/.multiautorizace-qa/arrows-animation-expan
 final result: passed
 
 Odstraněn border-top na .account-body. Mezi bílou hlavičkou karty a šedým rozbaleným obsahem je jen změna pozadí. Oddělovače jednotlivých položek zachovány. Lokálně ověřeno v prohlížeči při 375 × 812: border-top-width 0px, karta rgb(255,255,255), obsah rgb(248,248,248), oddělovač položek 1px. Vizuálně porovnáno s novou referencí. git diff --check prošel.
+
+
+## Horní oddělovač první dávky — 12. 10. 2026
+
+final result: passed
+
+Dávkové platby nemají mezilehlý nadpis typu; horní čáru proto kreslila první .instrument. Doplněno cílené pravidlo .account-body > .instruments > .instrument:first-child s border-top:0. V prohlížeči ověřeno rozbalení dávek: okraje položek 0/1/1/1/1/1 px; oddělovač první platby pod nadpisem Platby u účtu zůstává 1px. git diff --check prošel.
