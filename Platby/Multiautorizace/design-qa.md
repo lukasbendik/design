@@ -166,3 +166,10 @@ Ověření v prohlížeči, nikoli na fyzickém mobilu:
 - node --check a git diff --check prošly.
 
 Lokální screenshoty v /home/lukinab/Projects/UX/.multiautorizace-qa/: flow-summary.jpg, flow-wait-before.jpg, flow-pin.jpg, flow-wait-after.jpg, flow-result.jpg.
+
+
+## Počty a názvy instrumentů v souhrnu — 12. 10. 2026
+
+final result: passed
+
+summaryCount používá pro všechny typy názvy ve tvarech pro 1, 2–4 a 0/5+: platba/platby/plateb, trvalý příkaz/trvalé příkazy/trvalých příkazů, svolení k inkasu, příkaz k inkasu/příkazy k inkasu/příkazů k inkasu, dávka/dávky/dávek. Odstraněn obecný popisek „1 položka · Trvalé příkazy“. Rozlišení svolení (mandates) a příkazu (collections) zachováno podle datového modelu. Ověřeny výstupy pro 1/2/5 všech typů a skutečný souhrn s2/m1 v prohlížeči: „1 trvalý příkaz“, „1 svolení k inkasu“. git diff --check prošel.
