@@ -117,3 +117,21 @@ První kontrola odhalila nadbytečný padding hlaviček karet, větší mezeru p
 ## Oprava směru šipek při rozbalení
 
 Sbalené účty a dávky: caret doprava (0°); rozbalené: dolů (90°). Ověřeno v prohlížeči rozbalením a opětovným sbalením Business 1; computed transform identity → matrix(0,1,-1,0,0,0) → identity. Lokální evidence: arrow-expanded.png. final result: passed.
+
+
+## Šipky a plynulé rozbalování — 12. 10. 2026
+
+final result: passed
+
+Podle nových referencí mají sbalené účty i dávky šipku dolů (90° vůči caret-right), rozbalené nahoru (-90°). Panel zůstává v DOM; CSS Grid přechod 0fr ↔ 1fr a otočení ikony sdílejí 280 ms a cubic-bezier(.4,0,.2,1). Kliknutí mění pouze stav panelu, nepřekresluje přehled. Sbalený obsah je inert a aria-hidden; prefers-reduced-motion vypíná přechody.
+
+Ověřeno v Codex in-app prohlížeči na lokálním HTTP serveru:
+- Vzorkování po animation frames: otevření 0 → 956 px s průběžnými hodnotami; zavření 956 → 0 px s 20 mezistavy. Ikona končí matrix(0,-1,1,0,0,0) / matrix(0,1,-1,0,0,0).
+- Všechny tři karty se rozbalí a sbalí; dvojklik skončí správně ve výchozím stavu.
+- Výběr p1/p4/p7 po sbalení i refreshi zůstává 3 z 21, 61 000 Kč; refresh obnoví také otevřený účet.
+- Enter ovládá rozbalení/sbalení; sbalené položky nejsou v accessibility tree.
+- Emulované prefers-reduced-motion: panel i šipka mají transition-duration 0s.
+- Šířky 320 a 375 px bez vodorovného přetékání; bez zachycených console error/warn.
+- node --check a git diff --check prošly.
+
+Screenshot: /home/lukinab/Projects/UX/.multiautorizace-qa/arrows-animation-expanded.jpg. Nejde o ověření na fyzickém telefonu.
