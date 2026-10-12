@@ -135,3 +135,10 @@ Ověřeno v Codex in-app prohlížeči na lokálním HTTP serveru:
 - node --check a git diff --check prošly.
 
 Screenshot: /home/lukinab/Projects/UX/.multiautorizace-qa/arrows-animation-expanded.jpg. Nejde o ověření na fyzickém telefonu.
+
+
+## Oddělení hlavičky pouze barvou — 12. 10. 2026
+
+final result: passed
+
+Odstraněn border-top na .account-body. Mezi bílou hlavičkou karty a šedým rozbaleným obsahem je jen změna pozadí. Oddělovače jednotlivých položek zachovány. Lokálně ověřeno v prohlížeči při 375 × 812: border-top-width 0px, karta rgb(255,255,255), obsah rgb(248,248,248), oddělovač položek 1px. Vizuálně porovnáno s novou referencí. git diff --check prošel.
