@@ -23,7 +23,7 @@ To jsou veřejné obecné principy, nikoli důkaz, že tento konkrétní bankovn
 
 ## Zvolený návrh
 
-Pod „Zprávou pro příjemce“ je jediné terciální tlačítko **Kopírovat do popis pro mě** s ikonou kopírování na začátku. Ikona a podtržený text jsou společně vycentrované. Klepnutí přímo zkopíruje aktuální hodnotu do „Popis pro mě“, včetně více řádků a mezer. Zachováno pořadí polí.
+Pod „Zprávou pro příjemce“ je jediné terciální tlačítko **Kopírovat do popisu pro mě** s ikonou kopírování na začátku. Ikona a podtržený text jsou společně vycentrované. Klepnutí přímo zkopíruje aktuální hodnotu do „Popis pro mě“, včetně více řádků a mezer. Zachováno pořadí polí.
 
 Kopie je jednorázová: další změna zprávy nemění popis. Další klepnutí přenese novou aktuální hodnotu a rovnou přepíše případný dosavadní popis. Podle výslovného zadání nejsou hlášky o kopírování, zvýraznění výsledku, vrácení zpět ani potvrzování přepsání. Prázdná zpráva deaktivuje tlačítko.
 

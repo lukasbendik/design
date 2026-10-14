@@ -6,7 +6,7 @@ final result: passed
 
 ## Aktuální zadání a vizuální kontrola
 
-Uživatel požaduje jediné tlačítko pod zprávou: „Kopírovat do popis pro mě“, ikona kopírování na začátku, podtržený text a vycentrování. Bez hlášek o kopii, vrácení zpět a dalších mezikroků. Levý ovládací panel odstraněn; nové otevření začíná na Přehledu.
+Uživatel požaduje jediné tlačítko pod zprávou: „Kopírovat do popisu pro mě“, ikona kopírování na začátku, podtržený text a vycentrování. Bez hlášek o kopii, vrácení zpět a dalších mezikroků. Levý ovládací panel odstraněn; nové otevření začíná na Přehledu.
 
 - Porovnání s předchozí podobou a zadanými změnami otevřeno jako jeden společný obrázek `comparison-simple.png`. Oba snímky jsou 375 × 812 px, shodné hodnoty zprávy a prázdný popis, bez focusu či klávesnice. Rozložení ostatních polí zůstalo stejné.
 - `simple-ready-375.png` zachycuje hotové centrované tlačítko se sdílenou CORE ikonou copy.svg. CSS read-back potvrzuje justify-content=center, text-decoration-line=underline, výšku akce 48 px.
