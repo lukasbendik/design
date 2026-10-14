@@ -2,7 +2,7 @@
 
 Druhý samostatný prototyp v sekci Platby. Začíná na přehledu účtů a zachovává celý průchod novou platbou. Původní varianta s podtrženým tlačítkem pod polem zůstává zachována.
 
-Kopírovací ikona má dotykovou plochu 48 × 48 px vpravo uvnitř pole Zpráva pro příjemce. Otevře bottom sheet Kopírovat zprávu se dvěma možnostmi: Kopírovat do schránky a Kopírovat do popisu pro mě. Obě pracují s aktuálním textem. Kopie do popisu přepíše existující hodnotu; další úpravy zprávy už popis automaticky nemění.
+Kopírovací ikona má dotykovou plochu 48 × 48 px vpravo uvnitř pole Zpráva pro příjemce. Otevře bottom sheet Kopírovat zprávu se dvěma možnostmi: Do schránky a Do popisu pro mě. Obě pracují s aktuálním textem. Kopie do popisu přepíše existující hodnotu; další úpravy zprávy už popis automaticky nemění.
 
 Po úspěšné volbě se nabídka zavře bez informační hlášky či vrácení zpět. Prázdná zpráva má neaktivní ikonu. Bottom sheet lze zavřít křížkem, klepnutím mimo něj, Escape nebo prohlížečovým zpět. URL #copy obnoví nabídku po refreshi. Data obou variant mají samostatné localStorage.
 
@@ -13,3 +13,5 @@ Schránka používá aktuální Clipboard API writeText při kliknutí. Vyžaduj
 Použity sdílené CORE tokeny, fonty a ikony. Prototyp nemá vedlejší menu ani měřicí skripty. PIN a výsledná platba jsou pouze simulace.
 
 Bottom sheet vyjíždí ze spodního okraje za 300 ms, zavření jej zasune za 220 ms. Pozadí současně plynule mění neprůhlednost. Zavření dialogu nastane až po dokončení animace, aby výjezd nezmizel skokově. Rychlé obrácení směru navazuje na aktuální polohu. Po zavření se fokus vrací na kopírovací ikonu. Při prefers-reduced-motion je animace zkrácena na 1 ms.
+
+Zatmavení při kopírování je oříznuté na viditelnou plochu prototypu včetně zaoblení. Jeho hranice se odvozují od aktuálních rozměrů telefonu a přepočítávají při změně velikosti nebo posunu stránky. Okolí telefonu není zatmavené.

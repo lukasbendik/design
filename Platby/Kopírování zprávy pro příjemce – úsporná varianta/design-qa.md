@@ -18,3 +18,7 @@ Bez nevyřešených P0/P1/P2 vizuálních nálezů. Původní prototyp nezměně
 ## Animace bottom sheetu
 
 Ověřeno 14. 10. 2026 při 375 × 812: otevření začíná pod spodním okrajem (top 844 px, transform 220 px, backdrop opacity 0), končí v top 624 px a backdrop opacity 1. Zavření zachová modalitu do konce animace a potom dialog zavře; fokus vrací na copy-action. V prohlížeči ověřeno kopírování do popisu, refresh #copy, rychlé zpět/vpřed během animace a reduced-motion emulací: 1ms CSS pravidlo, dokončené zavření a návrat fokusu. Emulace po ověření odstraněna. Konzole bez chyb. Náhled skutečných zachycených snímků: `.copy-message-qa/bottom-sheet-animation.gif` mimo veřejný repozitář.
+
+## Omezení zatmavení a zkrácení copy
+
+Ověřeno 14. 10. 2026: při 1280 × 900 je telefon v (445, 28), 390 × 844 px a backdrop má clip-path inset(28px 445px round 16px). Screenshoty před/po potvrzují nezměněné pixely okolí v (100,100), (1100,100), (640,10). Při změně otevřeného dialogu na 600 × 812 se ořez přepočítá na inset(0px 105px); při 375 × 812 na inset(0px). Ověřen refresh #copy, oba zkrácené názvy akcí a přenos do popisu. Finální screenshoty mimo veřejný repozitář: `.copy-message-qa/shade-after-desktop.png`, `shade-mobile-375.png`. Animace zůstává zachovaná.
