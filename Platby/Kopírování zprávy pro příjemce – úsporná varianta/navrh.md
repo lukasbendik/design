@@ -11,3 +11,5 @@ Oproti první variantě odpadá 48px tlačítko a 4px mezera, tedy 52 px na vý�
 Schránka používá aktuální Clipboard API writeText při kliknutí. Vyžaduje bezpečný kontext a oprávnění prohlížeče. Při selhání nabídka zůstane otevřená se stručnou chybou; prototyp nepředstírá úspěch. Ověřeno podle [MDN Clipboard.writeText](https://developer.mozilla.org/en-US/docs/Web/API/Clipboard/writeText) a [MDN dialog](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/dialog), 14. 10. 2026.
 
 Použity sdílené CORE tokeny, fonty a ikony. Prototyp nemá vedlejší menu ani měřicí skripty. PIN a výsledná platba jsou pouze simulace.
+
+Bottom sheet vyjíždí ze spodního okraje za 300 ms, zavření jej zasune za 220 ms. Pozadí současně plynule mění neprůhlednost. Zavření dialogu nastane až po dokončení animace, aby výjezd nezmizel skokově. Rychlé obrácení směru navazuje na aktuální polohu. Po zavření se fokus vrací na kopírovací ikonu. Při prefers-reduced-motion je animace zkrácena na 1 ms.

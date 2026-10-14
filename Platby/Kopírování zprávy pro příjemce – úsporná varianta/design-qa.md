@@ -14,3 +14,7 @@ Vizuálně ověřeno v prohlížeči: 375 × 812, 320 × 640 a 1280 × 900. Komb
 - Konzole bez chyb a varování. Chyba zamítnutého oprávnění schránky je implementována, avšak zamítnutí nebylo v tomto prohlížeči vynuceno. Fyzický mobil nebyl testován.
 
 Bez nevyřešených P0/P1/P2 vizuálních nálezů. Původní prototyp nezměněn.
+
+## Animace bottom sheetu
+
+Ověřeno 14. 10. 2026 při 375 × 812: otevření začíná pod spodním okrajem (top 844 px, transform 220 px, backdrop opacity 0), končí v top 624 px a backdrop opacity 1. Zavření zachová modalitu do konce animace a potom dialog zavře; fokus vrací na copy-action. V prohlížeči ověřeno kopírování do popisu, refresh #copy, rychlé zpět/vpřed během animace a reduced-motion emulací: 1ms CSS pravidlo, dokončené zavření a návrat fokusu. Emulace po ověření odstraněna. Konzole bez chyb. Náhled skutečných zachycených snímků: `.copy-message-qa/bottom-sheet-animation.gif` mimo veřejný repozitář.
