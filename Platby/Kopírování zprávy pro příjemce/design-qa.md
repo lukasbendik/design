@@ -4,7 +4,18 @@ Datum: 14. 10. 2026.
 
 final result: passed
 
-## Vizuální zdroj a porovnání
+## Aktuální úprava – terciální tlačítko pod zdrojovým polem
+
+Zadání uživatele: podle jeho popisu RB použít pod „Zprávou pro příjemce“ terciální tlačítko „To samé do zprávy pro mě“, které zkopíruje aktuální hodnotu. Odstraněna původní akce, ikona a duplicitní náhled u cíle. Styl transparentního tlačítka vychází z existující `.btn--tertiary` v CORE prototype-kitu. Název cílového pole „Popis pro mě“ z dodaných obrazovek zůstává zachován.
+
+- Společné vizuální porovnání původního a upraveného prototypu: `comparison-tertiary.png`. Oba screenshoty mají 375 × 812 px a shodný stav: vyplněná zpráva, prázdný popis, žádná klávesnice/focus. Posun variabilního symbolu a popisu vyplývá z přesunu akce nad ně; pole jsou stále ve stejném pořadí. V aktuálním porovnání žádné otevřené P0/P1/P2 vizuální vady.
+- `tertiary-ready-375.png`: tlačítko přímo pod zprávou, bez ikony a náhledu; hit area 48 px.
+- Ověřeno nové znění a umístění, kopie českého víceřádkového textu, nezávislá pozdější editace zprávy, další kopie její aktuální hodnoty, potvrzení nahrazení, undo, persistence a hash po refreshi.
+- Prázdná zpráva: tlačítko je viditelné a neaktivní; existující popis zůstává zachován.
+- 320 × 640: všech 140 znaků přeneseno beze změny (`same=true`, `len=140`), bez vodorovného overflow. Souhrn obsahuje shodné hodnoty obou polí; browser Zpět obnoví formulář.
+- Console bez chyb/varování, JavaScript syntax check a git diff --check prošly. Nativní klávesnice/fyzický mobil ani porozumění s uživateli zůstávají neověřené.
+
+## Původní verze – vizuální zdroj a porovnání
 
 - Zdroj: pět uživatelem dodaných obrazovek platebního flow; hlavní porovnání používá prázdný formulář doplňujících údajů (`codex-clipboard-ee1ef280-1c2b-411f-9cec-4e517dc8232a.png`).
 - Zdroj 782 × 1642 px byl normalizován: odstraněn vnější černý rámeček, oblast x=16…766 / y=0…1624 zmenšena z 750 × 1624 na 375 × 812 px. Implementace byla zachycena při CSS viewportu 375 × 812; výsledný PNG má stejné rozměry.

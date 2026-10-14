@@ -19,25 +19,25 @@ To jsou veřejné obecné principy, nikoli důkaz, že tento konkrétní bankovn
 | Systémové označit → kopírovat → vložit | Známé ovládání, lze přenést jen část textu | Více kroků; přepínání focusu, klávesnice a scroll |
 | Checkbox „Stejný jako zpráva pro příjemce“ | Jeden krok; známá analogie adres | Může působit jako trvalé propojení; nejasné chování při vlastní úpravě |
 | Ikona kopie u zdroje | Kompaktní | Bez textu není zřejmé, zda kopíruje do schránky, nebo do jiného pole |
-| Pojmenovaná akce u cílového pole | Jasný zdroj, cílové pole i výsledek | Zabere místo pod polem; náhled pomáhá při skrytém zdroji |
+| Terciální tlačítko pod zdrojovým polem | Aktuální zpráva i akce jsou pohromadě; text pojmenuje vzdálený cíl | Po vložení je třeba viditelně potvrdit výsledek u cíle |
 
 ## Zvolený návrh
 
-Pod „Popis pro mě“ je akce **Zkopírovat zprávu pro příjemce**, ikona kopie a náhled aktuální zprávy. Kopíruje přímo mezi poli, bez systémové schránky. Existující pořadí polí není nutné měnit. Náhled se vizuálně zkrátí na dva řádky; skutečná kopie přenese celý text včetně řádků a mezer.
+Pod „Zprávou pro příjemce“ je terciální tlačítko **To samé do zprávy pro mě**, bez ikony a opakovaného náhledu. Kopíruje aktuální hodnotu přímo do „Popis pro mě“, bez systémové schránky. Pořadí polí zůstává zachováno. Inspirací je uživatelem popsané ovládání v RB; konkrétní obrazovku RB jsme nezávisle neověřili. Tato úprava nahrazuje původní akci u cílového pole a dříve navrhovaný checkbox.
 
-- Prázdná zpráva: místo akce je vysvětlení, že je potřeba nejprve vyplnit zprávu.
-- Prázdný popis: jedno klepnutí vloží celý text. Potvrzení je u cílového pole, které může uživatel dál upravit.
-- Vlastní popis: dialog ukáže původní i nový text. Nabízí „Nahradit popis“ a „Ponechat můj popis“; výchozí focus je na ponechání.
-- Shodný text: akce se nahradí informací, že zpráva už je v popisu.
-- Vrátit zpět: obnoví přesný původní popis. Možnost přetrvá i po refreshi; po ruční úpravě popisu zmizí, aby neodstranila novou práci.
-- Pozdější změna zprávy: popis se automaticky nemění. Uživatel může zkopírovat novou verzi.
-- Obě pole mají v ukázce limit 140 znaků, takže nedochází k tichému oříznutí. Skutečné limity cílového systému je před produkční implementací nutné ověřit.
+- Prázdná zpráva: tlačítko zůstává viditelné, ale neaktivní. Nemaže existující popis.
+- Prázdný popis: jedno klepnutí vloží celý aktuální text. Cílové pole se podle potřeby posune do zobrazení a pod ním se potvrdí vložení.
+- Vlastní popis: zachováno potvrzení nahrazení se současným i novým textem.
+- Shodný text: opakované klepnutí nic nepřepisuje ani nepřidá další kopii.
+- Vrátit zpět: obnoví přesný původní popis. Možnost přetrvá i po refreshi; po ruční úpravě popisu zmizí.
+- Pozdější změna zprávy: popis se automaticky nemění. Další klepnutí přenese novou aktuální hodnotu.
+- Obě pole mají v ukázce limit 140 znaků; kopie přenese celý text včetně mezer a nových řádků.
 
 Prototyp používá modelové údaje, vlastní klíč localStorage, hash navigaci a stávající vstupní guard rozcestníku. Guard je projektová brána prototypů, nikoli serverové zabezpečení. Žádné analytické skripty ani platební API nejsou připojené. Scénáře na desktopu přepíší jen data tohoto prototypu. Mobil zůstává bez ovládacího panelu.
 
 ## Hypotéza a následné ověření s lidmi
 
-Hypotéza: lidé najdou akci u cílového pole a pochopí ji jako jednorázovou kopii. Dosud neproběhl uživatelský výzkum; browser test ověřuje funkčnost, nikoli srozumitelnost lidem.
+Hypotéza: lidé pochopí terciální tlačítko pod zprávou jako jednorázové vložení do vlastního popisu. Dosud neproběhl uživatelský výzkum; browser test ověřuje funkčnost, nikoli srozumitelnost lidem.
 
 Navržené úkoly pro mobilní test bez předchozího vysvětlení:
 
@@ -46,7 +46,7 @@ Navržené úkoly pro mobilní test bez předchozího vysvětlení:
 3. Ponechte vlastní poznámku při nabídce nahrazení; potom nahraďte a vraťte kopii zpět.
 4. Upravte po kopii zprávu. Zjistěte, zda uživatel očekává změnu popisu, a ověřte samostatnou úpravu popisu.
 
-Porovnat lze variantu s pojmenovanou akcí a checkboxem. Vyhodnotit dokončení bez pomoci, chybná nahrazení, počet kroků a vysvětlení vztahu polí vlastními slovy. Zatím nejsou naměřené výsledky ani baseline.
+Porovnat lze nové terciální tlačítko pod zdrojem a původní akci u cílového pole. Vyhodnotit dokončení bez pomoci, chybná nahrazení, počet kroků a vysvětlení vztahu polí vlastními slovy. Zatím nejsou naměřené výsledky ani baseline.
 
 ## Technická a vizuální kontrola
 
