@@ -23,17 +23,13 @@ To jsou veřejné obecné principy, nikoli důkaz, že tento konkrétní bankovn
 
 ## Zvolený návrh
 
-Pod „Zprávou pro příjemce“ je terciální tlačítko **To samé do zprávy pro mě**, bez ikony a opakovaného náhledu. Kopíruje aktuální hodnotu přímo do „Popis pro mě“, bez systémové schránky. Pořadí polí zůstává zachováno. Inspirací je uživatelem popsané ovládání v RB; konkrétní obrazovku RB jsme nezávisle neověřili. Tato úprava nahrazuje původní akci u cílového pole a dříve navrhovaný checkbox.
+Pod „Zprávou pro příjemce“ je jediné terciální tlačítko **Kopírovat do popis pro mě** s ikonou kopírování na začátku. Ikona a podtržený text jsou společně vycentrované. Klepnutí přímo zkopíruje aktuální hodnotu do „Popis pro mě“, včetně více řádků a mezer. Zachováno pořadí polí.
 
-- Prázdná zpráva: tlačítko zůstává viditelné, ale neaktivní. Nemaže existující popis.
-- Prázdný popis: jedno klepnutí vloží celý aktuální text. Cílové pole se podle potřeby posune do zobrazení a pod ním se potvrdí vložení.
-- Vlastní popis: zachováno potvrzení nahrazení se současným i novým textem.
-- Shodný text: opakované klepnutí nic nepřepisuje ani nepřidá další kopii.
-- Vrátit zpět: obnoví přesný původní popis. Možnost přetrvá i po refreshi; po ruční úpravě popisu zmizí.
-- Pozdější změna zprávy: popis se automaticky nemění. Další klepnutí přenese novou aktuální hodnotu.
-- Obě pole mají v ukázce limit 140 znaků; kopie přenese celý text včetně mezer a nových řádků.
+Kopie je jednorázová: další změna zprávy nemění popis. Další klepnutí přenese novou aktuální hodnotu a rovnou přepíše případný dosavadní popis. Podle výslovného zadání nejsou hlášky o kopírování, zvýraznění výsledku, vrácení zpět ani potvrzování přepsání. Prázdná zpráva deaktivuje tlačítko.
 
-Prototyp používá modelové údaje, vlastní klíč localStorage, hash navigaci a stávající vstupní guard rozcestníku. Guard je projektová brána prototypů, nikoli serverové zabezpečení. Žádné analytické skripty ani platební API nejsou připojené. Scénáře na desktopu přepíší jen data tohoto prototypu. Mobil zůstává bez ovládacího panelu.
+Levý panel a scénáře byly odstraněny. Nové otevření bez hashe začíná na **Přehledu (#home)**; uživatel pokračuje přes Nová platba → doplňující údaje → Souhrn → demo PIN → výsledek. Refresh na konkrétním hashi zachovává aktuální krok. Zadané hodnoty se ukládají do vlastního klíče localStorage. Původní položky undo a notice se již nenačítají ani neukládají.
+
+Modelové údaje, stávající vstupní guard a absence platebního API či analytiky zůstávají. Guard není serverové zabezpečení. Inspirací byl uživatelem popsaný pattern RB; konkrétní obrazovku RB jsme nezávisle neověřili.
 
 ## Hypotéza a následné ověření s lidmi
 
@@ -43,10 +39,10 @@ Navržené úkoly pro mobilní test bez předchozího vysvětlení:
 
 1. „Chcete, aby se vám platba později lépe hledala. Použijte zprávu i jako svůj popis.“ Sledujte nalezení akce, počet klepnutí a potřebu pomoci.
 2. Zkopírujte delší zprávu se zobrazenou klávesnicí. Sledujte scroll, viditelnost cíle a jistotu, že se přenesl celý text.
-3. Ponechte vlastní poznámku při nabídce nahrazení; potom nahraďte a vraťte kopii zpět.
+3. Změňte svůj popis a potom znovu zkopírujte zprávu. Ověřte, zda uživatel očekává přepsání dosavadního textu.
 4. Upravte po kopii zprávu. Zjistěte, zda uživatel očekává změnu popisu, a ověřte samostatnou úpravu popisu.
 
-Porovnat lze nové terciální tlačítko pod zdrojem a původní akci u cílového pole. Vyhodnotit dokončení bez pomoci, chybná nahrazení, počet kroků a vysvětlení vztahu polí vlastními slovy. Zatím nejsou naměřené výsledky ani baseline.
+Vyhodnotit dokončení bez pomoci, chybná nahrazení, počet kroků a vysvětlení vztahu polí vlastními slovy. Zatím nejsou naměřené výsledky ani baseline.
 
 ## Technická a vizuální kontrola
 
