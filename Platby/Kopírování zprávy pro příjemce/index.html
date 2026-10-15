@@ -55,7 +55,7 @@ dialog{padding:0;width:min(100% - 32px,358px);max-height:calc(100dvh - 32px);bor
   <form id="details-form" class="content">
    <div class="message-group">
     <label class="field"><span>Zpráva pro příjemce</span><textarea id="message" data-key="message" rows="1" maxlength="140" aria-describedby="message-count"></textarea></label><p id="message-count" class="hint" hidden></p>
-    <button type="button" id="copy-action" class="copy-action" aria-controls="description"><img class="icon" src="../../design-system/design-system/assets/icons/copy.svg" alt=""><span>Kopírovat do popisu pro mě</span></button>
+    <button type="button" id="copy-action" class="copy-action" aria-controls="description" hidden><img class="icon" src="../../design-system/design-system/assets/icons/copy.svg" alt=""><span>Kopírovat do popisu pro mě</span></button>
    </div>
    <label class="field"><span>Variabilní symbol</span><input data-key="variable" inputmode="numeric" pattern="[0-9]{0,10}" maxlength="10" title="Nejvýše 10 číslic"></label>
    <label class="field"><span>Popis pro mě</span><textarea id="description" data-key="description" rows="1" maxlength="140"></textarea></label>
@@ -80,7 +80,7 @@ dialog{padding:0;width:min(100% - 32px,358px);max-height:calc(100dvh - 32px);bor
 <script>
 (()=>{
  'use strict';
- const $=id=>document.getElementById(id), STORAGE='payment-message-copy-v1', defaults={recipient:'138000/0100',amount:'2495',currency:'Kč',message:'Za internet – říjen 2026',description:'',variable:'123456789',constant:'',specific:'',timing:'soon',date:''};
+ const $=id=>document.getElementById(id), STORAGE='payment-message-copy-v1', defaults={recipient:'138000/0100',amount:'2495',currency:'Kč',message:'',description:'',variable:'123456789',constant:'',specific:'',timing:'soon',date:''};
  let data={...defaults};try{const saved=JSON.parse(localStorage.getItem(STORAGE));if(saved&&typeof saved==='object')for(const k of Object.keys(defaults))if(typeof saved[k]===typeof defaults[k])data[k]=saved[k];}catch(e){}
  for(const k of ['message','description'])data[k]=data[k].slice(0,140);
  let pin='',toastTimer,lastScreen='';
@@ -90,7 +90,7 @@ dialog{padding:0;width:min(100% - 32px,358px);max-height:calc(100dvh - 32px);bor
  function grow(el){el.style.height='auto';el.style.height=el.scrollHeight+'px';}
  function restore(){$('payment-error').hidden=true;$('date-error').hidden=true;document.querySelectorAll('[aria-invalid]').forEach(el=>el.removeAttribute('aria-invalid'));document.querySelectorAll('[data-key]').forEach(el=>{el.value=data[el.dataset.key]??'';if(el.tagName==='TEXTAREA')grow(el);});$('date').min=today();syncTiming();syncCopy();}
  function syncTiming(){document.querySelectorAll('[data-timing]').forEach(el=>el.setAttribute('aria-pressed',String(el.dataset.timing===data.timing)));$('date-field').hidden=data.timing!=='later';$('date').required=data.timing==='later';}
- function syncCopy(){$('copy-action').disabled=!data.message.trim();$('message-count').hidden=data.message.length<120;$('message-count').textContent=`${data.message.length} / 140 znaků`;}
+ function syncCopy(){$('copy-action').hidden=!data.message.trim();$('copy-action').disabled=!data.message.trim();$('message-count').hidden=data.message.length<120;$('message-count').textContent=`${data.message.length} / 140 znaků`;}
  $('copy-action').addEventListener('click',()=>{if(!data.message.trim())return;data.description=data.message;$('description').value=data.description;grow($('description'));save();});
  document.querySelectorAll('[data-key]').forEach(el=>el.addEventListener('input',()=>{const key=el.dataset.key;data[key]=el.value;if(el.tagName==='TEXTAREA')grow(el);el.removeAttribute('aria-invalid');if(key==='recipient'||key==='amount')$('payment-error').hidden=true;if(key==='date')$('date-error').hidden=true;save();syncCopy();}));
  document.querySelectorAll('[data-timing]').forEach(el=>el.addEventListener('click',()=>{data.timing=el.dataset.timing;save();syncTiming();}));

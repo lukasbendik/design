@@ -61,7 +61,7 @@ dialog{padding:0;width:min(100% - 32px,358px);max-height:calc(100dvh - 32px);bor
   <header class="hdr"><button class="nav" data-back="payment"><img class="icon" src="../../design-system/design-system/assets/icons/caret-left.svg" alt="">Zpět</button><h1>Nová platba</h1></header>
   <form id="details-form" class="content">
    <div class="message-group">
-    <div class="field message-field"><label for="message">Zpráva pro příjemce</label><textarea id="message" data-key="message" rows="1" maxlength="140" aria-describedby="message-count"></textarea><button type="button" id="copy-action" class="copy-action" aria-label="Kopírovat zprávu" aria-haspopup="dialog" aria-controls="copy-dialog"><img class="icon" src="../../design-system/design-system/assets/icons/copy.svg" alt=""></button></div><p id="message-count" class="hint" hidden></p>
+    <div class="field message-field"><label for="message">Zpráva pro příjemce</label><textarea id="message" data-key="message" rows="1" maxlength="140" aria-describedby="message-count"></textarea><button type="button" id="copy-action" class="copy-action" aria-label="Kopírovat zprávu" aria-haspopup="dialog" aria-controls="copy-dialog" hidden><img class="icon" src="../../design-system/design-system/assets/icons/copy.svg" alt=""></button></div><p id="message-count" class="hint" hidden></p>
    </div>
    <label class="field"><span>Variabilní symbol</span><input data-key="variable" inputmode="numeric" pattern="[0-9]{0,10}" maxlength="10" title="Nejvýše 10 číslic"></label>
    <label class="field"><span>Popis pro mě</span><textarea id="description" data-key="description" rows="1" maxlength="140"></textarea></label>
@@ -87,7 +87,7 @@ dialog{padding:0;width:min(100% - 32px,358px);max-height:calc(100dvh - 32px);bor
 <script>
 (()=>{
  'use strict';
- const $=id=>document.getElementById(id), STORAGE='payment-message-copy-compact-v1', defaults={recipient:'138000/0100',amount:'2495',currency:'Kč',message:'Za internet – říjen 2026',description:'',variable:'123456789',constant:'',specific:'',timing:'soon',date:''};
+ const $=id=>document.getElementById(id), STORAGE='payment-message-copy-compact-v1', defaults={recipient:'138000/0100',amount:'2495',currency:'Kč',message:'',description:'',variable:'123456789',constant:'',specific:'',timing:'soon',date:''};
  let data={...defaults};try{const saved=JSON.parse(localStorage.getItem(STORAGE));if(saved&&typeof saved==='object')for(const k of Object.keys(defaults))if(typeof saved[k]===typeof defaults[k])data[k]=saved[k];}catch(e){}
  for(const k of ['message','description'])data[k]=data[k].slice(0,140);
  let pin='',toastTimer,lastScreen='';
@@ -97,7 +97,7 @@ dialog{padding:0;width:min(100% - 32px,358px);max-height:calc(100dvh - 32px);bor
  function grow(el){el.style.height='auto';el.style.height=el.scrollHeight+'px';}
  function restore(){$('payment-error').hidden=true;$('date-error').hidden=true;document.querySelectorAll('[aria-invalid]').forEach(el=>el.removeAttribute('aria-invalid'));document.querySelectorAll('[data-key]').forEach(el=>{el.value=data[el.dataset.key]??'';if(el.tagName==='TEXTAREA')grow(el);});$('date').min=today();syncTiming();syncCopy();}
  function syncTiming(){document.querySelectorAll('[data-timing]').forEach(el=>el.setAttribute('aria-pressed',String(el.dataset.timing===data.timing)));$('date-field').hidden=data.timing!=='later';$('date').required=data.timing==='later';}
- function syncCopy(){$('copy-action').disabled=!data.message.trim();$('message-count').hidden=data.message.length<120;$('message-count').textContent=`${data.message.length} / 140 znaků`;}
+ function syncCopy(){$('copy-action').hidden=!data.message.trim();$('copy-action').disabled=!data.message.trim();$('message-count').hidden=data.message.length<120;$('message-count').textContent=`${data.message.length} / 140 znaků`;}
  $('copy-action').addEventListener('click',()=>{if(data.message.trim())go('copy');});
  $('copy-description').addEventListener('click',()=>{data.description=data.message;save();closeCopy();});
  $('copy-clipboard').addEventListener('click',async()=>{const button=$('copy-clipboard');button.disabled=true;$('clipboard-error').hidden=true;try{await navigator.clipboard.writeText(data.message);if(location.hash==='#copy')closeCopy();}catch(e){$('clipboard-error').textContent='Do schránky se nepodařilo zkopírovat text. Zkuste to znovu nebo zvolte popis pro mě.';$('clipboard-error').hidden=false;}finally{button.disabled=false;}});
