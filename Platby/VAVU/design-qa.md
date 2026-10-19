@@ -2,6 +2,11 @@
 
 final result: passed
 
+## Oprava mezery pod Nastavením
+- Uživatelský screenshot `codex-clipboard-b460a983-acfb-4ba2-b64e-3da2caa6815b.png` ukazuje nadbytečnou prázdnou plochu pod poslední položkou osobního profilu.
+- Příčina: dodatečný padding-bottom 56 px na `.profile-menu`. Pravidlo odstraněno; poslední řádek má nadále standardní vnitřní odsazení.
+- Zadání výslovně mění dřívější shodu s velkou spodní mezerou prvního návrhu. Ostatní seznamy a řádky beze změny.
+
 ## Doplnění: detail účtu – Oprávnění / Autorizace / Limity
 - Oba řádky v Oprávněních jsou tlačítka otevírající `#pristupy-ucet-czk` a `#pristupy-ucet-eur`. Sdílený template zobrazuje název a číslo podle ACCOUNT_DATA, účet je určen adresou a zůstane správný v historii i po refreshi. Tab se ukládá zvlášť pro každý účet; nový vstup ze seznamu začíná na Oprávnění.
 - Zdroj: `codex-clipboard-ba2aeaa5-d7c8-47a1-a896-a52e3a8cc26a.png` (2080 × 1640 px), `codex-clipboard-b6f1c9bb-dff2-4a22-aa28-399dc1d40927.png` a `codex-clipboard-91048cc3-e957-4d86-a146-9fe108247299.png` (2080 × 1554 px).
