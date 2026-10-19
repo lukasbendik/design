@@ -3127,6 +3127,23 @@
     .permission-help-dialog p { margin: 0 0 var(--padding-xl); font: var(--content-body-secondary); }
     .permission-help-dialog p:last-child { margin-bottom: 0; }
     @media(max-width:551px) { .permission-intro-illustration { margin-block: var(--padding-2xl); } .permission-steps li { gap: var(--padding-xl); } }
+
+    button.permission-edit-person { width: 100%; border: 0; background: none; color: var(--content-primary); text-align: left; cursor: pointer; }
+    button.permission-edit-person:focus-visible { outline: 2px solid var(--content-primary); outline-offset: -2px; }
+    #screen-person-permission .account-access-description { margin-bottom: var(--padding-xl); }
+    .person-permission-select { min-height: 60px; margin-bottom: var(--padding-xl); }
+    .person-permission-select select { min-height: 24px; cursor: pointer; }
+    .person-permission-select .payment-select-caret { bottom: 22px; }
+    .person-permission-benefit-row, .person-permission-cash-row { display: flex; gap: var(--padding-xl); padding: var(--padding-xl); align-items: flex-start; border-top: 1px solid var(--background-divider); font: var(--content-body-primary-bold); }
+    .person-permission-benefit-row > img { width: 32px; height: 24px; flex: none; object-fit: contain; }
+    .person-permission-benefit-row small, .person-permission-cash-row small { color: var(--content-tertiary); font: var(--content-body-secondary); }
+    .person-permission-extra { border: 1px solid var(--background-border); border-radius: var(--border-radius-md); margin-bottom: var(--padding-xl); }
+    .person-permission-cash-row { cursor: pointer; }
+    .person-permission-cash-row input { flex: none; margin: 0 4px; width: 22px; height: 22px; appearance: none; border: 2px solid var(--interactive-primary); border-radius: var(--border-radius-sm); background: var(--background-surface); cursor: pointer; }
+    .person-permission-cash-row input:checked { background: var(--interactive-primary); }
+    .person-permission-cash-row input:checked::after { content: ''; display: block; width: 18px; height: 18px; background: var(--interactive-on-primary); mask: url(assets/permission-check.svg) center / contain no-repeat; }
+    .person-permission-cash-row input:focus-visible { outline: 2px solid var(--content-primary); outline-offset: 2px; }
+    #screen-person-permission .profile-wrap { padding-bottom: var(--padding-xl); }
   </style>
 </head>
 <body>
@@ -3470,6 +3487,30 @@ unicode: "eac3"
         <p>Pokud nastavíte oprávnění autorizovat, nezapomeňte nastavit i způsob autorizace, případně denní limit uživatele.</p>
         <p>Bez vlastního nastavení se podpisy řídí statutárními podpisovými pravidly.</p>
       </dialog>
+
+
+      <section class="screen profile-screen access-screen access-users-screen" id="screen-person-permission" aria-labelledby="person-permission-title">
+        <div class="profile-wrap">
+          <div class="profile-header"><button class="profile-close" type="button" onclick="closePersonPermissionEditor()" aria-label="Zavřít nastavení osoby"><svg class="icon" aria-hidden="true"><use href="#es-close"></use></svg></button></div>
+          <h1 class="access-title profile-name" id="person-permission-title"></h1>
+          <p class="account-access-description" id="person-permission-account"></p>
+          <label class="payment-control payment-control-select person-permission-select" data-ds-component="CO Input SuperField">
+            <span class="payment-control-label">Úroveň oprávnění</span>
+            <select id="person-permission-level" aria-label="Úroveň oprávnění" onchange="updatePersonPermissionDraft()">
+              <option value="0">Bez oprávnění</option><option value="1">Náhled na účet</option><option value="2">Příprava plateb</option><option value="3">Autorizace plateb</option>
+            </select><svg class="icon payment-select-caret" aria-hidden="true"><use href="#es-caret-right"></use></svg>
+          </label>
+          <div class="profile-card" id="person-permission-benefits" hidden><h2 class="access-card-title">Umožňuje</h2><div id="person-permission-benefit-rows"></div></div>
+          <div class="person-permission-extra" id="person-permission-extra" hidden>
+            <h2 class="access-card-title">Navíc povolit</h2>
+            <label class="person-permission-cash-row" for="person-permission-cash">
+              <input type="checkbox" id="person-permission-cash" aria-label="Výběr hotovosti" aria-describedby="person-permission-cash-description" onchange="updatePersonPermissionDraft()">
+              <span class="access-user-copy"><span>Výběr hotovosti</span><small id="person-permission-cash-description">Autorizuje žádosti o výběr hotovosti.</small></span>
+            </label>
+          </div>
+        </div>
+        <div class="access-buttonbar" data-ds-component="CO Button Bar Bottom"><div class="access-buttonbar-inner"><button class="btn btn--primary" type="button" onclick="savePersonPermission()">Uložit</button></div></div>
+      </section>
 
       <!-- ================= SCREEN 0: PŘIHLÁŠENÍ ================= -->
       <div class="screen login-screen" id="screen-login">
@@ -5031,7 +5072,14 @@ unicode: "eac3"
     ]);
     const COMPANY_ACCOUNT_SCREENS = ['pristupy-ucet-czk', 'pristupy-ucet-eur'];
     const PERMISSION_FLOW_SCREENS = ['czk', 'eur'].flatMap(key => ['nastaveni-opravneni-uvod-' + key, 'nastaveni-opravneni-' + key, 'nastaveni-opravneni-info-' + key]);
-    const COMPANY_ACCESS_SCREENS = [...PERMISSION_FLOW_SCREENS, ...COMPANY_ACCOUNT_SCREENS, 'pristupy-k-uctum', 'pristupy-opravneni', 'pristupy-uzivatele', 'pristupy-podpisova-pravidla'];
+    const PERMISSION_EDITOR_SCREENS = ['czk', 'eur'].flatMap(key => COMPANY_USERS.map((_, index) => 'nastaveni-opravneni-osoba-' + key + '-' + index));
+    const PERMISSION_LEVELS = [
+      { label: 'Bez oprávnění', capabilities: 0 },
+      { label: 'Náhled na účet', capabilities: 1 },
+      { label: 'Příprava plateb', capabilities: 2 },
+      { label: 'Autorizace plateb', capabilities: 3 }
+    ];
+    const COMPANY_ACCESS_SCREENS = [...PERMISSION_EDITOR_SCREENS, ...PERMISSION_FLOW_SCREENS, ...COMPANY_ACCOUNT_SCREENS, 'pristupy-k-uctum', 'pristupy-opravneni', 'pristupy-uzivatele', 'pristupy-podpisova-pravidla'];
     const SCREENS = [...COMPANY_ACCESS_SCREENS, 'profil-firma', 'profil', 'login', 'prehled', 'extra', 'karty', 'pujcky', 'sporeni', 'investice', 'pojisteni', 'ucet-detail', 'tp-inkasa', 'tp-inkasa-s-autorizaci', 'autorizace', 'vsechny-platby', 'platba-detail', 'nova-platba', 'nova-platba-detaily', 'platba-vysledek', 'tp-novy', 'tp-detaily', 'tp-souhrn', 'tp-vysledek', 'inkaso-nove', 'inkaso-souhrn', 'inkaso-vysledek', 'davkove-platby', 'davkove-platby-detail', 'davkove-platby-souhrn', 'davkove-platby-vysledek'];
     // Seznam modálních hashů
     const MODALS = ['povoleni-inkasa-modal', 'autorizace-potvrzeni-modal', 'no-items-modal', 'payment-signature-modal', 'filter-modal'];
@@ -5375,10 +5423,11 @@ unicode: "eac3"
       // Zobrazit vybranou obrazovku
       const targetScreenId = screenId === 'tp-inkasa-s-autorizaci' ? 'tp-inkasa' : screenId;
       const isPermissionFlow = PERMISSION_FLOW_SCREENS.includes(targetScreenId);
+      const isPermissionEditor = PERMISSION_EDITOR_SCREENS.includes(targetScreenId);
       const isPermissionInfo = targetScreenId.startsWith('nastaveni-opravneni-info-');
       const permissionDialog = document.getElementById('permission-help-dialog');
       if (!isPermissionInfo && permissionDialog.open) permissionDialog.close();
-      const screenEl = document.getElementById(isPermissionFlow ? (targetScreenId.startsWith('nastaveni-opravneni-uvod-') ? 'screen-permission-intro' : 'screen-permission-edit') : COMPANY_ACCOUNT_SCREENS.includes(targetScreenId) ? 'screen-account-access' : 'screen-' + targetScreenId);
+      const screenEl = document.getElementById(isPermissionEditor ? 'screen-person-permission' : isPermissionFlow ? (targetScreenId.startsWith('nastaveni-opravneni-uvod-') ? 'screen-permission-intro' : 'screen-permission-edit') : COMPANY_ACCOUNT_SCREENS.includes(targetScreenId) ? 'screen-account-access' : 'screen-' + targetScreenId);
       if (screenEl) {
         screenEl.classList.add('active');
       }
@@ -5432,6 +5481,7 @@ unicode: "eac3"
       if (targetScreenId === 'profil-firma') renderCompanyProfile();
       if (COMPANY_ACCESS_SCREENS.includes(targetScreenId)) renderCompanyAccess();
       if (COMPANY_ACCOUNT_SCREENS.includes(targetScreenId)) renderAccountAccess(targetScreenId.endsWith('-eur') ? 'eur' : 'czk');
+      if (isPermissionEditor) renderPersonPermissionEditor(targetScreenId.includes('-eur-') ? 'eur' : 'czk', Number(targetScreenId.split('-').at(-1)));
       if (isPermissionFlow) {
         renderPermissionFlow(targetScreenId.endsWith('-eur') ? 'eur' : 'czk');
         if (isPermissionInfo && !permissionDialog.open) permissionDialog.showModal();
@@ -5506,8 +5556,97 @@ unicode: "eac3"
     }
 
 
+    function personPermissionStorageKey(key, index, draft = false) {
+      return 'vavu_person_permission_' + (draft ? 'draft_' : '') + key + '_' + index;
+    }
+
+    function normalizePersonPermission(value) {
+      const level = Number(value?.level);
+      return { level: Number.isInteger(level) && level >= 0 && level <= 3 ? level : 0, cash: level === 3 && value?.cash === true };
+    }
+
+    function getPersonPermission(key, index) {
+      const stored = localStorage.getItem(personPermissionStorageKey(key, index));
+      if (stored) {
+        try { return normalizePersonPermission(JSON.parse(stored)); } catch (_) {}
+      }
+      return { level: COMPANY_USERS[index]?.role === 'Člen představenstva' ? 3 : 0, cash: false };
+    }
+
+    function permissionSummary(key, index) {
+      return PERMISSION_LEVELS[getPersonPermission(key, index).level].label;
+    }
+
+    function userHasCompanyPermission(user) {
+      const index = COMPANY_USERS.indexOf(user);
+      const hasSavedSetting = ['czk', 'eur'].some(key => localStorage.getItem(personPermissionStorageKey(key, index)) !== null);
+      return hasSavedSetting ? ['czk', 'eur'].some(key => getPersonPermission(key, index).level > 0) : user.permitted;
+    }
+
+    function personPermissionEditorContext() {
+      const screen = document.getElementById('screen-person-permission');
+      return { key: screen.dataset.accountKey, index: Number(screen.dataset.userIndex) };
+    }
+
+    function openPersonPermissionEditor(index) {
+      if (!COMPANY_USERS[index]) return;
+      const key = permissionFlowAccount();
+      localStorage.setItem(personPermissionStorageKey(key, index, true), JSON.stringify(getPersonPermission(key, index)));
+      localStorage.setItem('vavu_permission_flow_person_' + key, COMPANY_USERS[index].name);
+      goTo('nastaveni-opravneni-osoba-' + key + '-' + index);
+    }
+
+    function renderPersonPermissionEditor(key, index) {
+      const screen = document.getElementById('screen-person-permission');
+      screen.dataset.accountKey = key;
+      screen.dataset.userIndex = index;
+      document.getElementById('person-permission-title').textContent = COMPANY_USERS[index].name;
+      document.getElementById('person-permission-account').textContent = ACCOUNT_DATA[key].name + ', ' + ACCOUNT_DATA[key].number;
+      let value = getPersonPermission(key, index);
+      try {
+        const draft = localStorage.getItem(personPermissionStorageKey(key, index, true));
+        if (draft) value = normalizePersonPermission(JSON.parse(draft));
+      } catch (_) {}
+      document.getElementById('person-permission-level').value = String(value.level);
+      document.getElementById('person-permission-cash').checked = value.cash;
+      renderPersonPermissionBenefits(value.level);
+    }
+
+    function renderPersonPermissionBenefits(level) {
+      const capabilities = [
+        ['Náhled na účet', 'Vidí zůstatek, historii plateb a stahuje výpisy.'],
+        ['Příprava plateb', 'Připravuje platby k autorizaci.'],
+        ['Autorizace plateb', 'Autorizuje platby.']
+      ];
+      document.getElementById('person-permission-benefits').hidden = level === 0;
+      document.getElementById('person-permission-benefit-rows').innerHTML = capabilities.slice(0, level).map(([title, description]) => `<div class="person-permission-benefit-row"><img src="assets/permission-check.svg" alt=""><span class="access-user-copy"><span>${escapeHtml(title)}</span><small>${escapeHtml(description)}</small></span></div>`).join('');
+      document.getElementById('person-permission-extra').hidden = level !== 3;
+    }
+
+    function updatePersonPermissionDraft() {
+      const { key, index } = personPermissionEditorContext();
+      const value = normalizePersonPermission({ level: document.getElementById('person-permission-level').value, cash: document.getElementById('person-permission-cash').checked });
+      document.getElementById('person-permission-cash').checked = value.cash;
+      localStorage.setItem(personPermissionStorageKey(key, index, true), JSON.stringify(value));
+      renderPersonPermissionBenefits(value.level);
+    }
+
+    function savePersonPermission() {
+      const { key, index } = personPermissionEditorContext();
+      const value = normalizePersonPermission({ level: document.getElementById('person-permission-level').value, cash: document.getElementById('person-permission-cash').checked });
+      localStorage.setItem(personPermissionStorageKey(key, index), JSON.stringify(value));
+      localStorage.removeItem(personPermissionStorageKey(key, index, true));
+      goTo('nastaveni-opravneni-' + key);
+    }
+
+    function closePersonPermissionEditor() {
+      const { key, index } = personPermissionEditorContext();
+      localStorage.removeItem(personPermissionStorageKey(key, index, true));
+      goTo('nastaveni-opravneni-' + key);
+    }
+
     function permissionFlowAccount() {
-      return currentScreen.endsWith('-eur') ? 'eur' : 'czk';
+      return currentScreen.includes('-eur') ? 'eur' : 'czk';
     }
 
     function startPermissionFlow(index) {
@@ -5527,9 +5666,9 @@ unicode: "eac3"
     function renderPermissionFlow(key) {
       const account = ACCOUNT_DATA[key];
       document.getElementById('permission-edit-account').textContent = account.name + ', ' + account.number;
-      const row = (user, statutory) => `<div class="access-info-row permission-edit-row" data-ds-component="CO Item Navigation"><span class="access-user-avatar" aria-hidden="true">${escapeHtml(user.initials)}</span><span class="access-user-copy"><span>${escapeHtml(user.name)}</span><small>${statutory ? 'Autorizace plateb' : 'Bez oprávnění'}</small></span>${statutory ? '' : '<svg class="icon profile-caret" aria-hidden="true"><use href="#es-caret-right"></use></svg>'}</div>`;
-      document.getElementById('permission-edit-people').innerHTML = COMPANY_USERS.filter(user => user.role !== 'Člen představenstva').map(user => row(user, false)).join('');
-      document.getElementById('permission-edit-statutory').innerHTML = COMPANY_USERS.filter(user => user.role === 'Člen představenstva').map(user => row(user, true)).join('');
+      const row = user => `<button type="button" class="access-info-row permission-edit-row permission-edit-person" data-ds-component="CO Item Navigation" onclick="openPersonPermissionEditor(${COMPANY_USERS.indexOf(user)})"><span class="access-user-avatar" aria-hidden="true">${escapeHtml(user.initials)}</span><span class="access-user-copy"><span>${escapeHtml(user.name)}</span><small>${escapeHtml(permissionSummary(key, COMPANY_USERS.indexOf(user)))}</small></span><svg class="icon profile-caret" aria-hidden="true"><use href="#es-caret-right"></use></svg></button>`;
+      document.getElementById('permission-edit-people').innerHTML = COMPANY_USERS.filter(user => user.role !== 'Člen představenstva').map(user => row(user)).join('');
+      document.getElementById('permission-edit-statutory').innerHTML = COMPANY_USERS.filter(user => user.role === 'Člen představenstva').map(user => row(user)).join('');
     }
 
     function closePermissionHelp() {
@@ -5557,8 +5696,8 @@ unicode: "eac3"
       document.getElementById('screen-account-access').dataset.accountKey = key;
       document.getElementById('account-access-description').textContent = account.name + ', ' + account.number;
       const userRow = (user, detail) => `<div class="access-info-row account-access-user"><span class="access-user-avatar" aria-hidden="true">${escapeHtml(user.initials)}</span><span class="access-user-copy"><span>${escapeHtml(user.name)}</span><small>${escapeHtml(detail)}</small></span></div>`;
-      document.getElementById('account-access-users').innerHTML = COMPANY_USERS.map((user, index) => userRow(user, user.role === 'Člen představenstva' ? 'Autorizace plateb' : 'Bez oprávnění').replace('<div class="access-info-row account-access-user">', `<button type="button" class="access-info-row account-access-user permission-person-trigger" onclick="startPermissionFlow(${index})">`).replace(/<\/div>$/, '</button>')).join('');
-      document.getElementById('account-access-signers').innerHTML = COMPANY_USERS.filter(user => user.role === 'Člen představenstva').map(user => userRow(user, user.role)).join('');
+      document.getElementById('account-access-users').innerHTML = COMPANY_USERS.map((user, index) => userRow(user, permissionSummary(key, index)).replace('<div class="access-info-row account-access-user">', `<button type="button" class="access-info-row account-access-user permission-person-trigger" onclick="startPermissionFlow(${index})">`).replace(/<\/div>$/, '</button>')).join('');
+      document.getElementById('account-access-signers').innerHTML = COMPANY_USERS.filter((user, index) => getPersonPermission(key, index).level === 3).map(user => userRow(user, user.role)).join('');
       switchAccountAccessTab(localStorage.getItem('vavu_account_access_tab_' + key) || 'permissions');
     }
 
@@ -5612,7 +5751,7 @@ unicode: "eac3"
       ).join('');
       const name = localStorage.getItem('vavu_selected_user') || 'František Koudelka';
       const current = COMPANY_USERS.find(user => user.name === name) || { name, initials: localStorage.getItem('vavu_selected_initials') || 'FK', role: 'Zmocněná osoba', permitted: false };
-      const userRow = (user, own) => `<div class="access-info-row access-user-row" data-ds-component="CO Item Navigation"><span class="access-user-avatar" aria-hidden="true">${escapeHtml(user.initials)}</span><span class="access-user-copy"><span>${escapeHtml(user.name)}${own ? ' (to jste Vy)' : ''}</span><small>${escapeHtml(user.role)}</small><span class="access-permission-status">${own ? (user.permitted ? 'Máte oprávnění' : 'Nemáte oprávnění') : (user.permitted ? 'Má oprávnění' : 'Nemá oprávnění')}</span></span>${caret}</div>`;
+      const userRow = (user, own) => { const permitted = userHasCompanyPermission(user); return `<div class="access-info-row access-user-row" data-ds-component="CO Item Navigation"><span class="access-user-avatar" aria-hidden="true">${escapeHtml(user.initials)}</span><span class="access-user-copy"><span>${escapeHtml(user.name)}${own ? ' (to jste Vy)' : ''}</span><small>${escapeHtml(user.role)}</small><span class="access-permission-status">${own ? (permitted ? 'Máte oprávnění' : 'Nemáte oprávnění') : (permitted ? 'Má oprávnění' : 'Nemá oprávnění')}</span></span>${caret}</div>`; };
       document.getElementById('company-current-user').innerHTML = userRow(current, true);
       document.getElementById('company-other-users').innerHTML = COMPANY_USERS.filter(user => user.name !== current.name).map(user => userRow(user, false)).join('');
       document.getElementById('company-signature-members').innerHTML = COMPANY_USERS.filter(user => user.role === 'Člen představenstva').map(user => `<div class="access-info-row"><span>${escapeHtml(user.name)}</span><small>${escapeHtml(user.role)}</small></div>`).join('');

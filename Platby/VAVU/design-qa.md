@@ -2,6 +2,21 @@
 
 final result: passed
 
+## Doplnění: editace oprávnění osoby – čtyři varianty a uložení
+- Všechny osoby v seznamu Oprávnění, včetně statutárních zástupců, otevírají editor. Účet i osoba mají vlastní URL. Název osoby a účet jsou převzaty ze společných dat; Alena Modrá z mobilních podkladů není novou osobou v prototypu.
+- Čtyři úrovně: Bez oprávnění, Náhled na účet, Příprava plateb, Autorizace plateb. Sekce Umožňuje obsahuje postupně 0/1/2/3 možnosti podle návrhu. Pouze u autorizace je navíc checkbox Výběr hotovosti. Při snížení úrovně se tato doplňková volba vypne.
+- Zdrojové soubory: `codex-clipboard-cf837b56-7753-4a7f-9ebc-0bd902995f17.png` a `codex-clipboard-d29d6128-3cbc-4b33-b478-5d5c8c6fd48a.png` (IB, 2080 × 1554 px), `codex-clipboard-0c16da79-af7d-4f4c-afed-848d36051eea.png` a `codex-clipboard-d1bd0859-c590-4a9a-8e5b-e239e8432b1a.png` (mobil, 750 × 1624 px).
+- Implementační snímky `/home/lukinab/Projects/UX/.vavu-profile-qa/person-level-{0,1,2,3}.png`, viewport 1040 × 777 CSS px / DPR 2; mobilní `person-level-{level}-375.png`, 375 × 812 / DPR 2. Stejné snímky existují pro 320/390 px.
+- Společná porovnání `compare-person-level-{0,1,2,3}.jpg` v téže QA složce: 0 a 3 srovnány ve stejném IB viewportu, 1 a 2 ve stejném mobilním viewportu kvůli přepisu obsahu a anatomy. Zdroj vlevo, implementace vpravo, zmenšené na CSS pixely. IB adaptace prostředních variant byla navíc otevřena a vizuálně zkontrolována v `person-level-1.png` a `person-level-2.png`; přímé IB zdroje těchto variant nebyly dodány.
+- IB adaptace na výslovné zadání: společný 520 px DS sloupec, křížek vpravo, titul osoby, název/číslo účtu, CO Input SuperField s nativním výběrem, karty s možnostmi a pravé tlačítko Uložit ve sticky spodním panelu. Na mobilu se zachová responzivní verze stejného toku s plnou šířkou tlačítka.
+- Povrchy QA: lokální Inter a stávající DS velikosti/řádkování, společný rytmus 16 px a DS radius/stíny/oddělovače, barvy DS včetně červeného checkboxu a akce. Copy možností a popisů je přesně z podkladů. Check ikona je oficiální Tabler SVG (assets/permission-check.svg; licence už v assets/tabler-LICENSE.txt), bez nových rastrových podkladů nebo kreslených náhrad.
+- Uložit zapíše nastavení konkrétní osoby/účtu a vrátí seznam se správným popiskem. Oprávnění v přehledu účtu i seznam osob oprávněných autorizovat se načítají ze stejných uložených hodnot. Firemní obecný stav přístupu odráží explicitně uložená nastavení. Identita a statutární role osoby se nemění.
+- Rozpracovaná volba má vlastní localStorage draft, takže přežije refresh editoru. Uložit ji převede na platné nastavení a odstraní draft; křížek draft zahodí a ponechá původně uložený stav. Výslovné nové otevření osoby začíná uloženým nastavením. Stav je oddělen pro obě měny a každou ze šesti osob.
+- Ověřeno Playwrightem: všechny čtyři varianty a kumulativní popisy, skrytí/povolení checkboxu, jeho uložení a obnovení i automatické odstranění při snížení úrovně; refresh draftu a jeho zahození; Uložit/návrat; všech 12 kombinací účet/osoba včetně statutárních zástupců; nezávislost hodnot; aktualizované seznamy/přehled a oprávnění autorizovat; opětovné otevření, refresh a browser historie.
+- 320/375/390 CSS px: všechny varianty bez horizontálního přetečení, dlouhé texty se zalamují, skutečně dosažitelné Uložit. Bez JS chyb, syntaxe inline skriptů a unikátnost ID ověřeny.
+- První vizuální srovnání bez P0/P1/P2. [P3] šířka 520 px a jemné odlišnosti ikon/oddělovačů odpovídají společnému DS; mobilní Zavřít nahrazuje křížek v rámci požadované IB adaptace.
+- Další krok Pokračovat z celkového seznamu dosud nemá dodaný navazující návrh. Toto zadání dokončuje individuální změny a jejich ukládání v prototypu.
+
 ## Doplnění: osoba → Jak to proběhne → Oprávnění → Jak to funguje
 - Každá ze šesti osob na tabu Oprávnění obou účtů je nově celým řádkem klikací. Otevírá úvod a uloží vybranou osobu odděleně pro každý účet. Úvod Pokračovat otevírá seznam ze druhé přílohy. Vybraný účet je součástí URL; obě nové obrazovky i dialog se obnoví při refreshi.
 - Zdrojové obrázky: `codex-clipboard-3850dd5c-71b4-4c1b-82cb-441acfc03f89.png` (2080 × 1554), `codex-clipboard-db9de5d9-a4cf-427e-a155-e328cffaa36f.png` (2080 × 1752), `codex-clipboard-6b342d89-e1b7-42fa-ab51-4b6d1ead913c.png` (2048 × 1536).
@@ -10,12 +25,12 @@ final result: passed
 - Typografie: lokální Inter a stávající DS tokeny, titul 28/36, popisky 16/24, vedlejší a vysvětlující texty 14/20. Na mobilu standardní zmenšení titulu a přirozené zalamování.
 - Layout a barvy: stejný sloupec 520 px, 16 px odsazení, karty, oddělovače a spodní panel jako ve zbytku prototypu. Úvod má centrovanou ilustraci a tři očíslované kroky. Seznam obsahuje čtyři osoby a zvláštní kartu dvou statutárních zástupců. Dialog je centrovaný na tmavém podkladu.
 - Obrazové podklady: `assets/permission-intro-clock.png` je přesný výřez hodin z uživatelského návrhu (235 × 300 px), nikoli překreslení. DS ikony a iniciály jsou stejné jako dříve. Očíslované kroky jsou sémantický ordered list.
-- Copy: všechny instrukce a texty dialogu převzaty z návrhů. Název a číslo účtu vycházejí z ACCOUNT_DATA; osoby a pořadí z COMPANY_USERS. Statutární zástupci mají v tomto kroku Autorizace plateb a nemají chevron, stejně jako ve zdroji. Vybraná osoba se uchovává pro další rozšíření bez přidávání nedodaného zvýraznění.
+- Copy: všechny instrukce a texty dialogu převzaty z návrhů. Název a číslo účtu vycházejí z ACCOUNT_DATA; osoby a pořadí z COMPANY_USERS. Původní stav zástupců byl Autorizace plateb bez chevronu. Novější zadání povoluje editaci všech osob, proto aktuálně mají také chevron a zobrazují uloženou úroveň. Vybraná osoba se uchovává pro další rozšíření bez přidávání nedodaného zvýraznění.
 - První srovnání: [P2] seznam měl vyšší řádky a odkaz zasahoval do spodního panelu; dialog měl navíc horní odsazení. Oprava: 78 px pro běžné dvouřádkové položky, menší mezera pod účtem, spodní padding obsahu a odstranění dodatečného marginu titulku dialogu. Druhé společné porovnání potvrzuje opravu a celý odkaz nad spodním panelem.
 - Ověřeno pro každou osobu na obou účtech: vstup a zavření úvodu; následně Pokračovat, správný účet, počty 4+2 a pořadí, refresh úvodu/seznamu/dialogu, křížek, Escape, prohlížečové zpět/vpřed a návraty na původní účet. Nativní dialog poskytuje modalitu a zachycení fokusu.
 - 320/390 CSS px: bez horizontálního přetečení; dialog uvnitř viewportu, skutečně otevřený odkaz Jak to funguje, zavření, návraty a dostupné tlačítko Pokračovat. Bez JS chyb; syntaxe inline skriptů a unikátnost ID ověřeny.
 - Bez zbývajících P0/P1/P2. [P3] jemné odlišnosti oddělovačů a šířky vycházejí ze společného DS; viditelný keyboard-focus na křížku je záměrná přístupnost.
-- Další pokračování ze seznamu a detail nastavení konkrétní osoby čekají na další návrh; tato změna neprovádí žádné úpravy oprávnění.
+- Individuální nastavení osoby a jeho uložení je doplněno aktuálním rozšířením. Další pokračování z celkového seznamu čeká na další návrh.
 
 ## Odstranění profilu OSVČ
 - Na výslovnou žádost odebrán celý řádek OSVČ ze segmentu Další profily včetně jeho naplňování v JavaScriptu.
