@@ -1,3 +1,17 @@
+# Aktuální doplnění: Kontrola (19. 10. 2026)
+
+Výsledek: passed. Porovnány přiložené návrhy s desktopovým vykreslením; mobilní kontrola 320/375/390 px bez vodorovného přetečení. Zachovány sdílené údaje účtu, DS komponenty a existující formuláře.
+
+- Pokračovat ze Způsobu autorizace otevře Kontrolu se třemi položkami. Stav Provedené změny / Beze změny se odvozuje od uloženého nastavení proti výchozím hodnotám prototypu.
+- Oprávnění a Autorizace z kontroly používají stejné obrazovky jako předchozí kroky. Uložit a Zpět vrací na kontrolu; původní postup nadále používá Pokračovat. Kontext je v URL a zachová se po refreshi.
+- Detail každé z šesti osob: Uložit zachová změnu a vrátí seznam; křížek změnu zahodí a vrátí seznam. Výběr podepisujících se rovněž vrací do správného kontextu.
+- Limity obsahují informaci o samostatném podepisování, existující prázdný stav, Jak to funguje a Zpět na kontrolu. Samostatné podepisování dosud nikdo nemá nastavené.
+- Opraven posun obsahu: profilové obrazovky se při otevření zobrazí od začátku.
+- Playwright: oba účty, všechny tři položky, všech šest osob, save/cancel, výběr podepisujících, nápověda, reload, historie, původní postup a úzké viewporty; bez JS chyb. Porovnání jsou lokálně v `.vavu-profile-qa/compare-review*.png` mimo Git.
+- Navazující akce Pokračovat z Kontroly zatím nemá dodaný návrh a zůstává připravená pro další zadání.
+
+---
+
 # Aktuální doplnění: Způsob autorizace a Podepisující (19. 10. 2026)
 
 Výsledek: passed. Porovnány dodané návrhy s vykreslením v samostatném Chrome přes Playwright (dříve schválený uživatelem). Zachována šířka a tokeny stávajícího IB prototypu; názvy a čísla účtů z jeho sdílených dat. Zaškrtnutí používá stejný DS stav jako existující formulář oprávnění.
