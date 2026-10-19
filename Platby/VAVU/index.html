@@ -3144,6 +3144,10 @@
     .authorization-pending .account-access-user { min-height: 64px; }
     .signer-option { display: flex; gap: var(--padding-xl); padding: var(--padding-xl); min-height: 76px; align-items: flex-start; cursor: pointer; font: var(--content-body-primary-bold); }
     .signer-option small { color: var(--content-tertiary); font: var(--content-body-secondary); }
+    #screen-permission-summary .account-access-description { margin-top: var(--padding-xl); }
+    #permission-summary-signatures .account-access-user { min-height: 64px; }
+    #permission-summary-signature-rows .signature-signed { color: var(--attention-success); }
+    #permission-summary-signature-rows .signature-waiting { color: var(--content-primary); }
     .review-step-number { display: grid; place-items: center; flex: none; width: 22px; height: 22px; border: 2px solid var(--interactive-primary); border-radius: 50%; color: var(--interactive-primary); font: var(--content-body-secondary); margin: 3px 4px; }
     .review-limits-info { display: flex; gap: var(--padding-xl); padding: var(--padding-xl); background: var(--background-surface-avatar); }
     .review-limits-info .icon { flex: none; width: 24px; height: 24px; }
@@ -3501,8 +3505,23 @@ unicode: "eac3"
           <label class="payment-control payment-control-select person-permission-select" data-ds-component="CO Input SuperField"><span class="payment-control-label">Počet podpisů</span><select id="signers-count" aria-label="Počet podpisů" onchange="updateSignersDraft()"><option value="2">2 podpisy</option><option value="3">3 podpisy</option><option value="4">4 podpisy</option><option value="5">5 podpisů</option><option value="6">6 podpisů</option></select><svg class="icon payment-select-caret" aria-hidden="true"><use href="#es-caret-right"></use></svg></label>
           <div class="profile-card"><div id="signers-options"></div><p class="signers-hint">Čím víc osob přidáte, tím víc kombinací podpisů umožníte.</p></div>
         </div><div class="access-buttonbar" data-ds-component="CO Button Bar Bottom"><div class="access-buttonbar-inner"><button class="btn btn--primary" type="button" onclick="saveSignersEditor()">Uložit</button></div></div></section>
-      <section class="screen profile-screen access-screen access-users-screen authorization-flow-screen" id="screen-permission-review" aria-labelledby="permission-review-title"><div class="profile-wrap"><div class="company-header"><button class="company-back" type="button" onclick="goTo('nastaveni-autorizace-' + permissionFlowAccount())"><svg class="icon" aria-hidden="true"><use href="#es-caret-left"></use></svg>Zpět</button></div><h1 class="access-title profile-name" id="permission-review-title">Kontrola</h1><p class="account-access-description" id="permission-review-account"></p><div class="profile-card"><h2 class="access-card-title">Připravené nastavení</h2><button type="button" class="access-info-row permission-edit-row permission-edit-person review-step" onclick="goTo('kontrola-nastaveni-opravneni-' + permissionFlowAccount())"><span class="review-step-number" aria-hidden="true">1</span><span class="access-user-copy"><span>Oprávnění</span><small id="review-status-opravneni">Beze změny</small></span><svg class="icon profile-caret" aria-hidden="true"><use href="#es-caret-right"></use></svg></button><button type="button" class="access-info-row permission-edit-row permission-edit-person review-step" onclick="goTo('kontrola-nastaveni-autorizace-' + permissionFlowAccount())"><span class="review-step-number" aria-hidden="true">2</span><span class="access-user-copy"><span>Autorizace</span><small id="review-status-autorizace">Beze změny</small></span><svg class="icon profile-caret" aria-hidden="true"><use href="#es-caret-right"></use></svg></button><button type="button" class="access-info-row permission-edit-row permission-edit-person review-step" onclick="goTo('kontrola-nastaveni-limity-' + permissionFlowAccount())"><span class="review-step-number" aria-hidden="true">3</span><span class="access-user-copy"><span>Limity</span><small id="review-status-limity">Beze změny</small></span><svg class="icon profile-caret" aria-hidden="true"><use href="#es-caret-right"></use></svg></button></div></div><div class="access-buttonbar" data-ds-component="CO Button Bar Bottom"><div class="access-buttonbar-inner"><button class="btn btn--primary" type="button" >Pokračovat</button></div></div></section>
+      <section class="screen profile-screen access-screen access-users-screen authorization-flow-screen" id="screen-permission-review" aria-labelledby="permission-review-title"><div class="profile-wrap"><div class="company-header"><button class="company-back" type="button" onclick="goTo('nastaveni-autorizace-' + permissionFlowAccount())"><svg class="icon" aria-hidden="true"><use href="#es-caret-left"></use></svg>Zpět</button></div><h1 class="access-title profile-name" id="permission-review-title">Kontrola</h1><p class="account-access-description" id="permission-review-account"></p><div class="profile-card"><h2 class="access-card-title">Připravené nastavení</h2><button type="button" class="access-info-row permission-edit-row permission-edit-person review-step" onclick="goTo('kontrola-nastaveni-opravneni-' + permissionFlowAccount())"><span class="review-step-number" aria-hidden="true">1</span><span class="access-user-copy"><span>Oprávnění</span><small id="review-status-opravneni">Beze změny</small></span><svg class="icon profile-caret" aria-hidden="true"><use href="#es-caret-right"></use></svg></button><button type="button" class="access-info-row permission-edit-row permission-edit-person review-step" onclick="goTo('kontrola-nastaveni-autorizace-' + permissionFlowAccount())"><span class="review-step-number" aria-hidden="true">2</span><span class="access-user-copy"><span>Autorizace</span><small id="review-status-autorizace">Beze změny</small></span><svg class="icon profile-caret" aria-hidden="true"><use href="#es-caret-right"></use></svg></button><button type="button" class="access-info-row permission-edit-row permission-edit-person review-step" onclick="goTo('kontrola-nastaveni-limity-' + permissionFlowAccount())"><span class="review-step-number" aria-hidden="true">3</span><span class="access-user-copy"><span>Limity</span><small id="review-status-limity">Beze změny</small></span><svg class="icon profile-caret" aria-hidden="true"><use href="#es-caret-right"></use></svg></button></div></div><div class="access-buttonbar" data-ds-component="CO Button Bar Bottom"><div class="access-buttonbar-inner"><button class="btn btn--primary" type="button" onclick="goTo('souhrn-opravneni-' + permissionFlowAccount())">Pokračovat</button></div></div></section>
       <section class="screen profile-screen access-screen access-users-screen authorization-flow-screen" id="screen-permission-limits" aria-labelledby="permission-limits-title"><div class="profile-wrap"><div class="company-header"><button class="company-back" type="button" onclick="goTo('kontrola-' + permissionFlowAccount())"><svg class="icon" aria-hidden="true"><use href="#es-caret-left"></use></svg>Zpět</button></div><h1 class="access-title profile-name" id="permission-limits-title">Limity</h1><p class="account-access-description" id="permission-limits-account"></p><div class="profile-card review-limits-info"><svg class="icon" aria-hidden="true"><use href="#es-info"></use></svg><p>Limity se vztahují pouze na uživatele, kteří mají nastavené samostatné podepisování.</p></div><div class="profile-card account-limits-empty"><img src="assets/account-limits-empty.png" width="84" height="76" alt=""><p>Zatím tu nejsou žádní uživatelé se samostatným podepisováním, kterým byste mohli nastavit limit.</p></div><button type="button" class="profile-row account-signature-link permission-help-trigger" onclick="goTo(permissionContextRoute('nastaveni-limity-info-' + permissionFlowAccount()))"><svg class="icon" aria-hidden="true"><use href="#es-info"></use></svg><span>Jak to funguje</span><svg class="icon profile-caret" aria-hidden="true"><use href="#es-caret-right"></use></svg></button></div><div class="access-buttonbar" data-ds-component="CO Button Bar Bottom"><div class="access-buttonbar-inner"><button class="btn btn--primary" type="button" onclick="goTo('kontrola-' + permissionFlowAccount())">Zpět na kontrolu</button></div></div></section>
+      <section class="screen profile-screen access-screen access-users-screen authorization-flow-screen" id="screen-permission-summary" aria-labelledby="permission-summary-title">
+        <div class="profile-wrap">
+          <div class="company-header"><button class="company-back" type="button" onclick="goTo('kontrola-' + permissionFlowAccount())"><svg class="icon" aria-hidden="true"><use href="#es-caret-left"></use></svg>Zpět</button></div>
+          <h1 class="access-title profile-name" id="permission-summary-title">Souhrn</h1>
+          <div class="profile-card"><div class="access-info-row"><span id="permission-summary-company"></span><small id="permission-summary-ico"></small></div></div>
+          <p class="account-access-description" id="permission-summary-account"></p>
+          <div class="profile-card" id="permission-summary-rights"><h2 class="access-card-title">Změna oprávnění</h2><div id="permission-summary-rights-rows"></div></div>
+          <div class="profile-card" id="permission-summary-authorization"><h2 class="access-card-title">Změna autorizace</h2><div class="access-info-row"><span id="permission-summary-authorization-title"></span><small id="permission-summary-authorization-description"></small></div></div>
+          <div class="profile-card" id="permission-summary-added"><h2 class="access-card-title">Přidání způsobu autorizace</h2><div id="permission-summary-added-rows"></div></div>
+          <div class="profile-card" id="permission-summary-removed"><h2 class="access-card-title">Odebrání způsobu autorizace</h2><div id="permission-summary-removed-rows"></div></div>
+          <div class="profile-card" id="permission-summary-unchanged"><div class="access-info-row">Nastavení účtu je beze změny.</div></div>
+          <div class="authorization-pending" id="permission-summary-signatures"><h2 class="access-card-title">Podepisující změnu oprávnění</h2><div id="permission-summary-signature-rows"></div></div>
+        </div>
+        <div class="access-buttonbar" data-ds-component="CO Button Bar Bottom"><div class="access-buttonbar-inner"><button class="btn btn--primary" type="button">Pokračovat</button></div></div>
+      </section>
       <dialog id="permission-help-dialog" class="permission-help-dialog" aria-labelledby="permission-help-title">
         <div class="profile-header"><button type="button" class="profile-close" onclick="closePermissionHelp()" aria-label="Zavřít Jak to funguje"><svg class="icon" aria-hidden="true"><use href="#es-close"></use></svg></button></div>
         <h2 class="profile-name" id="permission-help-title">Jak to funguje</h2>
@@ -5103,7 +5122,7 @@ unicode: "eac3"
       { label: 'Autorizace plateb', capabilities: 3 }
     ];
     const AUTHORIZATION_FLOW_SCREENS = ['czk', 'eur'].flatMap(key => ['nastaveni-autorizace-' + key, 'nastaveni-autorizace-info-' + key, 'nastaveni-podepisujici-' + key]);
-    const REVIEW_SCREENS = ['czk', 'eur'].flatMap(key => ['kontrola-' + key, 'nastaveni-limity-' + key, 'nastaveni-limity-info-' + key]);
+    const REVIEW_SCREENS = ['czk', 'eur'].flatMap(key => ['souhrn-opravneni-' + key, 'kontrola-' + key, 'nastaveni-limity-' + key, 'nastaveni-limity-info-' + key]);
     const REVIEW_EDIT_SCREENS = [...PERMISSION_FLOW_SCREENS, ...PERMISSION_EDITOR_SCREENS, ...AUTHORIZATION_FLOW_SCREENS, ...REVIEW_SCREENS.filter(id => id.startsWith('nastaveni-'))].map(id => 'kontrola-' + id);
     const COMPANY_ACCESS_SCREENS = [...REVIEW_SCREENS, ...REVIEW_EDIT_SCREENS, ...AUTHORIZATION_FLOW_SCREENS, ...PERMISSION_EDITOR_SCREENS, ...PERMISSION_FLOW_SCREENS, ...COMPANY_ACCOUNT_SCREENS, 'pristupy-k-uctum', 'pristupy-opravneni', 'pristupy-uzivatele', 'pristupy-podpisova-pravidla'];
     const SCREENS = [...COMPANY_ACCESS_SCREENS, 'profil-firma', 'profil', 'login', 'prehled', 'extra', 'karty', 'pujcky', 'sporeni', 'investice', 'pojisteni', 'ucet-detail', 'tp-inkasa', 'tp-inkasa-s-autorizaci', 'autorizace', 'vsechny-platby', 'platba-detail', 'nova-platba', 'nova-platba-detaily', 'platba-vysledek', 'tp-novy', 'tp-detaily', 'tp-souhrn', 'tp-vysledek', 'inkaso-nove', 'inkaso-souhrn', 'inkaso-vysledek', 'davkove-platby', 'davkove-platby-detail', 'davkove-platby-souhrn', 'davkove-platby-vysledek'];
@@ -5454,7 +5473,7 @@ unicode: "eac3"
       const isPermissionInfo = targetScreenId.startsWith('nastaveni-opravneni-info-') || targetScreenId.startsWith('nastaveni-autorizace-info-') || targetScreenId.startsWith('nastaveni-limity-info-');
       const permissionDialog = document.getElementById('permission-help-dialog');
       if (!isPermissionInfo && permissionDialog.open) permissionDialog.close();
-      const screenEl = document.getElementById(targetScreenId.startsWith('kontrola-') ? 'screen-permission-review' : targetScreenId.startsWith('nastaveni-limity-') ? 'screen-permission-limits' : isAuthorizationFlow ? (targetScreenId.startsWith('nastaveni-podepisujici-') ? 'screen-signers-edit' : 'screen-authorization-method') : isPermissionEditor ? 'screen-person-permission' : isPermissionFlow ? (targetScreenId.startsWith('nastaveni-opravneni-uvod-') ? 'screen-permission-intro' : 'screen-permission-edit') : COMPANY_ACCOUNT_SCREENS.includes(targetScreenId) ? 'screen-account-access' : 'screen-' + targetScreenId);
+      const screenEl = document.getElementById(targetScreenId.startsWith('souhrn-opravneni-') ? 'screen-permission-summary' : targetScreenId.startsWith('kontrola-') ? 'screen-permission-review' : targetScreenId.startsWith('nastaveni-limity-') ? 'screen-permission-limits' : isAuthorizationFlow ? (targetScreenId.startsWith('nastaveni-podepisujici-') ? 'screen-signers-edit' : 'screen-authorization-method') : isPermissionEditor ? 'screen-person-permission' : isPermissionFlow ? (targetScreenId.startsWith('nastaveni-opravneni-uvod-') ? 'screen-permission-intro' : 'screen-permission-edit') : COMPANY_ACCOUNT_SCREENS.includes(targetScreenId) ? 'screen-account-access' : 'screen-' + targetScreenId);
       if (screenEl) {
         screenEl.classList.add('active');
       }
@@ -5518,6 +5537,7 @@ unicode: "eac3"
         if (isPermissionInfo && !permissionDialog.open) permissionDialog.showModal();
       }
       renderPermissionReviewContext(targetScreenId);
+      if (targetScreenId.startsWith('souhrn-opravneni-')) renderPermissionSummary(permissionFlowAccount());
       if (isPermissionInfo && !permissionDialog.open) permissionDialog.showModal();
       if (targetScreenId === 'profil') {
         renderCurrentUser();
@@ -5668,6 +5688,7 @@ unicode: "eac3"
     function savePersonPermission() {
       const { key, index } = personPermissionEditorContext();
       const value = normalizePersonPermission({ level: document.getElementById('person-permission-level').value, cash: document.getElementById('person-permission-cash').checked });
+      if (JSON.stringify(getPersonPermission(key, index)) !== JSON.stringify(value)) localStorage.removeItem('vavu_permission_change_signatures_' + key);
       localStorage.setItem(personPermissionStorageKey(key, index), JSON.stringify(value));
       localStorage.setItem('vavu_signers_' + key, JSON.stringify(getSigners(key)));
       localStorage.removeItem(personPermissionStorageKey(key, index, true));
@@ -5678,6 +5699,65 @@ unicode: "eac3"
       const { key, index } = personPermissionEditorContext();
       localStorage.removeItem(personPermissionStorageKey(key, index, true));
       goTo(permissionContextRoute('nastaveni-opravneni-' + key));
+    }
+
+    function permissionChangeSet(key) {
+      const people = COMPANY_USERS.map((_, index) => index).filter(index => {
+        const value = getPersonPermission(key, index);
+        return value.level !== (index < 2 ? 3 : 0) || value.cash;
+      });
+      const signers = getSigners(key);
+      const added = signers.selected.filter(index => index >= 2);
+      const removed = [0, 1].filter(index => !signers.selected.includes(index));
+      return { people, signers, added, removed, authorization: signers.count !== 2 || added.length > 0 || removed.length > 0 };
+    }
+
+    // Signatures belong to one exact version of the proposed settings, per account.
+    // A future signing step can persist signedBy using this record; viewing is never a signature.
+    function permissionChangeSignatureState(key) {
+      const fingerprint = JSON.stringify({ permissions: COMPANY_USERS.map((_, index) => getPersonPermission(key, index)), signers: getSigners(key) });
+      const storageKey = 'vavu_permission_change_signatures_' + key;
+      let saved;
+      try { saved = JSON.parse(localStorage.getItem(storageKey)); } catch (_) {}
+      const state = { fingerprint, signedBy: saved?.fingerprint === fingerprint && Array.isArray(saved.signedBy) ? [...new Set(saved.signedBy)].filter(index => index === 0 || index === 1) : [] };
+      localStorage.setItem(storageKey, JSON.stringify(state));
+      return state;
+    }
+
+    function renderPermissionSummary(key) {
+      const changes = permissionChangeSet(key);
+      const account = ACCOUNT_DATA[key];
+      const hasChanges = changes.people.length > 0 || changes.authorization;
+      document.getElementById('permission-summary-company').textContent = COMPANY_PROFILE.name;
+      document.getElementById('permission-summary-ico').textContent = 'IČO: ' + COMPANY_PROFILE.ico;
+      document.getElementById('permission-summary-account').textContent = account.name + ', ' + account.number;
+      const row = (index, description) => `<div class="access-info-row"><span>${escapeHtml(COMPANY_USERS[index].name)}</span><small>${escapeHtml(description)}</small></div>`;
+      document.getElementById('permission-summary-rights').hidden = changes.people.length === 0;
+      document.getElementById('permission-summary-rights-rows').innerHTML = changes.people.map(index => {
+        const value = getPersonPermission(key, index);
+        return row(index, permissionSummary(key, index) + (value.cash ? ' · Výběr hotovosti' : ''));
+      }).join('');
+      document.getElementById('permission-summary-authorization').hidden = !changes.authorization;
+      document.getElementById('permission-summary-authorization-title').textContent = jointSignatureTitle(changes.signers.count);
+      const count = changes.signers.count;
+      const selected = changes.signers.selected;
+      let description = selected.length ? (count < 5 ? 'Libovolné ' + count + ' různé osoby' : 'Libovolných ' + count + ' různých osob') : 'Nikdo nemá nastavené společné podepisování.';
+      if (selected.length === COMPANY_USERS.length) description += ' ze všech ' + selected.length + ' lidí ve firmě.';
+      else if (selected.length) description += ' z vybraných ' + selected.length + ': ' + selected.map(index => COMPANY_USERS[index].name).join(', ');
+      document.getElementById('permission-summary-authorization-description').textContent = description;
+      document.getElementById('permission-summary-added').hidden = changes.added.length === 0;
+      document.getElementById('permission-summary-added-rows').innerHTML = changes.added.map(index => row(index, jointSignatureTitle(count))).join('');
+      document.getElementById('permission-summary-removed').hidden = changes.removed.length === 0;
+      document.getElementById('permission-summary-removed-rows').innerHTML = changes.removed.map(index => row(index, 'Bez společného podepisování')).join('');
+      document.getElementById('permission-summary-unchanged').hidden = hasChanges;
+      document.getElementById('permission-summary-signatures').hidden = !hasChanges;
+      const state = permissionChangeSignatureState(key);
+      const currentUser = localStorage.getItem('vavu_selected_user');
+      document.getElementById('permission-summary-signature-rows').innerHTML = COMPANY_USERS.slice(0, 2).map((user, index) => {
+        const signed = state.signedBy.includes(index);
+        const status = signed ? 'Podepsáno' : user.name === currentUser ? 'Čeká na váš podpis' : 'Čeká na podpis';
+        return `<div class="access-info-row account-access-user"><span class="access-user-avatar" aria-hidden="true">${escapeHtml(user.initials)}</span><span class="access-user-copy"><span>${escapeHtml(user.name)}</span><small class="${signed ? 'signature-signed' : 'signature-waiting'}">${status}</small></span></div>`;
+      }).join('');
     }
 
     function permissionContextRoute(route) {
@@ -5702,12 +5782,9 @@ unicode: "eac3"
         const description = ACCOUNT_DATA[key].name + ', ' + ACCOUNT_DATA[key].number;
         document.getElementById('permission-review-account').textContent = description;
         document.getElementById('permission-limits-account').textContent = description;
-        const permissionsChanged = COMPANY_USERS.some((_, index) => {
-          const value = getPersonPermission(key, index);
-          return value.level !== (index < 2 ? 3 : 0) || value.cash;
-        });
-        const signers = getSigners(key);
-        const authorizationChanged = signers.count !== 2 || signers.selected.length !== 2 || ![0, 1].every(index => signers.selected.includes(index));
+        const changes = permissionChangeSet(key);
+        const permissionsChanged = changes.people.length > 0;
+        const authorizationChanged = changes.authorization;
         document.getElementById('review-status-opravneni').textContent = permissionsChanged ? 'Provedené změny' : 'Beze změny';
         document.getElementById('review-status-autorizace').textContent = authorizationChanged ? 'Provedené změny' : 'Beze změny';
       }
@@ -5817,6 +5894,7 @@ unicode: "eac3"
     function saveSignersEditor() {
       const key = permissionFlowAccount();
       updateSignersDraft();
+      if (JSON.stringify(getSigners(key)) !== JSON.stringify(getSigners(key, true))) localStorage.removeItem('vavu_permission_change_signatures_' + key);
       localStorage.setItem('vavu_signers_' + key, JSON.stringify(getSigners(key, true)));
       closeSignersEditor();
     }

@@ -1,3 +1,17 @@
+# Aktuální doplnění: Souhrn změn oprávnění (19. 10. 2026)
+
+Výsledek: passed. Nový souhrn za Kontrolou porovnán s dodanou referencí a kontrolován v desktopovém i mobilním Chrome přes Playwright. Názvy firmy, IČO, účtu a osob přebírá ze sdílených dat prototypu.
+
+- Změna oprávnění obsahuje jen osoby odlišné od výchozího nastavení, včetně úrovně a povolení výběru hotovosti. Při nulové změně se sekce skryje.
+- Změna autorizace popisuje počet společných podpisů i okruh vybraných osob. Při výběru všech šesti osob používá znění ze vzoru. Přidání způsobu autorizace vypisuje nově přidané osoby; odebrání má vlastní podmíněnou sekci. Údaje i indikátory na Kontrole vycházejí ze stejného výpočtu změn.
+- Podepisující změnu jsou původní dva statutární zástupci, nikoli nově navržení podepisující plateb. Stav čekání rozlišuje přihlášenou osobu. Podepsáno je zelené a vychází pouze z uloženého záznamu podpisů.
+- Záznam podpisů je oddělený podle účtu a konkrétní verze nastavení. Editace oprávnění nebo způsobu podepisování jej zneplatní; otevření souhrnu nikoho nepodepisuje.
+- Ověřeny oba účty: nulové změny, změna jedné úrovně bez změny autorizace, čtyři přidané osoby, všechny osoby vybrané, odebrání osoby, výběr hotovosti, návrat na Kontrolu, refresh/historie a 320/375/390 px bez přetečení. Regrese Kontroly také prošla. Bez JS chyb, syntaxe a unikátní ID v pořádku.
+- Varianta Podepsáno / Čeká na váš podpis byla ověřena vložením testovacího záznamu podpisu a přepnutím testovací přihlášené osoby v samostatném prohlížeči. Samotný podpis ani následný krok Pokračovat ze Souhrnu nebyl v tomto zadání přidán.
+- Vizuální doklady mimo Git: `.vavu-profile-qa/compare-permission-summary.png`, `permission-summary-all.png`, `permission-summary-signed.png`, `permission-summary-mobile.png`.
+
+---
+
 # Aktuální doplnění: Kontrola (19. 10. 2026)
 
 Výsledek: passed. Porovnány přiložené návrhy s desktopovým vykreslením; mobilní kontrola 320/375/390 px bez vodorovného přetečení. Zachovány sdílené údaje účtu, DS komponenty a existující formuláře.
