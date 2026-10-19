@@ -1,3 +1,16 @@
+# Aktuální doplnění: Způsob autorizace a Podepisující (19. 10. 2026)
+
+Výsledek: passed. Porovnány dodané návrhy s vykreslením v samostatném Chrome přes Playwright (dříve schválený uživatelem). Zachována šířka a tokeny stávajícího IB prototypu; názvy a čísla účtů z jeho sdílených dat. Zaškrtnutí používá stejný DS stav jako existující formulář oprávnění.
+
+- Pokračovat z nastavení Oprávnění otevře Způsob autorizace. Nově oprávněné osoby jsou v Nemůže podepisovat, dokud nejsou vybrány jako podepisující. Sekce zmizí, pokud je prázdná.
+- Změnit u společných podpisů otevře Podepisující. Nabízí osoby s úrovní Autorizace plateb, výběr a počet podpisů ukládá samostatně pro každý účet. Počet vybraných osob může být vyšší než požadovaný počet podpisů (kombinace podpisů).
+- Uložit vrací na přehled a aktualizuje také segment Autorizace v detailu účtu. Zpět zahodí rozpracovanou změnu; refresh editoru ji obnoví. Odebrání oprávnění vyřadí osobu i z podepisujících.
+- Ověřeny oba účty, všechny osoby, jeden i čtyři čekající uživatelé, dva i šest vybraných, změna počtu, opětovné otevření, historie, dialog a zobrazení 320/375/390 px bez horizontálního přetečení. Bez JS chyb.
+- Vizuální porovnání a snímky: lokální `.vavu-profile-qa/compare-signers-two.png`, `compare-authorization-pending-four.png`, `compare-authorization-all.png`, `signers-mobile.png` (mimo Git).
+- Samostatné podepisování a následný krok tlačítka Pokračovat na obrazovce Způsob autorizace zůstávají podkladem pro další zadání; tato změna přidává požadovaný výběr společně podepisujících.
+
+---
+
 # VAVU – profil uživatele, 19. 10. 2026
 
 final result: passed
