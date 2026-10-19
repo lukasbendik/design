@@ -2,6 +2,20 @@
 
 final result: passed
 
+## Doplnění: přístupy k účtům a tři návazné obrazovky
+- Rozcestník `#pristupy-k-uctum` propojuje přesně tři položky s `#pristupy-opravneni`, `#pristupy-uzivatele` a `#pristupy-podpisova-pravidla`; vstup je z detailu firmy. Vzhled samotného rozcestníku nebyl dodán, používá existující CO Item Navigation a stejný scaffold.
+- Zdrojové návrhy: `codex-clipboard-0b140249-6424-4d22-8a14-887a87669aa5.png` (2048 × 1536), `codex-clipboard-cf2e9742-54da-425f-bfe6-c798f7a45ca8.png` (2080 × 1598), `codex-clipboard-73ce49b1-02c5-4528-aa4c-31d7069bf870.png` (2048 × 1536).
+- Implementace: `/home/lukinab/Projects/UX/.vavu-profile-qa/permissions.png`, `users.png`, `rules.png`. Viewport 1024 × 768, u Uživatelů 1040 × 799 CSS px; DPR 2. Snímky mají stejné pixelové rozměry jako jejich zdroje.
+- Společné vizuální porovnání: `compare-permissions.jpg`, `compare-users.jpg`, `compare-rules.jpg` ve stejné QA složce. Vždy vlevo zdroj, vpravo implementace zmenšená na CSS rozměry. Celé obrazovky i čitelné řádky prohlédnuty společně; samostatný výřez nebyl potřeba. Černé okraje a šum z uživatelského snímku Uživatelé nejsou obsahem aplikace.
+- Typografie: Inter z lokálního DS, nadpis 28/36 (mobil 24/32), karta 18/24, jméno a účet 16/24, role/číslo 14/20, stav 12/16. Rozestupy a barvy používají stávající DS tokeny; stálý sloupec 520 px zachován napříč prototypem.
+- Obrazové prvky: stejné DS šipky a křížek, iniciály odpovídající uživatelům; bez nových rastrových podkladů. Texty, role, stavy i pořadí odpovídají zdroji při přihlášení Kateřiny H.
+- Datová návaznost: názvy a čísla účtů pocházejí z existujícího ACCOUNT_DATA (Účet CZK a Účet EUR), nikoli ze zdrojového opakovaného čísla. Šest uživatelů a dva členové představenstva sdílejí COMPANY_USERS. Aktuální osoba je vždy první a nezobrazuje se podruhé; její skutečná role a demonstrační stav zůstávají zachovány i při změně přihlášení.
+- Interakce: všechny tři položky se otevírají, Zpět vrací rozcestník, křížek Oprávnění zavírá do místa vstupu. Nastavit oprávnění otevře dodaný výběr účtů a křížek pak vrací do Uživatelů (kontext přežije refresh).
+- První srovnání: [P2] desktopové tlačítko bylo roztažené a nadpisy příliš nízko. Oprava: šířka tlačítka podle obsahu, zarovnání doprava, nadpisy posunuty o 8 px výše; mezery textů uživatele upraveny na řádek 96 px. Druhá společná porovnání potvrzují opravu. Na mobilu má tlačítko plnou šířku.
+- Ověřeno Playwrightem se souhlasem uživatele: úplný vstup z firmy, tři cíle, sdílené účty, šest unikátních uživatelů, podpisové skupiny, kontextový návrat z CTA, refresh, historie, šířky 320/390 px bez horizontálního přetečení a dosažitelný spodní panel, změna přihlášení na Naděždu P. včetně „Nemáte oprávnění“. Bez JS chyb.
+- Další detail účtu/uživatele a vlastní editace oprávnění čekají na další návrhy. Tato změna přidává zobrazené obrazovky a navigaci, nemění bankovní kontext ani oprávnění.
+- Bez zbývajících P0/P1/P2. [P3] Drobná odlišnost oddělovačů a šířky sloupce vychází ze společného DS.
+
 ## Doplnění: detail firmy
 - Zdroj: `codex-clipboard-13bb7760-ace2-418a-ac55-1a87afc354cf.png` (2049 × 1536 px).
 - Implementace: `#profil-firma`, `/home/lukinab/Projects/UX/.vavu-profile-qa/company.png` (2048 × 1536 px, viewport 1024 × 768 CSS px, DPR 2).

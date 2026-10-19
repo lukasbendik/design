@@ -3066,6 +3066,27 @@
     .company-avatar { width: 64px; height: 64px; border-radius: var(--border-radius-md); }
     .company-avatar .icon { width: 40px; height: 40px; }
     .company-ico { margin: calc(-1 * var(--padding-sm)) 0 0; font: var(--content-body-primary); }
+
+    .access-title { margin: 0 0 var(--padding-xl); }
+    .access-card-title { margin: 0; padding: var(--padding-xl); font: var(--headings-headline-secondary); }
+    .access-info-row { position: relative; display: flex; flex-direction: column; gap: var(--padding-sm); padding: var(--padding-xl); font: var(--content-body-primary-bold); }
+    .access-info-row small { color: var(--content-tertiary); font: var(--content-body-secondary); overflow-wrap: anywhere; }
+    .access-card-title + .access-info-row::before, .access-info-row + .access-info-row::before,
+    .access-card-title + div > .access-info-row:first-child::before { content: ''; position: absolute; top: 0; left: var(--padding-xl); right: 0; border-top: 1px solid var(--background-divider); }
+    .access-account-row { flex-direction: row; align-items: center; justify-content: space-between; }
+    .access-account-row .profile-caret, .access-user-row .profile-caret { width: 8px; height: 16px; flex: none; }
+    .access-account-row .profile-row-copy { overflow-wrap: anywhere; }
+    .access-user-row { display: flex; flex-direction: row; align-items: flex-start; gap: var(--padding-xl); min-height: 96px; }
+    .access-user-avatar { display: grid; place-items: center; width: 32px; height: 32px; flex: none; border-radius: var(--border-radius-sm); background: var(--attention-information-surface); font: var(--content-body-secondary); }
+    .access-user-copy { display: flex; flex: 1; flex-direction: column; gap: var(--padding-xs); min-width: 0; }
+    .access-user-copy .access-permission-status { font: var(--content-caption-primary-bold); }
+    .access-user-row .profile-caret { margin-top: var(--padding-md); }
+    .access-users-screen.active { display: flex; flex-direction: column; gap: 0; }
+    .access-users-screen .profile-wrap { flex: 1; padding-bottom: 0; }
+    .access-buttonbar { position: sticky; bottom: 0; padding: var(--padding-xl); background: var(--background-body); box-shadow: var(--shadow-panel); }
+    .access-buttonbar-inner { width: min(100%, var(--layout-narrow-column)); margin: 0 auto; display: flex; justify-content: flex-end; }
+    .access-buttonbar .btn { width: auto; min-height: 48px; padding: 0 var(--padding-xl); font: var(--content-body-primary-bold); }
+    @media(max-width:551px) { .access-buttonbar .btn { width: 100%; } }
   </style>
 </head>
 <body>
@@ -3366,10 +3387,13 @@ unicode: "eac3"
   <path d="M15 12l2 0" />
   <path d="M7 16l10 0" />
 </svg>
-<span>Firemní a kontaktní údaje</span><svg class="icon profile-caret" aria-hidden="true"><use href="#es-caret-right"></use></svg></div><div class="profile-row" data-ds-component="CO Item Navigation"><svg class="icon" aria-hidden="true"><use href="#es-wallet"></use></svg><span>Přístupy k účtům</span><svg class="icon profile-caret" aria-hidden="true"><use href="#es-caret-right"></use></svg></div><div class="profile-row" data-ds-component="CO Item Navigation"><svg class="icon" aria-hidden="true"><use href="#es-text-file"></use></svg><span>Dokumenty</span><svg class="icon profile-caret" aria-hidden="true"><use href="#es-caret-right"></use></svg></div><div class="profile-row" data-ds-component="CO Item Navigation"><svg class="icon" aria-hidden="true"><use href="#es-contracts"></use></svg><span>Bankovní zpráva pro účely auditu</span><svg class="icon profile-caret" aria-hidden="true"><use href="#es-caret-right"></use></svg></div><div class="profile-row" data-ds-component="CO Item Navigation"><span class="profile-settings-icon" aria-hidden="true"></span><span>Nastavení</span><svg class="icon profile-caret" aria-hidden="true"><use href="#es-caret-right"></use></svg></div></div>
+<span>Firemní a kontaktní údaje</span><svg class="icon profile-caret" aria-hidden="true"><use href="#es-caret-right"></use></svg></div><button type="button" id="company-access-trigger" onclick="goTo('pristupy-k-uctum')" class="profile-row" data-ds-component="CO Item Navigation"><svg class="icon" aria-hidden="true"><use href="#es-wallet"></use></svg><span>Přístupy k účtům</span><svg class="icon profile-caret" aria-hidden="true"><use href="#es-caret-right"></use></svg></button><div class="profile-row" data-ds-component="CO Item Navigation"><svg class="icon" aria-hidden="true"><use href="#es-text-file"></use></svg><span>Dokumenty</span><svg class="icon profile-caret" aria-hidden="true"><use href="#es-caret-right"></use></svg></div><div class="profile-row" data-ds-component="CO Item Navigation"><svg class="icon" aria-hidden="true"><use href="#es-contracts"></use></svg><span>Bankovní zpráva pro účely auditu</span><svg class="icon profile-caret" aria-hidden="true"><use href="#es-caret-right"></use></svg></div><div class="profile-row" data-ds-component="CO Item Navigation"><span class="profile-settings-icon" aria-hidden="true"></span><span>Nastavení</span><svg class="icon profile-caret" aria-hidden="true"><use href="#es-caret-right"></use></svg></div></div>
         </div>
       </section>
 
+
+      <!-- Firemní přístupy: údaje sdílené s přihlášením a účty. -->
+<section class="screen profile-screen access-screen " id="screen-pristupy-k-uctum" aria-labelledby="title-pristupy-k-uctum"><div class="profile-wrap"><div class="company-header"><button class="company-back" type="button" onclick="goTo('profil-firma')"><svg class="icon" aria-hidden="true"><use href="#es-caret-left"></use></svg>Zpět</button></div><h1 class="access-title profile-name" id="title-pristupy-k-uctum">Přístupy k účtům</h1><div class="profile-card"><button type="button" class="profile-row" data-ds-component="CO Item Navigation" onclick="openCompanyPermissions('pristupy-k-uctum')"><span>Oprávnění</span><svg class="icon profile-caret" aria-hidden="true"><use href="#es-caret-right"></use></svg></button><button type="button" class="profile-row" data-ds-component="CO Item Navigation" onclick="goTo('pristupy-uzivatele')"><span>Uživatelé</span><svg class="icon profile-caret" aria-hidden="true"><use href="#es-caret-right"></use></svg></button><button type="button" class="profile-row" data-ds-component="CO Item Navigation" onclick="goTo('pristupy-podpisova-pravidla')"><span>Statutární podpisová pravidla</span><svg class="icon profile-caret" aria-hidden="true"><use href="#es-caret-right"></use></svg></button></div></div></section><section class="screen profile-screen access-screen " id="screen-pristupy-opravneni" aria-labelledby="title-pristupy-opravneni"><div class="profile-wrap"><div class="profile-header"><button class="profile-close" type="button" onclick="closeCompanyPermissions()" aria-label="Zavřít oprávnění"><svg class="icon" aria-hidden="true"><use href="#es-close"></use></svg></button></div><h1 class="access-title profile-name" id="title-pristupy-opravneni">Oprávnění</h1><div class="profile-card"><h2 class="access-card-title">Běžné účty</h2><div id="company-permission-accounts"></div></div></div></section><section class="screen profile-screen access-screen access-users-screen" id="screen-pristupy-uzivatele" aria-labelledby="title-pristupy-uzivatele"><div class="profile-wrap"><div class="company-header"><button class="company-back" type="button" onclick="goTo('pristupy-k-uctum')"><svg class="icon" aria-hidden="true"><use href="#es-caret-left"></use></svg>Zpět</button></div><h1 class="access-title profile-name" id="title-pristupy-uzivatele">Uživatelé</h1><div class="profile-card" id="company-current-user"></div><div class="profile-card" id="company-other-users"></div></div><div class="access-buttonbar" data-ds-component="CO Button Bar Bottom"><div class="access-buttonbar-inner"><button class="btn btn--primary" type="button" onclick="openCompanyPermissions('pristupy-uzivatele')">Nastavit oprávnění</button></div></div></section><section class="screen profile-screen access-screen " id="screen-pristupy-podpisova-pravidla" aria-labelledby="title-pristupy-podpisova-pravidla"><div class="profile-wrap"><div class="company-header"><button class="company-back" type="button" onclick="goTo('pristupy-k-uctum')"><svg class="icon" aria-hidden="true"><use href="#es-caret-left"></use></svg>Zpět</button></div><h1 class="access-title profile-name" id="title-pristupy-podpisova-pravidla">Statutární podpisová pravidla</h1><div class="profile-card"><h2 class="access-card-title">Výchozí podpisová pravidla</h2><div class="access-info-row"><span>Bez omezení částkou</span><small>Společně: Člen představenstva + Člen představenstva</small></div></div><div class="profile-card"><h2 class="access-card-title">Podpisové skupiny</h2><div id="company-signature-members"></div></div></div></section>
       <!-- ================= SCREEN 0: PŘIHLÁŠENÍ ================= -->
       <div class="screen login-screen" id="screen-login">
         <div class="login-visual" aria-hidden="true">
@@ -4920,7 +4944,16 @@ unicode: "eac3"
   <script>
     // Seznam podporovaných hlavních obrazovek
     const COMPANY_PROFILE = Object.freeze({ name: 'Vodárny, a.s.', ico: '87654326' });
-    const SCREENS = ['profil-firma', 'profil', 'login', 'prehled', 'extra', 'karty', 'pujcky', 'sporeni', 'investice', 'pojisteni', 'ucet-detail', 'tp-inkasa', 'tp-inkasa-s-autorizaci', 'autorizace', 'vsechny-platby', 'platba-detail', 'nova-platba', 'nova-platba-detaily', 'platba-vysledek', 'tp-novy', 'tp-detaily', 'tp-souhrn', 'tp-vysledek', 'inkaso-nove', 'inkaso-souhrn', 'inkaso-vysledek', 'davkove-platby', 'davkove-platby-detail', 'davkove-platby-souhrn', 'davkove-platby-vysledek'];
+    const COMPANY_USERS = Object.freeze([
+      { name: 'Kateřina H.', initials: 'KH', role: 'Člen představenstva', permitted: true },
+      { name: 'Šárka B.', initials: 'ŠB', role: 'Člen představenstva', permitted: true },
+      { name: 'Eva Š.', initials: 'EŠ', role: 'Zmocněná osoba', permitted: false },
+      { name: 'Linda O.', initials: 'LO', role: 'Zmocněná osoba', permitted: true },
+      { name: 'Naděžda P.', initials: 'NP', role: 'Zmocněná osoba', permitted: false },
+      { name: 'Šárka M.', initials: 'ŠM', role: 'Zmocněná osoba', permitted: false }
+    ]);
+    const COMPANY_ACCESS_SCREENS = ['pristupy-k-uctum', 'pristupy-opravneni', 'pristupy-uzivatele', 'pristupy-podpisova-pravidla'];
+    const SCREENS = [...COMPANY_ACCESS_SCREENS, 'profil-firma', 'profil', 'login', 'prehled', 'extra', 'karty', 'pujcky', 'sporeni', 'investice', 'pojisteni', 'ucet-detail', 'tp-inkasa', 'tp-inkasa-s-autorizaci', 'autorizace', 'vsechny-platby', 'platba-detail', 'nova-platba', 'nova-platba-detaily', 'platba-vysledek', 'tp-novy', 'tp-detaily', 'tp-souhrn', 'tp-vysledek', 'inkaso-nove', 'inkaso-souhrn', 'inkaso-vysledek', 'davkove-platby', 'davkove-platby-detail', 'davkove-platby-souhrn', 'davkove-platby-vysledek'];
     // Seznam modálních hashů
     const MODALS = ['povoleni-inkasa-modal', 'autorizace-potvrzeni-modal', 'no-items-modal', 'payment-signature-modal', 'filter-modal'];
 
@@ -5312,8 +5345,9 @@ unicode: "eac3"
         if (targetScreenId === 'inkaso-souhrn') renderDirectDebitSummary();
       }
 
-      document.body.classList.toggle('profile-mode', ['profil', 'profil-firma'].includes(targetScreenId));
+      document.body.classList.toggle('profile-mode', ['profil', 'profil-firma', ...COMPANY_ACCESS_SCREENS].includes(targetScreenId));
       if (targetScreenId === 'profil-firma') renderCompanyProfile();
+      if (COMPANY_ACCESS_SCREENS.includes(targetScreenId)) renderCompanyAccess();
       if (targetScreenId === 'profil') {
         renderCurrentUser();
         switchProfileTab(localStorage.getItem('vavu_profile_tab') || 'details');
@@ -5384,6 +5418,28 @@ unicode: "eac3"
       document.getElementById('profile-trigger').setAttribute('aria-label', 'Otevřít profil: ' + name);
     }
 
+
+    function openCompanyPermissions(from) {
+      localStorage.setItem('vavu_permissions_return', from === 'pristupy-uzivatele' ? from : 'pristupy-k-uctum');
+      goTo('pristupy-opravneni');
+    }
+
+    function closeCompanyPermissions() {
+      goTo(localStorage.getItem('vavu_permissions_return') === 'pristupy-uzivatele' ? 'pristupy-uzivatele' : 'pristupy-k-uctum');
+    }
+
+    function renderCompanyAccess() {
+      const caret = '<svg class="icon profile-caret" aria-hidden="true"><use href="#es-caret-right"></use></svg>';
+      document.getElementById('company-permission-accounts').innerHTML = Object.values(ACCOUNT_DATA).map(account =>
+        `<div class="access-info-row access-account-row" data-ds-component="CO Item Navigation"><span class="profile-row-copy"><span>${escapeHtml(account.name)}</span><small>${escapeHtml(account.number)}</small></span>${caret}</div>`
+      ).join('');
+      const name = localStorage.getItem('vavu_selected_user') || 'František Koudelka';
+      const current = COMPANY_USERS.find(user => user.name === name) || { name, initials: localStorage.getItem('vavu_selected_initials') || 'FK', role: 'Zmocněná osoba', permitted: false };
+      const userRow = (user, own) => `<div class="access-info-row access-user-row" data-ds-component="CO Item Navigation"><span class="access-user-avatar" aria-hidden="true">${escapeHtml(user.initials)}</span><span class="access-user-copy"><span>${escapeHtml(user.name)}${own ? ' (to jste Vy)' : ''}</span><small>${escapeHtml(user.role)}</small><span class="access-permission-status">${own ? (user.permitted ? 'Máte oprávnění' : 'Nemáte oprávnění') : (user.permitted ? 'Má oprávnění' : 'Nemá oprávnění')}</span></span>${caret}</div>`;
+      document.getElementById('company-current-user').innerHTML = userRow(current, true);
+      document.getElementById('company-other-users').innerHTML = COMPANY_USERS.filter(user => user.name !== current.name).map(user => userRow(user, false)).join('');
+      document.getElementById('company-signature-members').innerHTML = COMPANY_USERS.filter(user => user.role === 'Člen představenstva').map(user => `<div class="access-info-row"><span>${escapeHtml(user.name)}</span><small>${escapeHtml(user.role)}</small></div>`).join('');
+    }
 
     function renderCompanyProfile() {
       document.querySelectorAll('[data-company-name]').forEach(el => el.textContent = COMPANY_PROFILE.name);
