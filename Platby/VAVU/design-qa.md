@@ -14,7 +14,7 @@ final result: passed
 - Rozpracovaná volba má vlastní localStorage draft, takže přežije refresh editoru. Uložit ji převede na platné nastavení a odstraní draft; křížek draft zahodí a ponechá původně uložený stav. Výslovné nové otevření osoby začíná uloženým nastavením. Stav je oddělen pro obě měny a každou ze šesti osob.
 - Ověřeno Playwrightem: všechny čtyři varianty a kumulativní popisy, skrytí/povolení checkboxu, jeho uložení a obnovení i automatické odstranění při snížení úrovně; refresh draftu a jeho zahození; Uložit/návrat; všech 12 kombinací účet/osoba včetně statutárních zástupců; nezávislost hodnot; aktualizované seznamy/přehled a oprávnění autorizovat; opětovné otevření, refresh a browser historie.
 - 320/375/390 CSS px: všechny varianty bez horizontálního přetečení, dlouhé texty se zalamují, skutečně dosažitelné Uložit. Bez JS chyb, syntaxe inline skriptů a unikátnost ID ověřeny.
-- První vizuální srovnání bez P0/P1/P2. [P3] šířka 520 px a jemné odlišnosti ikon/oddělovačů odpovídají společnému DS; mobilní Zavřít nahrazuje křížek v rámci požadované IB adaptace.
+- První vizuální srovnání bez P0/P1/P2. [P3] šířka 520 px a jemné odlišnosti ikon/oddělovačů odpovídají společnému DS; IB křížek nahrazuje mobilní text Zavřít v rámci požadované adaptace.
 - Další krok Pokračovat z celkového seznamu dosud nemá dodaný navazující návrh. Toto zadání dokončuje individuální změny a jejich ukládání v prototypu.
 
 ## Doplnění: osoba → Jak to proběhne → Oprávnění → Jak to funguje
