@@ -3087,6 +3087,24 @@
     .access-buttonbar-inner { width: min(100%, var(--layout-narrow-column)); margin: 0 auto; display: flex; justify-content: flex-end; }
     .access-buttonbar .btn { width: auto; min-height: 48px; padding: 0 var(--padding-xl); font: var(--content-body-primary-bold); }
     @media(max-width:551px) { .access-buttonbar .btn { width: 100%; } }
+
+    button.access-account-row { width: 100%; border: 0; background: none; color: var(--content-primary); text-align: left; cursor: pointer; }
+    button.access-account-row:focus-visible { outline: 2px solid var(--content-primary); outline-offset: -2px; }
+    .account-access-description { margin: var(--padding-xl) 0 var(--padding-2xl); font: var(--content-body-primary); overflow-wrap: anywhere; }
+    .account-access-tabs { margin-bottom: var(--padding-xl); }
+    .account-access-tabs button { padding-inline: var(--padding-sm); }
+    .account-access-user { display: flex; flex-direction: row; align-items: flex-start; gap: var(--padding-xl); min-height: 84px; }
+    .account-card-heading { display: flex; align-items: flex-start; justify-content: space-between; gap: var(--padding-xl); padding: var(--padding-xl); }
+    .account-card-heading h2 { margin: 0; font: var(--headings-headline-secondary); }
+    .account-card-heading p { margin: var(--padding-md) 0 0; font: var(--content-body-secondary); }
+    .account-change-link { border: 0; padding: 0; flex: none; background: none; color: var(--content-primary); font: var(--content-body-secondary-bold); text-decoration: underline; text-underline-offset: 4px; cursor: pointer; }
+    .account-solo-row { display: flex; align-items: center; gap: var(--padding-xl); border-top: 1px solid var(--background-divider); padding: var(--padding-xl); font: var(--content-body-primary-bold); }
+    .account-solo-row .icon { width: 32px; height: 24px; flex: none; }
+    .account-card-heading + div > .account-access-user:first-child { border-top: 1px solid var(--background-divider); }
+    .account-signature-link { border: 1px solid var(--background-border); border-radius: var(--border-radius-md); margin: var(--padding-3xl) 0 var(--padding-xl); }
+    .account-limits-empty { padding: var(--padding-xl) var(--padding-md); margin-top: var(--padding-3xl); text-align: center; }
+    .account-limits-empty img { display: block; margin: 0 auto var(--padding-xl); object-fit: contain; }
+    .account-limits-empty p { margin: 0; font: var(--content-body-secondary); }
   </style>
 </head>
 <body>
@@ -3393,7 +3411,37 @@ unicode: "eac3"
 
 
       <!-- Firemní přístupy: údaje sdílené s přihlášením a účty. -->
-<section class="screen profile-screen access-screen " id="screen-pristupy-k-uctum" aria-labelledby="title-pristupy-k-uctum"><div class="profile-wrap"><div class="company-header"><button class="company-back" type="button" onclick="goTo('profil-firma')"><svg class="icon" aria-hidden="true"><use href="#es-caret-left"></use></svg>Zpět</button></div><h1 class="access-title profile-name" id="title-pristupy-k-uctum">Přístupy k účtům</h1><div class="profile-card"><button type="button" class="profile-row" data-ds-component="CO Item Navigation" onclick="openCompanyPermissions('pristupy-k-uctum')"><span>Oprávnění</span><svg class="icon profile-caret" aria-hidden="true"><use href="#es-caret-right"></use></svg></button><button type="button" class="profile-row" data-ds-component="CO Item Navigation" onclick="goTo('pristupy-uzivatele')"><span>Uživatelé</span><svg class="icon profile-caret" aria-hidden="true"><use href="#es-caret-right"></use></svg></button><button type="button" class="profile-row" data-ds-component="CO Item Navigation" onclick="goTo('pristupy-podpisova-pravidla')"><span>Statutární podpisová pravidla</span><svg class="icon profile-caret" aria-hidden="true"><use href="#es-caret-right"></use></svg></button></div></div></section><section class="screen profile-screen access-screen " id="screen-pristupy-opravneni" aria-labelledby="title-pristupy-opravneni"><div class="profile-wrap"><div class="profile-header"><button class="profile-close" type="button" onclick="closeCompanyPermissions()" aria-label="Zavřít oprávnění"><svg class="icon" aria-hidden="true"><use href="#es-close"></use></svg></button></div><h1 class="access-title profile-name" id="title-pristupy-opravneni">Oprávnění</h1><div class="profile-card"><h2 class="access-card-title">Běžné účty</h2><div id="company-permission-accounts"></div></div></div></section><section class="screen profile-screen access-screen access-users-screen" id="screen-pristupy-uzivatele" aria-labelledby="title-pristupy-uzivatele"><div class="profile-wrap"><div class="company-header"><button class="company-back" type="button" onclick="goTo('pristupy-k-uctum')"><svg class="icon" aria-hidden="true"><use href="#es-caret-left"></use></svg>Zpět</button></div><h1 class="access-title profile-name" id="title-pristupy-uzivatele">Uživatelé</h1><div class="profile-card" id="company-current-user"></div><div class="profile-card" id="company-other-users"></div></div><div class="access-buttonbar" data-ds-component="CO Button Bar Bottom"><div class="access-buttonbar-inner"><button class="btn btn--primary" type="button" onclick="openCompanyPermissions('pristupy-uzivatele')">Nastavit oprávnění</button></div></div></section><section class="screen profile-screen access-screen " id="screen-pristupy-podpisova-pravidla" aria-labelledby="title-pristupy-podpisova-pravidla"><div class="profile-wrap"><div class="company-header"><button class="company-back" type="button" onclick="goTo('pristupy-k-uctum')"><svg class="icon" aria-hidden="true"><use href="#es-caret-left"></use></svg>Zpět</button></div><h1 class="access-title profile-name" id="title-pristupy-podpisova-pravidla">Statutární podpisová pravidla</h1><div class="profile-card"><h2 class="access-card-title">Výchozí podpisová pravidla</h2><div class="access-info-row"><span>Bez omezení částkou</span><small>Společně: Člen představenstva + Člen představenstva</small></div></div><div class="profile-card"><h2 class="access-card-title">Podpisové skupiny</h2><div id="company-signature-members"></div></div></div></section>
+<section class="screen profile-screen access-screen " id="screen-pristupy-k-uctum" aria-labelledby="title-pristupy-k-uctum"><div class="profile-wrap"><div class="company-header"><button class="company-back" type="button" onclick="goTo('profil-firma')"><svg class="icon" aria-hidden="true"><use href="#es-caret-left"></use></svg>Zpět</button></div><h1 class="access-title profile-name" id="title-pristupy-k-uctum">Přístupy k účtům</h1><div class="profile-card"><button type="button" class="profile-row" data-ds-component="CO Item Navigation" onclick="openCompanyPermissions('pristupy-k-uctum')"><span>Oprávnění</span><svg class="icon profile-caret" aria-hidden="true"><use href="#es-caret-right"></use></svg></button><button type="button" class="profile-row" data-ds-component="CO Item Navigation" onclick="goTo('pristupy-uzivatele')"><span>Uživatelé</span><svg class="icon profile-caret" aria-hidden="true"><use href="#es-caret-right"></use></svg></button><button type="button" class="profile-row" data-ds-component="CO Item Navigation" onclick="openCompanySigningRules('pristupy-k-uctum')"><span>Statutární podpisová pravidla</span><svg class="icon profile-caret" aria-hidden="true"><use href="#es-caret-right"></use></svg></button></div></div></section><section class="screen profile-screen access-screen " id="screen-pristupy-opravneni" aria-labelledby="title-pristupy-opravneni"><div class="profile-wrap"><div class="profile-header"><button class="profile-close" type="button" onclick="closeCompanyPermissions()" aria-label="Zavřít oprávnění"><svg class="icon" aria-hidden="true"><use href="#es-close"></use></svg></button></div><h1 class="access-title profile-name" id="title-pristupy-opravneni">Oprávnění</h1><div class="profile-card"><h2 class="access-card-title">Běžné účty</h2><div id="company-permission-accounts"></div></div></div></section><section class="screen profile-screen access-screen access-users-screen" id="screen-pristupy-uzivatele" aria-labelledby="title-pristupy-uzivatele"><div class="profile-wrap"><div class="company-header"><button class="company-back" type="button" onclick="goTo('pristupy-k-uctum')"><svg class="icon" aria-hidden="true"><use href="#es-caret-left"></use></svg>Zpět</button></div><h1 class="access-title profile-name" id="title-pristupy-uzivatele">Uživatelé</h1><div class="profile-card" id="company-current-user"></div><div class="profile-card" id="company-other-users"></div></div><div class="access-buttonbar" data-ds-component="CO Button Bar Bottom"><div class="access-buttonbar-inner"><button class="btn btn--primary" type="button" onclick="openCompanyPermissions('pristupy-uzivatele')">Nastavit oprávnění</button></div></div></section><section class="screen profile-screen access-screen " id="screen-pristupy-podpisova-pravidla" aria-labelledby="title-pristupy-podpisova-pravidla"><div class="profile-wrap"><div class="company-header"><button class="company-back" type="button" onclick="closeCompanySigningRules()"><svg class="icon" aria-hidden="true"><use href="#es-caret-left"></use></svg>Zpět</button></div><h1 class="access-title profile-name" id="title-pristupy-podpisova-pravidla">Statutární podpisová pravidla</h1><div class="profile-card"><h2 class="access-card-title">Výchozí podpisová pravidla</h2><div class="access-info-row"><span>Bez omezení částkou</span><small>Společně: Člen představenstva + Člen představenstva</small></div></div><div class="profile-card"><h2 class="access-card-title">Podpisové skupiny</h2><div id="company-signature-members"></div></div></div></section>
+
+      <section class="screen profile-screen access-screen access-users-screen account-access-screen" id="screen-account-access" aria-labelledby="account-access-title">
+        <div class="profile-wrap">
+          <div class="company-header"><button class="company-back" type="button" onclick="goTo('pristupy-opravneni')"><svg class="icon" aria-hidden="true"><use href="#es-caret-left"></use></svg>Zpět</button></div>
+          <h1 class="access-title profile-name" id="account-access-title">Účet</h1>
+          <p class="account-access-description" id="account-access-description"></p>
+          <div class="profile-tabs account-access-tabs" id="account-access-tabs" role="tablist" aria-label="Nastavení účtu" data-ds-component="CO Tab">
+            <button type="button" id="account-tab-permissions" role="tab" aria-selected="true" aria-controls="account-panel-permissions" tabindex="0" class="active" onclick="switchAccountAccessTab('permissions')">Oprávnění</button>
+            <button type="button" id="account-tab-authorization" role="tab" aria-selected="false" aria-controls="account-panel-authorization" tabindex="-1"  onclick="switchAccountAccessTab('authorization')">Autorizace</button>
+            <button type="button" id="account-tab-limits" role="tab" aria-selected="false" aria-controls="account-panel-limits" tabindex="-1"  onclick="switchAccountAccessTab('limits')">Limity</button>
+          </div>
+          <div id="account-panel-permissions" role="tabpanel" aria-labelledby="account-tab-permissions"><div class="profile-card" id="account-access-users"></div></div>
+          <div id="account-panel-authorization" role="tabpanel" aria-labelledby="account-tab-authorization" hidden>
+            <div class="profile-card">
+              <div class="account-card-heading"><h2>Samostatné podepisování</h2><button class="account-change-link" type="button">Změnit</button></div>
+              <div class="account-solo-row"><svg class="icon" aria-hidden="true"><use href="#es-person"></use></svg><span>Nikdo nepodepisuje samostatně</span></div>
+            </div>
+            <div class="profile-card">
+              <div class="account-card-heading"><div><h2>2 společné podpisy</h2><p>Uživatelé, kteří mohou podepisovat</p></div><button class="account-change-link" type="button">Změnit</button></div>
+              <div id="account-access-signers"></div>
+            </div>
+            <button class="profile-row account-signature-link" data-ds-component="CO Item Navigation" type="button" onclick="openCompanySigningRules(currentScreen)"><svg class="icon" aria-hidden="true"><use href="#es-contracts"></use></svg><span>Statutární podpisová pravidla</span><svg class="icon profile-caret" aria-hidden="true"><use href="#es-caret-right"></use></svg></button>
+          </div>
+          <div id="account-panel-limits" role="tabpanel" aria-labelledby="account-tab-limits" hidden>
+            <div class="profile-card account-limits-empty"><img src="assets/account-limits-empty.png" width="84" height="76" alt=""><p>Zatím tu nejsou žádní uživatelé se samostatným podepisováním, kterým byste mohli nastavit limit.</p></div>
+          </div>
+        </div>
+        <div class="access-buttonbar" data-ds-component="CO Button Bar Bottom"><div class="access-buttonbar-inner"><button class="btn btn--primary" type="button">Změnit</button></div></div>
+      </section>
+
       <!-- ================= SCREEN 0: PŘIHLÁŠENÍ ================= -->
       <div class="screen login-screen" id="screen-login">
         <div class="login-visual" aria-hidden="true">
@@ -4952,7 +5000,8 @@ unicode: "eac3"
       { name: 'Naděžda P.', initials: 'NP', role: 'Zmocněná osoba', permitted: false },
       { name: 'Šárka M.', initials: 'ŠM', role: 'Zmocněná osoba', permitted: false }
     ]);
-    const COMPANY_ACCESS_SCREENS = ['pristupy-k-uctum', 'pristupy-opravneni', 'pristupy-uzivatele', 'pristupy-podpisova-pravidla'];
+    const COMPANY_ACCOUNT_SCREENS = ['pristupy-ucet-czk', 'pristupy-ucet-eur'];
+    const COMPANY_ACCESS_SCREENS = [...COMPANY_ACCOUNT_SCREENS, 'pristupy-k-uctum', 'pristupy-opravneni', 'pristupy-uzivatele', 'pristupy-podpisova-pravidla'];
     const SCREENS = [...COMPANY_ACCESS_SCREENS, 'profil-firma', 'profil', 'login', 'prehled', 'extra', 'karty', 'pujcky', 'sporeni', 'investice', 'pojisteni', 'ucet-detail', 'tp-inkasa', 'tp-inkasa-s-autorizaci', 'autorizace', 'vsechny-platby', 'platba-detail', 'nova-platba', 'nova-platba-detaily', 'platba-vysledek', 'tp-novy', 'tp-detaily', 'tp-souhrn', 'tp-vysledek', 'inkaso-nove', 'inkaso-souhrn', 'inkaso-vysledek', 'davkove-platby', 'davkove-platby-detail', 'davkove-platby-souhrn', 'davkove-platby-vysledek'];
     // Seznam modálních hashů
     const MODALS = ['povoleni-inkasa-modal', 'autorizace-potvrzeni-modal', 'no-items-modal', 'payment-signature-modal', 'filter-modal'];
@@ -5295,7 +5344,7 @@ unicode: "eac3"
       
       // Zobrazit vybranou obrazovku
       const targetScreenId = screenId === 'tp-inkasa-s-autorizaci' ? 'tp-inkasa' : screenId;
-      const screenEl = document.getElementById('screen-' + targetScreenId);
+      const screenEl = document.getElementById(COMPANY_ACCOUNT_SCREENS.includes(targetScreenId) ? 'screen-account-access' : 'screen-' + targetScreenId);
       if (screenEl) {
         screenEl.classList.add('active');
       }
@@ -5348,6 +5397,7 @@ unicode: "eac3"
       document.body.classList.toggle('profile-mode', ['profil', 'profil-firma', ...COMPANY_ACCESS_SCREENS].includes(targetScreenId));
       if (targetScreenId === 'profil-firma') renderCompanyProfile();
       if (COMPANY_ACCESS_SCREENS.includes(targetScreenId)) renderCompanyAccess();
+      if (COMPANY_ACCOUNT_SCREENS.includes(targetScreenId)) renderAccountAccess(targetScreenId.endsWith('-eur') ? 'eur' : 'czk');
       if (targetScreenId === 'profil') {
         renderCurrentUser();
         switchProfileTab(localStorage.getItem('vavu_profile_tab') || 'details');
@@ -5419,6 +5469,56 @@ unicode: "eac3"
     }
 
 
+    function openAccountAccess(key) {
+      const accountKey = Object.hasOwn(ACCOUNT_DATA, key) ? key : 'czk';
+      localStorage.setItem('vavu_account_access_tab_' + accountKey, 'permissions');
+      goTo('pristupy-ucet-' + accountKey);
+    }
+
+    function renderAccountAccess(key) {
+      const account = ACCOUNT_DATA[key];
+      document.getElementById('screen-account-access').dataset.accountKey = key;
+      document.getElementById('account-access-description').textContent = account.name + ', ' + account.number;
+      const userRow = (user, detail) => `<div class="access-info-row account-access-user"><span class="access-user-avatar" aria-hidden="true">${escapeHtml(user.initials)}</span><span class="access-user-copy"><span>${escapeHtml(user.name)}</span><small>${escapeHtml(detail)}</small></span></div>`;
+      document.getElementById('account-access-users').innerHTML = COMPANY_USERS.map(user => userRow(user, user.role === 'Člen představenstva' ? 'Autorizace plateb' : 'Bez oprávnění')).join('');
+      document.getElementById('account-access-signers').innerHTML = COMPANY_USERS.filter(user => user.role === 'Člen představenstva').map(user => userRow(user, user.role)).join('');
+      switchAccountAccessTab(localStorage.getItem('vavu_account_access_tab_' + key) || 'permissions');
+    }
+
+    function switchAccountAccessTab(tab) {
+      const keys = ['permissions', 'authorization', 'limits'];
+      const selected = keys.includes(tab) ? tab : 'permissions';
+      const key = document.getElementById('screen-account-access').dataset.accountKey || 'czk';
+      localStorage.setItem('vavu_account_access_tab_' + key, selected);
+      keys.forEach(item => {
+        const button = document.getElementById('account-tab-' + item);
+        button.classList.toggle('active', item === selected);
+        button.setAttribute('aria-selected', String(item === selected));
+        button.tabIndex = item === selected ? 0 : -1;
+        document.getElementById('account-panel-' + item).hidden = item !== selected;
+      });
+    }
+
+    document.getElementById('account-access-tabs').addEventListener('keydown', event => {
+      const keys = ['permissions', 'authorization', 'limits'];
+      if (!['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)) return;
+      event.preventDefault();
+      const index = keys.findIndex(key => event.target.id === 'account-tab-' + key);
+      const next = event.key === 'Home' ? 0 : event.key === 'End' ? 2 : (index + (event.key === 'ArrowRight' ? 1 : 2)) % 3;
+      switchAccountAccessTab(keys[next]);
+      document.getElementById('account-tab-' + keys[next]).focus();
+    });
+
+    function openCompanySigningRules(from) {
+      localStorage.setItem('vavu_signing_rules_return', COMPANY_ACCOUNT_SCREENS.includes(from) ? from : 'pristupy-k-uctum');
+      goTo('pristupy-podpisova-pravidla');
+    }
+
+    function closeCompanySigningRules() {
+      const target = localStorage.getItem('vavu_signing_rules_return');
+      goTo(COMPANY_ACCOUNT_SCREENS.includes(target) ? target : 'pristupy-k-uctum');
+    }
+
     function openCompanyPermissions(from) {
       localStorage.setItem('vavu_permissions_return', from === 'pristupy-uzivatele' ? from : 'pristupy-k-uctum');
       goTo('pristupy-opravneni');
@@ -5430,8 +5530,8 @@ unicode: "eac3"
 
     function renderCompanyAccess() {
       const caret = '<svg class="icon profile-caret" aria-hidden="true"><use href="#es-caret-right"></use></svg>';
-      document.getElementById('company-permission-accounts').innerHTML = Object.values(ACCOUNT_DATA).map(account =>
-        `<div class="access-info-row access-account-row" data-ds-component="CO Item Navigation"><span class="profile-row-copy"><span>${escapeHtml(account.name)}</span><small>${escapeHtml(account.number)}</small></span>${caret}</div>`
+      document.getElementById('company-permission-accounts').innerHTML = Object.entries(ACCOUNT_DATA).map(([key, account]) =>
+        `<button type="button" class="access-info-row access-account-row" data-ds-component="CO Item Navigation" onclick="openAccountAccess('${key}')"><span class="profile-row-copy"><span>${escapeHtml(account.name)}</span><small>${escapeHtml(account.number)}</small></span>${caret}</button>`
       ).join('');
       const name = localStorage.getItem('vavu_selected_user') || 'František Koudelka';
       const current = COMPANY_USERS.find(user => user.name === name) || { name, initials: localStorage.getItem('vavu_selected_initials') || 'FK', role: 'Zmocněná osoba', permitted: false };

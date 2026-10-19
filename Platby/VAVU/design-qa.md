@@ -2,6 +2,20 @@
 
 final result: passed
 
+## Doplnění: detail účtu – Oprávnění / Autorizace / Limity
+- Oba řádky v Oprávněních jsou tlačítka otevírající `#pristupy-ucet-czk` a `#pristupy-ucet-eur`. Sdílený template zobrazuje název a číslo podle ACCOUNT_DATA, účet je určen adresou a zůstane správný v historii i po refreshi. Tab se ukládá zvlášť pro každý účet; nový vstup ze seznamu začíná na Oprávnění.
+- Zdroj: `codex-clipboard-ba2aeaa5-d7c8-47a1-a896-a52e3a8cc26a.png` (2080 × 1640 px), `codex-clipboard-b6f1c9bb-dff2-4a22-aa28-399dc1d40927.png` a `codex-clipboard-91048cc3-e957-4d86-a146-9fe108247299.png` (2080 × 1554 px).
+- Implementace: `/home/lukinab/Projects/UX/.vavu-profile-qa/account-permissions.png`, `account-authorization.png`, `account-limits.png`. Viewport 1040 × 820 CSS px pro Oprávnění, 1040 × 777 pro Autorizaci/Limity; DPR 2, výsledné pixely stejné jako zdroje.
+- Společně porovnáno v `compare-account-permissions.jpg`, `compare-account-authorization.jpg`, `compare-account-limits.jpg` v téže QA složce. Vlevo zdroj a vpravo implementace normalizované na CSS rozměr. Celý pohled i čitelné regiony řádků a segmentů byly prohlédnuty. Černé okraje a šum snímků nejsou součástí aplikace.
+- Typografie: lokální Inter, dosavadní DS titul, řádky 16/24, role 14/20, tři segmenty 14/20; dlouhý EUR IBAN a mobilní nadpisy se přirozeně zalamují.
+- Rozložení/barvy: společný sloupec 520 px, DS tokeny pro plochy, texty, šedý segment, zvolený bílý segment, červené akce a oddělovače. Dole sticky panel Změnit. Samostatné a společné podepisování rozdělené do karet, statutární pravidla v obrysové navigační položce.
+- Obrazový podklad: ilustrace Limity převzata jako přesný výřez existujícího obrázku z uživatelského návrhu, `assets/account-limits-empty.png` (168 × 152 px, slot 84 × 76 CSS px), bez překreslování. Ostatní ikony pocházejí z DS.
+- Obsah: šest známých osob v původním pořadí. Dva členové představenstva mají v tomto demonstračním detailu „Autorizace plateb“, ostatní „Bez oprávnění“; dva členové jsou shodní v kartě společných podpisů i statutárních pravidlech. Obecný stav přístupu osoby do firmy z předchozího seznamu se nemění. Účet používá aktuální jméno/číslo namísto Business účet A a opakovaného čísla z návrhu. Text prázdného stavu je převzat přesně.
+- Funkční kontrola pro oba účty: vstup ze seznamu, všechny tři stavy, správný název/číslo, počty osob a oprávnění, refresh na každém tabu, cyklické šipky/Home/End, browser zpět/vpřed, návrat do seznamu. Odkaz na statutární pravidla vrací do původního účtu i tabu po refreshi; vstup z rozcestníku pak správně resetuje návrat do rozcestníku.
+- Mobil 320/390 CSS px: žádné horizontální přetečení, všechny panely i footer čitelné a dosažitelné; na 320 px byl statutární odkaz skutečně otevřen a prověřen návrat, spodní panel jej neblokuje. Bez JS chyb. Syntaxe všech inline skriptů a unikátnost ID ověřeny.
+- První společné vizuální porovnání: bez P0/P1/P2. [P3] Drobné rozdíly výšek a odsazení, šířka společného DS sloupce a chybějící jemná mezisegmentová dělicí čára; neovlivňují čitelnost ani navigaci.
+- Tlačítka Změnit zůstávají vizuální součástí dodaných stavů, editační obrazovky nejsou v aktuálním zadání. Změna neupravuje skutečná oprávnění ani backend.
+
 ## Doplnění: přístupy k účtům a tři návazné obrazovky
 - Rozcestník `#pristupy-k-uctum` propojuje přesně tři položky s `#pristupy-opravneni`, `#pristupy-uzivatele` a `#pristupy-podpisova-pravidla`; vstup je z detailu firmy. Vzhled samotného rozcestníku nebyl dodán, používá existující CO Item Navigation a stejný scaffold.
 - Zdrojové návrhy: `codex-clipboard-0b140249-6424-4d22-8a14-887a87669aa5.png` (2048 × 1536), `codex-clipboard-cf2e9742-54da-425f-bfe6-c798f7a45ca8.png` (2080 × 1598), `codex-clipboard-73ce49b1-02c5-4528-aa4c-31d7069bf870.png` (2048 × 1536).
@@ -13,7 +27,7 @@ final result: passed
 - Interakce: všechny tři položky se otevírají, Zpět vrací rozcestník, křížek Oprávnění zavírá do místa vstupu. Nastavit oprávnění otevře dodaný výběr účtů a křížek pak vrací do Uživatelů (kontext přežije refresh).
 - První srovnání: [P2] desktopové tlačítko bylo roztažené a nadpisy příliš nízko. Oprava: šířka tlačítka podle obsahu, zarovnání doprava, nadpisy posunuty o 8 px výše; mezery textů uživatele upraveny na řádek 96 px. Druhá společná porovnání potvrzují opravu. Na mobilu má tlačítko plnou šířku.
 - Ověřeno Playwrightem se souhlasem uživatele: úplný vstup z firmy, tři cíle, sdílené účty, šest unikátních uživatelů, podpisové skupiny, kontextový návrat z CTA, refresh, historie, šířky 320/390 px bez horizontálního přetečení a dosažitelný spodní panel, změna přihlášení na Naděždu P. včetně „Nemáte oprávnění“. Bez JS chyb.
-- Další detail účtu/uživatele a vlastní editace oprávnění čekají na další návrhy. Tato změna přidává zobrazené obrazovky a navigaci, nemění bankovní kontext ani oprávnění.
+- Detail účtu je doplněn níže popsaným rozšířením. Detail uživatele a vlastní editace oprávnění čekají na další návrhy. Tato změna přidává zobrazené obrazovky a navigaci, nemění bankovní kontext ani oprávnění.
 - Bez zbývajících P0/P1/P2. [P3] Drobná odlišnost oddělovačů a šířky sloupce vychází ze společného DS.
 
 ## Doplnění: detail firmy
