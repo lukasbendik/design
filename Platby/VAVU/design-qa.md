@@ -1,3 +1,11 @@
+# Aktuální oprava: vstup do flow z Účtu (19. 10. 2026)
+
+Výsledek: passed. Spodní tlačítko Změnit na obrazovce Účet otevírá úvod Jak to proběhne. Osoby v segmentu Oprávnění jsou statické řádky bez prokliku a bez button/focus sémantiky. Následný editovatelný seznam osob v kroku Oprávnění je zachován.
+
+Playwright: oba účty, klik na všech šest osob beze změny URL, vstup přes Změnit ze všech tří segmentů, refresh úvodu, pokračování do oprávnění a detailu osoby, 375 px bez přetečení, bez JS chyb.
+
+---
+
 # Aktuální doplnění: Podepisování oprávnění (19. 10. 2026)
 
 Výsledek: passed. Čtyři dodané obrazovky porovnány s implementací v Chrome přes Playwright; úvod, potvrzení, první i konečný podpis odpovídají rozložení při použití stávajících IB a DS komponent.

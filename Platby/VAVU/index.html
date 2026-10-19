@@ -3105,8 +3105,6 @@
     .account-limits-empty img { display: block; margin: 0 auto var(--padding-xl); object-fit: contain; }
     .account-limits-empty p { margin: 0; font: var(--content-body-secondary); }
 
-    button.permission-person-trigger { width: 100%; border: 0; background: none; color: var(--content-primary); text-align: left; cursor: pointer; }
-    button.permission-person-trigger:focus-visible { outline: 2px solid var(--content-primary); outline-offset: -2px; }
     .permission-intro-illustration { display: block; object-fit: contain; margin: var(--padding-3xl) auto var(--padding-4xl); }
     .permission-intro-title { margin-bottom: var(--padding-3xl); }
     .permission-steps { padding: 0; margin: 0 0 var(--padding-3xl); list-style: none; counter-reset: permission-step; }
@@ -3481,7 +3479,7 @@ unicode: "eac3"
             <div class="profile-card account-limits-empty"><img src="assets/account-limits-empty.png" width="84" height="76" alt=""><p>Zatím tu nejsou žádní uživatelé se samostatným podepisováním, kterým byste mohli nastavit limit.</p></div>
           </div>
         </div>
-        <div class="access-buttonbar" data-ds-component="CO Button Bar Bottom"><div class="access-buttonbar-inner"><button class="btn btn--primary" type="button">Změnit</button></div></div>
+        <div class="access-buttonbar" data-ds-component="CO Button Bar Bottom"><div class="access-buttonbar-inner"><button class="btn btn--primary" type="button" onclick="startPermissionFlow()">Změnit</button></div></div>
       </section>
 
 
@@ -5903,11 +5901,8 @@ unicode: "eac3"
       return currentScreen.includes('-eur') ? 'eur' : 'czk';
     }
 
-    function startPermissionFlow(index) {
-      const user = COMPANY_USERS[index];
-      if (!user) return;
+    function startPermissionFlow() {
       const key = document.getElementById('screen-account-access').dataset.accountKey || 'czk';
-      localStorage.setItem('vavu_permission_flow_person_' + key, user.name);
       goTo('nastaveni-opravneni-uvod-' + key);
     }
 
@@ -6024,7 +6019,7 @@ unicode: "eac3"
       document.getElementById('permission-pending-request').hidden = signatureState.signedBy.length !== 1;
       document.getElementById('account-access-description').textContent = account.name + ', ' + account.number;
       const userRow = (user, detail) => `<div class="access-info-row account-access-user"><span class="access-user-avatar" aria-hidden="true">${escapeHtml(user.initials)}</span><span class="access-user-copy"><span>${escapeHtml(user.name)}</span><small>${escapeHtml(detail)}</small></span></div>`;
-      document.getElementById('account-access-users').innerHTML = COMPANY_USERS.map((user, index) => userRow(user, permissionSummary(key, index)).replace('<div class="access-info-row account-access-user">', `<button type="button" class="access-info-row account-access-user permission-person-trigger" onclick="startPermissionFlow(${index})">`).replace(/<\/div>$/, '</button>')).join('');
+      document.getElementById('account-access-users').innerHTML = COMPANY_USERS.map((user, index) => userRow(user, permissionSummary(key, index))).join('');
       document.getElementById('account-access-signers').innerHTML = getSigners(key).selected.map(index => COMPANY_USERS[index]).map(user => userRow(user, user.role)).join('');
       document.getElementById('account-joint-title').textContent = jointSignatureTitle(getSigners(key).count);
       switchAccountAccessTab(localStorage.getItem('vavu_account_access_tab_' + key) || 'permissions');
