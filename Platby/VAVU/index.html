@@ -3021,6 +3021,42 @@
     .cursor-pointer {
       cursor: pointer;
     }
+
+    /* Supplemental profile icons: Tabler Icons, MIT, https://github.com/tabler/tabler-icons (official path data). */
+    /* Profil: CO Tab + CO Item Navigation, sdílená identita z přihlášení. */
+    button.topbar-item { border: 0; background: none; font: inherit; color: inherit; }
+    body.profile-mode .sidebar, body.profile-mode .topbar, body.profile-mode .chatbot-btn { display: none; }
+    body.profile-mode .app-wrapper { max-width: none; }
+    body.profile-mode .main-content { margin: 0; padding: 0; width: 100%; height: 100dvh; display: block; }
+    .profile-screen.active { display: block; min-height: 100%; }
+    .profile-wrap { width: min(100%, var(--layout-narrow-column)); margin: 0 auto; padding: var(--padding-xl) 0 var(--padding-4xl); }
+    .profile-header { display: flex; justify-content: flex-end; height: 32px; }
+    .profile-close { display: grid; place-items: center; width: 32px; height: 32px; border: 0; background: none; color: var(--content-primary); cursor: pointer; }
+    .profile-close .icon { width: 16px; height: 16px; }
+    .profile-identity { display: flex; align-items: center; flex-direction: column; gap: var(--padding-xl); margin: var(--padding-xl) 0 var(--padding-3xl); text-align: center; }
+    .profile-identity .user-avatar { width: 64px; height: 64px; font-size: 24px; background: var(--background-surface-avatar); }
+    .profile-name { font: var(--headings-title-tertiary); margin: 0; }
+    .profile-tabs { display: flex; padding: var(--padding-xs); background: var(--attention-information-surface); border-radius: var(--border-radius-md); margin-bottom: var(--padding-2xl); }
+    .profile-tabs button { flex: 1; min-width: 0; min-height: 28px; border: 0; border-radius: var(--radius-segmentedControl-segmentRadius); background: none; color: var(--content-primary); font: var(--content-body-secondary-bold); cursor: pointer; }
+    .profile-tabs button.active { background: var(--background-surface); box-shadow: var(--shadow-floating); }
+    .profile-card { background: var(--background-surface); border-radius: var(--border-radius-md); box-shadow: var(--shadow-panel); margin-bottom: var(--padding-xl); overflow: hidden; }
+    .profile-row { width: 100%; display: flex; align-items: center; gap: var(--padding-xl); border: 0; background: none; padding: var(--padding-xl); color: var(--content-primary); text-align: left; font: var(--content-body-primary-bold); min-height: 56px; }
+    button.profile-row { cursor: pointer; }
+    .profile-row + .profile-row { position: relative; }
+    .profile-row + .profile-row::before { content: ''; position: absolute; top: 0; left: var(--padding-xl); right: 0; border-top: 1px solid var(--background-divider); }
+    .profile-row > .icon { width: 32px; height: 24px; color: var(--interactive-primary); flex: none; }
+    .profile-row > img { width: 32px; height: 24px; object-fit: contain; flex: none; }
+    .profile-row > .profile-caret { color: var(--content-primary); width: 8px; height: 16px; margin-left: auto; flex: none; }
+    .profile-screen .profile-outline-icon { fill: none; }
+    .profile-settings-icon { width: 32px; height: 24px; flex: none; background: var(--interactive-primary); mask: url(assets/settings.png) center / 24px 24px no-repeat; }
+    .profile-menu { padding-bottom: calc(var(--padding-4xl) + var(--padding-md)); }
+    .profile-row-copy { min-width: 0; display: flex; flex-direction: column; gap: var(--padding-sm); }
+    .profile-row-copy small { font: var(--content-body-secondary); color: var(--content-tertiary); }
+    .profile-role-icon { width: 32px; height: 32px; display: grid; place-items: center; background: var(--attention-information-surface); border-radius: var(--border-radius-sm); flex: none; }
+    .profile-role-icon .icon { width: 24px; height: 24px; }
+    #profile-panel-profiles .profile-row { min-height: 78px; }
+    .profile-tabs button:focus-visible, .profile-close:focus-visible, button.profile-row:focus-visible, button.topbar-item:focus-visible { outline: 2px solid var(--content-primary); outline-offset: 2px; }
+    @media (max-width: 551px) { .profile-wrap { padding: var(--padding-xl); } .profile-name { font: var(--headings-title-quaternary); } }
   </style>
 </head>
 <body>
@@ -3079,10 +3115,10 @@
       <div class="topbar-item">
         <img class="topbar-centrum-icon" src="assets/centrum-kb.png" alt="Centrum KB+" />
       </div>
-      <div class="topbar-item">
-        <div class="user-avatar" id="avatar-letters">FK</div>
+      <button class="topbar-item" type="button" id="profile-trigger" onclick="openProfile()" aria-label="Otevřít profil">
+        <span class="user-avatar" id="avatar-letters" aria-hidden="true">FK</span>
         <span class="t-content-body-secondary-bold" id="topbar-user-name">František Koudelka</span>
-      </div>
+      </button>
       <div class="topbar-item">
         <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83 2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
         <img class="topbar-settings-icon" src="assets/settings.png" alt="" aria-hidden="true">
@@ -3096,6 +3132,160 @@
 
     <!-- 3. HLAVNÍ OBSAHOVÁ ČÁST -->
     <main class="main-content">
+
+
+      <!-- Profil uživatele: obsah odpovídá zvolenému přihlášení. -->
+      <section class="screen profile-screen" id="screen-profil" aria-labelledby="profile-name">
+        <div class="profile-wrap">
+          <div class="profile-header"><button class="profile-close" type="button" onclick="closeProfile()" aria-label="Zavřít profil"><svg class="icon" aria-hidden="true"><use href="#es-close"></use></svg></button></div>
+          <div class="profile-identity"><div class="user-avatar" id="profile-initials" aria-hidden="true"></div><h1 class="profile-name" id="profile-name"></h1></div>
+          <div class="profile-tabs" data-ds-component="CO Tab" role="tablist" aria-label="Profil uživatele">
+            <button type="button" id="profile-tab-details" role="tab" aria-controls="profile-panel-details" aria-selected="true" class="active" onclick="switchProfileTab('details')">Moje údaje</button>
+            <button type="button" id="profile-tab-profiles" role="tab" aria-controls="profile-panel-profiles" aria-selected="false" tabindex="-1" onclick="switchProfileTab('profiles')">Další profily</button>
+          </div>
+          <div id="profile-panel-details" role="tabpanel" aria-labelledby="profile-tab-details">
+            <div class="profile-card"><div class="profile-row" data-ds-component="CO Item Navigation"><!--
+tags: [layers, stack, pile, layout, elements, components, levels, z-order, stacked]
+category: Design
+version: "1.39"
+unicode: "eef7"
+-->
+<svg class="icon profile-outline-icon" aria-hidden="true"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="1.5"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M12 4l-8 4l8 4l8 -4l-8 -4" />
+  <path d="M4 12l8 4l8 -4" />
+  <path d="M4 16l8 4l8 -4" />
+</svg>
+<span>Standard</span><svg class="icon profile-caret" aria-hidden="true"><use href="#es-caret-right"></use></svg></div></div>
+            <div class="profile-card profile-menu"><div class="profile-row" data-ds-component="CO Item Navigation"><!--
+tags: [id, id-card, identity, identification, card, personal-details, profile, license]
+category: System
+version: "1.1"
+unicode: "eac3"
+-->
+<svg class="icon profile-outline-icon" aria-hidden="true"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="1.5"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M3 7a3 3 0 0 1 3 -3h12a3 3 0 0 1 3 3v10a3 3 0 0 1 -3 3h-12a3 3 0 0 1 -3 -3l0 -10" />
+  <path d="M7 10a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
+  <path d="M15 8l2 0" />
+  <path d="M15 12l2 0" />
+  <path d="M7 16l10 0" />
+</svg>
+<span>Osobní a kontaktní údaje</span><svg class="icon profile-caret" aria-hidden="true"><use href="#es-caret-right"></use></svg></div><div class="profile-row" data-ds-component="CO Item Navigation"><svg class="icon" aria-hidden="true"><use href="#es-text-file"></use></svg><span>Dokumenty</span><svg class="icon profile-caret" aria-hidden="true"><use href="#es-caret-right"></use></svg></div><div class="profile-row" data-ds-component="CO Item Navigation"><svg class="icon" aria-hidden="true"><use href="#es-listed-items"></use></svg><span>Moje kontakty</span><svg class="icon profile-caret" aria-hidden="true"><use href="#es-caret-right"></use></svg></div><div class="profile-row" data-ds-component="CO Item Navigation"><!--
+tags: [folder, directory, dir, files, archive, project, category, organize, storage]
+category: Document
+version: "1.0"
+unicode: "eaad"
+-->
+<svg class="icon profile-outline-icon" aria-hidden="true"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="1.5"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M5 4h4l3 3h7a2 2 0 0 1 2 2v8a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-11a2 2 0 0 1 2 -2" />
+</svg>
+<span>Šablony a příjemci</span><svg class="icon profile-caret" aria-hidden="true"><use href="#es-caret-right"></use></svg></div><div class="profile-row" data-ds-component="CO Item Navigation"><svg class="icon" aria-hidden="true"><use href="#es-wallet"></use></svg><span>Přístupy k účtům</span><svg class="icon profile-caret" aria-hidden="true"><use href="#es-caret-right"></use></svg></div><div class="profile-row" data-ds-component="CO Item Navigation"><span class="profile-settings-icon" aria-hidden="true"></span><span>Nastavení</span><svg class="icon profile-caret" aria-hidden="true"><use href="#es-caret-right"></use></svg></div></div>
+            <div class="profile-card"><button class="profile-row" data-ds-component="CO Item Navigation" type="button" onclick="logoutProfile()"><!--
+tags: [logout, log-out, sign-out, signout, exit, leave, arrow-right-from-bracket, account]
+category: System
+version: "1.4"
+unicode: "eba8"
+-->
+<svg class="icon profile-outline-icon" aria-hidden="true"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="1.5"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M14 8v-2a2 2 0 0 0 -2 -2h-7a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h7a2 2 0 0 0 2 -2v-2" />
+  <path d="M9 12h12l-3 -3" />
+  <path d="M18 15l3 -3" />
+</svg>
+<span>Odhlásit se</span><svg class="icon profile-caret" aria-hidden="true"><use href="#es-caret-right"></use></svg></button></div>
+          </div>
+          <div id="profile-panel-profiles" role="tabpanel" aria-labelledby="profile-tab-profiles" hidden>
+            <div class="profile-card">
+              <div class="profile-row" data-ds-component="CO Item Navigation"><span class="profile-role-icon"><!--
+tags: [store, shop, retail, market, storefront, supermarket, commerce, building]
+category: Buildings
+version: "1.1"
+unicode: "ea4e"
+-->
+<svg class="icon profile-outline-icon" aria-hidden="true"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="1.5"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M3 21l18 0" />
+  <path d="M3 7v1a3 3 0 0 0 6 0v-1m0 1a3 3 0 0 0 6 0v-1m0 1a3 3 0 0 0 6 0v-1h-18l2 -4h14l2 4" />
+  <path d="M5 21l0 -10.15" />
+  <path d="M19 21l0 -10.15" />
+  <path d="M9 21v-4a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v4" />
+</svg>
+</span><span class="profile-row-copy"><span id="profile-fop-name"></span><small>IČO: 12345679</small></span><svg class="icon profile-caret" aria-hidden="true"><use href="#es-caret-right"></use></svg></div>
+              <div class="profile-row" data-ds-component="CO Item Navigation"><span class="profile-role-icon"><!--
+tags: [community, neighborhood, district, town, city, buildings, houses, residential, building]
+category: Buildings
+version: "1.8"
+unicode: "ebf6"
+-->
+<svg class="icon profile-outline-icon" aria-hidden="true"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="1.5"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M8 9l5 5v7h-5v-4m0 4h-5v-7l5 -5m1 1v-6a1 1 0 0 1 1 -1h10a1 1 0 0 1 1 1v17h-8" />
+  <path d="M13 7l0 .01" />
+  <path d="M17 7l0 .01" />
+  <path d="M17 11l0 .01" />
+  <path d="M17 15l0 .01" />
+</svg>
+</span><span class="profile-row-copy"><span>Vodárny, a.s.</span><small>IČO: 87654326</small></span><svg class="icon profile-caret" aria-hidden="true"><use href="#es-caret-right"></use></svg></div>
+            </div>
+          </div>
+        </div>
+      </section>
 
       <!-- ================= SCREEN 0: PŘIHLÁŠENÍ ================= -->
       <div class="screen login-screen" id="screen-login">
@@ -4646,7 +4836,7 @@
   <!-- ================= JS LOGIKA ================= -->
   <script>
     // Seznam podporovaných hlavních obrazovek
-    const SCREENS = ['login', 'prehled', 'extra', 'karty', 'pujcky', 'sporeni', 'investice', 'pojisteni', 'ucet-detail', 'tp-inkasa', 'tp-inkasa-s-autorizaci', 'autorizace', 'vsechny-platby', 'platba-detail', 'nova-platba', 'nova-platba-detaily', 'platba-vysledek', 'tp-novy', 'tp-detaily', 'tp-souhrn', 'tp-vysledek', 'inkaso-nove', 'inkaso-souhrn', 'inkaso-vysledek', 'davkove-platby', 'davkove-platby-detail', 'davkove-platby-souhrn', 'davkove-platby-vysledek'];
+    const SCREENS = ['profil', 'login', 'prehled', 'extra', 'karty', 'pujcky', 'sporeni', 'investice', 'pojisteni', 'ucet-detail', 'tp-inkasa', 'tp-inkasa-s-autorizaci', 'autorizace', 'vsechny-platby', 'platba-detail', 'nova-platba', 'nova-platba-detaily', 'platba-vysledek', 'tp-novy', 'tp-detaily', 'tp-souhrn', 'tp-vysledek', 'inkaso-nove', 'inkaso-souhrn', 'inkaso-vysledek', 'davkove-platby', 'davkove-platby-detail', 'davkove-platby-souhrn', 'davkove-platby-vysledek'];
     // Seznam modálních hashů
     const MODALS = ['povoleni-inkasa-modal', 'autorizace-potvrzeni-modal', 'no-items-modal', 'payment-signature-modal', 'filter-modal'];
 
@@ -5038,6 +5228,12 @@
         if (targetScreenId === 'inkaso-souhrn') renderDirectDebitSummary();
       }
 
+      document.body.classList.toggle('profile-mode', targetScreenId === 'profil');
+      if (targetScreenId === 'profil') {
+        renderCurrentUser();
+        switchProfileTab(localStorage.getItem('vavu_profile_tab') || 'details');
+      }
+
       const paymentFlowScreens = ['nova-platba', 'nova-platba-detaily', 'platba-vysledek', 'tp-novy', 'tp-detaily', 'tp-souhrn', 'tp-vysledek', 'inkaso-nove', 'inkaso-souhrn', 'inkaso-vysledek', 'davkove-platby', 'davkove-platby-detail', 'davkove-platby-souhrn', 'davkove-platby-vysledek'];
       document.body.classList.toggle('flow-mode', paymentFlowScreens.includes(targetScreenId));
       document.body.classList.toggle('login-mode', targetScreenId === 'login');
@@ -5096,7 +5292,51 @@
       const avatarEl = document.getElementById('avatar-letters');
       if (nameEl) nameEl.textContent = name;
       if (avatarEl) avatarEl.textContent = initials;
+      document.getElementById('profile-name').textContent = name;
+      document.getElementById('profile-initials').textContent = initials;
+      document.getElementById('profile-fop-name').textContent = name + ' – OSVČ';
+      document.getElementById('profile-trigger').setAttribute('aria-label', 'Otevřít profil: ' + name);
     }
+
+
+    function openProfile() {
+      localStorage.setItem('vavu_profile_return', currentScreen);
+      switchProfileTab('details');
+      goTo('profil');
+    }
+
+    function closeProfile() {
+      const target = localStorage.getItem('vavu_profile_return');
+      goTo(SCREENS.includes(target) && target !== 'profil' && target !== 'login' ? target : 'prehled');
+      requestAnimationFrame(() => document.getElementById('profile-trigger').focus());
+    }
+
+    function logoutProfile() {
+      localStorage.removeItem('vavu_selected_user');
+      localStorage.removeItem('vavu_selected_initials');
+      localStorage.removeItem('vavu_profile_tab');
+      goTo('login');
+    }
+
+    function switchProfileTab(tab) {
+      const selected = tab === 'profiles' ? 'profiles' : 'details';
+      localStorage.setItem('vavu_profile_tab', selected);
+      ['details', 'profiles'].forEach(key => {
+        const button = document.getElementById('profile-tab-' + key);
+        button.classList.toggle('active', key === selected);
+        button.setAttribute('aria-selected', String(key === selected));
+        button.tabIndex = key === selected ? 0 : -1;
+        document.getElementById('profile-panel-' + key).hidden = key !== selected;
+      });
+    }
+
+    document.querySelector('.profile-tabs').addEventListener('keydown', event => {
+      if (!['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)) return;
+      event.preventDefault();
+      const selected = event.key === 'Home' ? 'details' : event.key === 'End' ? 'profiles' : event.target.id === 'profile-tab-details' ? 'profiles' : 'details';
+      switchProfileTab(selected);
+      document.getElementById('profile-tab-' + selected).focus();
+    });
 
     function selectLoginUser(name) {
       const initials = name.split(/\s+/).filter(Boolean).map(part => part.replace('.', '').charAt(0)).join('').slice(0, 2).toUpperCase();
