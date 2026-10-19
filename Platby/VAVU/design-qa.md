@@ -1,3 +1,18 @@
+# Aktuální doplnění: Podepisování oprávnění (19. 10. 2026)
+
+Výsledek: passed. Čtyři dodané obrazovky porovnány s implementací v Chrome přes Playwright; úvod, potvrzení, první i konečný podpis odpovídají rozložení při použití stávajících IB a DS komponent.
+
+- Pokračovat ze Souhrnu -> přehled dokumentů -> potvrzení podpisu -> výsledek podle skutečně uložených podpisů dvou odlišných statutárních zástupců. První podpis má informaci o druhém podpisu; druhý má Změnili jste oprávnění k účtu / Změny platí okamžitě.
+- Zavřít i křížek výsledku vrací na Účet stejného CZK/EUR účtu, segment Oprávnění. Po prvním podpisu lze z této obrazovky znovu otevřít čekající souhrn; druhý přihlášený zástupce jej může dokončit.
+- Stejná osoba nemůže podepsat dvakrát. Přímý vstup na potvrzení nebo výsledek kontroluje stav a přihlášeného. Zrušit vrátí Souhrn bez přidání podpisu; zobrazení dokumentu ani refresh nepodepisuje.
+- Záznam je v localStorage pro konkrétní účet a verzi. Druhý podpis uloží nastavení jako potvrzený základ dalšího návrhu. Dokončený souhrn zachová historii proti původnímu základu; nová editace vychází z posledního potvrzeného stavu a ruší předchozí podpisy.
+- Náhled dokumentu používá aktuální údaje a sekce Souhrnu, v nativním dialogu s obnovou URL a Escape. Jde o obsah prototypu; nepřidává vymyšlené znění právního dokumentu. Podpis i text o KB+ jsou simulace prototypu, bez externí služby.
+- Ilustrace tužky je výřez dodané reference (`permission-signing-pencil.png`). Výsledek používá ořez sdíleného DS `success-light.png` (`permission-signing-success.png`). Žádná generovaná náhrada.
+- UI ověření obou účtů: skutečný proklik prvního a druhého uživatele v obou pořadích, náhled dokumentu, zrušení, refresh, čekající souhrn, ochrana proti duplicitnímu/neoprávněnému podpisu, oba návraty na Účet, nový návrh po dokončení a šířky 320/375/390. Regrese Souhrnu také passed. Bez JS chyb, syntaxe a statická ID v pořádku.
+- Při kontrole opraven obrys vedlejších tlačítek a posun na začátek po dokončení změny obrazovky (rAF). Snímky a společná porovnání jsou v `.vavu-profile-qa/compare-signing-*.png` mimo Git.
+
+---
+
 # Aktuální doplnění: Souhrn změn oprávnění (19. 10. 2026)
 
 Výsledek: passed. Nový souhrn za Kontrolou porovnán s dodanou referencí a kontrolován v desktopovém i mobilním Chrome přes Playwright. Názvy firmy, IČO, účtu a osob přebírá ze sdílených dat prototypu.
