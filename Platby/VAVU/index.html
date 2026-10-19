@@ -3057,6 +3057,15 @@
     #profile-panel-profiles .profile-row { min-height: 78px; }
     .profile-tabs button:focus-visible, .profile-close:focus-visible, button.profile-row:focus-visible, button.topbar-item:focus-visible { outline: 2px solid var(--content-primary); outline-offset: 2px; }
     @media (max-width: 551px) { .profile-wrap { padding: var(--padding-xl); } .profile-name { font: var(--headings-title-quaternary); } }
+
+    .company-header { display: flex; align-items: center; height: 32px; }
+    .company-back { display: inline-flex; align-items: center; gap: var(--padding-sm); border: 0; padding: 0; background: none; color: var(--content-primary); font: var(--content-body-primary); cursor: pointer; }
+    .company-back .icon { width: 8px; height: 16px; }
+    .company-back:focus-visible { outline: 2px solid var(--content-primary); outline-offset: 4px; }
+    .company-identity { margin-top: var(--padding-xl); margin-bottom: var(--padding-3xl); gap: var(--padding-xl); }
+    .company-avatar { width: 64px; height: 64px; border-radius: var(--border-radius-md); }
+    .company-avatar .icon { width: 40px; height: 40px; }
+    .company-ico { margin: calc(-1 * var(--padding-sm)) 0 0; font: var(--content-body-primary); }
   </style>
 </head>
 <body>
@@ -3258,7 +3267,7 @@ unicode: "ea4e"
   <path d="M9 21v-4a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v4" />
 </svg>
 </span><span class="profile-row-copy"><span id="profile-fop-name"></span><small>IČO: 12345679</small></span><svg class="icon profile-caret" aria-hidden="true"><use href="#es-caret-right"></use></svg></div>
-              <div class="profile-row" data-ds-component="CO Item Navigation"><span class="profile-role-icon"><!--
+              <button type="button" id="company-profile-trigger" onclick="goTo('profil-firma')" class="profile-row" data-ds-component="CO Item Navigation"><span class="profile-role-icon"><!--
 tags: [community, neighborhood, district, town, city, buildings, houses, residential, building]
 category: Buildings
 version: "1.8"
@@ -3281,9 +3290,83 @@ unicode: "ebf6"
   <path d="M17 11l0 .01" />
   <path d="M17 15l0 .01" />
 </svg>
-</span><span class="profile-row-copy"><span>Vodárny, a.s.</span><small>IČO: 87654326</small></span><svg class="icon profile-caret" aria-hidden="true"><use href="#es-caret-right"></use></svg></div>
+</span><span class="profile-row-copy"><span data-company-name>Vodárny, a.s.</span><small data-company-ico>IČO: 87654326</small></span><svg class="icon profile-caret" aria-hidden="true"><use href="#es-caret-right"></use></svg></button>
             </div>
           </div>
+        </div>
+      </section>
+
+
+      <section class="screen profile-screen company-screen" id="screen-profil-firma" aria-labelledby="company-profile-name">
+        <div class="profile-wrap">
+          <div class="company-header"><button class="company-back" type="button" onclick="backToCompanyProfiles()"><svg class="icon" aria-hidden="true"><use href="#es-caret-left"></use></svg>Zpět</button></div>
+          <div class="profile-identity company-identity">
+            <span class="profile-role-icon company-avatar" aria-hidden="true"><svg class="icon profile-outline-icon" aria-hidden="true"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="1.5"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M8 9l5 5v7h-5v-4m0 4h-5v-7l5 -5m1 1v-6a1 1 0 0 1 1 -1h10a1 1 0 0 1 1 1v17h-8" />
+  <path d="M13 7l0 .01" />
+  <path d="M17 7l0 .01" />
+  <path d="M17 11l0 .01" />
+  <path d="M17 15l0 .01" />
+</svg></span>
+            <h1 class="profile-name" id="company-profile-name" data-company-name>Vodárny, a.s.</h1>
+            <p class="company-ico" data-company-ico>IČO: 87654326</p>
+          </div>
+          <div class="profile-card"><div class="profile-row" data-ds-component="CO Item Navigation"><!--
+tags: [layers, stack, pile, layout, elements, components, levels, z-order, stacked]
+category: Design
+version: "1.39"
+unicode: "eef7"
+-->
+<svg class="icon profile-outline-icon" aria-hidden="true"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="1.5"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M12 4l-8 4l8 4l8 -4l-8 -4" />
+  <path d="M4 12l8 4l8 -4" />
+  <path d="M4 16l8 4l8 -4" />
+</svg>
+<span>Tarif Komfort Business</span><svg class="icon profile-caret" aria-hidden="true"><use href="#es-caret-right"></use></svg></div></div>
+          <div class="profile-card company-menu"><div class="profile-row" data-ds-component="CO Item Navigation"><!--
+tags: [id, id-card, identity, identification, card, personal-details, profile, license]
+category: System
+version: "1.1"
+unicode: "eac3"
+-->
+<svg class="icon profile-outline-icon" aria-hidden="true"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="1.5"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M3 7a3 3 0 0 1 3 -3h12a3 3 0 0 1 3 3v10a3 3 0 0 1 -3 3h-12a3 3 0 0 1 -3 -3l0 -10" />
+  <path d="M7 10a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
+  <path d="M15 8l2 0" />
+  <path d="M15 12l2 0" />
+  <path d="M7 16l10 0" />
+</svg>
+<span>Firemní a kontaktní údaje</span><svg class="icon profile-caret" aria-hidden="true"><use href="#es-caret-right"></use></svg></div><div class="profile-row" data-ds-component="CO Item Navigation"><svg class="icon" aria-hidden="true"><use href="#es-wallet"></use></svg><span>Přístupy k účtům</span><svg class="icon profile-caret" aria-hidden="true"><use href="#es-caret-right"></use></svg></div><div class="profile-row" data-ds-component="CO Item Navigation"><svg class="icon" aria-hidden="true"><use href="#es-text-file"></use></svg><span>Dokumenty</span><svg class="icon profile-caret" aria-hidden="true"><use href="#es-caret-right"></use></svg></div><div class="profile-row" data-ds-component="CO Item Navigation"><svg class="icon" aria-hidden="true"><use href="#es-contracts"></use></svg><span>Bankovní zpráva pro účely auditu</span><svg class="icon profile-caret" aria-hidden="true"><use href="#es-caret-right"></use></svg></div><div class="profile-row" data-ds-component="CO Item Navigation"><span class="profile-settings-icon" aria-hidden="true"></span><span>Nastavení</span><svg class="icon profile-caret" aria-hidden="true"><use href="#es-caret-right"></use></svg></div></div>
         </div>
       </section>
 
@@ -4836,7 +4919,8 @@ unicode: "ebf6"
   <!-- ================= JS LOGIKA ================= -->
   <script>
     // Seznam podporovaných hlavních obrazovek
-    const SCREENS = ['profil', 'login', 'prehled', 'extra', 'karty', 'pujcky', 'sporeni', 'investice', 'pojisteni', 'ucet-detail', 'tp-inkasa', 'tp-inkasa-s-autorizaci', 'autorizace', 'vsechny-platby', 'platba-detail', 'nova-platba', 'nova-platba-detaily', 'platba-vysledek', 'tp-novy', 'tp-detaily', 'tp-souhrn', 'tp-vysledek', 'inkaso-nove', 'inkaso-souhrn', 'inkaso-vysledek', 'davkove-platby', 'davkove-platby-detail', 'davkove-platby-souhrn', 'davkove-platby-vysledek'];
+    const COMPANY_PROFILE = Object.freeze({ name: 'Vodárny, a.s.', ico: '87654326' });
+    const SCREENS = ['profil-firma', 'profil', 'login', 'prehled', 'extra', 'karty', 'pujcky', 'sporeni', 'investice', 'pojisteni', 'ucet-detail', 'tp-inkasa', 'tp-inkasa-s-autorizaci', 'autorizace', 'vsechny-platby', 'platba-detail', 'nova-platba', 'nova-platba-detaily', 'platba-vysledek', 'tp-novy', 'tp-detaily', 'tp-souhrn', 'tp-vysledek', 'inkaso-nove', 'inkaso-souhrn', 'inkaso-vysledek', 'davkove-platby', 'davkove-platby-detail', 'davkove-platby-souhrn', 'davkove-platby-vysledek'];
     // Seznam modálních hashů
     const MODALS = ['povoleni-inkasa-modal', 'autorizace-potvrzeni-modal', 'no-items-modal', 'payment-signature-modal', 'filter-modal'];
 
@@ -5228,7 +5312,8 @@ unicode: "ebf6"
         if (targetScreenId === 'inkaso-souhrn') renderDirectDebitSummary();
       }
 
-      document.body.classList.toggle('profile-mode', targetScreenId === 'profil');
+      document.body.classList.toggle('profile-mode', ['profil', 'profil-firma'].includes(targetScreenId));
+      if (targetScreenId === 'profil-firma') renderCompanyProfile();
       if (targetScreenId === 'profil') {
         renderCurrentUser();
         switchProfileTab(localStorage.getItem('vavu_profile_tab') || 'details');
@@ -5292,12 +5377,23 @@ unicode: "ebf6"
       const avatarEl = document.getElementById('avatar-letters');
       if (nameEl) nameEl.textContent = name;
       if (avatarEl) avatarEl.textContent = initials;
+      renderCompanyProfile();
       document.getElementById('profile-name').textContent = name;
       document.getElementById('profile-initials').textContent = initials;
       document.getElementById('profile-fop-name').textContent = name + ' – OSVČ';
       document.getElementById('profile-trigger').setAttribute('aria-label', 'Otevřít profil: ' + name);
     }
 
+
+    function renderCompanyProfile() {
+      document.querySelectorAll('[data-company-name]').forEach(el => el.textContent = COMPANY_PROFILE.name);
+      document.querySelectorAll('[data-company-ico]').forEach(el => el.textContent = 'IČO: ' + COMPANY_PROFILE.ico);
+    }
+
+    function backToCompanyProfiles() {
+      switchProfileTab('profiles');
+      goTo('profil');
+    }
 
     function openProfile() {
       localStorage.setItem('vavu_profile_return', currentScreen);
