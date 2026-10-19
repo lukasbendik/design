@@ -2,6 +2,21 @@
 
 final result: passed
 
+## Doplnění: osoba → Jak to proběhne → Oprávnění → Jak to funguje
+- Každá ze šesti osob na tabu Oprávnění obou účtů je nově celým řádkem klikací. Otevírá úvod a uloží vybranou osobu odděleně pro každý účet. Úvod Pokračovat otevírá seznam ze druhé přílohy. Vybraný účet je součástí URL; obě nové obrazovky i dialog se obnoví při refreshi.
+- Zdrojové obrázky: `codex-clipboard-3850dd5c-71b4-4c1b-82cb-441acfc03f89.png` (2080 × 1554), `codex-clipboard-db9de5d9-a4cf-427e-a155-e328cffaa36f.png` (2080 × 1752), `codex-clipboard-6b342d89-e1b7-42fa-ab51-4b6d1ead913c.png` (2048 × 1536).
+- Implementační snímky: `/home/lukinab/Projects/UX/.vavu-profile-qa/permission-intro.png`, `permission-edit.png`, `permission-help.png`; viewporty 1040 × 777, 1040 × 876, 1024 × 768 CSS px, DPR 2. Pixelové rozměry odpovídají zdrojům.
+- Společná porovnání: `compare-permission-intro.jpg`, `compare-permission-edit.jpg`, `compare-permission-help.jpg` ve stejné složce, vlevo zdroj a vpravo implementace normalizované na CSS rozměry. U zdrojového dialogu byla průhlednost zkomponována na tmavé pozadí zobrazené v referenci, aby srovnání nebylo zkresleno bílým podkladem. Celé pohledy i čitelné texty/řádky/ilustrace byly prohlédnuty; samostatné výřezy nebyly nutné.
+- Typografie: lokální Inter a stávající DS tokeny, titul 28/36, popisky 16/24, vedlejší a vysvětlující texty 14/20. Na mobilu standardní zmenšení titulu a přirozené zalamování.
+- Layout a barvy: stejný sloupec 520 px, 16 px odsazení, karty, oddělovače a spodní panel jako ve zbytku prototypu. Úvod má centrovanou ilustraci a tři očíslované kroky. Seznam obsahuje čtyři osoby a zvláštní kartu dvou statutárních zástupců. Dialog je centrovaný na tmavém podkladu.
+- Obrazové podklady: `assets/permission-intro-clock.png` je přesný výřez hodin z uživatelského návrhu (235 × 300 px), nikoli překreslení. DS ikony a iniciály jsou stejné jako dříve. Očíslované kroky jsou sémantický ordered list.
+- Copy: všechny instrukce a texty dialogu převzaty z návrhů. Název a číslo účtu vycházejí z ACCOUNT_DATA; osoby a pořadí z COMPANY_USERS. Statutární zástupci mají v tomto kroku Autorizace plateb a nemají chevron, stejně jako ve zdroji. Vybraná osoba se uchovává pro další rozšíření bez přidávání nedodaného zvýraznění.
+- První srovnání: [P2] seznam měl vyšší řádky a odkaz zasahoval do spodního panelu; dialog měl navíc horní odsazení. Oprava: 78 px pro běžné dvouřádkové položky, menší mezera pod účtem, spodní padding obsahu a odstranění dodatečného marginu titulku dialogu. Druhé společné porovnání potvrzuje opravu a celý odkaz nad spodním panelem.
+- Ověřeno pro každou osobu na obou účtech: vstup a zavření úvodu; následně Pokračovat, správný účet, počty 4+2 a pořadí, refresh úvodu/seznamu/dialogu, křížek, Escape, prohlížečové zpět/vpřed a návraty na původní účet. Nativní dialog poskytuje modalitu a zachycení fokusu.
+- 320/390 CSS px: bez horizontálního přetečení; dialog uvnitř viewportu, skutečně otevřený odkaz Jak to funguje, zavření, návraty a dostupné tlačítko Pokračovat. Bez JS chyb; syntaxe inline skriptů a unikátnost ID ověřeny.
+- Bez zbývajících P0/P1/P2. [P3] jemné odlišnosti oddělovačů a šířky vycházejí ze společného DS; viditelný keyboard-focus na křížku je záměrná přístupnost.
+- Další pokračování ze seznamu a detail nastavení konkrétní osoby čekají na další návrh; tato změna neprovádí žádné úpravy oprávnění.
+
 ## Odstranění profilu OSVČ
 - Na výslovnou žádost odebrán celý řádek OSVČ ze segmentu Další profily včetně jeho naplňování v JavaScriptu.
 - Zůstává jediná položka Vodárny, a.s. s původním IČO a funkčním přechodem do detailu firmy. Tato změna nahrazuje původní zadání se dvěma profily.
