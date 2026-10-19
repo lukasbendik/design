@@ -2,6 +2,10 @@
 
 final result: passed
 
+## Odstranění profilu OSVČ
+- Na výslovnou žádost odebrán celý řádek OSVČ ze segmentu Další profily včetně jeho naplňování v JavaScriptu.
+- Zůstává jediná položka Vodárny, a.s. s původním IČO a funkčním přechodem do detailu firmy. Tato změna nahrazuje původní zadání se dvěma profily.
+
 ## Oprava mezery pod Nastavením
 - Uživatelský screenshot `codex-clipboard-b460a983-acfb-4ba2-b64e-3da2caa6815b.png` ukazuje nadbytečnou prázdnou plochu pod poslední položkou osobního profilu.
 - Příčina: dodatečný padding-bottom 56 px na `.profile-menu`. Pravidlo odstraněno; poslední řádek má nadále standardní vnitřní odsazení.
