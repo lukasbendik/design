@@ -2393,6 +2393,19 @@
       white-space: nowrap;
     }
 
+
+    button.batch-overview-item { width: 100%; border: 0; background: none; color: var(--content-primary); text-align: left; font: inherit; cursor: pointer; }
+    button.batch-overview-item:focus-visible { outline: 2px solid var(--content-primary); outline-offset: -2px; }
+    .batch-existing-row { align-items: start; }
+    .batch-existing-row .batch-avatar { position: relative; background: var(--attention-information-surface); }
+    .batch-payment-badge { position: absolute; right: -2px; bottom: -2px; width: 12px; height: 12px; background: var(--background-surface); border-radius: var(--border-radius-full); }
+    .batch-existing-payments .batch-date-title + .batch-transaction::before { content: ''; position: absolute; top: 0; left: var(--pad-xl); right: var(--pad-xl); height: var(--border-sm); background: var(--color-background-divider); }
+    .batch-existing-row .batch-recipient { align-items: start; }
+    .batch-payment-status { color: var(--content-primary); font: var(--content-caption-primary); }
+    .batch-existing-actions[hidden] { display: none; }
+    #batch-detail-dialog::backdrop { background: var(--dialog-overlay); }
+    #batch-detail-dialog .batch-dialog-actions { display: flex; justify-content: flex-end; gap: var(--padding-md); margin-top: var(--padding-xl); }
+
     .batch-authorization-row {
       min-height: 58px;
       padding: var(--pad-xl);
@@ -4849,6 +4862,17 @@ unicode: "eac3"
         </footer>
       </section>
 
+
+      <section class="screen payment-screen batch-screen" id="screen-davka-detail" aria-labelledby="existing-batch-title">
+        <header class="payment-flow-header"><button class="payment-header-action" type="button" onclick="backToBatchOverview()"><svg class="icon icon--caret" style="transform:rotate(180deg)" aria-hidden="true"><use href="#es-caret-right"></use></svg>Zpět</button></header>
+        <div class="payment-flow-content"><div class="batch-flow-column"><h1 class="payment-flow-title" id="existing-batch-title">Detail dávky</h1>
+          <div class="batch-info-message" role="status"><img class="icon" id="existing-batch-warning" src="assets/batch-warning.svg" alt="" width="24" height="24"><svg class="icon" id="existing-batch-info" hidden aria-hidden="true"><use href="#es-info"></use></svg><span class="t-content-body-secondary" id="existing-batch-message"></span></div>
+          <div class="batch-summary-card" id="existing-batch-summary"></div><h2 class="batch-section-title">Platby v dávce</h2><div id="existing-batch-payments"></div>
+        </div></div>
+        <footer class="payment-buttonbar"><div class="payment-buttonbar-row"><button class="btn btn--primary batch-existing-actions" id="existing-batch-authorize" type="button" onclick="openBatchDetailAction('authorize')">Autorizovat</button><button class="btn btn--secondary batch-existing-actions" id="existing-batch-delete" type="button" onclick="openBatchDetailAction('delete')">Smazat</button></div></footer>
+      </section>
+      <dialog class="permission-help-dialog" id="batch-detail-dialog" aria-labelledby="batch-detail-dialog-title"><div class="profile-header"><button type="button" class="profile-close" onclick="document.getElementById('batch-detail-dialog').close()" aria-label="Zavřít potvrzení dávky"><svg class="icon" aria-hidden="true"><use href="#es-close"></use></svg></button></div><h2 class="profile-name" id="batch-detail-dialog-title"></h2><p id="batch-detail-dialog-copy"></p><div class="batch-dialog-actions"><button type="button" class="btn btn--secondary" onclick="document.getElementById('batch-detail-dialog').close()">Zrušit</button><button type="button" class="btn btn--primary" id="batch-detail-confirm" onclick="confirmBatchDetailAction()"></button></div></dialog>
+
       <section class="screen payment-screen batch-screen" id="screen-davkove-platby-detail" aria-labelledby="davkove-platby-detail-title">
         <header class="payment-flow-header">
           <button class="payment-header-action" type="button" onclick="goTo('davkove-platby')">
@@ -5465,7 +5489,7 @@ unicode: "eac3"
         showModalElement(hash);
       } 
       // 2. Zpracování pokud jde o STANDARDNÍ OBRAZOVKU
-      else if (SCREENS.includes(hash)) {
+      else if (SCREENS.includes(hash) || /^davka-detail-[A-Za-z0-9_-]+$/.test(hash)) {
         // Zavřeme případné otevřené modaly
         closeAllModalsElements();
         
@@ -5524,7 +5548,7 @@ unicode: "eac3"
       document.querySelectorAll('.screen').forEach(el => el.classList.remove('active'));
       
       // Zobrazit vybranou obrazovku
-      const targetScreenId = screenId === 'tp-inkasa-s-autorizaci' ? 'tp-inkasa' : screenId.replace(/^kontrola-(?=nastaveni-)/, '');
+      const targetScreenId = screenId.startsWith('davka-detail-') ? 'davka-detail' : screenId === 'tp-inkasa-s-autorizaci' ? 'tp-inkasa' : screenId.replace(/^kontrola-(?=nastaveni-)/, '');
       const isPermissionFlow = PERMISSION_FLOW_SCREENS.includes(targetScreenId);
       const isPermissionEditor = PERMISSION_EDITOR_SCREENS.includes(targetScreenId);
       const isAuthorizationFlow = AUTHORIZATION_FLOW_SCREENS.includes(targetScreenId);
@@ -5605,7 +5629,8 @@ unicode: "eac3"
         switchProfileTab(localStorage.getItem('vavu_profile_tab') || 'details');
       }
 
-      const paymentFlowScreens = ['nova-platba', 'nova-platba-detaily', 'platba-vysledek', 'tp-novy', 'tp-detaily', 'tp-souhrn', 'tp-vysledek', 'inkaso-nove', 'inkaso-souhrn', 'inkaso-vysledek', 'davkove-platby', 'davkove-platby-detail', 'davkove-platby-souhrn', 'davkove-platby-vysledek'];
+      if (targetScreenId === 'davka-detail') renderExistingBatchDetail(screenId.slice('davka-detail-'.length));
+      const paymentFlowScreens = ['davka-detail', 'nova-platba', 'nova-platba-detaily', 'platba-vysledek', 'tp-novy', 'tp-detaily', 'tp-souhrn', 'tp-vysledek', 'inkaso-nove', 'inkaso-souhrn', 'inkaso-vysledek', 'davkove-platby', 'davkove-platby-detail', 'davkove-platby-souhrn', 'davkove-platby-vysledek'];
       document.body.classList.toggle('flow-mode', paymentFlowScreens.includes(targetScreenId));
       document.body.classList.toggle('login-mode', targetScreenId === 'login');
 
@@ -6949,7 +6974,7 @@ unicode: "eac3"
       const list = document.getElementById('batch-overview-list');
       if (!list) return;
       const groups = new Map();
-      [...getImportedBatches(), ...DEFAULT_BATCHES].forEach(batch => {
+      allOverviewBatches().forEach(batch => {
         if (!groups.has(batch.date)) groups.set(batch.date, []);
         groups.get(batch.date).push(batch);
       });
@@ -6964,8 +6989,99 @@ unicode: "eac3"
       }));
     }
 
+    function batchOverrides() {
+      try { return JSON.parse(localStorage.getItem('vavu_batch_overrides') || '{}'); } catch (_) { return {}; }
+    }
+
+    function allOverviewBatches() {
+      const overrides = batchOverrides();
+      return [...getImportedBatches(), ...DEFAULT_BATCHES].map(batch => ({ ...batch, ...overrides[batch.id] })).filter(batch => !batch.deleted);
+    }
+
+    function backToBatchOverview() {
+      localStorage.setItem('vavu_batch_tab', 'overview');
+      goTo('davkove-platby');
+    }
+
+    function existingBatchState(batch) {
+      if (batch.statusType === 'alert') return { label: batch.status || 'Zrušeno', message: 'Dávka byla zrušena.', row: 'Zrušeno', canSign: false, canDelete: false };
+      if (batch.statusType === 'success') return { label: batch.status || 'Zpracováno', message: 'Dávka byla zpracována.', row: 'Zpracováno', canSign: false, canDelete: false };
+      if (batch.status === 'Čekající') return { label: 'Čekající', message: 'Čeká na zpracování.', row: 'Čeká na zpracování', canSign: false, canDelete: false };
+      const signed = batch.signedBy || [];
+      const user = localStorage.getItem('vavu_selected_user') || '';
+      return { label: 'K autorizaci', message: signed.length ? 'Čeká na další podpis.' : 'Čeká na podpisy.', row: 'Čeká na autorizaci dávky', canSign: !signed.includes(user), canDelete: true };
+    }
+
+    function renderExistingBatchDetail(id) {
+      const screen = document.getElementById('screen-davka-detail');
+      screen.dataset.batchId = id;
+      const batch = allOverviewBatches().find(batch => batch.id === id);
+      if (!batch) { backToBatchOverview(); return; }
+      const state = existingBatchState(batch);
+      document.getElementById('existing-batch-message').textContent = state.message;
+      document.getElementById('existing-batch-warning').hidden = !state.canDelete;
+      document.getElementById('existing-batch-info').style.display = state.canDelete ? 'none' : '';
+      document.getElementById('existing-batch-info').removeAttribute('hidden');
+      const values = [['Název dávky', batch.name], ['KB ID dávky', batch.id], ['Stav', state.label], ['Celkem plateb', batch.payments], ['Celková částka', batch.amount]];
+      document.getElementById('existing-batch-summary').innerHTML = values.map(([label, value]) => `<div class="batch-summary-row" data-ds-component="CO Item Display"><span class="t-content-caption-primary">${escapeHtml(label)}</span><strong class="t-content-body-primary">${escapeHtml(String(value))}</strong></div>`).join('');
+      // Existující prototyp import pouze simuluje; ukázkové platby odvozujeme ze stejného seznamu.
+      const sourceRows = [...document.querySelectorAll('#screen-davkove-platby-detail .batch-transaction')];
+      const totalCents = Math.round(Number(batch.amount.replace(/[^0-9,]/g, '').replace(',', '.')) * 100);
+      const count = Math.max(1, Number(batch.payments) || 1);
+      const groups = new Map();
+      for (let i = 0; i < count; i++) {
+        const original = sourceRows[i % sourceRows.length];
+        const date = batch.sourceFile ? original.parentElement.querySelector('.batch-date-title').textContent : 'Datum splatnosti ' + batch.date;
+        const row = original.cloneNode(true);
+        row.classList.add('batch-existing-row');
+        if (batch.statusType === 'pending') {
+          const badge = document.createElement('img'); badge.className = 'batch-payment-badge'; badge.src = 'assets/batch-clock.svg'; badge.alt = ''; row.querySelector('.batch-avatar').append(badge);
+        }
+        const copy = row.querySelector('.batch-recipient .batch-transaction-copy');
+        const status = document.createElement('span'); status.className = 'batch-payment-status'; status.textContent = state.row; copy.append(status);
+        const cents = batch.sourceFile && count === 8 && totalCents === 43300051 ? null : Math.floor(totalCents / count) + (i < totalCents % count ? 1 : 0);
+        if (cents !== null) row.querySelector('.batch-amount').textContent = new Intl.NumberFormat('cs-CZ', { style: 'currency', currency: 'CZK' }).format(cents / 100);
+        if (!groups.has(date)) groups.set(date, []);
+        groups.get(date).push(row);
+      }
+      document.getElementById('existing-batch-payments').replaceChildren(...[...groups].map(([date, rows]) => {
+        const card = document.createElement('div'); card.className = 'batch-payments-card batch-existing-payments'; card.style.marginBottom = 'var(--space-12)';
+        const heading = document.createElement('div'); heading.className = 'batch-date-title'; heading.textContent = date; card.append(heading, ...rows); return card;
+      }));
+      document.getElementById('existing-batch-authorize').hidden = !state.canSign;
+      document.getElementById('existing-batch-delete').hidden = !state.canDelete;
+      screen.querySelector('.payment-buttonbar').hidden = !state.canSign && !state.canDelete;
+    }
+
+    function openBatchDetailAction(action) {
+      const dialog = document.getElementById('batch-detail-dialog');
+      dialog.dataset.action = action;
+      document.getElementById('batch-detail-dialog-title').textContent = action === 'delete' ? 'Smazat dávku?' : 'Autorizovat dávku';
+      document.getElementById('batch-detail-dialog-copy').textContent = action === 'delete' ? 'Dávku odstraníte z přehledu.' : 'Svým podpisem potvrdíte platby v této dávce. K dokončení jsou potřeba dva různé podpisy.';
+      document.getElementById('batch-detail-confirm').textContent = action === 'delete' ? 'Smazat' : 'Podepsat';
+      dialog.showModal();
+    }
+
+    function confirmBatchDetailAction() {
+      const dialog = document.getElementById('batch-detail-dialog');
+      const id = document.getElementById('screen-davka-detail').dataset.batchId;
+      const batch = allOverviewBatches().find(batch => batch.id === id);
+      if (!batch) { dialog.close(); backToBatchOverview(); return; }
+      const overrides = batchOverrides();
+      if (dialog.dataset.action === 'delete' && existingBatchState(batch).canDelete) overrides[id] = { ...overrides[id], deleted: true };
+      else if (dialog.dataset.action === 'authorize' && existingBatchState(batch).canSign) {
+        const signedBy = [...new Set([...(batch.signedBy || []), localStorage.getItem('vavu_selected_user')])];
+        overrides[id] = { ...overrides[id], signedBy, status: signedBy.length >= 2 ? 'Čekající' : 'K autorizaci', statusType: 'pending' };
+      }
+      localStorage.setItem('vavu_batch_overrides', JSON.stringify(overrides));
+      dialog.close();
+      if (overrides[id]?.deleted) backToBatchOverview(); else renderExistingBatchDetail(id);
+    }
+
     function createBatchOverviewItem(batch) {
-      const item = document.createElement('div');
+      const item = document.createElement('button');
+      item.type = 'button';
+      item.onclick = () => goTo('davka-detail-' + batch.id);
       item.className = 'batch-overview-item';
 
       const main = document.createElement('div');

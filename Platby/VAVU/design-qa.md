@@ -1,3 +1,21 @@
+# Detail dávky z přehledu – 20. 10. 2026
+
+final result: passed
+
+Zdroj: `/home/lukinab/.codex/attachments/39bfeacf-780e-4516-8ea8-ea2410d3857a/codex-clipboard-c9a78ab8-8043-4f61-a9f2-3ff51f503518.png` (3360 × 2617 px). Implementace: `/home/lukinab/Projects/UX/.vavu-profile-qa/existing-batch-desktop.png` (1040 × 1100 CSS px, DPR 1) a `existing-batch-mobile.png` (375 × 812). Obsahové porovnání: `compare-existing-batch.png`, výřez zdrojového sloupce převeden na šířku 620 px vedle implementace. Toto je porovnání anatomie; šířka a typografické tokeny zůstávají z existujícího prototypu, nejde o pixelovou shodu různých viewportů.
+
+Přehled dávek má nově tlačítkové řádky se samostatnou URL podle ID dávky. Detail obsahuje hlášku, pět souhrnných polí, platby seskupené podle splatnosti, stav každé platby, čekací ikony a spodní akce Autorizovat/Smazat. Stávající Nová dávka zůstává samostatnou obrazovkou.
+
+Hlášky: K autorizaci → Čeká na podpisy.; po prvním prototypovém podpisu → Čeká na další podpis.; Čekající → Čeká na zpracování.; úspěšná dávka → Dávka byla zpracována.; Zrušeno → Dávka byla zrušena. Podepsaný uživatel nepodepisuje znovu; po dvou různých podpisech přejde prototyp do Čekající. Stav je uložen podle ID a projeví se v přehledu. Smazání má vlastní potvrzení a je vratně reprezentováno příznakem v lokálním úložišti.
+
+Data: název, ID, počet a celková částka pocházejí z vybrané položky přehledu; nepřebírají historické příklady z obrázku. Import již před změnou pouze simuloval platby. Osm plateb importované dávky používá existující ukázková data; u ostatních ukázkových dávek se řádky odvozují z tohoto vzoru s počtem a součtem odpovídajícím souhrnu. Fotografie Jana Janka a logo Mojry z reference se nepřenášejí na jiné příjemce. Ikony jsou existující DS a Tabler (MIT).
+
+Ověření: všechny čtyři výchozí stavy, každá dávka se správnými údaji a počtem řádků, import se dvěma skupinami, refresh, dva různí uživatelé, propsání stavu do přehledu, zrušení a potvrzení smazání, persistence, neznámé ID a mobil 320/375/768 px bez přetečení. Bez JS chyb. Regrese společného zarovnání VS prošla na šesti šířkách.
+
+Vizuální kontrola: fonty, layout a spacing používají stávající DS; barvy a informační plocha odpovídají sémantice, texty a pořadí polí odpovídají referenci. Zdrojové ikonky čekání doplněny po prvním porovnání; opakovaná kontrola aktuálního snímku prošla. Žádné zbývající P0/P1/P2. Záměrné rozdíly: ukázkoví příjemci a částky z prototypu, původní scaffold 620 px a jeho typografická velikost.
+
+---
+
 # Zarovnání VS v dávce – 20. 10. 2026
 
 final result: passed
