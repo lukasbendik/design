@@ -605,6 +605,10 @@
       flex: 0 0 auto;
     }
 
+    .overview-actions { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-4); }
+    .overview-actions .card-action-red--control { border-radius: var(--radius-xl); }
+    .overview-actions .overview-action-icon { width: 24px; height: 24px; filter: brightness(0) invert(1); }
+
     /* Tlačítka */
     .btn {
       height: 48px;
@@ -3703,9 +3707,9 @@ unicode: "eac3"
         </div>
 
         <div class="right-column">
-          <!-- Akční červená karta Nová platba -->
-          <div class="card-action-red" role="button" tabindex="0" onclick="goTo('nova-platba')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();goTo('nova-platba')}">
-            <img src="assets/new-payment.png" alt="Nová platba">
+          <div class="overview-actions">
+            <button class="card-action-red card-action-red--control" type="button" onclick="goTo('nova-platba')"><svg class="icon" aria-hidden="true"><use href="#es-send-payment"></use></svg><span>Nová platba</span></button>
+            <button class="card-action-red card-action-red--control" type="button" onclick="goTo('autorizace')"><img class="overview-action-icon" src="assets/authorization-lock.svg" width="24" height="24" alt=""><span>Autorizace</span></button>
           </div>
 
           <!-- Karta souhrn -->

@@ -1,3 +1,13 @@
+# Přehled – tlačítko Autorizace, 20. 10. 2026
+
+final result: passed
+
+Dvě stejně velké červené akce Nová platba a Autorizace vedle sebe v pravém sloupci Přehledu podle dodané reference `codex-clipboard-5f68c6e4-b0f0-4b0d-8fce-ef70442fa0e6.png`. Sdílená komponenta card-action-red--control a DS tokeny; ikona Autorizace z Tabler (MIT). Úprava se omezuje na tuto dvojici akcí.
+
+Vizuálně ověřeno 1440 × 1000 px, DPR 1: `/home/lukinab/Projects/UX/.vavu-profile-qa/home-authorization.png`. Stejná výška, šířka i horní hrana obou tlačítek. Funguje kliknutí i Enter do stávající autorizace, historie zpět, Nová platba i refresh. Bez JS chyb.
+
+---
+
 # Detail dávky z přehledu – 20. 10. 2026
 
 final result: passed
