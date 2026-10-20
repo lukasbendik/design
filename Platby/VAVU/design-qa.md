@@ -1,3 +1,21 @@
+# Výběr subjektu, přehled autorizací a autorizace dávek – 20. 10. 2026
+
+final result: passed
+
+Zdroje: tři uživatelské přílohy `codex-clipboard-537b6b55-84a8-4331-b1a6-08fcb7d824ea.png` (dávky), `codex-clipboard-7dcbc0cd-99ba-4acd-ad18-f6bfed676951.png` (subjekty) a `codex-clipboard-cd8c4637-b905-4c78-b291-5c0548d1e906.png` (přehled). Zdrojové rozměry 3360 × 2048 px; normalizace na 1680 × 1024 CSS px. Implementace 1680 × 1000 px, DPR 1. Stejné oblasti obsahu porovnány vedle sebe v `compare-authorization-hub-subjects.png`, `compare-authorization-hub-overview.png`, `compare-authorization-hub-batches.png`; původní a implementační snímky v `/home/lukinab/Projects/UX/.vavu-profile-qa/`. Výřezy x240–1290, y40–900 zachycují všechny podstatné části nové UI.
+
+Průchod: Autorizace na Přehledu → při více subjektech Vyberte subjekt → Přehled autorizací → Dávkové platby → Autorizace dávek → existující Detail dávky. V aktuálních datech je pouze Vodárny, a.s.; výběr se přeskočí a i přímý odkaz na výběr přesměruje bez přidání zbytečné položky historie. Výběr pro více subjektů je připraven v AUTHORIZATION_SUBJECTS; druhý subjekt existoval výhradně jako testovací fixture v izolovaném prohlížeči, nebyl přidán do prototypu.
+
+Počty odpovídají stávající autorizaci (3 platby, 3 trvalé příkazy a 1 inkaso ve výchozím stavu; změny a smazané položky se zohledňují). Typ Příkazy k inkasu nemá ve stávajícím prototypu žádná data. Žádné ukázkové firmy ani počty z referencí se nevydávají za skutečný stav prototypu. Účet EUR zobrazuje prázdný stav. Seznam dávek filtruje pouze dávky vybraného subjektu, které čekají na podpis aktuálního uživatele. Jméno subjektu a IČO jsou ze společných dat Vodáren, limit ze stávajícího prototypu.
+
+Vizuální iterace: [P2] původní obecné CSS rozprostřelo prvky do výšky a centrovalo firemní identitu; opraveno specifickým scaffoldem a vodorovnou identitou. [P2] titul/odstup a červené ikony výběru neodpovídaly zdroji; použit token 28/36, odstup 8 a šedý avatar. Nové snímky a porovnání ověřují opravy. Aktuálně fonty Inter/DS, gap/padding/radius/stíny/barvy DS, správné texty, avatar, dokument a čekací ikona; zbývající odlišnosti obsahu jsou záměrné podle aktuálních dat. Bez nových bitmapových nebo kreslených náhrad assetů.
+
+Ověření přes uživatelem schválený samostatný Chrome/Playwright: přeskočení jednoho subjektu, přímý odkaz, více subjektů a izolace dat, výběr, refresh, historie zpět/vpřed, návaznost na starší autorizační seznamy a správný segment, dávky a jejich detail, návrat do správného seznamu i po refreshi, odstranění podepsané dávky z nabídky a prázdný stav, počty, 320/375/768 px včetně neprázdného seznamu dávek bez vodorovného přetečení. Bez JS chyb. Regrese staršího detailu dávek prošla pro všechny čtyři stavy, podpisy a smazání.
+
+Žádné zbývající P0/P1/P2. Záměrné odlišnosti: názvy a počty z aktuálních dat, stávající DS ikona firmy místo loga z ilustrační reference. Starší přímá autorizace u konkrétního účtu zůstává dostupná.
+
+---
+
 # Přehled – tlačítko Autorizace, 20. 10. 2026
 
 final result: passed

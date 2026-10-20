@@ -605,6 +605,39 @@
       flex: 0 0 auto;
     }
 
+
+    body.authorization-hub-mode .app-wrapper { max-width: none; }
+    body.authorization-hub-mode .main-content { padding-top: var(--padding-xl); }
+    .screen.authorization-hub.active { justify-content: flex-start; flex: 0 0 auto; display: flex; flex-direction: column; align-items: stretch; gap: var(--padding-xl); width: 100%; max-width: 1000px; min-width: 0; }
+    .authorization-hub .profile-card, .authorization-hub .card-secondary { margin: 0; }
+    .authorization-hub .profile-row { font: var(--content-body-primary-bold); }
+    .authorization-hub .hub-heading { margin: 0; font: var(--headings-title-tertiary); }
+    .authorization-hub > .company-back { margin-bottom: calc(-1 * var(--padding-md)); }
+    .authorization-hub .hub-description { margin: var(--padding-sm) 0 0; font: var(--content-body-primary); }
+    .authorization-hub .hub-card-heading { margin: 0; padding: var(--padding-xl); font: var(--headings-headline-secondary); }
+    .authorization-hub .hub-card-heading small { display: block; font: var(--content-body-primary); }
+    .authorization-hub .hub-subject { display: flex; flex-direction: row; align-items: center; gap: var(--padding-xl); padding: var(--padding-xl); }
+    .authorization-hub .hub-subject .icon { width: 24px; height: 24px; flex: none; }
+    .authorization-hub .hub-account .profile-row { position: relative; }
+    .authorization-hub .hub-card-heading + .profile-row::before { content: ''; position: absolute; top: 0; left: var(--padding-xl); right: 0; border-top: 1px solid var(--background-divider); }
+    .authorization-hub .hub-account + .hub-account { margin-top: var(--padding-xl); }
+    .authorization-hub .batch-overview-item { grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr) minmax(140px, .5fr); }
+    .authorization-hub .batch-overview-copy > strong, .authorization-hub .batch-overview-amount { font: var(--content-body-primary-bold); }
+    .authorization-hub .batch-overview-count { font: var(--content-body-primary); color: var(--content-tertiary); }
+    .authorization-hub .batch-overview-group { margin-bottom: var(--padding-xl); }
+    .authorization-hub .hub-empty { padding: var(--padding-xl); margin: 0; font: var(--content-body-primary); }
+    .authorization-hub .hub-limit { display: flex; flex-direction: column; gap: var(--padding-sm); padding: var(--padding-xl); font: var(--content-body-primary); }
+    .authorization-hub .hub-limit small { font: var(--content-body-secondary); color: var(--content-tertiary); }
+    .authorization-hub .hub-warning-copy { color: var(--content-tertiary); font: var(--content-body-secondary); }
+    @media(max-width:767px) {
+      body.authorization-hub-mode .sidebar, body.authorization-hub-mode .topbar, body.authorization-hub-mode .chatbot-btn { display: none; }
+      body.authorization-hub-mode .main-content { margin: 0; width: 100%; height: 100dvh; padding: var(--padding-xl); }
+      .authorization-hub .hub-heading { font: var(--headings-title-quaternary); }
+      .authorization-hub .batch-overview-item { grid-template-columns: minmax(0, 1fr) auto; }
+      .authorization-hub .batch-overview-count { grid-column: 1; }
+      .authorization-hub .batch-overview-amount { grid-column: 2; grid-row: 1 / span 2; }
+    }
+
     .overview-actions { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-4); }
     .overview-actions .card-action-red--control { border-radius: var(--radius-xl); }
     .overview-actions .overview-action-icon { width: 24px; height: 24px; filter: brightness(0) invert(1); }
@@ -3709,7 +3742,7 @@ unicode: "eac3"
         <div class="right-column">
           <div class="overview-actions">
             <button class="card-action-red card-action-red--control" type="button" onclick="goTo('nova-platba')"><svg class="icon" aria-hidden="true"><use href="#es-send-payment"></use></svg><span>Nová platba</span></button>
-            <button class="card-action-red card-action-red--control" type="button" onclick="goTo('autorizace')"><img class="overview-action-icon" src="assets/authorization-lock.svg" width="24" height="24" alt=""><span>Autorizace</span></button>
+            <button class="card-action-red card-action-red--control" type="button" onclick="startAuthorization()"><img class="overview-action-icon" src="assets/authorization-lock.svg" width="24" height="24" alt=""><span>Autorizace</span></button>
           </div>
 
           <!-- Karta souhrn -->
@@ -4179,10 +4212,15 @@ unicode: "eac3"
 
 
       <!-- ================= SCREEN 7: AUTORIZACE ================= -->
+
+      <section class="screen authorization-hub" id="screen-vyber-subjektu" aria-labelledby="hub-subjects-title"><button class="company-back" type="button" onclick="closeAuthorizationHub()"><svg class="icon" aria-hidden="true"><use href="#es-caret-left"></use></svg>Zpět</button><h1 class="hub-heading" id="hub-subjects-title">Vyberte subjekt</h1><p class="hub-description">U těchto máte požadavek k autorizaci.</p><div class="profile-card" id="hub-subjects-list"></div></section>
+      <section class="screen authorization-hub" id="screen-prehled-autorizaci" aria-labelledby="hub-overview-title"><button class="company-back" type="button" onclick="backFromAuthorizationOverview()"><svg class="icon" aria-hidden="true"><use href="#es-caret-left"></use></svg>Zpět</button><h1 class="hub-heading" id="hub-overview-title">Přehled autorizací</h1><div class="card-secondary hub-subject"><svg class="icon" aria-hidden="true"><use href="#es-bank"></use></svg><span class="profile-row-copy"><span id="hub-company-name"></span><small id="hub-company-ico"></small></span></div><div class="profile-card"><button type="button" class="profile-row" onclick="goTo('autorizace-davek')"><span class="profile-row-copy"><span>Dávkové platby</span><small id="hub-batch-count"></small></span><svg class="icon profile-caret" aria-hidden="true"><use href="#es-caret-right"></use></svg></button></div><div id="hub-account-categories"></div></section>
+      <section class="screen authorization-hub" id="screen-autorizace-davek" aria-labelledby="hub-batches-title"><button class="company-back" type="button" onclick="goTo('prehled-autorizaci')"><svg class="icon" aria-hidden="true"><use href="#es-caret-left"></use></svg>Zpět</button><h1 class="hub-heading" id="hub-batches-title">Autorizace dávek</h1><div class="card-secondary hub-limit"><strong>K dispozici</strong><small id="hub-subject-limit"></small></div><div id="hub-batches-list"></div></section>
+
       <div class="screen" id="screen-autorizace">
         <div class="center-column">
           <!-- Zpět z Autorizace má vést na detail účtu (speciální zpětný flow z diagramu) -->
-          <button class="back-btn" onclick="goTo('ucet-detail')">
+          <button class="back-btn" onclick="goTo(currentScreen === 'autorizace' ? 'ucet-detail' : 'prehled-autorizaci')">
             <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"><path d="m15 19-7-7 7-7"/></svg>
             Zpět
           </button>
@@ -5167,6 +5205,7 @@ unicode: "eac3"
   <script>
     // Seznam podporovaných hlavních obrazovek
     const COMPANY_PROFILE = Object.freeze({ name: 'Vodárny, a.s.', ico: '87654326' });
+    const AUTHORIZATION_SUBJECTS = [{ id: 'vodarny', name: COMPANY_PROFILE.name, ico: COMPANY_PROFILE.ico, accounts: ['czk', 'eur'], availableLimit: '258 000,00 Kč' }];
     const COMPANY_USERS = Object.freeze([
       { name: 'Kateřina H.', initials: 'KH', role: 'Člen představenstva', permitted: true },
       { name: 'Šárka B.', initials: 'ŠB', role: 'Člen představenstva', permitted: true },
@@ -5190,7 +5229,7 @@ unicode: "eac3"
     const PERMISSION_SIGNING_SCREENS = ['czk', 'eur'].flatMap(key => ['podpis-opravneni-uvod-' + key, 'podpis-opravneni-potvrzeni-' + key, 'podpis-opravneni-dokument-' + key, 'podpis-opravneni-vysledek-' + key]);
     const USER_DETAIL_SCREENS = [...COMPANY_USERS.map((_, index) => String(index)), 'current'].flatMap(id => ['uzivatel-' + id, 'uzivatel-opravneni-' + id]);
     const COMPANY_ACCESS_SCREENS = [...USER_DETAIL_SCREENS, ...PERMISSION_SIGNING_SCREENS, ...REVIEW_SCREENS, ...REVIEW_EDIT_SCREENS, ...AUTHORIZATION_FLOW_SCREENS, ...PERMISSION_EDITOR_SCREENS, ...PERMISSION_FLOW_SCREENS, ...COMPANY_ACCOUNT_SCREENS, 'pristupy-k-uctum', 'pristupy-opravneni', 'pristupy-uzivatele', 'pristupy-podpisova-pravidla'];
-    const SCREENS = [...COMPANY_ACCESS_SCREENS, 'profil-firma', 'profil', 'login', 'prehled', 'extra', 'karty', 'pujcky', 'sporeni', 'investice', 'pojisteni', 'ucet-detail', 'tp-inkasa', 'tp-inkasa-s-autorizaci', 'autorizace', 'vsechny-platby', 'platba-detail', 'nova-platba', 'nova-platba-detaily', 'platba-vysledek', 'tp-novy', 'tp-detaily', 'tp-souhrn', 'tp-vysledek', 'inkaso-nove', 'inkaso-souhrn', 'inkaso-vysledek', 'davkove-platby', 'davkove-platby-detail', 'davkove-platby-souhrn', 'davkove-platby-vysledek'];
+    const SCREENS = ['vyber-subjektu', 'prehled-autorizaci', 'autorizace-davek', 'autorizace-platby', 'autorizace-tp', 'autorizace-inkasa', ...COMPANY_ACCESS_SCREENS, 'profil-firma', 'profil', 'login', 'prehled', 'extra', 'karty', 'pujcky', 'sporeni', 'investice', 'pojisteni', 'ucet-detail', 'tp-inkasa', 'tp-inkasa-s-autorizaci', 'autorizace', 'vsechny-platby', 'platba-detail', 'nova-platba', 'nova-platba-detaily', 'platba-vysledek', 'tp-novy', 'tp-detaily', 'tp-souhrn', 'tp-vysledek', 'inkaso-nove', 'inkaso-souhrn', 'inkaso-vysledek', 'davkove-platby', 'davkove-platby-detail', 'davkove-platby-souhrn', 'davkove-platby-vysledek'];
     // Seznam modálních hashů
     const MODALS = ['povoleni-inkasa-modal', 'autorizace-potvrzeni-modal', 'no-items-modal', 'payment-signature-modal', 'filter-modal'];
 
@@ -5552,7 +5591,7 @@ unicode: "eac3"
       document.querySelectorAll('.screen').forEach(el => el.classList.remove('active'));
       
       // Zobrazit vybranou obrazovku
-      const targetScreenId = screenId.startsWith('davka-detail-') ? 'davka-detail' : screenId === 'tp-inkasa-s-autorizaci' ? 'tp-inkasa' : screenId.replace(/^kontrola-(?=nastaveni-)/, '');
+      const targetScreenId = /^autorizace-(platby|tp|inkasa)$/.test(screenId) ? 'autorizace' : screenId.startsWith('davka-detail-') ? 'davka-detail' : screenId === 'tp-inkasa-s-autorizaci' ? 'tp-inkasa' : screenId.replace(/^kontrola-(?=nastaveni-)/, '');
       const isPermissionFlow = PERMISSION_FLOW_SCREENS.includes(targetScreenId);
       const isPermissionEditor = PERMISSION_EDITOR_SCREENS.includes(targetScreenId);
       const isAuthorizationFlow = AUTHORIZATION_FLOW_SCREENS.includes(targetScreenId);
@@ -5566,7 +5605,7 @@ unicode: "eac3"
       }
 
       if (targetScreenId === 'autorizace') {
-        switchAuthTab('platby');
+        switchAuthTab(screenId === 'autorizace' ? 'platby' : screenId.slice('autorizace-'.length));
       }
       if (targetScreenId === 'ucet-detail') {
         renderAccountDetail();
@@ -5610,6 +5649,8 @@ unicode: "eac3"
         if (targetScreenId === 'inkaso-souhrn') renderDirectDebitSummary();
       }
 
+      document.body.classList.toggle('authorization-hub-mode', ['vyber-subjektu', 'prehled-autorizaci', 'autorizace-davek'].includes(targetScreenId));
+      if (['vyber-subjektu', 'prehled-autorizaci', 'autorizace-davek'].includes(targetScreenId)) renderAuthorizationHub(targetScreenId);
       document.body.classList.toggle('profile-mode', ['profil', 'profil-firma', ...COMPANY_ACCESS_SCREENS].includes(targetScreenId));
       if (userRoute) renderUserDetail(userRoute[2]);
       if (targetScreenId === 'profil-firma') renderCompanyProfile();
@@ -5643,7 +5684,7 @@ unicode: "eac3"
       
       // Mapování obrazovek na menu položky
       let menuId = screenId === 'login' ? null : 'nav-prehled';
-      if (screenId === 'ucet-detail' || screenId === 'tp-inkasa' || screenId === 'tp-inkasa-s-autorizaci' || screenId === 'autorizace' || screenId === 'vsechny-platby' || screenId === 'platba-detail') {
+      if (['vyber-subjektu', 'prehled-autorizaci', 'autorizace-davek', 'autorizace-platby', 'autorizace-tp', 'autorizace-inkasa'].includes(screenId) || screenId === 'ucet-detail' || screenId === 'tp-inkasa' || screenId === 'tp-inkasa-s-autorizaci' || screenId === 'autorizace' || screenId === 'vsechny-platby' || screenId === 'platba-detail') {
         menuId = 'nav-ucy';
       } else if (screenId === 'extra') {
         menuId = 'nav-extra';
@@ -7002,7 +7043,14 @@ unicode: "eac3"
       return [...getImportedBatches(), ...DEFAULT_BATCHES].map(batch => ({ ...batch, ...overrides[batch.id] })).filter(batch => !batch.deleted);
     }
 
+    function openExistingBatch(id, from) {
+      localStorage.setItem('vavu_batch_return_' + id, from);
+      goTo('davka-detail-' + id);
+    }
+
     function backToBatchOverview() {
+      const id = document.getElementById('screen-davka-detail').dataset.batchId;
+      if (localStorage.getItem('vavu_batch_return_' + id) === 'autorizace-davek') { goTo('autorizace-davek'); return; }
       localStorage.setItem('vavu_batch_tab', 'overview');
       goTo('davkove-platby');
     }
@@ -7082,10 +7130,95 @@ unicode: "eac3"
       if (overrides[id]?.deleted) backToBatchOverview(); else renderExistingBatchDetail(id);
     }
 
+    function authorizationSubject() {
+      return AUTHORIZATION_SUBJECTS.find(subject => subject.id === localStorage.getItem('vavu_authorization_subject')) || AUTHORIZATION_SUBJECTS[0];
+    }
+
+    function startAuthorization() {
+      localStorage.setItem('vavu_authorization_origin', currentScreen || 'prehled');
+      if (AUTHORIZATION_SUBJECTS.length === 1) selectAuthorizationSubject(AUTHORIZATION_SUBJECTS[0].id);
+      else goTo('vyber-subjektu');
+    }
+
+    function selectAuthorizationSubject(id) {
+      if (!AUTHORIZATION_SUBJECTS.some(subject => subject.id === id)) return;
+      localStorage.setItem('vavu_authorization_subject', id);
+      goTo('prehled-autorizaci');
+    }
+
+    function closeAuthorizationHub() {
+      const origin = localStorage.getItem('vavu_authorization_origin');
+      goTo(SCREENS.includes(origin) && !['vyber-subjektu', 'prehled-autorizaci', 'autorizace-davek'].includes(origin) ? origin : 'prehled');
+    }
+
+    function backFromAuthorizationOverview() {
+      if (AUTHORIZATION_SUBJECTS.length > 1) goTo('vyber-subjektu'); else closeAuthorizationHub();
+    }
+
+    function authorizableBatches() {
+      return allOverviewBatches().filter(batch => (batch.subjectId || 'vodarny') === authorizationSubject()?.id && existingBatchState(batch).canSign);
+    }
+
+    function authorizationItemCount(count) {
+      return count + (count === 1 ? ' položka' : count >= 2 && count <= 4 ? ' položky' : ' položek');
+    }
+
+    function authorizationCategoryCounts() {
+      const current = currentAuthTab;
+      const result = {};
+      for (const tab of ['platby', 'tp', 'inkasa']) {
+        currentAuthTab = tab;
+        renderDynamicContent();
+        result[tab] = document.querySelectorAll('#auth-items-list .auth-item-card').length;
+      }
+      currentAuthTab = current;
+      renderDynamicContent();
+      return result;
+    }
+
+    function renderAuthorizationHub(route) {
+      if (route === 'vyber-subjektu' && AUTHORIZATION_SUBJECTS.length === 1) {
+        localStorage.setItem('vavu_authorization_subject', AUTHORIZATION_SUBJECTS[0].id);
+        goTo('prehled-autorizaci', true);
+        currentScreen = 'prehled-autorizaci';
+        showScreenElements(currentScreen);
+        return;
+      }
+      const caret = '<svg class="icon profile-caret" aria-hidden="true"><use href="#es-caret-right"></use></svg>';
+      document.getElementById('hub-subjects-list').innerHTML = AUTHORIZATION_SUBJECTS.map(subject => `<button class="profile-row" type="button" onclick="selectAuthorizationSubject('${escapeHtml(subject.id)}')"><span class="profile-role-icon" aria-hidden="true"><svg class="icon"><use href="#es-person"></use></svg></span><span>${escapeHtml(subject.name)}</span>${caret}</button>`).join('');
+      const subject = authorizationSubject();
+      if (!subject) return;
+      document.getElementById('hub-company-name').textContent = subject.name;
+      document.getElementById('hub-company-ico').textContent = subject.ico ? 'IČO: ' + subject.ico : '';
+      document.getElementById('hub-subject-limit').textContent = subject.availableLimit ? 'Z vlastního limitu subjektu: ' + subject.availableLimit : 'Bez nastaveného limitu subjektu';
+      const batches = authorizableBatches();
+      document.getElementById('hub-batch-count').textContent = authorizationItemCount(batches.length);
+      const counts = subject.id === 'vodarny' ? authorizationCategoryCounts() : { platby: 0, tp: 0, inkasa: 0 };
+      document.getElementById('hub-account-categories').innerHTML = (subject.accounts || []).map((key, index) => {
+        const account = ACCOUNT_DATA[key];
+        if (!account) return '';
+        const rows = index === 0 ? [['Platby', 'platby'], ['Trvalé příkazy', 'tp'], ['Inkasa', 'inkasa']].filter(([, tab]) => counts[tab] > 0) : [];
+        return `<div class="profile-card hub-account"><h2 class="hub-card-heading">${escapeHtml(account.name)}<small>${escapeHtml(account.number)}</small></h2>${rows.length ? rows.map(([label, tab]) => `<button class="profile-row" type="button" onclick="goTo('autorizace-${tab}')"><span class="profile-row-copy"><span>${label}</span><small>${authorizationItemCount(counts[tab])}</small></span>${caret}</button>`).join('') : '<p class="hub-empty">Žádné požadavky k autorizaci.</p>'}</div>`;
+      }).join('');
+      const groups = new Map();
+      batches.forEach(batch => { if (!groups.has(batch.date)) groups.set(batch.date, []); groups.get(batch.date).push(batch); });
+      document.getElementById('hub-batches-list').replaceChildren(...[...groups].map(([date, items]) => {
+        const group = document.createElement('div'); group.className = 'profile-card batch-overview-group';
+        const title = document.createElement('h2'); title.className = 'hub-card-heading'; title.textContent = 'Datum zadání ' + date;
+        group.append(title, ...items.map(batch => {
+          const item = createBatchOverviewItem({ ...batch, status: '' });
+          const badge = document.createElement('img'); badge.src = 'assets/batch-clock.svg'; badge.alt = ''; badge.width = 12; badge.height = 12; item.querySelector('.batch-status-dot').replaceChildren(badge);
+          item.onclick = () => openExistingBatch(batch.id, 'autorizace-davek');
+          return item;
+        })); return group;
+      }));
+      if (!batches.length) document.getElementById('hub-batches-list').innerHTML = '<div class="profile-card"><p class="hub-empty">Žádné dávky k autorizaci.</p></div>';
+    }
+
     function createBatchOverviewItem(batch) {
       const item = document.createElement('button');
       item.type = 'button';
-      item.onclick = () => goTo('davka-detail-' + batch.id);
+      item.onclick = () => openExistingBatch(batch.id, 'davkove-platby');
       item.className = 'batch-overview-item';
 
       const main = document.createElement('div');
