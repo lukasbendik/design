@@ -1,3 +1,17 @@
+# Oprava: Jak to funguje jako overlay – 20. 10. 2026
+
+final result: passed
+
+Příčina: dialog měl neprůhledný backdrop a hash nápovědy znovu přepínal obrazovky; u limitů směroval na obecnou kontrolu. Nápověda nyní zachovává aktivní zdrojovou obrazovku, její obsah a scroll. Při přímém odkazu a refreshi obnoví odpovídající podklad. Průhlednost čerpá z DS `--dialog-overlay`. Styl dokumentového dialogu zůstává beze změny.
+
+Zdroj: `/home/lukinab/.codex/attachments/9993784c-4834-4b7d-8903-e9d2ffb462fc/codex-clipboard-7c155a8a-d2ce-4dcd-9a3f-5adb6a8e5802.png`; požadovanou odchylkou od obrázku je viditelná spouštěcí obrazovka pod průhledným překrytím. Obsah, typografie, rozměry a zaoblení původního dialogu zachovány.
+
+Implementace: `/home/lukinab/Projects/UX/.vavu-profile-qa/help-overlay-desktop.png` a `help-overlay-mobile.png`, 1040 × 780 a 375 × 780 CSS px, DPR 1. Vizuálně ověřen obsah dialogu a viditelný podklad na desktopu i mobilu. Žádné nové assety ani copy.
+
+Ověření: oba účty, Oprávnění/Autorizace/Limity v běžném flow i editaci z Kontroly; zavření křížkem, Escape a backdropem, refresh i historie zpět/vpřed. Otevření a zavření zachovává scroll v okamžiku aktivace odkazu. Bez JS chyb. Žádné zbývající P0/P1/P2 nálezy.
+
+---
+
 # Detail uživatele a jeho oprávnění – 20. 10. 2026
 
 final result: passed

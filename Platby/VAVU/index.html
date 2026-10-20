@@ -3135,6 +3135,7 @@
     .permission-help-trigger { margin-top: var(--padding-xl); }
     .permission-help-dialog { width: min(var(--layout-narrow-column), calc(100% - 32px)); max-height: calc(100dvh - 32px); overflow-y: auto; padding: var(--padding-xl); border: 0; border-radius: var(--border-radius-xl); background: var(--background-body); color: var(--content-primary); }
     .permission-help-dialog::backdrop { background: var(--content-primary); }
+    #permission-help-dialog::backdrop { background: var(--dialog-overlay); }
     .permission-help-dialog .profile-name { margin: 0 0 var(--padding-xl); }
     .permission-help-dialog p { margin: 0 0 var(--padding-xl); font: var(--content-body-secondary); }
     .permission-help-dialog p:last-child { margin-bottom: 0; }
@@ -5498,6 +5499,27 @@ unicode: "eac3"
 
     // Zobrazit konkrétní div obrazovky a upravit stav v menu
     function showScreenElements(screenId, forceAuthCard = false) {
+      const helpDialog = document.getElementById('permission-help-dialog');
+      const helpRoute = screenId.match(/^(kontrola-)?nastaveni-(opravneni|autorizace|limity)-info-(czk|eur)$/);
+      if (helpRoute) {
+        const parentRoute = screenId.replace('-info-', '-');
+        const parentId = { opravneni: 'screen-permission-edit', autorizace: 'screen-authorization-method', limity: 'screen-permission-limits' }[helpRoute[2]];
+        // Při přímém odkazu nebo refreshi nejdřív obnovit podklad dialogu.
+        if (!document.getElementById(parentId).classList.contains('active')) showScreenElements(parentRoute);
+        helpDialog.dataset.returnRoute = parentRoute;
+        if (!helpDialog.open) {
+          const scroller = document.querySelector('.main-content');
+          const scrollTop = scroller.scrollTop;
+          helpDialog.showModal();
+          scroller.scrollTop = scrollTop;
+        }
+        return;
+      }
+      if (helpDialog.open && helpDialog.dataset.returnRoute === screenId) {
+        helpDialog.close();
+        document.querySelector('.screen.active .permission-help-trigger')?.focus({ preventScroll: true });
+        return;
+      }
       // Skrýt všechny obrazovky
       document.querySelectorAll('.screen').forEach(el => el.classList.remove('active'));
       
