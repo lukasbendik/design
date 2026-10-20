@@ -3105,6 +3105,20 @@
     .account-limits-empty img { display: block; margin: 0 auto var(--padding-xl); object-fit: contain; }
     .account-limits-empty p { margin: 0; font: var(--content-body-secondary); }
 
+
+    button.access-user-row { width: 100%; border: 0; background: none; color: var(--content-primary); text-align: left; cursor: pointer; }
+    button.access-user-row:focus-visible { outline: 2px solid var(--content-primary); outline-offset: -2px; }
+    .user-detail-identity { margin: var(--padding-xl) 0 var(--padding-xl); gap: var(--padding-xl); }
+    .user-detail-identity .access-user-avatar { background: var(--background-surface-avatar); width: 64px; height: 64px; border-radius: var(--border-radius-md); font: var(--headings-title-tertiary); }
+    .user-detail-birth { margin: calc(-1 * var(--padding-sm)) 0 0; font: var(--content-body-secondary); }
+    .user-detail-actions { margin-top: var(--padding-3xl); }
+    .user-detail-screen .profile-row > .user-action-icon { width: 24px; height: 24px; margin-left: auto; color: inherit; flex: none; }
+    .user-detail-screen .profile-row.user-delete { color: var(--attention-alert); }
+    .user-permissions-empty { padding: var(--padding-xl); text-align: center; }
+    .user-permissions-empty img { display: block; width: 80px; height: 64px; object-fit: contain; margin: 0 auto var(--padding-xl); }
+    .user-permissions-empty p { margin: 0; font: var(--content-body-secondary); }
+    .user-permissions-name { margin: var(--padding-xl) 0; font: var(--content-body-primary); }
+
     .permission-intro-illustration { display: block; object-fit: contain; margin: var(--padding-3xl) auto var(--padding-4xl); }
     .permission-intro-title { margin-bottom: var(--padding-3xl); }
     .permission-steps { padding: 0; margin: 0 0 var(--padding-3xl); list-style: none; counter-reset: permission-step; }
@@ -3452,7 +3466,13 @@ unicode: "eac3"
       <!-- Firemní přístupy: údaje sdílené s přihlášením a účty. -->
 <section class="screen profile-screen access-screen " id="screen-pristupy-k-uctum" aria-labelledby="title-pristupy-k-uctum"><div class="profile-wrap"><div class="company-header"><button class="company-back" type="button" onclick="goTo('profil-firma')"><svg class="icon" aria-hidden="true"><use href="#es-caret-left"></use></svg>Zpět</button></div><h1 class="access-title profile-name" id="title-pristupy-k-uctum">Přístupy k účtům</h1><div class="profile-card"><button type="button" class="profile-row" data-ds-component="CO Item Navigation" onclick="openCompanyPermissions('pristupy-k-uctum')"><span>Oprávnění</span><svg class="icon profile-caret" aria-hidden="true"><use href="#es-caret-right"></use></svg></button><button type="button" class="profile-row" data-ds-component="CO Item Navigation" onclick="goTo('pristupy-uzivatele')"><span>Uživatelé</span><svg class="icon profile-caret" aria-hidden="true"><use href="#es-caret-right"></use></svg></button><button type="button" class="profile-row" data-ds-component="CO Item Navigation" onclick="openCompanySigningRules('pristupy-k-uctum')"><span>Statutární podpisová pravidla</span><svg class="icon profile-caret" aria-hidden="true"><use href="#es-caret-right"></use></svg></button></div></div></section><section class="screen profile-screen access-screen " id="screen-pristupy-opravneni" aria-labelledby="title-pristupy-opravneni"><div class="profile-wrap"><div class="profile-header"><button class="profile-close" type="button" onclick="closeCompanyPermissions()" aria-label="Zavřít oprávnění"><svg class="icon" aria-hidden="true"><use href="#es-close"></use></svg></button></div><h1 class="access-title profile-name" id="title-pristupy-opravneni">Oprávnění</h1><div class="profile-card"><h2 class="access-card-title">Běžné účty</h2><div id="company-permission-accounts"></div></div></div></section><section class="screen profile-screen access-screen access-users-screen" id="screen-pristupy-uzivatele" aria-labelledby="title-pristupy-uzivatele"><div class="profile-wrap"><div class="company-header"><button class="company-back" type="button" onclick="goTo('pristupy-k-uctum')"><svg class="icon" aria-hidden="true"><use href="#es-caret-left"></use></svg>Zpět</button></div><h1 class="access-title profile-name" id="title-pristupy-uzivatele">Uživatelé</h1><div class="profile-card" id="company-current-user"></div><div class="profile-card" id="company-other-users"></div></div><div class="access-buttonbar" data-ds-component="CO Button Bar Bottom"><div class="access-buttonbar-inner"><button class="btn btn--primary" type="button" onclick="openCompanyPermissions('pristupy-uzivatele')">Nastavit oprávnění</button></div></div></section><section class="screen profile-screen access-screen " id="screen-pristupy-podpisova-pravidla" aria-labelledby="title-pristupy-podpisova-pravidla"><div class="profile-wrap"><div class="company-header"><button class="company-back" type="button" onclick="closeCompanySigningRules()"><svg class="icon" aria-hidden="true"><use href="#es-caret-left"></use></svg>Zpět</button></div><h1 class="access-title profile-name" id="title-pristupy-podpisova-pravidla">Statutární podpisová pravidla</h1><div class="profile-card"><h2 class="access-card-title">Výchozí podpisová pravidla</h2><div class="access-info-row"><span>Bez omezení částkou</span><small>Společně: Člen představenstva + Člen představenstva</small></div></div><div class="profile-card"><h2 class="access-card-title">Podpisové skupiny</h2><div id="company-signature-members"></div></div></div></section>
 
-      <section class="screen profile-screen access-screen access-users-screen account-access-screen" id="screen-account-access" aria-labelledby="account-access-title">
+      <section class="screen profile-screen access-screen user-detail-screen" id="screen-user-detail" aria-labelledby="user-detail-name"><div class="profile-wrap"><div class="company-header"><button class="company-back" type="button" onclick="goTo('pristupy-uzivatele')"><svg class="icon" aria-hidden="true"><use href="#es-caret-left"></use></svg>Zpět</button></div>
+        <div class="profile-identity user-detail-identity"><span class="access-user-avatar" id="user-detail-initials" aria-hidden="true"></span><h1 class="profile-name" id="user-detail-name"></h1><p class="user-detail-birth" id="user-detail-birth" hidden></p></div>
+        <div class="profile-card"><button type="button" class="profile-row" onclick="goTo(currentUserDetailRoute(true))"><span>Oprávnění</span><svg class="icon profile-caret" aria-hidden="true"><use href="#es-caret-right"></use></svg></button><button type="button" class="profile-row" onclick="alert('Podpisové skupiny zatím nejsou součástí prototypu.')"><span>Podpisové skupiny</span><svg class="icon profile-caret" aria-hidden="true"><use href="#es-caret-right"></use></svg></button></div>
+        <div class="profile-card user-detail-actions"><button type="button" class="profile-row" onclick="openCompanyPermissions(currentUserDetailRoute())"><span>Nastavit oprávnění</span><img class="user-action-icon" src="assets/user-permissions-settings.png" width="24" height="24" alt=""></button><button type="button" class="profile-row" onclick="alert('Kopírování nastavení zatím není součástí prototypu.')"><span>Zkopírovat nastavení</span><svg class="icon user-action-icon" aria-hidden="true"><use href="#es-copy"></use></svg></button><button type="button" class="profile-row user-delete" onclick="alert('Mazání uživatelů zatím není součástí prototypu.')"><span>Smazat uživatele</span><svg class="icon user-action-icon" aria-hidden="true"><use href="#es-delete"></use></svg></button></div>
+      </div></section>
+      <section class="screen profile-screen access-screen user-detail-screen" id="screen-user-permissions" aria-labelledby="user-permissions-title"><div class="profile-wrap"><div class="company-header"><button class="company-back" type="button" onclick="goTo(currentUserDetailRoute())"><svg class="icon" aria-hidden="true"><use href="#es-caret-left"></use></svg>Zpět</button></div><h1 class="access-title profile-name" id="user-permissions-title">Oprávnění</h1><p class="user-permissions-name" id="user-permissions-name"></p><div id="user-permissions-content"></div><div class="profile-card user-detail-actions"><button type="button" class="profile-row" onclick="openCompanyPermissions(currentUserDetailRoute(true))"><span>Nastavit oprávnění</span><img class="user-action-icon" src="assets/user-permissions-settings.png" width="24" height="24" alt=""></button></div></div></section>
+<section class="screen profile-screen access-screen access-users-screen account-access-screen" id="screen-account-access" aria-labelledby="account-access-title">
         <div class="profile-wrap">
           <div class="company-header"><button class="company-back" type="button" onclick="goTo('pristupy-opravneni')"><svg class="icon" aria-hidden="true"><use href="#es-caret-left"></use></svg>Zpět</button></div>
           <h1 class="access-title profile-name" id="account-access-title">Účet</h1>
@@ -5121,7 +5141,7 @@ unicode: "eac3"
     const COMPANY_USERS = Object.freeze([
       { name: 'Kateřina H.', initials: 'KH', role: 'Člen představenstva', permitted: true },
       { name: 'Šárka B.', initials: 'ŠB', role: 'Člen představenstva', permitted: true },
-      { name: 'Eva Š.', initials: 'EŠ', role: 'Zmocněná osoba', permitted: false },
+      { name: 'Eva Š.', initials: 'EŠ', birthDate: '25. 12. 1975', role: 'Zmocněná osoba', permitted: false },
       { name: 'Linda O.', initials: 'LO', role: 'Zmocněná osoba', permitted: true },
       { name: 'Naděžda P.', initials: 'NP', role: 'Zmocněná osoba', permitted: false },
       { name: 'Šárka M.', initials: 'ŠM', role: 'Zmocněná osoba', permitted: false }
@@ -5139,7 +5159,8 @@ unicode: "eac3"
     const REVIEW_SCREENS = ['czk', 'eur'].flatMap(key => ['souhrn-opravneni-' + key, 'kontrola-' + key, 'nastaveni-limity-' + key, 'nastaveni-limity-info-' + key]);
     const REVIEW_EDIT_SCREENS = [...PERMISSION_FLOW_SCREENS, ...PERMISSION_EDITOR_SCREENS, ...AUTHORIZATION_FLOW_SCREENS, ...REVIEW_SCREENS.filter(id => id.startsWith('nastaveni-'))].map(id => 'kontrola-' + id);
     const PERMISSION_SIGNING_SCREENS = ['czk', 'eur'].flatMap(key => ['podpis-opravneni-uvod-' + key, 'podpis-opravneni-potvrzeni-' + key, 'podpis-opravneni-dokument-' + key, 'podpis-opravneni-vysledek-' + key]);
-    const COMPANY_ACCESS_SCREENS = [...PERMISSION_SIGNING_SCREENS, ...REVIEW_SCREENS, ...REVIEW_EDIT_SCREENS, ...AUTHORIZATION_FLOW_SCREENS, ...PERMISSION_EDITOR_SCREENS, ...PERMISSION_FLOW_SCREENS, ...COMPANY_ACCOUNT_SCREENS, 'pristupy-k-uctum', 'pristupy-opravneni', 'pristupy-uzivatele', 'pristupy-podpisova-pravidla'];
+    const USER_DETAIL_SCREENS = [...COMPANY_USERS.map((_, index) => String(index)), 'current'].flatMap(id => ['uzivatel-' + id, 'uzivatel-opravneni-' + id]);
+    const COMPANY_ACCESS_SCREENS = [...USER_DETAIL_SCREENS, ...PERMISSION_SIGNING_SCREENS, ...REVIEW_SCREENS, ...REVIEW_EDIT_SCREENS, ...AUTHORIZATION_FLOW_SCREENS, ...PERMISSION_EDITOR_SCREENS, ...PERMISSION_FLOW_SCREENS, ...COMPANY_ACCOUNT_SCREENS, 'pristupy-k-uctum', 'pristupy-opravneni', 'pristupy-uzivatele', 'pristupy-podpisova-pravidla'];
     const SCREENS = [...COMPANY_ACCESS_SCREENS, 'profil-firma', 'profil', 'login', 'prehled', 'extra', 'karty', 'pujcky', 'sporeni', 'investice', 'pojisteni', 'ucet-detail', 'tp-inkasa', 'tp-inkasa-s-autorizaci', 'autorizace', 'vsechny-platby', 'platba-detail', 'nova-platba', 'nova-platba-detaily', 'platba-vysledek', 'tp-novy', 'tp-detaily', 'tp-souhrn', 'tp-vysledek', 'inkaso-nove', 'inkaso-souhrn', 'inkaso-vysledek', 'davkove-platby', 'davkove-platby-detail', 'davkove-platby-souhrn', 'davkove-platby-vysledek'];
     // Seznam modálních hashů
     const MODALS = ['povoleni-inkasa-modal', 'autorizace-potvrzeni-modal', 'no-items-modal', 'payment-signature-modal', 'filter-modal'];
@@ -5488,7 +5509,8 @@ unicode: "eac3"
       const isPermissionInfo = targetScreenId.startsWith('nastaveni-opravneni-info-') || targetScreenId.startsWith('nastaveni-autorizace-info-') || targetScreenId.startsWith('nastaveni-limity-info-');
       const permissionDialog = document.getElementById('permission-help-dialog');
       if (!isPermissionInfo && permissionDialog.open) permissionDialog.close();
-      const screenEl = document.getElementById(PERMISSION_SIGNING_SCREENS.includes(targetScreenId) ? (targetScreenId.includes('-uvod-') ? 'screen-permission-signing-intro' : targetScreenId.includes('-vysledek-') ? 'screen-permission-signing-result' : 'screen-permission-signing-confirm') : targetScreenId.startsWith('souhrn-opravneni-') ? 'screen-permission-summary' : targetScreenId.startsWith('kontrola-') ? 'screen-permission-review' : targetScreenId.startsWith('nastaveni-limity-') ? 'screen-permission-limits' : isAuthorizationFlow ? (targetScreenId.startsWith('nastaveni-podepisujici-') ? 'screen-signers-edit' : 'screen-authorization-method') : isPermissionEditor ? 'screen-person-permission' : isPermissionFlow ? (targetScreenId.startsWith('nastaveni-opravneni-uvod-') ? 'screen-permission-intro' : 'screen-permission-edit') : COMPANY_ACCOUNT_SCREENS.includes(targetScreenId) ? 'screen-account-access' : 'screen-' + targetScreenId);
+      const userRoute = targetScreenId.match(/^uzivatel-(opravneni-)?(\d+|current)$/);
+      const screenEl = document.getElementById(userRoute ? (userRoute[1] ? 'screen-user-permissions' : 'screen-user-detail') : PERMISSION_SIGNING_SCREENS.includes(targetScreenId) ? (targetScreenId.includes('-uvod-') ? 'screen-permission-signing-intro' : targetScreenId.includes('-vysledek-') ? 'screen-permission-signing-result' : 'screen-permission-signing-confirm') : targetScreenId.startsWith('souhrn-opravneni-') ? 'screen-permission-summary' : targetScreenId.startsWith('kontrola-') ? 'screen-permission-review' : targetScreenId.startsWith('nastaveni-limity-') ? 'screen-permission-limits' : isAuthorizationFlow ? (targetScreenId.startsWith('nastaveni-podepisujici-') ? 'screen-signers-edit' : 'screen-authorization-method') : isPermissionEditor ? 'screen-person-permission' : isPermissionFlow ? (targetScreenId.startsWith('nastaveni-opravneni-uvod-') ? 'screen-permission-intro' : 'screen-permission-edit') : COMPANY_ACCOUNT_SCREENS.includes(targetScreenId) ? 'screen-account-access' : 'screen-' + targetScreenId);
       if (screenEl) {
         screenEl.classList.add('active');
       }
@@ -5539,6 +5561,7 @@ unicode: "eac3"
       }
 
       document.body.classList.toggle('profile-mode', ['profil', 'profil-firma', ...COMPANY_ACCESS_SCREENS].includes(targetScreenId));
+      if (userRoute) renderUserDetail(userRoute[2]);
       if (targetScreenId === 'profil-firma') renderCompanyProfile();
       if (COMPANY_ACCESS_SCREENS.includes(targetScreenId)) renderCompanyAccess();
       if (COMPANY_ACCOUNT_SCREENS.includes(targetScreenId)) renderAccountAccess(targetScreenId.endsWith('-eur') ? 'eur' : 'czk');
@@ -6060,12 +6083,38 @@ unicode: "eac3"
     }
 
     function openCompanyPermissions(from) {
-      localStorage.setItem('vavu_permissions_return', from === 'pristupy-uzivatele' ? from : 'pristupy-k-uctum');
+      localStorage.setItem('vavu_permissions_return', from === 'pristupy-uzivatele' || USER_DETAIL_SCREENS.includes(from) ? from : 'pristupy-k-uctum');
       goTo('pristupy-opravneni');
     }
 
     function closeCompanyPermissions() {
-      goTo(localStorage.getItem('vavu_permissions_return') === 'pristupy-uzivatele' ? 'pristupy-uzivatele' : 'pristupy-k-uctum');
+      const from = localStorage.getItem('vavu_permissions_return');
+      goTo(from === 'pristupy-uzivatele' || USER_DETAIL_SCREENS.includes(from) ? from : 'pristupy-k-uctum');
+    }
+
+    function openUserDetail(id) {
+      localStorage.setItem('vavu_detail_user', String(id));
+      goTo('uzivatel-' + id);
+    }
+
+    function currentUserDetailRoute(permissions = false) {
+      return 'uzivatel-' + (permissions ? 'opravneni-' : '') + (localStorage.getItem('vavu_detail_user') || '2');
+    }
+
+    function renderUserDetail(id) {
+      localStorage.setItem('vavu_detail_user', id);
+      const user = id === 'current' ? { name: localStorage.getItem('vavu_selected_user') || 'František Koudelka', initials: localStorage.getItem('vavu_selected_initials') || 'FK' } : COMPANY_USERS[Number(id)];
+      document.getElementById('user-detail-name').textContent = user.name;
+      document.getElementById('user-detail-initials').textContent = user.initials;
+      const birth = document.getElementById('user-detail-birth');
+      birth.hidden = !user.birthDate;
+      birth.textContent = user.birthDate ? 'Datum narození: ' + user.birthDate : '';
+      document.getElementById('user-permissions-name').textContent = user.name;
+      const accounts = Object.entries(ACCOUNT_DATA).filter(([key]) => {
+        const saved = localStorage.getItem(personPermissionStorageKey(key, Number(id)));
+        return saved !== null ? getPersonPermission(key, Number(id)).level > 0 : user.permitted;
+      });
+      document.getElementById('user-permissions-content').innerHTML = accounts.length ? '<div class="profile-card">' + accounts.map(([key, account]) => `<button type="button" class="access-info-row access-account-row" onclick="openAccountAccess('${key}')"><span class="profile-row-copy"><span>${escapeHtml(account.name)}</span><small>${escapeHtml(account.number)}</small></span><svg class="icon profile-caret" aria-hidden="true"><use href="#es-caret-right"></use></svg></button>`).join('') + '</div>' : '<div class="profile-card user-permissions-empty"><img src="assets/user-permissions-empty.png" width="80" height="64" alt=""><p>Zatím nemá žádné oprávnění.</p></div>';
     }
 
     function renderCompanyAccess() {
@@ -6075,7 +6124,7 @@ unicode: "eac3"
       ).join('');
       const name = localStorage.getItem('vavu_selected_user') || 'František Koudelka';
       const current = COMPANY_USERS.find(user => user.name === name) || { name, initials: localStorage.getItem('vavu_selected_initials') || 'FK', role: 'Zmocněná osoba', permitted: false };
-      const userRow = (user, own) => { const permitted = userHasCompanyPermission(user); return `<div class="access-info-row access-user-row" data-ds-component="CO Item Navigation"><span class="access-user-avatar" aria-hidden="true">${escapeHtml(user.initials)}</span><span class="access-user-copy"><span>${escapeHtml(user.name)}${own ? ' (to jste Vy)' : ''}</span><small>${escapeHtml(user.role)}</small><span class="access-permission-status">${own ? (permitted ? 'Máte oprávnění' : 'Nemáte oprávnění') : (permitted ? 'Má oprávnění' : 'Nemá oprávnění')}</span></span>${caret}</div>`; };
+      const userRow = (user, own) => { const permitted = userHasCompanyPermission(user); return `<button type="button" class="access-info-row access-user-row" data-ds-component="CO Item Navigation" onclick="openUserDetail('${COMPANY_USERS.indexOf(user) < 0 ? "current" : COMPANY_USERS.indexOf(user)}')"><span class="access-user-avatar" aria-hidden="true">${escapeHtml(user.initials)}</span><span class="access-user-copy"><span>${escapeHtml(user.name)}${own ? ' (to jste Vy)' : ''}</span><small>${escapeHtml(user.role)}</small><span class="access-permission-status">${own ? (permitted ? 'Máte oprávnění' : 'Nemáte oprávnění') : (permitted ? 'Má oprávnění' : 'Nemá oprávnění')}</span></span>${caret}</button>`; };
       document.getElementById('company-current-user').innerHTML = userRow(current, true);
       document.getElementById('company-other-users').innerHTML = COMPANY_USERS.filter(user => user.name !== current.name).map(user => userRow(user, false)).join('');
       document.getElementById('company-signature-members').innerHTML = COMPANY_USERS.filter(user => user.role === 'Člen představenstva').map(user => `<div class="access-info-row"><span>${escapeHtml(user.name)}</span><small>${escapeHtml(user.role)}</small></div>`).join('');

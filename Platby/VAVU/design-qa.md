@@ -1,3 +1,22 @@
+# Detail uživatele a jeho oprávnění – 20. 10. 2026
+
+final result: passed
+
+- Zdroj: přílohy `codex-clipboard-8e673f59-131d-4826-8b71-d3b7088bd8f8.png` a `codex-clipboard-f11536bc-eea7-4825-a659-dea4607ad0a7.png` z lokálních adresářů `/home/lukinab/.codex/attachments/fd65d854-5892-490a-8be8-fc030fe5f953/` a `/home/lukinab/.codex/attachments/4da4aceb-9cf0-4af7-8206-ff9e608b2569/`.
+- Implementace a porovnání: `/home/lukinab/Projects/UX/.vavu-profile-qa/user-detail-desktop.png`, `user-permissions-desktop.png`, `compare-user-detail.png`, `compare-user-permissions.png` a odpovídající `*-focused.png`. Snímky mimo veřejný Git.
+- Viewport: 1040 × 780 CSS px, DPR 1. Oba zdroje 2048 × 1536 px normalizovány na 1040 × 780 px; implementace 1040 × 780 px. Stav: Eva Š., light, bez oprávnění.
+- Typografie: stávající Inter a DS tokeny; kontrola názvu, data narození, akcí a prázdného stavu. Obsah a pořadí odpovídají přílohám.
+- Rozložení: zachována existující DS šířka 520 px oproti přibližně 497 px v normalizované referenci. Jde o vědomé použití existujícího scaffoldingu prototypu. Mobilní šířky 320/375/390 × 812 px bez vodorovného přetečení.
+- Barvy: DS povrchy, avatar, oddělovače a alert pro Smazat uživatele. Ilustrace složky a ikona nastavení jsou vyříznuté originální assety z přílohy; kopírování a mazání používají stávající DS sprite.
+- První porovnání: [P2] avatar a následující obsah byly o 16 px níže; opraven horní odstup identity. [P2] náhradní ikona měla tři řádky místo dvou; nahrazena originálem z reference. Aktuální plné a detailní porovnání ověřuje opravy.
+- Interakce: seznam → detail → oprávnění, všechny osoby i přihlášený uživatel, samostatné hashe, refresh, browser back/forward, tlačítka Zpět, obě Nastavit oprávnění → existující výběr účtu → návrat na správnou zdrojovou obrazovku.
+- Datum narození je známé pouze u Evy a u dalších osob se nevymýšlí. Přehled oprávnění čte uložená oprávnění a výchozí data existujícího prototypu.
+- Podpisové skupiny, kopírování a mazání zobrazují informaci o nepřipravené části prototypu. Jejich navazující obrazovky nejsou součástí zadání.
+- Automatizovaná kontrola přes samostatný Chrome/Playwright schválený uživatelem: bez JS chyb a chyb aplikačních assetů; existující chybějící favicon je v testu obsloužena odpovědí 204.
+- Zbývající P0/P1/P2: žádné. P3: malé rozdíly v kresbě caret/copy/delete odpovídají použití sdílených DS ikon.
+
+---
+
 # Aktuální oprava: vstup do flow z Účtu (19. 10. 2026)
 
 Výsledek: passed. Spodní tlačítko Změnit na obrazovce Účet otevírá úvod Jak to proběhne. Osoby v segmentu Oprávnění jsou statické řádky bez prokliku a bez button/focus sémantiky. Následný editovatelný seznam osob v kroku Oprávnění je zachován.
