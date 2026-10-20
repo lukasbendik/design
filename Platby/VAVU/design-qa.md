@@ -1,3 +1,15 @@
+# Zarovnání VS v dávce – 20. 10. 2026
+
+final result: passed
+
+Prostřední sloupec detailu nové dávky měl různou levou hranu, protože třetí sloupec se v každém řádku počítal samostatně podle šířky částky (`auto`). Nyní má třetí sloupec společný poměr `minmax(0, 1fr)`, takže VS i doplňující text začínají na stejné souřadnici napříč oběma kartami.
+
+Ověřeno všech osm řádků na šířkách 1440/1040/768/681 px: levé souřadnice prostředních sloupců a jejich textů shodné s tolerancí <1 px. Mobilní 375/320 px zachovávají jednosloupcové rozložení bez přetečení. Částky zůstávají uvnitř řádků. Bez JS chyb.
+
+Vizuální kontrola: `/home/lukinab/Projects/UX/.vavu-profile-qa/batch-vs-aligned.png` a `batch-vs-mobile.png`. Ostatní typografie, mezery, barvy, texty a assety zůstávají beze změny.
+
+---
+
 # Oprava: Jak to funguje jako overlay – 20. 10. 2026
 
 final result: passed
