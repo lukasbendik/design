@@ -1,3 +1,17 @@
+# Přístupy k účtům – ikony a popisky – 21. 10. 2026
+
+final result: passed
+
+Zdroj: /home/lukinab/.codex/attachments/fa085276-1813-4b89-bcf7-7e3640f90632/codex-clipboard-5bb41dbb-265a-466d-9185-777298b6af31.png (2048 × 1536, normalizováno na 1024 × 768 CSS px). Implementace: /home/lukinab/Projects/UX/.vavu-profile-qa/access-reference.png, viewport 1024 × 768, DPR 2, 2048 × 1536 px; shodná obrazovka pristupy-k-uctum. Plné porovnání: /home/lukinab/Projects/UX/.vavu-profile-qa/access-reference-comparison.png. Detail ikon a textu byl zkontrolován také v plném snímku implementace; samostatný výřez nebyl nutný, obsah je čitelný.
+
+Původní P2: chybějící ikony a popisky. Doplněny přesné texty a tři zdrojové ikony z přílohy jako transparentní PNG @2x. První porovnání ukázalo širší kartu a větší mezery mezi nadpisem a popisem. Oprava: pouze pro tuto obrazovku sloupec 488 px odvozený z DS tokenů, mezera padding-xs a horní zarovnání ikon a šipek. Nový snímek a společné porovnání po opravě bez zbývajících P0/P1/P2.
+
+Typografie: existující Inter a DS fonty, hlavní/sekundární hierarchie a zalamování shodné s předlohou. Rozložení: centrovaná karta, zdrojová šířka, paddingy a děliče DS; mobilní vnější odsazení 16 px zachováno. Barvy: DS povrch, primární text, terciární popisky a červené ikony. Assety: přímo ze zdroje, zachované proporce 24 × 24 CSS px v 32px slotu, transparentní pozadí. Copy: všechny tři titulky a popisy doslovně podle předlohy. P3: drobné rozdíly rasterizace a výchozího DS řezu písma oproti screenshotu; bez dopadu na čitelnost či strukturu.
+
+Playwright/Chrome: reálná cesta přihlášení → profil → Další profily → firma → Přístupy k účtům; všechny tři destinace a browser Zpět, refresh stejné obrazovky. Mobilní viewporty 320 × 800 a 390 × 800 bez overflow, snímky access-reference-320.png a access-reference-390.png ve stejné složce. Bez JavaScriptových chyb. Původní podpisová a datová logika nezměněna.
+
+---
+
 # Oprávnění účtu a společná autorizace instrumentů – 21. 10. 2026
 
 final result: passed
