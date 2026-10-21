@@ -1,3 +1,15 @@
+# Společný výběr způsobu podpisu – 21. 10. 2026
+
+final result: passed
+
+Stávající modál Vyberte způsob podpisu je nově zapojen před dokončením podpisu změn oprávnění (CZK i EUR), existující dávky ze Souhrnu a označených položek v seznamech autorizací. Platba, nový trvalý příkaz, inkaso a nová dávka používají stejný společný vstup. Vzhled a metody podpisu zůstávají ze stávajícího prototypu.
+
+Kontext uchovává výchozí obrazovku, druh operace a označené položky. Refresh obnoví modál nad správnou obrazovkou; Zrušit, křížek, Escape i backdrop se vracejí bez podpisu. Zápis nastává až po výběru Elektronicky KB Klíčem. Dokončený nebo zrušený požadavek se z historie znovu nepodepisuje.
+
+Ověřeno samostatným Chrome/Playwright: sedm průchodů (platba, TP, inkaso, nová dávka, existující dávka, oprávnění CZK a EUR) a tři seznamy označených autorizací. Refresh a zrušení zachovají účet, původní obrazovku a výběr. U oprávnění a dávky před volbou metody žádný podpis, po volbě právě jeden; správný výsledek každého flow. Bez JS chyb. Mobil 375 × 812 bez vodorovného přetečení, backdrop nic neautorizuje. Vizuálně ověřeno 1040 × 900 i 375 × 812, evidence v /home/lukinab/Projects/UX/.vavu-profile-qa/shared-signature-{batch,mobile}.png. Žádné zbývající P0/P1/P2.
+
+---
+
 # Detail autorizace dávky a Souhrn – 21. 10. 2026
 
 final result: passed

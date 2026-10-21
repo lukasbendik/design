@@ -5545,7 +5545,15 @@ unicode: "eac3"
       // 1. Zpracování pokud jde o MODAL
       if (MODALS.includes(hash)) {
         if (hash === 'payment-signature-modal') {
-          currentScreen = directDebitFlowActive ? 'inkaso-souhrn' : standingOrderFlowActive ? 'tp-souhrn' : batchFlowActive ? 'davkove-platby-souhrn' : 'nova-platba-detaily';
+          const request = signatureRequest();
+          const origin = signatureOrigin();
+          const needsRender = currentScreen !== origin || !document.querySelector('.screen.active');
+          currentScreen = origin;
+          if (needsRender) showScreenElements(origin);
+          restoreSignatureSelection(request);
+          if (request && request.status !== 'pending') { history.replaceState(null, '', '#' + origin); closeAllModalsElements(); return; }
+          showModalElement(hash);
+          return;
         } else if (hash === 'filter-modal') {
           currentScreen = 'ucet-detail';
         }
@@ -5916,7 +5924,8 @@ unicode: "eac3"
       if (canSignPermissionChange(key)) goTo('podpis-opravneni-uvod-' + key);
     }
 
-    function signPermissionChange() {
+    function signPermissionChange(confirmed = false) {
+      if (!confirmed) { if (canSignPermissionChange(permissionFlowAccount())) openSignatureSelection('permissions'); return; }
       const key = permissionFlowAccount();
       if (!canSignPermissionChange(key)) return;
       const state = permissionChangeSignatureState(key);
@@ -6347,11 +6356,23 @@ unicode: "eac3"
 
     // Otevřít modal změnou hash
     function openModal(modalId) {
+      if (modalId === 'payment-signature-modal') { openSignatureSelection(); return; }
       goTo(modalId);
     }
 
     // Zavřít modal návratem na podkladovou obrazovku
     function closeModal() {
+      if (location.hash === '#payment-signature-modal') {
+        const request = signatureRequest();
+        if (request) {
+          request.status = 'cancelled';
+          localStorage.setItem('vavu_signature_context', JSON.stringify(request));
+          closeAllModalsElements();
+          currentScreen = request.origin;
+          history.replaceState(null, '', '#' + request.origin);
+          return;
+        }
+      }
       // Pokud máme uloženou informaci o tom, že máme zobrazit kartu autorizace, skočíme tam
       const wasSaved = localStorage.getItem('inkaso_saved_for_auth') === '1';
       if (wasSaved && currentScreen === 'tp-inkasa') {
@@ -6653,7 +6674,7 @@ unicode: "eac3"
         openModal('no-items-modal');
         return;
       }
-      deleteSelectedAuth();
+      openSignatureSelection('selected-authorization');
     }
 
     // Smazat vybrané položky z autorizace
@@ -7219,6 +7240,7 @@ unicode: "eac3"
     }
 
     function openBatchDetailAction(action) {
+      if (action === 'authorize') { openSignatureSelection('existing-batch'); return; }
       const dialog = document.getElementById('batch-detail-dialog');
       dialog.dataset.action = action;
       document.getElementById('batch-detail-dialog-title').textContent = action === 'delete' ? 'Smazat dávku?' : 'Autorizovat dávku';
@@ -7579,7 +7601,63 @@ unicode: "eac3"
       goTo('tp-inkasa');
     }
 
+    function signatureRequest() {
+      try { return JSON.parse(localStorage.getItem('vavu_signature_context') || 'null'); } catch (_) { return null; }
+    }
+
+    function signatureOrigin() {
+      const request = signatureRequest();
+      if (request && (SCREENS.includes(request.origin) || /^davka-souhrn-[A-Za-z0-9_-]+$/.test(request.origin))) return request.origin;
+      return directDebitFlowActive ? 'inkaso-souhrn' : standingOrderFlowActive ? 'tp-souhrn' : batchFlowActive ? 'davkove-platby-souhrn' : 'nova-platba-detaily';
+    }
+
+    function openSignatureSelection(kind = 'payment') {
+      const request = { kind, origin: currentScreen, status: 'pending' };
+      if (kind === 'selected-authorization') {
+        request.tab = currentAuthTab;
+        request.selected = [...document.querySelectorAll('.auth-checkbox:checked')].map(input => input.value);
+      }
+      localStorage.setItem('vavu_signature_context', JSON.stringify(request));
+      goTo('payment-signature-modal');
+    }
+
+    function restoreSignatureSelection(request) {
+      if (request?.kind !== 'selected-authorization') return;
+      if (currentAuthTab !== request.tab) switchAuthTab(request.tab);
+      document.querySelectorAll('.auth-checkbox').forEach(input => { input.checked = request.selected.includes(input.value); });
+      updateDeleteButtonState();
+    }
+
+    document.getElementById('modal-payment-signature-modal').addEventListener('click', event => {
+      if (event.target === event.currentTarget) closeModal();
+    });
+    document.addEventListener('keydown', event => {
+      if (event.key === 'Escape' && document.getElementById('modal-payment-signature-modal').classList.contains('active')) { event.preventDefault(); closeModal(); }
+    });
+
     function authorizePayment() {
+      const request = signatureRequest();
+      if (request && request.status !== 'pending') return;
+      if (request) {
+        request.status = 'completed';
+        localStorage.setItem('vavu_signature_context', JSON.stringify(request));
+        currentScreen = request.origin;
+      }
+      if (request?.kind === 'permissions') { closeAllModalsElements(); signPermissionChange(true); return; }
+      if (request?.kind === 'existing-batch') {
+        closeAllModalsElements();
+        document.getElementById('batch-detail-dialog').dataset.action = 'authorize';
+        confirmBatchDetailAction();
+        return;
+      }
+      if (request?.kind === 'selected-authorization') {
+        closeAllModalsElements();
+        restoreSignatureSelection(request);
+        history.replaceState(null, '', '#' + request.origin);
+        deleteSelectedAuth();
+        return;
+      }
+
       closeAllModalsElements();
       if (directDebitFlowActive) {
         const data = getDirectDebitData();
@@ -7627,9 +7705,10 @@ unicode: "eac3"
         history.replaceState({ screen: 'tp-inkasa-s-autorizaci' }, '', window.location.hash);
       } else if (MODALS.includes(hash)) {
         // Modal podpisu patří k platbě, původní modaly k inkasům.
-        currentScreen = hash === 'payment-signature-modal' ? (directDebitFlowActive ? 'inkaso-souhrn' : standingOrderFlowActive ? 'tp-souhrn' : batchFlowActive ? 'davkove-platby-souhrn' : 'nova-platba-detaily') : 'tp-inkasa';
+        currentScreen = hash === 'payment-signature-modal' ? signatureOrigin() : 'tp-inkasa';
         showScreenElements(currentScreen);
-        showModalElement(hash);
+        if (hash !== 'payment-signature-modal' || !signatureRequest() || signatureRequest().status === 'pending') { restoreSignatureSelection(signatureRequest()); showModalElement(hash); }
+        else history.replaceState(null, '', '#' + currentScreen);
       } else {
         const screenId = 'screen-' + hash;
         const el = document.getElementById(screenId);
