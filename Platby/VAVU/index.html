@@ -1706,11 +1706,18 @@
       text-align: center;
     }
 
-    #prototype-reset-dialog { padding: 0; border: 0; background: transparent; width: min(440px, calc(100vw - 32px)); max-width: none; max-height: calc(100dvh - 32px); color: var(--color-content-primary); }
+    #prototype-reset-dialog { padding: 0; border: 0; border-radius: var(--border-radius-xl); background: var(--background-body); width: min(680px, calc(100vw - 32px)); max-width: none; max-height: calc(100dvh - 32px); overflow: auto; color: var(--color-content-primary); box-shadow: var(--shadow-highlighted); }
     #prototype-reset-dialog::backdrop { background: rgba(0, 0, 0, 0.4); backdrop-filter: blur(4px); }
-    #prototype-reset-dialog .modal-content-popup { gap: var(--space-24); }
-    #prototype-reset-dialog h2, #prototype-reset-dialog p { margin: 0; }
-    .prototype-reset-actions { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: var(--space-16); width: 100%; }
+    .prototype-reset-content { position: relative; padding: var(--space-48) var(--space-24) var(--space-24); text-align: left; }
+    #prototype-reset-dialog h2 { margin: 0 0 var(--space-24); }
+    #prototype-reset-dialog p { margin: 0; font: var(--content-body-primary); }
+    .prototype-reset-actions { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: var(--space-16); padding: var(--space-24); border-top: var(--border-sm) solid var(--background-divider); }
+    .prototype-reset-actions .btn { width: auto; }
+    @media(max-width:551px) {
+      #prototype-reset-dialog h2 { font: var(--headings-title-tertiary); }
+      .prototype-reset-actions { gap: var(--space-8); padding: var(--space-16); }
+      .prototype-reset-actions .btn { flex: 1; min-width: 0; }
+    }
 
     .modal-form-wrap {
       width: 100%;
@@ -3698,12 +3705,12 @@ unicode: "eac3"
       <section class="screen profile-screen access-screen access-users-screen authorization-flow-screen" id="screen-authorization-method" aria-labelledby="authorization-method-title"><div class="profile-wrap"><div class="company-header"><button class="company-back" type="button" onclick="goTo('nastaveni-opravneni-' + permissionFlowAccount())"><svg class="icon" aria-hidden="true"><use href="#es-caret-left"></use></svg>Zpět</button></div><h1 class="access-title profile-name" id="authorization-method-title">Způsob autorizace</h1><p class="account-access-description" id="authorization-method-account"></p>
           <div class="profile-card"><div class="account-card-heading"><h2>Samostatné podepisování</h2><button class="account-change-link" type="button">Změnit</button></div><div class="account-solo-row"><svg class="icon" aria-hidden="true"><use href="#es-person"></use></svg><span>Nikdo nepodepisuje samostatně</span></div></div>
           <div class="profile-card"><div class="account-card-heading"><div><h2 id="authorization-joint-title">2 společné podpisy</h2><p>Uživatelé, kteří mohou podepisovat</p></div><button class="account-change-link" type="button" onclick="openSignersEditor()">Změnit</button></div><div id="authorization-selected-signers"></div></div>
-          <div class="authorization-pending" id="authorization-pending"><div class="account-card-heading"><div><h2>Nemůže podepisovat</h2><p>Nastavte uživatelům způsob autorizace.</p></div></div><div id="authorization-pending-users"></div></div>
+          <div class="authorization-pending" id="authorization-pending"><div class="account-card-heading"><div><h2>Nemůže podepisovat</h2><p>Nastavte uživatelům oprávnění Autorizace plateb.</p></div></div><div id="authorization-pending-users"></div></div>
           <button type="button" class="profile-row account-signature-link permission-help-trigger" onclick="goTo(permissionContextRoute('nastaveni-autorizace-info-' + permissionFlowAccount()))"><svg class="icon" aria-hidden="true"><use href="#es-info"></use></svg><span>Jak to funguje</span><svg class="icon profile-caret" aria-hidden="true"><use href="#es-caret-right"></use></svg></button>
         </div><div class="access-buttonbar" data-ds-component="CO Button Bar Bottom"><div class="access-buttonbar-inner"><button class="btn btn--primary" type="button" >Pokračovat</button></div></div></section>
       <section class="screen profile-screen access-screen access-users-screen authorization-flow-screen" id="screen-signers-edit" aria-labelledby="signers-edit-title"><div class="profile-wrap"><div class="company-header"><button class="company-back" type="button" onclick="closeSignersEditor()"><svg class="icon" aria-hidden="true"><use href="#es-caret-left"></use></svg>Zpět</button></div><h1 class="access-title profile-name" id="signers-edit-title">Podepisující</h1><p class="account-access-description" id="signers-edit-account"></p>
           <label class="payment-control payment-control-select person-permission-select" data-ds-component="CO Input SuperField"><span class="payment-control-label">Počet podpisů</span><select id="signers-count" aria-label="Počet podpisů" onchange="updateSignersDraft()"><option value="2">2 podpisy</option><option value="3">3 podpisy</option><option value="4">4 podpisy</option><option value="5">5 podpisů</option><option value="6">6 podpisů</option></select><svg class="icon payment-select-caret" aria-hidden="true"><use href="#es-caret-right"></use></svg></label>
-          <div class="profile-card"><div id="signers-options"></div><p class="signers-hint">Čím víc osob přidáte, tím víc kombinací podpisů umožníte.</p></div>
+          <div class="profile-card"><div id="signers-options"></div><p class="signers-hint" id="signers-membership-hint">Společně mohou podepisovat všichni uživatelé s oprávněním Autorizace plateb. Osoby přidáte nebo odeberete změnou jejich oprávnění k účtu. Zde nastavíte požadovaný počet různých podpisů.</p></div>
         </div><div class="access-buttonbar" data-ds-component="CO Button Bar Bottom"><div class="access-buttonbar-inner"><button class="btn btn--primary" type="button" onclick="saveSignersEditor()">Uložit</button></div></div></section>
       <section class="screen profile-screen access-screen access-users-screen authorization-flow-screen" id="screen-permission-review" aria-labelledby="permission-review-title"><div class="profile-wrap"><div class="company-header"><button class="company-back" type="button" onclick="goTo('nastaveni-autorizace-' + permissionFlowAccount())"><svg class="icon" aria-hidden="true"><use href="#es-caret-left"></use></svg>Zpět</button></div><h1 class="access-title profile-name" id="permission-review-title">Kontrola</h1><p class="account-access-description" id="permission-review-account"></p><div class="profile-card"><h2 class="access-card-title">Připravené nastavení</h2><button type="button" class="access-info-row permission-edit-row permission-edit-person review-step" onclick="goTo('kontrola-nastaveni-opravneni-' + permissionFlowAccount())"><span class="review-step-number" aria-hidden="true">1</span><span class="access-user-copy"><span>Oprávnění</span><small id="review-status-opravneni">Beze změny</small></span><svg class="icon profile-caret" aria-hidden="true"><use href="#es-caret-right"></use></svg></button><button type="button" class="access-info-row permission-edit-row permission-edit-person review-step" onclick="goTo('kontrola-nastaveni-autorizace-' + permissionFlowAccount())"><span class="review-step-number" aria-hidden="true">2</span><span class="access-user-copy"><span>Autorizace</span><small id="review-status-autorizace">Beze změny</small></span><svg class="icon profile-caret" aria-hidden="true"><use href="#es-caret-right"></use></svg></button><button type="button" class="access-info-row permission-edit-row permission-edit-person review-step" onclick="goTo('kontrola-nastaveni-limity-' + permissionFlowAccount())"><span class="review-step-number" aria-hidden="true">3</span><span class="access-user-copy"><span>Limity</span><small id="review-status-limity">Beze změny</small></span><svg class="icon profile-caret" aria-hidden="true"><use href="#es-caret-right"></use></svg></button></div></div><div class="access-buttonbar" data-ds-component="CO Button Bar Bottom"><div class="access-buttonbar-inner"><button class="btn btn--primary" type="button" onclick="goTo('souhrn-opravneni-' + permissionFlowAccount())">Pokračovat</button></div></div></section>
       <section class="screen profile-screen access-screen access-users-screen authorization-flow-screen" id="screen-permission-limits" aria-labelledby="permission-limits-title"><div class="profile-wrap"><div class="company-header"><button class="company-back" type="button" onclick="goTo('kontrola-' + permissionFlowAccount())"><svg class="icon" aria-hidden="true"><use href="#es-caret-left"></use></svg>Zpět</button></div><h1 class="access-title profile-name" id="permission-limits-title">Limity</h1><p class="account-access-description" id="permission-limits-account"></p><div class="profile-card review-limits-info"><svg class="icon" aria-hidden="true"><use href="#es-info"></use></svg><p>Limity se vztahují pouze na uživatele, kteří mají nastavené samostatné podepisování.</p></div><div class="profile-card account-limits-empty"><img src="assets/account-limits-empty.png" width="84" height="76" alt=""><p>Zatím tu nejsou žádní uživatelé se samostatným podepisováním, kterým byste mohli nastavit limit.</p></div><button type="button" class="profile-row account-signature-link permission-help-trigger" onclick="goTo(permissionContextRoute('nastaveni-limity-info-' + permissionFlowAccount()))"><svg class="icon" aria-hidden="true"><use href="#es-info"></use></svg><span>Jak to funguje</span><svg class="icon profile-caret" aria-hidden="true"><use href="#es-caret-right"></use></svg></button></div><div class="access-buttonbar" data-ds-component="CO Button Bar Bottom"><div class="access-buttonbar-inner"><button class="btn btn--primary" type="button" onclick="goTo('kontrola-' + permissionFlowAccount())">Zpět na kontrolu</button></div></div></section>
@@ -3730,8 +3737,8 @@ unicode: "eac3"
         <div class="profile-header"><button type="button" class="profile-close" onclick="closePermissionHelp()" aria-label="Zavřít Jak to funguje"><svg class="icon" aria-hidden="true"><use href="#es-close"></use></svg></button></div>
         <h2 class="profile-name" id="permission-help-title">Jak to funguje</h2>
         <p>Nastavujete uživatelům oprávnění.</p>
-        <p>Pokud nastavíte oprávnění autorizovat, nezapomeňte nastavit i způsob autorizace, případně denní limit uživatele.</p>
-        <p>Bez vlastního nastavení se podpisy řídí statutárními podpisovými pravidly.</p>
+        <p>Uživatelé s oprávněním Autorizace plateb mohou společně podepisovat. Počet potřebných různých podpisů nastavíte ve Způsobu autorizace.</p>
+        <p>Změna oprávnění i počtu podpisů začne platit až po schválení oběma statutárními zástupci.</p>
       </dialog>
 
 
@@ -3793,7 +3800,7 @@ unicode: "eac3"
           <div class="card-secondary" style="padding: 0; overflow: hidden; margin-bottom: 16px; box-shadow: var(--shadow-panel);">
             <!-- Horní část (Tarif Komfort) na šedém pozadí -->
             <div class="flex-row-between" style="padding: 16px 24px; cursor: pointer;" onclick="goTo('ucet-detail')">
-              <span class="t-headings-headline-secondary-bold" style="color: var(--color-content-primary);">Tarif Komfort</span>
+              <span class="t-headings-headline-secondary-bold" style="color: var(--color-content-primary);">Tarif Komfort Business</span>
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--color-content-tertiary)" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg>
             </div>
             
@@ -3842,30 +3849,30 @@ unicode: "eac3"
           <div class="card-secondary">
             <div class="flex-row-between" style="margin-bottom: 16px;">
               <div class="item-details">
-                <span class="t-headings-headline-secondary-bold">Souhrn za červenec</span>
-                <span class="t-content-caption-primary" style="color: var(--color-content-tertiary);">Běžný účet</span>
+                <span id="overview-summary-month" class="t-headings-headline-secondary-bold">Souhrn</span>
+                <span class="t-content-caption-primary" style="color: var(--color-content-tertiary);">Účet CZK</span>
               </div>
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--color-content-tertiary)" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg>
             </div>
             
             <div class="summary-progress-group">
-              <div class="summary-track" aria-hidden="true"><div class="progress-fill expenses" style="width: 50%; background: var(--color-content-primary);"></div></div>
+              <div class="summary-track" aria-hidden="true"><div id="overview-summary-expenses-progress" class="progress-fill expenses" style="width: 0%; background: var(--color-content-primary);"></div></div>
               <div class="summary-row">
                 <svg class="summary-row-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="11" fill="currentColor"/><path d="M7 12h9M13 8l4 4-4 4" fill="none" stroke="var(--color-background-body)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
                 <span>Výdaje</span>
-                <span class="summary-row-value">-10 000,00 Kč</span>
+                <span id="overview-summary-expenses" class="summary-row-value">0,00 Kč</span>
               </div>
-              <div class="summary-track" aria-hidden="true"><div class="progress-fill allowance" style="width: 100%; background: var(--color-attention-success);"></div></div>
+              <div class="summary-track" aria-hidden="true"><div id="overview-summary-income-progress" class="progress-fill income" style="width: 0%; background: var(--color-attention-success);"></div></div>
               <div class="summary-row income">
                 <svg class="summary-row-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="11" fill="currentColor"/><path d="M17 12H8m3-4-4 4 4 4" fill="none" stroke="var(--color-background-surface)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                <span>Kapesné 💰</span>
-                <span class="summary-row-value">20 000,00 Kč</span>
+                <span>Příjmy</span>
+                <span id="overview-summary-income" class="summary-row-value">0,00 Kč</span>
               </div>
             </div>
 
             <div class="summary-difference">
               <span style="color: var(--color-content-secondary);">Rozdíl</span>
-              <span class="amount-positive" style="font-weight: 700;">10 000,00 Kč</span>
+              <span id="overview-summary-difference" class="amount-positive" style="font-weight: 700;">0,00 Kč</span>
             </div>
           </div>
 
@@ -4944,7 +4951,7 @@ unicode: "eac3"
       <!-- ================= VAVU: NOVÝ TRVALÝ PŘÍKAZ – VÝSLEDEK ================= -->
       <section class="screen payment-screen batch-screen standing-order-screen" id="screen-tp-vysledek" aria-labelledby="tp-vysledek-title">
         <header class="payment-flow-header"><button class="payment-header-action" type="button" onclick="finishStandingOrder()">Zavřít</button><span class="header-spacer"></span></header>
-        <div class="payment-flow-content"><div class="batch-flow-column batch-result-column"><img class="result-illustration" src="../../design-system/design-system/assets/illustrations/success-light.png" alt="Trvalý příkaz autorizován"><h1 class="result-heading" id="tp-vysledek-title">Autorizovali jste trvalý příkaz</h1><p class="result-lead">Musí ho ještě autorizovat ostatní.</p><p class="result-copy">Nemáte dostatečný dispoziční limit pro odeslání.</p></div></div>
+        <div class="payment-flow-content"><div class="batch-flow-column batch-result-column"><img class="result-illustration" src="../../design-system/design-system/assets/illustrations/success-light.png" alt="Trvalý příkaz autorizován"><h1 class="result-heading" id="tp-vysledek-title">Autorizovali jste trvalý příkaz</h1><p class="result-lead">Trvalý příkaz ještě musí autorizovat ostatní.</p><p class="result-copy">Nemáte dostatečný dispoziční limit pro odeslání.</p></div></div>
         <footer class="payment-buttonbar"><div class="payment-buttonbar-row"><button class="btn btn--secondary" type="button" onclick="finishStandingOrder()">Zavřít</button></div></footer>
       </section>
 
@@ -4984,7 +4991,7 @@ unicode: "eac3"
 
       <section class="screen payment-screen batch-screen standing-order-screen" id="screen-inkaso-vysledek" aria-labelledby="inkaso-vysledek-title">
         <header class="payment-flow-header"><button class="payment-header-action" type="button" onclick="finishDirectDebit()">Zavřít</button><span class="header-spacer"></span></header>
-        <div class="payment-flow-content"><div class="batch-flow-column batch-result-column"><img class="result-illustration" src="../../design-system/design-system/assets/illustrations/success-light.png" alt="Povolení inkasa autorizováno"><h1 class="result-heading" id="inkaso-vysledek-title">Autorizovali jste povolení inkasa</h1><p class="result-lead">Musí ho ještě autorizovat ostatní.</p><p class="result-copy">Nemáte dostatečný dispoziční limit pro odeslání.</p></div></div>
+        <div class="payment-flow-content"><div class="batch-flow-column batch-result-column"><img class="result-illustration" src="../../design-system/design-system/assets/illustrations/success-light.png" alt="Povolení inkasa autorizováno"><h1 class="result-heading" id="inkaso-vysledek-title">Autorizovali jste povolení inkasa</h1><p class="result-lead">Povolení inkasa ještě musí autorizovat ostatní.</p><p class="result-copy">Nemáte dostatečný dispoziční limit pro odeslání.</p></div></div>
         <footer class="payment-buttonbar"><div class="payment-buttonbar-row"><button class="btn btn--secondary" type="button" onclick="finishDirectDebit()">Zavřít</button></div></footer>
       </section>
 
@@ -5151,18 +5158,19 @@ unicode: "eac3"
   <!-- 4. PLOVOUCÍ CHATBOT -->
   <button type="button" class="chatbot-btn" onclick="document.getElementById('prototype-reset-dialog').showModal()">
     <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-    <span>Chcete poradit?</span>
+    <span>Restartovat prototyp</span>
   </button>
 
   <dialog id="prototype-reset-dialog" aria-labelledby="prototype-reset-title" aria-describedby="prototype-reset-description">
-    <div class="modal-content-popup">
+    <div class="prototype-reset-content">
+      <button class="signature-close" type="button" onclick="document.getElementById('prototype-reset-dialog').close()" aria-label="Zrušit"><svg class="icon icon--close" aria-hidden="true"><use href="#es-close"></use></svg></button>
       <h2 class="t-headings-title-secondary" id="prototype-reset-title">Smazat data prototypu?</h2>
       <p id="prototype-reset-description">Opravdu chcete smazat všechna uložená data tohoto prototypu? Prototyp se vrátí do výchozího stavu.</p>
-      <div class="prototype-reset-actions">
-        <button class="btn btn--secondary" type="button" autofocus onclick="document.getElementById('prototype-reset-dialog').close()">Zavřít</button>
-        <button class="btn btn--primary" type="button" onclick="resetPrototypeData()">Smazat</button>
-      </div>
     </div>
+    <footer class="prototype-reset-actions">
+      <button class="btn btn--secondary" type="button" autofocus onclick="document.getElementById('prototype-reset-dialog').close()">Zrušit</button>
+      <button class="btn btn--primary" type="button" onclick="resetPrototypeData()">Smazat</button>
+    </footer>
   </dialog>
 
   <!-- ================= VAVU: POTVRZENÍ V MOBILNÍ APLIKACI ================= -->
@@ -5389,9 +5397,46 @@ unicode: "eac3"
       { date: '3. 9.', name: '20260903-fakturace', id: '1025I252M', cancelled: { name: 'Šárka B.', at: '2026-09-03T11:38:00+02:00' }, created: { name: 'Kateřina H.', at: '2026-09-03T10:22:00+02:00' }, status: 'Zrušeno', statusType: 'alert', payments: 50, amount: '20 525,12 Kč' }
     ];
 
+    // Calendar boundaries follow the business account's Czech time zone.
+    function getPragueCalendarDate(date = new Date()) {
+      const parts = new Intl.DateTimeFormat('en-CA', { timeZone: 'Europe/Prague', year: 'numeric', month: '2-digit', day: '2-digit' }).formatToParts(date);
+      const part = type => parts.find(value => value.type === type).value;
+      return `${part('year')}-${part('month')}-${part('day')}`;
+    }
+
+    function renderOverviewSummary() {
+      const month = getPragueCalendarDate().slice(0, 7);
+      const monthDate = new Date(month + '-15T12:00:00Z');
+      document.getElementById('overview-summary-month').textContent = 'Souhrn za ' + new Intl.DateTimeFormat('cs-CZ', { month: 'long', timeZone: 'Europe/Prague' }).format(monthDate);
+      const totals = getAccountTransactions('czk').reduce((sum, transaction) => {
+        if (!transaction[5] || !transaction[5].startsWith(month + '-')) return sum;
+        // Numeric accountAmount is shared with the account ledger. Foreign
+        // amounts without an explicit account conversion cannot be added to CZK.
+        const amount = Number.isFinite(transaction[6]) ? Math.abs(transaction[6]) : /(?:Kč|CZK)\s*$/.test(transaction[3]) ? Math.abs(Number(transaction[3].replace(/[^0-9,.-]/g, '').replace(',', '.'))) : NaN;
+        if (!Number.isFinite(amount)) return sum;
+        sum[transaction[4] === 'prichozi' ? 'income' : 'expenses'] += Math.round(amount * 100);
+        return sum;
+      }, { income: 0, expenses: 0 });
+      const format = cents => new Intl.NumberFormat('cs-CZ', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(cents / 100) + ' Kč';
+      document.getElementById('overview-summary-expenses').textContent = format(-totals.expenses);
+      document.getElementById('overview-summary-income').textContent = format(totals.income);
+      const difference = totals.income - totals.expenses;
+      const differenceElement = document.getElementById('overview-summary-difference');
+      differenceElement.textContent = format(difference);
+      differenceElement.classList.toggle('amount-positive', difference >= 0);
+      const maximum = Math.max(totals.income, totals.expenses);
+      document.getElementById('overview-summary-expenses-progress').style.width = (maximum ? totals.expenses / maximum * 100 : 0) + '%';
+      document.getElementById('overview-summary-income-progress').style.width = (maximum ? totals.income / maximum * 100 : 0) + '%';
+    }
+
     function buildTransactionHistory(currency) {
       const isEur = currency === 'EUR';
       const dates = ['Dnes', 'Včera', '26. 8.', '25. 8.', '22. 8.', '21. 8.', '20. 8.', '19. 8.', '18. 8.', '15. 8.'];
+      const today = getPragueCalendarDate();
+      const previousDay = new Date(today + 'T12:00:00Z');
+      previousDay.setUTCDate(previousDay.getUTCDate() - 1);
+      const historyYear = Number(today.slice(0, 4)) - (Number(today.slice(5, 7)) < 8 ? 1 : 0);
+      const datesISO = [today, previousDay.toISOString().slice(0, 10), ...[26, 25, 22, 21, 20, 19, 18, 15].map(day => `${historyYear}-08-${String(day).padStart(2, '0')}`)];
       const czkTransactions = [
         ['Vodárna Kárany', 'Údržba čerpací stanice'],
         ['Povodí Vltavy, s. p.', 'Fakturace za odběr vody'],
@@ -5434,7 +5479,9 @@ unicode: "eac3"
           transaction[0],
           transaction[1],
           `${isIncome ? '' : '-'}${formattedAmount} ${unit}`,
-          isIncome ? 'prichozi' : 'odchozi'
+          isIncome ? 'prichozi' : 'odchozi',
+          datesISO[Math.floor(index / 5)],
+          amount
         ];
       });
     }
@@ -5514,6 +5561,31 @@ unicode: "eac3"
         </section>`).join('');
     }
 
+    function completedAccountInstruments(kind, accountKey) {
+      const seen = new Set();
+      return authorizedInstruments().filter(entry => entry.kind === kind && instrumentAccountKey(entry.item) === accountKey).filter(entry => {
+        const identity = entry.item.authorizationId || entry.fingerprint;
+        if (seen.has(identity)) return false;
+        seen.add(identity); return true;
+      }).sort((a, b) => String(b.at || '').localeCompare(String(a.at || '')));
+    }
+    function getAccountTransactions(accountKey) {
+      const account = ACCOUNT_DATA[accountKey];
+      if (!account) return [];
+      const currency = accountKey === 'eur' ? 'EUR' : 'CZK';
+      const posted = completedAccountInstruments('platby', accountKey).map(entry => {
+        const item = entry.item;
+        const validDate = entry.at && Number.isFinite(Date.parse(entry.at));
+        const iso = validDate ? getPragueCalendarDate(new Date(entry.at)) : null;
+        const date = iso === getPragueCalendarDate() ? 'Dnes' : iso ? new Intl.DateTimeFormat('cs-CZ', {day:'numeric', month:'numeric', year:'numeric', timeZone:'Europe/Prague'}).format(new Date(entry.at)) : item.date || 'Datum není uložené';
+        const money = bulkMoney(item.amount);
+        const explicit = item.authorizationAmount ? bulkMoney(item.authorizationAmount) : null;
+        const accountAmount = money.currency === currency ? Math.abs(money.cents) / 100 : explicit?.currency === currency ? Math.abs(explicit.cents) / 100 : Number.isFinite(item.accountDebitCents) ? Math.abs(item.accountDebitCents) / 100 : null;
+        return [date, item.name || item.recipient, item.message || item.description || item.desc || '', '-' + String(item.amount || '').replace(/^[−-]/, ''), 'odchozi', iso, accountAmount, item];
+      });
+      return [...posted, ...account.transactions];
+    }
+
     function renderAccountDetail(accountKey = localStorage.getItem('vavu_selected_account') || 'czk') {
       const selectedKey = ACCOUNT_DATA[accountKey] ? accountKey : 'czk';
       const account = ACCOUNT_DATA[selectedKey];
@@ -5524,7 +5596,8 @@ unicode: "eac3"
       renderAccountSidebar();
       const container = document.getElementById('account-transactions');
       if (!container) return;
-      const groups = account.transactions.reduce((result, transaction) => {
+      const allTransactions = getAccountTransactions(selectedKey);
+      const groups = allTransactions.reduce((result, transaction) => {
         (result[transaction[0]] ||= []).push(transaction);
         return result;
       }, {});
@@ -5533,20 +5606,28 @@ unicode: "eac3"
           <div class="account-transaction-date t-content-body-secondary">${date}</div>
           <div class="card">
           <div class="list-container">
-            ${transactions.map(([group, name, note, amount, direction]) => {
+            ${transactions.map(transaction => {
+              const [group, name, note, amount, direction] = transaction;
               const isIncome = direction === 'prichozi';
               const amountClass = isIncome ? ' amount-positive' : '';
-              return `<div class="list-item" onclick='viewDetail(${JSON.stringify(name)}, ${JSON.stringify(account.number)}, ${JSON.stringify(amount)}, ${JSON.stringify(date)}, ${JSON.stringify(direction)}, ${JSON.stringify(note)})'>
+              return `<div class="list-item" role="button" tabindex="0" data-transaction-index="${allTransactions.indexOf(transaction)}">
                 <div class="list-item-left"><div class="item-icon">
                   <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
                   <span class="badge-icon ${isIncome ? 'badge-success' : 'badge-alert'}">${isIncome ? '&larr;' : '&rarr;'}</span>
-                </div><div class="item-details"><span class="item-title">${name}</span><span class="item-subtitle">${note}</span></div></div>
-                <div class="list-item-right${amountClass}">${amount}</div>
+                </div><div class="item-details"><span class="item-title">${escapeHtml(name)}</span><span class="item-subtitle">${escapeHtml(note)}</span></div></div>
+                <div class="list-item-right${amountClass}">${escapeHtml(amount)}</div>
               </div>`;
             }).join('')}
           </div>
           </div>
         </div>`).join('');
+      container.querySelectorAll('[data-transaction-index]').forEach(row => {
+        const transaction = allTransactions[Number(row.dataset.transactionIndex)];
+        const [date, name, note, amount, direction, iso, accountAmount, item] = transaction;
+        const open = () => viewDetail(name, item?.recipient || account.number, amount, date, direction, note, item, selectedKey);
+        row.addEventListener('click', open);
+        row.addEventListener('keydown', event => { if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); open(); } });
+      });
     }
 
     // Neimplementované akce zobrazit jako dočasný toast místo blokujícího modálu.
@@ -5820,6 +5901,7 @@ unicode: "eac3"
       if (targetScreenId === 'autorizace') {
         switchAuthTab(screenId === 'autorizace' ? (localStorage.getItem('vavu_auth_tab') || 'platby') : screenId.slice('autorizace-'.length));
       }
+      if (targetScreenId === 'prehled') renderOverviewSummary();
       if (targetScreenId === 'ucet-detail') {
         renderAccountDetail();
       }
@@ -6128,7 +6210,10 @@ unicode: "eac3"
     function permissionAppliedSettings(key) {
       let value;
       try { value = JSON.parse(localStorage.getItem('vavu_permission_applied_' + key)); } catch (_) {}
-      return { permissions: COMPANY_USERS.map((_, index) => normalizePersonPermission(value?.permissions?.[index] || { level: index < 2 ? 3 : 0, cash: false })), signers: value?.signers && Array.isArray(value.signers.selected) ? value.signers : { count: 2, selected: [0, 1] } };
+      const permissions = COMPANY_USERS.map((_, index) => normalizePersonPermission(value?.permissions?.[index] || { level: index < 2 ? 3 : 0, cash: false }));
+      // Applied rights remain the authority. A saved but unsigned proposal grants nothing.
+      // Every approved payment authorizer participates in the same joint-signature rule.
+      return { permissions, signers: { count: Math.min(6, Math.max(2, Number(value?.signers?.count) || 2)), selected: permissions.map((permission, index) => permission.level === 3 ? index : -1).filter(index => index >= 0) } };
     }
 
     function permissionChangeSet(key) {
@@ -6275,7 +6360,9 @@ unicode: "eac3"
 
     function normalizeSigners(key, value) {
       const eligible = eligibleSigners(key);
-      return { count: Math.min(6, Math.max(2, Number(value?.count) || 2)), selected: [...new Set(Array.isArray(value?.selected) ? value.selected : [0, 1])].filter(index => eligible.includes(index)) };
+      // Membership follows the account's authorization permission; the editor controls
+      // only the required number of distinct signatures, never an additional allowlist.
+      return { count: Math.min(6, Math.max(2, Number(value?.count) || 2)), selected: eligible };
     }
 
     function getSigners(key, draft = false) {
@@ -6309,7 +6396,7 @@ unicode: "eac3"
         document.getElementById('signers-count').value = draft.count;
         document.getElementById('signers-options').innerHTML = eligibleSigners(key).map(index => {
           const user = COMPANY_USERS[index];
-          return `<label class="signer-option" data-ds-component="CO Item CheckBox"><input type="checkbox" value="${index}" ${draft.selected.includes(index) ? 'checked' : ''} onchange="updateSignersDraft()" aria-label="${escapeHtml(user.name)}"><span class="access-user-copy"><span>${escapeHtml(user.name)}</span><small>${escapeHtml(user.role)}</small></span></label>`;
+          return `<label class="signer-option" data-ds-component="CO Item CheckBox"><input type="checkbox" value="${index}" checked disabled aria-describedby="signers-membership-hint" aria-label="${escapeHtml(user.name)}"><span class="access-user-copy"><span>${escapeHtml(user.name)}</span><small>${escapeHtml(user.role)}</small></span></label>`;
         }).join('');
       }
     }
@@ -6330,7 +6417,7 @@ unicode: "eac3"
       const key = permissionFlowAccount();
       updateSignersDraft();
       const draft = getSigners(key, true);
-      if (draft.selected.length < draft.count) { showToast('Vyberte alespoň tolik podepisujících osob, kolik podpisů požadujete.'); return; }
+      if (draft.selected.length < draft.count) { showToast('Počet podpisů nesmí být větší než počet uživatelů s oprávněním autorizovat.'); return; }
       if (JSON.stringify(getSigners(key)) !== JSON.stringify(getSigners(key, true))) localStorage.removeItem('vavu_permission_change_signatures_' + key);
       localStorage.setItem('vavu_signers_' + key, JSON.stringify(getSigners(key, true)));
       closeSignersEditor();
@@ -6671,6 +6758,9 @@ unicode: "eac3"
       if (result.outcome === 'success') removeAuthorizationItems([id]);
       goTo(route);
     }
+    function instrumentPartialResultMessage(tab) {
+      return { tp: 'Trvalý příkaz ještě musí autorizovat ostatní.', inkasa: 'Povolení inkasa ještě musí autorizovat ostatní.' }[tab] || 'Požádejte dalšího oprávněného uživatele o podpis. Může se přihlásit po vašem odhlášení.';
+    }
     function renderCreatedInstrumentResult(route) {
       let result;
       try { result = JSON.parse(localStorage.getItem('vavu_creation_result')); } catch (_) {}
@@ -6679,7 +6769,7 @@ unicode: "eac3"
       const success = result.outcome === 'success';
       screen.querySelector('.result-heading').textContent = success ? { platby: 'Platbu jste plně autorizovali', tp: 'Vytvořili jste trvalý příkaz', inkasa: 'Povolili jste inkaso' }[result.tab] : { platby: 'Autorizovali jste platbu', tp: 'Autorizovali jste trvalý příkaz', inkasa: 'Autorizovali jste povolení inkasa' }[result.tab];
       if (['forbidden', 'duplicate', 'error'].includes(result.outcome)) screen.querySelector('.result-heading').textContent = instrumentAuthorizationMessage(result.outcome);
-      const lead = screen.querySelector('.result-lead'); lead.textContent = success ? '' : result.outcome === 'partial' ? 'Požádejte dalšího oprávněného uživatele o podpis. Může se přihlásit po vašem odhlášení.' : 'Instrument zůstává k autorizaci.'; lead.hidden = success;
+      const lead = screen.querySelector('.result-lead'); lead.textContent = success ? '' : result.outcome === 'partial' ? instrumentPartialResultMessage(result.tab) : 'Instrument zůstává k autorizaci.'; lead.hidden = success;
       screen.querySelector('.result-copy').hidden = true;
       const art = screen.querySelector('.result-illustration');
       art.src = ['forbidden', 'error', 'duplicate'].includes(result.outcome) ? 'assets/batch-authorization-warning.png' : '../../design-system/design-system/assets/illustrations/success-light.png'; art.alt = '';
@@ -6824,7 +6914,7 @@ unicode: "eac3"
       if (!result || result.id !== id || result.tab !== tab || result.user !== localStorage.getItem('vavu_selected_user')) { goTo(authDetailReturnRoute(tab, id), true); handleRouting(); return false; }
       document.getElementById('auth-item-result-title').textContent = result.outcome === 'success' ? { platby: 'Platbu jste plně autorizovali', tp: 'Vytvořili jste trvalý příkaz', inkasa: 'Povolili jste inkaso' }[tab] : result.outcome === 'partial' ? { platby: 'Autorizovali jste platbu', tp: 'Autorizovali jste trvalý příkaz', inkasa: 'Autorizovali jste povolení inkasa' }[tab] : instrumentAuthorizationMessage(result.outcome);
       const lead = document.getElementById('auth-item-result-message');
-      lead.hidden = result.outcome === 'success'; lead.textContent = result.outcome === 'partial' || result.outcome === 'duplicate' ? 'Požádejte dalšího oprávněného uživatele o podpis. Může se přihlásit po vašem odhlášení.' : 'Instrument zůstává k autorizaci.';
+      lead.hidden = result.outcome === 'success'; lead.textContent = result.outcome === 'partial' ? instrumentPartialResultMessage(tab) : result.outcome === 'duplicate' ? 'Požádejte dalšího oprávněného uživatele o podpis. Může se přihlásit po vašem odhlášení.' : 'Instrument zůstává k autorizaci.';
       document.querySelector('#screen-auth-item-result .result-illustration').src = ['forbidden', 'duplicate', 'error'].includes(result.outcome) ? 'assets/batch-authorization-warning.png' : '../../design-system/design-system/assets/illustrations/success-light.png';
     }
     function closeAuthItemResult() {
@@ -7058,7 +7148,7 @@ unicode: "eac3"
       localStorage.removeItem('form_obdobi');
     }
 
-    function viewDetail(name, account, amount, date, direction, note) {
+    function viewDetail(name, account, amount, date, direction, note, transactionItem = null, accountKey = localStorage.getItem('vavu_selected_account') || 'czk') {
       // 1. Nastavit typ platby (Odchozí / Příchozí)
       const isPrichozi = direction === 'prichozi';
       document.getElementById('detail-type-title').textContent = isPrichozi ? 'Příchozí platba' : 'Odchozí platba';
@@ -7101,6 +7191,15 @@ unicode: "eac3"
       document.getElementById('detail-id').textContent = Math.floor(10000000 + Math.random() * 90000000).toString();
       document.getElementById('detail-category').textContent = 'Nezatříděné';
 
+      if (transactionItem) {
+        document.getElementById('detail-from-account').textContent = ACCOUNT_DATA[accountKey].name + '\n' + ACCOUNT_DATA[accountKey].number;
+        document.getElementById('detail-msg-recipient').textContent = transactionItem.message || '—';
+        document.getElementById('detail-msg-me').textContent = transactionItem.description || transactionItem.desc || '—';
+        document.getElementById('detail-vs').textContent = transactionItem.variableSymbol || '—';
+        document.getElementById('detail-ks').textContent = transactionItem.constantSymbol || '—';
+        document.getElementById('detail-ss').textContent = transactionItem.specificSymbol || '—';
+        document.getElementById('detail-id').textContent = transactionItem.authorizationId || transactionItem.id;
+      }
       // 5. Přejít na obrazovku
       goTo('platba-detail');
     }
@@ -7155,7 +7254,7 @@ unicode: "eac3"
           { name: 'Zálohy na energie', period: 'Měsíčně', amount: '12 500,00 Kč', initial: 'Z' }
         ];
 
-        authorizedInstruments().filter(entry => entry.kind === 'tp' && instrumentAccountKey(entry.item) === (localStorage.getItem('vavu_selected_account') || 'czk')).forEach(({item}) => tpData.push({ name: item.name, period: item.frequency, amount: item.amount, initial: item.name.charAt(0).toUpperCase() }));
+        completedAccountInstruments('tp', localStorage.getItem('vavu_selected_account') || 'czk').forEach(({item}) => tpData.push({ name: item.name, period: item.frequency, amount: item.amount, initial: item.name.charAt(0).toUpperCase() }));
         tpData.forEach(item => {
           const div = document.createElement('div');
           div.className = 'list-item';
@@ -7190,7 +7289,7 @@ unicode: "eac3"
           inkasaData.push({ name: name, period: period, amount: limit, initial: name.charAt(0).toUpperCase() });
         }
 
-        authorizedInstruments().filter(entry => entry.kind === 'inkasa' && instrumentAccountKey(entry.item) === (localStorage.getItem('vavu_selected_account') || 'czk')).forEach(({item}) => inkasaData.push({ name: item.name, period: item.frequency, amount: item.amount, initial: item.name.charAt(0).toUpperCase() }));
+        completedAccountInstruments('inkasa', localStorage.getItem('vavu_selected_account') || 'czk').forEach(({item}) => inkasaData.push({ name: item.name, period: item.frequency, amount: item.amount, initial: item.name.charAt(0).toUpperCase() }));
         inkasaData.forEach(item => {
           const div = document.createElement('div');
           div.className = 'list-item';
@@ -8164,7 +8263,8 @@ unicode: "eac3"
           localStorage.setItem('vavu_pending_payment', JSON.stringify({
             authorizationId: newInstrumentId(), created: { name: localStorage.getItem('vavu_selected_user'), at: new Date().toISOString() }, name: recipient, recipient, accountName: paymentAccount().name, accountNumber: paymentAccount().number, message: localStorage.getItem(paymentStorageKey('messageRecipient')) || '', description, variableSymbol: localStorage.getItem(paymentStorageKey('variableSymbol')) || '', constantSymbol: localStorage.getItem(paymentStorageKey('constantSymbol')) || '', specificSymbol: localStorage.getItem(paymentStorageKey('specificSymbol')) || '',
             desc: description,
-            date: '28. 8. 2026',
+            date: new Intl.DateTimeFormat('cs-CZ', {day:'numeric',month:'numeric',year:'numeric',timeZone:'Europe/Prague'}).format(new Date()),
+            accountDebitCents: paymentDebitCents(),
             amount: formatStandingOrderAmount(amount, currency)
           }));
         }

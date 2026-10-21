@@ -1,3 +1,15 @@
+# Dokončení autorizací, business přehledu a restartu – 21. 10. 2026
+
+final result: passed (lokální Playwright/Chrome)
+
+- Oprávnění: podepisující se odvozují od schváleného práva Autorizace plateb, včetně dříve uložených konfigurací se skupinou omezenou na jednatele. Výslovně potvrzeno uživatelem. Počet požadovaných různých podpisů zachován; rozpracované změny práv se neuplatní před schválením. Členství skupiny odpovídá právům a nelze je ručně rozpojit.
+- Plně autorizované platby se zobrazují v historii příslušného účtu, TP a inkasa v aktivních seznamech. Částečně autorizované položky čekají na zbývající podpisy. Deduplikace dle ID autorizace, zachování po refreshi, skutečné údaje nových plateb v detailu.
+- Souhrn účtu CZK počítá aktuální měsíc v Europe/Prague, příjmy, výdaje, rozdíl a poměry ukazatelů z historie včetně dokončených plateb. Cizoměnová platba používá uloženou částku odpisu; bez známého převodu se do CZK součtu nevymýšlí kurz. Zůstatky účtů zůstávají demonstračními daty. Tarif Komfort Business a Příjmy bez motivu kapesného.
+- TP: částečný výsledek Autorizovali jste trvalý příkaz / Trvalý příkaz ještě musí autorizovat ostatní.; úplný Vytvořili jste trvalý příkaz bez podtextu. Inkaso analogicky Autorizovali jste povolení inkasa / Povolení inkasa ještě musí autorizovat ostatní.; úplný Povolili jste inkaso.
+- Restartovat prototyp otevírá sjednocený zaoblený dialog s křížkem, oddělenou patičkou, obrysovým Zrušit a červeným Smazat. Potvrzený reset zachovává data ostatních prototypů i přístupový token.
+
+Playwright: skutečná změna práv a dvě schválení jednateli; podpisy nejednatelů u platby, TP a inkasa; blokování neschválených práv, duplicitních podpisů a zachování pravidla tří různých podpisů. Skutečný průchod dvěma uživateli přes potvrzovací modál až do historie/aktivních seznamů, izolace CZK/EUR, přesná kontrola měsíčních součtů, refresh bez duplikátů. Oba renderery výsledků TP/inkasa ve všech stavech. Zrušit, Escape a potvrzený reset. Desktop 1440 a mobilní šířky 320/390 bez přetečení a JS chyb. Screenshoty business-overview.png ve složce .vavu-profile-qa a /tmp/vavu-reset-modal-{1440,390,320}.png vizuálně zkontrolovány. Bez nových P0/P1/P2; ikonografie a typografie navazují na existující DS.
+
 # Detail platby k autorizaci a sdílený Detail autorizace – 21. 10. 2026
 
 final result: passed
