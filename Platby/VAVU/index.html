@@ -2869,99 +2869,34 @@
       #screen-auth-bulk-result .payment-buttonbar .btn { flex: 1; min-width: 0; }
     }
 
+    #modal-payment-signature-modal { padding: var(--space-24); }
     .signature-modal {
-      max-width: 720px;
-      padding: var(--padding-2xl) 0 0;
-      align-items: stretch;
-      text-align: left;
-      border: 0;
-      border-radius: var(--border-radius-xl);
-      overflow: hidden;
-      background: var(--dialog-surface);
-      box-shadow: var(--shadow-highlighted);
+      display: grid; grid-template-columns: 184px minmax(0, 1fr); grid-template-rows: 316px auto;
+      width: 100%; max-width: 756px; padding: 0; align-items: stretch; text-align: left;
+      border: 0; border-radius: var(--border-radius-xl); overflow: auto;
+      max-height: calc(100dvh - var(--space-48)); background: var(--background-body); box-shadow: var(--shadow-highlighted);
     }
-
-    .signature-modal-header {
-      display: flex;
-      align-items: flex-start;
-      gap: var(--padding-xl);
-      padding: 0 var(--padding-2xl) var(--padding-2xl);
-    }
-
-    .signature-modal-title {
-      flex: 1;
-      margin: 0;
-      font: var(--headings-title-secondary);
-      letter-spacing: var(--tracking-title-secondary);
-    }
-
-    .signature-close {
-      width: 48px;
-      height: 48px;
-      margin: -12px -12px 0 0;
-      border: 0;
-      border-radius: var(--border-radius-md);
-      background: transparent;
-      color: var(--content-primary);
-      cursor: pointer;
-    }
-
-    .signature-list {
-      margin: 0 var(--padding-2xl) var(--padding-2xl);
-      border-radius: var(--border-radius-md);
-      overflow: hidden;
-      background: var(--background-surface);
-      box-shadow: var(--shadow-panel);
-    }
-
-    .signature-option {
-      width: 100%;
-      min-height: 92px;
-      padding: var(--padding-xl);
-      display: grid;
-      grid-template-columns: 32px 1fr 24px;
-      align-items: center;
-      gap: var(--padding-xl);
-      border: 0;
-      background: transparent;
-      color: var(--content-primary);
-      text-align: left;
-      cursor: pointer;
-    }
-
-    .signature-option + .signature-option {
-      border-top: .5px solid var(--background-divider);
-    }
-
-    .signature-option:hover {
-      background: var(--interactive-secondary-action);
-    }
-
-    .signature-option-icon {
-      color: var(--interactive-primary);
-    }
-
-    .signature-option-copy {
-      display: flex;
-      flex-direction: column;
-      gap: var(--padding-xs);
-    }
-
-    .signature-option-title {
-      font: var(--content-body-primary-bold);
-    }
-
-    .signature-option-caption {
-      font: var(--content-body-secondary);
-      color: var(--content-tertiary);
-    }
-
-    .signature-modal-footer {
-      display: flex;
-      justify-content: flex-end;
-      padding: var(--padding-xl) var(--padding-2xl);
-      background: var(--background-body);
-      box-shadow: var(--shadow-panel);
+    .signature-art { grid-row: 1 / 3; background: var(--attention-information-surface); display: flex; justify-content: center; padding-top: var(--space-64); }
+    .signature-art img { width: 80px; height: 64px; object-fit: contain; }
+    .signature-body { min-width: 0; padding: calc(var(--space-64) - var(--space-8)) var(--padding-xl) var(--padding-2xl); }
+    .signature-modal-title { margin: 0 0 var(--space-16); font: var(--headings-title-secondary); line-height: calc(var(--space-32) + var(--space-8)); letter-spacing: var(--tracking-title-secondary); }
+    .signature-instructions { margin: 0; font: var(--content-body-primary); }
+    .signature-close { position: absolute; top: var(--padding-md); right: var(--padding-md); width: 32px; height: 32px; display: grid; place-items: center; padding: 0; border: 0; background: transparent; color: var(--content-primary); cursor: pointer; }
+    .signature-offline { display: flex; align-items: center; gap: var(--padding-lg); margin-top: var(--padding-xl); padding: var(--padding-3xl) var(--padding-xl) 0; border: 0; border-top: var(--border-sm) solid var(--background-divider); width: 100%; background: transparent; color: var(--content-primary); text-align: left; font: var(--headings-headline-secondary); cursor: pointer; }
+    .signature-offline img { width: 24px; height: 24px; flex: none; }
+    .signature-offline span { text-decoration: underline; text-underline-offset: var(--padding-sm); }
+    .signature-offline-help { margin: var(--padding-xl) 0 0; font: var(--content-body-secondary); }
+    .signature-modal-footer { display: flex; justify-content: flex-end; align-items: center; padding: var(--padding-xl); background: var(--background-body); box-shadow: var(--shadow-panel); min-height: 88px; }
+    .signature-modal-footer .btn { width: auto; min-width: 120px; }
+    .signature-close:focus-visible, .signature-offline:focus-visible { outline: var(--border-md) solid var(--interactive-secondary); outline-offset: 2px; }
+    @media(max-width:551px) {
+      #modal-payment-signature-modal { padding: var(--padding-xl); }
+      .signature-modal { grid-template-columns: 1fr; grid-template-rows: auto auto auto; max-height: calc(100dvh - var(--space-32)); }
+      .signature-art { grid-row: auto; padding: var(--padding-2xl) 0 var(--padding-xl); }
+      .signature-body { padding: var(--padding-2xl) var(--padding-xl); }
+      .signature-modal-title { font: var(--headings-title-tertiary); }
+      .signature-offline { padding: var(--padding-2xl) 0 0; font: var(--content-body-primary-bold); align-items: flex-start; }
+      .signature-modal-footer .btn { width: 100%; }
     }
 
     .result-column {
@@ -5214,42 +5149,20 @@ unicode: "eac3"
     </div>
   </dialog>
 
-  <!-- ================= VAVU: VOLBA ZPŮSOBU PODPISU ================= -->
-  <div class="modal-overlay-popup" id="modal-payment-signature-modal" role="dialog" aria-modal="true" aria-labelledby="signature-modal-title">
+  <!-- ================= VAVU: POTVRZENÍ V MOBILNÍ APLIKACI ================= -->
+  <div class="modal-overlay-popup" id="modal-payment-signature-modal" role="dialog" aria-modal="true" aria-labelledby="signature-modal-title" aria-describedby="signature-instructions">
     <div class="modal-content-popup signature-modal">
-      <div class="signature-modal-header">
-        <h2 class="signature-modal-title" id="signature-modal-title">Vyberte způsob podpisu</h2>
-        <button class="signature-close" type="button" onclick="closeModal()" aria-label="Zavřít dialog">
-          <svg class="icon icon--close" aria-hidden="true"><use href="#es-close"></use></svg>
-        </button>
+      <aside class="signature-art" aria-hidden="true"><img src="assets/authorization-key.png" width="80" height="64" alt=""></aside>
+      <button class="signature-close" type="button" onclick="closeModal()" aria-label="Zavřít dialog"><svg class="icon icon--close" aria-hidden="true"><use href="#es-close"></use></svg></button>
+      <div class="signature-body">
+        <h2 class="signature-modal-title" id="signature-modal-title">Platba</h2>
+        <p class="signature-instructions" id="signature-instructions">Otevřete mobilní aplikaci KB Klíč nebo KB+ a požadavek potvrďte.</p>
+        <button class="signature-offline" type="button" aria-expanded="false" aria-controls="signature-offline-help" onclick="toggleSignatureOfflineHelp(this)"><img src="assets/authorization-wifi-off.png" width="24" height="24" alt=""><span>Nemáte mobil připojený k internetu?</span></button>
+        <p class="signature-offline-help" id="signature-offline-help" hidden>Připojte mobil k Wi-Fi nebo zapněte mobilní data. Potom otevřete aplikaci KB Klíč nebo KB+ a potvrďte požadavek.</p>
       </div>
-
-      <div class="signature-list">
-        <button class="signature-option" type="button" onclick="authorizePayment()">
-          <svg class="icon signature-option-icon" aria-hidden="true"><use href="#es-key"></use></svg>
-          <span class="signature-option-copy">
-            <span class="signature-option-title">Elektronicky KB Klíčem</span>
-            <span class="signature-option-caption">Potvrzení požadavku na zařízení klienta</span>
-          </span>
-          <svg class="icon icon--caret" aria-hidden="true"><use href="#es-caret-right"></use></svg>
-        </button>
-
-        <button class="signature-option" type="button" onclick="alert('Tato metoda podpisu není v prototypu rozpracovaná.')">
-          <svg class="icon signature-option-icon" aria-hidden="true"><use href="#es-text-file"></use></svg>
-          <span class="signature-option-copy">
-            <span class="signature-option-title">Vlastnoručně na telefonu poradce</span>
-            <span class="signature-option-caption">Vlastnoruční elektronický podpis v mobilní aplikaci inSign</span>
-          </span>
-          <svg class="icon icon--caret" aria-hidden="true"><use href="#es-caret-right"></use></svg>
-        </button>
-      </div>
-
-      <div class="signature-modal-footer">
-        <button class="btn btn--secondary" type="button" onclick="closeModal()">Zrušit</button>
-      </div>
+      <footer class="signature-modal-footer"><button class="btn btn--secondary" type="button" onclick="closeModal()">Zamítnout</button></footer>
     </div>
   </div>
-
 
   <!-- ================= MODAL 1: FORMULÁŘ POVOLENÍ INKASA ================= -->
   <div class="modal-overlay" id="modal-povoleni-inkasa-modal">
@@ -6575,6 +6488,7 @@ unicode: "eac3"
           closeAllModalsElements();
           currentScreen = request.origin;
           history.replaceState(null, '', '#' + request.origin);
+          if (signatureReturnFocus?.isConnected) signatureReturnFocus.focus();
           return;
         }
       }
@@ -6599,11 +6513,13 @@ unicode: "eac3"
       const modalEl = document.getElementById('modal-' + modalId);
       if (modalEl) {
         modalEl.classList.add('active');
+        if (modalId === 'payment-signature-modal') startSignatureConfirmation();
       }
     }
 
     // Fyzické skrytí všech modalů v DOMu
     function closeAllModalsElements() {
+      clearTimeout(signatureConfirmationTimer);
       document.querySelectorAll('.modal-overlay, .modal-overlay-popup, .filter-modal-overlay').forEach(el => el.classList.remove('active'));
     }
 
@@ -8093,7 +8009,7 @@ unicode: "eac3"
 
     function openSignatureSelection(kind = 'payment') {
       if (kind === 'payment' && batchFlowActive && currentScreen === 'davkove-platby-souhrn') kind = 'new-batch';
-      const request = { kind, origin: currentScreen, status: 'pending', user: localStorage.getItem('vavu_selected_user') };
+      const request = { id: newInstrumentId(), kind, origin: currentScreen, status: 'pending', user: localStorage.getItem('vavu_selected_user') };
       if (kind === 'existing-batch') request.batchId = document.getElementById('screen-davka-souhrn').dataset.batchId;
       if (kind === 'new-batch') request.batchId = getImportedBatches()[0]?.id;
       if (kind === 'authorization-item') { const route = currentScreen.match(/^autorizace-(?:detail|souhrn)-(platby|tp|inkasa)-([A-Za-z0-9_-]+)$/); request.tab = route[1]; request.itemId = route[2]; request.returnRoute = authDetailReturnRoute(route[1], route[2]); }
@@ -8111,6 +8027,7 @@ unicode: "eac3"
       request.policies = Object.fromEntries(reviewed.map(item => [item.id, JSON.stringify(instrumentPolicy(item))]));
       request.fingerprints = Object.fromEntries(reviewed.map(item => [item.id, instrumentFingerprint(item)]));
       if (kind === 'payment') request.creationPolicy = JSON.stringify(instrumentPolicy({ accountNumber: paymentAccount().number }));
+      signatureReturnFocus = document.activeElement;
       localStorage.setItem('vavu_signature_context', JSON.stringify(request));
       goTo('payment-signature-modal');
     }
@@ -8122,11 +8039,43 @@ unicode: "eac3"
       updateDeleteButtonState();
     }
 
+    var signatureConfirmationTimer, signatureReturnFocus;
+    function startSignatureConfirmation() {
+      clearTimeout(signatureConfirmationTimer);
+      const request = signatureRequest();
+      if (!request || request.status !== 'pending') return;
+      const titles = { platby: 'Platba', tp: 'Trvalý příkaz', inkasa: 'Povolení inkasa' };
+      document.getElementById('signature-modal-title').textContent = request.kind === 'permissions' ? 'Správa oprávnění' : ['existing-batch', 'new-batch'].includes(request.kind) ? 'Dávka plateb' : request.tab ? titles[request.tab] : directDebitFlowActive ? titles.inkasa : standingOrderFlowActive ? titles.tp : titles.platby;
+      document.getElementById('signature-offline-help').hidden = true;
+      document.querySelector('.signature-offline').setAttribute('aria-expanded', 'false');
+      document.querySelector('.signature-close').focus();
+      // Prototype simulation of confirmation in the mobile app; no external request is sent.
+      const id = request.id;
+      signatureConfirmationTimer = setTimeout(() => {
+        const current = signatureRequest();
+        if (location.hash === '#payment-signature-modal' && current?.id === id && current.status === 'pending' && document.getElementById('modal-payment-signature-modal').classList.contains('active')) authorizePayment();
+      }, 6000);
+    }
+    function toggleSignatureOfflineHelp(button) {
+      const help = document.getElementById('signature-offline-help');
+      help.hidden = !help.hidden;
+      button.setAttribute('aria-expanded', String(!help.hidden));
+      clearTimeout(signatureConfirmationTimer);
+      if (help.hidden) startSignatureConfirmation();
+    }
+
     document.getElementById('modal-payment-signature-modal').addEventListener('click', event => {
       if (event.target === event.currentTarget) closeModal();
     });
     document.addEventListener('keydown', event => {
-      if (event.key === 'Escape' && document.getElementById('modal-payment-signature-modal').classList.contains('active')) { event.preventDefault(); closeModal(); }
+      const modal = document.getElementById('modal-payment-signature-modal');
+      if (event.key === 'Tab' && modal.classList.contains('active')) {
+        const buttons = [...modal.querySelectorAll('button:not([disabled])')];
+        const first = buttons[0], last = buttons[buttons.length - 1];
+        if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus(); }
+        else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }
+      }
+      if (event.key === 'Escape' && modal.classList.contains('active')) { event.preventDefault(); closeModal(); }
     });
 
     function authorizePayment() {

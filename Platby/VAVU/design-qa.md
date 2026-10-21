@@ -1,3 +1,21 @@
+# Modál potvrzení v KB Klíči / KB+ – 21. 10. 2026
+
+final result: passed
+
+Vizuální zdroj: /home/lukinab/.codex/attachments/b67088db-506d-4bc1-b196-b6bc5b071022/codex-clipboard-beda81bf-f7eb-4d90-a8c7-1af84270896e.png (1596 × 914 px). Předloha obsahuje čekání na potvrzení v mobilní aplikaci, nikoli výběr podpisové metody. Starý sdílený modál nahrazen na stejném routingu a nad původním souhrnem.
+
+Implementace: /home/lukinab/Projects/UX/.vavu-profile-qa/confirmation-desktop.png, viewport 1024 × 768 CSS px, DPR 2. Element confirmation-modal.png má 1512 × 808 px, tedy 756 × 404 CSS px. Společné porovnání confirmation-comparison.png: zdrojový modál x46/y49/w1514/h810 normalizován na 756 × 405, implementace na 756 × 404. Toto fokusované porovnání zobrazuje celý modál a jeho všechny prvky; samostatný screenshot celé stránky kontroluje i dimming a umístění. Vizuálně zkontrolovány také confirmation-{320,390}.png (výška 800 CSS px, DPR 2).
+
+Původní [P1]: nesprávný výběrový modál místo čekání na mobilní potvrzení. Oprava: levý panel s přesnou ilustrací klíče z přílohy, titulek, doslovná instrukce KB Klíč/KB+, dělič, podtržený odkaz s přesnou ikonou offline z přílohy, křížek, footer Zamítnout. Kontextové titulky pro trvalý příkaz, inkaso, dávky a oprávnění používají stejnou komponentu. První porovnání [P2] ukázalo obsah cca 10px níže; horní padding a line-height upraveny a zachycen nový screenshot/porovnání. Bez zbývajících P0/P1/P2.
+
+Pět povrchů: typografie Inter a DS hierarchie; layout panelů a rozměry podle předlohy, tokeny pro spacing/radius; DS barvy a obrys sekundárního tlačítka; oba bitmapové assety přímo ze zdroje bez překreslení; přesné české texty a kontextové nadpisy. P3: drobné odlišnosti rasterizace a vertikálního umístění textu vůči původnímu řezu; tlačítko má společnou DS výšku 48px v souladu s předchozím výslovným požadavkem na jednotná secondary tlačítka.
+
+Chování prototypu: potvrzení z mobilní aplikace se simuluje po 6 sekundách, žádný externí požadavek se neposílá. Uživatel byl během práce požádán o preferenci simulace; při absenci odpovědi byl použit oznámený předpoklad krátké automatické prodlevy. Zamítnout, křížek, Escape a opuštění modálu ruší timer a nic nepodepisují. Timer je vázán na jedinečné ID čekajícího požadavku a stav/user guard; nemůže potvrdit později otevřenou jinou operaci. Refresh obnoví čekání, dokončená operace se neopakuje. Fokus zůstává v dialogu a při zrušení se vrací na spouštěcí tlačítko. Offline odkaz rozbalí radu k připojení mobilu a pozastaví simulaci; sbalení ji obnoví. Na mobilu se panely skládají do sloupce bez overflow, Zamítnout je dostupné.
+
+Playwright/Chrome: reálná nová platba → detaily → nový modál → výsledek; Zamítnout/křížek/Escape bez mutace, focus trap a návrat fokusu, pomoc, refresh, jediné potvrzení, 320/390 a bez JS chyb. Regrese 7 vstupů: nová platba, nový TP, nové inkaso, nová dávka, existující dávka, oprávnění CZK a EUR. Zamítnutí/Escape/refresh zachovají původní obrazovku a před potvrzením nic nepodepisují. Tři individuální autorizační souhrny (platba/TP/inkaso), výsledek a idempotence; hromadný výběr dvou plateb potvrdí pouze vybrané. Zachována první autorizace jako partial a čekání na druhého podepisujícího. Starší testy předpokládaly okamžitý klik na KB Klíč a jediný podpis: testovací očekávání přizpůsobena nové 6s prodlevě a existujícímu pravidlu dvou podpisů, produktová podpisová logika se neměnila.
+
+---
+
 # Jednotná sekundární tlačítka – 21. 10. 2026
 
 final result: passed
