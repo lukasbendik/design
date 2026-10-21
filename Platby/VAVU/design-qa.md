@@ -1,3 +1,15 @@
+# Výsledek hromadné autorizace inkas – 21. 10. 2026
+
+final result: passed
+
+Nová příloha 80e396b6-56ce-4cfe-89b1-19c666b99b6b/codex-clipboard-1a1d5017-7106-41df-8736-0b8dc6a0bd25.png doplňuje výsledkovou variantu inkas. Řádek zobrazuje název inkasa, období, limit a skutečný stav ze snímku schválených položek. Číslo příjemce a VS zůstávají ve výsledcích ostatních instrumentů. Ilustrace červeného minus odpovídá této referenci i při úspěchu všech inkas; stavové ikony a texty nadále vyjadřují skutečný výsledek.
+
+Vizuálně ověřeno oproti příloze normalizované z 2048 × 2046 na 1024 × 1023 CSS px: stejný sloupec, ilustrace, nadpis, dvouřádkový seznam a spodní akce. Evidence: /home/lukinab/Projects/UX/.vavu-profile-qa/bulk-result-inkasa.png a bulk-result-inkasa-{320,375}.png. Testovací výběr Elektřina / Čtvrtletně / 1 950 Kč a Internet / Měsíčně / 350 Kč ověřuje skutečné různé hodnoty místo přepsání veřejných dat ilustračními údaji. Bez zbývajících P0/P1/P2.
+
+Chrome/Playwright: výběr dvou inkas → souhrn 2 300 Kč → Vyberte způsob podpisu → výsledek; správné názvy/období/limity/stavy, refresh výsledku, odstranění úspěšných položek a Autorizovat další. Mobil 320/375 bez vodorovného overflow. Regrese hromadné autorizace plateb a TP, oddělení aktivní záložky, FX a chybových stavů prošla. Bez JS chyb.
+
+---
+
 # Souhrnná autorizace aktivní záložky – 21. 10. 2026
 
 final result: passed
@@ -8,7 +20,7 @@ Souhrn seskupuje účty a měny, zobrazuje skutečný účet, počty a součty �
 
 Výchozí položky nemají vymyšlené chyby. Smíšené výsledky jsou podporovány pro explicitní authorizationOutcome error/rejected a skutečně zmizelé položky; pro QA byly použity izolované fixtures. Veřejná demo data se kvůli obrázku neměnila. Konverzní upozornění se ukáže u cizoměnových plateb. Je-li v datech authorizationAmount, používá se pro částku k autorizaci v seznamu i souhrnu a původní měna se zobrazí pod řádkem. Bez předané konverzní částky se měny sečtou odděleně, žádný kurz se nevymýšlí. FX fixture měla explicitní 100 EUR / 2 527 Kč, ostatní částky byly z vybraných položek; nejde o nový veřejný kurz.
 
-Zdroje pod /home/lukinab/.codex/attachments/: 6a164f73-7826-4e25-9876-0fe3e8a3c3d2/codex-clipboard-f85f1042-4751-49de-89b7-33d94e053476.png (platby); e8de6f17-705b-4a7c-a61b-0f451ce7a03b/codex-clipboard-ee324fce-9822-4e92-a230-720935a33c55.png (FX); a356cf49-b281-43d4-9007-e3fad6f2d4cf/codex-clipboard-07287d1b-09c1-481d-95a5-17b7dc09a7c0.png (TP); 49be3a6a-fbb0-45ee-b3ba-36503afbd60d/codex-clipboard-3e9e16b6-46fb-4094-873f-3a5316e91df0.png (inkasa); 83074e14-72ca-4907-8fde-56dd515aced1/codex-clipboard-81824528-34a9-4ba2-b8e5-5e552b2a1e01.png (výsledky). Poslední příloha je duplicitní výsledek. Samostatná budoucí varianta výsledku inkas zatím není dodána; používá se společný výsledkový seznam s jejich skutečnými údaji.
+Zdroje pod /home/lukinab/.codex/attachments/: 6a164f73-7826-4e25-9876-0fe3e8a3c3d2/codex-clipboard-f85f1042-4751-49de-89b7-33d94e053476.png (platby); e8de6f17-705b-4a7c-a61b-0f451ce7a03b/codex-clipboard-ee324fce-9822-4e92-a230-720935a33c55.png (FX); a356cf49-b281-43d4-9007-e3fad6f2d4cf/codex-clipboard-07287d1b-09c1-481d-95a5-17b7dc09a7c0.png (TP); 49be3a6a-fbb0-45ee-b3ba-36503afbd60d/codex-clipboard-3e9e16b6-46fb-4094-873f-3a5316e91df0.png (inkasa); 83074e14-72ca-4907-8fde-56dd515aced1/codex-clipboard-81824528-34a9-4ba2-b8e5-5e552b2a1e01.png (výsledky). Poslední příloha je duplicitní výsledek. Varianta výsledku inkas byla následně doplněna podle nové přílohy; viz aktuální záznam výše.
 
 Normalizace: první dvě přílohy 2048 × 1536 → 1024 × 768 CSS px; TP 2080 × 1576 a inkasa 2080 × 1554 oříznuty o rám na x16–2064/y0–1536 → 1024 × 768. Výsledek 2048 × 2046 → 1024 × 1023. Implementační viewporty stejné, DPR 1. Evidence /home/lukinab/Projects/UX/.vavu-profile-qa/: bulk-summary-{platby,tp,inkasa,fx}.png, bulk-result-mixed.png, bulk-mobile-{320,375,768}.png, bulk-result-mobile-{320,375}.png. Soubory compare-bulk-{payment,fx,tp,inkasa,result}.png a jejich -focus.png obsahují plné a detailní porovnání vedle sebe. Počty/údaje se záměrně řídí skutečným výběrem, ne ilustračními částkami z příloh.
 

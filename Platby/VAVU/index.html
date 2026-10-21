@@ -6874,11 +6874,14 @@ unicode: "eac3"
       if (stage === 'souhrn' && operation.status === 'completed') { goTo('autorizace-vyber-vysledek-' + id, true); handleRouting(); return false; }
       if (stage === 'vysledek') {
         const failed = operation.results.some(item => item.outcome !== 'success');
-        const art = document.getElementById('auth-bulk-result-art'); art.src = failed ? 'assets/authorization-partial.png' : '../../design-system/design-system/assets/illustrations/success-light.png'; art.classList.toggle('bulk-partial-art', failed);
+        const neutralArt = failed || operation.tab === 'inkasa';
+        const art = document.getElementById('auth-bulk-result-art'); art.src = neutralArt ? 'assets/authorization-partial.png' : '../../design-system/design-system/assets/illustrations/success-light.png'; art.classList.toggle('bulk-partial-art', neutralArt);
         document.getElementById('auth-bulk-result-items').innerHTML = operation.results.map(item => {
           const error = item.outcome !== 'success';
           const message = { success: 'Autorizováno', error: 'Chyba při autorizaci', rejected: 'Akci jsme museli odmítnout', gone: 'Autorizováno nebo smazáno' }[item.outcome];
-          return `<div class="bulk-result-item"><span class="bulk-result-avatar"><svg class="icon" aria-hidden="true"><use href="#es-person"></use></svg><span class="bulk-result-badge ${error ? 'bulk-error-badge' : ''}">${error ? '<svg class="icon" aria-hidden="true"><use href="#es-close"></use></svg>' : '<img src="assets/authorization-arrow-right.svg" alt="">'}</span></span><span class="bulk-result-copy"><strong>${escapeHtml(item.recipient || item.name)}</strong>${item.variableSymbol ? `<small>VS: ${escapeHtml(item.variableSymbol)}</small>` : ''}<span class="bulk-result-status ${error ? 'bulk-error' : ''}">${message}</span></span><strong class="bulk-result-amount">${escapeHtml(item.amount)}</strong></div>`;
+          const title = operation.tab === 'inkasa' ? item.name : (item.recipient || item.name);
+          const secondary = operation.tab === 'inkasa' ? (item.frequency || item.desc) : (item.variableSymbol ? 'VS: ' + item.variableSymbol : '');
+          return `<div class="bulk-result-item"><span class="bulk-result-avatar"><svg class="icon" aria-hidden="true"><use href="#es-person"></use></svg><span class="bulk-result-badge ${error ? 'bulk-error-badge' : ''}">${error ? '<svg class="icon" aria-hidden="true"><use href="#es-close"></use></svg>' : '<img src="assets/authorization-arrow-right.svg" alt="">'}</span></span><span class="bulk-result-copy"><strong>${escapeHtml(title)}</strong>${secondary ? `<small>${escapeHtml(secondary)}</small>` : ''}<span class="bulk-result-status ${error ? 'bulk-error' : ''}">${message}</span></span><strong class="bulk-result-amount">${escapeHtml(item.amount)}</strong></div>`;
         }).join(''); return;
       }
       const accounts = new Map(); operation.items.forEach(item => {
