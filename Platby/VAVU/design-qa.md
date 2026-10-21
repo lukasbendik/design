@@ -1,3 +1,13 @@
+# Stav částečné autorizace – 21. 10. 2026
+
+final result: passed
+
+Zadání: v Autorizaci používat přesný stav Částečně autorizováno místo Čeká na další podpis s počtem. Změněn společný instrumentSigningStatus pro řádky seznamu a detail platby/TP/inkasa. Nepodepsaný stav K autorizaci, plná autorizace i kontrola oprávnění zůstávají stejné; podpisová logika nezměněna.
+
+Playwright/Chrome: skutečný první podpis platby, TP a inkasa přes nový sdílený modál → výsledek → Zavřít → seznam. U všech tří typů přesně Částečně autorizováno, bez starého textu a počtu 1/2. Stejný stav po refreshi a v detailu. Mobil 320 bez overflow, bez JS chyb. Screenshot /home/lukinab/Projects/UX/.vavu-profile-qa/partial-status.png, viewport 1024 × 900 CSS px, DPR 2.
+
+---
+
 # Modál potvrzení v KB Klíči / KB+ – 21. 10. 2026
 
 final result: passed

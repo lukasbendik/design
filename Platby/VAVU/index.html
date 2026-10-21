@@ -6614,7 +6614,7 @@ unicode: "eac3"
       const state = instrumentSignatures(kind, item);
       if (!state.policy.names.includes(localStorage.getItem('vavu_selected_user'))) return instrumentAuthorizationMessage('forbidden');
       if (state.signatures.length >= state.policy.count) return 'Autorizováno';
-      return state.signatures.length ? 'Čeká na další podpis (' + state.signatures.length + '/' + state.policy.count + ').' : 'K autorizaci';
+      return state.signatures.length ? 'Částečně autorizováno' : 'K autorizaci';
     }
     function signInstrument(kind, item, expectedPolicy) {
       const state = instrumentSignatures(kind, item);
