@@ -1,3 +1,21 @@
+# Nová platba – výška měny a dynamický zůstatek – 21. 10. 2026
+
+final result: passed
+
+Zdroj: /home/lukinab/.codex/attachments/5986461c-5db7-468e-bae7-a24b056101f5/codex-clipboard-3c97f740-cc4b-4e22-abcb-e28df5949ed7.png, 1462 × 1544 px. Příloha ukazuje původní chybu; požadavek výslovně mění výšku měny a zůstatek. Implementace: /home/lukinab/Projects/UX/.vavu-profile-qa/payment-form-final.png, 2048 × 1800 px, viewport 1024 × 900 CSS px, DPR 2. Stav: CZK účet, příjemce 87564765/0800, 150000 Kč. Fokus sejmut před finálním snímkem.
+
+Celý formulář a mobilní snímky payment-form-{320,390}.png ve stejné složce zkontrolovány. Fokusované společné porovnání payment-form-comparison.png: původní obsah přílohy x103/y572/w1074/h476 normalizován na šířku 488 CSS px, implementace x268/y268/w488/h216 zachycena při DPR 2 a normalizována na 488 px. Srovnává se stejné pole příjemce, částka a měna; rozdíly výšky a zůstatku jsou požadovanou opravou.
+
+Nálezy a opravy: [P2] currency label se roztahoval na výšku celého sousedního pole včetně helperu; scoped align-items:start odstranil roztažení. Obě pole nyní 76 CSS px na desktopu i 320/390 px. [P1] zůstatek byl pevný text 18063,38; nyní stejný ACCOUNT_DATA zdroj jako detail účtu minus zadaná platba. CZK 680063,38 − 150000 = 530063,38; EUR 24850,42 − 100 = 24750,42. Žádné zbývající P0/P1/P2.
+
+Typografie a rozložení: stávající Inter/DS, paddingy, 488px sloupec a navigace zachovány; měna zarovnána s částkou. Barvy/tokeny: existující DS; nedostatek prostředků využívá existující error variantu. Assety: původní DS ikony, bez nových ilustrací. Copy: dynamický český zůstatek, u FX označení orientačně a datum kurzu bez poplatků. Mobilní popisek se přirozeně zalomí, bez overflow.
+
+Měny: oficiální KB seznam pro MojeBanka Business ověřen 21. 10. 2026 na https://www.kb.cz/cs/obcane/ucty/platby-a-hotovostni-sluzby/zahranicni-platby — AUD, CAD, CNY, CZK, DKK, EUR, GBP, HUF, CHF, JPY, NOK, PLN, RON, SEK, TRY, USD. RUB a papírové-only měny nezařazeny. FX snapshot z https://www.kb.cz/cs/kurzovni-listek, validDate 2026-10-21T15:10:00. CZK účet používá deviza prodej; EUR účet při převodu používá deviza nákup zdrojové měny a deviza prodej cílové měny, včetně currencyUnit JPY/HUF. Nejde o live feed ani garantovaný kurz zúčtování; datum je viditelné ve formuláři. Formulář sám zůstatek účtu nemění.
+
+Playwright/Chrome: skutečné přihlášení → přehled → Nová platba, editace částky včetně haléřů a prázdného vstupu, všech 16 měn, JPY jednotky, CZK/EUR účet a číslo účtu, persistence výběru/částky po refreshi, další krok a browser Zpět. Nedostatek prostředků brání pokračování a po opravě částky zmizí. Nová CHF platba z EUR účtu předána přes skutečný podpisový dialog se správným účtem a měnou; nové měny zachovány i v parseru součtů autorizací. Bez JS chyb. První běh testu očekával EUR místo nativního symbolu €; sjednoceno zobrazení na účetní označení EUR, test zopakován a prošel.
+
+---
+
 # Přístupy k účtům – ikony a popisky – 21. 10. 2026
 
 final result: passed

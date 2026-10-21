@@ -2631,6 +2631,10 @@
       }
     }
 
+    #screen-nova-platba .payment-field-row { align-items: start; }
+    #payment-account-select { appearance: none; border: 0; background: transparent; color: inherit; font: inherit; width: 100%; cursor: pointer; }
+    #payment-account-picker .item__text { flex: 1; min-width: 0; }
+    #payment-currency { padding-right: var(--padding-xl); }
     .payment-field-row {
       display: grid;
       grid-template-columns: minmax(0, 1fr) 104px;
@@ -4795,14 +4799,14 @@ unicode: "eac3"
           <form class="payment-flow-column" id="payment-basic-form" onsubmit="event.preventDefault(); continuePayment();">
             <h1 class="payment-flow-title" id="nova-platba-title">Nová platba</h1>
 
-            <button class="item" type="button" onclick="showToast('V tomto prototypu je dostupný jen Účet CZK.')">
+            <label class="item" id="payment-account-picker">
               <span class="item__text">
-                <span class="item__label">Účet CZK</span>
-                <span class="item__caption">123456-4835477/0100</span>
+                <select id="payment-account-select" class="item__label" aria-label="Účet pro platbu" onchange="selectPaymentAccount(this.value)"><option value="czk">Účet CZK</option><option value="eur">Účet EUR</option></select>
+                <span class="item__caption" id="payment-account-number"></span>
                 <span class="item__caption">Vodárny, a.s.</span>
               </span>
               <span class="item__caret"><svg class="icon icon--caret" aria-hidden="true"><use href="#es-caret-right"></use></svg></span>
-            </button>
+            </label>
 
             <div class="payment-field">
               <label class="payment-control" id="payment-recipient-control">
@@ -4818,7 +4822,7 @@ unicode: "eac3"
                   <span class="payment-control-label">Částka</span>
                   <input id="payment-amount" name="amount" type="number" min="0.01" step="0.01" inputmode="decimal" value="500" data-payment-key="amount" aria-describedby="payment-amount-message">
                 </label>
-                <span class="payment-field-message" id="payment-amount-message">Na účtu vám zůstane 18 063,38 Kč</span>
+                <span class="payment-field-message" id="payment-amount-message" aria-live="polite"></span>
               </div>
 
               <label class="payment-control">
@@ -4826,6 +4830,20 @@ unicode: "eac3"
                 <select id="payment-currency" class="payment-control-select" data-payment-key="currency" aria-label="Měna">
                   <option value="Kč">Kč</option>
                   <option value="EUR">EUR</option>
+                  <option value="USD">USD</option>
+                  <option value="GBP">GBP</option>
+                  <option value="CHF">CHF</option>
+                  <option value="PLN">PLN</option>
+                  <option value="AUD">AUD</option>
+                  <option value="CAD">CAD</option>
+                  <option value="CNY">CNY</option>
+                  <option value="DKK">DKK</option>
+                  <option value="HUF">HUF</option>
+                  <option value="JPY">JPY</option>
+                  <option value="NOK">NOK</option>
+                  <option value="RON">RON</option>
+                  <option value="SEK">SEK</option>
+                  <option value="TRY">TRY</option>
                 </select>
                 <svg class="icon payment-select-caret" aria-hidden="true"><use href="#es-caret-right"></use></svg>
               </label>
@@ -5885,6 +5903,7 @@ unicode: "eac3"
         localStorage.removeItem('vavu_batch_flow_active');
         localStorage.removeItem('vavu_standing_order_flow_active');
         localStorage.removeItem('vavu_direct_debit_flow_active');
+        renderPaymentAccount();
       }
       if (['tp-novy', 'tp-detaily', 'tp-souhrn', 'tp-vysledek'].includes(targetScreenId)) {
         standingOrderFlowActive = true;
@@ -6926,7 +6945,7 @@ unicode: "eac3"
     // Tlačítko K autorizaci v pravém sloupci
     function bulkMoney(value) {
       const text = String(value || '');
-      const currency = /(?:EUR|USD|GBP|CHF|CZK)\s*$/.exec(text)?.[0].trim() || 'CZK';
+      const currency = /(?:AUD|CAD|CNY|CZK|DKK|EUR|GBP|HUF|CHF|JPY|NOK|PLN|RON|SEK|TRY|USD)\s*$/.exec(text)?.[0].trim() || 'CZK';
       const cents = Math.round(Number(text.replace(/[^0-9,.-]/g, '').replace(',', '.')) * 100);
       return { currency, cents: Number.isFinite(cents) ? cents : 0 };
     }
@@ -7273,9 +7292,59 @@ unicode: "eac3"
       return 'vavu_payment_' + key;
     }
 
+    // KB online-payment currencies: https://www.kb.cz/cs/obcane/ucty/platby-a-hotovostni-sluzby/zahranicni-platby
+    // Prototype FX snapshot, not a live or guaranteed settlement quote. Rates are CZK per currencyUnit.
+    const PAYMENT_FX = {"USD":{"currencyUnit":1,"nonCashBuy":20.7909,"nonCashSell":22.4785,"validDate":"2026-10-21T15:10:00"},"EUR":{"currencyUnit":1,"nonCashBuy":23.3526,"nonCashSell":25.2481,"validDate":"2026-10-21T15:10:00"},"GBP":{"currencyUnit":1,"nonCashBuy":27.8356,"nonCashSell":30.0948,"validDate":"2026-10-21T15:10:00"},"AUD":{"currencyUnit":1,"nonCashBuy":14.5534,"nonCashSell":15.7346,"validDate":"2026-10-21T15:10:00"},"CAD":{"currencyUnit":1,"nonCashBuy":14.8005,"nonCashSell":16.0017,"validDate":"2026-10-21T15:10:00"},"DKK":{"currencyUnit":1,"nonCashBuy":3.1243,"nonCashSell":3.3779,"validDate":"2026-10-21T15:10:00"},"HUF":{"currencyUnit":100,"nonCashBuy":6.4099,"nonCashSell":6.9301,"validDate":"2026-10-21T15:10:00"},"CHF":{"currencyUnit":1,"nonCashBuy":25.2407,"nonCashSell":27.2893,"validDate":"2026-10-21T15:10:00"},"JPY":{"currencyUnit":100,"nonCashBuy":13.1561,"nonCashSell":14.2239,"validDate":"2026-10-21T15:10:00"},"NOK":{"currencyUnit":1,"nonCashBuy":2.2129,"nonCashSell":2.3925,"validDate":"2026-10-21T15:10:00"},"PLN":{"currencyUnit":1,"nonCashBuy":5.3477,"nonCashSell":5.7817,"validDate":"2026-10-21T15:10:00"},"RON":{"currencyUnit":1,"nonCashBuy":4.3832,"nonCashSell":4.739,"validDate":"2026-10-21T15:10:00"},"SEK":{"currencyUnit":1,"nonCashBuy":2.1028,"nonCashSell":2.2734,"validDate":"2026-10-21T15:10:00"},"CNY":{"currencyUnit":1,"nonCashBuy":3.0389,"nonCashSell":3.4407,"validDate":"2026-10-21T15:10:00"},"TRY":{"currencyUnit":100,"nonCashBuy":39.3851,"nonCashSell":47.8949,"validDate":"2026-10-21T15:10:00"}};
+    function paymentAccountKey() {
+      const key = localStorage.getItem(paymentStorageKey('account')) || localStorage.getItem('vavu_selected_account');
+      return Object.hasOwn(ACCOUNT_DATA, key) ? key : 'czk';
+    }
+    function paymentAccount() { return ACCOUNT_DATA[paymentAccountKey()]; }
+    function selectPaymentAccount(key) {
+      if (!Object.hasOwn(ACCOUNT_DATA, key)) return;
+      localStorage.setItem(paymentStorageKey('account'), key);
+      document.getElementById('payment-currency').value = key === 'eur' ? 'EUR' : 'Kč';
+      localStorage.setItem(paymentStorageKey('currency'), document.getElementById('payment-currency').value);
+      renderPaymentAccount();
+    }
+    function renderPaymentAccount() {
+      document.getElementById('payment-account-select').value = paymentAccountKey();
+      document.getElementById('payment-account-number').textContent = paymentAccount().number;
+      updatePaymentBalance();
+    }
+    function paymentDebitCents() {
+      const value = document.getElementById('payment-amount').value;
+      const amount = value === '' ? 0 : Number(value);
+      if (!Number.isFinite(amount) || amount < 0) return null;
+      const currency = document.getElementById('payment-currency').value.replace('Kč', 'CZK');
+      const accountCurrency = paymentAccountKey() === 'eur' ? 'EUR' : 'CZK';
+      if (currency === accountCurrency) return Math.round(amount * 100);
+      const sourceRate = accountCurrency === 'CZK' ? 1 : PAYMENT_FX[accountCurrency].nonCashBuy / PAYMENT_FX[accountCurrency].currencyUnit;
+      const targetRate = currency === 'CZK' ? 1 : PAYMENT_FX[currency]?.nonCashSell / PAYMENT_FX[currency]?.currencyUnit;
+      return Number.isFinite(targetRate) ? Math.round(amount * targetRate / sourceRate * 100) : null;
+    }
+    function updatePaymentBalance() {
+      const message = document.getElementById('payment-amount-message');
+      const control = document.getElementById('payment-amount-control');
+      const accountCurrency = paymentAccountKey() === 'eur' ? 'EUR' : 'CZK';
+      const currency = document.getElementById('payment-currency').value.replace('Kč', 'CZK');
+      const balance = Math.round(Number(paymentAccount().balance.replace(/[^0-9,.-]/g, '').replace(',', '.')) * 100);
+      const debit = paymentDebitCents();
+      const insufficient = debit !== null && debit > balance;
+      message.classList.toggle('error', insufficient);
+      control.classList.toggle('is-error', insufficient);
+      const money = cents => new Intl.NumberFormat('cs-CZ', {style:'currency', currency:accountCurrency, currencyDisplay:'code'}).format(cents / 100).replace('CZK', 'Kč');
+      if (debit === null) { message.textContent = 'Zadejte platnou částku.'; return; }
+      message.textContent = insufficient ? `Na účtu chybí ${money(debit - balance)}` : `${currency === accountCurrency ? 'Na účtu vám zůstane' : 'Na účtu vám orientačně zůstane'} ${money(balance - debit)}`;
+      if (currency !== accountCurrency) {
+        const date = PAYMENT_FX[currency === 'CZK' ? accountCurrency : currency].validDate.slice(0, 10).split('-').reverse().join('. ');
+        message.textContent += ` · Kurz KB z ${date}, bez poplatků.`;
+      }
+    }
+
     function bindPaymentPersistence() {
       document.querySelectorAll('[data-payment-key]').forEach(field => {
-        const save = () => localStorage.setItem(paymentStorageKey(field.dataset.paymentKey), field.value);
+        const save = () => { localStorage.setItem(paymentStorageKey(field.dataset.paymentKey), field.value); if (['amount', 'currency'].includes(field.dataset.paymentKey)) updatePaymentBalance(); };
         field.addEventListener('input', save);
         field.addEventListener('change', save);
       });
@@ -7288,6 +7357,9 @@ unicode: "eac3"
       });
       const timing = localStorage.getItem(paymentStorageKey('timing')) || 'now';
       setPaymentTiming(timing, false);
+      const currency = document.getElementById('payment-currency');
+      if (!currency.value || localStorage.getItem(paymentStorageKey('currency')) === null) { currency.value = paymentAccountKey() === 'eur' ? 'EUR' : 'Kč'; localStorage.setItem(paymentStorageKey('currency'), currency.value); }
+      renderPaymentAccount();
     }
 
     function continuePayment() {
@@ -7304,7 +7376,8 @@ unicode: "eac3"
       recipientMessage.classList.remove('error');
       amountMessage.classList.remove('error');
       recipientMessage.textContent = '';
-      amountMessage.textContent = 'Na účtu vám zůstane 18 063,38 Kč';
+      updatePaymentBalance();
+      if (amountControl.classList.contains('is-error')) valid = false;
 
       if (!recipient.value.trim()) {
         recipientControl.classList.add('is-error');
@@ -8019,7 +8092,7 @@ unicode: "eac3"
       const reviewed = kind === 'selected-authorization' ? (currentBulkOperation()?.items || []) : ['existing-batch', 'new-batch'].includes(kind) ? allOverviewBatches().filter(batch => batch.id === request.batchId) : [];
       request.policies = Object.fromEntries(reviewed.map(item => [item.id, JSON.stringify(instrumentPolicy(item))]));
       request.fingerprints = Object.fromEntries(reviewed.map(item => [item.id, instrumentFingerprint(item)]));
-      if (kind === 'payment') request.creationPolicy = JSON.stringify(instrumentPolicy({ accountNumber: ACCOUNT_DATA.czk.number }));
+      if (kind === 'payment') request.creationPolicy = JSON.stringify(instrumentPolicy({ accountNumber: paymentAccount().number }));
       localStorage.setItem('vavu_signature_context', JSON.stringify(request));
       goTo('payment-signature-modal');
     }
@@ -8077,7 +8150,7 @@ unicode: "eac3"
           const amount = localStorage.getItem(paymentStorageKey('amount')) || '0';
           const currency = localStorage.getItem(paymentStorageKey('currency')) || 'Kč';
           localStorage.setItem('vavu_pending_payment', JSON.stringify({
-            authorizationId: newInstrumentId(), name: recipient, recipient, accountName: ACCOUNT_DATA.czk.name, accountNumber: ACCOUNT_DATA.czk.number, message: localStorage.getItem(paymentStorageKey('messageRecipient')) || '', description, variableSymbol: localStorage.getItem(paymentStorageKey('variableSymbol')) || '', constantSymbol: localStorage.getItem(paymentStorageKey('constantSymbol')) || '', specificSymbol: localStorage.getItem(paymentStorageKey('specificSymbol')) || '',
+            authorizationId: newInstrumentId(), name: recipient, recipient, accountName: paymentAccount().name, accountNumber: paymentAccount().number, message: localStorage.getItem(paymentStorageKey('messageRecipient')) || '', description, variableSymbol: localStorage.getItem(paymentStorageKey('variableSymbol')) || '', constantSymbol: localStorage.getItem(paymentStorageKey('constantSymbol')) || '', specificSymbol: localStorage.getItem(paymentStorageKey('specificSymbol')) || '',
             desc: description,
             date: '28. 8. 2026',
             amount: formatStandingOrderAmount(amount, currency)
