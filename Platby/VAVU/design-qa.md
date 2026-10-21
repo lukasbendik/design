@@ -1,3 +1,19 @@
+# Detail položek k autorizaci a výběr – 21. 10. 2026
+
+final result: passed
+
+Zdroje: /home/lukinab/.codex/attachments/6f084d39-e215-42b6-96f1-2edadcfce92d/codex-clipboard-51f1d1a7-1f85-4aee-bc5c-b8dcd695eab5.png (platba, 2048 × 2364 px); /home/lukinab/.codex/attachments/6ef0bd5e-b62d-4eea-bbcc-68a337a818ee/codex-clipboard-4b51d528-aa8f-4c25-9b4a-333c2f18748b.png (TP, 2048 × 2461 px). Třetí příloha je stejná varianta TP. Hustota normalizována 2:1 na šířku 1024 CSS px; implementace 1024 × 1230, DPR 1. Rozdílná výška zdroje platby je doplněna pouze pozadím v porovnání. Evidence /home/lukinab/Projects/UX/.vavu-profile-qa/: auth-detail-{platby,tp,inkasa}.png, auth-detail-checked-{platby,tp,inkasa}.png, compare-auth-detail-{platby,tp}.png (plné pohledy), compare-auth-detail-{platby,tp}-focus.png (obsah a akce), auth-detail-mobile-{320,375,768}.png.
+
+Nové detaily všech plateb, TP a povolení inkasa používají společný model dat se seznamem. Záznam otevře detail, samostatný label obsahuje pouze zaškrtávátko. Akce Označit k autorizaci mění check v detailu a výběr v seznamu. Stav je uložen podle uživatele a přežije návrat, přepnutí typu, historii i refresh. Nové platby uchovávají i zprávu, popis a symboly pro následný detail; nové TP a inkasa používají uložené hodnoty formulářů. Staré chybějící údaje jsou označené pomlčkou. Výchozí položky zachovávají názvy/částky/data seznamu a mají doplněné demo detailní údaje; nejde o nové reálné bankovní záznamy.
+
+Autorizovat z detailu otevře stávající výběr způsobu podpisu; až KB Klíč zpracuje právě danou položku, ostatní výběry zachová. Zrušení nic nezpracuje. Smazat v detailu odstraní pouze otevřenou položku a vrátí seznam. Přímá URL a refresh fungují, chybějící/smazaná položka vrací na seznam. Návrat zachovává původní vstup (účet či přehled autorizací) a správný typ; volba segmentu se obnovuje. Součty čtou částku položky, nikoli její název.
+
+Vizuální QA: fonty Inter/DS 28/36 titulek, 16/24 hodnoty a akce, 12/16 popisky; mezery, povrchy, děliče, radiusy a stíny DS; ikony a avatar ze stávající sady a assetů. Kopie akcí odpovídá zdroji, TP má celou sadu polí, inkaso používá stejné rozložení s relevantními údaji (samostatná vizuální reference inkasa nebyla přiložena). Platba má číselného příjemce, částku a datum v kartě; datum je uvnitř karty oproti chybně přetékajícímu datu v referenci. Aktuální účty, jméno uživatele a demo položky zachovány místo ilustračních hodnot z příloh. [P2] počáteční horní odstup a příliš vysoká hero karta opraveny; [P2] výchozí desktopový scaffold na 320 px skrýval obsah, nyní pro seznam/detail responzivní a bez postranní navigace. Mobilní akce nad údaji, aby byly dostupné bez dlouhého scrollu. [P2] aktivní navigace a velikost checku opraveny. Finální snímky byly znovu zachyceny a porovnány. Žádné zbývající P0/P1/P2.
+
+Interakční QA v samostatném Chrome/Playwright: všech sedm výchozích položek, klik na text/řádek otevírá detail bez změny výběru, pouze checkbox mění výběr v seznamu, označení/odznačení a check v detailu, návrat Zpět i historie zpět/vpřed, refresh detailu a seznamu. Všechny tři skutečné formulářové flow ověřeny přes výběr podpisu do nově vytvořené položky, uložené zprávy/symboly/termíny a odpovídající součty. Selekce mezi typy a uživateli, izolovaná autorizace jedné položky (včetně cancel a refresh modálu), smazání jedné položky. 320/375/768 px bez overflow. Regrese sedmi podpisových flow a tří seznamů autorizací prošla. Bez JS chyb.
+
+---
+
 # Primární cesta autorizace dávek a sdílený detail – 21. 10. 2026
 
 final result: passed

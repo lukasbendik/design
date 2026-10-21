@@ -1914,6 +1914,57 @@
       flex-shrink: 0;
     }
 
+    .auth-item-card { gap: var(--space-16); }
+    .auth-item-card .auth-item-checkbox { width: 22px; flex: 0 0 22px; }
+    .auth-item-checkbox .checkmark img { display: none; filter: invert(1); }
+    .auth-item-checkbox input:checked + .checkmark img { display: block; }
+    .auth-item-checkbox input:focus-visible + .checkmark { outline: 2px solid var(--content-primary); outline-offset: 3px; }
+    .auth-item-open { min-width: 0; flex: 1; display: flex; align-items: center; justify-content: space-between; gap: var(--space-16); padding: 0; border: 0; color: var(--content-primary); background: none; text-align: left; cursor: pointer; font: inherit; }
+    .auth-item-open .item-details { min-width: 0; }
+    .auth-item-open .auth-item-amount { white-space: nowrap; }
+    .auth-item-muted { color: var(--content-tertiary); }
+    #screen-auth-item-detail { gap: var(--space-16); align-items: flex-start; }
+    #screen-auth-item-detail .center-column { min-width: 0; padding: 0; gap: var(--space-12); }
+    body.auth-detail-mode .main-content { padding-top: var(--padding-xl); }
+    #screen-auth-item-detail .right-column { padding-top: var(--space-32); }
+    #screen-auth-item-detail[data-type="tp"] .right-column, #screen-auth-item-detail[data-type="inkasa"] .right-column { padding-top: calc(var(--space-64) + var(--space-16)); }
+    #screen-auth-item-detail h1 { margin: 0; font: var(--headings-title-tertiary); }
+    #screen-auth-item-detail .profile-card { margin: 0; }
+    .auth-detail-field { position: relative; padding: var(--padding-xl); display: flex; flex-direction: column; gap: var(--padding-xs); }
+    .auth-detail-field + .auth-detail-field::before { content: ''; position: absolute; top: 0; left: var(--padding-xl); right: 0; border-top: 1px solid var(--background-divider); }
+    .auth-detail-field > span { font: var(--content-caption-primary); }
+    .auth-detail-field > strong { font: var(--content-body-primary); white-space: pre-line; overflow-wrap: anywhere; }
+    .auth-detail-actions .profile-row { justify-content: space-between; }
+    .auth-detail-actions .profile-row .icon, .auth-detail-actions .profile-row img { color: var(--content-primary); width: 24px; height: 24px; }
+    .auth-detail-actions .auth-detail-delete, .auth-detail-actions .auth-detail-delete .icon { color: var(--interactive-primary); }
+    .auth-detail-check { width: 22px; height: 22px; border: 1.5px solid var(--content-primary); border-radius: var(--border-radius-sm); display: grid; place-items: center; flex: none; }
+    .auth-detail-check [hidden] { display: none; }
+    .auth-detail-check #auth-detail-select-check { width: 16px; height: 16px; }
+    #screen-auth-item-detail .auth-detail-hero { padding: var(--padding-xl); display: flex; flex-direction: column; align-items: center; gap: var(--space-8); text-align: center; }
+    #screen-auth-item-detail .auth-detail-hero[hidden] { display: none; }
+    .auth-detail-avatar { width: 64px; height: 64px; border-radius: var(--border-radius-md); background: var(--attention-information-surface); display: grid; place-items: center; position: relative; }
+    .auth-detail-avatar .icon { width: 48px; height: 48px; }
+    .auth-detail-avatar img { position: absolute; width: 32px; height: 32px; bottom: -12px; right: -16px; }
+    .auth-detail-hero h2, .auth-detail-hero > strong { font: var(--headings-title-tertiary); margin: var(--space-8) 0 0; }
+    .auth-detail-hero > strong { margin-top: var(--space-8); }
+    .auth-detail-hero > span { font: var(--content-body-secondary); }
+    @media(max-width:767px) {
+      body.auth-detail-mode .sidebar, body.auth-detail-mode .topbar, body.auth-detail-mode .chatbot-btn, body.auth-list-mode .sidebar, body.auth-list-mode .topbar, body.auth-list-mode .chatbot-btn { display: none; }
+      body.auth-detail-mode .main-content, body.auth-list-mode .main-content { margin: 0; width: 100%; height: 100dvh; padding: var(--padding-xl); }
+      #screen-auth-item-detail { display: none; }
+      #screen-auth-item-detail.active { display: grid; grid-template-columns: minmax(0, 1fr); }
+      #screen-auth-item-detail .center-column { display: contents; }
+      #screen-auth-item-detail .right-column, #screen-auth-item-detail[data-type] .right-column { grid-row: 3; padding-top: 0; }
+      #screen-autorizace { flex-direction: column; gap: var(--space-16); }
+      #screen-autorizace .center-column, #screen-autorizace .right-column { width: 100%; min-width: 0; padding: 0; }
+      #screen-autorizace .segmented-control { min-width: 0; }
+      #screen-autorizace .segment-btn { padding: var(--padding-md); min-width: 0; }
+      #screen-auth-item-detail .center-column, #screen-auth-item-detail .right-column { width: 100%; }
+      #screen-auth-item-detail .right-column { padding-top: 0; }
+      .auth-item-open { flex-wrap: wrap; gap: var(--space-8); }
+      .auth-item-open .auth-item-amount { margin-left: auto; }
+    }
+
     .delete-link {
       color: var(--color-interactive-primary);
       text-decoration: underline;
@@ -4279,9 +4330,9 @@ unicode: "eac3"
 
           <!-- Segmented control -->
           <div class="segmented-control" style="margin-top: 16px;">
-            <button class="segment-btn active" id="btn-auth-platby" onclick="switchAuthTab('platby')">Platby</button>
-            <button class="segment-btn" id="btn-auth-tp" onclick="switchAuthTab('tp')">Trvalé příkazy</button>
-            <button class="segment-btn" id="btn-auth-inkasa" onclick="switchAuthTab('inkasa')">Inkasa</button>
+            <button class="segment-btn active" id="btn-auth-platby" onclick="changeAuthTab('platby')">Platby</button>
+            <button class="segment-btn" id="btn-auth-tp" onclick="changeAuthTab('tp')">Trvalé příkazy</button>
+            <button class="segment-btn" id="btn-auth-inkasa" onclick="changeAuthTab('inkasa')">Inkasa</button>
           </div>
 
           <!-- Akce (Označit vše, Smazat) -->
@@ -4336,6 +4387,14 @@ unicode: "eac3"
         </div>
       </div>
 
+
+      <section class="screen auth-item-detail" id="screen-auth-item-detail" aria-labelledby="auth-detail-title">
+        <div class="center-column"><button class="company-back" type="button" onclick="backFromAuthItemDetail()"><svg class="icon" aria-hidden="true"><use href="#es-caret-left"></use></svg>Zpět</button><h1 id="auth-detail-title">Platba k autorizaci</h1>
+          <div class="profile-card auth-detail-hero" id="auth-detail-hero"><div class="auth-detail-avatar"><svg class="icon" aria-hidden="true"><use href="#es-person"></use></svg><img src="assets/batch-clock.svg" alt="Čeká na autorizaci"></div><h2 id="auth-detail-recipient"></h2><strong id="auth-detail-amount"></strong><span id="auth-detail-date"></span></div>
+          <div class="profile-card" id="auth-detail-fields"></div>
+        </div>
+        <div class="right-column"><div class="profile-card auth-detail-actions"><button class="profile-row" id="auth-detail-select" type="button" aria-pressed="false" onclick="toggleAuthDetailSelection()"><span>Označit k autorizaci</span><span class="auth-detail-check"><img id="auth-detail-select-check" src="assets/permission-check.svg" width="20" height="20" alt="" hidden></span></button><button class="profile-row" type="button" onclick="authorizeAuthItemDetail()"><span>Autorizovat</span><img src="assets/authorization-lock.svg" alt="" width="24" height="24"></button><button class="profile-row auth-detail-delete" type="button" onclick="deleteAuthItemDetail()"><span>Smazat</span><svg class="icon" aria-hidden="true"><use href="#es-delete"></use></svg></button></div></div>
+      </section>
 
       <!-- ================= SCREEN 8: VŠECHNY PLATBY ================= -->
       <div class="screen" id="screen-vsechny-platby">
@@ -5589,7 +5648,7 @@ unicode: "eac3"
         showModalElement(hash);
       } 
       // 2. Zpracování pokud jde o STANDARDNÍ OBRAZOVKU
-      else if (SCREENS.includes(hash) || /^davka-(detail|souhrn|autorizace)-[A-Za-z0-9_-]+$/.test(hash)) {
+      else if (SCREENS.includes(hash) || /^autorizace-detail-(platby|tp|inkasa)-[A-Za-z0-9_-]+$/.test(hash) || /^davka-(detail|souhrn|autorizace)-[A-Za-z0-9_-]+$/.test(hash)) {
         // Zavřeme případné otevřené modaly
         closeAllModalsElements();
         
@@ -5684,7 +5743,8 @@ unicode: "eac3"
       document.querySelectorAll('.screen').forEach(el => el.classList.remove('active'));
       
       // Zobrazit vybranou obrazovku
-      const targetScreenId = /^autorizace-(platby|tp|inkasa)$/.test(screenId) ? 'autorizace' : screenId.startsWith('davka-souhrn-') ? 'davka-souhrn' : screenId.startsWith('davka-detail-') ? 'davka-detail' : screenId === 'tp-inkasa-s-autorizaci' ? 'tp-inkasa' : screenId.replace(/^kontrola-(?=nastaveni-)/, '');
+      const authDetail = screenId.match(/^autorizace-detail-(platby|tp|inkasa)-([A-Za-z0-9_-]+)$/);
+      const targetScreenId = authDetail ? 'auth-item-detail' : /^autorizace-(platby|tp|inkasa)$/.test(screenId) ? 'autorizace' : screenId.startsWith('davka-souhrn-') ? 'davka-souhrn' : screenId.startsWith('davka-detail-') ? 'davka-detail' : screenId === 'tp-inkasa-s-autorizaci' ? 'tp-inkasa' : screenId.replace(/^kontrola-(?=nastaveni-)/, '');
       const isPermissionFlow = PERMISSION_FLOW_SCREENS.includes(targetScreenId);
       const isPermissionEditor = PERMISSION_EDITOR_SCREENS.includes(targetScreenId);
       const isAuthorizationFlow = AUTHORIZATION_FLOW_SCREENS.includes(targetScreenId);
@@ -5697,8 +5757,11 @@ unicode: "eac3"
         screenEl.classList.add('active');
       }
 
+      document.body.classList.toggle('auth-detail-mode', Boolean(authDetail));
+      document.body.classList.toggle('auth-list-mode', targetScreenId === 'autorizace');
+      if (authDetail) renderAuthItemDetail(authDetail[1], authDetail[2]);
       if (targetScreenId === 'autorizace') {
-        switchAuthTab(screenId === 'autorizace' ? 'platby' : screenId.slice('autorizace-'.length));
+        switchAuthTab(screenId === 'autorizace' ? (localStorage.getItem('vavu_auth_tab') || 'platby') : screenId.slice('autorizace-'.length));
       }
       if (targetScreenId === 'ucet-detail') {
         renderAccountDetail();
@@ -5779,7 +5842,7 @@ unicode: "eac3"
       
       // Mapování obrazovek na menu položky
       let menuId = screenId === 'login' ? null : 'nav-prehled';
-      if (['vyber-subjektu', 'prehled-autorizaci', 'autorizace-davek', 'autorizace-platby', 'autorizace-tp', 'autorizace-inkasa'].includes(screenId) || screenId === 'ucet-detail' || screenId === 'tp-inkasa' || screenId === 'tp-inkasa-s-autorizaci' || screenId === 'autorizace' || screenId === 'vsechny-platby' || screenId === 'platba-detail') {
+      if (authDetail || ['vyber-subjektu', 'prehled-autorizaci', 'autorizace-davek', 'autorizace-platby', 'autorizace-tp', 'autorizace-inkasa'].includes(screenId) || screenId === 'ucet-detail' || screenId === 'tp-inkasa' || screenId === 'tp-inkasa-s-autorizaci' || screenId === 'autorizace' || screenId === 'vsechny-platby' || screenId === 'platba-detail') {
         menuId = 'nav-ucy';
       } else if (screenId === 'extra') {
         menuId = 'nav-extra';
@@ -6469,156 +6532,116 @@ unicode: "eac3"
       renderDynamicContent();
     }
 
-    // Vykreslit dynamicky přidanou položku k autorizaci nebo do seznamu inkas
+    function authSelectionKey() { return 'vavu_auth_selection_' + (localStorage.getItem('vavu_selected_user') || 'current'); }
+    function authSelection() { try { return new Set(JSON.parse(localStorage.getItem(authSelectionKey()) || '[]')); } catch (_) { return new Set(); } }
+    function setAuthItemSelected(id, selected) {
+      const ids = authSelection();
+      if (selected) ids.add(id); else ids.delete(id);
+      localStorage.setItem(authSelectionKey(), JSON.stringify([...ids]));
+      document.querySelectorAll('.auth-checkbox').forEach(input => { if (input.value === id) input.checked = selected; });
+      updateDeleteButtonState();
+      if (document.getElementById('screen-auth-item-detail').classList.contains('active')) updateAuthDetailSelection(id);
+    }
+
+    function authorizationItems(tab) {
+      const account = ACCOUNT_DATA.czk;
+      const base = { accountName: account.name, accountNumber: account.number };
+      const paymentDemo = [
+        { id: 'platba_auth_1', name: 'Tesco', recipient: '129000/0100', desc: 'Vršovická 3827/11, Praha 10', date: '10. 7. 2026', amount: '2 430,30 Kč', message: 'Nákup v Tesco', description: 'Vršovická 3827/11, Praha 10', variableSymbol: '756589870144', constantSymbol: '0144', specificSymbol: '123456789' },
+        { id: 'platba_auth_2', name: 'Alza.cz', recipient: '4835477/0100', desc: 'Nákup elektroniky', date: '9. 7. 2026', amount: '15 800,00 Kč', message: 'Nákup elektroniky', description: 'Alza.cz', variableSymbol: '5856214' },
+        { id: 'platba_auth_3', name: 'Shell Praha', recipient: '51255/0800', desc: 'Čerpací stanice Shell', date: '8. 7. 2026', amount: '1 500,00 Kč', message: 'Pohonné hmoty', description: 'Čerpací stanice Shell' }
+      ];
+      const orderDemo = [
+        { id: 'tp_auth_1', name: 'Nájem bytu', recipient: '4835477/0100', amount: '15 000,00 Kč', date: '10. 7. 2026', variableSymbol: '5856214', message: 'Nájem bytu', description: 'Nájem bytu', constantSymbol: '0385', specificSymbol: '0144', orderId: 'SWG123456789' },
+        { id: 'tp_auth_2', name: 'ČEZ Distribuce', recipient: '623423/0100', amount: '3 200,00 Kč', date: '8. 7. 2026', message: 'Záloha za elektřinu', description: 'ČEZ Distribuce', orderId: 'SWG123456790' },
+        { id: 'tp_auth_3', name: 'Stavební spoření', recipient: '76234523/0100', amount: '2 000,00 Kč', date: '5. 7. 2026', message: 'Stavební spoření', description: 'Stavební spoření', orderId: 'SWG123456791' }
+      ].map(item => ({ frequency: 'Měsíčně', desc: 'Měsíčně', endDate: 'Nikdy', death: 'Neprovádět', ...item }));
+      let items = tab === 'platby' ? paymentDemo : tab === 'tp' ? orderDemo : [];
+      try {
+        if (tab === 'platby') {
+          const item = JSON.parse(localStorage.getItem('vavu_pending_payment') || 'null');
+          if (item) items.unshift({ ...item, id: 'platba_auth_created' });
+        } else if (tab === 'tp') {
+          const item = JSON.parse(localStorage.getItem('vavu_pending_standing_order') || 'null');
+          if (item) items.unshift({ ...item, id: 'tp_auth_created', name: item.name || 'Nový trvalý příkaz', message: item.messageRecipient || '', desc: item.frequency || 'Měsíčně', date: formatStandingOrderDate(item.startDate), endDate: item.endDate ? formatStandingOrderDate(item.endDate) : 'Nikdy', amount: formatStandingOrderAmount(item.amount, item.currency) });
+        }
+      } catch (_) {}
+      if (tab === 'inkasa') {
+        if (localStorage.getItem('inkaso_saved_for_auth') === '1') items.push({ id: 'dynamic', name: localStorage.getItem('inkaso_nazev') || 'Povolení inkasa', recipient: localStorage.getItem('inkaso_prijemce'), desc: localStorage.getItem('inkaso_obdobi'), frequency: localStorage.getItem('inkaso_obdobi'), date: localStorage.getItem('inkaso_platnost_od'), endDate: localStorage.getItem('inkaso_platnost_do') || 'Neomezeně', amount: localStorage.getItem('inkaso_limit') });
+        if (localStorage.getItem('inkaso_internet_deleted') !== '1') items.push({ id: 'internet', name: 'Internet', recipient: '4835477/0100', desc: 'Měsíčně', frequency: 'Měsíčně', date: '10. 7. 2026', endDate: 'Neomezeně', amount: '350,00 Kč' });
+      }
+      let deleted = [];
+      try { deleted = JSON.parse(localStorage.getItem(tab === 'tp' ? 'deleted_tp' : 'deleted_platby') || '[]'); } catch (_) {}
+      return items.filter(item => !deleted.includes(item.id)).map(item => ({ ...base, ...item }));
+    }
+
     function renderDynamicContent() {
       const authList = document.getElementById('auth-items-list');
       if (!authList) return;
+      const selected = authSelection();
+      authList.replaceChildren(...authorizationItems(currentAuthTab).map(item => {
+        const card = document.createElement('div');
+        card.className = 'auth-item-card'; card.id = 'auth-item-' + item.id;
+        const label = document.createElement('label'); label.className = 'checkbox-container auth-item-checkbox';
+        const input = document.createElement('input'); input.type = 'checkbox'; input.className = 'auth-checkbox'; input.value = item.id; input.checked = selected.has(item.id); input.setAttribute('aria-label', 'Označit ' + item.name + ' k autorizaci');
+        input.onchange = () => setAuthItemSelected(item.id, input.checked);
+        const mark = document.createElement('span'); mark.className = 'checkmark'; mark.innerHTML = '<img src="assets/permission-check.svg" width="16" height="16" alt="">';
+        label.append(input, mark);
+        const open = document.createElement('button'); open.type = 'button'; open.className = 'auth-item-open'; open.onclick = () => openAuthItemDetail(currentAuthTab, item.id);
+        open.innerHTML = `<span class="item-details"><span class="t-headings-headline-secondary-bold">${escapeHtml(item.name)}</span><span class="t-content-body-secondary auth-item-muted">${escapeHtml(item.desc || '')}</span><span class="t-content-caption-primary auth-item-muted">${escapeHtml(item.date || '')}</span></span><span class="t-headings-headline-secondary-bold auth-item-amount">${escapeHtml(item.amount || '')}</span>`;
+        card.onclick = event => { if (!event.target.closest('label, button')) openAuthItemDetail(currentAuthTab, item.id); };
+        card.append(label, open); return card;
+      }));
+      const boxes = [...authList.querySelectorAll('.auth-checkbox')];
+      const all = document.getElementById('select-all-checkbox');
+      all.checked = boxes.length > 0 && boxes.every(input => input.checked); all.indeterminate = !all.checked && boxes.some(input => input.checked);
+      updateDeleteButtonState(); applyDesignSystemComponents(authList);
+    }
 
-      // Vyčistit celý seznam
-      authList.innerHTML = '';
-
-      // Získat seznam smazaných položek z localStorage
-      const deletedPlatby = JSON.parse(localStorage.getItem('deleted_platby') || '[]');
-      const deletedTp = JSON.parse(localStorage.getItem('deleted_tp') || '[]');
-      const isInternetDeleted = localStorage.getItem('inkaso_internet_deleted') === '1';
-
-      if (currentAuthTab === 'platby') {
-        // Vykreslit platby k autorizaci
-        const platbyData = [
-          { id: 'platba_auth_1', name: 'Tesco', desc: 'Vršovická 3827/11, Praha 10', date: '10. 7. 2026', amount: '2 430,30 Kč' },
-          { id: 'platba_auth_2', name: 'Alza.cz', desc: 'Nákup elektroniky', date: '9. 7. 2026', amount: '15 800,00 Kč' },
-          { id: 'platba_auth_3', name: 'Shell Praha', desc: 'Čerpací stanice Shell', date: '8. 7. 2026', amount: '1 500,00 Kč' }
-        ];
-
-        try {
-          const pendingPayment = JSON.parse(localStorage.getItem('vavu_pending_payment') || 'null');
-          if (pendingPayment) platbyData.unshift({ id: 'platba_auth_created', ...pendingPayment });
-        } catch (error) {
-          localStorage.removeItem('vavu_pending_payment');
-        }
-
-        platbyData.forEach(item => {
-          if (!deletedPlatby.includes(item.id)) {
-            const card = document.createElement('div');
-            card.className = 'auth-item-card';
-            card.id = 'auth-item-' + item.id;
-            card.innerHTML = `
-              <label class="checkbox-container">
-                <input type="checkbox" class="auth-checkbox" value="${item.id}" onchange="updateDeleteButtonState()">
-                <span class="checkmark">
-                  <svg viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-                </span>
-                <div class="item-details" style="margin-left: 8px;">
-                  <span class="t-headings-headline-secondary-bold">${escapeHtml(item.name)}</span>
-                  <span class="t-content-body-secondary" style="color: var(--color-content-tertiary);">${escapeHtml(item.desc)}</span>
-                  <span class="t-content-caption-primary" style="color: var(--color-content-tertiary);">${escapeHtml(item.date)}</span>
-                </div>
-              </label>
-              <div class="t-headings-headline-secondary-bold">${escapeHtml(item.amount)}</div>
-            `;
-            authList.appendChild(card);
-          }
-        });
-      } else if (currentAuthTab === 'tp') {
-        // Vykreslit trvalé příkazy k autorizaci
-        const tpData = [
-          { id: 'tp_auth_1', name: 'Nájem bytu', desc: 'Měsíčně', date: '10. 7. 2026', amount: '15 000,00 Kč' },
-          { id: 'tp_auth_2', name: 'ČEZ Distribuce', desc: 'Měsíčně', date: '8. 7. 2026', amount: '3 200,00 Kč' },
-          { id: 'tp_auth_3', name: 'Stavební spoření', desc: 'Měsíčně', date: '5. 7. 2026', amount: '2 000,00 Kč' }
-        ];
-
-        try {
-          const pendingStandingOrder = JSON.parse(localStorage.getItem('vavu_pending_standing_order') || 'null');
-          if (pendingStandingOrder) {
-            tpData.unshift({
-              id: 'tp_auth_created',
-              name: pendingStandingOrder.name || 'Nový trvalý příkaz',
-              desc: pendingStandingOrder.frequency || 'Měsíčně',
-              date: formatStandingOrderDate(pendingStandingOrder.startDate),
-              amount: formatStandingOrderAmount(pendingStandingOrder.amount, pendingStandingOrder.currency)
-            });
-          }
-        } catch (error) {
-          localStorage.removeItem('vavu_pending_standing_order');
-        }
-
-        tpData.forEach(item => {
-          if (!deletedTp.includes(item.id)) {
-            const card = document.createElement('div');
-            card.className = 'auth-item-card';
-            card.id = 'auth-item-' + item.id;
-            card.innerHTML = `
-              <label class="checkbox-container">
-                <input type="checkbox" class="auth-checkbox" value="${item.id}" onchange="updateDeleteButtonState()">
-                <span class="checkmark">
-                  <svg viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-                </span>
-                <div class="item-details" style="margin-left: 8px;">
-                  <span class="t-headings-headline-secondary-bold">${escapeHtml(item.name)}</span>
-                  <span class="t-content-body-secondary" style="color: var(--color-content-tertiary);">${escapeHtml(item.desc)}</span>
-                  <span class="t-content-caption-primary" style="color: var(--color-content-tertiary);">${escapeHtml(item.date)}</span>
-                </div>
-              </label>
-              <div class="t-headings-headline-secondary-bold">${escapeHtml(item.amount)}</div>
-            `;
-            authList.appendChild(card);
-          }
-        });
-      } else if (currentAuthTab === 'inkasa') {
-        // Vykreslit dynamicky přidanou položku inkasa, pokud existuje v localStorage
-        const hasAuthItem = localStorage.getItem('inkaso_saved_for_auth') === '1';
-        if (hasAuthItem) {
-          const nazev = localStorage.getItem('inkaso_nazev');
-          const obdobi = localStorage.getItem('inkaso_obdobi');
-          const platnostOd = localStorage.getItem('inkaso_platnost_od');
-          const limit = localStorage.getItem('inkaso_limit');
-
-          const dynamicCard = document.createElement('div');
-          dynamicCard.className = 'auth-item-card';
-          dynamicCard.id = 'auth-item-dynamic';
-          dynamicCard.innerHTML = `
-            <label class="checkbox-container">
-              <input type="checkbox" class="auth-checkbox" value="dynamic" onchange="updateDeleteButtonState()">
-              <span class="checkmark">
-                <svg viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-              </span>
-              <div class="item-details" style="margin-left: 8px;">
-                <span class="t-headings-headline-secondary-bold">${escapeHtml(nazev)}</span>
-                <span class="t-content-body-secondary" style="color: var(--color-content-tertiary);">${escapeHtml(obdobi)}</span>
-                <span class="t-content-caption-primary" style="color: var(--color-content-tertiary);">${escapeHtml(platnostOd)}</span>
-              </div>
-            </label>
-            <div class="t-headings-headline-secondary-bold">${escapeHtml(limit)}</div>
-          `;
-          authList.appendChild(dynamicCard);
-        }
-
-        // Vykreslit výchozí "Internet" inkaso
-        if (!isInternetDeleted) {
-          const internetCard = document.createElement('div');
-          internetCard.className = 'auth-item-card';
-          internetCard.id = 'auth-item-internet';
-          internetCard.innerHTML = `
-            <label class="checkbox-container">
-              <input type="checkbox" class="auth-checkbox" value="internet" onchange="updateDeleteButtonState()">
-              <span class="checkmark">
-                <svg viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-              </span>
-              <div class="item-details" style="margin-left: 8px;">
-                <span class="t-headings-headline-secondary-bold">Internet</span>
-                <span class="t-content-body-secondary" style="color: var(--color-content-tertiary);">Měsíčně</span>
-                <span class="t-content-caption-primary" style="color: var(--color-content-tertiary);">10. 7. 2026</span>
-              </div>
-            </label>
-            <div class="t-headings-headline-secondary-bold">350,00 Kč</div>
-          `;
-          authList.appendChild(internetCard);
-        }
-      }
-
-      // Aktualizovat stav tlačítka smazat a přehled v pravém sloupci
-      updateDeleteButtonState();
-      applyDesignSystemComponents(authList);
+    function changeAuthTab(tab) {
+      localStorage.setItem('vavu_auth_tab', tab);
+      if (currentScreen === 'autorizace') switchAuthTab(tab); else goTo('autorizace-' + tab);
+    }
+    function authDetailRoute() { return currentScreen.match(/^autorizace-detail-(platby|tp|inkasa)-([A-Za-z0-9_-]+)$/); }
+    function openAuthItemDetail(tab, id) {
+      localStorage.setItem('vavu_auth_detail_return_' + tab + '_' + id, currentScreen);
+      goTo('autorizace-detail-' + tab + '-' + id);
+    }
+    function authDetailReturnRoute(tab, id) {
+      const route = localStorage.getItem('vavu_auth_detail_return_' + tab + '_' + id);
+      return route === 'autorizace' || /^autorizace-(platby|tp|inkasa)$/.test(route || '') ? route : 'autorizace-' + tab;
+    }
+    function backFromAuthItemDetail() {
+      const route = authDetailRoute(); if (route) goTo(authDetailReturnRoute(route[1], route[2]));
+    }
+    function updateAuthDetailSelection(id) {
+      const selected = authSelection().has(id);
+      const button = document.getElementById('auth-detail-select'); button.setAttribute('aria-pressed', String(selected));
+      document.getElementById('auth-detail-select-check').hidden = !selected;
+    }
+    function toggleAuthDetailSelection() {
+      const route = authDetailRoute(); if (route) setAuthItemSelected(route[2], !authSelection().has(route[2]));
+    }
+    function renderAuthItemDetail(tab, id) {
+      document.getElementById('screen-auth-item-detail').dataset.type = tab;
+      const item = authorizationItems(tab).find(item => item.id === id);
+      if (!item) { goTo(authDetailReturnRoute(tab, id), true); return; }
+      localStorage.setItem('vavu_auth_tab', tab);
+      document.getElementById('auth-detail-title').textContent = tab === 'platby' ? 'Platba k autorizaci' : tab === 'tp' ? 'Nový trvalý příkaz' : 'Povolení inkasa k autorizaci';
+      const from = item.accountName + '\n' + item.accountNumber;
+      const payment = tab === 'platby';
+      document.getElementById('auth-detail-hero').hidden = !payment;
+      document.getElementById('auth-detail-recipient').textContent = item.recipient || item.name;
+      document.getElementById('auth-detail-amount').textContent = item.amount;
+      document.getElementById('auth-detail-date').textContent = item.date || '';
+      const rows = payment ? [['Z účtu', from], ['Zpráva pro příjemce', item.message], ['Popis pro mě', item.description || item.desc], ['Variabilní symbol', item.variableSymbol], ['Konstantní symbol', item.constantSymbol], ['Specifický symbol', item.specificSymbol]] : tab === 'tp' ? [['Z účtu', from], ['Příjemce', item.recipient], ['Název trvalého příkazu', item.name], ['Částka', item.amount], ['Opakovat', item.frequency], ['Datum první platby', item.date], ['Ukončit', item.endDate], ['Variabilní symbol', item.variableSymbol], ['Zpráva pro příjemce', item.message], ['Popis pro mě', item.description || item.name], ['Konstantní symbol', item.constantSymbol], ['Specifický symbol', item.specificSymbol], ['Platby v případě úmrtí', item.death || 'Neprovádět'], ['ID trvalého příkazu', item.orderId]] : [['Z účtu', from], ['Příjemce', item.recipient], ['Název povolení inkasa', item.name], ['Limit inkasa', item.amount], ['Období', item.frequency], ['Platnost od', item.date], ['Platnost do', item.endDate]];
+      document.getElementById('auth-detail-fields').innerHTML = rows.map(([label,value]) => `<div class="auth-detail-field"><span>${escapeHtml(label)}</span><strong>${escapeHtml(value || '—')}</strong></div>`).join('');
+      updateAuthDetailSelection(id);
+    }
+    function authorizeAuthItemDetail() { openSignatureSelection('authorization-item'); }
+    function deleteAuthItemDetail() {
+      const route = authDetailRoute(); if (!route) return;
+      removeAuthorizationItems([route[2]]); goTo(authDetailReturnRoute(route[1], route[2]));
     }
 
     // Zaškrtnout nebo odškrtnout vše
@@ -6626,6 +6649,7 @@ unicode: "eac3"
       const isChecked = checkbox.checked;
       document.querySelectorAll('.auth-checkbox').forEach(cb => {
         cb.checked = isChecked;
+        setAuthItemSelected(cb.value, isChecked);
       });
       updateDeleteButtonState();
     }
@@ -6642,6 +6666,9 @@ unicode: "eac3"
         }
       }
       
+      const boxes = [...document.querySelectorAll('.auth-checkbox')];
+      const selectAll = document.getElementById('select-all-checkbox');
+      if (selectAll) { selectAll.checked = boxes.length > 0 && boxes.every(input => input.checked); selectAll.indeterminate = !selectAll.checked && boxes.some(input => input.checked); }
       // Přepočítat přehled pro pravý sloupec
       updateAuthSummary();
     }
@@ -6658,7 +6685,7 @@ unicode: "eac3"
       checkedBoxes.forEach(cb => {
         const card = cb.closest('.auth-item-card');
         if (card) {
-          const amountDiv = card.querySelector('.t-headings-headline-secondary-bold:last-child');
+          const amountDiv = card.querySelector('.auth-item-amount');
           if (amountDiv) {
             const amountText = amountDiv.textContent;
             const cleanNumberText = amountText.replace(/[^\d,.-]/g, '').replace(',', '.');
@@ -6699,15 +6726,11 @@ unicode: "eac3"
     }
 
     // Smazat vybrané položky z autorizace
-    function deleteSelectedAuth() {
-      const selected = document.querySelectorAll('.auth-checkbox:checked');
-      if (selected.length === 0) return;
-
+    function removeAuthorizationItems(ids) {
       const deletedPlatby = JSON.parse(localStorage.getItem('deleted_platby') || '[]');
       const deletedTp = JSON.parse(localStorage.getItem('deleted_tp') || '[]');
 
-      selected.forEach(cb => {
-        const val = cb.value;
+      ids.forEach(val => {
         if (val === 'dynamic') {
           localStorage.removeItem('inkaso_prijemce');
           localStorage.removeItem('inkaso_nazev');
@@ -6731,6 +6754,14 @@ unicode: "eac3"
       localStorage.setItem('deleted_platby', JSON.stringify(deletedPlatby));
       localStorage.setItem('deleted_tp', JSON.stringify(deletedTp));
 
+      const selected = authSelection(); ids.forEach(id => selected.delete(id));
+      localStorage.setItem(authSelectionKey(), JSON.stringify([...selected]));
+    }
+
+    function deleteSelectedAuth() {
+      const ids = [...document.querySelectorAll('.auth-checkbox:checked')].map(input => input.value);
+      if (!ids.length) return;
+      removeAuthorizationItems(ids);
       // Překreslit seznam
       renderDynamicContent();
 
@@ -7673,7 +7704,7 @@ unicode: "eac3"
 
     function signatureOrigin() {
       const request = signatureRequest();
-      if (request && (SCREENS.includes(request.origin) || /^davka-souhrn-[A-Za-z0-9_-]+$/.test(request.origin))) return request.origin;
+      if (request && (SCREENS.includes(request.origin) || /^autorizace-detail-(platby|tp|inkasa)-[A-Za-z0-9_-]+$/.test(request.origin) || /^davka-souhrn-[A-Za-z0-9_-]+$/.test(request.origin))) return request.origin;
       return directDebitFlowActive ? 'inkaso-souhrn' : standingOrderFlowActive ? 'tp-souhrn' : batchFlowActive ? 'davkove-platby-souhrn' : 'nova-platba-detaily';
     }
 
@@ -7682,6 +7713,7 @@ unicode: "eac3"
       const request = { kind, origin: currentScreen, status: 'pending' };
       if (kind === 'existing-batch') request.batchId = document.getElementById('screen-davka-souhrn').dataset.batchId;
       if (kind === 'new-batch') request.batchId = getImportedBatches()[0]?.id;
+      if (kind === 'authorization-item') { const route = authDetailRoute(); request.tab = route[1]; request.itemId = route[2]; request.returnRoute = authDetailReturnRoute(route[1], route[2]); }
       if (kind === 'selected-authorization') {
         request.tab = currentAuthTab;
         request.selected = [...document.querySelectorAll('.auth-checkbox:checked')].map(input => input.value);
@@ -7712,6 +7744,7 @@ unicode: "eac3"
         localStorage.setItem('vavu_signature_context', JSON.stringify(request));
         currentScreen = request.origin;
       }
+      if (request?.kind === 'authorization-item') { closeAllModalsElements(); removeAuthorizationItems([request.itemId]); goTo(request.returnRoute); alert('Položka byla úspěšně autorizována.'); return; }
       if (request?.kind === 'permissions') { closeAllModalsElements(); signPermissionChange(true); return; }
       if (request?.kind === 'existing-batch' || request?.kind === 'new-batch' || request?.origin === 'davkove-platby-souhrn') {
         closeAllModalsElements();
@@ -7747,7 +7780,7 @@ unicode: "eac3"
           const amount = localStorage.getItem(paymentStorageKey('amount')) || '0';
           const currency = localStorage.getItem(paymentStorageKey('currency')) || 'Kč';
           localStorage.setItem('vavu_pending_payment', JSON.stringify({
-            name: recipient,
+            name: recipient, recipient, accountName: ACCOUNT_DATA.czk.name, accountNumber: ACCOUNT_DATA.czk.number, message: localStorage.getItem(paymentStorageKey('messageRecipient')) || '', description, variableSymbol: localStorage.getItem(paymentStorageKey('variableSymbol')) || '', constantSymbol: localStorage.getItem(paymentStorageKey('constantSymbol')) || '', specificSymbol: localStorage.getItem(paymentStorageKey('specificSymbol')) || '',
             desc: description,
             date: '28. 8. 2026',
             amount: formatStandingOrderAmount(amount, currency)
