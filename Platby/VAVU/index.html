@@ -2509,6 +2509,7 @@
     #batch-audit-dialog { width: min(calc(var(--batch-width) + 2 * var(--padding-xl)), calc(100% - 32px)); }
     #batch-audit-dialog::backdrop { background: var(--dialog-overlay); }
     #batch-audit-dialog .batch-audit-card { padding: 0; margin: 0; overflow: hidden; }
+    #batch-audit-dialog .batch-audit-card + .batch-audit-card { margin-top: var(--space-16); }
     #batch-audit-dialog .batch-audit-card[hidden] { display: none; }
     .batch-audit-heading { font: var(--headings-headline-secondary); margin: 0; padding: var(--padding-xl); }
     .batch-audit-row { display: flex; align-items: center; gap: var(--padding-xl); padding: var(--padding-xl); border-top: 1px solid var(--background-divider); }
@@ -3464,7 +3465,7 @@
         <img class="topbar-settings-icon" src="assets/settings.png" alt="" aria-hidden="true">
         <span class="t-content-body-secondary">Nastavení</span>
       </div>
-      <div class="topbar-item" onclick="localStorage.removeItem('vavu_selected_user'); localStorage.removeItem('vavu_selected_initials'); goTo('login');">
+      <div class="topbar-item" onclick="logoutProfile()">
         <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/></svg>
         <span class="t-content-body-secondary">Odhlásit se</span>
       </div>
@@ -3819,33 +3820,7 @@ unicode: "eac3"
 
             <h1 class="login-heading" id="login-heading">Přihlášení do bankovnictví</h1>
 
-            <div class="login-user-list" role="list" aria-label="Výběr uživatele">
-              <button class="login-user" type="button" onclick="selectLoginUser('Kateřina H.')">
-                <svg class="login-user-icon" aria-hidden="true"><use href="#es-person"></use></svg>
-                <span>Kateřina H.</span>
-                <svg class="login-caret" aria-hidden="true"><use href="#es-caret-right"></use></svg>
-              </button>
-              <button class="login-user" type="button" onclick="selectLoginUser('Šárka B.')">
-                <svg class="login-user-icon" aria-hidden="true"><use href="#es-person"></use></svg>
-                <span>Šárka B.</span>
-                <svg class="login-caret" aria-hidden="true"><use href="#es-caret-right"></use></svg>
-              </button>
-              <button class="login-user" type="button" onclick="selectLoginUser('Naděžda P.')">
-                <svg class="login-user-icon" aria-hidden="true"><use href="#es-person"></use></svg>
-                <span>Naděžda P.</span>
-                <svg class="login-caret" aria-hidden="true"><use href="#es-caret-right"></use></svg>
-              </button>
-              <button class="login-user" type="button" onclick="selectLoginUser('Šárka M.')">
-                <svg class="login-user-icon" aria-hidden="true"><use href="#es-person"></use></svg>
-                <span>Šárka M.</span>
-                <svg class="login-caret" aria-hidden="true"><use href="#es-caret-right"></use></svg>
-              </button>
-              <button class="login-other-user" type="button" onclick="selectLoginUser('Kateřina H.')">
-                <svg class="login-user-icon" aria-hidden="true"><use href="#es-person"></use></svg>
-                <span>Přihlásit se jako někdo jiný</span>
-                <svg class="login-caret" aria-hidden="true"><use href="#es-caret-right"></use></svg>
-              </button>
-            </div>
+            <div class="login-user-list" role="list" aria-label="Výběr uživatele"></div>
 
             <div class="login-links">
               <a class="login-link" href="#login"><svg class="login-link-icon" aria-hidden="true"><use href="#es-key"></use></svg>Spravovat zapamatovaná jména</a>
@@ -4475,7 +4450,7 @@ unicode: "eac3"
       </section>
       <section class="screen payment-screen batch-screen auth-instrument-result" id="screen-auth-item-result" aria-labelledby="auth-item-result-title">
         <header class="payment-flow-header"><button class="payment-header-action" type="button" onclick="closeAuthItemResult()">Zavřít</button></header>
-        <div class="payment-flow-content"><div class="batch-flow-column"><img class="result-illustration" src="../../design-system/design-system/assets/illustrations/success-light.png" alt=""><h1 class="result-heading" id="auth-item-result-title"></h1></div></div>
+        <div class="payment-flow-content"><div class="batch-flow-column"><img class="result-illustration" src="../../design-system/design-system/assets/illustrations/success-light.png" alt=""><h1 class="result-heading" id="auth-item-result-title"></h1><p class="result-lead" id="auth-item-result-message" hidden></p></div></div>
         <footer class="payment-buttonbar"><div class="payment-buttonbar-row"><button class="btn btn--secondary" type="button" onclick="closeAuthItemResult()">Zavřít</button></div></footer>
       </section>
 
@@ -4814,11 +4789,11 @@ unicode: "eac3"
           <form class="payment-flow-column" id="payment-basic-form" onsubmit="event.preventDefault(); continuePayment();">
             <h1 class="payment-flow-title" id="nova-platba-title">Nová platba</h1>
 
-            <button class="item" type="button" onclick="alert('V tomto prototypu je dostupný jen Běžný účet.')">
+            <button class="item" type="button" onclick="showToast('V tomto prototypu je dostupný jen Účet CZK.')">
               <span class="item__text">
-                <span class="item__label">Běžný účet</span>
-                <span class="item__caption">122000/0100</span>
-                <span class="item__caption">František Koudelka</span>
+                <span class="item__label">Účet CZK</span>
+                <span class="item__caption">123456-4835477/0100</span>
+                <span class="item__caption">Vodárny, a.s.</span>
               </span>
               <span class="item__caret"><svg class="icon icon--caret" aria-hidden="true"><use href="#es-caret-right"></use></svg></span>
             </button>
@@ -5163,6 +5138,7 @@ unicode: "eac3"
             <h1 class="payment-flow-title" id="davkove-platby-souhrn-title">Souhrn</h1>
             <div class="batch-summary-card">
               <div class="batch-summary-row"><span class="t-content-caption-primary" style="color: var(--color-content-tertiary);">Název dávky</span><strong class="t-content-body-primary" data-batch-name>Faktury_11/2026</strong><span class="t-content-caption-primary">KB ID dávky: 12GHE21XA</span></div>
+              <div class="batch-summary-row"><span class="t-content-caption-primary">Z účtu</span><strong class="t-content-body-primary" id="imported-batch-source"></strong></div>
               <div class="batch-summary-row"><span class="t-content-caption-primary" style="color: var(--color-content-tertiary);">Režim zpracování</span><strong class="t-content-body-primary">Online</strong></div>
             </div>
             <div class="batch-authorization-row"><div class="batch-transaction-copy"><strong class="t-content-body-primary">Částka k autorizaci</strong><span class="t-content-caption-primary" style="color:var(--color-content-tertiary);">Celkem 8 plateb</span></div><strong class="batch-amount t-content-body-primary">433 000,51 Kč</strong></div>
@@ -5689,6 +5665,7 @@ unicode: "eac3"
       bindStandingOrderPersistence();
       restoreDirectDebitValues();
       bindDirectDebitPersistence();
+      document.querySelector('.login-user-list').innerHTML = COMPANY_USERS.map((user, index) => `<button class="login-user" type="button" onclick="selectLoginUser(COMPANY_USERS[${index}].name)"><svg class="login-user-icon" aria-hidden="true"><use href="#es-person"></use></svg><span>${escapeHtml(user.name)}</span><svg class="login-caret" aria-hidden="true"><use href="#es-caret-right"></use></svg></button>`).join('');
       renderCurrentUser();
       // Aktualizovat seznamy (inkasa a položky k autorizaci)
       renderDynamicContent();
@@ -5924,6 +5901,8 @@ unicode: "eac3"
         if (targetScreenId === 'inkaso-souhrn') renderDirectDebitSummary();
       }
 
+      if (['davkove-platby-detail', 'davkove-platby-souhrn'].includes(targetScreenId)) renderImportedBatchContext();
+      if (['platba-vysledek', 'tp-vysledek', 'inkaso-vysledek'].includes(targetScreenId)) renderCreatedInstrumentResult(targetScreenId);
       document.body.classList.toggle('authorization-hub-mode', ['vyber-subjektu', 'prehled-autorizaci', 'autorizace-davek'].includes(targetScreenId));
       if (['vyber-subjektu', 'prehled-autorizaci', 'autorizace-davek'].includes(targetScreenId)) renderAuthorizationHub(targetScreenId);
       document.body.classList.toggle('profile-mode', ['profil', 'profil-firma', ...COMPANY_ACCESS_SCREENS].includes(targetScreenId));
@@ -6387,6 +6366,8 @@ unicode: "eac3"
     function saveSignersEditor() {
       const key = permissionFlowAccount();
       updateSignersDraft();
+      const draft = getSigners(key, true);
+      if (draft.selected.length < draft.count) { showToast('Vyberte alespoň tolik podepisujících osob, kolik podpisů požadujete.'); return; }
       if (JSON.stringify(getSigners(key)) !== JSON.stringify(getSigners(key, true))) localStorage.removeItem('vavu_permission_change_signatures_' + key);
       localStorage.setItem('vavu_signers_' + key, JSON.stringify(getSigners(key, true)));
       closeSignersEditor();
@@ -6525,6 +6506,8 @@ unicode: "eac3"
       localStorage.removeItem('vavu_selected_user');
       localStorage.removeItem('vavu_selected_initials');
       localStorage.removeItem('vavu_profile_tab');
+      localStorage.removeItem('vavu_signature_context');
+      closeAllModalsElements();
       goTo('login');
     }
 
@@ -6620,6 +6603,7 @@ unicode: "eac3"
       localStorage.setItem('inkaso_platnost_od', platnostOd);
       localStorage.setItem('inkaso_saved_for_auth', '1'); // Flag, že máme novou položku k autorizaci
 
+      localStorage.setItem('vavu_dynamic_inkaso_id', newInstrumentId());
       // Překreslit dynamický obsah
       renderDynamicContent();
 
@@ -6661,6 +6645,80 @@ unicode: "eac3"
       if (document.getElementById('screen-auth-item-detail').classList.contains('active')) updateAuthDetailSelection(id);
     }
 
+    // Instrument signatures use the approved account settings, never an unsigned proposal.
+    function newInstrumentId() { return Array.from(crypto.getRandomValues(new Uint8Array(16)), byte => byte.toString(16).padStart(2, '0')).join(''); }
+    function instrumentAccountKey(item) {
+      return Object.keys(ACCOUNT_DATA).find(key => ACCOUNT_DATA[key].number === item.accountNumber) || (Object.hasOwn(ACCOUNT_DATA, item.accountKey) ? item.accountKey : item.accountNumber ? null : 'czk');
+    }
+    function instrumentPolicy(item) {
+      const key = instrumentAccountKey(item);
+      if (!key) return { key: null, count: 2, names: [] };
+      const settings = permissionAppliedSettings(key);
+      const selected = [...new Set(settings.signers.selected)].filter(index => settings.permissions[index]?.level === 3);
+      return { key, count: Math.max(2, Number(settings.signers.count) || 2), names: selected.map(index => COMPANY_USERS[index]?.name).filter(Boolean) };
+    }
+    function instrumentFingerprint(item) {
+      const { signedBy, authorizations, status, statusType, deleted, ...data } = item;
+      return JSON.stringify(data);
+    }
+    function instrumentSignatures(kind, item) {
+      const key = 'vavu_instrument_signatures_' + kind + '_' + item.id;
+      let saved;
+      try { saved = JSON.parse(localStorage.getItem(key)); } catch (_) {}
+      const fingerprint = instrumentFingerprint(item);
+      const signatures = saved?.fingerprint === fingerprint ? saved.signatures : !saved && kind === 'batch' ? (item.authorizations || (item.signedBy || []).map(name => ({ name }))) : [];
+      const policy = instrumentPolicy(item);
+      const valid = [...new Map((signatures || []).filter(signature => policy.names.includes(signature.name)).map(signature => [signature.name, signature])).values()];
+      return { key, fingerprint, signatures: valid, policy };
+    }
+    function instrumentAuthorizationMessage(outcome) {
+      return { success: 'Autorizováno', partial: 'Čeká na podpis dalšího uživatele.', duplicate: 'Už jste autorizovali. Čeká na podpis dalšího uživatele.', forbidden: 'Nemáte oprávnění autorizovat na tomto účtu.', error: 'Chyba při autorizaci', rejected: 'Akci jsme museli odmítnout', gone: 'Autorizováno nebo smazáno' }[outcome] || '';
+    }
+    function instrumentSigningStatus(kind, item) {
+      const state = instrumentSignatures(kind, item);
+      if (!state.policy.names.includes(localStorage.getItem('vavu_selected_user'))) return instrumentAuthorizationMessage('forbidden');
+      if (state.signatures.length >= state.policy.count) return 'Autorizováno';
+      return state.signatures.length ? 'Čeká na další podpis (' + state.signatures.length + '/' + state.policy.count + ').' : 'K autorizaci';
+    }
+    function signInstrument(kind, item, expectedPolicy) {
+      const state = instrumentSignatures(kind, item);
+      const user = localStorage.getItem('vavu_selected_user');
+      if (expectedPolicy && expectedPolicy !== JSON.stringify(state.policy)) return { outcome: 'error', signatures: state.signatures };
+      if (!state.policy.names.includes(user)) return { outcome: 'forbidden', signatures: state.signatures };
+      if (state.signatures.length >= state.policy.count) return { outcome: 'gone', signatures: state.signatures };
+      if (state.signatures.some(signature => signature.name === user)) return { outcome: 'duplicate', signatures: state.signatures };
+      state.signatures.push({ name: user, at: new Date().toISOString() });
+      localStorage.setItem(state.key, JSON.stringify({ fingerprint: state.fingerprint, signatures: state.signatures }));
+      const outcome = state.signatures.length >= state.policy.count ? 'success' : 'partial';
+      if (outcome === 'success' && kind !== 'batch') {
+        const completed = authorizedInstruments().filter(entry => entry.kind !== kind || entry.fingerprint !== state.fingerprint);
+        completed.push({ kind, fingerprint: state.fingerprint, item, signatures: state.signatures, at: new Date().toISOString() });
+        localStorage.setItem('vavu_authorized_instruments', JSON.stringify(completed));
+      }
+      return { outcome, signatures: state.signatures };
+    }
+    function authorizedInstruments() { try { return JSON.parse(localStorage.getItem('vavu_authorized_instruments') || '[]'); } catch (_) { return []; } }
+    function finishCreatedInstrument(tab, id, route) {
+      const item = authorizationItems(tab).find(item => item.id === id);
+      const result = signInstrument(tab, item, signatureRequest()?.creationPolicy);
+      localStorage.setItem('vavu_creation_result', JSON.stringify({ ...result, tab, route, user: localStorage.getItem('vavu_selected_user') }));
+      if (result.outcome === 'success') removeAuthorizationItems([id]);
+      goTo(route);
+    }
+    function renderCreatedInstrumentResult(route) {
+      let result;
+      try { result = JSON.parse(localStorage.getItem('vavu_creation_result')); } catch (_) {}
+      if (!result || result.route !== route || result.user !== localStorage.getItem('vavu_selected_user')) return;
+      const screen = document.getElementById('screen-' + route);
+      const success = result.outcome === 'success';
+      screen.querySelector('.result-heading').textContent = success ? { platby: 'Platbu jste plně autorizovali', tp: 'Vytvořili jste trvalý příkaz', inkasa: 'Povolili jste inkaso' }[result.tab] : { platby: 'Autorizovali jste platbu', tp: 'Autorizovali jste trvalý příkaz', inkasa: 'Autorizovali jste povolení inkasa' }[result.tab];
+      if (['forbidden', 'duplicate', 'error'].includes(result.outcome)) screen.querySelector('.result-heading').textContent = instrumentAuthorizationMessage(result.outcome);
+      const lead = screen.querySelector('.result-lead'); lead.textContent = success ? '' : result.outcome === 'partial' ? 'Požádejte dalšího oprávněného uživatele o podpis. Může se přihlásit po vašem odhlášení.' : 'Instrument zůstává k autorizaci.'; lead.hidden = success;
+      screen.querySelector('.result-copy').hidden = true;
+      const art = screen.querySelector('.result-illustration');
+      art.src = ['forbidden', 'error', 'duplicate'].includes(result.outcome) ? 'assets/batch-authorization-warning.png' : '../../design-system/design-system/assets/illustrations/success-light.png'; art.alt = '';
+    }
+
     function authorizationItems(tab) {
       const account = ACCOUNT_DATA.czk;
       const base = { accountName: account.name, accountNumber: account.number };
@@ -6685,7 +6743,7 @@ unicode: "eac3"
         }
       } catch (_) {}
       if (tab === 'inkasa') {
-        if (localStorage.getItem('inkaso_saved_for_auth') === '1') items.push({ id: 'dynamic', name: localStorage.getItem('inkaso_nazev') || 'Povolení inkasa', recipient: localStorage.getItem('inkaso_prijemce'), desc: localStorage.getItem('inkaso_obdobi'), frequency: localStorage.getItem('inkaso_obdobi'), date: localStorage.getItem('inkaso_platnost_od'), endDate: localStorage.getItem('inkaso_platnost_do') || 'Neomezeně', amount: localStorage.getItem('inkaso_limit') });
+        if (localStorage.getItem('inkaso_saved_for_auth') === '1') items.push({ id: 'dynamic', authorizationId: localStorage.getItem('vavu_dynamic_inkaso_id'), name: localStorage.getItem('inkaso_nazev') || 'Povolení inkasa', recipient: localStorage.getItem('inkaso_prijemce'), desc: localStorage.getItem('inkaso_obdobi'), frequency: localStorage.getItem('inkaso_obdobi'), date: localStorage.getItem('inkaso_platnost_od'), endDate: localStorage.getItem('inkaso_platnost_do') || 'Neomezeně', amount: localStorage.getItem('inkaso_limit') });
         if (localStorage.getItem('inkaso_internet_deleted') !== '1') items.push({ id: 'internet', name: 'Internet', recipient: '4835477/0100', desc: 'Měsíčně', frequency: 'Měsíčně', date: '10. 7. 2026', endDate: 'Neomezeně', amount: '350,00 Kč' });
       }
       let deleted = [];
@@ -6706,7 +6764,7 @@ unicode: "eac3"
         const mark = document.createElement('span'); mark.className = 'checkmark'; mark.innerHTML = '<img src="assets/permission-check.svg" width="16" height="16" alt="">';
         label.append(input, mark);
         const open = document.createElement('button'); open.type = 'button'; open.className = 'auth-item-open'; open.onclick = () => openAuthItemDetail(currentAuthTab, item.id);
-        open.innerHTML = `<span class="item-details"><span class="t-headings-headline-secondary-bold">${escapeHtml(item.name)}</span><span class="t-content-body-secondary auth-item-muted">${escapeHtml(item.desc || '')}</span><span class="t-content-caption-primary auth-item-muted">${escapeHtml(item.date || '')}</span></span><span class="t-headings-headline-secondary-bold auth-item-amount">${escapeHtml(item.amount || '')}</span>`;
+        open.innerHTML = `<span class="item-details"><span class="t-headings-headline-secondary-bold">${escapeHtml(item.name)}</span><span class="t-content-body-secondary auth-item-muted">${escapeHtml(item.desc || '')}</span><span class="t-content-caption-primary auth-item-muted">${escapeHtml(item.date || '')}</span><span class="t-content-caption-primary">${escapeHtml(instrumentSigningStatus(currentAuthTab, item))}</span></span><span class="t-headings-headline-secondary-bold auth-item-amount">${escapeHtml(item.amount || '')}</span>`;
         card.onclick = event => { if (!event.target.closest('label, button')) openAuthItemDetail(currentAuthTab, item.id); };
         card.append(label, open); return card;
       }));
@@ -6754,6 +6812,9 @@ unicode: "eac3"
       document.getElementById('auth-detail-date').textContent = item.date || '';
       const rows = payment ? [['Z účtu', from], ['Zpráva pro příjemce', item.message], ['Popis pro mě', item.description || item.desc], ['Variabilní symbol', item.variableSymbol], ['Konstantní symbol', item.constantSymbol], ['Specifický symbol', item.specificSymbol]] : tab === 'tp' ? [['Z účtu', from], ['Příjemce', item.recipient], ['Název trvalého příkazu', item.name], ['Částka', item.amount], ['Opakovat', item.frequency], ['Datum první platby', item.date], ['Ukončit', item.endDate], ['Variabilní symbol', item.variableSymbol], ['Zpráva pro příjemce', item.message], ['Popis pro mě', item.description || item.name], ['Konstantní symbol', item.constantSymbol], ['Specifický symbol', item.specificSymbol], ['Platby v případě úmrtí', item.death || 'Neprovádět'], ['ID trvalého příkazu', item.orderId]] : [['Z účtu', from], ['Příjemce', item.recipient], ['Název povolení inkasa', item.name], ['Limit inkasa', item.amount], ['Období', item.frequency], ['Platnost od', item.date], ['Platnost do', item.endDate]];
       document.getElementById('auth-detail-fields').innerHTML = rows.map(([label,value]) => `<div class="auth-detail-field"><span>${escapeHtml(label)}</span><strong>${escapeHtml(value || '—')}</strong></div>`).join('');
+      document.getElementById('auth-detail-fields').insertAdjacentHTML('afterbegin', `<div class="auth-detail-field"><span>Stav autorizace</span><strong>${escapeHtml(instrumentSigningStatus(tab, item))}</strong></div>`);
+      const signing = instrumentSignatures(tab, item);
+      if (signing.signatures.length) document.getElementById('auth-detail-fields').insertAdjacentHTML('beforeend', `<div class="auth-detail-field"><span>Autorizovali</span><strong>${signing.signatures.map(signature => escapeHtml(signature.name) + ' · ' + escapeHtml(batchAuditDate(signature.at))).join('<br>')}</strong></div>`);
       updateAuthDetailSelection(id);
     }
     function authorizeAuthItemDetail() {
@@ -6775,15 +6836,20 @@ unicode: "eac3"
       const item = authorizationItems(request.tab).find(item => item.id === request.itemId);
       if (!item) { goTo(request.returnRoute); return; }
       const result = { tab: request.tab, id: request.itemId, returnRoute: request.returnRoute, item, at: new Date().toISOString(), user: localStorage.getItem('vavu_selected_user') };
+      const signing = request.item && JSON.stringify(request.item) !== JSON.stringify(item) ? { outcome: 'error' } : signInstrument(request.tab, item, request.policy);
+      result.outcome = signing.outcome; result.signatures = signing.signatures;
       localStorage.setItem('vavu_auth_item_result', JSON.stringify(result));
-      removeAuthorizationItems([request.itemId]);
+      if (signing.outcome === 'success') removeAuthorizationItems([request.itemId]);
       goTo('autorizace-vysledek-' + request.tab + '-' + request.itemId);
     }
     function authItemResult() { try { return JSON.parse(localStorage.getItem('vavu_auth_item_result') || 'null'); } catch (_) { return null; } }
     function renderAuthItemResult(tab, id) {
       const result = authItemResult();
-      if (!result || result.id !== id || result.tab !== tab) { goTo(authDetailReturnRoute(tab, id), true); handleRouting(); return false; }
-      document.getElementById('auth-item-result-title').textContent = { platby: 'Platbu jste plně autorizovali', tp: 'Vytvořili jste trvalý příkaz', inkasa: 'Povolili jste inkaso' }[tab];
+      if (!result || result.id !== id || result.tab !== tab || result.user !== localStorage.getItem('vavu_selected_user')) { goTo(authDetailReturnRoute(tab, id), true); handleRouting(); return false; }
+      document.getElementById('auth-item-result-title').textContent = result.outcome === 'success' ? { platby: 'Platbu jste plně autorizovali', tp: 'Vytvořili jste trvalý příkaz', inkasa: 'Povolili jste inkaso' }[tab] : result.outcome === 'partial' ? { platby: 'Autorizovali jste platbu', tp: 'Autorizovali jste trvalý příkaz', inkasa: 'Autorizovali jste povolení inkasa' }[tab] : instrumentAuthorizationMessage(result.outcome);
+      const lead = document.getElementById('auth-item-result-message');
+      lead.hidden = result.outcome === 'success'; lead.textContent = result.outcome === 'partial' || result.outcome === 'duplicate' ? 'Požádejte dalšího oprávněného uživatele o podpis. Může se přihlásit po vašem odhlášení.' : 'Instrument zůstává k autorizaci.';
+      document.querySelector('#screen-auth-item-result .result-illustration').src = ['forbidden', 'duplicate', 'error'].includes(result.outcome) ? 'assets/batch-authorization-warning.png' : '../../design-system/design-system/assets/illustrations/success-light.png';
     }
     function closeAuthItemResult() {
       const result = authItemResult(); goTo(result?.returnRoute || 'autorizace');
@@ -6890,12 +6956,12 @@ unicode: "eac3"
       if (stage === 'vysledek' && operation.status !== 'completed') { goTo('autorizace-vyber-souhrn-' + id, true); handleRouting(); return false; }
       if (stage === 'souhrn' && operation.status === 'completed') { goTo('autorizace-vyber-vysledek-' + id, true); handleRouting(); return false; }
       if (stage === 'vysledek') {
-        const failed = operation.results.some(item => item.outcome !== 'success');
+        const failed = operation.results.some(item => !['success', 'partial'].includes(item.outcome));
         const neutralArt = failed || operation.tab === 'inkasa';
         const art = document.getElementById('auth-bulk-result-art'); art.src = neutralArt ? 'assets/authorization-partial.png' : '../../design-system/design-system/assets/illustrations/success-light.png'; art.classList.toggle('bulk-partial-art', neutralArt);
         document.getElementById('auth-bulk-result-items').innerHTML = operation.results.map(item => {
-          const error = item.outcome !== 'success';
-          const message = { success: 'Autorizováno', error: 'Chyba při autorizaci', rejected: 'Akci jsme museli odmítnout', gone: 'Autorizováno nebo smazáno' }[item.outcome];
+          const error = !['success', 'partial'].includes(item.outcome);
+          const message = instrumentAuthorizationMessage(item.outcome);
           const title = operation.tab === 'inkasa' ? item.name : (item.recipient || item.name);
           const secondary = operation.tab === 'inkasa' ? (item.frequency || item.desc) : (item.variableSymbol ? 'VS: ' + item.variableSymbol : '');
           return `<div class="bulk-result-item"><span class="bulk-result-avatar"><svg class="icon" aria-hidden="true"><use href="#es-person"></use></svg><span class="bulk-result-badge ${error ? 'bulk-error-badge' : ''}">${error ? '<svg class="icon" aria-hidden="true"><use href="#es-close"></use></svg>' : '<img src="assets/authorization-arrow-right.svg" alt="">'}</span></span><span class="bulk-result-copy"><strong>${escapeHtml(title)}</strong>${secondary ? `<small>${escapeHtml(secondary)}</small>` : ''}<span class="bulk-result-status ${error ? 'bulk-error' : ''}">${message}</span></span><strong class="bulk-result-amount">${escapeHtml(item.amount)}</strong></div>`;
@@ -6924,7 +6990,8 @@ unicode: "eac3"
         operation.results = operation.items.map(item => {
           const live = current.find(candidate => candidate.id === item.id);
           const outcome = !live ? 'gone' : ['error', 'rejected'].includes(live.authorizationOutcome) ? live.authorizationOutcome : JSON.stringify(live) !== JSON.stringify(item) ? 'error' : 'success';
-          return { ...item, outcome };
+          const signing = outcome === 'success' ? signInstrument(operation.tab, live, request.policies?.[item.id]) : { outcome };
+          return { ...item, ...signing };
         });
         operation.status = 'completed'; operation.at = new Date().toISOString();
         localStorage.setItem('vavu_auth_bulk_' + operation.id, JSON.stringify(operation));
@@ -7112,23 +7179,24 @@ unicode: "eac3"
           { name: 'Zálohy na energie', period: 'Měsíčně', amount: '12 500,00 Kč', initial: 'Z' }
         ];
 
+        authorizedInstruments().filter(entry => entry.kind === 'tp' && instrumentAccountKey(entry.item) === (localStorage.getItem('vavu_selected_account') || 'czk')).forEach(({item}) => tpData.push({ name: item.name, period: item.frequency, amount: item.amount, initial: item.name.charAt(0).toUpperCase() }));
         tpData.forEach(item => {
           const div = document.createElement('div');
           div.className = 'list-item';
           div.innerHTML = `
             <div class="list-item-left">
               <div class="item-icon">
-                <span class="t-headings-headline-secondary-bold" style="color: var(--color-content-secondary);">${item.initial}</span>
+                <span class="t-headings-headline-secondary-bold" style="color: var(--color-content-secondary);">${escapeHtml(item.initial)}</span>
                 <span class="badge-icon badge-success" style="right: -4px; bottom: -4px;">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
                 </span>
               </div>
               <div class="item-details">
-                <span class="item-title">${item.name}</span>
-                <span class="item-subtitle">${item.period}</span>
+                <span class="item-title">${escapeHtml(item.name)}</span>
+                <span class="item-subtitle">${escapeHtml(item.period)}</span>
               </div>
             </div>
-            <div class="list-item-right">${item.amount}</div>
+            <div class="list-item-right">${escapeHtml(item.amount)}</div>
           `;
           listEl.appendChild(div);
         });
@@ -7146,23 +7214,24 @@ unicode: "eac3"
           inkasaData.push({ name: name, period: period, amount: limit, initial: name.charAt(0).toUpperCase() });
         }
 
+        authorizedInstruments().filter(entry => entry.kind === 'inkasa' && instrumentAccountKey(entry.item) === (localStorage.getItem('vavu_selected_account') || 'czk')).forEach(({item}) => inkasaData.push({ name: item.name, period: item.frequency, amount: item.amount, initial: item.name.charAt(0).toUpperCase() }));
         inkasaData.forEach(item => {
           const div = document.createElement('div');
           div.className = 'list-item';
           div.innerHTML = `
             <div class="list-item-left">
               <div class="item-icon">
-                <span class="t-headings-headline-secondary-bold" style="color: var(--color-content-secondary);">${item.initial}</span>
+                <span class="t-headings-headline-secondary-bold" style="color: var(--color-content-secondary);">${escapeHtml(item.initial)}</span>
                 <span class="badge-icon badge-success" style="right: -4px; bottom: -4px;">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
                 </span>
               </div>
               <div class="item-details">
-                <span class="item-title">${item.name}</span>
-                <span class="item-subtitle">${item.period}</span>
+                <span class="item-title">${escapeHtml(item.name)}</span>
+                <span class="item-subtitle">${escapeHtml(item.period)}</span>
               </div>
             </div>
-            <div class="list-item-right">${item.amount}</div>
+            <div class="list-item-right">${escapeHtml(item.amount)}</div>
           `;
           listEl.appendChild(div);
         });
@@ -7177,17 +7246,17 @@ unicode: "eac3"
           div.innerHTML = `
             <div class="list-item-left">
               <div class="item-icon">
-                <span class="t-headings-headline-secondary-bold" style="color: var(--color-content-secondary);">${item.initial}</span>
+                <span class="t-headings-headline-secondary-bold" style="color: var(--color-content-secondary);">${escapeHtml(item.initial)}</span>
                 <span class="badge-icon badge-success" style="right: -4px; bottom: -4px;">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
                 </span>
               </div>
               <div class="item-details">
-                <span class="item-title">${item.name}</span>
-                <span class="item-subtitle">${item.period}</span>
+                <span class="item-title">${escapeHtml(item.name)}</span>
+                <span class="item-subtitle">${escapeHtml(item.period)}</span>
               </div>
             </div>
-            <div class="list-item-right">${item.amount}</div>
+            <div class="list-item-right">${escapeHtml(item.amount)}</div>
           `;
           listEl.appendChild(div);
         });
@@ -7289,7 +7358,9 @@ unicode: "eac3"
       if (batchNameInput) batchNameInput.value = batchName;
       document.getElementById('batch-uploaded-content').hidden = false;
       document.getElementById('batch-upload-continue').disabled = false;
+      const accountKey = Object.hasOwn(ACCOUNT_DATA, localStorage.getItem('vavu_selected_account')) ? localStorage.getItem('vavu_selected_account') : 'czk';
       saveImportedBatch({
+        accountKey, accountNumber: ACCOUNT_DATA[accountKey].number, accountName: ACCOUNT_DATA[accountKey].name,
         created: { name: localStorage.getItem('vavu_selected_user'), at: new Date().toISOString() },
         sourceFile: file.name,
         date: new Intl.DateTimeFormat('cs-CZ', { day: 'numeric', month: 'numeric' }).format(new Date()),
@@ -7302,6 +7373,14 @@ unicode: "eac3"
       });
       updateBatchName(batchName);
       showToast('Nahráli jste soubor. Parametry dávky jsme doplnili.');
+    }
+
+    function renderImportedBatchContext() {
+      const batch = allOverviewBatches().find(batch => batch.id === getImportedBatches()[0]?.id);
+      if (!batch) return;
+      document.querySelectorAll('#screen-davkove-platby-detail .batch-recipient .batch-transaction-copy span').forEach(element => { element.textContent = 'Z účtu: ' + batch.accountNumber; });
+      document.getElementById('imported-batch-source').textContent = batch.accountName + ' · ' + batch.accountNumber;
+      document.querySelector('#screen-davkove-platby-souhrn [data-batch-name] + span').textContent = 'KB ID dávky: ' + batch.id;
     }
 
     function updateBatchName(value) {
@@ -7388,7 +7467,7 @@ unicode: "eac3"
 
     function allOverviewBatches() {
       const overrides = batchOverrides();
-      return [...getImportedBatches(), ...DEFAULT_BATCHES].map(batch => ({ ...batch, ...overrides[batch.id] })).filter(batch => !batch.deleted);
+      return [...getImportedBatches(), ...DEFAULT_BATCHES].map(batch => ({ accountKey: 'czk', accountNumber: ACCOUNT_DATA.czk.number, accountName: ACCOUNT_DATA.czk.name, ...batch, ...overrides[batch.id] })).filter(batch => !batch.deleted);
     }
 
     function openExistingBatch(id, from) {
@@ -7419,9 +7498,9 @@ unicode: "eac3"
       if (batch.statusType === 'alert') return { label: batch.status || 'Zrušeno', message: 'Dávka byla zrušena.', row: 'Zrušeno', canSign: false, canDelete: false };
       if (batch.statusType === 'success') return { label: batch.status || 'Zpracováno', message: 'Dávka byla zpracována.', row: 'Zpracováno', canSign: false, canDelete: false };
       if (batch.status === 'Čekající') return { label: 'Čekající', message: 'Čeká na zpracování.', row: 'Čeká na zpracování', canSign: false, canDelete: false };
-      const signed = batch.signedBy || [];
+      const signed = instrumentSignatures('batch', batch).signatures.map(signature => signature.name);
       const user = localStorage.getItem('vavu_selected_user') || '';
-      return { label: 'K autorizaci', message: signed.length ? 'Čeká na další podpis.' : 'Čeká na podpisy.', row: 'Čeká na autorizaci dávky', canSign: !signed.includes(user), canAttemptSign: true, canDelete: true };
+      return { label: 'K autorizaci', message: signed.length ? 'Čeká na další podpis.' : 'Čeká na podpisy.', row: 'Čeká na autorizaci dávky', canSign: instrumentPolicy(batch).names.includes(user) && !signed.includes(user), canAttemptSign: true, canDelete: true };
     }
 
     function renderExistingBatchDetail(id) {
@@ -7434,7 +7513,7 @@ unicode: "eac3"
       document.getElementById('existing-batch-warning').hidden = !state.canDelete;
       document.getElementById('existing-batch-info').style.display = state.canDelete ? 'none' : '';
       document.getElementById('existing-batch-info').removeAttribute('hidden');
-      const values = [['Název dávky', batch.name], ['KB ID dávky', batch.id], ['Stav', state.label], ['Celkem plateb', batch.payments], ['Celková částka', batch.amount]];
+      const values = [['Z účtu', batch.accountName + ' · ' + batch.accountNumber], ['Název dávky', batch.name], ['KB ID dávky', batch.id], ['Stav', state.label], ['Celkem plateb', batch.payments], ['Celková částka', batch.amount]];
       document.getElementById('existing-batch-summary').innerHTML = values.map(([label, value]) => `<div class="batch-summary-row" data-ds-component="CO Item Display"><span class="t-content-caption-primary">${escapeHtml(label)}</span><strong class="t-content-body-primary">${escapeHtml(String(value))}</strong></div>`).join('');
       // Existující prototyp import pouze simuluje; ukázkové platby odvozujeme ze stejného seznamu.
       const sourceRows = [...document.querySelectorAll('#screen-davkove-platby-detail .batch-transaction')];
@@ -7450,6 +7529,7 @@ unicode: "eac3"
           const badge = document.createElement('img'); badge.className = 'batch-payment-badge'; badge.src = 'assets/batch-clock.svg'; badge.alt = ''; row.querySelector('.batch-avatar').append(badge);
         }
         const copy = row.querySelector('.batch-recipient .batch-transaction-copy');
+        copy.querySelector('span').textContent = 'Z účtu: ' + batch.accountNumber;
         const status = document.createElement('span'); status.className = 'batch-payment-status'; status.textContent = state.row; copy.append(status);
         const cents = batch.sourceFile && count === 8 && totalCents === 43300051 ? null : Math.floor(totalCents / count) + (i < totalCents % count ? 1 : 0);
         if (cents !== null) row.querySelector('.batch-amount').textContent = new Intl.NumberFormat('cs-CZ', { style: 'currency', currency: 'CZK' }).format(cents / 100);
@@ -7502,7 +7582,7 @@ unicode: "eac3"
       const batch = allOverviewBatches().find(batch => batch.id === id);
       if (!batch) { backToBatchOverview(); return; }
       document.getElementById('screen-davka-souhrn').dataset.batchId = id;
-      document.getElementById('batch-existing-summary-info').innerHTML = batchSummaryRows([['Název dávky', batch.name], ['KB ID dávky', batch.id], ['Režim zpracování', batch.processingMode || 'Online']]);
+      document.getElementById('batch-existing-summary-info').innerHTML = batchSummaryRows([['Z účtu', batch.accountName + ' · ' + batch.accountNumber], ['Název dávky', batch.name], ['KB ID dávky', batch.id], ['Režim zpracování', batch.processingMode || 'Online']]);
       const totals = batch.currencyTotals || [batch.amount];
       document.getElementById('batch-existing-summary-currencies').innerHTML = totals.map(total => `<div class="batch-summary-row"><strong class="t-content-body-primary">${escapeHtml(total)}</strong></div>`).join('');
       document.getElementById('batch-existing-summary-count').textContent = 'Celkem ' + batch.payments + (batch.payments === 1 ? ' platba' : batch.payments >= 2 && batch.payments <= 4 ? ' platby' : ' plateb');
@@ -7542,14 +7622,13 @@ unicode: "eac3"
     function authorizeBatch(id) {
       const batch = allOverviewBatches().find(batch => batch.id === id);
       if (!batch) { startBatchFlow('overview'); return; }
-      const user = localStorage.getItem('vavu_selected_user');
-      const signedBy = [...new Set(batch.signedBy || [])];
-      if (signedBy.includes(user)) { showBatchAuthorizationResult(id, 'duplicate'); return; }
-      if (!user || !existingBatchState(batch).canSign) { goTo('davka-detail-' + id); return; }
-      signedBy.push(user);
-      const complete = signedBy.length >= 2;
+      if (['alert', 'success'].includes(batch.statusType) || batch.status === 'Čekající') { goTo('davka-detail-' + id); return; }
+      const request = signatureRequest();
+      const signing = request?.fingerprints?.[id] && request.fingerprints[id] !== instrumentFingerprint(batch) ? { outcome: 'error' } : signInstrument('batch', batch, request?.policies?.[id]);
+      if (!['success', 'partial'].includes(signing.outcome)) { showBatchAuthorizationResult(id, signing.outcome); return; }
+      const complete = signing.outcome === 'success';
       const overrides = batchOverrides();
-      overrides[id] = { ...overrides[id], signedBy, authorizations: [...(batch.authorizations || []), { name: user, at: new Date().toISOString() }], status: complete ? 'Čekající' : 'K autorizaci', statusType: 'pending' };
+      overrides[id] = { ...overrides[id], signedBy: signing.signatures.map(signature => signature.name), authorizations: signing.signatures, status: complete ? 'Čekající' : 'K autorizaci', statusType: 'pending' };
       localStorage.setItem('vavu_batch_overrides', JSON.stringify(overrides));
       showBatchAuthorizationResult(id, complete ? 'complete' : 'partial');
     }
@@ -7558,14 +7637,13 @@ unicode: "eac3"
       let result;
       try { result = JSON.parse(localStorage.getItem('vavu_batch_authorization_result') || 'null'); } catch (_) {}
       const outcome = result?.outcome || 'partial';
-      const duplicate = outcome === 'duplicate';
-      const batch = allOverviewBatches().find(batch => batch.id === result?.id);
+      const duplicate = ['duplicate', 'forbidden', 'error', 'gone'].includes(outcome);
       const screen = document.getElementById('screen-davkove-platby-vysledek');
       screen.dataset.outcome = outcome;
-      document.getElementById('davkove-platby-vysledek-title').textContent = duplicate ? 'Dávku už jste autorizovali' : 'Autorizovali jste dávku';
+      document.getElementById('davkove-platby-vysledek-title').textContent = outcome === 'duplicate' ? 'Dávku už jste autorizovali' : duplicate ? instrumentAuthorizationMessage(outcome) : 'Autorizovali jste dávku';
       const message = document.getElementById('batch-result-message');
-      message.textContent = duplicate ? 'Musí ji autorizovat ještě ostatní.' : 'Musí ji ještě autorizovat ostatní.';
-      message.hidden = outcome === 'complete' || (duplicate && batch && (batch.signedBy || []).length >= 2);
+      message.textContent = ['partial', 'duplicate'].includes(outcome) ? 'Požádejte dalšího oprávněného uživatele o podpis. Může se přihlásit po vašem odhlášení.' : '';
+      message.hidden = !message.textContent;
       document.getElementById('batch-result-illustration').src = duplicate ? 'assets/batch-authorization-warning.png' : '../../design-system/design-system/assets/illustrations/success-light.png';
       document.getElementById('batch-result-overview').hidden = duplicate;
     }
@@ -7596,7 +7674,7 @@ unicode: "eac3"
     }
 
     function authorizableBatches() {
-      return allOverviewBatches().filter(batch => (batch.subjectId || 'vodarny') === authorizationSubject()?.id && existingBatchState(batch).canSign);
+      return allOverviewBatches().filter(batch => (batch.subjectId || 'vodarny') === authorizationSubject()?.id && existingBatchState(batch).canAttemptSign);
     }
 
     function authorizationItemCount(count) {
@@ -7918,7 +7996,7 @@ unicode: "eac3"
 
     function openSignatureSelection(kind = 'payment') {
       if (kind === 'payment' && batchFlowActive && currentScreen === 'davkove-platby-souhrn') kind = 'new-batch';
-      const request = { kind, origin: currentScreen, status: 'pending' };
+      const request = { kind, origin: currentScreen, status: 'pending', user: localStorage.getItem('vavu_selected_user') };
       if (kind === 'existing-batch') request.batchId = document.getElementById('screen-davka-souhrn').dataset.batchId;
       if (kind === 'new-batch') request.batchId = getImportedBatches()[0]?.id;
       if (kind === 'authorization-item') { const route = currentScreen.match(/^autorizace-(?:detail|souhrn)-(platby|tp|inkasa)-([A-Za-z0-9_-]+)$/); request.tab = route[1]; request.itemId = route[2]; request.returnRoute = authDetailReturnRoute(route[1], route[2]); }
@@ -7927,6 +8005,15 @@ unicode: "eac3"
         request.operationId = operation?.id; request.tab = operation?.tab || currentAuthTab; request.returnRoute = operation?.returnRoute || currentScreen;
         request.selected = operation ? operation.items.map(item => item.id) : [...document.querySelectorAll('#auth-items-list .auth-checkbox:checked')].map(input => input.value);
       }
+      if (kind === 'authorization-item') {
+        request.item = authorizationItems(request.tab).find(item => item.id === request.itemId);
+        if (!request.item) return;
+        request.policy = JSON.stringify(instrumentPolicy(request.item));
+      }
+      const reviewed = kind === 'selected-authorization' ? (currentBulkOperation()?.items || []) : ['existing-batch', 'new-batch'].includes(kind) ? allOverviewBatches().filter(batch => batch.id === request.batchId) : [];
+      request.policies = Object.fromEntries(reviewed.map(item => [item.id, JSON.stringify(instrumentPolicy(item))]));
+      request.fingerprints = Object.fromEntries(reviewed.map(item => [item.id, instrumentFingerprint(item)]));
+      if (kind === 'payment') request.creationPolicy = JSON.stringify(instrumentPolicy({ accountNumber: ACCOUNT_DATA.czk.number }));
       localStorage.setItem('vavu_signature_context', JSON.stringify(request));
       goTo('payment-signature-modal');
     }
@@ -7947,7 +8034,7 @@ unicode: "eac3"
 
     function authorizePayment() {
       const request = signatureRequest();
-      if (request && request.status !== 'pending') return;
+      if (!request || request.status !== 'pending' || request.user !== localStorage.getItem('vavu_selected_user')) return;
       if (request) {
         request.status = 'completed';
         localStorage.setItem('vavu_signature_context', JSON.stringify(request));
@@ -7972,10 +8059,11 @@ unicode: "eac3"
         localStorage.setItem('inkaso_platnost_od', formatStandingOrderDate(data.startDate));
         localStorage.setItem('inkaso_platnost_do', data.endDate ? formatStandingOrderDate(data.endDate) : 'Neomezeně');
         localStorage.setItem('inkaso_saved_for_auth', '1');
-        goTo('inkaso-vysledek');
+        localStorage.setItem('vavu_dynamic_inkaso_id', newInstrumentId());
+        finishCreatedInstrument('inkasa', 'dynamic', 'inkaso-vysledek');
       } else if (standingOrderFlowActive) {
-        localStorage.setItem('vavu_pending_standing_order', JSON.stringify({ ...getStandingOrderData(), status: 'K autorizaci' }));
-        goTo('tp-vysledek');
+        localStorage.setItem('vavu_pending_standing_order', JSON.stringify({ ...getStandingOrderData(), authorizationId: newInstrumentId(), status: 'K autorizaci' }));
+        finishCreatedInstrument('tp', 'tp_auth_created', 'tp-vysledek');
       } else {
         if (!batchFlowActive) {
           const recipient = localStorage.getItem(paymentStorageKey('recipient')) || 'Nová platba';
@@ -7983,13 +8071,13 @@ unicode: "eac3"
           const amount = localStorage.getItem(paymentStorageKey('amount')) || '0';
           const currency = localStorage.getItem(paymentStorageKey('currency')) || 'Kč';
           localStorage.setItem('vavu_pending_payment', JSON.stringify({
-            name: recipient, recipient, accountName: ACCOUNT_DATA.czk.name, accountNumber: ACCOUNT_DATA.czk.number, message: localStorage.getItem(paymentStorageKey('messageRecipient')) || '', description, variableSymbol: localStorage.getItem(paymentStorageKey('variableSymbol')) || '', constantSymbol: localStorage.getItem(paymentStorageKey('constantSymbol')) || '', specificSymbol: localStorage.getItem(paymentStorageKey('specificSymbol')) || '',
+            authorizationId: newInstrumentId(), name: recipient, recipient, accountName: ACCOUNT_DATA.czk.name, accountNumber: ACCOUNT_DATA.czk.number, message: localStorage.getItem(paymentStorageKey('messageRecipient')) || '', description, variableSymbol: localStorage.getItem(paymentStorageKey('variableSymbol')) || '', constantSymbol: localStorage.getItem(paymentStorageKey('constantSymbol')) || '', specificSymbol: localStorage.getItem(paymentStorageKey('specificSymbol')) || '',
             desc: description,
             date: '28. 8. 2026',
             amount: formatStandingOrderAmount(amount, currency)
           }));
         }
-        goTo(batchFlowActive ? 'davkove-platby-vysledek' : 'platba-vysledek');
+        finishCreatedInstrument('platby', 'platba_auth_created', 'platba-vysledek');
       }
     }
 

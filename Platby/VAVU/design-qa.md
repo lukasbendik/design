@@ -1,3 +1,29 @@
+# Oprávnění účtu a společná autorizace instrumentů – 21. 10. 2026
+
+final result: passed
+
+Platby, trvalé příkazy, povolení inkasa i dávky nyní používají společnou kontrolu schválených oprávnění a podpisového schématu konkrétního účtu. Výchozí schéma vyžaduje dva různé vybrané uživatele s úrovní Autorizace plateb. Používá se permissionAppliedSettings; rozepsané nastavení ani změna s jediným podpisem ještě neplatí. Po schválení změny oběma uživateli se použijí nová práva a vybraní podepisující. U schématu s vyšším počtem podpisů se počítá skutečná schválená hodnota; editor nedovolí uložit méně osob, než požadovaný počet podpisů.
+
+Podpisy se ukládají pro konkrétní typ, ID a verzi instrumentu, včetně jména a času. První podpis zachová instrument k autorizaci, zobrazí žádost o podpis dalšího oprávněného uživatele a počítadlo v seznamu. Detail zobrazuje stav i dosavadní podepisující s datem. Tentýž uživatel nepřidá další podpis, uživatel bez práva nebo mimo schéma nezmění podpisy. Teprve dosažení počtu různých oprávněných podpisů odstraní položku z čekajících; dokončené TP a inkasa se zobrazují v aktivním seznamu účtu. Podpis při vytvoření nové platby/TP/inkasa se započítá jako první; nová verze dostává vlastní identitu i při stejných údajích.
+
+Jednotlivé i hromadné souhrny zůstávají přes výběr způsobu podpisu. Hromadná operace zpracuje pouze výběr aktuální záložky, vyhodnotí každou položku samostatně a rozlišuje částečný/úplný/duplicitní/neoprávněný/chybový výsledek. Zrušení dialogu nemění podpisy. Po refreshi se zobrazí stejný výsledek; potvrzení stejné operace se neopakuje. Podpisový požadavek je svázaný s uživatelem a kontroluje schválenou politiku; změněný obsah individuální/hromadné položky ani dávky není skrytě podepsán.
+
+Odhlášení zachová instrumenty i podpisy, zruší podpisový kontext. Přihlášení nabízí všech šest osob z COMPANY_USERS včetně Evy a Lindy; další uživatel může pokračovat přes Přehled → Autorizace. Rozhodují stejná data v obou cestách do detailu dávky. Historické zpracované/zrušené dávky se znovu nepodepisují. Starší uložené podpisy dávek se přebírají ze skutečných záznamů.
+
+Nové formuláře platby/TP/inkasa zůstávají výslovně pro Účet CZK; platební formulář má sjednocené číslo a firmu s účtem v modelu. Instrument s EUR zdrojem používá EUR práva. Import simulované dávky z detailu účtu ukládá jeho identitu, detail/souhrn i ukázkové řádky zobrazují tento zdroj; EUR import proto nikdy nepoužije CZK podpisové schéma. Současný import nadále simuluje soubor a platby, nejde o novou implementaci parsování XML/KPC. Původní demo dávky jsou přiřazené k CZK.
+
+Chrome/Playwright lokálně: všechny tři typy individuálně první podpis → refresh → opakovaný podpis → neoprávněný uživatel → odhlášení a druhý oprávněný podpis; skutečná tvorba všech tří typů zachovala údaje a první podpis, druhý podpis dokončil položky a aktivní seznamy. Hromadné TP a inkasa přes dva uživatele, izolace skrytého výběru, jména/období/limity a součty, uložené výsledky. Dávka přes oba vstupy, nově nahraná dávka a duplicitní pokus. Skutečné editory práv a schématu → dva podpisy změny → Eva místo Šárky na CZK; před schválením stará politika, EUR beze změny. EUR import přes skutečný účetní vstup s odlišnou fixture politikou zablokoval CZK podepisující a přijal správného EUR podepisujícího. Změna údajů po otevření souhrnu zablokována. Žádné JS chyby.
+
+Mobil 320/375 px: autorizační seznam, jednotlivý výsledek, šest uživatelů na loginu i hromadný výsledek inkas bez vodorovného přetékání. Screenshoty /home/lukinab/Projects/UX/.vavu-profile-qa/two-signers-{result,login}-{320,375}.png a bulk-result-inkasa-{320,375}.png vizuálně ověřeny. Bez zbývajících P0/P1/P2.
+
+# Mezery v modálu Detail autorizace – 21. 10. 2026
+
+final result: passed
+
+Mezi sousední karty Vytvořeno / Autorizovali / Zrušeno přidán token --space-16. Ověřeno skutečné otevření modálu přes detail dávky na desktopu 1680 a mobilu 375/320: oba rozestupy přesně 16 px, bez overflow dialogu i stránky, bez JS chyb. Vizuálně porovnáno s novou přílohou; evidence batch-audit-spacing-{1680,375,320}.png v /home/lukinab/Projects/UX/.vavu-profile-qa/.
+
+---
+
 # Potvrzení resetu prototypu – 21. 10. 2026
 
 final result: passed
