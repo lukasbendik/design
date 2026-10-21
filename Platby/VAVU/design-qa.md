@@ -1,3 +1,17 @@
+# Jednotná sekundární tlačítka – 21. 10. 2026
+
+final result: passed
+
+Zadání: Zavřít na Autorizovali jste platbu má být sekundární tlačítko s rámečkem; sjednotit tuto variantu v celém VAVU. Autoritativní zdroj: design-system/design-system/prototype-kit/components.css, CO Button secondary (1px solid interactive-secondary, transparentní výplň, secondary-action hover).
+
+Příčina: lokální .btn { border:none } se načítá po DS a přepisovala .btn--secondary. Starší alias .btn-secondary, pravidlo pro dávky a inline styly rámeček místy obnovovaly různými barvami a tloušťkou. Oprava: společná .btn.btn--secondary podle DS a odstranění duplicitních výjimek/aliasů. Všechny existující sekundární akce sdílejí border 1px solid #212121 a transparentní výplň; hover používá DS. Rozložení a navazující akce zachovány. Horní navigační ovladače zůstávají navigačními ovladači.
+
+Playwright/Chrome: skutečná cesta Nová platba → další krok → podpis KB Klíčem → Autorizovali jste platbu. Vypočtené styly všech 21 sekundárních tlačítek odpovídají společné definici (rámeček, barva, výplň). Ověřen hover po doběhnutí přechodu, focus, viditelnost a návrat Zavřít do přehledu. Mobil 320/390 bez overflow a s dostupným CTA. Bez JS chyb. Regrese předání CHF platby z EUR účtu do podpisu prošla.
+
+Vizuálně zkontrolované screenshoty: /home/lukinab/Projects/UX/.vavu-profile-qa/secondary-payment-result.png (1024 × 900 CSS px, DPR 2) a secondary-payment-result-{320,390}.png ve stejné složce (výška 800 CSS px, DPR 2). Typografie Inter, spacing, DS barvy a ilustrace zachovány; nově viditelný obrys tlačítka. Bez zbývajících P0/P1/P2.
+
+---
+
 # Nová platba – nový prázdný formulář – 21. 10. 2026
 
 final result: passed

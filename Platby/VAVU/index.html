@@ -673,14 +673,15 @@
       background-color: var(--color-interactive-primary-action);
     }
 
-    .btn-secondary {
-      background-color: var(--color-background-surface);
-      border: 1px solid var(--color-background-border-highlighted);
-      color: var(--color-content-primary);
+    /* CO Button secondary: restore the shared outline after the local .btn reset. */
+    .btn.btn--secondary {
+      background: transparent;
+      border: var(--border-sm) solid var(--interactive-secondary);
+      color: var(--interactive-secondary);
     }
 
-    .btn-secondary:hover {
-      background-color: var(--color-interactive-secondary-active);
+    .btn.btn--secondary:hover {
+      background: var(--interactive-secondary-action);
     }
 
     .overview-edit-button {
@@ -2127,11 +2128,6 @@
       min-width: auto;
     }
 
-    .batch-screen .payment-buttonbar .btn--secondary {
-      border: var(--border-sm) solid var(--color-background-border-highlighted);
-      background: var(--color-background-body);
-    }
-
     .batch-screen .payment-segmented.batch-tabs {
       width: 270px;
       min-height: 32px;
@@ -2294,7 +2290,6 @@
     .batch-upload-zone .btn {
       width: auto;
       margin-top: var(--space-4);
-      border: var(--border-sm) solid var(--color-background-border-highlighted);
     }
 
     .batch-uploaded-content {
@@ -3926,7 +3921,7 @@ unicode: "eac3"
           </div>
 
           <!-- Tlačítko upravit přehled -->
-          <button class="btn btn--secondary btn-secondary overview-edit-button" onclick="alert('Funkce není v prototypu implementována')">
+          <button class="btn btn--secondary overview-edit-button" onclick="alert('Funkce není v prototypu implementována')">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
             Upravit přehled
           </button>
@@ -5321,7 +5316,7 @@ unicode: "eac3"
         <div class="modal-form-bottom">
           <div class="flex-row-between" style="gap: 16px; width: 100%;">
             <button class="btn btn--primary btn-primary" onclick="alert('Tlačítko Pokračovat není v tomto flow aktivní. Klikněte prosím na Uložit k autorizaci.')" style="flex: 1; height: 52px;">Pokračovat</button>
-            <button class="btn btn--secondary btn-secondary" onclick="saveToAuthorization()" style="flex: 1; height: 52px; border-color: var(--color-content-primary); border-width: 1.5px; color: var(--color-content-primary); font-weight: 600;">Uložit k autorizaci</button>
+            <button class="btn btn--secondary" onclick="saveToAuthorization()" style="flex: 1;">Uložit k autorizaci</button>
           </div>
         </div>
       </div>
@@ -5355,7 +5350,7 @@ unicode: "eac3"
         <!-- Zelená šipka z diagramu: Na autorizace vede na autorizace -->
         <button class="btn btn--primary btn-primary" onclick="closeModalAndGoTo('autorizace')" style="width: auto; height: 48px; padding: 0 32px;">Na autorizace</button>
         <!-- Červená šipka z diagramu: Zavřít vede na trvalé příkazy a inkasa s kartou -->
-        <button class="btn btn--secondary btn-secondary" onclick="closeModalAndGoTo('tp-inkasa-s-autorizaci')" style="width: auto; height: 48px; padding: 0 32px; border-color: var(--color-content-primary); border-width: 1.5px; color: var(--color-content-primary); font-weight: 600;">Zavřít</button>
+        <button class="btn btn--secondary" onclick="closeModalAndGoTo('tp-inkasa-s-autorizaci')" style="width: auto; padding: 0 var(--padding-3xl);">Zavřít</button>
       </div>
     </div>
   </div>
