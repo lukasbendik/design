@@ -1705,6 +1705,12 @@
       text-align: center;
     }
 
+    #prototype-reset-dialog { padding: 0; border: 0; background: transparent; width: min(440px, calc(100vw - 32px)); max-width: none; max-height: calc(100dvh - 32px); color: var(--color-content-primary); }
+    #prototype-reset-dialog::backdrop { background: rgba(0, 0, 0, 0.4); backdrop-filter: blur(4px); }
+    #prototype-reset-dialog .modal-content-popup { gap: var(--space-24); }
+    #prototype-reset-dialog h2, #prototype-reset-dialog p { margin: 0; }
+    .prototype-reset-actions { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: var(--space-16); width: 100%; }
+
     .modal-form-wrap {
       width: 100%;
       max-width: 600px;
@@ -5197,10 +5203,21 @@ unicode: "eac3"
   </div>
 
   <!-- 4. PLOVOUCÍ CHATBOT -->
-  <button type="button" class="chatbot-btn" onclick="resetPrototypeData()">
+  <button type="button" class="chatbot-btn" onclick="document.getElementById('prototype-reset-dialog').showModal()">
     <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
     <span>Chcete poradit?</span>
   </button>
+
+  <dialog id="prototype-reset-dialog" aria-labelledby="prototype-reset-title" aria-describedby="prototype-reset-description">
+    <div class="modal-content-popup">
+      <h2 class="t-headings-title-secondary" id="prototype-reset-title">Smazat data prototypu?</h2>
+      <p id="prototype-reset-description">Opravdu chcete smazat všechna uložená data tohoto prototypu? Prototyp se vrátí do výchozího stavu.</p>
+      <div class="prototype-reset-actions">
+        <button class="btn btn--secondary" type="button" autofocus onclick="document.getElementById('prototype-reset-dialog').close()">Zavřít</button>
+        <button class="btn btn--primary" type="button" onclick="resetPrototypeData()">Smazat</button>
+      </div>
+    </div>
+  </dialog>
 
   <!-- ================= VAVU: VOLBA ZPŮSOBU PODPISU ================= -->
   <div class="modal-overlay-popup" id="modal-payment-signature-modal" role="dialog" aria-modal="true" aria-labelledby="signature-modal-title">

@@ -1,3 +1,13 @@
+# Potvrzení resetu prototypu – 21. 10. 2026
+
+final result: passed
+
+Chcete poradit? otevírá nativní modální dialog Smazat data prototypu? s upozorněním na návrat do výchozího stavu. Zavřít / Escape nic nemažou, červené Smazat spouští existující reset dat VAVU a přechod na login. Zachován vstupní flag rozcestníku i data jiných prototypů. Nativní dialog drží focus; počáteční focus je na Zavřít. Použité stávající DS styly panelu a tlačítek.
+
+Chrome/Playwright lokálně: otevření nemění uložené hodnoty, Zavřít i Escape zachovají data, Smazat má červené pozadí a vymaže pouze původní rozsah klíčů. Ověřen návrat na login a zachování nesouvisejících dat. Mobil 320 px bez overflow; screenshot /home/lukinab/Projects/UX/.vavu-profile-qa/reset-confirm-mobile.png vizuálně zkontrolován. Bez JS chyb.
+
+---
+
 # Výsledek hromadné autorizace inkas – 21. 10. 2026
 
 final result: passed
