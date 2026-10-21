@@ -1,3 +1,21 @@
+# Souhrny a výsledky jednotlivých instrumentů – 21. 10. 2026
+
+final result: passed
+
+Detail platby / trvalého příkazu / povolení inkasa → Autorizovat nyní otevírá odpovídající Souhrn. Souhrn používá stejnou položku ze společného datového modelu jako detail, včetně účtu, příjemce, částky/limitu, zprávy, popisu, symbolů a termínů; TP navíc frekvenci a ukončení, inkaso období a platnost. Přílohy souhrnů jsou tři stejné platební vzory; TP a inkaso zachovávají jejich anatomii s relevantními poli svého typu. Nezaměňují se s ilustračními hodnotami reference.
+
+Teprve Odeslat (platba) / Autorizovat (TP a inkaso) otevře existující Vyberte způsob podpisu nad Souhrnem. KB Klíč zpracuje jen otevřenou položku a zobrazí samostatný výsledek: Platbu jste plně autorizovali / Vytvořili jste trvalý příkaz / Povolili jste inkaso. Výsledkový snímek dat, uživatel a čas se uloží před odebráním položky ze seznamu. Ostatní výběry se zachovají. Zrušení/Únik ze způsobu podpisu ponechá nezměněný Souhrn. Zavřít vrací původní autorizační seznam. Refresh souhrnu, modálu i výsledku zachovává kontext. Historie neprovede podpis znovu; dokončený podpisový hash zobrazí uložený výsledek. Neexistující/smazaný detail, souhrn nebo nepodepsaný přímý výsledek vrací funkční seznam, nikoli prázdnou obrazovku.
+
+Vizuální zdroje: attachments 579a1f1c-caa0-4a9d-a6f0-f688e4db5418/codex-clipboard-194fabf1-0ff0-4c48-bbfa-be0e8ea5fca7.png (Souhrn), 54faccad-4c07-41df-ba01-d5246233bca2/codex-clipboard-8f3cdf47-0cf8-4494-a3f4-8fa625ab332a.png (platba), 1716d675-6ce2-4d75-b33d-1c461354ce74/codex-clipboard-20ae78d9-96f5-4b97-a7fc-10d9f7d615f9.png (inkaso), bc7ef021-fedd-46cd-8091-d50c219680c9/codex-clipboard-c19d975b-eb3f-4071-aea1-3d941700ac1a.png (TP), vše pod /home/lukinab/.codex/attachments/. Zbývající dvě přílohy souhrnu jsou duplicitní.
+
+Normalizace: souhrn 2080 × 2066 px, ořez rámu na x16–2064/y0–2048 → 1024 × 1024 CSS px (2:1); výsledky 782 × 1642 px, ořez x16–766/y0–1624 → 375 × 812 CSS px (2:1). Implementace stejné viewporty, DPR 1. Evidence /home/lukinab/Projects/UX/.vavu-profile-qa/: instrument-summary-{platby,tp,inkasa}.png; instrument-result-{platby,tp,inkasa}.png; compare-instrument-summary.png a -focus.png; compare-instrument-result-{platby,tp,inkasa}.png a -focus.png. Plné pohledy i detaily byly porovnány vedle sebe.
+
+Vizuální QA: Inter/DS titulek 28/36 a hodnoty 16/24, popisky 12/16, pozadí/povrchy/děliče/radiusy/stíny ze stávajících tokenů. Šířka sloupce 488 px, správné mezery a spodní trvalé tlačítko. Success ilustrace přímo ze sdíleného DS assetu, bez překreslení; měřítko/ostrost/umístění ověřeny. Texty výsledků a CTA přesně podle typu. [P2] počáteční vertikální posun o 8 px opraven u souhrnu i titulku výsledku, po opravě nové snímky a opakované porovnání. Malé odchylky kresby fontu proti rastru přijaty pro konzistenci DS. Žádné zbývající P0/P1/P2.
+
+Ověřeno Chrome/Playwright: všechny tři úplné průchody, shodná data souhrnu a výsledkového snímku s položkou detailu, žádná mutace před podpisem, návrat do detailu, cancel, refresh všech tří kroků, historie a ochrana před opakovaným zápisem, správný text výsledku a odebrání právě jedné položky. Nové položky vzniklé skutečnými třemi formulářovými flow zobrazují své zadané hodnoty; přetrvává označení jiných položek. Mobilní souhrny 320/375/768 px a výsledky 375 px bez overflow, Escape funguje pro všechny typy. Neplatné URL nemají falešný úspěch. Regrese detailů/checkboxů a všech sedmi stávajících podpisových flow plus tří seznamů prošla. Bez JS chyb.
+
+---
+
 # Detail položek k autorizaci a výběr – 21. 10. 2026
 
 final result: passed

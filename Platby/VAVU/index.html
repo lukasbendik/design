@@ -2797,6 +2797,23 @@
       padding: 0 var(--padding-xl);
     }
 
+    .auth-instrument-summary, .auth-instrument-result { --batch-width: 488px; }
+    .auth-instrument-summary .payment-flow-header, .auth-instrument-result .payment-flow-header { min-height: 48px; }
+    .auth-instrument-summary .batch-flow-column { gap: var(--space-16); padding-top: 0; }
+    .auth-instrument-summary .profile-card { margin: 0; }
+    .auth-instrument-summary .payment-flow-title { font: var(--headings-title-tertiary); }
+    .auth-instrument-summary .auth-detail-field > strong { white-space: pre-line; }
+    .auth-instrument-summary .payment-buttonbar .btn { min-width: 0; }
+    .auth-instrument-result .batch-flow-column { gap: var(--space-16); }
+    .auth-instrument-result .result-illustration { width: 256px; height: 256px; align-self: center; margin-top: calc(-1 * (var(--space-32) + var(--space-8))); margin-bottom: calc(-1 * (var(--space-24) + var(--space-4))); }
+    .auth-instrument-result .result-heading { font: var(--headings-title-tertiary); letter-spacing: normal; }
+    .auth-instrument-result .payment-flow-header .payment-header-action { padding: 0; }
+    @media(max-width: 551px) {
+      .auth-instrument-summary .payment-flow-header, .auth-instrument-result .payment-flow-header { padding: 0 var(--padding-xl); }
+      .auth-instrument-summary .batch-flow-column, .auth-instrument-result .batch-flow-column { padding-left: var(--padding-xl); padding-right: var(--padding-xl); }
+      .auth-instrument-result .payment-buttonbar .btn { width: 100%; }
+    }
+
     .signature-modal {
       max-width: 720px;
       padding: var(--padding-2xl) 0 0;
@@ -4396,6 +4413,17 @@ unicode: "eac3"
         <div class="right-column"><div class="profile-card auth-detail-actions"><button class="profile-row" id="auth-detail-select" type="button" aria-pressed="false" onclick="toggleAuthDetailSelection()"><span>Označit k autorizaci</span><span class="auth-detail-check"><img id="auth-detail-select-check" src="assets/permission-check.svg" width="20" height="20" alt="" hidden></span></button><button class="profile-row" type="button" onclick="authorizeAuthItemDetail()"><span>Autorizovat</span><img src="assets/authorization-lock.svg" alt="" width="24" height="24"></button><button class="profile-row auth-detail-delete" type="button" onclick="deleteAuthItemDetail()"><span>Smazat</span><svg class="icon" aria-hidden="true"><use href="#es-delete"></use></svg></button></div></div>
       </section>
 
+      <section class="screen payment-screen batch-screen auth-instrument-summary" id="screen-auth-item-summary" aria-labelledby="auth-item-summary-title">
+        <header class="payment-flow-header"><button class="payment-header-action" type="button" onclick="backFromAuthItemSummary()"><svg class="icon" aria-hidden="true"><use href="#es-caret-left"></use></svg>Zpět</button></header>
+        <div class="payment-flow-content"><div class="batch-flow-column"><h1 class="payment-flow-title" id="auth-item-summary-title">Souhrn</h1><div class="profile-card" id="auth-item-summary-fields"></div></div></div>
+        <footer class="payment-buttonbar"><div class="payment-buttonbar-row"><button class="btn btn--primary" id="auth-item-summary-submit" type="button" onclick="openSignatureSelection('authorization-item')">Autorizovat</button></div></footer>
+      </section>
+      <section class="screen payment-screen batch-screen auth-instrument-result" id="screen-auth-item-result" aria-labelledby="auth-item-result-title">
+        <header class="payment-flow-header"><button class="payment-header-action" type="button" onclick="closeAuthItemResult()">Zavřít</button></header>
+        <div class="payment-flow-content"><div class="batch-flow-column"><img class="result-illustration" src="../../design-system/design-system/assets/illustrations/success-light.png" alt=""><h1 class="result-heading" id="auth-item-result-title"></h1></div></div>
+        <footer class="payment-buttonbar"><div class="payment-buttonbar-row"><button class="btn btn--secondary" type="button" onclick="closeAuthItemResult()">Zavřít</button></div></footer>
+      </section>
+
       <!-- ================= SCREEN 8: VŠECHNY PLATBY ================= -->
       <div class="screen" id="screen-vsechny-platby">
         <div class="center-column">
@@ -5626,6 +5654,11 @@ unicode: "eac3"
         if (hash === 'payment-signature-modal') {
           const request = signatureRequest();
           const origin = signatureOrigin();
+          if (request?.kind === 'authorization-item' && request.status === 'completed') {
+            const result = authItemResult();
+            const route = result?.id === request.itemId && result?.tab === request.tab ? 'autorizace-vysledek-' + result.tab + '-' + result.id : request.returnRoute;
+            history.replaceState(null, '', '#' + route); currentScreen = route; closeAllModalsElements(); showScreenElements(route); return;
+          }
           const needsRender = currentScreen !== origin || !document.querySelector('.screen.active');
           currentScreen = origin;
           if (needsRender) showScreenElements(origin);
@@ -5648,7 +5681,7 @@ unicode: "eac3"
         showModalElement(hash);
       } 
       // 2. Zpracování pokud jde o STANDARDNÍ OBRAZOVKU
-      else if (SCREENS.includes(hash) || /^autorizace-detail-(platby|tp|inkasa)-[A-Za-z0-9_-]+$/.test(hash) || /^davka-(detail|souhrn|autorizace)-[A-Za-z0-9_-]+$/.test(hash)) {
+      else if (SCREENS.includes(hash) || /^autorizace-(detail|souhrn|vysledek)-(platby|tp|inkasa)-[A-Za-z0-9_-]+$/.test(hash) || /^davka-(detail|souhrn|autorizace)-[A-Za-z0-9_-]+$/.test(hash)) {
         // Zavřeme případné otevřené modaly
         closeAllModalsElements();
         
@@ -5743,8 +5776,9 @@ unicode: "eac3"
       document.querySelectorAll('.screen').forEach(el => el.classList.remove('active'));
       
       // Zobrazit vybranou obrazovku
-      const authDetail = screenId.match(/^autorizace-detail-(platby|tp|inkasa)-([A-Za-z0-9_-]+)$/);
-      const targetScreenId = authDetail ? 'auth-item-detail' : /^autorizace-(platby|tp|inkasa)$/.test(screenId) ? 'autorizace' : screenId.startsWith('davka-souhrn-') ? 'davka-souhrn' : screenId.startsWith('davka-detail-') ? 'davka-detail' : screenId === 'tp-inkasa-s-autorizaci' ? 'tp-inkasa' : screenId.replace(/^kontrola-(?=nastaveni-)/, '');
+      const authInstrument = screenId.match(/^autorizace-(detail|souhrn|vysledek)-(platby|tp|inkasa)-([A-Za-z0-9_-]+)$/);
+      const authDetail = authInstrument?.[1] === 'detail' ? [authInstrument[0], authInstrument[2], authInstrument[3]] : null;
+      const targetScreenId = authInstrument ? { detail: 'auth-item-detail', souhrn: 'auth-item-summary', vysledek: 'auth-item-result' }[authInstrument[1]] : /^autorizace-(platby|tp|inkasa)$/.test(screenId) ? 'autorizace' : screenId.startsWith('davka-souhrn-') ? 'davka-souhrn' : screenId.startsWith('davka-detail-') ? 'davka-detail' : screenId === 'tp-inkasa-s-autorizaci' ? 'tp-inkasa' : screenId.replace(/^kontrola-(?=nastaveni-)/, '');
       const isPermissionFlow = PERMISSION_FLOW_SCREENS.includes(targetScreenId);
       const isPermissionEditor = PERMISSION_EDITOR_SCREENS.includes(targetScreenId);
       const isAuthorizationFlow = AUTHORIZATION_FLOW_SCREENS.includes(targetScreenId);
@@ -5759,7 +5793,9 @@ unicode: "eac3"
 
       document.body.classList.toggle('auth-detail-mode', Boolean(authDetail));
       document.body.classList.toggle('auth-list-mode', targetScreenId === 'autorizace');
-      if (authDetail) renderAuthItemDetail(authDetail[1], authDetail[2]);
+      if (authDetail && renderAuthItemDetail(authDetail[1], authDetail[2]) === false) return;
+      if (authInstrument?.[1] === 'souhrn' && renderAuthItemSummary(authInstrument[2], authInstrument[3]) === false) return;
+      if (authInstrument?.[1] === 'vysledek' && renderAuthItemResult(authInstrument[2], authInstrument[3]) === false) return;
       if (targetScreenId === 'autorizace') {
         switchAuthTab(screenId === 'autorizace' ? (localStorage.getItem('vavu_auth_tab') || 'platby') : screenId.slice('autorizace-'.length));
       }
@@ -5833,7 +5869,7 @@ unicode: "eac3"
 
       if (targetScreenId === 'davka-detail') renderExistingBatchDetail(screenId.slice('davka-detail-'.length));
       if (targetScreenId === 'davka-souhrn') renderExistingBatchSummary(screenId.slice('davka-souhrn-'.length));
-      const paymentFlowScreens = ['davka-souhrn', 'davka-detail', 'nova-platba', 'nova-platba-detaily', 'platba-vysledek', 'tp-novy', 'tp-detaily', 'tp-souhrn', 'tp-vysledek', 'inkaso-nove', 'inkaso-souhrn', 'inkaso-vysledek', 'davkove-platby', 'davkove-platby-detail', 'davkove-platby-souhrn', 'davkove-platby-vysledek'];
+      const paymentFlowScreens = ['auth-item-summary', 'auth-item-result', 'davka-souhrn', 'davka-detail', 'nova-platba', 'nova-platba-detaily', 'platba-vysledek', 'tp-novy', 'tp-detaily', 'tp-souhrn', 'tp-vysledek', 'inkaso-nove', 'inkaso-souhrn', 'inkaso-vysledek', 'davkove-platby', 'davkove-platby-detail', 'davkove-platby-souhrn', 'davkove-platby-vysledek'];
       document.body.classList.toggle('flow-mode', paymentFlowScreens.includes(targetScreenId));
       document.body.classList.toggle('login-mode', targetScreenId === 'login');
 
@@ -6625,7 +6661,7 @@ unicode: "eac3"
     function renderAuthItemDetail(tab, id) {
       document.getElementById('screen-auth-item-detail').dataset.type = tab;
       const item = authorizationItems(tab).find(item => item.id === id);
-      if (!item) { goTo(authDetailReturnRoute(tab, id), true); return; }
+      if (!item) { goTo(authDetailReturnRoute(tab, id), true); handleRouting(); return false; }
       localStorage.setItem('vavu_auth_tab', tab);
       document.getElementById('auth-detail-title').textContent = tab === 'platby' ? 'Platba k autorizaci' : tab === 'tp' ? 'Nový trvalý příkaz' : 'Povolení inkasa k autorizaci';
       const from = item.accountName + '\n' + item.accountNumber;
@@ -6638,7 +6674,38 @@ unicode: "eac3"
       document.getElementById('auth-detail-fields').innerHTML = rows.map(([label,value]) => `<div class="auth-detail-field"><span>${escapeHtml(label)}</span><strong>${escapeHtml(value || '—')}</strong></div>`).join('');
       updateAuthDetailSelection(id);
     }
-    function authorizeAuthItemDetail() { openSignatureSelection('authorization-item'); }
+    function authorizeAuthItemDetail() {
+      const route = authDetailRoute(); if (route) goTo('autorizace-souhrn-' + route[1] + '-' + route[2]);
+    }
+    function backFromAuthItemSummary() {
+      const route = currentScreen.match(/^autorizace-souhrn-(platby|tp|inkasa)-([A-Za-z0-9_-]+)$/);
+      if (route) goTo('autorizace-detail-' + route[1] + '-' + route[2]);
+    }
+    function renderAuthItemSummary(tab, id) {
+      const item = authorizationItems(tab).find(item => item.id === id);
+      if (!item) { goTo(authDetailReturnRoute(tab, id), true); handleRouting(); return false; }
+      const from = item.accountName + '\n' + item.accountNumber;
+      const rows = tab === 'platby' ? [['Z účtu', from], ['Na účet', item.recipient || item.name], ['Částka', item.amount], ['Zpráva pro příjemce', item.message], ['Variabilní symbol', item.variableSymbol], ['Popis pro mě', item.description || item.desc], ['Konstantní symbol', item.constantSymbol], ['Specifický symbol', item.specificSymbol], ['Datum platby', item.date]] : tab === 'tp' ? [['Z účtu', from], ['Na účet', item.recipient], ['Název trvalého příkazu', item.name], ['Částka', item.amount], ['Opakovat', item.frequency], ['Datum první platby', item.date], ['Ukončit', item.endDate], ['Zpráva pro příjemce', item.message], ['Variabilní symbol', item.variableSymbol], ['Popis pro mě', item.description || item.name], ['Konstantní symbol', item.constantSymbol], ['Specifický symbol', item.specificSymbol], ['Platby v případě úmrtí', item.death || 'Neprovádět']] : [['Z účtu', from], ['Příjemce', item.recipient], ['Název povolení inkasa', item.name], ['Limit inkasa', item.amount], ['Období', item.frequency], ['Platnost od', item.date], ['Platnost do', item.endDate]];
+      document.getElementById('auth-item-summary-fields').innerHTML = rows.map(([label,value]) => `<div class="auth-detail-field"><span>${escapeHtml(label)}</span><strong>${escapeHtml(value || '—')}</strong></div>`).join('');
+      document.getElementById('auth-item-summary-submit').textContent = tab === 'platby' ? 'Odeslat' : 'Autorizovat';
+    }
+    function completeAuthItem(request) {
+      const item = authorizationItems(request.tab).find(item => item.id === request.itemId);
+      if (!item) { goTo(request.returnRoute); return; }
+      const result = { tab: request.tab, id: request.itemId, returnRoute: request.returnRoute, item, at: new Date().toISOString(), user: localStorage.getItem('vavu_selected_user') };
+      localStorage.setItem('vavu_auth_item_result', JSON.stringify(result));
+      removeAuthorizationItems([request.itemId]);
+      goTo('autorizace-vysledek-' + request.tab + '-' + request.itemId);
+    }
+    function authItemResult() { try { return JSON.parse(localStorage.getItem('vavu_auth_item_result') || 'null'); } catch (_) { return null; } }
+    function renderAuthItemResult(tab, id) {
+      const result = authItemResult();
+      if (!result || result.id !== id || result.tab !== tab) { goTo(authDetailReturnRoute(tab, id), true); handleRouting(); return false; }
+      document.getElementById('auth-item-result-title').textContent = { platby: 'Platbu jste plně autorizovali', tp: 'Vytvořili jste trvalý příkaz', inkasa: 'Povolili jste inkaso' }[tab];
+    }
+    function closeAuthItemResult() {
+      const result = authItemResult(); goTo(result?.returnRoute || 'autorizace');
+    }
     function deleteAuthItemDetail() {
       const route = authDetailRoute(); if (!route) return;
       removeAuthorizationItems([route[2]]); goTo(authDetailReturnRoute(route[1], route[2]));
@@ -7704,7 +7771,7 @@ unicode: "eac3"
 
     function signatureOrigin() {
       const request = signatureRequest();
-      if (request && (SCREENS.includes(request.origin) || /^autorizace-detail-(platby|tp|inkasa)-[A-Za-z0-9_-]+$/.test(request.origin) || /^davka-souhrn-[A-Za-z0-9_-]+$/.test(request.origin))) return request.origin;
+      if (request && (SCREENS.includes(request.origin) || /^autorizace-(detail|souhrn)-(platby|tp|inkasa)-[A-Za-z0-9_-]+$/.test(request.origin) || /^davka-souhrn-[A-Za-z0-9_-]+$/.test(request.origin))) return request.origin;
       return directDebitFlowActive ? 'inkaso-souhrn' : standingOrderFlowActive ? 'tp-souhrn' : batchFlowActive ? 'davkove-platby-souhrn' : 'nova-platba-detaily';
     }
 
@@ -7713,7 +7780,7 @@ unicode: "eac3"
       const request = { kind, origin: currentScreen, status: 'pending' };
       if (kind === 'existing-batch') request.batchId = document.getElementById('screen-davka-souhrn').dataset.batchId;
       if (kind === 'new-batch') request.batchId = getImportedBatches()[0]?.id;
-      if (kind === 'authorization-item') { const route = authDetailRoute(); request.tab = route[1]; request.itemId = route[2]; request.returnRoute = authDetailReturnRoute(route[1], route[2]); }
+      if (kind === 'authorization-item') { const route = currentScreen.match(/^autorizace-(?:detail|souhrn)-(platby|tp|inkasa)-([A-Za-z0-9_-]+)$/); request.tab = route[1]; request.itemId = route[2]; request.returnRoute = authDetailReturnRoute(route[1], route[2]); }
       if (kind === 'selected-authorization') {
         request.tab = currentAuthTab;
         request.selected = [...document.querySelectorAll('.auth-checkbox:checked')].map(input => input.value);
@@ -7744,7 +7811,7 @@ unicode: "eac3"
         localStorage.setItem('vavu_signature_context', JSON.stringify(request));
         currentScreen = request.origin;
       }
-      if (request?.kind === 'authorization-item') { closeAllModalsElements(); removeAuthorizationItems([request.itemId]); goTo(request.returnRoute); alert('Položka byla úspěšně autorizována.'); return; }
+      if (request?.kind === 'authorization-item') { closeAllModalsElements(); completeAuthItem(request); return; }
       if (request?.kind === 'permissions') { closeAllModalsElements(); signPermissionChange(true); return; }
       if (request?.kind === 'existing-batch' || request?.kind === 'new-batch' || request?.origin === 'davkove-platby-souhrn') {
         closeAllModalsElements();
