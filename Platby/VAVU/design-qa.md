@@ -1,3 +1,13 @@
+# Reset dat tlačítkem Chcete poradit? – 21. 10. 2026
+
+final result: passed
+
+Tlačítko zachovává text a vzhled, nově resetuje celý lokální stav VAVU a po skutečném reloadu otevírá výběr uživatele. Čistí všechny klíče vavu_ (včetně budoucích), starší formulářové a inkasní klíče používané VAVU a seznamy smazaných plateb/trvalých příkazů. Sdílený přístupový flag rozcestníku ani nesouvisející klíče jiných prototypů nemaže. Žádná nová potvrzovací obrazovka.
+
+Ověřeno izolovaným Chrome/Playwright: vložené vzorky formulářů, plateb, oprávnění, importovaných dávek, podpisového stavu a starších klíčů odstraněny. Výběr uživatele resetován, společný auth a cizí klíč zachovány. Ověřen skutečný reload, opětovný vstup, opakovaný reset a Enter. Bez JS chyb. Vizuálně ověřeno 1440 × 1000 px, DPR 1: `/home/lukinab/Projects/UX/.vavu-profile-qa/reset-button.png`.
+
+---
+
 # Výběr subjektu, přehled autorizací a autorizace dávek – 20. 10. 2026
 
 final result: passed

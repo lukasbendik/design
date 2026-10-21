@@ -1410,6 +1410,9 @@
 
     /* Plovoucí chatbot */
     .chatbot-btn {
+      border: 0;
+      font-family: inherit;
+      line-height: inherit;
       position: absolute;
       bottom: 24px;
       right: 24px;
@@ -5001,10 +5004,10 @@ unicode: "eac3"
   </div>
 
   <!-- 4. PLOVOUCÍ CHATBOT -->
-  <div class="chatbot-btn" onclick="alert('Dobrý den! Jak Vám mohu pomoci?')">
+  <button type="button" class="chatbot-btn" onclick="resetPrototypeData()">
     <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
     <span>Chcete poradit?</span>
-  </div>
+  </button>
 
   <!-- ================= VAVU: VOLBA ZPŮSOBU PODPISU ================= -->
   <div class="modal-overlay-popup" id="modal-payment-signature-modal" role="dialog" aria-modal="true" aria-labelledby="signature-modal-title">
@@ -5556,6 +5559,21 @@ unicode: "eac3"
     }
 
     // Přejít na obrazovku (změnit URL hash)
+    function resetPrototypeData() {
+      const legacyKeys = new Set([
+        'deleted_platby', 'deleted_tp',
+        'form_limit', 'form_nazev', 'form_obdobi', 'form_prijemce',
+        'inkaso_approved', 'inkaso_internet_deleted', 'inkaso_limit',
+        'inkaso_nazev', 'inkaso_obdobi', 'inkaso_platnost_do',
+        'inkaso_platnost_od', 'inkaso_prijemce', 'inkaso_saved_for_auth'
+      ]);
+      // Společný vstupní flag rozcestníku a data ostatních prototypů zachovat.
+      Object.keys(localStorage).filter(key => key.startsWith('vavu_') || legacyKeys.has(key))
+        .forEach(key => localStorage.removeItem(key));
+      history.replaceState(null, '', location.pathname + location.search + '#login');
+      location.reload();
+    }
+
     function goTo(screenName, replace = false) {
       if (replace) {
         history.replaceState(null, '', '#' + screenName);
