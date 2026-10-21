@@ -1,3 +1,23 @@
+# Detail autorizace dávky a Souhrn – 21. 10. 2026
+
+final result: passed
+
+Zdroje: přílohy `/home/lukinab/.codex/attachments/e9a6873b-1dce-4acf-9747-955a16ea6ec7/codex-clipboard-c618a58e-a76f-4e62-b2f9-07180f37a0c8.png` (detail), `/home/lukinab/.codex/attachments/519fcb3e-2b4b-4b24-853c-7a3bbc2c736e/codex-clipboard-da3c297c-137f-43dd-adff-46035f2a6bfb.png` (modál) a `/home/lukinab/.codex/attachments/bb531f1b-65e9-4da8-a4f2-35612766d8b9/codex-clipboard-d485876d-42f3-4678-ab9c-6a69f2a5ce32.png` (Souhrn). Normalizace zdrojů 3360 px na 1680 CSS px (2:1); zdroj modálu/Souhrnu 2048 px výška → 1024 CSS px. Detail je delší snímek se seznamem. Implementační viewport 1680 × 1024, DPR 1; dále funkční snímky 1040 × 1100 a mobilní 375 × 812. Evidence `/home/lukinab/Projects/UX/.vavu-profile-qa/batch-audit-*`, porovnání `compare-batch-audit-detail.png`, `compare-batch-audit-modal.png`, `compare-batch-audit-summary.png`. Výřezy x400–1300 zachycují celý nový obsah.
+
+Detail obsahuje odkaz Detail autorizace mezi souhrnnými poli a platbami. Modál zůstává nad stejnou dávkou, má sekce Vytvořeno, Autorizovali a volitelně Zrušeno. Události mají jméno a lokalizované datum/čas Europe/Prague. Nové importy ukládají skutečný čas a aktuálního autora; nové podpisy zaznamenávají jméno a čas potvrzení. Výchozí demo dávky mají explicitní demo metadata. Staré uložené záznamy bez autora/data zobrazují chybějící údaj poctivě; datum otevření se nevydává za čas vytvoření či podpisu. Události jsou oddělené podle ID a přežijí refresh i přepnutí uživatele. Reset VAVU je odstraní spolu s ostatními daty vavu_.
+
+Autorizovat z detailu nyní otevírá Souhrn se stejným ID/názvem, režimem Online, odchozími částkami podle měn a částkou k autorizaci s počtem plateb. Teprve Autorizovat na Souhrnu otevírá stávající prototypové potvrzení podpisu. Samotné otevření Souhrnu ani zrušení potvrzení neukládá podpis. Po potvrzení návrat na detail a aktualizace historie/stavu. Souhrn nemá Smazat.
+
+CZK dávky zobrazují skutečnou ukázkovou částku v CZK, bez vymyšleného měnového kurzu. Volitelná předaná data currencyTotals/authorizationAmount/conversionNote byla ověřena pouze v izolované FX fixture podle reference; žádný reálný přepočet ani nové EUR platby se nevymýšlejí. FX fixture a druhý podepisující ve snímcích jsou jen testovací data, ne změna veřejných dávek.
+
+Vizuální iterace: [P2] výchozí margin h2 zvětšoval mezeru v kartě Odejde v měně; odstraněn a doplněn divider. [P2] starší scaffold byl příliš úzký oproti referenci; cílové detail/Souhrn mají změřenou šířku obsahu 824 px při 1680 px viewportu, modál 824 + vnější padding. Použity tokeny fontu 28/36, mezery/radiusy/povrchy DS. Opakované snímky ověřují opravy. Překrytí používá průhledný DS backdrop, aby byl patrný podklad, podle dřívějšího požadavku na overlay. Ostatní obrazovky nové dávky si zachovávají původní rozměry.
+
+Ověření: modál nad aktivním detailem, přímá URL a refresh, X/Escape/backdrop, historie zpět/vpřed, žádný podpis před potvrzením, zrušení potvrzení, dvě odlišná jména a uložené ISO časy, persistence, vytvoření importu se jménem/časem, zrušený stav, 320/375 px bez overflow, skrytí autorizace u zpracované dávky. Regrese přehledu autorizací: jeden/více subjektů, filtrace podepsaných dávek a návrat do správného seznamu prošla. Bez JS chyb.
+
+Žádné zbývající P0/P1/P2. Záměrné rozdíly obsahu: dávky, částky a jména z prototypu místo ilustračních hodnot z referencí; podklad pod modálem zůstává viditelný.
+
+---
+
 # Reset dat tlačítkem Chcete poradit? – 21. 10. 2026
 
 final result: passed
