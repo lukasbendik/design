@@ -1,3 +1,13 @@
+# Nová platba – nový prázdný formulář – 21. 10. 2026
+
+final result: passed
+
+Kliknutí na Nová platba nyní volá startNewPayment(): vyprázdní příjemce, částku, zprávu, popis a všechny symboly, obnoví výchozí měnu aktuálního účtu a termín Co nejdříve, odstraní validační chyby a QR soubor. Odstraněna také HTML výchozí částka 500. Maže se jen koncept formuláře; vytvořené položky k autorizaci zůstávají zachované. Zpět z dalšího kroku i refresh zachovají právě rozpracovaný koncept.
+
+Playwright/Chrome: vyplnění obou kroků a pozdějšího termínu → zpět → refresh zachová hodnoty → zavření → Nová platba vyprázdní všechna pole; stejný výsledek při otevření klávesou Enter. Prázdná částka ponechá celý zůstatek účtu. Bez JS chyb. Screenshot: /home/lukinab/Projects/UX/.vavu-profile-qa/payment-new-empty.png (1024 × 900 CSS px, DPR 2). Stávající vzhled a DS zachovány; změna je chování nového konceptu.
+
+---
+
 # Nová platba – výška měny a dynamický zůstatek – 21. 10. 2026
 
 final result: passed

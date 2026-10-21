@@ -3890,7 +3890,7 @@ unicode: "eac3"
 
         <div class="right-column">
           <div class="overview-actions">
-            <button class="card-action-red card-action-red--control" type="button" onclick="goTo('nova-platba')"><svg class="icon" aria-hidden="true"><use href="#es-send-payment"></use></svg><span>Nová platba</span></button>
+            <button class="card-action-red card-action-red--control" type="button" onclick="startNewPayment()"><svg class="icon" aria-hidden="true"><use href="#es-send-payment"></use></svg><span>Nová platba</span></button>
             <button class="card-action-red card-action-red--control" type="button" onclick="startAuthorization()"><img class="overview-action-icon" src="assets/authorization-lock.svg" width="24" height="24" alt=""><span>Autorizace</span></button>
           </div>
 
@@ -4194,7 +4194,7 @@ unicode: "eac3"
 
         <div class="right-column">
           <!-- Akční červená karta Nová platba -->
-          <div class="card-action-red" role="button" tabindex="0" onclick="goTo('nova-platba')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();goTo('nova-platba')}">
+          <div class="card-action-red" role="button" tabindex="0" onclick="startNewPayment()" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();startNewPayment()}">
             <img src="assets/new-payment.png" alt="Nová platba">
           </div>
 
@@ -4820,7 +4820,7 @@ unicode: "eac3"
               <div class="payment-field">
                 <label class="payment-control" id="payment-amount-control">
                   <span class="payment-control-label">Částka</span>
-                  <input id="payment-amount" name="amount" type="number" min="0.01" step="0.01" inputmode="decimal" value="500" data-payment-key="amount" aria-describedby="payment-amount-message">
+                  <input id="payment-amount" name="amount" type="number" min="0.01" step="0.01" inputmode="decimal" data-payment-key="amount" aria-describedby="payment-amount-message">
                 </label>
                 <span class="payment-field-message" id="payment-amount-message" aria-live="polite"></span>
               </div>
@@ -7286,6 +7286,29 @@ unicode: "eac3"
           listEl.appendChild(div);
         });
       }
+    }
+
+    function startNewPayment() {
+      // A new payment is a new draft; returning from its next step keeps the draft.
+      document.querySelectorAll('[data-payment-key]').forEach(field => {
+        field.value = '';
+        localStorage.removeItem(paymentStorageKey(field.dataset.paymentKey));
+      });
+      localStorage.removeItem(paymentStorageKey('account'));
+      localStorage.removeItem(paymentStorageKey('timing'));
+      const accountKey = paymentAccountKey();
+      localStorage.setItem(paymentStorageKey('account'), accountKey);
+      const currency = document.getElementById('payment-currency');
+      currency.value = accountKey === 'eur' ? 'EUR' : 'Kč';
+      localStorage.setItem(paymentStorageKey('currency'), currency.value);
+      document.querySelectorAll('#payment-basic-form .is-error').forEach(el => el.classList.remove('is-error'));
+      document.getElementById('payment-recipient-message').textContent = '';
+      document.getElementById('payment-recipient-message').classList.remove('error');
+      document.getElementById('payment-qr-file').value = '';
+      document.querySelector('.qr-upload span:last-child').textContent = 'Přetáhněte sem QR kód nebo ho nahrajte pomocí tlačítka.';
+      setPaymentTiming('now');
+      renderPaymentAccount();
+      goTo('nova-platba');
     }
 
     function paymentStorageKey(key) {
