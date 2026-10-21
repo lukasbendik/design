@@ -1,3 +1,19 @@
+# Detail autorizace v platbě, TP a inkasu – 21. 10. 2026
+
+final result: passed
+
+Rozsah: doplnění samostatné navigační karty Detail autorizace pod údaji a před akcemi, podle přiložené reference. Existující ostatní části detailu (nadpis, iniciálový avatar, údaje a akce) zachovány; nejde o přestavbu celé obrazovky. TP a inkasa otevírají stejný datový detail ze svých aktivních seznamů, bez autorizačních akcí u již dokončené položky. U čekajících TP a inkas je nyní také stejný vstup do auditu místo vložených podpisů v tabulce.
+
+Zdroj: /home/lukinab/.codex/attachments/27d2be84-c3c6-4fff-ac89-85b608c58584/codex-clipboard-88310347-591d-4186-92c2-68da51da4d1c.png (750 × 2282 px, 375 × 1141 CSS px). Implementace: .vavu-profile-qa/completed-payment-reference.png (750 × 3000 px, 375 × 1500 CSS px, DPR2; rozšířený viewport pro zachycení celého obsahu). Společné porovnání completed-payment-comparison.png obě strany normalizuje na 375px šířku, různou výšku doplňuje okolním pozadím. Zaměřený výřez completed-audit-row-comparison.png porovnává vlastní navigační kartu ve stejném měřítku. Porovnání i reálné screenshoty completed-{platby,tp,inkasa}-{375,320,390}.png a příslušné -audit- snímky byly vizuálně zkontrolovány.
+
+Pět povrchů: stávající Inter a DS typografie řádku 16px; stejný padding16 a mezera16 pod údaji; DS bílý povrch, radius a stín; původní sdílená knihovní šipka a ikony osob v dialogu bez nových obrazových náhražek; přesný popisek Detail autorizace a stávající sekce Vytvořeno / Autorizovali. Ostatní části platby se podle zadání nepřekreslují, proto zůstává stávající nadpis, avatar a hustota tabulky odlišná od reference.
+
+Data: dokončené položky používají uložený neměnný záznam autora a podpisů z autorizačního ledgeru, čekající položky jejich skutečné rozpracované podpisy. Nově zadané TP a inkaso ukládají autora a čas při vytvoření. U historických položek bez metadat se nevymýšlí osoby ani časy: Autor není uložený / Datum není uložené a Údaje o autorizaci nejsou uložené. Formát času Europe/Prague. Dříve uložené inkaso bez metadat nemění fingerprint a neztrácí rozpracované podpisy.
+
+Playwright/Chrome: skutečná tvorba TP a inkasa přes formuláře a první podpis, druhý podpis jiným uživatelem; platba podepsaná dvěma osobami přes původní potvrzovací modál. Audit před dokončením i po něm přes aktivní seznam/historii, shoda jmen a časů, autor nových TP/inkasa, historický fallback. Refresh detailu i otevřeného auditu, browser zpět/vpřed, Escape a návrat fokusu. Klávesové otevření aktivní položky. Desktop1280 a mobil375/320/390 bez přetečení; bez JS chyb. Detail platby se nově obnovuje ze svého uloženého kontextu, stabilní ID a návratová cesta. Záložka TP/inkasa se obnovuje společně s obsahem.
+
+Iterace: [P2] odstraněna zdvojená mezera nad novou kartou a opraveno pořadí akcí pod údaji u mobilních TP/inkas. Po opravě nové snímky a kompletní test opět prošly. Bez zbývajících P0/P1/P2 v rozsahu doplněné sekce. P3: stávající renderování písma a ikon vůči referenci.
+
 # Dokončení autorizací, business přehledu a restartu – 21. 10. 2026
 
 final result: passed (lokální Playwright/Chrome)
