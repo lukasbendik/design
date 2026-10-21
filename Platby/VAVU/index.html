@@ -2498,6 +2498,23 @@
       font: var(--content-body-secondary);
     }
 
+    /* Výsledky autorizace dávky: společná anatomie ze zdrojových obrazovek. */
+    #screen-davkove-platby-vysledek { --batch-width: 488px; }
+    #screen-davkove-platby-vysledek .payment-flow-header { min-height: 48px; }
+    #screen-davkove-platby-vysledek .batch-result-column { width: min(100%, var(--batch-width)); gap: var(--space-24); }
+    #screen-davkove-platby-vysledek .result-illustration { width: 256px; height: 256px; margin-top: calc(-1 * var(--space-32)); margin-bottom: calc(-1 * (var(--space-32) + var(--space-4))); align-self: center; object-fit: contain; }
+    #screen-davkove-platby-vysledek .result-heading { font: var(--headings-title-tertiary); letter-spacing: normal; }
+    #screen-davkove-platby-vysledek .result-lead { font: var(--headings-headline-secondary); letter-spacing: normal; margin-top: calc(-1 * var(--space-8)); }
+    #screen-davkove-platby-vysledek .payment-buttonbar .btn { min-width: 0; }
+    #screen-davkove-platby-vysledek [hidden] { display: none; }
+    #screen-davkove-platby-vysledek[data-outcome="duplicate"] .result-illustration { width: 145px; height: 150px; margin-top: calc(var(--space-32) + var(--space-4)); margin-bottom: calc(var(--space-24) - var(--space-4)); }
+    @media (max-width: 551px) {
+      #screen-davkove-platby-vysledek .batch-result-column { padding: var(--padding-md) var(--padding-xl) var(--padding-4xl); }
+      #screen-davkove-platby-vysledek .payment-flow-header { padding: 0 var(--padding-xl); }
+      #screen-davkove-platby-vysledek .result-heading { font: var(--headings-title-quaternary); }
+      #screen-davkove-platby-vysledek .payment-buttonbar-row { flex-wrap: wrap; }
+    }
+
     .standing-order-screen {
       --batch-width: 620px;
     }
@@ -5000,8 +5017,8 @@ unicode: "eac3"
 
       <section class="screen payment-screen batch-screen" id="screen-davkove-platby-vysledek" aria-labelledby="davkove-platby-vysledek-title">
         <header class="payment-flow-header"><span class="header-spacer"></span><button class="payment-header-action" type="button" onclick="finishBatchPayment()" aria-label="Zavřít"><svg class="icon icon--close" aria-hidden="true"><use href="#es-close"></use></svg></button></header>
-        <div class="payment-flow-content"><div class="batch-flow-column batch-result-column"><img class="result-illustration" src="../../design-system/design-system/assets/illustrations/success-light.png" alt="Dávka autorizována"><h1 class="result-heading" id="davkove-platby-vysledek-title">Autorizovali jste dávku</h1><p class="result-lead">Musí ji ještě autorizovat ostatní.</p><p class="result-copy">Nemáte dostatečný dispoziční limit pro odeslání.</p></div></div>
-        <footer class="payment-buttonbar"><div class="payment-buttonbar-row"><button class="btn btn--primary" type="button" onclick="startBatchFlow('overview')">Přehled dávek</button><button class="btn btn--secondary" type="button" onclick="finishBatchPayment()">Zavřít</button></div></footer>
+        <div class="payment-flow-content"><div class="batch-flow-column batch-result-column"><img class="result-illustration" id="batch-result-illustration" src="../../design-system/design-system/assets/illustrations/success-light.png" alt=""><h1 class="result-heading" id="davkove-platby-vysledek-title">Autorizovali jste dávku</h1><p class="result-lead" id="batch-result-message">Musí ji ještě autorizovat ostatní.</p></div></div>
+        <footer class="payment-buttonbar"><div class="payment-buttonbar-row"><button class="btn btn--secondary" type="button" onclick="finishBatchPayment()">Zavřít</button><button class="btn btn--primary" id="batch-result-overview" type="button" onclick="startBatchFlow('overview')">Přehled dávek</button></div></footer>
       </section>
 
       <!-- ================= VAVU: RESULT ================= -->
@@ -5692,6 +5709,7 @@ unicode: "eac3"
         localStorage.removeItem('vavu_direct_debit_flow_active');
         restoreBatchName();
         if (targetScreenId === 'davkove-platby') restoreBatchTab();
+        if (targetScreenId === 'davkove-platby-vysledek') renderBatchAuthorizationResult();
       }
       if (targetScreenId === 'nova-platba' || targetScreenId === 'nova-platba-detaily') {
         batchFlowActive = false;
@@ -7034,7 +7052,7 @@ unicode: "eac3"
         sourceFile: file.name,
         date: new Intl.DateTimeFormat('cs-CZ', { day: 'numeric', month: 'numeric' }).format(new Date()),
         name: batchName,
-        id: '12GHE21XA',
+        id: '12' + Array.from(crypto.getRandomValues(new Uint8Array(4)), byte => byte.toString(16).padStart(2, '0')).join('').toUpperCase(),
         status: 'K autorizaci',
         statusType: 'pending',
         payments: 8,
@@ -7149,7 +7167,7 @@ unicode: "eac3"
       if (batch.status === 'Čekající') return { label: 'Čekající', message: 'Čeká na zpracování.', row: 'Čeká na zpracování', canSign: false, canDelete: false };
       const signed = batch.signedBy || [];
       const user = localStorage.getItem('vavu_selected_user') || '';
-      return { label: 'K autorizaci', message: signed.length ? 'Čeká na další podpis.' : 'Čeká na podpisy.', row: 'Čeká na autorizaci dávky', canSign: !signed.includes(user), canDelete: true };
+      return { label: 'K autorizaci', message: signed.length ? 'Čeká na další podpis.' : 'Čeká na podpisy.', row: 'Čeká na autorizaci dávky', canSign: !signed.includes(user), canAttemptSign: true, canDelete: true };
     }
 
     function renderExistingBatchDetail(id) {
@@ -7188,7 +7206,7 @@ unicode: "eac3"
         const card = document.createElement('div'); card.className = 'batch-payments-card batch-existing-payments'; card.style.marginBottom = 'var(--space-12)';
         const heading = document.createElement('div'); heading.className = 'batch-date-title'; heading.textContent = date; card.append(heading, ...rows); return card;
       }));
-      document.getElementById('existing-batch-authorize').hidden = !state.canSign;
+      document.getElementById('existing-batch-authorize').hidden = !state.canAttemptSign;
       document.getElementById('existing-batch-delete').hidden = !state.canDelete;
       screen.querySelector('.payment-buttonbar').hidden = !state.canSign && !state.canDelete;
     }
@@ -7236,7 +7254,7 @@ unicode: "eac3"
       document.getElementById('batch-existing-summary-count').textContent = 'Celkem ' + batch.payments + (batch.payments === 1 ? ' platba' : batch.payments >= 2 && batch.payments <= 4 ? ' platby' : ' plateb');
       document.getElementById('batch-existing-summary-total').textContent = batch.authorizationAmount || batch.amount;
       const note = document.getElementById('batch-existing-summary-rate'); note.hidden = !batch.conversionNote; note.textContent = batch.conversionNote || '';
-      document.getElementById('batch-existing-summary-authorize').hidden = !existingBatchState(batch).canSign;
+      document.getElementById('batch-existing-summary-authorize').hidden = !existingBatchState(batch).canAttemptSign;
     }
 
     function openBatchDetailAction(action) {
@@ -7256,13 +7274,46 @@ unicode: "eac3"
       if (!batch) { dialog.close(); backToBatchOverview(); return; }
       const overrides = batchOverrides();
       if (dialog.dataset.action === 'delete' && existingBatchState(batch).canDelete) overrides[id] = { ...overrides[id], deleted: true };
-      else if (dialog.dataset.action === 'authorize' && existingBatchState(batch).canSign) {
-        const signedBy = [...new Set([...(batch.signedBy || []), localStorage.getItem('vavu_selected_user')])];
-        overrides[id] = { ...overrides[id], signedBy, authorizations: [...(batch.authorizations || []), { name: localStorage.getItem('vavu_selected_user'), at: new Date().toISOString() }], status: signedBy.length >= 2 ? 'Čekající' : 'K autorizaci', statusType: 'pending' };
-      }
+      else if (dialog.dataset.action === 'authorize') { dialog.close(); authorizeBatch(id); return; }
       localStorage.setItem('vavu_batch_overrides', JSON.stringify(overrides));
       dialog.close();
       if (overrides[id]?.deleted) backToBatchOverview(); else if (currentScreen.startsWith('davka-souhrn-')) goTo('davka-detail-' + id); else renderExistingBatchDetail(id);
+    }
+
+    function showBatchAuthorizationResult(id, outcome) {
+      localStorage.setItem('vavu_batch_authorization_result', JSON.stringify({ id, outcome, user: localStorage.getItem('vavu_selected_user') }));
+      goTo('davkove-platby-vysledek');
+    }
+
+    function authorizeBatch(id) {
+      const batch = allOverviewBatches().find(batch => batch.id === id);
+      if (!batch) { startBatchFlow('overview'); return; }
+      const user = localStorage.getItem('vavu_selected_user');
+      const signedBy = [...new Set(batch.signedBy || [])];
+      if (signedBy.includes(user)) { showBatchAuthorizationResult(id, 'duplicate'); return; }
+      if (!user || !existingBatchState(batch).canSign) { goTo('davka-detail-' + id); return; }
+      signedBy.push(user);
+      const complete = signedBy.length >= 2;
+      const overrides = batchOverrides();
+      overrides[id] = { ...overrides[id], signedBy, authorizations: [...(batch.authorizations || []), { name: user, at: new Date().toISOString() }], status: complete ? 'Čekající' : 'K autorizaci', statusType: 'pending' };
+      localStorage.setItem('vavu_batch_overrides', JSON.stringify(overrides));
+      showBatchAuthorizationResult(id, complete ? 'complete' : 'partial');
+    }
+
+    function renderBatchAuthorizationResult() {
+      let result;
+      try { result = JSON.parse(localStorage.getItem('vavu_batch_authorization_result') || 'null'); } catch (_) {}
+      const outcome = result?.outcome || 'partial';
+      const duplicate = outcome === 'duplicate';
+      const batch = allOverviewBatches().find(batch => batch.id === result?.id);
+      const screen = document.getElementById('screen-davkove-platby-vysledek');
+      screen.dataset.outcome = outcome;
+      document.getElementById('davkove-platby-vysledek-title').textContent = duplicate ? 'Dávku už jste autorizovali' : 'Autorizovali jste dávku';
+      const message = document.getElementById('batch-result-message');
+      message.textContent = duplicate ? 'Musí ji autorizovat ještě ostatní.' : 'Musí ji ještě autorizovat ostatní.';
+      message.hidden = outcome === 'complete' || (duplicate && batch && (batch.signedBy || []).length >= 2);
+      document.getElementById('batch-result-illustration').src = duplicate ? 'assets/batch-authorization-warning.png' : '../../design-system/design-system/assets/illustrations/success-light.png';
+      document.getElementById('batch-result-overview').hidden = duplicate;
     }
 
     function authorizationSubject() {
@@ -7612,7 +7663,10 @@ unicode: "eac3"
     }
 
     function openSignatureSelection(kind = 'payment') {
+      if (kind === 'payment' && batchFlowActive && currentScreen === 'davkove-platby-souhrn') kind = 'new-batch';
       const request = { kind, origin: currentScreen, status: 'pending' };
+      if (kind === 'existing-batch') request.batchId = document.getElementById('screen-davka-souhrn').dataset.batchId;
+      if (kind === 'new-batch') request.batchId = getImportedBatches()[0]?.id;
       if (kind === 'selected-authorization') {
         request.tab = currentAuthTab;
         request.selected = [...document.querySelectorAll('.auth-checkbox:checked')].map(input => input.value);
@@ -7644,10 +7698,9 @@ unicode: "eac3"
         currentScreen = request.origin;
       }
       if (request?.kind === 'permissions') { closeAllModalsElements(); signPermissionChange(true); return; }
-      if (request?.kind === 'existing-batch') {
+      if (request?.kind === 'existing-batch' || request?.kind === 'new-batch' || request?.origin === 'davkove-platby-souhrn') {
         closeAllModalsElements();
-        document.getElementById('batch-detail-dialog').dataset.action = 'authorize';
-        confirmBatchDetailAction();
+        authorizeBatch(request.batchId || (request.kind === 'existing-batch' ? request.origin.slice('davka-souhrn-'.length) : getImportedBatches()[0]?.id));
         return;
       }
       if (request?.kind === 'selected-authorization') {

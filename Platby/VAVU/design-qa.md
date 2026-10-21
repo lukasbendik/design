@@ -1,3 +1,19 @@
+# Výsledky autorizace dávky – 21. 10. 2026
+
+final result: passed
+
+Vizuální zdroje: tři přílohy codex-clipboard-2b4f77c8-7799-42a1-b9b1-a631e64c0dc5.png (úplná autorizace), codex-clipboard-8f1847e1-6973-40ad-8629-bfc5b7087045.png (další podpis) a codex-clipboard-ca568a33-9b32-438c-9d32-30c519674614.png (opakovaný podpis), v uživatelských attachments. Originály 2080 × 1554 px, ořez aplikační plochy x16–2064/y0–1536 a normalizace 2:1 na 1024 × 768 CSS px. Implementační viewport 1024 × 768, DPR 1. Evidence v /home/lukinab/Projects/UX/.vavu-profile-qa/: batch-result-{complete,partial,duplicate}.png, plná porovnání compare-batch-result-{complete,partial,duplicate}.png a odpovídající -focus.png (ilustrace, titulek, podtitulek). Mobilní snímky batch-result-mobile-{320,375,768}-{complete,partial,duplicate}.png.
+
+Stavy: první ze dvou různých podpisů zobrazí Autorizovali jste dávku / Musí ji ještě autorizovat ostatní. Druhý zobrazí pouze Autorizovali jste dávku. Opakovaný pokus stejného uživatele zobrazí Dávku už jste autorizovali / Musí ji autorizovat ještě ostatní., varovnou ilustraci a pouze Zavřít. Hotové dávky již nenabízejí autorizaci. Opakovaný pokus je dostupný z rozpracované dávky v běžném Přehledu dávek; seznam k autorizaci nadále ukazuje jen dávky čekající na podpis přihlášeného uživatele.
+
+Oba platné podpisy ukládají jméno a ISO čas do stejné historie dávky. Opakovaný podpis nic nepřidává ani nemění stav. Existující a nově importované dávky používají společnou funkci; podpis se provede až po KB Klíči. Nové importy dostávají samostatná ID, aby se podpisy různých souborů nesdílely. Výsledkový stav přežije refresh. Odstraněna nepodložená pevná hláška o nedostatečném limitu.
+
+Vizuální iterace: [P2] první snímky měly obsah příliš nízko, malé success artwork a velké mezery. Upravená výška, umístění a mezery byly znovu zachyceny a porovnány. Finální barvy a typografie používají stávající DS (titulek 28/36, podtitulek 18/24, na mobilu 24/32); malé rozdíly kresby písma oproti rastru reference jsou přijaty pro konzistenci prototypu. Rozložení: stejný levý okraj obou textů, středová ilustrace, spodní lišta v pořadí Zavřít / Přehled dávek, u duplicity jen Zavřít. Obrázky: success-light z DS, varování přímo vyříznuté ze zdrojové přílohy bez překreslování; velikost a ostrost ověřeny v detailu porovnání. Texty odpovídají zdroji, žádná nadbytečná hláška o limitu. Žádné zbývající P0/P1/P2.
+
+Interakční QA samostatným Chrome/Playwright: obě pořadí Kateřina H. / Šárka B., první podpis, opakovaný podpis bez změny uložených dat, druhý podpis, výsledky, refresh, zpět/vpřed bez dalšího podpisu, historie s oběma jmény a časy, skrytí autorizace hotové dávky, Přehled dávek i Zavřít. Skutečný import a jeho podpis, opakování z nového flow, druhý import s odlišným ID a oddělenými podpisy. Mobilní stavy 320/375/768 px bez overflow a se spodními akcemi dostupnými. Regrese společného modálu prošla pro sedm autorizačních flow a tři seznamy označených položek. Bez JS chyb.
+
+---
+
 # Společný výběr způsobu podpisu – 21. 10. 2026
 
 final result: passed
