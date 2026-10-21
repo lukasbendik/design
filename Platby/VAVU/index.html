@@ -2814,6 +2814,55 @@
       .auth-instrument-result .payment-buttonbar .btn { width: 100%; }
     }
 
+    .auth-bulk-screen { --batch-width: 520px; }
+    .auth-bulk-screen .payment-flow-header { min-height: 48px; padding: 0 var(--padding-xl); }
+    .auth-bulk-screen .payment-header-action { padding: 0; }
+    .auth-bulk-screen .batch-flow-column { padding-top: 0; gap: var(--space-16); }
+    .auth-bulk-screen .payment-flow-title { font: var(--headings-title-tertiary); margin-left: var(--padding-xl); }
+    #screen-auth-bulk-result .payment-flow-title { margin-left: 0; }
+    .auth-bulk-screen .profile-card { margin: 0; }
+    .bulk-account-group { display: flex; flex-direction: column; gap: var(--space-16); margin-bottom: var(--space-16); }
+    .bulk-summary-row { padding: var(--padding-xl); display: flex; justify-content: space-between; gap: var(--space-16); font: var(--content-body-primary-bold); position: relative; }
+    .bulk-summary-row + .bulk-summary-row::before { content: ''; position: absolute; top: 0; left: var(--padding-xl); right: 0; border-top: 1px solid var(--background-divider); }
+    .bulk-summary-row strong { font: inherit; white-space: nowrap; }
+    .bulk-summary-row small, .bulk-summary-footer small { display: block; font: var(--content-body-secondary); color: var(--content-tertiary); margin-top: var(--space-4); }
+    .bulk-summary-footer { padding: 0 var(--padding-xl); justify-content: space-between; align-items: center; gap: var(--space-16); }
+    .bulk-summary-footer > div { min-width: 0; }
+    .bulk-summary-footer strong { font: var(--content-body-primary-bold); }
+    .bulk-summary-footer .btn { min-width: 0; flex: none; }
+    .bulk-conversion { display: flex; align-items: flex-start; gap: var(--space-16); padding: var(--padding-xl); background: var(--attention-information-surface); border-radius: var(--border-radius-md); font: var(--content-body-secondary); }
+    .bulk-conversion img { flex: none; }
+    #screen-auth-bulk-result { --batch-width: 488px; }
+    #screen-auth-bulk-result .result-illustration { width: 256px; height: 256px; align-self: center; margin-top: calc(-1 * var(--space-32)); margin-bottom: calc(-1 * (var(--space-32) + var(--space-4))); }
+    #screen-auth-bulk-result .bulk-partial-art { width: 130px; height: 160px; margin-top: var(--space-24); margin-bottom: var(--space-12); }
+    #screen-auth-bulk-result .payment-flow-header { padding: 0; }
+    #auth-bulk-result-items { border: 1px solid var(--background-border); border-radius: var(--border-radius-md); overflow: hidden; }
+    .bulk-result-item { display: grid; grid-template-columns: 32px minmax(0, 1fr) auto; align-items: start; gap: var(--space-16); padding: var(--padding-xl); position: relative; }
+    .bulk-result-item + .bulk-result-item::before { content: ''; position: absolute; top: 0; left: var(--padding-xl); right: 0; border-top: 1px solid var(--background-divider); }
+    .bulk-result-avatar { width: 32px; height: 32px; margin-top: var(--space-4); display: grid; place-items: center; background: var(--attention-information-surface); border-radius: var(--border-radius-sm); position: relative; }
+    .bulk-result-avatar > .icon { width: 24px; height: 24px; }
+    .bulk-result-badge { width: 14px; height: 14px; position: absolute; right: -6px; bottom: -6px; border: 1px solid var(--background-body); border-radius: var(--border-radius-full); background: var(--content-primary); display: grid; place-items: center; color: var(--interactive-on-primary); }
+    .bulk-result-badge img { width: 10px; height: 10px; filter: invert(1); }
+    .bulk-result-badge .icon { width: 8px; height: 8px; }
+    .bulk-error-badge { background: var(--attention-alert); }
+    .bulk-result-copy { display: flex; flex-direction: column; gap: var(--space-4); min-width: 0; }
+    .bulk-result-copy strong, .bulk-result-amount { font: var(--content-body-primary-bold); overflow-wrap: anywhere; }
+    .bulk-result-copy small { font: var(--content-body-secondary); color: var(--content-tertiary); }
+    .bulk-result-status { font: var(--content-caption-primary); }
+    .bulk-error { color: var(--attention-alert); }
+    .bulk-result-amount { text-align: right; white-space: nowrap; }
+    @media(max-width:551px) {
+      .auth-bulk-screen .payment-flow-header { padding: 0 var(--padding-xl); }
+      .auth-bulk-screen .batch-flow-column { padding-left: var(--padding-xl); padding-right: var(--padding-xl); }
+      .auth-bulk-screen .payment-flow-title { margin-left: 0; }
+      .bulk-summary-footer { padding: 0; flex-direction: column; align-items: stretch; }
+      .bulk-summary-footer .btn { width: 100%; }
+      .bulk-result-item { grid-template-columns: 32px minmax(0, 1fr); gap: var(--space-8) var(--space-16); }
+      .bulk-result-amount { grid-column: 2; text-align: left; }
+      #screen-auth-bulk-result .payment-buttonbar-row { flex-wrap: wrap; }
+      #screen-auth-bulk-result .payment-buttonbar .btn { flex: 1; min-width: 0; }
+    }
+
     .signature-modal {
       max-width: 720px;
       padding: var(--padding-2xl) 0 0;
@@ -4424,6 +4473,17 @@ unicode: "eac3"
         <footer class="payment-buttonbar"><div class="payment-buttonbar-row"><button class="btn btn--secondary" type="button" onclick="closeAuthItemResult()">Zavřít</button></div></footer>
       </section>
 
+      <section class="screen payment-screen batch-screen auth-bulk-screen" id="screen-auth-bulk-summary" aria-labelledby="auth-bulk-summary-title">
+        <header class="payment-flow-header"><button class="payment-header-action" type="button" onclick="backFromBulkAuthorization()"><svg class="icon" aria-hidden="true"><use href="#es-caret-left"></use></svg>Zpět</button></header>
+        <div class="payment-flow-content"><div class="batch-flow-column"><h1 class="payment-flow-title" id="auth-bulk-summary-title">Souhrn</h1><div id="auth-bulk-summary-accounts"></div></div></div>
+        <footer class="payment-buttonbar"><div class="payment-buttonbar-row bulk-summary-footer"><div><strong id="auth-bulk-total"></strong><small id="auth-bulk-count"></small></div><button class="btn btn--primary" id="auth-bulk-submit" type="button" onclick="openSignatureSelection('selected-authorization')">Autorizovat platby</button></div></footer>
+      </section>
+      <section class="screen payment-screen batch-screen auth-bulk-screen" id="screen-auth-bulk-result" aria-labelledby="auth-bulk-result-title">
+        <header class="payment-flow-header bulk-result-header"><span class="header-spacer"></span><button class="payment-header-action" type="button" onclick="backFromBulkAuthorization()" aria-label="Zavřít"><svg class="icon" aria-hidden="true"><use href="#es-close"></use></svg></button></header>
+        <div class="payment-flow-content"><div class="batch-flow-column"><img id="auth-bulk-result-art" class="result-illustration" src="../../design-system/design-system/assets/illustrations/success-light.png" alt=""><h1 class="payment-flow-title" id="auth-bulk-result-title">Výsledek autorizace</h1><div id="auth-bulk-result-items"></div></div></div>
+        <footer class="payment-buttonbar"><div class="payment-buttonbar-row"><button class="btn btn--secondary" type="button" onclick="backFromBulkAuthorization()">Zavřít</button><button class="btn btn--primary" type="button" onclick="backFromBulkAuthorization()">Autorizovat další</button></div></footer>
+      </section>
+
       <!-- ================= SCREEN 8: VŠECHNY PLATBY ================= -->
       <div class="screen" id="screen-vsechny-platby">
         <div class="center-column">
@@ -5654,6 +5714,9 @@ unicode: "eac3"
         if (hash === 'payment-signature-modal') {
           const request = signatureRequest();
           const origin = signatureOrigin();
+          if (request?.kind === 'selected-authorization' && request.operationId && request.status === 'completed') {
+            const route = 'autorizace-vyber-vysledek-' + request.operationId; history.replaceState(null, '', '#' + route); currentScreen = route; closeAllModalsElements(); showScreenElements(route); return;
+          }
           if (request?.kind === 'authorization-item' && request.status === 'completed') {
             const result = authItemResult();
             const route = result?.id === request.itemId && result?.tab === request.tab ? 'autorizace-vysledek-' + result.tab + '-' + result.id : request.returnRoute;
@@ -5681,7 +5744,7 @@ unicode: "eac3"
         showModalElement(hash);
       } 
       // 2. Zpracování pokud jde o STANDARDNÍ OBRAZOVKU
-      else if (SCREENS.includes(hash) || /^autorizace-(detail|souhrn|vysledek)-(platby|tp|inkasa)-[A-Za-z0-9_-]+$/.test(hash) || /^davka-(detail|souhrn|autorizace)-[A-Za-z0-9_-]+$/.test(hash)) {
+      else if (SCREENS.includes(hash) || /^autorizace-vyber-(souhrn|vysledek)-[A-Za-z0-9_-]+$/.test(hash) || /^autorizace-(detail|souhrn|vysledek)-(platby|tp|inkasa)-[A-Za-z0-9_-]+$/.test(hash) || /^davka-(detail|souhrn|autorizace)-[A-Za-z0-9_-]+$/.test(hash)) {
         // Zavřeme případné otevřené modaly
         closeAllModalsElements();
         
@@ -5776,9 +5839,10 @@ unicode: "eac3"
       document.querySelectorAll('.screen').forEach(el => el.classList.remove('active'));
       
       // Zobrazit vybranou obrazovku
+      const bulkRoute = screenId.match(/^autorizace-vyber-(souhrn|vysledek)-([A-Za-z0-9_-]+)$/);
       const authInstrument = screenId.match(/^autorizace-(detail|souhrn|vysledek)-(platby|tp|inkasa)-([A-Za-z0-9_-]+)$/);
       const authDetail = authInstrument?.[1] === 'detail' ? [authInstrument[0], authInstrument[2], authInstrument[3]] : null;
-      const targetScreenId = authInstrument ? { detail: 'auth-item-detail', souhrn: 'auth-item-summary', vysledek: 'auth-item-result' }[authInstrument[1]] : /^autorizace-(platby|tp|inkasa)$/.test(screenId) ? 'autorizace' : screenId.startsWith('davka-souhrn-') ? 'davka-souhrn' : screenId.startsWith('davka-detail-') ? 'davka-detail' : screenId === 'tp-inkasa-s-autorizaci' ? 'tp-inkasa' : screenId.replace(/^kontrola-(?=nastaveni-)/, '');
+      const targetScreenId = bulkRoute ? (bulkRoute[1] === 'souhrn' ? 'auth-bulk-summary' : 'auth-bulk-result') : authInstrument ? { detail: 'auth-item-detail', souhrn: 'auth-item-summary', vysledek: 'auth-item-result' }[authInstrument[1]] : /^autorizace-(platby|tp|inkasa)$/.test(screenId) ? 'autorizace' : screenId.startsWith('davka-souhrn-') ? 'davka-souhrn' : screenId.startsWith('davka-detail-') ? 'davka-detail' : screenId === 'tp-inkasa-s-autorizaci' ? 'tp-inkasa' : screenId.replace(/^kontrola-(?=nastaveni-)/, '');
       const isPermissionFlow = PERMISSION_FLOW_SCREENS.includes(targetScreenId);
       const isPermissionEditor = PERMISSION_EDITOR_SCREENS.includes(targetScreenId);
       const isAuthorizationFlow = AUTHORIZATION_FLOW_SCREENS.includes(targetScreenId);
@@ -5793,6 +5857,7 @@ unicode: "eac3"
 
       document.body.classList.toggle('auth-detail-mode', Boolean(authDetail));
       document.body.classList.toggle('auth-list-mode', targetScreenId === 'autorizace');
+      if (bulkRoute && renderBulkAuthorization(bulkRoute[2], bulkRoute[1]) === false) return;
       if (authDetail && renderAuthItemDetail(authDetail[1], authDetail[2]) === false) return;
       if (authInstrument?.[1] === 'souhrn' && renderAuthItemSummary(authInstrument[2], authInstrument[3]) === false) return;
       if (authInstrument?.[1] === 'vysledek' && renderAuthItemResult(authInstrument[2], authInstrument[3]) === false) return;
@@ -5869,7 +5934,7 @@ unicode: "eac3"
 
       if (targetScreenId === 'davka-detail') renderExistingBatchDetail(screenId.slice('davka-detail-'.length));
       if (targetScreenId === 'davka-souhrn') renderExistingBatchSummary(screenId.slice('davka-souhrn-'.length));
-      const paymentFlowScreens = ['auth-item-summary', 'auth-item-result', 'davka-souhrn', 'davka-detail', 'nova-platba', 'nova-platba-detaily', 'platba-vysledek', 'tp-novy', 'tp-detaily', 'tp-souhrn', 'tp-vysledek', 'inkaso-nove', 'inkaso-souhrn', 'inkaso-vysledek', 'davkove-platby', 'davkove-platby-detail', 'davkove-platby-souhrn', 'davkove-platby-vysledek'];
+      const paymentFlowScreens = ['auth-bulk-summary', 'auth-bulk-result', 'auth-item-summary', 'auth-item-result', 'davka-souhrn', 'davka-detail', 'nova-platba', 'nova-platba-detaily', 'platba-vysledek', 'tp-novy', 'tp-detaily', 'tp-souhrn', 'tp-vysledek', 'inkaso-nove', 'inkaso-souhrn', 'inkaso-vysledek', 'davkove-platby', 'davkove-platby-detail', 'davkove-platby-souhrn', 'davkove-platby-vysledek'];
       document.body.classList.toggle('flow-mode', paymentFlowScreens.includes(targetScreenId));
       document.body.classList.toggle('login-mode', targetScreenId === 'login');
 
@@ -6748,28 +6813,15 @@ unicode: "eac3"
       const checkedBoxes = document.querySelectorAll('.auth-checkbox:checked');
       const checkedCount = checkedBoxes.length;
 
-      let totalAmount = 0;
-      checkedBoxes.forEach(cb => {
-        const card = cb.closest('.auth-item-card');
-        if (card) {
-          const amountDiv = card.querySelector('.auth-item-amount');
-          if (amountDiv) {
-            const amountText = amountDiv.textContent;
-            const cleanNumberText = amountText.replace(/[^\d,.-]/g, '').replace(',', '.');
-            const num = parseFloat(cleanNumberText);
-            if (!isNaN(num)) {
-              totalAmount += num;
-            }
-          }
-        }
-      });
+      const selectedIds = new Set([...checkedBoxes].map(input => input.value));
+      const amounts = bulkMoneyTotals(authorizationItems(currentAuthTab).filter(item => selectedIds.has(item.id)).map(item => item.authorizationAmount || item.amount));
 
       const summaryAmountEl = document.getElementById('auth-summary-amount');
       const summaryCountEl = document.getElementById('auth-summary-count');
       const executeBtn = document.getElementById('btn-execute-auth');
 
       if (summaryAmountEl) {
-        summaryAmountEl.textContent = totalAmount.toLocaleString('cs-CZ', { minimumFractionDigits: 2 }) + ' Kč';
+        summaryAmountEl.textContent = amounts || '0,00 Kč';
       }
       if (summaryCountEl) {
         summaryCountEl.textContent = `${checkedCount} z ${totalCount} položek`;
@@ -6783,13 +6835,82 @@ unicode: "eac3"
     }
 
     // Tlačítko K autorizaci v pravém sloupci
+    function bulkMoney(value) {
+      const text = String(value || '');
+      const currency = /(?:EUR|USD|GBP|CHF|CZK)\s*$/.exec(text)?.[0].trim() || 'CZK';
+      const cents = Math.round(Number(text.replace(/[^0-9,.-]/g, '').replace(',', '.')) * 100);
+      return { currency, cents: Number.isFinite(cents) ? cents : 0 };
+    }
+    function bulkFormat(cents, currency) { return new Intl.NumberFormat('cs-CZ', { style: 'currency', currency }).format(cents / 100); }
+    function bulkMoneyTotals(values) {
+      const sums = new Map(); values.forEach(value => { const money = bulkMoney(value); sums.set(money.currency, (sums.get(money.currency) || 0) + money.cents); });
+      return [...sums].map(([currency, cents]) => bulkFormat(cents, currency)).join(' + ');
+    }
+    function bulkCount(tab, count) {
+      const forms = { platby: ['platba', 'platby', 'plateb'], tp: ['trvalý příkaz', 'trvalé příkazy', 'trvalých příkazů'], inkasa: ['inkaso', 'inkasa', 'inkas'] };
+      return count + ' ' + forms[tab][count === 1 ? 0 : count >= 2 && count <= 4 ? 1 : 2];
+    }
+    function bulkOperation(id) { try { return JSON.parse(localStorage.getItem('vavu_auth_bulk_' + id) || 'null'); } catch (_) { return null; } }
+    function createBulkOperation(tab, selected, returnRoute) {
+      const ids = new Set(selected);
+      const items = authorizationItems(tab).filter(item => ids.has(item.id));
+      if (!items.length) return null;
+      const id = Array.from(crypto.getRandomValues(new Uint8Array(6)), byte => byte.toString(16).padStart(2, '0')).join('');
+      const operation = { id, tab, items, returnRoute, user: localStorage.getItem('vavu_selected_user'), status: 'review' };
+      localStorage.setItem('vavu_auth_bulk_' + id, JSON.stringify(operation)); return operation;
+    }
     function executeSelectedAuth() {
-      const checkedCount = document.querySelectorAll('.auth-checkbox:checked').length;
-      if (checkedCount === 0) {
-        openModal('no-items-modal');
-        return;
+      const selected = [...document.querySelectorAll('#auth-items-list .auth-checkbox:checked')].map(input => input.value);
+      const operation = createBulkOperation(currentAuthTab, selected, currentScreen);
+      if (!operation) { openModal('no-items-modal'); return; }
+      goTo('autorizace-vyber-souhrn-' + operation.id);
+    }
+    function currentBulkOperation() { return bulkOperation(currentScreen.match(/^autorizace-vyber-(?:souhrn|vysledek)-([A-Za-z0-9_-]+)$/)?.[1]); }
+    function backFromBulkAuthorization() { goTo(currentBulkOperation()?.returnRoute || 'autorizace'); }
+    function renderBulkAuthorization(id, stage) {
+      const operation = bulkOperation(id);
+      if (!operation || operation.user !== localStorage.getItem('vavu_selected_user')) { goTo('autorizace', true); handleRouting(); return false; }
+      if (stage === 'vysledek' && operation.status !== 'completed') { goTo('autorizace-vyber-souhrn-' + id, true); handleRouting(); return false; }
+      if (stage === 'souhrn' && operation.status === 'completed') { goTo('autorizace-vyber-vysledek-' + id, true); handleRouting(); return false; }
+      if (stage === 'vysledek') {
+        const failed = operation.results.some(item => item.outcome !== 'success');
+        const art = document.getElementById('auth-bulk-result-art'); art.src = failed ? 'assets/authorization-partial.png' : '../../design-system/design-system/assets/illustrations/success-light.png'; art.classList.toggle('bulk-partial-art', failed);
+        document.getElementById('auth-bulk-result-items').innerHTML = operation.results.map(item => {
+          const error = item.outcome !== 'success';
+          const message = { success: 'Autorizováno', error: 'Chyba při autorizaci', rejected: 'Akci jsme museli odmítnout', gone: 'Autorizováno nebo smazáno' }[item.outcome];
+          return `<div class="bulk-result-item"><span class="bulk-result-avatar"><svg class="icon" aria-hidden="true"><use href="#es-person"></use></svg><span class="bulk-result-badge ${error ? 'bulk-error-badge' : ''}">${error ? '<svg class="icon" aria-hidden="true"><use href="#es-close"></use></svg>' : '<img src="assets/authorization-arrow-right.svg" alt="">'}</span></span><span class="bulk-result-copy"><strong>${escapeHtml(item.recipient || item.name)}</strong>${item.variableSymbol ? `<small>VS: ${escapeHtml(item.variableSymbol)}</small>` : ''}<span class="bulk-result-status ${error ? 'bulk-error' : ''}">${message}</span></span><strong class="bulk-result-amount">${escapeHtml(item.amount)}</strong></div>`;
+        }).join(''); return;
       }
-      openSignatureSelection('selected-authorization');
+      const accounts = new Map(); operation.items.forEach(item => {
+        const key = item.accountNumber; if (!accounts.has(key)) accounts.set(key, []); accounts.get(key).push(item);
+      });
+      document.getElementById('auth-bulk-summary-accounts').innerHTML = [...accounts].map(([number, items]) => {
+        const currencies = new Map(); items.forEach(item => { const currency = bulkMoney(item.amount).currency; if (!currencies.has(currency)) currencies.set(currency, []); currencies.get(currency).push(item); });
+        const accountCurrency = number === ACCOUNT_DATA.eur.number ? 'EUR' : 'CZK';
+        const conversion = operation.tab === 'platby' && [...currencies.keys()].some(currency => currency !== accountCurrency);
+        return `<div class="bulk-account-group"><div class="profile-card"><div class="auth-detail-field"><span>Z účtu</span><strong>${escapeHtml(items[0].accountName)}<br>${escapeHtml(number)}</strong></div></div>${conversion ? '<div class="bulk-conversion"><img src="assets/batch-warning.svg" width="24" height="24" alt=""><span>Pro konverzní platby použijeme kurz platný v okamžiku zúčtování bankou.</span></div>' : ''}<div class="profile-card">${[...currencies].map(([currency, group]) => { const original = bulkMoneyTotals(group.map(item => item.amount)); const authorized = bulkMoneyTotals(group.map(item => item.authorizationAmount || item.amount)); return `<div class="bulk-summary-row"><span>${bulkCount(operation.tab, group.length)}${original !== authorized ? `<small>${escapeHtml(original)}</small>` : ''}</span><strong>${escapeHtml(authorized)}</strong></div>`; }).join('')}</div></div>`;
+      }).join('');
+      document.getElementById('auth-bulk-total').textContent = 'Částka k autorizaci: ' + bulkMoneyTotals(operation.items.map(item => item.authorizationAmount || item.amount));
+      document.getElementById('auth-bulk-count').textContent = 'Celkem ' + (operation.tab === 'platby' ? bulkCount(operation.tab, operation.items.length) : authorizationItemCount(operation.items.length));
+      document.getElementById('auth-bulk-submit').textContent = { platby: 'Autorizovat platby', tp: 'Autorizovat trvalé příkazy', inkasa: 'Autorizovat inkasa' }[operation.tab];
+    }
+    function completeBulkAuthorization(request) {
+      let operation = bulkOperation(request.operationId);
+      if (!operation) operation = createBulkOperation(request.tab, request.selected || [], request.origin);
+      if (!operation) { goTo(request.returnRoute || 'autorizace'); return; }
+      if (operation.user !== localStorage.getItem('vavu_selected_user')) { goTo('autorizace'); return; }
+      if (operation.status !== 'completed') {
+        const current = authorizationItems(operation.tab);
+        operation.results = operation.items.map(item => {
+          const live = current.find(candidate => candidate.id === item.id);
+          const outcome = !live ? 'gone' : ['error', 'rejected'].includes(live.authorizationOutcome) ? live.authorizationOutcome : JSON.stringify(live) !== JSON.stringify(item) ? 'error' : 'success';
+          return { ...item, outcome };
+        });
+        operation.status = 'completed'; operation.at = new Date().toISOString();
+        localStorage.setItem('vavu_auth_bulk_' + operation.id, JSON.stringify(operation));
+        removeAuthorizationItems(operation.results.filter(item => item.outcome === 'success').map(item => item.id));
+      }
+      goTo('autorizace-vyber-vysledek-' + operation.id);
     }
 
     // Smazat vybrané položky z autorizace
@@ -7771,7 +7892,7 @@ unicode: "eac3"
 
     function signatureOrigin() {
       const request = signatureRequest();
-      if (request && (SCREENS.includes(request.origin) || /^autorizace-(detail|souhrn)-(platby|tp|inkasa)-[A-Za-z0-9_-]+$/.test(request.origin) || /^davka-souhrn-[A-Za-z0-9_-]+$/.test(request.origin))) return request.origin;
+      if (request && (SCREENS.includes(request.origin) || /^autorizace-vyber-souhrn-[A-Za-z0-9_-]+$/.test(request.origin) || /^autorizace-(detail|souhrn)-(platby|tp|inkasa)-[A-Za-z0-9_-]+$/.test(request.origin) || /^davka-souhrn-[A-Za-z0-9_-]+$/.test(request.origin))) return request.origin;
       return directDebitFlowActive ? 'inkaso-souhrn' : standingOrderFlowActive ? 'tp-souhrn' : batchFlowActive ? 'davkove-platby-souhrn' : 'nova-platba-detaily';
     }
 
@@ -7782,15 +7903,16 @@ unicode: "eac3"
       if (kind === 'new-batch') request.batchId = getImportedBatches()[0]?.id;
       if (kind === 'authorization-item') { const route = currentScreen.match(/^autorizace-(?:detail|souhrn)-(platby|tp|inkasa)-([A-Za-z0-9_-]+)$/); request.tab = route[1]; request.itemId = route[2]; request.returnRoute = authDetailReturnRoute(route[1], route[2]); }
       if (kind === 'selected-authorization') {
-        request.tab = currentAuthTab;
-        request.selected = [...document.querySelectorAll('.auth-checkbox:checked')].map(input => input.value);
+        const operation = currentBulkOperation();
+        request.operationId = operation?.id; request.tab = operation?.tab || currentAuthTab; request.returnRoute = operation?.returnRoute || currentScreen;
+        request.selected = operation ? operation.items.map(item => item.id) : [...document.querySelectorAll('#auth-items-list .auth-checkbox:checked')].map(input => input.value);
       }
       localStorage.setItem('vavu_signature_context', JSON.stringify(request));
       goTo('payment-signature-modal');
     }
 
     function restoreSignatureSelection(request) {
-      if (request?.kind !== 'selected-authorization') return;
+      if (request?.kind !== 'selected-authorization' || request.operationId) return;
       if (currentAuthTab !== request.tab) switchAuthTab(request.tab);
       document.querySelectorAll('.auth-checkbox').forEach(input => { input.checked = request.selected.includes(input.value); });
       updateDeleteButtonState();
@@ -7818,13 +7940,7 @@ unicode: "eac3"
         authorizeBatch(request.batchId || (request.kind === 'existing-batch' ? request.origin.slice('davka-souhrn-'.length) : getImportedBatches()[0]?.id));
         return;
       }
-      if (request?.kind === 'selected-authorization') {
-        closeAllModalsElements();
-        restoreSignatureSelection(request);
-        history.replaceState(null, '', '#' + request.origin);
-        deleteSelectedAuth();
-        return;
-      }
+      if (request?.kind === 'selected-authorization') { closeAllModalsElements(); completeBulkAuthorization(request); return; }
 
       closeAllModalsElements();
       if (directDebitFlowActive) {

@@ -1,3 +1,23 @@
+# Souhrnná autorizace aktivní záložky – 21. 10. 2026
+
+final result: passed
+
+K autorizaci ze seznamu nyní pro libovolný neprázdný výběr otevírá souhrnný Souhrn bez detailů položek. Rozsah se zachytí výhradně z checkboxů právě vykreslené záložky. Označení na ostatních záložkách zůstane uložené, ale nezahrne se do této operace, součtů, podpisu ani výsledku. Souhrn je uložen pod vlastním ID se snímkem konkrétních vybraných položek a původní cestou; zpět/refresh a další operace jej nesměšují.
+
+Souhrn seskupuje účty a měny, zobrazuje skutečný účet, počty a součty částek. Čeština počtů: 1 platba / 2–4 platby / 5+ plateb, stejné pravidlo pro trvalé příkazy a inkasa; footer má podle reference platby nebo položky. CTA Autorizovat platby / Autorizovat trvalé příkazy / Autorizovat inkasa → existující Vyberte způsob podpisu → Výsledek autorizace. Zrušení nic nemění. Výsledek používá příjemce, VS a částku ze schváleného snímku, po úspěchu odstraní pouze úspěšné položky dané operace. Chyba či odmítnutí zůstávají k dalšímu pokusu; položka mezitím odstraněná má Autorizováno nebo smazáno. Změna údajů mezi souhrnem a podpisem není skrytě autorizována. Autorizační operace je vázaná na uživatele a opakování/reload neopakuje zápis. Zavřít a Autorizovat další vracejí původní seznam.
+
+Výchozí položky nemají vymyšlené chyby. Smíšené výsledky jsou podporovány pro explicitní authorizationOutcome error/rejected a skutečně zmizelé položky; pro QA byly použity izolované fixtures. Veřejná demo data se kvůli obrázku neměnila. Konverzní upozornění se ukáže u cizoměnových plateb. Je-li v datech authorizationAmount, používá se pro částku k autorizaci v seznamu i souhrnu a původní měna se zobrazí pod řádkem. Bez předané konverzní částky se měny sečtou odděleně, žádný kurz se nevymýšlí. FX fixture měla explicitní 100 EUR / 2 527 Kč, ostatní částky byly z vybraných položek; nejde o nový veřejný kurz.
+
+Zdroje pod /home/lukinab/.codex/attachments/: 6a164f73-7826-4e25-9876-0fe3e8a3c3d2/codex-clipboard-f85f1042-4751-49de-89b7-33d94e053476.png (platby); e8de6f17-705b-4a7c-a61b-0f451ce7a03b/codex-clipboard-ee324fce-9822-4e92-a230-720935a33c55.png (FX); a356cf49-b281-43d4-9007-e3fad6f2d4cf/codex-clipboard-07287d1b-09c1-481d-95a5-17b7dc09a7c0.png (TP); 49be3a6a-fbb0-45ee-b3ba-36503afbd60d/codex-clipboard-3e9e16b6-46fb-4094-873f-3a5316e91df0.png (inkasa); 83074e14-72ca-4907-8fde-56dd515aced1/codex-clipboard-81824528-34a9-4ba2-b8e5-5e552b2a1e01.png (výsledky). Poslední příloha je duplicitní výsledek. Samostatná budoucí varianta výsledku inkas zatím není dodána; používá se společný výsledkový seznam s jejich skutečnými údaji.
+
+Normalizace: první dvě přílohy 2048 × 1536 → 1024 × 768 CSS px; TP 2080 × 1576 a inkasa 2080 × 1554 oříznuty o rám na x16–2064/y0–1536 → 1024 × 768. Výsledek 2048 × 2046 → 1024 × 1023. Implementační viewporty stejné, DPR 1. Evidence /home/lukinab/Projects/UX/.vavu-profile-qa/: bulk-summary-{platby,tp,inkasa,fx}.png, bulk-result-mixed.png, bulk-mobile-{320,375,768}.png, bulk-result-mobile-{320,375}.png. Soubory compare-bulk-{payment,fx,tp,inkasa,result}.png a jejich -focus.png obsahují plné a detailní porovnání vedle sebe. Počty/údaje se záměrně řídí skutečným výběrem, ne ilustračními částkami z příloh.
+
+Povrchy QA: Inter/DS 28/36 pro tituly, 16/24 hodnoty a počty, 14/20 sekundární měna/VS a 12/16 stav; rozložení sloupce 520 px u souhrnu, 488 px u výsledku, trvalý footer. Barvy, mezery, radiusy a děliče z tokenů. Ilustrace částečného výsledku přímo vyříznuta ze zdroje, úspěch je sdílený DS asset. Ikony ze stávající sady, šipka Tabler (oficiální export arrow-right.svg, stávající Tabler licence). Copy řádků a CTA odpovídá typu/stavu. [P2] horní umístění partial ilustrace/titulku a vodorovné odsazení souhrnu/footeru upraveno podle prvního porovnání; po opravě nové zachycení a porovnání. Na mobilu se dlouhé účty zalomí, částka může být pod nimi, footer se skládá bez overflow. Žádné zbývající P0/P1/P2.
+
+Ověřeno Chrome/Playwright: platba vybraná na jedné záložce → dva TP na jiné → souhrn a podpis pouze TP; platba zůstala vybraná a nezpracovaná. Jedna platba, dva TP, dvě inkasa s odpovídajícími součty a texty, prázdný aktuální výběr nezpracuje skrytý výběr. Zpět, cancel, refresh souhrnu/modálu/výsledku, idempotence, navazující další autorizace. FX fixture a shodný součet v seznamu/souhrnu; success/error/rejected/gone a odstranění pouze success. Mobil 320/375/768 bez overflow, výsledky skrolují se spodními akcemi. Regrese jednotlivých souhrnů, obou vstupů do dávek, sedmi podpisových flow a tří autorizačních seznamů prošla. Bez JS chyb.
+
+---
+
 # Souhrny a výsledky jednotlivých instrumentů – 21. 10. 2026
 
 final result: passed
