@@ -1,3 +1,19 @@
+# Primární cesta autorizace dávek a sdílený detail – 21. 10. 2026
+
+final result: passed
+
+Přehled → Autorizace → Přehled autorizací → Dávkové platby otevírá Autorizaci dávek pouze s dávkami čekajícími na podpis aktuálního uživatele. Detail účtu → Dávkové platby → Přehled dávek nadále obsahuje všechny stavy včetně dávek K autorizaci. Oba seznamy otevírají stejný detail se stejnými ID, údaji a historií; podpisy se mezi seznamy nepřevádějí ani nekopírují, jde o společný stav.
+
+Oprava: výsledkové Přehled dávek, Zavřít i horní křížek zachovají původní seznam (Autorizace dávek nebo celkový Přehled dávek). Cílová cesta je součástí persistovaného výsledku a funguje po refreshi. Starší uložené výsledky bez této vlastnosti používají uložený původ dávky. Návrat z detailu používá stejnou funkci. Po prvním podpisu se dávka odebere z autorizační nabídky podepisujícího, u účtu zůstává K autorizaci; jiný uživatel ji stále má k podpisu. Po druhém různém podpisu je Čekající v celkovém přehledu a není v nabídce k podpisu.
+
+Zdroj: /home/lukinab/.codex/attachments/ef3f41b2-9bb3-4caa-aa8c-06e47d8fdd66/codex-clipboard-76d5fe90-5a6d-4eb6-972a-ead10c094f86.png. Originál 3360 × 2048 px, normalizace 2:1 na implementační viewport 1680 × 1024 CSS px, DPR 1. Evidence v /home/lukinab/Projects/UX/.vavu-profile-qa/: batch-entry-hub.png, compare-batch-entry.png (plný pohled), compare-batch-entry-focus.png (titulek, limit, první karta), batch-entry-hub-{320,375}.png. V aktuálním demo stavu je jedna dávka k podpisu a jiné údaje než dvě ilustrační dávky v příloze; data nebyla nahrazena kvůli screenshotu.
+
+Pět povrchů QA: typografie z existujících DS tokenů (28/36 titulek, 16/24 položky a limit), zarovnání a mezery podle stávajícího scaffoldu, barvy/povrchy/radiusy z tokenů, dokumentová ikona ze stávající sady s hodinovým badge, texty a stavy odpovídají společným datům. [P2] podklad dokumentové ikony a zarovnání názvu byly menší oproti referenci; upraven DS avatar na 32 px a mezera 16 px, znovu zachyceno a porovnáno. Váha K dispozici sjednocena s DS. Bez nových ilustrací. Mobilní jméno může používat stávající zkrácení, ID a částka zůstávají viditelné. Žádné zbývající P0/P1/P2.
+
+Interakční QA Chrome/Playwright: skutečné kliky oběma vstupy, autorizační seznam 1 vs celkový seznam 4 dávky, shodné údaje detailu, detail/refresh/zpět do původního seznamu, první podpis a zmizení z nabídky, opakovaný pokus z účtu bez dalšího záznamu, druhý podepisující a dokončení, trvající společný stav po přepnutí cesty. Návrat z výsledku přes Přehled dávek / Zavřít / X, včetně refresh výsledku, 320/375 px bez overflow. Bez JS chyb.
+
+---
+
 # Výsledky autorizace dávky – 21. 10. 2026
 
 final result: passed

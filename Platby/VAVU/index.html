@@ -624,6 +624,9 @@
     .authorization-hub .batch-overview-item { grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr) minmax(140px, .5fr); }
     .authorization-hub .batch-overview-copy > strong, .authorization-hub .batch-overview-amount { font: var(--content-body-primary-bold); }
     .authorization-hub .batch-overview-count { font: var(--content-body-primary); color: var(--content-tertiary); }
+    .authorization-hub .batch-overview-main { grid-template-columns: 32px minmax(0, 1fr); gap: var(--space-16); }
+    .authorization-hub .batch-overview-icon { width: 32px; height: 32px; display: grid; place-items: center; background: var(--attention-information-surface); border-radius: var(--border-radius-sm); }
+    .authorization-hub .hub-limit strong { font: var(--content-body-primary-bold); }
     .authorization-hub .batch-overview-group { margin-bottom: var(--padding-xl); }
     .authorization-hub .hub-empty { padding: var(--padding-xl); margin: 0; font: var(--content-body-primary); }
     .authorization-hub .hub-limit { display: flex; flex-direction: column; gap: var(--padding-sm); padding: var(--padding-xl); font: var(--content-body-primary); }
@@ -5018,7 +5021,7 @@ unicode: "eac3"
       <section class="screen payment-screen batch-screen" id="screen-davkove-platby-vysledek" aria-labelledby="davkove-platby-vysledek-title">
         <header class="payment-flow-header"><span class="header-spacer"></span><button class="payment-header-action" type="button" onclick="finishBatchPayment()" aria-label="Zavřít"><svg class="icon icon--close" aria-hidden="true"><use href="#es-close"></use></svg></button></header>
         <div class="payment-flow-content"><div class="batch-flow-column batch-result-column"><img class="result-illustration" id="batch-result-illustration" src="../../design-system/design-system/assets/illustrations/success-light.png" alt=""><h1 class="result-heading" id="davkove-platby-vysledek-title">Autorizovali jste dávku</h1><p class="result-lead" id="batch-result-message">Musí ji ještě autorizovat ostatní.</p></div></div>
-        <footer class="payment-buttonbar"><div class="payment-buttonbar-row"><button class="btn btn--secondary" type="button" onclick="finishBatchPayment()">Zavřít</button><button class="btn btn--primary" id="batch-result-overview" type="button" onclick="startBatchFlow('overview')">Přehled dávek</button></div></footer>
+        <footer class="payment-buttonbar"><div class="payment-buttonbar-row"><button class="btn btn--secondary" type="button" onclick="finishBatchPayment()">Zavřít</button><button class="btn btn--primary" id="batch-result-overview" type="button" onclick="openBatchResultOverview()">Přehled dávek</button></div></footer>
       </section>
 
       <!-- ================= VAVU: RESULT ================= -->
@@ -7154,11 +7157,23 @@ unicode: "eac3"
       goTo('davka-detail-' + id);
     }
 
+    function batchOverviewRoute(id) {
+      return localStorage.getItem('vavu_batch_return_' + id) === 'autorizace-davek' ? 'autorizace-davek' : 'davkove-platby';
+    }
+
+    function openBatchOverview(route) {
+      if (route === 'autorizace-davek') goTo(route);
+      else startBatchFlow('overview');
+    }
+
     function backToBatchOverview() {
-      const id = document.getElementById('screen-davka-detail').dataset.batchId;
-      if (localStorage.getItem('vavu_batch_return_' + id) === 'autorizace-davek') { goTo('autorizace-davek'); return; }
-      localStorage.setItem('vavu_batch_tab', 'overview');
-      goTo('davkove-platby');
+      openBatchOverview(batchOverviewRoute(document.getElementById('screen-davka-detail').dataset.batchId));
+    }
+
+    function openBatchResultOverview() {
+      let result;
+      try { result = JSON.parse(localStorage.getItem('vavu_batch_authorization_result') || 'null'); } catch (_) {}
+      openBatchOverview(result?.returnRoute || batchOverviewRoute(result?.id));
     }
 
     function existingBatchState(batch) {
@@ -7281,7 +7296,7 @@ unicode: "eac3"
     }
 
     function showBatchAuthorizationResult(id, outcome) {
-      localStorage.setItem('vavu_batch_authorization_result', JSON.stringify({ id, outcome, user: localStorage.getItem('vavu_selected_user') }));
+      localStorage.setItem('vavu_batch_authorization_result', JSON.stringify({ id, outcome, returnRoute: batchOverviewRoute(id), user: localStorage.getItem('vavu_selected_user') }));
       goTo('davkove-platby-vysledek');
     }
 
@@ -7448,7 +7463,7 @@ unicode: "eac3"
     function finishBatchPayment() {
       batchFlowActive = false;
       localStorage.removeItem('vavu_batch_flow_active');
-      goTo('prehled');
+      openBatchResultOverview();
     }
 
     function getStandingOrderData() {
