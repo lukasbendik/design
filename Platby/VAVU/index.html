@@ -1930,13 +1930,14 @@
     .auth-item-open .item-details { min-width: 0; }
     .auth-item-open .auth-item-amount { white-space: nowrap; }
     .auth-item-muted { color: var(--content-tertiary); }
-    #screen-auth-item-detail { gap: var(--space-16); align-items: flex-start; }
+    #screen-auth-item-detail { gap: var(--space-16); align-items: flex-start; align-self: flex-start; height: auto; flex: 0 0 auto; }
     #screen-auth-item-detail .center-column { min-width: 0; padding: 0; gap: var(--space-12); }
     body.auth-detail-mode .main-content { padding-top: var(--padding-xl); }
     #screen-auth-item-detail .right-column { padding-top: var(--space-32); }
     #screen-auth-item-detail[data-type="tp"] .right-column, #screen-auth-item-detail[data-type="inkasa"] .right-column { padding-top: calc(var(--space-64) + var(--space-16)); }
     #screen-auth-item-detail h1 { margin: 0; font: var(--headings-title-tertiary); }
     #screen-auth-item-detail .profile-card { margin: 0; }
+    #screen-auth-item-detail .center-column > * { flex-shrink: 0; }
     .auth-detail-field { position: relative; padding: var(--padding-xl); display: flex; flex-direction: column; gap: var(--padding-xs); }
     .auth-detail-field + .auth-detail-field::before { content: ''; position: absolute; top: 0; left: var(--padding-xl); right: 0; border-top: 1px solid var(--background-divider); }
     .auth-detail-field > span { font: var(--content-caption-primary); }
@@ -1959,9 +1960,9 @@
       body.auth-detail-mode .sidebar, body.auth-detail-mode .topbar, body.auth-detail-mode .chatbot-btn, body.auth-list-mode .sidebar, body.auth-list-mode .topbar, body.auth-list-mode .chatbot-btn { display: none; }
       body.auth-detail-mode .main-content, body.auth-list-mode .main-content { margin: 0; width: 100%; height: 100dvh; padding: var(--padding-xl); }
       #screen-auth-item-detail { display: none; }
-      #screen-auth-item-detail.active { display: grid; grid-template-columns: minmax(0, 1fr); }
+      #screen-auth-item-detail.active { display: grid; grid-template-columns: minmax(0, 1fr); grid-auto-rows: max-content; align-content: start; }
       #screen-auth-item-detail .center-column { display: contents; }
-      #screen-auth-item-detail .right-column, #screen-auth-item-detail[data-type] .right-column { grid-row: 3; padding-top: 0; }
+      #screen-auth-item-detail .right-column, #screen-auth-item-detail[data-type] .right-column { grid-row: auto; padding-top: 0; }
       #screen-autorizace { flex-direction: column; gap: var(--space-16); }
       #screen-autorizace .center-column, #screen-autorizace .right-column { width: 100%; min-width: 0; padding: 0; }
       #screen-autorizace .segmented-control { min-width: 0; }
@@ -1970,6 +1971,19 @@
       #screen-auth-item-detail .right-column { padding-top: 0; }
       .auth-item-open { flex-wrap: wrap; gap: var(--space-8); }
       .auth-item-open .auth-item-amount { margin-left: auto; }
+    }
+
+    .auth-detail-status { display: flex; align-items: center; gap: var(--padding-xl); padding: var(--padding-lg) var(--padding-xl); background: var(--attention-information-surface); font: var(--content-body-primary); }
+    .auth-detail-status img { flex: none; }
+    .auth-detail-status[hidden], #auth-detail-audit-card[hidden] { display: none; }
+    #auth-detail-audit-trigger { justify-content: space-between; }
+    @media(max-width:767px) {
+      #screen-auth-item-detail[data-type="platby"] { gap: var(--space-16); }
+      #screen-auth-item-detail[data-type="platby"] .company-back { line-height: calc(var(--space-16) + var(--space-4)); margin-bottom: calc(-1 * var(--space-4)); }
+      #screen-auth-item-detail[data-type="platby"] h1 { margin-bottom: calc(-1 * var(--space-4)); }
+      #screen-auth-item-detail[data-type="platby"] .right-column { margin-inline: calc(-1 * var(--padding-xl)); width: calc(100% + var(--space-32)); }
+      #screen-auth-item-detail[data-type="platby"] .auth-detail-actions { border-radius: 0; box-shadow: none; }
+      #screen-auth-item-detail[data-type="platby"] .auth-detail-status { margin-inline: calc(-1 * var(--padding-xl)); }
     }
 
     .delete-link {
@@ -4378,7 +4392,9 @@ unicode: "eac3"
       <section class="screen auth-item-detail" id="screen-auth-item-detail" aria-labelledby="auth-detail-title">
         <div class="center-column"><button class="company-back" type="button" onclick="backFromAuthItemDetail()"><svg class="icon" aria-hidden="true"><use href="#es-caret-left"></use></svg>Zpět</button><h1 id="auth-detail-title">Platba k autorizaci</h1>
           <div class="profile-card auth-detail-hero" id="auth-detail-hero"><div class="auth-detail-avatar"><svg class="icon" aria-hidden="true"><use href="#es-person"></use></svg><img src="assets/batch-clock.svg" alt="Čeká na autorizaci"></div><h2 id="auth-detail-recipient"></h2><strong id="auth-detail-amount"></strong><span id="auth-detail-date"></span></div>
+          <div class="auth-detail-status" id="auth-detail-status" role="status" hidden><img src="assets/batch-warning.svg" width="24" height="24" alt=""><span id="auth-detail-status-copy"></span></div>
           <div class="profile-card" id="auth-detail-fields"></div>
+          <div class="profile-card" id="auth-detail-audit-card" hidden><button class="profile-row" id="auth-detail-audit-trigger" type="button" onclick="openAuthItemAudit()"><span>Detail autorizace</span><svg class="icon profile-caret" aria-hidden="true"><use href="#es-caret-right"></use></svg></button></div>
         </div>
         <div class="right-column"><div class="profile-card auth-detail-actions"><button class="profile-row" id="auth-detail-select" type="button" aria-pressed="false" onclick="toggleAuthDetailSelection()"><span>Označit k autorizaci</span><span class="auth-detail-check"><img id="auth-detail-select-check" src="assets/permission-check.svg" width="20" height="20" alt="" hidden></span></button><button class="profile-row" type="button" onclick="authorizeAuthItemDetail()"><span>Autorizovat</span><img src="assets/authorization-lock.svg" alt="" width="24" height="24"></button><button class="profile-row auth-detail-delete" type="button" onclick="deleteAuthItemDetail()"><span>Smazat</span><svg class="icon" aria-hidden="true"><use href="#es-delete"></use></svg></button></div></div>
       </section>
@@ -5670,7 +5686,7 @@ unicode: "eac3"
         showModalElement(hash);
       } 
       // 2. Zpracování pokud jde o STANDARDNÍ OBRAZOVKU
-      else if (SCREENS.includes(hash) || /^autorizace-vyber-(souhrn|vysledek)-[A-Za-z0-9_-]+$/.test(hash) || /^autorizace-(detail|souhrn|vysledek)-(platby|tp|inkasa)-[A-Za-z0-9_-]+$/.test(hash) || /^davka-(detail|souhrn|autorizace)-[A-Za-z0-9_-]+$/.test(hash)) {
+      else if (SCREENS.includes(hash) || /^autorizace-audit-platby-[A-Za-z0-9_-]+$/.test(hash) || /^autorizace-vyber-(souhrn|vysledek)-[A-Za-z0-9_-]+$/.test(hash) || /^autorizace-(detail|souhrn|vysledek)-(platby|tp|inkasa)-[A-Za-z0-9_-]+$/.test(hash) || /^davka-(detail|souhrn|autorizace)-[A-Za-z0-9_-]+$/.test(hash)) {
         // Zavřeme případné otevřené modaly
         closeAllModalsElements();
         
@@ -5720,6 +5736,20 @@ unicode: "eac3"
     // Zobrazit konkrétní div obrazovky a upravit stav v menu
     function showScreenElements(screenId, forceAuthCard = false) {
       const auditDialog = document.getElementById('batch-audit-dialog');
+      const paymentAuditRoute = screenId.match(/^autorizace-audit-platby-([A-Za-z0-9_-]+)$/);
+      if (paymentAuditRoute) {
+        const id = paymentAuditRoute[1];
+        const item = authorizationItems('platby').find(item => item.id === id);
+        if (!item) { goTo(authDetailReturnRoute('platby', id), true); handleRouting(); return; }
+        const detail = document.getElementById('screen-auth-item-detail');
+        if (!detail.classList.contains('active') || detail.dataset.itemId !== id || detail.dataset.type !== 'platby') showScreenElements('autorizace-detail-platby-' + id);
+        renderAuthorizationAudit({ created: item.created, events: instrumentSignatures('platby', item).signatures, cancelled: item.cancelled, returnRoute: 'autorizace-detail-platby-' + id, triggerId: 'auth-detail-audit-trigger', emptyText: 'Platbu zatím nikdo neautorizoval.' });
+        const scroller = document.querySelector('.main-content');
+        const scrollTop = scroller.scrollTop;
+        if (!auditDialog.open) auditDialog.showModal();
+        scroller.scrollTop = scrollTop;
+        return;
+      }
       const auditRoute = screenId.match(/^davka-autorizace-([A-Za-z0-9_-]+)$/);
       if (auditRoute) {
         const id = auditRoute[1];
@@ -5734,9 +5764,9 @@ unicode: "eac3"
         return;
       }
       if (auditDialog.open) {
-        const returnToDetail = screenId === 'davka-detail-' + auditDialog.dataset.batchId;
+        const returnToDetail = screenId === auditDialog.dataset.returnRoute;
         auditDialog.close();
-        if (returnToDetail) { document.getElementById('batch-audit-trigger').focus({ preventScroll: true }); return; }
+        if (returnToDetail) { document.getElementById(auditDialog.dataset.triggerId)?.focus({ preventScroll: true }); return; }
       }
       const batchConfirm = document.getElementById('batch-detail-dialog');
       if (batchConfirm.open) batchConfirm.close();
@@ -5912,7 +5942,7 @@ unicode: "eac3"
       
       // Posunout scroll na začátek
       window.scrollTo(0, 0);
-      if (document.body.classList.contains('profile-mode')) {
+      if (document.body.classList.contains('profile-mode') || authDetail) {
         document.querySelector('.main-content').scrollTo(0, 0);
         requestAnimationFrame(() => { if (currentScreen === screenId) document.querySelector('.main-content').scrollTo(0, 0); });
       }
@@ -6736,6 +6766,7 @@ unicode: "eac3"
     }
     function renderAuthItemDetail(tab, id) {
       document.getElementById('screen-auth-item-detail').dataset.type = tab;
+      document.getElementById('screen-auth-item-detail').dataset.itemId = id;
       const item = authorizationItems(tab).find(item => item.id === id);
       if (!item) { goTo(authDetailReturnRoute(tab, id), true); handleRouting(); return false; }
       localStorage.setItem('vavu_auth_tab', tab);
@@ -6743,15 +6774,24 @@ unicode: "eac3"
       const from = item.accountName + '\n' + item.accountNumber;
       const payment = tab === 'platby';
       document.getElementById('auth-detail-hero').hidden = !payment;
+      document.getElementById('auth-detail-status').hidden = !payment;
+      document.getElementById('auth-detail-audit-card').hidden = !payment;
+      document.getElementById('auth-detail-status-copy').textContent = instrumentSignatures(tab, item).signatures.length ? instrumentSigningStatus(tab, item) : 'Čeká se na autorizaci.';
       document.getElementById('auth-detail-recipient').textContent = item.recipient || item.name;
       document.getElementById('auth-detail-amount').textContent = item.amount;
-      document.getElementById('auth-detail-date').textContent = item.date || '';
+      const dateParts = /^(\d{1,2})\.\s*(\d{1,2})\.\s*(\d{4})$/.exec(item.date || '');
+      const date = dateParts && new Date(Date.UTC(Number(dateParts[3]), Number(dateParts[2]) - 1, Number(dateParts[1]), 12));
+      document.getElementById('auth-detail-date').textContent = date && date.getUTCDate() === Number(dateParts[1]) && date.getUTCMonth() === Number(dateParts[2]) - 1 ? new Intl.DateTimeFormat('cs-CZ', { weekday: 'long', day: 'numeric', month: 'numeric', year: 'numeric', timeZone: 'Europe/Prague' }).format(date) : item.date || '';
       const rows = payment ? [['Z účtu', from], ['Zpráva pro příjemce', item.message], ['Popis pro mě', item.description || item.desc], ['Variabilní symbol', item.variableSymbol], ['Konstantní symbol', item.constantSymbol], ['Specifický symbol', item.specificSymbol]] : tab === 'tp' ? [['Z účtu', from], ['Příjemce', item.recipient], ['Název trvalého příkazu', item.name], ['Částka', item.amount], ['Opakovat', item.frequency], ['Datum první platby', item.date], ['Ukončit', item.endDate], ['Variabilní symbol', item.variableSymbol], ['Zpráva pro příjemce', item.message], ['Popis pro mě', item.description || item.name], ['Konstantní symbol', item.constantSymbol], ['Specifický symbol', item.specificSymbol], ['Platby v případě úmrtí', item.death || 'Neprovádět'], ['ID trvalého příkazu', item.orderId]] : [['Z účtu', from], ['Příjemce', item.recipient], ['Název povolení inkasa', item.name], ['Limit inkasa', item.amount], ['Období', item.frequency], ['Platnost od', item.date], ['Platnost do', item.endDate]];
       document.getElementById('auth-detail-fields').innerHTML = rows.map(([label,value]) => `<div class="auth-detail-field"><span>${escapeHtml(label)}</span><strong>${escapeHtml(value || '—')}</strong></div>`).join('');
-      document.getElementById('auth-detail-fields').insertAdjacentHTML('afterbegin', `<div class="auth-detail-field"><span>Stav autorizace</span><strong>${escapeHtml(instrumentSigningStatus(tab, item))}</strong></div>`);
+      if (!payment) document.getElementById('auth-detail-fields').insertAdjacentHTML('afterbegin', `<div class="auth-detail-field"><span>Stav autorizace</span><strong>${escapeHtml(instrumentSigningStatus(tab, item))}</strong></div>`);
       const signing = instrumentSignatures(tab, item);
-      if (signing.signatures.length) document.getElementById('auth-detail-fields').insertAdjacentHTML('beforeend', `<div class="auth-detail-field"><span>Autorizovali</span><strong>${signing.signatures.map(signature => escapeHtml(signature.name) + ' · ' + escapeHtml(batchAuditDate(signature.at))).join('<br>')}</strong></div>`);
+      if (!payment && signing.signatures.length) document.getElementById('auth-detail-fields').insertAdjacentHTML('beforeend', `<div class="auth-detail-field"><span>Autorizovali</span><strong>${signing.signatures.map(signature => escapeHtml(signature.name) + ' · ' + escapeHtml(batchAuditDate(signature.at))).join('<br>')}</strong></div>`);
       updateAuthDetailSelection(id);
+    }
+    function openAuthItemAudit() {
+      const route = authDetailRoute();
+      if (route?.[1] === 'platby') goTo('autorizace-audit-platby-' + route[2]);
     }
     function authorizeAuthItemDetail() {
       const route = authDetailRoute(); if (route) goTo('autorizace-souhrn-' + route[1] + '-' + route[2]);
@@ -7563,21 +7603,26 @@ unicode: "eac3"
       return new Intl.DateTimeFormat('cs-CZ', { day: 'numeric', month: 'numeric', year: 'numeric', hour: '2-digit', minute: '2-digit', timeZone: 'Europe/Prague' }).format(new Date(value));
     }
 
+    function renderAuthorizationAudit({ created, events = [], cancelled, returnRoute, triggerId, emptyText }) {
+      const dialog = document.getElementById('batch-audit-dialog');
+      dialog.dataset.returnRoute = returnRoute;
+      dialog.dataset.triggerId = triggerId;
+      const row = event => `<div class="batch-audit-row"><span class="profile-role-icon" aria-hidden="true"><svg class="icon"><use href="#es-person"></use></svg></span><span class="profile-row-copy"><span>${escapeHtml(event.name || 'Autor není uložený')}</span><small>${escapeHtml(batchAuditDate(event.at))}</small></span></div>`;
+      document.getElementById('batch-audit-created').innerHTML = row(created || {});
+      document.getElementById('batch-audit-authorized').innerHTML = events.length ? events.map(row).join('') : `<p class="batch-audit-empty">${escapeHtml(emptyText)}</p>`;
+      document.getElementById('batch-audit-cancelled-card').hidden = !cancelled;
+      document.getElementById('batch-audit-cancelled').innerHTML = cancelled ? row(cancelled) : '';
+    }
     function renderBatchAudit(id) {
       const batch = allOverviewBatches().find(batch => batch.id === id);
       if (!batch) return;
       document.getElementById('batch-audit-dialog').dataset.batchId = id;
-      const row = event => `<div class="batch-audit-row"><span class="profile-role-icon" aria-hidden="true"><svg class="icon"><use href="#es-person"></use></svg></span><span class="profile-row-copy"><span>${escapeHtml(event.name || 'Autor není uložený')}</span><small>${escapeHtml(batchAuditDate(event.at))}</small></span></div>`;
-      document.getElementById('batch-audit-created').innerHTML = row(batch.created || {});
       const recorded = batch.authorizations || [];
       const events = [...recorded, ...(batch.signedBy || []).filter(name => !recorded.some(event => event.name === name)).map(name => ({ name }))];
-      document.getElementById('batch-audit-authorized').innerHTML = events.length ? events.map(row).join('') : '<p class="batch-audit-empty">Dávku zatím nikdo neautorizoval.</p>';
-      document.getElementById('batch-audit-cancelled-card').hidden = !batch.cancelled;
-      document.getElementById('batch-audit-cancelled').innerHTML = batch.cancelled ? row(batch.cancelled) : '';
+      renderAuthorizationAudit({ created: batch.created, events, cancelled: batch.cancelled, returnRoute: 'davka-detail-' + id, triggerId: 'batch-audit-trigger', emptyText: 'Dávku zatím nikdo neautorizoval.' });
     }
-
     function closeBatchAudit() {
-      goTo('davka-detail-' + document.getElementById('batch-audit-dialog').dataset.batchId);
+      goTo(document.getElementById('batch-audit-dialog').dataset.returnRoute);
     }
 
     document.getElementById('batch-audit-dialog').addEventListener('cancel', event => { event.preventDefault(); closeBatchAudit(); });
@@ -8117,7 +8162,7 @@ unicode: "eac3"
           const amount = localStorage.getItem(paymentStorageKey('amount')) || '0';
           const currency = localStorage.getItem(paymentStorageKey('currency')) || 'Kč';
           localStorage.setItem('vavu_pending_payment', JSON.stringify({
-            authorizationId: newInstrumentId(), name: recipient, recipient, accountName: paymentAccount().name, accountNumber: paymentAccount().number, message: localStorage.getItem(paymentStorageKey('messageRecipient')) || '', description, variableSymbol: localStorage.getItem(paymentStorageKey('variableSymbol')) || '', constantSymbol: localStorage.getItem(paymentStorageKey('constantSymbol')) || '', specificSymbol: localStorage.getItem(paymentStorageKey('specificSymbol')) || '',
+            authorizationId: newInstrumentId(), created: { name: localStorage.getItem('vavu_selected_user'), at: new Date().toISOString() }, name: recipient, recipient, accountName: paymentAccount().name, accountNumber: paymentAccount().number, message: localStorage.getItem(paymentStorageKey('messageRecipient')) || '', description, variableSymbol: localStorage.getItem(paymentStorageKey('variableSymbol')) || '', constantSymbol: localStorage.getItem(paymentStorageKey('constantSymbol')) || '', specificSymbol: localStorage.getItem(paymentStorageKey('specificSymbol')) || '',
             desc: description,
             date: '28. 8. 2026',
             amount: formatStandingOrderAmount(amount, currency)

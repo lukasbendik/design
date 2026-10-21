@@ -1,3 +1,21 @@
+# Detail platby k autorizaci a sdílený Detail autorizace – 21. 10. 2026
+
+final result: passed
+
+Zdroj: /home/lukinab/.codex/attachments/4426d635-3b68-410d-938c-028543b72f45/codex-clipboard-bad2e2f2-6d99-4cc5-9080-a182c1a424f7.png (750 × 2263 px → 375 × 1131,5 CSS px). Implementace /home/lukinab/Projects/UX/.vavu-profile-qa/payment-detail-reference.png (750 × 2400 px, viewport 375 × 1200 CSS px, DPR 2). Testovací platba odpovídá copy předlohy; účet plátce zůstává existující skutečný účet prototypu, ilustrativní účet z obrázku nebyl přepsán do produkčních dat. Společné plné porovnání payment-detail-comparison.png normalizuje oba snímky na šířku 375 CSS px, zdroj doplněn okolním canvasem na 1200 px. Texty i detail sekce jsou v porovnání čitelné, další výřez není nutný.
+
+Oprava [P1]: stav a podpisy byly součástí údajů platby a chyběl Detail autorizace. Nyní pořadí hlavní karta → samostatný stavový pruh → šest údajů o platbě → vstup Detail autorizace → akce. Mobilní akce podle předlohy na plnou šířku bez obalu se zaoblením. Prázdný podpisový stav Čeká se na autorizaci., po prvním podpisu Částečně autorizováno. Datum v hlavní kartě doplněno o den v týdnu, údaje ze skutečné položky zachovány.
+
+Reálně znovu použit tentýž DOM dialog #batch-audit-dialog, stejné nadpisy Vytvořeno / Autorizovali / případně Zrušeno, stejný renderer řádků a styly jako dávky. Sdílený renderAuthorizationAudit přijímá data platby či dávky a návratovou cestu. Události podpisu se čtou ze skutečného instrumentSignatures. Nové platby ukládají autora a čas vytvoření při vytvoření položky; historické položky bez metadat mají existující pravdivý fallback Autor není uložený / Datum není uložené. Žádná historická událost se nevymýšlí.
+
+Iterace [P2]: první společné porovnání odhalilo rozdílné mezery a akční kartu; layout upraven podle předlohy. Playwright následně zachytil překrývání gridových řádků na 320px při nižším viewportu: grid-auto-rows:max-content, přirozená výška detailu a vypnutí shrinku zajistily čitelné karty bez překryvu. Nový detail resetuje hlavní scroll, otevření/zavření auditu uchovává místo a vrací fokus. Po opravě nový screenshot, společné porovnání a celý interakční test prošly. Bez zbývajících P0/P1/P2. P3: drobné rozdíly rasterizace a stávajících DS ikon vůči screenshotu.
+
+Pět povrchů: stávající Inter a DS hierarchie; šířka 343px ve 375px viewportu, gap16 a struktura podle reference; povrchy, děliče a stavový pruh z DS tokenů; skutečné existující ikony a sdílený dialog; přesné popisky a dynamické údaje. Podpisová a autorizační logika zachována. TP/inkasa mají stávající datový detail, nový vizuál a auditní vstup jsou omezeny na platby.
+
+Playwright/Chrome: seznam → detail → audit před podpisem i po skutečném prvním podpisu přes nový potvrzovací modál; autor, datum a jedna reálná událost podpisu. Refresh auditu, browser zpět/vpřed, Escape/křížek, návrat fokusu, persistentní označení i smazání položky. 320/390/1024 bez overflow, bez překryvu klikacího vstupu a bez JS chyb. Screenshoty payment-audit-empty.png a payment-audit-signed.png. Regrese sdíleného dialogu u nepodepsané, podepsané dvěma osobami a zrušené dávky, včetně refresh/Escape/fokusu, prošla. Samostatná reálná tvorba CHF platby z EUR účtu potvrdila uložené created.name/at a zachování účtu i měny.
+
+---
+
 # Stav částečné autorizace – 21. 10. 2026
 
 final result: passed
