@@ -6777,13 +6777,13 @@ unicode: "eac3"
       return { key, fingerprint, signatures: valid, policy };
     }
     function instrumentAuthorizationMessage(outcome) {
-      return { success: 'Autorizováno', partial: 'Čeká na podpis dalšího uživatele.', duplicate: 'Už jste autorizovali. Čeká na podpis dalšího uživatele.', forbidden: 'Nemáte oprávnění autorizovat na tomto účtu.', error: 'Chyba při autorizaci', rejected: 'Akci jsme museli odmítnout', gone: 'Autorizováno nebo smazáno' }[outcome] || '';
+      return { success: 'Autorizováno', partial: 'Částečně autorizováno', duplicate: 'Už jste autorizovali. Částečně autorizováno.', forbidden: 'Nemáte oprávnění autorizovat na tomto účtu.', error: 'Chyba při autorizaci', rejected: 'Akci jsme museli odmítnout', gone: 'Autorizováno nebo smazáno' }[outcome] || '';
     }
     function instrumentSigningStatus(kind, item) {
       const state = instrumentSignatures(kind, item);
       if (!state.policy.names.includes(localStorage.getItem('vavu_selected_user'))) return instrumentAuthorizationMessage('forbidden');
       if (state.signatures.length >= state.policy.count) return 'Autorizováno';
-      return state.signatures.length ? 'Částečně autorizováno' : 'K autorizaci';
+      return state.signatures.length ? instrumentAuthorizationMessage('partial') : 'K autorizaci';
     }
     function signInstrument(kind, item, expectedPolicy) {
       const state = instrumentSignatures(kind, item);
@@ -7721,7 +7721,7 @@ unicode: "eac3"
       if (batch.status === 'Čekající') return { label: 'Čekající', message: 'Čeká na zpracování.', row: 'Čeká na zpracování', canSign: false, canDelete: false };
       const signed = instrumentSignatures('batch', batch).signatures.map(signature => signature.name);
       const user = localStorage.getItem('vavu_selected_user') || '';
-      return { label: 'K autorizaci', message: signed.length ? 'Čeká na další podpis.' : 'Čeká na podpisy.', row: 'Čeká na autorizaci dávky', canSign: instrumentPolicy(batch).names.includes(user) && !signed.includes(user), canAttemptSign: true, canDelete: true };
+      return { label: signed.length ? instrumentAuthorizationMessage('partial') : 'K autorizaci', message: signed.length ? instrumentAuthorizationMessage('partial') : 'Čeká na podpisy.', row: signed.length ? instrumentAuthorizationMessage('partial') : 'Čeká na autorizaci dávky', canSign: instrumentPolicy(batch).names.includes(user) && !signed.includes(user), canAttemptSign: true, canDelete: true };
     }
 
     function renderExistingBatchDetail(id) {
