@@ -1,3 +1,17 @@
+# Samostatné podepisování – Podepisující, 22. 10. 2026
+
+final result: passed
+
+Rozsah: Změnit u Samostatného podepisování v #nastaveni-autorizace-czk/eur otevírá novou obrazovku #nastaveni-samostatni-podepisujici-czk/eur. Nadpis Podepisující, skutečný účet, všech šest existujících osob v pořadí reference, checkboxy, role, přesný text „Vybraní uživatelé budou podepisovat samostatně.“, křížek a spodní Uložit. Výběr je oddělený od společných podpisů, uložený po účtech; draft přežije refresh, zavření jej zahodí. Uložit se vrací do původního běžného nebo kontrolního kontextu. Uložený výběr se promítá do nastavení, přehledu účtu a souhrnu změn. Jde o rozšíření editoru nastavení; provádění plateb ani implementace uživatelských limitů nejsou součástí této úpravy.
+
+Zdroj vizuální pravdy: /home/lukinab/.codex/attachments/53edae54-f8ad-4ff8-a54e-fb145e1d7ed1/codex-clipboard-8f4c1224-4b16-4ac5-9a47-76ba44909f50.png (2080 × 1554 px). Pro porovnání normalizováno /2 na1040 ×777; toto je normalizace zdrojového obrázku, nikoli tvrzení o jeho známém fyzickém DPR. Implementace: /home/lukinab/Projects/UX/.vavu-solo-qa/solo-1040.png (1040 ×777 CSS i px, DPR1), solo-desktop.png (1280 ×1000) a solo-{320,390}.png (320/390 ×844). Stav: šest nezaškrtnutých osob, CZK účet. comparison-full.png a comparison-card.png obsahují společné porovnání zdroje a implementace; oba otevřeny a vizuálně posouzeny.
+
+Pět povrchů: stávající Inter a DS váhy/velikosti; stejný rytmus šesti řádků, spacing16, zaoblení8, panel a spodní lišta (šířka z existujícího narrow sloupce); stávající DS barvy, červené checkboxy a CTA; existující knihovní ikona zavření a asset zaškrtnutí, bez nových obrazových náhražek; přesné názvy osob a role, pouze název/číslo účtu nahrazeny skutečným kontextem prototypu. Bez P0/P1/P2 v rozsahu požadavku. Drobné rozdíly šířky panelu a okolního rámu oproti zdroji zachovávají stávající DS scaffold. Žádné vizuální opravy po finálním porovnání nebyly potřeba.
+
+Playwright/Brave: skutečný vstup přes Změnit, šest checkboxů, zaškrtnutí více osob, refresh rozepsaného výběru, Uložit a vykreslení osob, zavření bez uložení, browser zpět/vpřed, prázdný výběr, různé volby CZK/EUR bez přenosu, kontext kontroly s návratem, společný editor zachová samostatný výběr, souhrn rozpozná samotnou změnu samostatných podpisů. Poslední checkbox i Uložit dostupné na320px;320/390 bez horizontálního přetečení. Bez JS chyb. Syntaxe inline skriptů ověřena node --check. Doplňková regresní kontrola ověřila zachování historického částečného podpisu při chybějícím starém poli solo a zneplatnění podpisů při skutečné změně solo.
+
+---
+
 # Účet / Autorizace – jediné Změnit, 22. 10. 2026
 
 final result: passed
