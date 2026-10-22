@@ -2017,6 +2017,56 @@
       text-decoration: none;
     }
 
+    /* Savings account detail uses the same desktop scaffold and Golem components. */
+    .savings-detail-screen.active { align-items: flex-start; }
+    .savings-detail-screen .center-column { min-width: 0; padding: 0; gap: var(--space-24); }
+    .savings-detail-screen .back-btn { margin: 0 0 var(--space-8); }
+    .savings-account-top { display: flex; align-items: baseline; justify-content: space-between; gap: var(--space-16); }
+    .savings-account-top h1 { margin: 0; font: var(--content-body-primary-bold); }
+    .savings-account-top > span, .savings-account-heading p { color: var(--content-tertiary); font: var(--content-body-primary); }
+    .savings-account-top > span { white-space: nowrap; }
+    .savings-account-balance { font: var(--headings-title-primary); margin-top: var(--space-16); white-space: nowrap; }
+    .savings-account-balance > span { font: var(--headings-title-tertiary); }
+    .savings-account-heading p { margin: var(--space-4) 0 0; }
+    .savings-detail-screen .savings-management { margin: 0; }
+    .savings-detail-screen .filter-navigation-item { margin: 0; }
+    .savings-management .profile-row { min-height: 72px; font: var(--content-body-primary); }
+    .savings-management .profile-row > .icon:first-child, .savings-navigation .profile-row > .icon:first-child { color: var(--interactive-primary); }
+    .savings-management .profile-row > .icon:last-child, .savings-navigation .profile-row > .icon:last-child { margin-left: auto; width: 16px; color: var(--content-primary); }
+    .savings-tools { gap: var(--space-24); padding-top: var(--space-48); }
+    .savings-tools > * { width: 100%; }
+    .savings-navigation { border: 1px solid var(--background-divider); border-radius: var(--radius-md); overflow: hidden; }
+    .savings-navigation .profile-row { position: relative; background: transparent; min-height: 72px; font: var(--content-body-primary); }
+    .savings-navigation .profile-row + .profile-row::before { content: ''; position: absolute; top: 0; left: var(--space-16); right: 0; border-top: 1px solid var(--background-divider); }
+    .savings-detail-screen .list-item { gap: var(--space-16); padding: var(--space-24) 0; }
+    .savings-detail-screen .item-icon { border-radius: var(--radius-sm); font: var(--content-body-primary); flex: none; }
+    .savings-detail-screen .list-item-right { white-space: nowrap; font: var(--content-body-primary-bold); }
+    .savings-detail-screen .account-transaction-date { margin-top: var(--space-24); }
+    .savings-detail-screen .account-transaction-group:first-child .account-transaction-date { margin-top: 0; }
+    .savings-direction-icon { width: 14px; height: 14px; filter: brightness(0) invert(1); }
+    .savings-direction-incoming { transform: rotate(180deg); }
+    .savings-all-payments { align-self: center; width: auto; }
+    .savings-dialog { position: relative; width: min(560px, calc(100vw - 32px)); max-height: calc(100dvh - 32px); border: 0; border-radius: var(--radius-md); padding: var(--space-32) var(--space-24) var(--space-24); color: var(--content-primary); background: var(--background-body); }
+    .savings-dialog::backdrop { background: rgba(0,0,0,.4); }
+    .savings-dialog h2 { margin: 0 0 var(--space-24); padding-right: var(--space-24); }
+    .savings-dialog-close { position: absolute; top: var(--space-8); right: var(--space-8); }
+    .savings-dialog .payment-control { margin-bottom: var(--space-16); }
+    .savings-dialog form > .btn { width: 100%; margin-top: var(--space-16); }
+    .savings-dialog a { color: var(--content-primary); }
+    @media(max-width:900px) {
+      body.savings-detail-mode .sidebar, body.savings-detail-mode .topbar, body.savings-detail-mode .chatbot-btn { display: none; }
+      body.savings-detail-mode .main-content { margin: 0; width: 100%; height: 100dvh; padding: var(--space-16); }
+      .savings-detail-screen.active { flex-direction: column; gap: var(--space-24); min-height: min-content; }
+      .savings-detail-screen .center-column, .savings-tools { width: 100%; }
+      .savings-tools { padding-top: 0; padding-bottom: var(--space-24); }
+      .savings-account-top { align-items: flex-start; flex-direction: column; gap: var(--space-4); }
+      .savings-account-balance { font: var(--headings-title-secondary); }
+      .savings-account-balance > span { font: var(--headings-title-quaternary); }
+      .savings-detail-screen .list-item { align-items: flex-start; flex-wrap: wrap; gap: var(--space-8); }
+      .savings-detail-screen .list-item-left { min-width: 0; }
+      .savings-detail-screen .list-item-right { margin-left: auto; }
+    }
+
     /* ---- Přepínání obrazovek ---- */
     .screen {
       display: none;
@@ -3837,13 +3887,13 @@ unicode: "eac3"
             </div>
           </div>
 
-          <div class="card cursor-pointer" onclick="goTo('ucet-detail')">
+          <div class="card cursor-pointer" role="button" tabindex="0" onclick="goTo('sporeni-detail')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();goTo('sporeni-detail')}">
             <div class="flex-row-between" style="margin-bottom: 12px;">
               <span class="t-content-body-secondary-bold" style="color: var(--color-content-secondary);">Spořicí účet Business</span>
               <span class="t-content-body-secondary" style="color: var(--color-content-tertiary);">326683764/0100</span>
             </div>
             <div class="flex-row-between">
-              <span class="t-headings-title-secondary" style="font-weight: 600; white-space: nowrap;">11 490<span class="t-headings-headline-primary">,20 Kč</span></span>
+              <span class="t-headings-title-secondary" style="font-weight: 600; white-space: nowrap;">1 850 000<span class="t-headings-headline-primary">,00 Kč</span></span>
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--color-content-tertiary)" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg>
             </div>
           </div>
@@ -3955,7 +4005,7 @@ unicode: "eac3"
           <section class="reference-panel" aria-labelledby="savings-heading">
             <h1 class="reference-panel__heading" id="savings-heading">Spořicí účet Business</h1>
             <div class="reference-divider"></div>
-            <button class="reference-product" type="button" onclick="goTo('ucet-detail')"><span class="reference-product__top"><span class="reference-product__name">Spořicí účet Business</span><span class="reference-product__num">326683764/0100</span></span><span class="reference-product__content"><span class="reference-product__body"><span class="reference-product__value">11 490<small>,20 Kč</small></span></span><span class="reference-product__caret"><svg class="icon icon--caret" aria-hidden="true"><use href="#es-caret-right"></use></svg></span></span></button>
+            <button class="reference-product" type="button" onclick="goTo('sporeni-detail')"><span class="reference-product__top"><span class="reference-product__name">Spořicí účet Business</span><span class="reference-product__num">326683764/0100</span></span><span class="reference-product__content"><span class="reference-product__body"><span class="reference-product__value">1 850 000<small>,00 Kč</small></span></span><span class="reference-product__caret"><svg class="icon icon--caret" aria-hidden="true"><use href="#es-caret-right"></use></svg></span></span></button>
             <div class="reference-divider"></div>
             <button class="item reference-action-item" type="button" onclick="alert('Nabídky pro spoření nejsou v tomto prototypu rozpracované.')"><span class="item__text"><span class="item__label">Nabídky pro vaše spoření</span></span><span class="item__caret"><svg class="icon icon--caret" aria-hidden="true"><use href="#es-caret-right"></use></svg></span></button>
           </section>
@@ -3986,6 +4036,41 @@ unicode: "eac3"
           </section>
         </div>
       </div>
+
+      <section class="screen savings-detail-screen" id="screen-sporeni-detail" aria-labelledby="savings-detail-title">
+        <div class="center-column">
+          <button class="back-btn" type="button" onclick="goTo('prehled')"><svg class="icon" aria-hidden="true"><use href="#es-caret-left"></use></svg>Přehled</button>
+          <header class="savings-account-heading">
+            <div class="savings-account-top"><h1 id="savings-detail-title">Spořicí účet Business</h1><span>326683764/0100</span></div>
+            <div class="savings-account-balance">1 850 000<span>,00 Kč</span></div>
+            <p>Úroková sazba 3 % p. a.</p><p>Vodárny, a.s.</p>
+          </header>
+          <div class="profile-card savings-management"><button type="button" class="profile-row" onclick="openSavingsInfo('management')"><svg class="icon" aria-hidden="true"><use href="#es-listed-items"></use></svg><span>Detail a správa účtu</span><svg class="icon" aria-hidden="true"><use href="#es-caret-right"></use></svg></button></div>
+          <button class="item filter-navigation-item" type="button" onclick="openSavingsFilter()"><span class="item__text"><span class="filter-navigation-item__label">Filtr</span></span><svg class="filter-sliders-icon" viewBox="0 0 32 32" aria-hidden="true">
+              <line x1="3" y1="10" x2="29" y2="10"></line>
+              <circle cx="14" cy="10" r="6"></circle>
+              <line x1="3" y1="22" x2="29" y2="22"></line>
+              <circle cx="22" cy="22" r="6"></circle>
+            </svg></button>
+          <div id="savings-transactions"></div>
+          <button type="button" class="btn btn--secondary savings-all-payments" onclick="goTo('sporeni-platby')">Všechny platby</button>
+        </div>
+        <aside class="right-column savings-tools">
+          <div class="overview-actions">
+            <button type="button" class="card-action-red card-action-red--control" onclick="startSavingsPayment(false)"><svg class="icon" aria-hidden="true"><use href="#es-send-payment"></use></svg><span>Nová platba</span></button>
+            <button type="button" class="card-action-red card-action-red--control" onclick="startSavingsPayment(true)"><svg class="icon" aria-hidden="true"><use href="#es-moneybox"></use></svg><span>Vklad</span></button>
+          </div>
+          <div class="savings-navigation"><button type="button" class="profile-row" onclick="openSavingsInfo('about')"><svg class="icon" aria-hidden="true"><use href="#es-info"></use></svg><span>O účtu</span><svg class="icon" aria-hidden="true"><use href="#es-caret-right"></use></svg></button><button type="button" class="profile-row" onclick="openSavingsInfo('interest')"><svg class="icon" aria-hidden="true"><use href="#es-pay-me"></use></svg><span>Úročení</span><svg class="icon" aria-hidden="true"><use href="#es-caret-right"></use></svg></button><button type="button" class="profile-row" onclick="openSavingsInfo('statements')"><svg class="icon" aria-hidden="true"><use href="#es-pdf"></use></svg><span>Výpisy a potvrzení</span><svg class="icon" aria-hidden="true"><use href="#es-caret-right"></use></svg></button><button type="button" class="profile-row" onclick="openSavingsInfo('permissions')"><svg class="icon" aria-hidden="true"><use href="#es-person"></use></svg><span>Oprávnění k účtu</span><svg class="icon" aria-hidden="true"><use href="#es-caret-right"></use></svg></button></div>
+        </aside>
+      </section>
+      <section class="screen savings-detail-screen" id="screen-sporeni-platby" aria-labelledby="savings-all-title"><div class="center-column"><button class="back-btn" type="button" onclick="goTo('sporeni-detail')"><svg class="icon" aria-hidden="true"><use href="#es-caret-left"></use></svg>Spořicí účet Business</button><h1 id="savings-all-title" class="t-headings-title-secondary">Všechny platby</h1><button type="button" class="item filter-navigation-item" onclick="openSavingsFilter()"><span class="item__text"><span class="filter-navigation-item__label">Filtr</span></span><svg class="filter-sliders-icon" viewBox="0 0 32 32" aria-hidden="true">
+              <line x1="3" y1="10" x2="29" y2="10"></line>
+              <circle cx="14" cy="10" r="6"></circle>
+              <line x1="3" y1="22" x2="29" y2="22"></line>
+              <circle cx="22" cy="22" r="6"></circle>
+            </svg></button><div id="savings-all-transactions"></div></div></section>
+      <dialog id="savings-info-dialog" class="savings-dialog" aria-labelledby="savings-info-title"><button type="button" class="profile-close savings-dialog-close" onclick="this.closest('dialog').close()" aria-label="Zavřít"><svg class="icon" aria-hidden="true"><use href="#es-close"></use></svg></button><h2 id="savings-info-title" class="t-headings-title-tertiary"></h2><div id="savings-info-content"></div></dialog>
+      <dialog id="savings-filter-dialog" class="savings-dialog" aria-labelledby="savings-filter-title"><form onsubmit="applySavingsFilter(event)"><button type="button" class="profile-close savings-dialog-close" onclick="this.closest('dialog').close()" aria-label="Zavřít"><svg class="icon" aria-hidden="true"><use href="#es-close"></use></svg></button><h2 id="savings-filter-title" class="t-headings-title-tertiary">Filtr plateb</h2><label class="payment-control"><span class="payment-control-label">Hledat v platbách</span><input id="savings-filter-query" type="search" placeholder="Název nebo zpráva" oninput="saveSavingsFilterDraft()"></label><label class="payment-control"><span class="payment-control-label">Typ platby</span><select id="savings-filter-direction" onchange="saveSavingsFilterDraft()"><option value="all">Všechny platby</option><option value="prichozi">Příchozí platby</option><option value="odchozi">Odchozí platby</option></select></label><button class="btn btn--primary" type="submit">Použít filtr</button><button class="btn btn--secondary" type="button" onclick="resetSavingsFilter()">Zrušit filtr</button></form></dialog>
 
       <!-- ================= SCREEN 5: BĚŽNÝ ÚČET DETAIL ================= -->
       <div class="screen" id="screen-ucet-detail">
@@ -4754,7 +4839,7 @@ unicode: "eac3"
       <section class="screen payment-screen" id="screen-nova-platba" aria-labelledby="nova-platba-title">
         <header class="payment-flow-header">
           <span class="header-spacer"></span>
-          <button class="payment-header-action" type="button" onclick="goTo('prehled')" aria-label="Zavřít novou platbu">
+          <button class="payment-header-action" type="button" onclick="finishPayment()" aria-label="Zavřít novou platbu">
             <svg class="icon icon--close" aria-hidden="true"><use href="#es-close"></use></svg>
           </button>
         </header>
@@ -4765,7 +4850,7 @@ unicode: "eac3"
 
             <label class="item" id="payment-account-picker">
               <span class="item__text">
-                <select id="payment-account-select" class="item__label" aria-label="Účet pro platbu" onchange="selectPaymentAccount(this.value)"><option value="czk">Účet CZK</option><option value="eur">Účet EUR</option></select>
+                <select id="payment-account-select" class="item__label" aria-label="Účet pro platbu" onchange="selectPaymentAccount(this.value)"><option value="czk">Účet CZK</option><option value="eur">Účet EUR</option><option value="savings">Spořicí účet Business</option></select>
                 <span class="item__caption" id="payment-account-number"></span>
                 <span class="item__caption">Vodárny, a.s.</span>
               </span>
@@ -4839,7 +4924,7 @@ unicode: "eac3"
             Zpět
           </button>
           <span class="header-spacer"></span>
-          <button class="payment-header-action" type="button" onclick="goTo('prehled')" aria-label="Zavřít novou platbu">
+          <button class="payment-header-action" type="button" onclick="finishPayment()" aria-label="Zavřít novou platbu">
             <svg class="icon icon--close" aria-hidden="true"><use href="#es-close"></use></svg>
           </button>
         </header>
@@ -5385,7 +5470,7 @@ unicode: "eac3"
     const PERMISSION_SIGNING_SCREENS = ['czk', 'eur'].flatMap(key => ['podpis-opravneni-uvod-' + key, 'podpis-opravneni-potvrzeni-' + key, 'podpis-opravneni-dokument-' + key, 'podpis-opravneni-vysledek-' + key]);
     const USER_DETAIL_SCREENS = [...COMPANY_USERS.map((_, index) => String(index)), 'current'].flatMap(id => ['uzivatel-' + id, 'uzivatel-opravneni-' + id]);
     const COMPANY_ACCESS_SCREENS = [...USER_DETAIL_SCREENS, ...PERMISSION_SIGNING_SCREENS, ...REVIEW_SCREENS, ...REVIEW_EDIT_SCREENS, ...AUTHORIZATION_FLOW_SCREENS, ...PERMISSION_EDITOR_SCREENS, ...PERMISSION_FLOW_SCREENS, ...COMPANY_ACCOUNT_SCREENS, 'pristupy-k-uctum', 'pristupy-opravneni', 'pristupy-uzivatele', 'pristupy-podpisova-pravidla'];
-    const SCREENS = ['vyber-subjektu', 'prehled-autorizaci', 'autorizace-davek', 'autorizace-platby', 'autorizace-tp', 'autorizace-inkasa', ...COMPANY_ACCESS_SCREENS, 'profil-firma', 'profil', 'login', 'prehled', 'extra', 'karty', 'pujcky', 'sporeni', 'investice', 'pojisteni', 'ucet-detail', 'tp-inkasa', 'tp-inkasa-s-autorizaci', 'autorizace', 'vsechny-platby', 'platba-detail', 'nova-platba', 'nova-platba-detaily', 'platba-vysledek', 'tp-novy', 'tp-detaily', 'tp-souhrn', 'tp-vysledek', 'inkaso-nove', 'inkaso-souhrn', 'inkaso-vysledek', 'davkove-platby', 'davkove-platby-detail', 'davkove-platby-souhrn', 'davkove-platby-vysledek'];
+    const SCREENS = ['vyber-subjektu', 'prehled-autorizaci', 'autorizace-davek', 'autorizace-platby', 'autorizace-tp', 'autorizace-inkasa', ...COMPANY_ACCESS_SCREENS, 'profil-firma', 'profil', 'login', 'prehled', 'sporeni-detail', 'sporeni-platby', 'extra', 'karty', 'pujcky', 'sporeni', 'investice', 'pojisteni', 'ucet-detail', 'tp-inkasa', 'tp-inkasa-s-autorizaci', 'autorizace', 'vsechny-platby', 'platba-detail', 'nova-platba', 'nova-platba-detaily', 'platba-vysledek', 'tp-novy', 'tp-detaily', 'tp-souhrn', 'tp-vysledek', 'inkaso-nove', 'inkaso-souhrn', 'inkaso-vysledek', 'davkove-platby', 'davkove-platby-detail', 'davkove-platby-souhrn', 'davkove-platby-vysledek'];
     // Seznam modálních hashů
     const MODALS = ['povoleni-inkasa-modal', 'autorizace-potvrzeni-modal', 'no-items-modal', 'payment-signature-modal', 'filter-modal'];
 
@@ -5524,6 +5609,77 @@ unicode: "eac3"
       }
     };
 
+    const SAVINGS_ACCOUNT = { name: 'Spořicí účet Business', number: '326683764/0100', balance: '1 850 000,00 Kč', transactions: [] };
+    (function() {
+      const yesterday = new Date(getPragueCalendarDate() + 'T12:00:00Z'); yesterday.setUTCDate(yesterday.getUTCDate() - 1);
+      const recent = yesterday.toISOString().slice(0, 10);
+      const rows = [
+        ['Včera', 'Účet CZK', 'Převod do rezervy na obnovu sítě', 450000, recent],
+        ['Včera', 'Provozní rezerva', 'Odložení volných provozních prostředků', 250000, recent],
+        ['Včera', 'Účet CZK', 'Doplnění provozních prostředků', -100000, recent],
+        ['3. 7.', 'Účet CZK', 'Rezerva na obnovu vodovodní sítě', 1250000, '2026-07-03'],
+        ['2. 7.', 'Účet CZK', 'Převod do provozní rezervy', 200000, '2026-07-02'],
+        ['1. 7.', 'Účet CZK', 'Čerpání provozní rezervy', -200000, '2026-07-01']
+      ];
+      SAVINGS_ACCOUNT.transactions = rows.map(([date, name, note, amount, iso], index) => [date, name, note, new Intl.NumberFormat('cs-CZ', {minimumFractionDigits:2, maximumFractionDigits:2}).format(amount) + ' Kč', amount > 0 ? 'prichozi' : 'odchozi', iso, Math.abs(amount), { id: 'seed_savings_' + index, recipient: ACCOUNT_DATA.czk.number, message: note, description: note, ...demoAuthorizationHistory(iso) }]);
+    })();
+    function accountData(key) { return key === 'savings' ? SAVINGS_ACCOUNT : ACCOUNT_DATA[key]; }
+    function savingsFilter() { try { return JSON.parse(localStorage.getItem('vavu_savings_filter') || '{"query":"","direction":"all"}'); } catch (_) { return {query:'',direction:'all'}; } }
+    function renderSavingsDetail(all = false) {
+      const filter = savingsFilter();
+      const rows = getAccountTransactions('savings').filter(row => (filter.direction === 'all' || row[4] === filter.direction) && (!filter.query || (row[1] + ' ' + row[2]).toLocaleLowerCase('cs').includes(filter.query.toLocaleLowerCase('cs'))));
+      const visible = all || filter.query || filter.direction !== 'all' ? rows : rows.slice(0, 4);
+      const groups = new Map(); visible.forEach(row => { if (!groups.has(row[0])) groups.set(row[0], []); groups.get(row[0]).push(row); });
+      const target = document.getElementById(all ? 'savings-all-transactions' : 'savings-transactions');
+      target.replaceChildren();
+      for (const [date, transactions] of groups) {
+        const group = document.createElement('section'); group.className = 'account-transaction-group';
+        const title = document.createElement('div'); title.className = 'account-transaction-date t-content-body-secondary'; title.textContent = date;
+        const card = document.createElement('div'); card.className = 'card';
+        const list = document.createElement('div'); list.className = 'list-container';
+        for (const row of transactions) {
+          const [,name,note,amount,direction,,,item] = row;
+          const income = direction === 'prichozi';
+          const button = document.createElement('div'); button.className = 'list-item'; button.tabIndex = 0; button.setAttribute('role','button');
+          button.innerHTML = `<div class="list-item-left"><span class="item-icon">${escapeHtml(name.charAt(0))}<span class="badge-icon ${income ? 'badge-success' : 'badge-alert'}"><img class="savings-direction-icon ${income ? 'savings-direction-incoming' : ''}" src="assets/authorization-arrow-right.svg" alt=""></span></span><span class="item-title t-content-body-primary-bold">${escapeHtml(name)}</span></div><span class="list-item-right ${income ? 'amount-positive' : ''}">${escapeHtml(amount)}</span>`;
+          const open = () => viewDetail(name, item.recipient, amount, date, direction, note, item, 'savings');
+          button.onclick = open; button.onkeydown = event => { if (event.key === 'Enter' || event.key === ' ') {event.preventDefault();open();} };
+          list.append(button);
+        }
+        card.append(list); group.append(title,card); target.append(group);
+      }
+      if (!visible.length) target.innerHTML = '<div class="profile-card"><p class="auth-detail-field">Žádné platby neodpovídají filtru.</p></div>';
+    }
+    function openSavingsFilter() {
+      let draft = savingsFilter(); try { draft = JSON.parse(localStorage.getItem('vavu_savings_filter_draft')) || draft; } catch (_) {}
+      document.getElementById('savings-filter-query').value = draft.query;
+      document.getElementById('savings-filter-direction').value = draft.direction;
+      document.getElementById('savings-filter-dialog').showModal();
+    }
+    function saveSavingsFilterDraft() { localStorage.setItem('vavu_savings_filter_draft', JSON.stringify({query:document.getElementById('savings-filter-query').value.trim(),direction:document.getElementById('savings-filter-direction').value})); }
+    function applySavingsFilter(event) { event.preventDefault();saveSavingsFilterDraft();localStorage.setItem('vavu_savings_filter', localStorage.getItem('vavu_savings_filter_draft'));document.getElementById('savings-filter-dialog').close();renderSavingsDetail(currentScreen === 'sporeni-platby'); }
+    function resetSavingsFilter() { localStorage.removeItem('vavu_savings_filter');localStorage.removeItem('vavu_savings_filter_draft');document.getElementById('savings-filter-dialog').close();renderSavingsDetail(currentScreen === 'sporeni-platby'); }
+    function startSavingsPayment(deposit) {
+      localStorage.setItem('vavu_payment_return', 'sporeni-detail');
+      startNewPayment(deposit ? 'czk' : 'savings');
+      if (deposit) { document.getElementById('payment-recipient').value = SAVINGS_ACCOUNT.number;localStorage.setItem(paymentStorageKey('recipient'),SAVINGS_ACCOUNT.number); }
+    }
+    function openSavingsInfo(kind) {
+      const rows = pairs => pairs.map(([label,value]) => `<div class="auth-detail-field"><span>${escapeHtml(label)}</span><strong>${escapeHtml(value)}</strong></div>`).join('');
+      const content = {
+        management: ['Detail a správa účtu', rows([['Název účtu',SAVINGS_ACCOUNT.name],['Číslo účtu',SAVINGS_ACCOUNT.number],['Majitel','Vodárny, a.s.'],['Měna','CZK'],['Účel rezervy','Provoz a obnova vodovodní sítě']])],
+        about: ['O účtu', rows([['Produkt',SAVINGS_ACCOUNT.name],['Číslo účtu',SAVINGS_ACCOUNT.number],['Majitel','Vodárny, a.s.'],['Dostupný zůstatek',SAVINGS_ACCOUNT.balance]])],
+        interest: ['Úročení', rows([['Úroková sazba','3 % p. a.'],['Pásmo bonusového úročení','Od 200 000 Kč do 30 000 000 Kč'],['Připisování úroků','Měsíčně']]) + '<p><a href="https://www.kb.cz/cs/podnikatele-a-firmy/sporeni-a-investice/sporici-ucet-business" target="_blank" rel="noopener">Podmínky Spořicího účtu Business</a></p>'],
+        permissions: ['Oprávnění k účtu', rows([['Kateřina H.','Autorizace plateb'],['Šárka B.','Autorizace plateb'],['Způsob autorizace','2 společné podpisy']])],
+        statements: ['Výpisy a potvrzení', rows([['Účet',SAVINGS_ACCOUNT.number],['Přehled plateb','Ukázkové transakce spořicího účtu']]) + '<button type="button" class="btn btn--secondary" onclick="downloadSavingsStatement()">Stáhnout přehled (CSV)</button>']
+      }[kind];
+      document.getElementById('savings-info-title').textContent = content[0];document.getElementById('savings-info-content').innerHTML = content[1];document.getElementById('savings-info-dialog').showModal();
+    }
+    function downloadSavingsStatement() {
+      const csv = '\uFEFFDatum;Název;Zpráva;Částka\n' + getAccountTransactions('savings').map(row => [row[0],row[1],row[2],row[3]].map(value => '"' + String(value).replace(/"/g,'""') + '"').join(';')).join('\n');
+      const url = URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8'}));const link=document.createElement('a');link.href=url;link.download='sporici-ucet-business-platby.csv';link.click();setTimeout(()=>URL.revokeObjectURL(url),1000);
+    }
+
     function openAccount(accountKey) {
       localStorage.setItem('vavu_selected_account', accountKey);
       renderAccountDetail(accountKey);
@@ -5597,7 +5753,7 @@ unicode: "eac3"
       }).sort((a, b) => String(b.at || '').localeCompare(String(a.at || '')));
     }
     function getAccountTransactions(accountKey) {
-      const account = ACCOUNT_DATA[accountKey];
+      const account = accountData(accountKey);
       if (!account) return [];
       const currency = accountKey === 'eur' ? 'EUR' : 'CZK';
       const posted = completedAccountInstruments('platby', accountKey).map(entry => {
@@ -5954,6 +6110,8 @@ unicode: "eac3"
       }
       if (targetScreenId === 'platba-detail' && paymentDetailData()) renderPaymentDetail(paymentDetailData());
       if (targetScreenId === 'prehled') { renderOverviewSummary(); renderOverviewAuthorizationBadge(); }
+      document.body.classList.toggle('savings-detail-mode', ['sporeni-detail','sporeni-platby'].includes(targetScreenId));
+      if (['sporeni-detail','sporeni-platby'].includes(targetScreenId)) renderSavingsDetail(targetScreenId === 'sporeni-platby');
       if (targetScreenId === 'ucet-detail') {
         renderAccountDetail();
       }
@@ -6044,7 +6202,7 @@ unicode: "eac3"
         menuId = 'nav-karty';
       } else if (screenId === 'pujcky') {
         menuId = 'nav-pujcky';
-      } else if (screenId === 'sporeni') {
+      } else if (['sporeni','sporeni-detail','sporeni-platby'].includes(screenId)) {
         menuId = 'nav-sporeni';
       } else if (screenId === 'investice') {
         menuId = 'nav-investice';
@@ -6052,6 +6210,7 @@ unicode: "eac3"
         menuId = 'nav-pojisteni';
       }
       
+      if (screenId === 'platba-detail' && paymentDetailData()?.accountKey === 'savings') menuId = 'nav-sporeni';
       const menuEl = document.getElementById(menuId);
       if (menuEl) {
         menuEl.classList.add('active');
@@ -6754,7 +6913,7 @@ unicode: "eac3"
     // The prototype uses the saved account permissions and explicit signer selection.
     function newInstrumentId() { return Array.from(crypto.getRandomValues(new Uint8Array(16)), byte => byte.toString(16).padStart(2, '0')).join(''); }
     function instrumentAccountKey(item) {
-      return Object.keys(ACCOUNT_DATA).find(key => ACCOUNT_DATA[key].number === item.accountNumber) || (Object.hasOwn(ACCOUNT_DATA, item.accountKey) ? item.accountKey : item.accountNumber ? null : 'czk');
+      return (item.accountNumber === SAVINGS_ACCOUNT.number || item.accountKey === 'savings' ? 'savings' : null) || Object.keys(ACCOUNT_DATA).find(key => ACCOUNT_DATA[key].number === item.accountNumber) || (Object.hasOwn(ACCOUNT_DATA, item.accountKey) ? item.accountKey : item.accountNumber ? null : 'czk');
     }
     function instrumentPolicy(item) {
       const key = instrumentAccountKey(item);
@@ -7260,7 +7419,7 @@ unicode: "eac3"
       document.getElementById('detail-category').textContent = 'Nezatříděné';
 
       if (transactionItem) {
-        document.getElementById('detail-from-account').textContent = ACCOUNT_DATA[accountKey].name + '\n' + ACCOUNT_DATA[accountKey].number;
+        document.getElementById('detail-from-account').textContent = accountData(accountKey).name + '\n' + accountData(accountKey).number;
         document.getElementById('detail-msg-recipient').textContent = transactionItem.message || '—';
         document.getElementById('detail-msg-me').textContent = transactionItem.description || transactionItem.desc || '—';
         document.getElementById('detail-vs').textContent = transactionItem.variableSymbol || '—';
@@ -7407,7 +7566,7 @@ unicode: "eac3"
       }
     }
 
-    function startNewPayment() {
+    function startNewPayment(accountKeyOverride = null) {
       // A new payment is a new draft; returning from its next step keeps the draft.
       document.querySelectorAll('[data-payment-key]').forEach(field => {
         field.value = '';
@@ -7415,7 +7574,8 @@ unicode: "eac3"
       });
       localStorage.removeItem(paymentStorageKey('account'));
       localStorage.removeItem(paymentStorageKey('timing'));
-      const accountKey = paymentAccountKey();
+      const accountKey = accountKeyOverride || paymentAccountKey();
+      if (!accountKeyOverride) localStorage.removeItem('vavu_payment_return');
       localStorage.setItem(paymentStorageKey('account'), accountKey);
       const currency = document.getElementById('payment-currency');
       currency.value = accountKey === 'eur' ? 'EUR' : 'Kč';
@@ -7439,11 +7599,11 @@ unicode: "eac3"
     const PAYMENT_FX = {"USD":{"currencyUnit":1,"nonCashBuy":20.7909,"nonCashSell":22.4785,"validDate":"2026-10-21T15:10:00"},"EUR":{"currencyUnit":1,"nonCashBuy":23.3526,"nonCashSell":25.2481,"validDate":"2026-10-21T15:10:00"},"GBP":{"currencyUnit":1,"nonCashBuy":27.8356,"nonCashSell":30.0948,"validDate":"2026-10-21T15:10:00"},"AUD":{"currencyUnit":1,"nonCashBuy":14.5534,"nonCashSell":15.7346,"validDate":"2026-10-21T15:10:00"},"CAD":{"currencyUnit":1,"nonCashBuy":14.8005,"nonCashSell":16.0017,"validDate":"2026-10-21T15:10:00"},"DKK":{"currencyUnit":1,"nonCashBuy":3.1243,"nonCashSell":3.3779,"validDate":"2026-10-21T15:10:00"},"HUF":{"currencyUnit":100,"nonCashBuy":6.4099,"nonCashSell":6.9301,"validDate":"2026-10-21T15:10:00"},"CHF":{"currencyUnit":1,"nonCashBuy":25.2407,"nonCashSell":27.2893,"validDate":"2026-10-21T15:10:00"},"JPY":{"currencyUnit":100,"nonCashBuy":13.1561,"nonCashSell":14.2239,"validDate":"2026-10-21T15:10:00"},"NOK":{"currencyUnit":1,"nonCashBuy":2.2129,"nonCashSell":2.3925,"validDate":"2026-10-21T15:10:00"},"PLN":{"currencyUnit":1,"nonCashBuy":5.3477,"nonCashSell":5.7817,"validDate":"2026-10-21T15:10:00"},"RON":{"currencyUnit":1,"nonCashBuy":4.3832,"nonCashSell":4.739,"validDate":"2026-10-21T15:10:00"},"SEK":{"currencyUnit":1,"nonCashBuy":2.1028,"nonCashSell":2.2734,"validDate":"2026-10-21T15:10:00"},"CNY":{"currencyUnit":1,"nonCashBuy":3.0389,"nonCashSell":3.4407,"validDate":"2026-10-21T15:10:00"},"TRY":{"currencyUnit":100,"nonCashBuy":39.3851,"nonCashSell":47.8949,"validDate":"2026-10-21T15:10:00"}};
     function paymentAccountKey() {
       const key = localStorage.getItem(paymentStorageKey('account')) || localStorage.getItem('vavu_selected_account');
-      return Object.hasOwn(ACCOUNT_DATA, key) ? key : 'czk';
+      return accountData(key) ? key : 'czk';
     }
-    function paymentAccount() { return ACCOUNT_DATA[paymentAccountKey()]; }
+    function paymentAccount() { return accountData(paymentAccountKey()); }
     function selectPaymentAccount(key) {
-      if (!Object.hasOwn(ACCOUNT_DATA, key)) return;
+      if (!accountData(key)) return;
       localStorage.setItem(paymentStorageKey('account'), key);
       document.getElementById('payment-currency').value = key === 'eur' ? 'EUR' : 'Kč';
       localStorage.setItem(paymentStorageKey('currency'), document.getElementById('payment-currency').value);
@@ -8349,7 +8509,7 @@ unicode: "eac3"
     }
 
     function finishPayment() {
-      goTo('prehled');
+      goTo(localStorage.getItem('vavu_payment_return') || 'prehled');
     }
   </script>
 

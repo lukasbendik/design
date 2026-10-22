@@ -1,3 +1,17 @@
+# Spořicí účet Business – detail podle reference, 22. 10. 2026
+
+final result: passed
+
+Rozsah: nový detail `#sporeni-detail`, plná historie `#sporeni-platby`, vstupy z Přehledu a sekce Spoření. Zachován společný desktopový rámec prototypu, topbar, navigace a Golem DS. Hlavička účtu se zůstatkem, sazbou a firmou, karta správy, filtr, denní skupiny plateb, dva červené ovladače a čtyři řádky pravého panelu navazují na dodanou referenci. Mobilní varianta skládá panely do jednoho sloupce.
+
+Zdroj: dodaný screenshot `codex-clipboard-7bbd8ae1-dcdc-406b-9fa8-dd4272046fdf.png` (2400 × 1936 px včetně vnějšího rámu zařízení). Zdroj a aktuální implementace byly společně otevřeny a vizuálně porovnány. Aplikační obsah je přizpůsoben již existujícímu rámci VAVU 1440 px; vnější rám zařízení se nereprodukuje. Finální důkazy: `/home/lukinab/Projects/UX/.vavu-savings-qa/detail-{320,390,768,1024,1440}.png`.
+
+Iterace [P2]: první porovnání zachytilo červené koncové šipky a nadbytečnou mezeru za kartou správy. Opraveny barvy šipek a specificita resetu marginu karty. Po opravě pořízeny nové snímky a znovu společně porovnány s referencí; bez zbývajících P0/P1/P2. Drobné rozdíly hustoty vůči screenshotu vycházejí ze stávajícího rámce a tokenů aplikace. Obsah se podle zadání liší: Vodárny, a.s., existující číslo účtu 326683764/0100, ukázkový zůstatek 1 850 000 Kč. Sazba 3 % p. a. a pásmo 200 tisíc–30 milionů Kč odpovídají aktuální stránce KB ověřené v této konverzaci; nejsou převzaty ze staršího screenshotu (2,75 %).
+
+Funkční kontrola Playwright/Chrome: vstup z obou přehledů, shodný zůstatek ve všech třech místech, aktivní navigace Spoření, čtyři poslední a šest všech ukázkových transakcí. Otevření transakce, správný spořicí účet a Detail autorizace, návrat. Filtrování směru, persistentní stav po refreshi a reset; informační dialogy a CSV se skutečnými novými řádky. Vklad předvyplní příjemce a CZK zdroj; Nová platba projde skutečným formulářem a prvním podpisem se zdrojem Spořicí účet Business. Návrat z platebního flow je zpět na spoření. Šířky 320/390/768/1024/1440 bez přetečení a koncových oddělovačů. Bez JS chyb. Regrese autorizace Evou u dávky, platby, TP a inkasa, změn práv a oddělení CZK/EUR účtů prošla.
+
+---
+
 # Detail autorizace v platbě, TP a inkasu – 21. 10. 2026
 
 final result: passed
