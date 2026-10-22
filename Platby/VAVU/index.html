@@ -5406,10 +5406,10 @@ unicode: "eac3"
     const DIRECT_DEBIT_STORAGE_KEY = 'vavu_direct_debit_draft';
     const BATCH_OVERVIEW_STORAGE_KEY = 'vavu_imported_batches';
     const DEFAULT_BATCHES = [
-      { date: '10. 9.', name: 'Faktury_8/2026', id: '12DE4125GW', created: { name: 'Kateřina H.', at: '2026-09-10T10:22:00+02:00' }, status: 'K autorizaci', statusType: 'pending', payments: 48, amount: '327 239,00 Kč' },
-      { date: '10. 9.', name: '20250421', id: 'SFAW5124', authorizations: [{ name: 'Kateřina H.', at: '2026-09-10T10:38:00+02:00' }, { name: 'Šárka B.', at: '2026-09-10T18:51:00+02:00' }], created: { name: 'Kateřina H.', at: '2026-09-10T10:22:00+02:00' }, status: '', statusType: 'success', payments: 150, amount: '58 267,00 Kč' },
-      { date: '3. 9.', name: '2026_Doplatky', id: '13IH512D2', authorizations: [{ name: 'Kateřina H.', at: '2026-09-03T10:38:00+02:00' }, { name: 'Šárka B.', at: '2026-09-03T18:51:00+02:00' }], created: { name: 'Kateřina H.', at: '2026-09-03T10:22:00+02:00' }, status: 'Čekající', statusType: 'pending', payments: 24, amount: '41 000,00 Kč' },
-      { date: '3. 9.', name: '20260903-fakturace', id: '1025I252M', cancelled: { name: 'Šárka B.', at: '2026-09-03T11:38:00+02:00' }, created: { name: 'Kateřina H.', at: '2026-09-03T10:22:00+02:00' }, status: 'Zrušeno', statusType: 'alert', payments: 50, amount: '20 525,12 Kč' }
+      { date: '10. 9.', name: 'Servis_a_material_9_2026', id: '12DE4125GW', created: { name: 'Kateřina H.', at: '2026-09-10T10:22:00+02:00' }, status: 'K autorizaci', statusType: 'pending', payments: 48, amount: '327 239,00 Kč' },
+      { date: '10. 9.', name: 'Obnova_vodovodni_site', id: 'SFAW5124', authorizations: [{ name: 'Kateřina H.', at: '2026-09-10T10:38:00+02:00' }, { name: 'Šárka B.', at: '2026-09-10T18:51:00+02:00' }], created: { name: 'Kateřina H.', at: '2026-09-10T10:22:00+02:00' }, status: '', statusType: 'success', payments: 150, amount: '58 267,00 Kč' },
+      { date: '3. 9.', name: 'Energie_a_provoz_9_2026', id: '13IH512D2', authorizations: [{ name: 'Kateřina H.', at: '2026-09-03T10:38:00+02:00' }, { name: 'Šárka B.', at: '2026-09-03T18:51:00+02:00' }], created: { name: 'Kateřina H.', at: '2026-09-03T10:22:00+02:00' }, status: 'Čekající', statusType: 'pending', payments: 24, amount: '41 000,00 Kč' },
+      { date: '3. 9.', name: 'Armatury_a_potrubi_9_2026', id: '1025I252M', cancelled: { name: 'Šárka B.', at: '2026-09-03T11:38:00+02:00' }, created: { name: 'Kateřina H.', at: '2026-09-03T10:22:00+02:00' }, status: 'Zrušeno', statusType: 'alert', payments: 50, amount: '20 525,12 Kč' }
     ];
 
     // Calendar boundaries follow the business account's Czech time zone.
@@ -6835,14 +6835,14 @@ unicode: "eac3"
       const account = ACCOUNT_DATA.czk;
       const base = { accountName: account.name, accountNumber: account.number };
       const paymentDemo = [
-        { id: 'platba_auth_1', name: 'Tesco', recipient: '129000/0100', desc: 'Vršovická 3827/11, Praha 10', date: '10. 7. 2026', amount: '2 430,30 Kč', message: 'Nákup v Tesco', description: 'Vršovická 3827/11, Praha 10', variableSymbol: '756589870144', constantSymbol: '0144', specificSymbol: '123456789' },
-        { id: 'platba_auth_2', name: 'Alza.cz', recipient: '4835477/0100', desc: 'Nákup elektroniky', date: '9. 7. 2026', amount: '15 800,00 Kč', message: 'Nákup elektroniky', description: 'Alza.cz', variableSymbol: '5856214' },
-        { id: 'platba_auth_3', name: 'Shell Praha', recipient: '51255/0800', desc: 'Čerpací stanice Shell', date: '8. 7. 2026', amount: '1 500,00 Kč', message: 'Pohonné hmoty', description: 'Čerpací stanice Shell' }
+        { id: 'platba_auth_1', name: 'Grundfos s.r.o.', recipient: '129000/0100', desc: 'Servis čerpadel – čerpací stanice Káraný', date: '10. 7. 2026', amount: '58 430,30 Kč', message: 'Servis čerpadel – čerpací stanice Káraný', description: 'Oprava a revize čerpadel', variableSymbol: '2026070144', constantSymbol: '0308', specificSymbol: '123456789' },
+        { id: 'platba_auth_2', name: 'ČEVAK a.s.', recipient: '4835477/0100', desc: 'Laboratorní rozbory pitné vody', date: '9. 7. 2026', amount: '24 800,00 Kč', message: 'Laboratorní rozbory pitné vody – červen 2026', description: 'Pravidelná kontrola kvality vody', variableSymbol: '202606058' },
+        { id: 'platba_auth_3', name: 'Hydroservis Praha s.r.o.', recipient: '51255/0800', desc: 'Dodávka armatur pro vodovodní síť', date: '8. 7. 2026', amount: '86 500,00 Kč', message: 'Dodávka armatur DN 200', description: 'Obnova vodovodní sítě', variableSymbol: '202607032' }
       ];
       const orderDemo = [
-        { id: 'tp_auth_1', name: 'Nájem bytu', recipient: '4835477/0100', amount: '15 000,00 Kč', date: '10. 7. 2026', variableSymbol: '5856214', message: 'Nájem bytu', description: 'Nájem bytu', constantSymbol: '0385', specificSymbol: '0144', orderId: 'SWG123456789' },
-        { id: 'tp_auth_2', name: 'ČEZ Distribuce', recipient: '623423/0100', amount: '3 200,00 Kč', date: '8. 7. 2026', message: 'Záloha za elektřinu', description: 'ČEZ Distribuce', orderId: 'SWG123456790' },
-        { id: 'tp_auth_3', name: 'Stavební spoření', recipient: '76234523/0100', amount: '2 000,00 Kč', date: '5. 7. 2026', message: 'Stavební spoření', description: 'Stavební spoření', orderId: 'SWG123456791' }
+        { id: 'tp_auth_1', name: 'Nájem provozního areálu', recipient: '4835477/0100', amount: '28 000,00 Kč', date: '10. 7. 2026', variableSymbol: '202607001', message: 'Nájem provozního areálu a skladu', description: 'Provozní areál – měsíční nájem', constantSymbol: '0308', specificSymbol: '0144', orderId: 'SWG123456789' },
+        { id: 'tp_auth_2', name: 'Zálohy na elektřinu – ČOV', recipient: '623423/0100', amount: '42 000,00 Kč', date: '8. 7. 2026', message: 'Měsíční záloha na elektřinu pro ČOV', description: 'Energie pro čistírnu odpadních vod', orderId: 'SWG123456790' },
+        { id: 'tp_auth_3', name: 'Servis vodárenské technologie', recipient: '76234523/0100', amount: '18 500,00 Kč', date: '5. 7. 2026', message: 'Pravidelný servis úpravny vody', description: 'Měsíční servis a údržba technologie', orderId: 'SWG123456791' }
       ].map(item => ({ frequency: 'Měsíčně', desc: 'Měsíčně', endDate: 'Nikdy', death: 'Neprovádět', ...item }));
       let items = tab === 'platby' ? paymentDemo : tab === 'tp' ? orderDemo : [];
       try {
@@ -6856,7 +6856,7 @@ unicode: "eac3"
       } catch (_) {}
       if (tab === 'inkasa') {
         if (localStorage.getItem('inkaso_saved_for_auth') === '1') items.push({ id: 'dynamic', authorizationId: localStorage.getItem('vavu_dynamic_inkaso_id'), ...(localStorage.getItem('vavu_dynamic_inkaso_created') ? { created: JSON.parse(localStorage.getItem('vavu_dynamic_inkaso_created')) } : {}), name: localStorage.getItem('inkaso_nazev') || 'Povolení inkasa', recipient: localStorage.getItem('inkaso_prijemce'), desc: localStorage.getItem('inkaso_obdobi'), frequency: localStorage.getItem('inkaso_obdobi'), date: localStorage.getItem('inkaso_platnost_od'), endDate: localStorage.getItem('inkaso_platnost_do') || 'Neomezeně', amount: localStorage.getItem('inkaso_limit') });
-        if (localStorage.getItem('inkaso_internet_deleted') !== '1') items.push({ id: 'internet', name: 'Internet', recipient: '4835477/0100', desc: 'Měsíčně', frequency: 'Měsíčně', date: '10. 7. 2026', endDate: 'Neomezeně', amount: '350,00 Kč' });
+        if (localStorage.getItem('inkaso_internet_deleted') !== '1') items.push({ id: 'internet', name: 'Vodafone Business', recipient: '4835477/0100', desc: 'Datové připojení a telemetrie čerpacích stanic', frequency: 'Měsíčně', date: '10. 7. 2026', endDate: 'Neomezeně', amount: '4 890,00 Kč' });
       }
       let deleted = [];
       try { deleted = JSON.parse(localStorage.getItem(tab === 'tp' ? 'deleted_tp' : 'deleted_platby') || '[]'); } catch (_) {}
