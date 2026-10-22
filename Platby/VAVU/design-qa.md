@@ -10,6 +10,8 @@ Iterace [P2]: první porovnání zachytilo červené koncové šipky a nadbyteč
 
 Funkční kontrola Playwright/Chrome: vstup z obou přehledů, shodný zůstatek ve všech třech místech, aktivní navigace Spoření, čtyři poslední a šest všech ukázkových transakcí. Otevření transakce, správný spořicí účet a Detail autorizace, návrat. Filtrování směru, persistentní stav po refreshi a reset; informační dialogy a CSV se skutečnými novými řádky. Vklad předvyplní příjemce a CZK zdroj; Nová platba projde skutečným formulářem a prvním podpisem se zdrojem Spořicí účet Business. Návrat z platebního flow je zpět na spoření. Šířky 320/390/768/1024/1440 bez přetečení a koncových oddělovačů. Bez JS chyb. Regrese autorizace Evou u dávky, platby, TP a inkasa, změn práv a oddělení CZK/EUR účtů prošla.
 
+Návaznost autorizací: částečně podepsaná nová platba ze spoření se v přehledu autorizací zobrazuje pod Spořicím účtem Business se správným počtem položek. Kategorie se počítají ze zdrojových dat pro konkrétní účet, bez přepínání skrytých tabů. Ověřeno po skutečném prvním podpisu.
+
 ---
 
 # Detail autorizace v platbě, TP a inkasu – 21. 10. 2026

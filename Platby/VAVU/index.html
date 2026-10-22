@@ -8073,17 +8073,8 @@ unicode: "eac3"
       return count + (count === 1 ? ' položka' : count >= 2 && count <= 4 ? ' položky' : ' položek');
     }
 
-    function authorizationCategoryCounts() {
-      const current = currentAuthTab;
-      const result = {};
-      for (const tab of ['platby', 'tp', 'inkasa']) {
-        currentAuthTab = tab;
-        renderDynamicContent();
-        result[tab] = document.querySelectorAll('#auth-items-list .auth-item-card').length;
-      }
-      currentAuthTab = current;
-      renderDynamicContent();
-      return result;
+    function authorizationCategoryCounts(accountKey = null) {
+      return Object.fromEntries(['platby', 'tp', 'inkasa'].map(tab => [tab, authorizationItems(tab).filter(item => !accountKey || instrumentAccountKey(item) === accountKey).length]));
     }
 
     function renderAuthorizationHub(route) {
@@ -8103,11 +8094,13 @@ unicode: "eac3"
       document.getElementById('hub-subject-limit').textContent = subject.availableLimit ? 'Z vlastního limitu subjektu: ' + subject.availableLimit : 'Bez nastaveného limitu subjektu';
       const batches = authorizableBatches();
       document.getElementById('hub-batch-count').textContent = authorizationItemCount(batches.length);
-      const counts = subject.id === 'vodarny' ? authorizationCategoryCounts() : { platby: 0, tp: 0, inkasa: 0 };
-      document.getElementById('hub-account-categories').innerHTML = (subject.accounts || []).map((key, index) => {
-        const account = ACCOUNT_DATA[key];
+      const savingsPending = subject.id === 'vodarny' && Object.values(authorizationCategoryCounts('savings')).some(count => count > 0);
+      const accountKeys = [...(subject.accounts || []), ...(savingsPending ? ['savings'] : [])];
+      document.getElementById('hub-account-categories').innerHTML = accountKeys.map(key => {
+        const account = accountData(key);
         if (!account) return '';
-        const rows = index === 0 ? [['Platby', 'platby'], ['Trvalé příkazy', 'tp'], ['Inkasa', 'inkasa']].filter(([, tab]) => counts[tab] > 0) : [];
+        const counts = subject.id === 'vodarny' ? authorizationCategoryCounts(key) : { platby: 0, tp: 0, inkasa: 0 };
+        const rows = [['Platby', 'platby'], ['Trvalé příkazy', 'tp'], ['Inkasa', 'inkasa']].filter(([, tab]) => counts[tab] > 0);
         return `<div class="profile-card hub-account"><h2 class="hub-card-heading">${escapeHtml(account.name)}<small>${escapeHtml(account.number)}</small></h2>${rows.length ? rows.map(([label, tab]) => `<button class="profile-row" type="button" onclick="goTo('autorizace-${tab}')"><span class="profile-row-copy"><span>${label}</span><small>${authorizationItemCount(counts[tab])}</small></span>${caret}</button>`).join('') : '<p class="hub-empty">Žádné požadavky k autorizaci.</p>'}</div>`;
       }).join('');
       const groups = new Map();
