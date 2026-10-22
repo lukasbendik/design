@@ -643,6 +643,9 @@
     .overview-actions { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-4); }
     .overview-actions .card-action-red--control { border-radius: var(--radius-xl); }
     .overview-actions .overview-action-icon { width: 24px; height: 24px; filter: brightness(0) invert(1); }
+    #overview-authorization-button { position: relative; }
+    .overview-authorization-badge { position: absolute; top: var(--space-8); right: var(--space-8); width: var(--space-24); height: var(--space-24); display: grid; place-items: center; border-radius: var(--radius-full); background: var(--background-surface); color: var(--interactive-primary); font: var(--content-body-primary-bold); line-height: 1; }
+    .overview-authorization-badge[hidden] { display: none; }
 
     /* Tlačítka */
     .btn {
@@ -3853,7 +3856,7 @@ unicode: "eac3"
         <div class="right-column">
           <div class="overview-actions">
             <button class="card-action-red card-action-red--control" type="button" onclick="startNewPayment()"><svg class="icon" aria-hidden="true"><use href="#es-send-payment"></use></svg><span>Nová platba</span></button>
-            <button class="card-action-red card-action-red--control" type="button" onclick="startAuthorization()"><img class="overview-action-icon" src="assets/authorization-lock.svg" width="24" height="24" alt=""><span>Autorizace</span></button>
+            <button class="card-action-red card-action-red--control" id="overview-authorization-button" type="button" onclick="startAuthorization()"><img class="overview-action-icon" src="assets/authorization-lock.svg" width="24" height="24" alt=""><span>Autorizace</span><span class="overview-authorization-badge" id="overview-authorization-badge" aria-hidden="true" hidden>!</span></button>
           </div>
 
           <!-- Karta souhrn -->
@@ -5954,7 +5957,7 @@ unicode: "eac3"
         switchAuthTab(screenId === 'autorizace' ? (localStorage.getItem('vavu_auth_tab') || 'platby') : screenId.slice('autorizace-'.length));
       }
       if (targetScreenId === 'platba-detail' && paymentDetailData()) renderPaymentDetail(paymentDetailData());
-      if (targetScreenId === 'prehled') renderOverviewSummary();
+      if (targetScreenId === 'prehled') { renderOverviewSummary(); renderOverviewAuthorizationBadge(); }
       if (targetScreenId === 'ucet-detail') {
         renderAccountDetail();
       }
@@ -7902,6 +7905,12 @@ unicode: "eac3"
 
     function authorizableBatches() {
       return allOverviewBatches().filter(batch => (batch.subjectId || 'vodarny') === authorizationSubject()?.id && existingBatchState(batch).canAttemptSign);
+    }
+
+    function renderOverviewAuthorizationBadge() {
+      const pending = ['platby', 'tp', 'inkasa'].some(tab => authorizationItems(tab).length > 0) || allOverviewBatches().some(batch => existingBatchState(batch).canAttemptSign);
+      document.getElementById('overview-authorization-badge').hidden = !pending;
+      document.getElementById('overview-authorization-button').setAttribute('aria-label', pending ? 'Autorizace – čekají položky k autorizaci' : 'Autorizace');
     }
 
     function authorizationItemCount(count) {
