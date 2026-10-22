@@ -6737,7 +6737,7 @@ unicode: "eac3"
       if (document.getElementById('screen-auth-item-detail').classList.contains('active')) updateAuthDetailSelection(id);
     }
 
-    // Instrument signatures use the approved account settings, never an unsigned proposal.
+    // The prototype uses the saved account permissions and explicit signer selection.
     function newInstrumentId() { return Array.from(crypto.getRandomValues(new Uint8Array(16)), byte => byte.toString(16).padStart(2, '0')).join(''); }
     function instrumentAccountKey(item) {
       return Object.keys(ACCOUNT_DATA).find(key => ACCOUNT_DATA[key].number === item.accountNumber) || (Object.hasOwn(ACCOUNT_DATA, item.accountKey) ? item.accountKey : item.accountNumber ? null : 'czk');
@@ -6745,9 +6745,8 @@ unicode: "eac3"
     function instrumentPolicy(item) {
       const key = instrumentAccountKey(item);
       if (!key) return { key: null, count: 2, names: [] };
-      const settings = permissionAppliedSettings(key);
-      const selected = [...new Set(settings.signers.selected)].filter(index => settings.permissions[index]?.level === 3);
-      return { key, count: Math.max(2, Number(settings.signers.count) || 2), names: selected.map(index => COMPANY_USERS[index]?.name).filter(Boolean) };
+      const signers = getSigners(key);
+      return { key, count: signers.count, names: signers.selected.map(index => COMPANY_USERS[index]?.name).filter(Boolean) };
     }
     function instrumentFingerprint(item) {
       const { signedBy, authorizations, status, statusType, deleted, ...data } = item;
