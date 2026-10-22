@@ -3287,6 +3287,11 @@
     .profile-tabs button:focus-visible, .profile-close:focus-visible, button.profile-row:focus-visible, button.topbar-item:focus-visible { outline: 2px solid var(--content-primary); outline-offset: 2px; }
     @media (max-width: 551px) { .profile-wrap { padding: var(--padding-xl); } .profile-name { font: var(--headings-title-quaternary); } }
 
+    /* Název subjektu nad tarifem: CO Item Navigation bez kartového pozadí. */
+    .overview-company-link { border-radius: var(--border-radius-md); text-decoration: none; }
+    .overview-company-link .profile-outline-icon { fill: none; }
+    .overview-company-link .profile-row-copy { flex: 1; overflow-wrap: anywhere; }
+
     .company-header { display: flex; align-items: center; height: 32px; }
     .company-back { display: inline-flex; align-items: center; gap: var(--padding-sm); border: 0; padding: 0; background: none; color: var(--content-primary); font: var(--content-body-primary); cursor: pointer; }
     .company-back .icon { width: 8px; height: 16px; }
@@ -3596,7 +3601,7 @@ unicode: "eba8"
           </div>
           <div id="profile-panel-profiles" role="tabpanel" aria-labelledby="profile-tab-profiles" hidden>
             <div class="profile-card">
-              <button type="button" id="company-profile-trigger" onclick="goTo('profil-firma')" class="profile-row" data-ds-component="CO Item Navigation"><span class="profile-role-icon"><!--
+              <button type="button" id="company-profile-trigger" onclick="openCompanyProfile('profil')" class="profile-row" data-ds-component="CO Item Navigation"><span class="profile-role-icon"><!--
 tags: [community, neighborhood, district, town, city, buildings, houses, residential, building]
 category: Buildings
 version: "1.8"
@@ -3856,6 +3861,35 @@ unicode: "eac3"
         <div class="center-column">
           <h1 class="t-headings-title-secondary" style="margin-bottom: 24px;">Přehled</h1>
           
+          <a class="profile-row overview-company-link" id="overview-company-link" data-ds-component="CO Item Navigation" href="#profil-firma" onclick="event.preventDefault();openCompanyProfile('prehled')">
+            <span class="profile-role-icon"><!--
+tags: [community, neighborhood, district, town, city, buildings, houses, residential, building]
+category: Buildings
+version: "1.8"
+unicode: "ebf6"
+-->
+<svg class="icon profile-outline-icon" aria-hidden="true"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="1.5"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M8 9l5 5v7h-5v-4m0 4h-5v-7l5 -5m1 1v-6a1 1 0 0 1 1 -1h10a1 1 0 0 1 1 1v17h-8" />
+  <path d="M13 7l0 .01" />
+  <path d="M17 7l0 .01" />
+  <path d="M17 11l0 .01" />
+  <path d="M17 15l0 .01" />
+</svg>
+</span>
+            <span class="profile-row-copy"><span data-company-name>Vodárny, a.s.</span></span>
+            <svg class="icon profile-caret" aria-hidden="true"><use href="#es-caret-right"></use></svg>
+          </a>
+
           <!-- Spojený widget Tarif Komfort a Běžný účet (Grouped widget pattern) -->
           <div class="card-secondary" style="padding: 0; overflow: hidden; margin-bottom: 16px; box-shadow: var(--shadow-panel);">
             <!-- Horní část (Tarif Komfort) na šedém pozadí -->
@@ -6746,7 +6780,17 @@ unicode: "eac3"
       document.querySelectorAll('[data-company-ico]').forEach(el => el.textContent = 'IČO: ' + COMPANY_PROFILE.ico);
     }
 
+    function openCompanyProfile(from) {
+      localStorage.setItem('vavu_company_profile_return', from);
+      goTo('profil-firma');
+    }
+
     function backToCompanyProfiles() {
+      if (localStorage.getItem('vavu_company_profile_return') === 'prehled') {
+        goTo('prehled');
+        requestAnimationFrame(() => document.getElementById('overview-company-link').focus());
+        return;
+      }
       switchProfileTab('profiles');
       goTo('profil');
     }

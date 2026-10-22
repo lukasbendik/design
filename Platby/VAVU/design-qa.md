@@ -1,3 +1,19 @@
+# Název subjektu nad tarifem – 22. 10. 2026
+
+final result: passed
+
+Rozsah: navigační řádek Vodárny, a.s. nad Tarif Komfort Business na Přehledu. Otevírá existující #profil-firma; návrat se řídí vstupem (Přehled nebo Další profily), včetně refresh. Zachován stávající desktopový rámec a ostatní obsah VAVU. Mobilní reference slouží pro anatomii řádku, nikoli jako zadání přestavět celý Přehled.
+
+Zdroj: /home/lukinab/.codex/attachments/07fa9046-2085-42ae-b99d-1f011a270fa9/codex-clipboard-c301fd7b-ce6d-40cc-af2e-4b62c786f820.png (676 × 2372 px). Druhá reference v zadání odpovídá existujícímu firemnímu profilu. Implementace: /home/lukinab/Projects/UX/.vavu-subject-qa/overview-1280.png (1280 × 900 px, CSS viewport 1280 × 900, DPR1); company-390.png (390 × 844 px). comparison-full.png porovnává celý mobilní vzor a stávající desktopový rámec se záměrně odlišnou šířkou; comparison-row.png porovnává výřezy subjekt/tarif. Výřezy nejsou vydávány za pixelovou shodu: zdroj má jinou hustotu a obsah; implementace dodržuje DS a data existujícího prototypu.
+
+Pět povrchů: Inter a stávající CO Item Navigation typografie; řádek 64 px, odsazení16, mezera16 před tarifem, bez nového kartového pozadí; stávající DS barvy a radius8; skutečná existující Tabler ikona firmy sdílená s profilem a knihovní šipka (bez nových rastrových náhražek); název Vodárny, a.s. konzistentní se stávající firmou a cílovou obrazovkou, nevkládá se referenční Satuzi ani Jan Novák.
+
+Iterace P2: první render měl vyplněnou ikonu kvůli scoped CSS profilu a zbytečně zdvojenou mezeru za řádkem. Opraven fill:none pro existující outline ikonu a odstraněn margin navíc; finální capture a společné porovnání comparison-row.png ověřeny po opravě. V rozsahu nové komponenty bez zbývajících P0/P1/P2.
+
+Playwright v Brave: přihlášení, proklik celého řádku, Enter, správné jméno a IČO v cíli, refresh subjektu, Zpět na Přehled, browser zpět/vpřed, původní vstup přes profil a návrat na Další profily. Bez JS chyb. Cíl profilu se vejde na 320 i 390 px bez horizontálního přetečení. Známé omezení mimo rozsah: samotný starý Přehled na 390 px zachovává desktopový sidebar a ořezává obsah. Mobilní použitelnost celého Přehledu proto neprošla; úprava ji neřeší a uživatel byl informován.
+
+---
+
 # Spořicí účet Business – detail podle reference, 22. 10. 2026
 
 final result: passed
