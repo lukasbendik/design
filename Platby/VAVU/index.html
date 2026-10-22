@@ -5442,6 +5442,21 @@ unicode: "eac3"
       document.getElementById('overview-summary-income-progress').style.width = (maximum ? totals.income / maximum * 100 : 0) + '%';
     }
 
+    // Audit history belongs only to the original demo fixtures, never to user-created items.
+    function demoAuthorizationHistory(date, complete = true) {
+      const day = new Date(date + 'T12:00:00Z');
+      const at = hour => { const time = new Date(day); time.setUTCHours(hour, 0, 0, 0); return time.toISOString(); };
+      return {
+        created: { name: 'Kateřina H.', at: at(7) },
+        authorizations: complete ? [{ name: 'Kateřina H.', at: at(8) }, { name: 'Šárka B.', at: at(9) }] : []
+      };
+    }
+
+    function pendingDemoAuthorizationHistory(id) {
+      const dates = { platba_auth_1: '2026-07-10', platba_auth_2: '2026-07-09', platba_auth_3: '2026-07-08', tp_auth_1: '2026-07-10', tp_auth_2: '2026-07-08', tp_auth_3: '2026-07-05', internet: '2026-07-10' };
+      return dates[id] ? demoAuthorizationHistory(dates[id], false) : null;
+    }
+
     function buildTransactionHistory(currency) {
       const isEur = currency === 'EUR';
       const dates = ['Dnes', 'Včera', '26. 8.', '25. 8.', '22. 8.', '21. 8.', '20. 8.', '19. 8.', '18. 8.', '15. 8.'];
@@ -5494,7 +5509,8 @@ unicode: "eac3"
           `${isIncome ? '' : '-'}${formattedAmount} ${unit}`,
           isIncome ? 'prichozi' : 'odchozi',
           datesISO[Math.floor(index / 5)],
-          amount
+          amount,
+          isIncome ? null : { id: 'seed_payment_' + currency.toLowerCase() + '_' + index, message: transaction[1], description: transaction[1], ...demoAuthorizationHistory(datesISO[Math.floor(index / 5)]) }
         ];
       });
     }
@@ -5835,7 +5851,7 @@ unicode: "eac3"
         if (!document.getElementById('screen-platba-detail').classList.contains('active')) showScreenElements('platba-detail');
         const data = paymentDetailData();
         const entry = completedPaymentEntry(data.transactionItem);
-        renderAuthorizationAudit({ created: entry?.item.created || data.transactionItem?.created, events: entry?.signatures || [], returnRoute: 'platba-detail', triggerId: 'payment-detail-audit-trigger', emptyText: 'Údaje o autorizaci nejsou uložené.' });
+        renderAuthorizationAudit({ created: entry?.item.created || data.transactionItem?.created || data.demoAudit?.created || pendingDemoAuthorizationHistory(data.transactionItem?.id)?.created, events: entry?.signatures || data.transactionItem?.authorizations || data.demoAudit?.authorizations || [], returnRoute: 'platba-detail', triggerId: 'payment-detail-audit-trigger', emptyText: 'Údaje o autorizaci nejsou uložené.' });
         const scroller = document.querySelector('.main-content'); const top = scroller.scrollTop;
         if (!auditDialog.open) auditDialog.showModal();
         scroller.scrollTop = top; return;
@@ -5847,7 +5863,7 @@ unicode: "eac3"
         if (!entry) { goTo('tp-inkasa', true); return; }
         const detail = document.getElementById('screen-auth-item-detail');
         if (!detail.classList.contains('active') || detail.dataset.itemId !== id || detail.dataset.type !== tab || detail.dataset.completed !== 'true') showScreenElements('aktivni-detail-' + tab + '-' + id);
-        renderAuthorizationAudit({ created: entry.item.created, events: entry.signatures || [], returnRoute: 'aktivni-detail-' + tab + '-' + id, triggerId: 'auth-detail-audit-trigger', emptyText: 'Údaje o autorizaci nejsou uložené.' });
+        renderAuthorizationAudit({ created: entry.item.created || pendingDemoAuthorizationHistory(entry.item.id)?.created, events: entry.signatures || [], returnRoute: 'aktivni-detail-' + tab + '-' + id, triggerId: 'auth-detail-audit-trigger', emptyText: 'Údaje o autorizaci nejsou uložené.' });
         const scroller = document.querySelector('.main-content'); const top = scroller.scrollTop;
         if (!auditDialog.open) auditDialog.showModal();
         scroller.scrollTop = top; return;
@@ -5859,7 +5875,7 @@ unicode: "eac3"
         if (!item) { goTo(authDetailReturnRoute(tab, id), true); handleRouting(); return; }
         const detail = document.getElementById('screen-auth-item-detail');
         if (!detail.classList.contains('active') || detail.dataset.itemId !== id || detail.dataset.type !== tab || detail.dataset.completed === 'true') showScreenElements('autorizace-detail-' + tab + '-' + id);
-        renderAuthorizationAudit({ created: item.created, events: instrumentSignatures(tab, item).signatures, cancelled: item.cancelled, returnRoute: 'autorizace-detail-' + tab + '-' + id, triggerId: 'auth-detail-audit-trigger', emptyText: tab === 'platby' ? 'Platbu zatím nikdo neautorizoval.' : tab === 'tp' ? 'Trvalý příkaz zatím nikdo neautorizoval.' : 'Povolení inkasa zatím nikdo neautorizoval.' });
+        renderAuthorizationAudit({ created: item.created || pendingDemoAuthorizationHistory(item.id)?.created, events: instrumentSignatures(tab, item).signatures, cancelled: item.cancelled, returnRoute: 'autorizace-detail-' + tab + '-' + id, triggerId: 'auth-detail-audit-trigger', emptyText: tab === 'platby' ? 'Platbu zatím nikdo neautorizoval.' : tab === 'tp' ? 'Trvalý příkaz zatím nikdo neautorizoval.' : 'Povolení inkasa zatím nikdo neautorizoval.' });
         const scroller = document.querySelector('.main-content');
         const scrollTop = scroller.scrollTop;
         if (!auditDialog.open) auditDialog.showModal();
@@ -7197,7 +7213,8 @@ unicode: "eac3"
     }
     function viewDetail(name, account, amount, date, direction, note, transactionItem = null, accountKey = localStorage.getItem('vavu_selected_account') || 'czk') {
       const returnRoute = currentScreen === 'platba-detail' || currentScreen === 'platba-detail-autorizace' ? paymentDetailData()?.returnRoute || 'ucet-detail' : currentScreen;
-      const data = { name, account, amount, date, direction, note, transactionItem, accountKey, returnRoute, displayId: transactionItem?.authorizationId || transactionItem?.id || newInstrumentId() };
+      const demoAudit = !transactionItem && direction === 'odchozi' && ['Tesco', 'Josef Pokorný'].includes(name) ? demoAuthorizationHistory(getPragueCalendarDate()) : null;
+      const data = { name, account, amount, date, direction, note, transactionItem, demoAudit, accountKey, returnRoute, displayId: transactionItem?.authorizationId || transactionItem?.id || newInstrumentId() };
       localStorage.setItem('vavu_payment_detail', JSON.stringify(data));
       renderPaymentDetail(data); goTo('platba-detail');
     }
@@ -7300,7 +7317,10 @@ unicode: "eac3"
       const key = localStorage.getItem('vavu_selected_account') || 'czk';
       const base = { accountName: ACCOUNT_DATA[key].name, accountNumber: ACCOUNT_DATA[key].number, frequency: 'Měsíčně' };
       const seeded = tab === 'tp' ? [{ id: 'seed_tp_rent', name: 'Nájem provozovny', amount: '28 000,00 Kč' }, { id: 'seed_tp_energy', name: 'Zálohy na energie', amount: '12 500,00 Kč' }] : [{ id: 'seed_inkaso_vodafone', name: 'Vodafone Business', amount: '1 890,00 Kč' }, { id: 'seed_inkaso_cez', name: 'ČEZ Distribuce', amount: '8 750,00 Kč' }];
-      const entries = seeded.map(item => ({ item: { ...base, ...item }, signatures: [] }));
+      const entries = seeded.map((item, index) => {
+        const history = demoAuthorizationHistory(index === 0 ? '2026-07-01' : '2026-07-02');
+        return { item: { ...base, ...item, created: history.created }, signatures: history.authorizations };
+      });
       if (tab === 'inkasa' && localStorage.getItem('inkaso_approved') === '1') entries.push({ item: { ...base, id: 'legacy_inkaso', name: localStorage.getItem('inkaso_nazev') || 'Nové inkaso', frequency: localStorage.getItem('inkaso_obdobi') || 'Měsíčně', amount: localStorage.getItem('inkaso_limit') || '0,00 Kč', recipient: localStorage.getItem('inkaso_prijemce') }, signatures: [] });
       return [...entries, ...completedAccountInstruments(tab, key).map(entry => ({ ...entry, item: { ...entry.item, id: entry.item.authorizationId || entry.item.id } }))];
     }
