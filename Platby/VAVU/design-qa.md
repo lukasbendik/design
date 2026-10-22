@@ -1,3 +1,11 @@
+# Účet / Autorizace – jediné Změnit, 22. 10. 2026
+
+final result: passed
+
+Odstraněna dvě sekční tlačítka Změnit z přehledu autorizace účtu (#pristupy-ucet-czk/eur). Ponecháno jediné primární tlačítko v dolní liště, které spouští startPermissionFlow(). Editační průvodce zachován. Zdroj: dodaný screenshot codex-clipboard-7a8d1d9e-c3c4-4c82-99b6-b21f251367c2.png. Důkaz: /home/lukinab/Projects/UX/.vavu-subject-qa/account-authorization-single-change.png. Playwright/Brave ověřil právě jedno viditelné Změnit na obou účtech, jeho skutečný vstup na Jak to proběhne, zachování aktivní záložky po refreshi a absenci chyb konzole. Vizuálně beze změny typografie, ikon, spacingu a dat sekcí; odstraněny jen požadované dvě akce.
+
+---
+
 # Název subjektu nad tarifem – 22. 10. 2026
 
 final result: passed
