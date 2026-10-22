@@ -5445,12 +5445,12 @@ unicode: "eac3"
     }
 
     // Audit history belongs only to the original demo fixtures, never to user-created items.
-    function demoAuthorizationHistory(date, complete = true) {
+    function demoAuthorizationHistory(date, complete = true, author = 'Kateřina H.', signers = ['Kateřina H.', 'Šárka B.']) {
       const day = new Date(date + 'T12:00:00Z');
       const at = hour => { const time = new Date(day); time.setUTCHours(hour, 0, 0, 0); return time.toISOString(); };
       return {
-        created: { name: 'Kateřina H.', at: at(7) },
-        authorizations: complete ? [{ name: 'Kateřina H.', at: at(8) }, { name: 'Šárka B.', at: at(9) }] : []
+        created: { name: author, at: at(7) },
+        authorizations: complete ? signers.map((name, index) => ({ name, at: at(8 + index) })) : []
       };
     }
 
@@ -5512,7 +5512,7 @@ unicode: "eac3"
           isIncome ? 'prichozi' : 'odchozi',
           datesISO[Math.floor(index / 5)],
           amount,
-          isIncome ? null : { id: 'seed_payment_' + currency.toLowerCase() + '_' + index, message: transaction[1], description: transaction[1], ...demoAuthorizationHistory(datesISO[Math.floor(index / 5)]) }
+          { id: 'seed_payment_' + currency.toLowerCase() + '_' + index, message: transaction[1], description: transaction[1], ...demoAuthorizationHistory(datesISO[Math.floor(index / 5)], true, isIncome ? transaction[0] : 'Kateřina H.', isIncome ? [transaction[0]] : ['Kateřina H.', 'Šárka B.']) }
         ];
       });
     }
@@ -7215,7 +7215,7 @@ unicode: "eac3"
     }
     function viewDetail(name, account, amount, date, direction, note, transactionItem = null, accountKey = localStorage.getItem('vavu_selected_account') || 'czk') {
       const returnRoute = currentScreen === 'platba-detail' || currentScreen === 'platba-detail-autorizace' ? paymentDetailData()?.returnRoute || 'ucet-detail' : currentScreen;
-      const demoAudit = !transactionItem && direction === 'odchozi' && ['Tesco', 'Josef Pokorný'].includes(name) ? demoAuthorizationHistory(getPragueCalendarDate()) : null;
+      const demoAudit = !transactionItem && ['Tesco', 'Josef Pokorný', 'Karel Kropáček'].includes(name) ? (direction === 'prichozi' ? demoAuthorizationHistory(getPragueCalendarDate(), true, name, [name]) : demoAuthorizationHistory(getPragueCalendarDate())) : null;
       const data = { name, account, amount, date, direction, note, transactionItem, demoAudit, accountKey, returnRoute, displayId: transactionItem?.authorizationId || transactionItem?.id || newInstrumentId() };
       localStorage.setItem('vavu_payment_detail', JSON.stringify(data));
       renderPaymentDetail(data); goTo('platba-detail');
@@ -7272,7 +7272,7 @@ unicode: "eac3"
         document.getElementById('detail-ss').textContent = transactionItem.specificSymbol || '—';
         document.getElementById('detail-id').textContent = transactionItem.authorizationId || transactionItem.id;
       }
-      document.getElementById('payment-detail-audit-card').hidden = isPrichozi;
+      document.getElementById('payment-detail-audit-card').hidden = false;
     }
 
     function goBack() {
