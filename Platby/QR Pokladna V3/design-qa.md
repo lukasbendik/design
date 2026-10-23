@@ -107,3 +107,9 @@ QR pokladna nyní používá dodanou ikonu `codex-clipboard-ac251a08-bbd7-488e-b
 - Visual reference: Apple newsroom iPhone XR banking Face ID overlay https://www.apple.com.cn/newsroom/2018/09/apple-introduces-iphone-xr/ ; behavior reference https://support.apple.com/en-gb/108411 .
 - Playwright: desktop and mobile 375×812 visual inspection; widget → Face ID → cashier; app icon → Face ID → KB homepage; cancel → phone homescreen; homepage survives refresh; no console errors.
 - final result: passed
+
+## Received payments update account balance and history — 2026-10-23
+- Derive balances from baseline plus persisted non-demo received payments, scoped to account. Historical demo receipts are already included in the baseline. No additional mutable balance or duplicate transaction records.
+- Account detail lists received QR transfers with actual credited amounts, receipt times and payment IDs linking to detail, including archived QR requests. Home balance shares the same calculation. Auto receipt updates account/home even when the QR screen is closed.
+- Playwright: +100 full, +80 partial on 100 request; timeout/cancel add zero; refresh retains exact balance/count; archiving preserves received money/history. Second account receives +150 while detail remains open; main home balance unchanged and matches main detail. Mobile 375×812 visually reviewed; console clean.
+- final result: passed
