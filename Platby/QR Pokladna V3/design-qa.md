@@ -91,3 +91,8 @@ QR pokladna nyní používá dodanou ikonu `codex-clipboard-ac251a08-bbd7-488e-b
 - Overlay all surrounding applications and dock icons using the existing original full-strength iOS assets, matching the KB+ icon. Align labels with screenshot text and preserve screenshot wallpaper/layout.
 - Playwright: desktop and 375×812 mobile visually reviewed; widget still opens login, console clean.
 - final result: passed
+
+## Close cashier opened from widget — 2026-10-23
+- Close now opens KB+ homepage for widget entry. App entry still returns to account detail.
+- Playwright verified widget → login → cashier → Close → #home, homepage survives refresh, console clean.
+- final result: passed
