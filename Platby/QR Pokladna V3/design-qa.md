@@ -55,3 +55,7 @@ Konzole bez zaznamenaných chyb a varování. `node --check app.js`, `node --che
 - Pozadí pod kontextovým menu používá stejný homescreen jako widget, aby obě vstupní cesty byly součástí jednoho telefonu.
 
 Nezůstává otevřená chyba P0/P1/P2 v požadovaných změnách.
+
+## Ikona pokladny
+
+QR pokladna nyní používá dodanou ikonu `codex-clipboard-ac251a08-bbd7-488e-ba8d-9d9a858b318f.png` jako průhledný lokální asset `cash-register.png`: v rychlých akcích, nabídce placení účtu i v hlavičce pokladny. Playwright ověřil zdroj obrázku v menu, vzhled i čistou konzoli. Syntaxe a diff check prošly.

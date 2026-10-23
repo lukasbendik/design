@@ -14,7 +14,7 @@ window.QRHomescreen = (() => {
       <button type="button" tabindex="-1"><img src="assets/qr-code.svg" alt=""><span>Vyfotit</span></button>
       <button type="button" tabindex="-1">${ds('pay-me')}<span>Zaplať mi</span></button>
       <button type="button" tabindex="-1">${ds('key')}<span>KB Klíč</span></button>
-      <button type="button" data-action="login-widget"><img src="assets/ios-menu-devices.png" alt=""><span>QR pokladna</span></button>
+      <button type="button" data-action="login-widget"><img src="assets/cash-register.png" alt=""><span>QR pokladna</span></button>
       <button type="button" tabindex="-1"><img src="assets/ios-menu-edit-home.png" alt=""><span>Edit Home Screen</span></button>
       <button type="button" tabindex="-1"><img src="assets/ios-menu-face-id.png" alt=""><span>Require Face ID</span></button>
       <button type="button" tabindex="-1" class="ios-remove"><img src="assets/ios-menu-remove-app.png" alt=""><span>Remove App</span></button></nav></div>`;
