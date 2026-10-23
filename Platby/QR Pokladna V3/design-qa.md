@@ -119,3 +119,8 @@ QR pokladna nyní používá dodanou ikonu `codex-clipboard-ac251a08-bbd7-488e-b
 - Existing result/list/ledger logic reflects each resolved outcome. Unpaid requests remain pending for 60 seconds, then show the no-payment result and red Nezaplaceno in the QR list; they do not credit the account.
 - Node boundary checks cover all outcome intervals. Playwright created 8 random payments, observed mixed paid/overpaid/timeout outcomes, verified persisted outcomes after refresh, and waited the actual 60-second timeout to verify no-payment result and QR-list entry. Mobile 375×812 visually checked, console clean. Partial outcome and account accounting covered by previous payment-ledger QA.
 - final result: passed
+
+## 15-second countdown — 2026-10-23
+- New payment expiry reduced from 60 to 15 seconds; tester labels updated.
+- Playwright verified countdown starts at 15, actual expiry opens no-payment result, list shows Nezaplaceno, console clean.
+- final result: passed
