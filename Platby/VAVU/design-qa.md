@@ -629,3 +629,20 @@ Playwright se souhlasem uživatele, samostatný Chrome:
 - [x] Oba segmenty porovnány s návrhy.
 - [x] Opraveny nálezy P2 a znovu zachycena implementace.
 - [x] Ověřeny interakce, identita, historie, obnova a úzké zobrazení.
+
+## 2026-10-23 – autorizační dialogy podle dvou předloh
+
+- Zdroj: `/home/lukinab/.codex/attachments/ec63375b-de48-4be1-ace1-99f032dab882/codex-clipboard-ba29f635-4fad-4be1-9dcd-0310decc7226.png` (dokumenty) a `/home/lukinab/.codex/attachments/33acc2d1-6752-4081-a3a7-9fd529a80fba/codex-clipboard-9a07ea77-ff66-4622-8ff9-6acecbd1e5e4.png` (klíček).
+- Implementace: `/tmp/vavu-dialog-qa/payment.png`, `document.png`, `mobile.png`; společná porovnání `/tmp/vavu-dialog-qa/compare-payment.png` a `compare-document.png` otevřena a posouzena.
+- Normalizace: zdroj 2048×1536, dialog crop 1376×594 zmenšen na 756×326; implementace viewport 1280×900, DPR 1, dialog 756×326. Mobilní kontrola 390×844. Desktopové společné porovnání zobrazuje celý dialog i čitelný detail písma a ilustrací, samostatný výřez proto není potřeba.
+- Stav: čekání na potvrzení v mobilní aplikaci; dokumenty pro změnu oprávnění/schématu, telefon s klíčkem pro instrumenty. Pozadí aplikace zachovává dosavadní překryv; předloha má za dialogem jednolitou tmavou plochu.
+- Typografie: zachován lokální Inter a DS titul 32/40, text 16/24, nápověda 18/24; na mobilu titul 28/36. Bez ořezu nadpisů.
+- Rozložení: levý panel 184 px, pravý obsah, oddělený footer; výška opravena z 404 na 326 px. Zarovnání nápovědy sjednoceno s titulkem. Na 320/390/768/1280 px se dialog vejde do viewportu, obsah lze posouvat a Zamítnout zůstává dostupné.
+- Barvy: původní DS tokeny pro pozadí, text, šedý ilustrační panel, oddělovače, rámeček a stíny.
+- Ilustrace: dvě samostatné bitmapy odvozené nástrojem ImageGen z dodaných předloh. [P3] Nejde o původní exporty: drobně se liší stín a proporce telefonu a tužky. Význam, barva a kompozice odpovídají předlohám; žádné náhradní CSS kresby.
+- Obsah: Podpis dokumentů, Příkaz k úhradě v CZK/EUR, Trvalý příkaz, Povolení inkasa a Dávka plateb. Vícenásobný výběr používá množné číslo. Jediná vybraná platba odvozuje měnu ze skutečně vybrané položky.
+- Iterace: první společné vizuální porovnání po implementaci bez nálezů P0/P1/P2. Testovací skript byl opraven o čekání na viditelnost dialogu po navigaci; nešlo o chybu produktu.
+- Playwright v Brave Origin: skutečné CTA pro platbu, TP a inkaso → zamítnutí → znovu otevřít → simulované potvrzení; úprava oprávnění a podepisujících → dokumenty → nápověda zastaví časovač → Escape → znovu otevřít → refresh → dokončení; skutečná existující dávka → potvrzení. Ověřen fokus v otevřeném dialogu a šířky 320/390/768/1280. Bez JavaScriptových chyb. Samostatná kontrola názvů pro novou platbu EUR, nový TP/inkaso/dávku a jednotlivý i vícenásobný výběr.
+- Simulace potvrzení v mobilní aplikaci po šesti sekundách zůstává původní; prototyp neposílá skutečný podpis do banky.
+
+final result: passed

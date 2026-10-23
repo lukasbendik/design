@@ -2952,22 +2952,24 @@
 
     #modal-payment-signature-modal { padding: var(--space-24); }
     .signature-modal {
-      display: grid; grid-template-columns: 184px minmax(0, 1fr); grid-template-rows: 316px auto;
+      display: grid; grid-template-columns: 184px minmax(0, 1fr); grid-template-rows: minmax(238px, auto) auto;
       width: 100%; max-width: 756px; padding: 0; align-items: stretch; text-align: left;
       border: 0; border-radius: var(--border-radius-xl); overflow: auto;
       max-height: calc(100dvh - var(--space-48)); background: var(--background-body); box-shadow: var(--shadow-highlighted);
     }
-    .signature-art { grid-row: 1 / 3; background: var(--attention-information-surface); display: flex; justify-content: center; padding-top: var(--space-64); }
-    .signature-art img { width: 80px; height: 64px; object-fit: contain; }
+    .signature-art { grid-row: 1 / 3; background: var(--attention-information-surface); display: flex; align-items: flex-start; justify-content: center; overflow: hidden; padding-top: var(--space-8); }
+    .signature-art img { width: 240px; height: 240px; max-width: none; flex: none; object-fit: contain; }
+    .signature-art--document { padding-top: var(--space-32); }
+    .signature-art--document img { width: 184px; height: 184px; }
     .signature-body { min-width: 0; padding: calc(var(--space-64) - var(--space-8)) var(--padding-xl) var(--padding-2xl); }
     .signature-modal-title { margin: 0 0 var(--space-16); font: var(--headings-title-secondary); line-height: calc(var(--space-32) + var(--space-8)); letter-spacing: var(--tracking-title-secondary); }
     .signature-instructions { margin: 0; font: var(--content-body-primary); }
     .signature-close { position: absolute; top: var(--padding-md); right: var(--padding-md); width: 32px; height: 32px; display: grid; place-items: center; padding: 0; border: 0; background: transparent; color: var(--content-primary); cursor: pointer; }
-    .signature-offline { display: flex; align-items: center; gap: var(--padding-lg); margin-top: var(--padding-xl); padding: var(--padding-3xl) var(--padding-xl) 0; border: 0; border-top: var(--border-sm) solid var(--background-divider); width: 100%; background: transparent; color: var(--content-primary); text-align: left; font: var(--headings-headline-secondary); cursor: pointer; }
+    .signature-offline { display: flex; align-items: center; gap: var(--padding-lg); margin-top: var(--padding-xl); padding: var(--padding-3xl) 0 0; border: 0; border-top: var(--border-sm) solid var(--background-divider); width: 100%; background: transparent; color: var(--content-primary); text-align: left; font: var(--headings-headline-secondary); cursor: pointer; }
     .signature-offline img { width: 24px; height: 24px; flex: none; }
     .signature-offline span { text-decoration: underline; text-underline-offset: var(--padding-sm); }
     .signature-offline-help { margin: var(--padding-xl) 0 0; font: var(--content-body-secondary); }
-    .signature-modal-footer { display: flex; justify-content: flex-end; align-items: center; padding: var(--padding-xl); background: var(--background-body); box-shadow: var(--shadow-panel); min-height: 88px; }
+    .signature-modal-footer { display: flex; justify-content: flex-end; align-items: center; padding: var(--padding-xl); background: var(--background-body); border-top: var(--border-sm) solid var(--background-divider); min-height: 88px; }
     .signature-modal-footer .btn { width: auto; min-width: 120px; }
     .signature-close:focus-visible, .signature-offline:focus-visible { outline: var(--border-md) solid var(--interactive-secondary); outline-offset: 2px; }
     @media(max-width:551px) {
@@ -2975,7 +2977,9 @@
       .signature-modal { grid-template-columns: 1fr; grid-template-rows: auto auto auto; max-height: calc(100dvh - var(--space-32)); }
       .signature-art { grid-row: auto; padding: var(--padding-2xl) 0 var(--padding-xl); }
       .signature-body { padding: var(--padding-2xl) var(--padding-xl); }
-      .signature-modal-title { font: var(--headings-title-tertiary); }
+      .signature-modal-title { font: var(--headings-title-tertiary); padding-right: var(--space-16); }
+      .signature-art img { width: 152px; height: 152px; }
+      .signature-art--document img { width: 152px; height: 152px; }
       .signature-offline { padding: var(--padding-2xl) 0 0; font: var(--content-body-primary-bold); align-items: flex-start; }
       .signature-modal-footer .btn { width: 100%; }
     }
@@ -5315,11 +5319,11 @@ unicode: "ebf6"
   <!-- ================= VAVU: POTVRZENÍ V MOBILNÍ APLIKACI ================= -->
   <div class="modal-overlay-popup" id="modal-payment-signature-modal" role="dialog" aria-modal="true" aria-labelledby="signature-modal-title" aria-describedby="signature-instructions">
     <div class="modal-content-popup signature-modal">
-      <aside class="signature-art" aria-hidden="true"><img src="assets/authorization-key.png" width="80" height="64" alt=""></aside>
+      <aside class="signature-art" aria-hidden="true"><img id="signature-illustration" src="assets/signature-phone-key.png" width="136" height="160" alt=""></aside>
       <button class="signature-close" type="button" onclick="closeModal()" aria-label="Zavřít dialog"><svg class="icon icon--close" aria-hidden="true"><use href="#es-close"></use></svg></button>
       <div class="signature-body">
         <h2 class="signature-modal-title" id="signature-modal-title">Platba</h2>
-        <p class="signature-instructions" id="signature-instructions">Otevřete mobilní aplikaci KB Klíč nebo KB+ a požadavek potvrďte.</p>
+        <p class="signature-instructions" id="signature-instructions">Otevřete mobilní aplikaci a požadavek potvrďte.</p>
         <button class="signature-offline" type="button" aria-expanded="false" aria-controls="signature-offline-help" onclick="toggleSignatureOfflineHelp(this)"><img src="assets/authorization-wifi-off.png" width="24" height="24" alt=""><span>Nemáte mobil připojený k internetu?</span></button>
         <p class="signature-offline-help" id="signature-offline-help" hidden>Připojte mobil k Wi-Fi nebo zapněte mobilní data. Potom otevřete aplikaci KB Klíč nebo KB+ a potvrďte požadavek.</p>
       </div>
@@ -8526,16 +8530,31 @@ unicode: "ebf6"
       updateDeleteButtonState();
     }
 
+    function signatureTitle(request) {
+      if (request.kind === 'permissions') return 'Podpis dokumentů';
+      if (['existing-batch', 'new-batch'].includes(request.kind)) return 'Dávka plateb';
+      const tab = request.tab || (request.origin === 'inkaso-souhrn' ? 'inkasa' : request.origin === 'tp-souhrn' ? 'tp' : 'platby');
+      const multiple = request.kind === 'selected-authorization' && request.selected?.length > 1;
+      if (tab === 'tp') return multiple ? 'Trvalé příkazy' : 'Trvalý příkaz';
+      if (tab === 'inkasa') return 'Povolení inkasa';
+      if (multiple) return 'Příkazy k úhradě';
+      const item = request.item || (request.kind === 'selected-authorization' ? authorizationItems(tab).find(item => item.id === request.selected?.[0]) : null);
+      const currency = item ? (item.currency || (/\bEUR\b|€/.test(item.amount || '') ? 'EUR' : 'CZK')) : (localStorage.getItem(paymentStorageKey('currency')) || 'Kč');
+      return 'Příkaz k úhradě v ' + (currency === 'Kč' ? 'CZK' : currency);
+    }
+
     var signatureConfirmationTimer, signatureReturnFocus;
     function startSignatureConfirmation() {
       clearTimeout(signatureConfirmationTimer);
       const request = signatureRequest();
       if (!request || request.status !== 'pending') return;
-      const titles = { platby: 'Platba', tp: 'Trvalý příkaz', inkasa: 'Povolení inkasa' };
-      document.getElementById('signature-modal-title').textContent = request.kind === 'permissions' ? 'Správa oprávnění' : ['existing-batch', 'new-batch'].includes(request.kind) ? 'Dávka plateb' : request.tab ? titles[request.tab] : directDebitFlowActive ? titles.inkasa : standingOrderFlowActive ? titles.tp : titles.platby;
+      const isDocument = request.kind === 'permissions';
+      document.getElementById('signature-modal-title').textContent = signatureTitle(request);
+      document.querySelector('.signature-art').classList.toggle('signature-art--document', isDocument);
+      document.getElementById('signature-illustration').src = isDocument ? 'assets/signature-document.png' : 'assets/signature-phone-key.png';
       document.getElementById('signature-offline-help').hidden = true;
       document.querySelector('.signature-offline').setAttribute('aria-expanded', 'false');
-      document.querySelector('.signature-close').focus();
+      document.querySelector('#modal-payment-signature-modal .signature-close').focus();
       // Prototype simulation of confirmation in the mobile app; no external request is sent.
       const id = request.id;
       signatureConfirmationTimer = setTimeout(() => {
