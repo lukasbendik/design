@@ -113,3 +113,9 @@ QR pokladna nyní používá dodanou ikonu `codex-clipboard-ac251a08-bbd7-488e-b
 - Account detail lists received QR transfers with actual credited amounts, receipt times and payment IDs linking to detail, including archived QR requests. Home balance shares the same calculation. Auto receipt updates account/home even when the QR screen is closed.
 - Playwright: +100 full, +80 partial on 100 request; timeout/cancel add zero; refresh retains exact balance/count; archiving preserves received money/history. Second account receives +150 while detail remains open; main home balance unchanged and matches main detail. Mobile 375×812 visually reviewed; console clean.
 - final result: passed
+
+## Random payment outcomes — 2026-10-23
+- Random mode is now the default (one-time migration for existing saved settings). Per-payment outcome is selected once and persisted: paid 40%, overpaid 10%, partial 25%, timeout 25%. Explicit tester scenarios remain available. Existing pending payments are preserved.
+- Existing result/list/ledger logic reflects each resolved outcome. Unpaid requests remain pending for 60 seconds, then show the no-payment result and red Nezaplaceno in the QR list; they do not credit the account.
+- Node boundary checks cover all outcome intervals. Playwright created 8 random payments, observed mixed paid/overpaid/timeout outcomes, verified persisted outcomes after refresh, and waited the actual 60-second timeout to verify no-payment result and QR-list entry. Mobile 375×812 visually checked, console clean. Partial outcome and account accounting covered by previous payment-ledger QA.
+- final result: passed

@@ -14,10 +14,11 @@ function seeds(){return [
  [190000,'paid',200000,0],[30000,'partial',24500,0],[122200,'paid',122200,0],[44400,'pending',0,0],
  [3500,'pending',0,1,true],[3500,'pending',0,1],[82900,'paid',82900,2],[98200,'paid',98200,2],[3500,'paid',3500,2],[3500,'timeout',0,2]
 ].map((p,i)=>({id:`QR-260909-${String(36-i).padStart(3,'0')}`,amount:p[0],status:p[1],received:p[2],account:'main',createdAt:today.getTime()-p[3]*86400000+(14*60+45-i*7)*60000,removed:!!p[4],demo:true}));}
-let state={version:1,amount:'',account:'main',scenario:'paid',entry:'widget',authenticated:false,sequence:36,payments:seeds(),activeId:null,returnRoute:'pokladna'};
+let state={version:1,amount:'',account:'main',scenario:'random',entry:'widget',authenticated:false,sequence:36,payments:seeds(),activeId:null,returnRoute:'pokladna'};
 try{const saved=JSON.parse(localStorage.getItem(KEY));if(saved?.version===1&&Array.isArray(saved.payments))Object.assign(state,saved);}catch{}
 if(!accounts.some(a=>a.id===state.account))state.account='main';
-if(!['paid','overpaid','partial','timeout','manual'].includes(state.scenario))state.scenario='paid';
+if(state.randomScenarioEnabled!==1){state.scenario='random';state.randomScenarioEnabled=1;}
+if(!['random','paid','overpaid','partial','timeout','manual'].includes(state.scenario))state.scenario='random';
 let faceTimers=[],route='',pin='',keyboardOpen=true,routeBeforeSheet='',error='';
 const save=()=>localStorage.setItem(KEY,JSON.stringify(state));
 const account=()=>accounts.find(a=>a.id===state.account)||accounts[0];
@@ -98,9 +99,10 @@ function openAccounts(){routeBeforeSheet=route;showSheet(`<div class="sheet-top"
 function quickActions(){overlay.innerHTML=QRHomescreen.quickActions();}
 function onAmount(){const el=$('#amount');const start=el.selectionStart;const cleaned=el.value.replace(/[^\d.,]/g,'').replace('.',',');const parts=cleaned.split(',');state.amount=parts[0].slice(0,8)+(parts.length>1?','+parts.slice(1).join('').slice(0,2):'');el.value=state.amount;el.setSelectionRange(Math.min(start,el.value.length),Math.min(start,el.value.length));save();}
 function amountCents(){return Math.round(Number(state.amount.replace(',','.'))*100);}
+function randomScenario(){const draw=Math.random();return draw<.4?'paid':draw<.5?'overpaid':draw<.75?'partial':'timeout';}
 function createPayment(){const amount=amountCents();if(!Number.isSafeInteger(amount)||amount<=0||amount>9999999999){error='Zadejte částku větší než 0 Kč.';render();return;}
  const stamp=Date.now();const id='QR-'+new Intl.DateTimeFormat('sv-SE',{year:'2-digit',month:'2-digit',day:'2-digit'}).format(stamp).replace(/-/g,'')+'-'+String(++state.sequence).padStart(3,'0');
- const p={id,amount,account:state.account,status:'pending',received:0,removed:false,createdAt:stamp,expiresAt:stamp+60000,resolveAt:stamp+8000,scenario:state.scenario};state.payments.unshift(p);state.activeId=id;save();go('qr');}
+ const p={id,amount,account:state.account,status:'pending',received:0,removed:false,createdAt:stamp,expiresAt:stamp+60000,resolveAt:stamp+8000,scenario:state.scenario==='random'?randomScenario():state.scenario};state.payments.unshift(p);state.activeId=id;save();go('qr');}
 function remaining(p){return Math.max(0,Math.ceil((p.expiresAt-Date.now())/1000));}
 function iban(a){const number=a.number.split('/')[0];const bban='0100'+'000000'+number.padStart(10,'0');const mod=BigInt(bban+'123500')%97n;return 'CZ'+String(98n-mod).padStart(2,'0')+bban;}
 function drawQR(){const p=current(),target=$('#qrcode');if(!p||!target)return;const payload=`SPD*1.0*ACC:${iban(payAccount(p))}*AM:${(p.amount/100).toFixed(2)}*CC:CZK*MSG:${p.id}`;try{const qr=qrcode(0,'M');qr.addData(payload);qr.make();target.innerHTML=qr.createImgTag(5,0,`QR platba ${money(p.amount)}`);}catch(e){target.textContent='QR kód se nepodařilo vytvořit.';console.error(e);}}
