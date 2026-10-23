@@ -25,3 +25,8 @@
 .ios-context-menu>button:not([data-action]){cursor:default}
 .ios-context-menu>button>img,.ios-context-menu>button>span:first-child:not(:last-child){width:5.3cqw;height:5.3cqw;flex-shrink:0;object-fit:contain}
 .ios-context-menu .ios-remove{color:#ff4549}
+
+/* Supplied real iOS screenshot; interactive areas stay accessible HTML buttons. */
+.ios-photo-homescreen{background-image:url('assets/ios-homescreen-reference.png');background-size:100% 100%}
+.ios-widget-hitbox{background:transparent;padding:0}
+.os-mode .statusbar{visibility:hidden}

@@ -59,3 +59,9 @@ Nezůstává otevřená chyba P0/P1/P2 v požadovaných změnách.
 ## Ikona pokladny
 
 QR pokladna nyní používá dodanou ikonu `codex-clipboard-ac251a08-bbd7-488e-ba8d-9d9a858b318f.png` jako průhledný lokální asset `cash-register.png`: v rychlých akcích, nabídce placení účtu i v hlavičce pokladny. Playwright ověřil zdroj obrázku v menu, vzhled i čistou konzoli. Syntaxe a diff check prošly.
+
+## Real iOS homescreen — 2026-10-23
+- Supplied iOS screenshot used directly as the homescreen background; original widget and system icons preserved. KB+ uses the supplied red/black app icon.
+- Playwright: widget and app both open login; context menu opens; no console errors.
+- Desktop screenshot visually reviewed against the supplied iOS reference; mobile 375×812 reviewed, no horizontal overflow.
+- final result: passed
