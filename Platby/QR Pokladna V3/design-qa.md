@@ -96,3 +96,8 @@ QR pokladna nyní používá dodanou ikonu `codex-clipboard-ac251a08-bbd7-488e-b
 - Close now opens KB+ homepage for widget entry. App entry still returns to account detail.
 - Playwright verified widget → login → cashier → Close → #home, homepage survives refresh, console clean.
 - final result: passed
+
+## Remove duplicated homescreen artwork — 2026-10-23
+- Root cause: full screenshot background already contained app icons/labels beneath live full-strength icons. Replaced with the existing icon-free wallpaper. Widget, page indicators, dock and app labels now each render once; desktop status indicators retained, mobile indicators hidden.
+- Playwright desktop and 375×812 mobile screenshots visually reviewed: no duplicate icons or labels; 13 app images; widget opens login; console clean.
+- final result: passed

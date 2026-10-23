@@ -26,15 +26,13 @@
 .ios-context-menu>button>img,.ios-context-menu>button>span:first-child:not(:last-child){width:5.3cqw;height:5.3cqw;flex-shrink:0;object-fit:contain}
 .ios-context-menu .ios-remove{color:#ff4549}
 
-/* Supplied real iOS screenshot; interactive areas stay accessible HTML buttons. */
-.ios-photo-homescreen{background-image:url('assets/ios-homescreen-reference.png');background-size:100% 100%}
-.ios-widget-hitbox{background:transparent;padding:0}
-.os-mode .statusbar{visibility:hidden}
+/* Clean wallpaper contains no icons or labels; each app is rendered once. */
+.ios-photo-homescreen{background-image:url('assets/ios-wallpaper.png');background-size:100% 100%}
+.os-mode .statusbar{visibility:visible}
 
-/* Remove the status bar baked into the supplied screenshot on mobile. */
+/* Keep the same mobile homescreen placement without simulated status indicators. */
 @media(max-width:700px){.ios-photo-homescreen{background-size:100% 104.166667%;background-position:center bottom}.ios-photo-homescreen .ios-widget{top:2.239583%;height:19.864583%}.ios-photo-homescreen .ios-kb{top:29.270833%}}
 
 /* Render every app from its original full-strength icon, like KB+. */
-.ios-photo-homescreen .ios-dock{background:transparent;backdrop-filter:none}
 @media(max-width:700px){.ios-photo-homescreen .ios-clock,.ios-photo-homescreen .ios-instagram{top:29.270833%}.ios-photo-homescreen .ios-telegram,.ios-photo-homescreen .ios-reminders{top:41.447917%}.ios-photo-homescreen .ios-figma,.ios-photo-homescreen .ios-folder,.ios-photo-homescreen .ios-mail,.ios-photo-homescreen .ios-spotify{top:53.614583%}.ios-photo-homescreen .ios-dock{bottom:1.40625%;height:12.041667%}}
 .ios-photo-homescreen>.ios-app{gap:2.8cqw}
