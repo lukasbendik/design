@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="cs">
+<head>
+<script>
+(function(){var H='4c129f69f551195cbc5e8b57cc5a0975b6efa1e8510573524d11df03c7d010c6',K='rozcestnik__auth';try{var p=new URLSearchParams(location.search);if(p.get('k')===H){localStorage.setItem(K,'1');p.delete('k');var q=p.toString();history.replaceState(history.state,'',location.pathname+(q?'?'+q:'')+location.hash);}if(localStorage.getItem(K)!=='1')location.replace('../../');}catch(e){}})();
+</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache"><meta http-equiv="Expires" content="0">
+<title>Prototyp: QR Pokladna V3</title>
+<link rel="icon" href="../QR%20Pokladna%20V2/icon.svg">
+<link rel="stylesheet" href="../../design-system/tokens.css?v=1">
+<link rel="stylesheet" href="styles.css?v=1">
+<script defer src="assets/qrcode.js?v=1"></script><script defer src="app.js?v=1"></script>
+</head>
+<body>
+<aside class="tester" aria-label="Ovládání prototypu">
+  <img class="desktop-logo" src="../../design-system/design-system/assets/icons/logotype-kb.svg" alt="KB">
+  <p class="eyebrow">INTERAKTIVNÍ PROTOTYP · V3</p><h1>QR pokladna</h1>
+  <p>Od widgetu rovnou<br>k přijetí platby.</p>
+  <div class="test-section"><span class="test-label">ZAČÍT ZNOVU</span><button data-action="home">Homescreen telefonu</button><small>Widget otevře pokladnu.<br>Ikona KB+ otevře přehled účtů.<br>Pro přihlášení zadejte libovolných 6 číslic.</small></div>
+  <div class="test-section"><label class="test-label" for="scenario">PRŮBĚH NOVÉ PLATBY</label><select id="scenario"><option value="paid">Zaplaceno za 8 sekund</option><option value="overpaid">Vyšší částka za 8 sekund</option><option value="partial">Nižší částka za 8 sekund</option><option value="timeout">Platba nedorazí (60 sekund)</option><option value="manual">Ruční simulace</option></select><small>Volba platí pro nově vytvořený QR kód.</small></div>
+  <div class="simulation"><button data-sim="paid">Přijmout celou částku</button><button data-sim="partial">Přijmout nižší částku</button><button data-sim="timeout">Ukončit odpočet</button><small id="simulationHint" aria-live="polite">Nejprve vytvořte QR platbu.</small></div>
+  <p class="desktop-footnote">Ukázková data · bez skutečných plateb</p>
+</aside>
+<div class="phone-wrap"><div class="phone" data-testid="phone-frame"><div class="device-screen" data-testid="device-screen">
+  <div class="statusbar"><span>9:41</span><div class="status-icons"><img src="assets/reception-4.svg" alt="Signál"><img src="assets/wifi.svg" alt="Wi-Fi"><img src="assets/battery-full.svg" alt="Baterie"></div></div><div class="island" aria-hidden="true"></div>
+  <main id="app"></main><div id="overlay"></div><div class="home-indicator" aria-hidden="true"></div>
+</div></div><p class="phone-caption">KB+ · QR pokladna</p></div>
+</body></html>
