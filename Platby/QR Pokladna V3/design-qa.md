@@ -1,54 +1,57 @@
-# QR Pokladna V3 — ověření 23. 10. 2026
+# QR Pokladna V3 — opravy podle podkladů 23. 10. 2026
 
 final result: passed
 
-## Vizuální podklady a normalizace
+## Podklady a vizuální důkazy
 
-- Schéma uživatele: `codex-clipboard-a6498cd3-b6e2-438e-ab44-c1bb171ea7b6.png`, 3182 × 2642 px.
-- Přihlášení: `codex-clipboard-7277bbe0-4f48-45bb-a267-0cda68a381e9.png`, 750 × 1624 px, normalizováno na 375 × 812 a 393 × 851 px.
-- Přehled KB+: `codex-clipboard-9e5b78ca-2217-493d-a253-e25d960b1b0b.png`, 750 × 1624 px, normalizováno na 393 × 851 px.
-- Vizuální důkazy jsou lokálně v `../../zapisky/qr-pokladna-v3-qa-2026-10-23/` (nepublikované): `login-final-v2-comparison.png`, `cashier-comparison.png`, `home-verified.png`, `home-final-comparison.png`, `partial.png`, `removed.png`, `accounts.png`.
-- Desktop QA: Brave, Playwright, viewport 1400 × 1100, deviceScaleFactor 1; obsah telefonu 393 × 852 CSS px. Samostatně ověřen výchozí nižší desktop viewport a automatické zmenšení celého telefonu.
-- Mobil: 375 × 812 a 320 × 740; bez vodorovného přesahu. Nativní klávesnice je deklarována `inputmode="decimal"`; její skutečný vzhled na fyzickém zařízení nebyl ověřen.
-- Screenshot API po změně viewportu někdy vrací předchozí vykreslený snímek. Pro porovnání byly snímky opakovány v dalším kroku a stav ověřen v DOM. Obrazovka telefonu byla z plných snímků vyříznuta beze změny měřítka.
+Aktuální reference uživatele:
 
-## Porovnání a opravy
+- `codex-clipboard-ecfb5e32-4dfd-4002-9b5e-c789298d9653.png`: 900 × 1840, kontextové menu KB+.
+- `codex-clipboard-6b5890a7-3217-4b70-b5a5-6e4fd9e0027d.png`: 748 × 1626, homescreen s widgetem; normalizováno na šířku 375 CSS px a výšku 812 px (3 px rozdíl poměru stran oříznuty).
+- `codex-clipboard-11472ba1-8a7e-40b1-8c67-ec34a5af8952.png`: 750 × 1624, částka a klávesnice; zdroj klávesnice 750 × 675 px, zobrazený se zachovaným poměrem stran a funkčními HTML klávesami.
+- `codex-clipboard-ad3a0f15-874d-4431-b7e8-8adb4064e832.png`: 750 × 1624, QR platba; normalizováno na 375 × 812 CSS px.
 
-1. P2: pevné desktopové měřítko ořezávalo telefon na nízkém okně. Nahrazeno výpočtem měřítka z výšky okna; boční ovládání má vlastní scroll. Opětovně ověřen celý telefon včetně spodních akcí.
-2. P2: zůstatky a šířka plovoucího panelu na přehledu byly větší než předloha, chyběla šipka souhrnu. Upraveny velikosti, rozestupy, stíny účtové karty, kruhové vlajky a zarovnání příjmů/výdajů. Porovnáno ve společném obrázku `home-final-comparison.png`; konečné vykreslení po odsazení panelu od home indikátoru v `home-verified.png`.
-3. P2: přihlašovací panel měl na mobilu chybnou výšku kvůli přepsání min-height. Opraveno a ověřeno při 375 × 812. Desktopové klávesy následně přizpůsobeny hustotě 393 px; Face ID převzato přímo z dodané předlohy. Nové společné porovnání `login-final-v2-comparison.png`.
-4. P2: návrat historie ke zrušenému QR ukazoval čekání. Nyní vede na vyřazený detail, identita platby je navíc uchována v history.state. Opětovně ověřeno prohlížečové zpět a refresh detailu.
+Snímky i společná porovnání jsou uložené pouze lokálně v `../../zapisky/qr-pokladna-v3-fixes-2026-10-23/`:
 
-### Povinné vizuální oblasti
+- `comparison-home-final.png`: reference a finální skutečný render vedle sebe.
+- `comparison-qr.png`: reference a skutečný render QR ve stejné šířce 375 px; implementace přidává 44px status bar telefonu a spodní safe area.
+- `cashier-desktop.png`: celá desktopová simulace telefonu, Zaplatit nad Gboard klávesnicí.
+- `menu-final.png`: skutečné HTML kontextové menu.
+- `qr-320x568.png`, `paid-320x568.png`: celé obrazovky na malém displeji.
+- `keyboard-visible-area.png`: lokální test modelující změnu pouze visual viewportu.
 
-- Typografie: Inter z místního DS, velikosti a váhy odvozeny z komponent a příloh. Bez nechtěného zalamování hlavních akcí; dlouhý výsledek nižší částky záměrně na dvou řádcích.
-- Rozložení: obě vstupní cesty, hlavičky, výběr účtu, částka, QR, výsledky, přehled a vyřazení odpovídají anatomii schématu. Status bar a safe area jsou přidány jako součást telefonu.
-- Barvy: napojení na `design-system/tokens.css`, červené primární akce, zelené zaplacení, chybové a vyřazené stavy.
-- Obrázky: KB ikony a úspěch z existujícího DS; avatar, Face ID a ilustrace nedoručení extrahovány z dodaných obrázků. QR je generovaný z částky, čísla účtu a jedinečného ID; knihovny a ikony se načítají lokálně.
-- Copy: zachovány texty příloh „Zaplatit“, „K zaplacení“, „Zadat další“, „Zaplaceno“, „Platba dorazila s nižší částkou“, „Platba zatím nedorazila“, „Vyřadit“, „Zrušit vyřazení“.
-- Detailní porovnání: samostatný login a formulář/klávesnice ve společných obrázcích. Přehled zkontrolován v celé výšce i v oblastech zůstatku, měnových štítků a souhrnu.
+Prohlížeč: připojený Brave, ovládání a ověřování přes Playwright. Desktop 1400 × 1100, telefon 393 × 852 CSS px, deviceScaleFactor 1. Mobilní viewporty 375 × 812, 375 × 667 a 320 × 568. Snímky se pořizovaly po vykreslení v následujícím kroku, protože screenshot API někdy vrací poslední vykreslený frame.
 
-## Funkční kontrola přes Playwright
+## Nálezy, opravy a následné ověření
 
-- Widget → přihlášení libovolnými šesti číslicemi → pokladna; skutečný focus v částce.
-- Ikona KB+ → přihlášení → přehled → běžný účet → Placení a správa účtu → QR pokladna.
-- Kontextové menu ikony KB+ → QR pokladna → přihlášení. Podporováno podržení i pravé tlačítko; pravé tlačítko ověřeno.
-- Numerická klávesnice na desktopu; na mobilu skrytá simulace a inputmode decimal. Fyzickou klávesnicí lze zadávat PIN i částku.
-- Validace prázdné částky, desetinné částky, obnova částky a zvoleného účtu po refreshi.
-- Výběr druhého účtu, QR vytvořený pro vybraný účet, oddělený přehled podle účtu.
-- Zobrazení QR a odpočtu, refresh během čekání.
-- Zaplacení celé částky, nižší částka a ruční vypršení odpočtu; automatický přeplatek po 8 s.
-- Skutečné automatické vypršení po 60 s, ověřen výsledek „Platba zatím nedorazila“.
-- Zadat další, zrušení s potvrzovacím panelem, přehled plateb, detail.
-- Vyřazení včetně zaplacených/čekajících položek, trvalý stav po refreshi, zrušení vyřazení.
-- Browser back, obnovení obrazovky z hashe, focus, Escape a omezení Tab v dialogu.
-- Konzole bez zaznamenaných chyb a varování. `node --check app.js` a `git diff --check` bez chyb.
+1. **P1 — Zaplatit mimo plochu při otevření systémové klávesnice.** Původní výška vycházela z layout viewportu. Výška mobilního telefonu nyní sleduje `visualViewport.height` a `offsetTop`; formulář má pevně dostupnou spodní akci a samostatně scrollovatelný obsah. Přidáno `interactive-widget=resizes-content` pro podporující prohlížeče. Test layout 812 px / viditelná plocha 360 px: input končí na 245 px, tlačítko je od 300 do 348 px; při posunu viditelné oblasti o 70 px zůstává pod její spodní hranicí 430 px.
+2. **P2 — levá navigace zarovnaná ke středu.** Selektor `.header button:last-child` zasahoval i jediné tlačítko v levém sloupci. Zarovnání nyní řídí levý/pravý obal samostatně. Naměřeno levé tlačítko i obsah na x=16 px. QR návrat má také šipku podle reference.
+3. **P2 — platební obrazovka přesahovala malý displej.** QR obrazovka má pružnou prostřední oblast, adaptivní QR a kompaktní režim. Na 320 × 568 je screen 524 px (zbývajících 44 px je status bar), scrollHeight=clientHeight, Zrušit platbu končí na y=544 px. Výsledek zaplacení má rovněž scrollHeight=clientHeight, spodní Zavřít končí na y=528 px.
+4. **P2 — zbytečné potvrzování zrušení.** Dialog odstraněn. Akce přímo uloží zrušený/vyřazený stav a otevře `#zruseno` s výsledkem „Platba zrušena“. Po kliknutí je počet dialogů 0; stav a výsledek zůstávají i po refreshi.
+5. **P2 — odlišný homescreen a menu.** Widget a menu jsou skutečné HTML komponenty, app ikony, KB+ značka a ikony menu jsou převzaté z podkladů. Tapeta byla očištěna přes ImageGen podle zdroje. Během porovnání zjištěna poloviční průhlednost některých výřezů; opravena a znovu porovnána v `comparison-home-final.png`.
+6. **P2 — focus při ovládání nové klávesnice.** Přechod focusu z částky na její klávesy nesmí panel zavřít před kliknutím. Blur handler nyní rozlišuje klávesnici/primární akci od odchodu jinam. Přes Playwright ověřeno 2 → 3 → 8 = hodnota 238 a potvrzení šipkou. Spodek Zaplatit y=524, začátek klávesnice y=542 v desktopové simulaci.
 
-## Záměrné odlišnosti a limity
+## Povinné vizuální oblasti
 
-- Schéma mísí iOS homescreen s Android klávesnicí. Telefon používá jednotnou iOS numerickou klávesnici; na desktopu jde o funkční simulaci.
-- Homescreen telefonu používá jednobarevnou tapetu a standardní ikony místo konkrétní osobní tapety a sady aplikací z malého obrázku schématu.
-- Okolní bankovní akce mimo zadaný tok jsou vizuální kontext. Neprovádějí skutečné platby ani přihlášení.
-- Stav příchozí platby je výhradně simulace, bez bankovního backendu. PIN se neukládá.
+- **Fonty a typografie:** Inter a sémantické tokeny KB; hierarchie částky s větší celou částí, sekundární popisky účtu a ID přiblíženy referenci; kompaktní režim zachovává čitelnost menšího telefonu.
+- **Rozložení:** 16px vodorovné okraje; správná levá navigace; akce mimo scroll obsahu; celý QR i oba spodní ovladače viditelné. Konkrétní klíčové oblasti porovnány samostatně: widget a dock, menu, pole částky a Zaplatit/klávesnice, QR a spodní akce.
+- **Barvy:** stávající KB DS tokeny, červená primární akce, světlé plochy a sekundární texty; zachováno rozlišení výsledků.
+- **Obrázky:** skutečné výřezy ikon, obrázek nativní klávesnice pro desktop, zdrojové ikony kamery a čekání. Samotné bankovní obrazovky, widget a menu zůstávají HTML; QR je skutečně generovaný z částky, účtu a ID.
+- **Copy:** zachováno „Zaplatit“, „K zaplacení“, „Zadat další“, „Zrušit platbu“. Nový přímý výsledek má jednoznačné „Platba zrušena“.
 
-Nezůstává otevřená chyba P0/P1/P2 v požadovaném toku.
+## Interakce a regrese
+
+Playwright ověřil widget → PIN → focus částky, vstup přes ikonu KB+, QR rychlou akci z kontextového menu, klávesy a potvrzení částky, viditelnost Zaplatit, tvorbu QR, celé QR na malých displejích, zaplacení, přímé zrušení bez dialogu, refresh zrušeného výsledku a návrat na pokladnu/homescreen. Původní přehledy a práce s účty zůstávají stejné.
+
+Model klávesnice používá izolovaný lokální `keyboard-fixture.html`, který drží layout na 812 px a zmenšuje pouze platformní visual viewport na 360 px. Prošel také posun viditelné oblasti o 70 px. Fixture se nepublikuje. Test skutečné klávesnice na fyzickém telefonu není součástí těchto browser kontrol.
+
+Konzole bez zaznamenaných chyb a varování. `node --check app.js`, `node --check homescreen.js` a `git diff --check` prošly.
+
+## Záměrné odlišnosti
+
+- Přidána ikona KB+ do volného místa pod widgetem, aby byl dostupný i druhý vstup požadovaný v zadání.
+- Telefon přidává status bar a safe area; bankovní screenshoty je v referenci nezobrazují.
+- Numerická klávesnice na desktopu je funkční simulace; mobil používá systémovou klávesnici přes `inputmode=decimal`.
+- Pozadí pod kontextovým menu používá stejný homescreen jako widget, aby obě vstupní cesty byly součástí jednoho telefonu.
+
+Nezůstává otevřená chyba P0/P1/P2 v požadovaných změnách.

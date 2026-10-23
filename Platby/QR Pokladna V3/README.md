@@ -6,6 +6,15 @@ Na desktopu jsou mimo telefon volby simulace. Nová platba se podle volby zaplat
 
 Účet, rozpracovaná částka, scénář a historie jsou uložené pod samostatným klíčem `qr_pokladna_v3__state`. PIN se neukládá. Hash i historie zachovávají navigaci. Prototyp neobsahuje měření ani bankovní integraci.
 
+## Úpravy podle podkladů
+
+Zaplatit je ukotveno nad klávesnicí; mobilní výška reaguje na `visualViewport.height` i `offsetTop`. QR a výsledky se přizpůsobí malému displeji. Zrušit platbu vede rovnou na výsledek „Platba zrušena“, bez potvrzovacího dialogu.
+
+Homescreen, HTML widget a kontextové menu vycházejí z aktuálních screenshotů. Ikony jsou extrahované ze zdrojů, tapeta je očištěná přes ImageGen. Desktop používá interaktivní obrazovou klávesnici podle reference; na mobilu se simulace skrývá a zůstává systémová klávesnice.
+
+- [VisualViewport API](https://developer.mozilla.org/en-US/docs/Web/API/VisualViewport)
+- [Chrome: změny velikosti viewportu při zobrazení klávesnice](https://developer.chrome.com/blog/viewport-resize-behavior)
+
 ## Zdroje
 
 - Místní KB design systém, ikony, fonty a ilustrace.

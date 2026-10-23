@@ -12,3 +12,80 @@
 @media(max-width:700px){.login-screen{min-height:100dvh}}
 .pin-key{width:75px;height:75px}.pin-grid{row-gap:17px}.pin-dots{gap:25px}.login-sheet h2,.login-sheet p{font-size:17px;line-height:24px}.login-sheet h2{margin-bottom:17px}.login-sheet p{margin-bottom:31px}
 @media(max-width:700px){.pin-key{width:72px;height:72px}.pin-grid{row-gap:16px}.pin-dots{gap:24px}.login-sheet h2,.login-sheet p{font-size:16px}.login-sheet h2{margin-bottom:16px}.login-sheet p{margin-bottom:30px}}
+
+/* Payment flow: a bounded viewport keeps every primary action above the keyboard. */
+.header{grid-template-columns:minmax(0,1fr) auto minmax(0,1fr)}
+.header>div:first-child{justify-self:start;min-width:0}
+.header>div:last-child{justify-self:end;display:flex;justify-content:flex-end}
+.header>div:first-child button{justify-self:start;justify-content:flex-start}
+.header button:last-child{justify-self:auto}
+.payment-mode #app{display:flex;flex-direction:column;overflow:hidden}
+.payment-mode .screen{flex:1;min-height:0;height:100%;overflow:hidden}
+.payment-mode .header{position:relative}
+.payment-mode .screen>.content{flex:1;min-height:0;overflow:auto;overscroll-behavior:contain}
+.payment-mode .bottom{position:static;flex-shrink:0;margin-top:auto}
+.cashier-screen>.content{padding-bottom:12px}
+.cashier-screen>.bottom{border-top:1px solid var(--color-background-divider);margin-top:0}
+.qr-screen>.content{display:grid;grid-template-rows:96px auto minmax(0,1fr);gap:12px;overflow:hidden!important}
+.qr-screen .account-selector{height:96px}
+.qr-screen .pay-amount{margin:12px 0 8px;line-height:48px}
+.qr-screen .payment-id{margin:0;font-size:14px}
+.qr-screen .qr{justify-self:center;align-self:center;width:auto;height:100%;max-height:224px;max-width:224px;aspect-ratio:1;padding:12px}
+.qr-screen .qr img{width:100%;height:100%;object-fit:contain}
+.qr-screen .waiting{flex-shrink:0;margin:12px 0;padding:0;min-height:64px;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.qr-screen .waiting .icon{margin:0 0 10px}
+.qr-screen .bottom{margin-top:0}
+.result-screen>.result-illustration{flex-shrink:1;min-height:48px}
+.result-screen>.result-title,.result-screen>.link{flex-shrink:0}
+@media(max-width:700px){
+ body{height:100dvh;overflow:hidden}
+ .phone-wrap{position:fixed;top:var(--visual-top,0px);left:0;width:100%;height:var(--visual-height,100dvh)}
+ .phone{height:100%}
+ .device-screen{height:100%}
+ .login-screen{min-height:var(--visual-height,100dvh)}
+ .native-keyboard-open .cashier-screen>.bottom{padding-bottom:12px}
+ .native-keyboard-open .home-indicator{display:none}
+ .native-keyboard-open .cashier-screen .account-selector{min-height:76px;padding:12px 16px}
+ .native-keyboard-open .cashier-screen>.content{gap:12px}
+ .header strong{font-size:16px}
+}
+@media(max-width:350px){.header button{font-size:13px}.header .icon{width:16px}}
+.compact-payment .qr-screen{padding-bottom:16px}
+.compact-payment .qr-screen>.content{grid-template-rows:76px auto minmax(0,1fr);gap:8px}
+.compact-payment .qr-screen .account-selector{height:76px;min-height:76px;padding:8px 16px}
+.compact-payment .qr-screen .rowtext>strong{font-size:14px}
+.compact-payment .qr-screen .rowtext>small{font-size:11px;line-height:16px}
+.compact-payment .qr-screen .pay-amount{font-size:32px;line-height:40px;margin:4px 0}
+.compact-payment .qr-screen .pay-amount span{font-size:21px}
+.compact-payment .qr-screen .payment-id{font-size:12px}
+.compact-payment .qr-screen .qr{max-height:200px;max-width:200px;padding:8px}
+.compact-payment .qr-screen .waiting{min-height:44px;margin:6px 0;font-size:13px}
+.compact-payment .qr-screen .waiting .icon{width:20px;height:20px;margin-bottom:4px}
+.compact-payment .qr-screen .bottom{padding-top:8px;padding-bottom:8px;gap:8px}
+.compact-payment .result-illustration{max-height:120px;margin-top:8px;margin-bottom:12px}
+.compact-payment .result-illustration.error{max-height:80px;margin-top:16px;margin-bottom:20px}
+.compact-payment .result-title{font-size:24px;line-height:30px}
+.qr-screen .pay-amount{display:flex;justify-content:center;align-items:baseline;gap:0;font-weight:600}
+.qr-screen .pay-amount .amount-whole{font-size:inherit;font-weight:600}
+.qr-screen .pay-amount .amount-fraction,.qr-screen .pay-amount .amount-currency{font-size:28px;font-weight:500}
+.qr-screen .pay-amount .amount-currency{margin-left:4px}
+.compact-payment .qr-screen .pay-amount .amount-fraction,.compact-payment .qr-screen .pay-amount .amount-currency{font-size:24px}
+.compact-payment .qr-screen .qr{padding:12px}
+@media(max-width:350px){.header button{font-size:12px}.header strong{font-size:15px}.header .icon{width:14px}}
+/* Supplied native numeric keyboard artwork; keys remain real accessible buttons. */
+.keyboard.gboard{position:relative;width:100%;height:auto;aspect-ratio:750/675;padding:0;background:#fff8ff url('assets/numeric-keyboard.png') center/100% 100% no-repeat}
+.gboard .native-key{position:absolute;left:calc(2% + var(--key-col)*24.65%);top:calc(15.4% + var(--key-row)*17.3%);width:22.5%;height:14%;border:0;border-radius:24px;background:transparent;box-shadow:none;padding:0}
+.gboard .native-keyboard-hide{position:absolute;left:4%;bottom:4%;width:10%;height:9%;background:transparent;border:0;padding:0}
+@media(min-width:701px){.device-screen:has(.keyboard.gboard.open) .home-indicator{visibility:hidden}}
+.qr-screen .qr{max-height:200px;max-width:200px;padding:16px}
+.qr-screen .waiting .icon{width:32px;height:28px}
+.compact-payment .qr-screen .qr{padding:12px}
+.compact-payment .qr-screen .waiting .icon{width:20px;height:20px}
+.account-selector .rowtext>small{font-size:14px;line-height:20px}
+.field>span{font-size:14px}
+.field em{font-size:16px}
+.qr-screen .payment-id{font-size:16px}
+.qr-screen .waiting{font-size:16px}
+.compact-payment .qr-screen .rowtext>small{font-size:11px;line-height:16px}
+.compact-payment .qr-screen .payment-id{font-size:12px}
+.compact-payment .qr-screen .waiting{font-size:13px}

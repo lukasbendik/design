@@ -1,0 +1,27 @@
+/* Actual app icons extracted from the supplied homescreen reference. */
+.os-mode #app{padding-top:0;overflow:hidden}
+.device-screen.os-mode{background:#050610}
+.os-mode .home-indicator{display:none}
+.os-mode .island{display:none}
+.ios-homescreen{position:relative;height:100%;min-height:100%;padding:0;background:#050610 url('assets/ios-wallpaper.png') center/100% 100% no-repeat;color:#fff;container-type:size;overflow:hidden}
+.ios-widget{position:absolute;left:5.6%;top:6.15%;width:41.45%;height:19.07%;border-radius:5.2cqw;background:#fff;color:var(--color-content-primary);display:flex;flex-direction:column;align-items:center;padding:3.2cqw 3.7cqw;gap:0;box-shadow:none}
+.ios-widget>img{width:16cqw;height:16cqw;border-radius:4.5cqw;margin-bottom:2cqw}
+.ios-widget strong{font-size:3.75cqw;font-weight:600;line-height:1.2;white-space:nowrap}
+.ios-widget>span{margin-top:auto;width:100%;height:9.1cqw;border-radius:2.5cqw;background:var(--color-interactive-primary);color:var(--color-interactive-on-primary);font-size:3.5cqw;font-weight:600;display:grid;place-items:center}
+.ios-app{position:absolute;width:16.05%;display:flex;flex-direction:column;align-items:center;gap:1.35cqw;font-size:3.15cqw;line-height:1.2;color:#fff;text-shadow:0 1px 3px #0003;white-space:nowrap;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none}
+.ios-app>img{width:100%;aspect-ratio:1;object-fit:cover;border-radius:3.8cqw}
+.ios-app:not([data-action]){pointer-events:none}
+.ios-kb{left:7.2%;top:32.1%}.ios-clock{left:53.5%;top:32.1%}.ios-instagram{left:76.7%;top:32.1%}
+.ios-telegram{left:53.5%;top:43.79%}.ios-reminders{left:76.7%;top:43.79%}
+.ios-figma{left:7.2%;top:55.47%}.ios-folder{left:30.35%;top:55.47%}.ios-mail{left:53.5%;top:55.47%}.ios-spotify{left:76.7%;top:55.47%}
+.ios-pages{position:absolute;bottom:13.6%;left:0;right:0;display:flex;justify-content:center;gap:2.5cqw}.ios-pages i{width:1.85cqw;height:1.85cqw;background:#ffffff60;border-radius:50%}.ios-pages i:first-child{background:#fff}
+.ios-dock{position:absolute;bottom:1.35%;left:2.7%;width:94.6%;height:11.56%;border-radius:8.4cqw;background:#ccccd25e;backdrop-filter:blur(20px);display:flex;align-items:center;justify-content:space-between;padding:0 4.8cqw}
+.ios-dock .ios-app{position:static;width:18.2%;gap:0}.ios-dock .ios-app span{display:none}
+.ios-quick-overlay{background:#0003;align-items:flex-start;backdrop-filter:blur(2px);container-type:size}
+.ios-context-dismiss{position:absolute;inset:0;width:100%;height:100%;cursor:default}
+.ios-context-menu{position:absolute;top:19%;right:8%;width:62%;border:1px solid #ffffffb0;background:#f4f7f4c9;color:#091011;border-radius:7cqw;padding:1.6cqw 3.8cqw 2cqw;backdrop-filter:blur(22px);box-shadow:0 4px 20px #0001;overflow:hidden}
+.ios-widget-sizes{height:12cqw;display:flex;align-items:center;justify-content:space-between;margin-bottom:2.7cqw;gap:1cqw}.ios-widget-sizes span{font-size:6cqw;display:grid;place-items:center;width:10cqw;height:10cqw;line-height:1}.ios-widget-sizes img{width:8cqw;height:8cqw;object-fit:contain}.ios-widget-sizes span:first-child{background:#5b5c3220;border-radius:2cqw}
+.ios-context-menu>button{display:flex;align-items:center;gap:3.5cqw;text-align:left;width:100%;min-height:10.3cqw;font-size:4.05cqw;line-height:1.2;white-space:nowrap;border:0;padding:0 1.5cqw}
+.ios-context-menu>button:not([data-action]){cursor:default}
+.ios-context-menu>button>img,.ios-context-menu>button>span:first-child:not(:last-child){width:5.3cqw;height:5.3cqw;flex-shrink:0;object-fit:contain}
+.ios-context-menu .ios-remove{color:#ff4549}
