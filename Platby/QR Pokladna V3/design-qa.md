@@ -76,3 +76,8 @@ QR pokladna nyní používá dodanou ikonu `codex-clipboard-ac251a08-bbd7-488e-b
 - Waiting icon rotates 360 degrees around the horizontal X axis, with reduced-motion support.
 - Playwright: desktop and 375×667 mobile capture/sheet visually reviewed; mobile PNG is 750×1334. Mock destination feedback and save action work; no console errors. Computed animation is waiting-flip with an X-axis matrix3d transform. Native OS sharing not available in the desktop browser and not device-tested.
 - final result: passed
+
+## Cashier header icon correction — 2026-10-23
+- Replace calculator-shaped icon in cashier top right with Font Awesome cash-register SVG (CC BY 4.0, bundled license). Other icons unchanged.
+- Playwright visually verified actual till silhouette and clicking opens payment list; console clean.
+- final result: passed
