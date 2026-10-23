@@ -92,3 +92,9 @@
 
 /* Real mobile devices already provide their own status bar. */
 @media(max-width:700px){.statusbar{display:none}#app{padding-top:0}.login-screen{min-height:100%;margin-top:0}}
+
+/* Waiting indicator flips around its horizontal axis. */
+.waiting{perspective:240px}.waiting .icon{animation:waiting-flip 1.6s linear infinite;transform-origin:center;backface-visibility:visible}
+@keyframes waiting-flip{from{transform:rotateX(0deg)}to{transform:rotateX(360deg)}}
+@media(prefers-reduced-motion:reduce){.waiting .icon{animation:none}}
+.share-sheet{max-height:90%;overflow:auto;padding-bottom:28px}.share-file{display:flex;align-items:center;gap:16px;padding:0 0 16px;border-bottom:1px solid var(--color-background-divider)}.share-preview{height:150px;width:auto;max-width:90px;object-fit:contain;border-radius:8px;border:1px solid var(--color-background-border)}.share-file strong{font-size:14px;font-weight:500;display:block}.share-file small{font-size:12px;color:var(--color-content-tertiary)}.share-apps{display:flex;gap:24px;padding:20px 0}.share-apps button{display:grid;justify-items:center;gap:6px;font-size:12px}.share-apps img{width:48px;height:48px;border-radius:12px}.share-option{background:var(--color-background-surface);border-radius:12px;margin-bottom:8px;padding:12px;min-height:48px}.share-sheet .share-feedback{font-size:12px;margin:12px 0 0;color:var(--color-content-tertiary)}

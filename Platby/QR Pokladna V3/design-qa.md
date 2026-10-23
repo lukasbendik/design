@@ -70,3 +70,9 @@ QR pokladna nyní používá dodanou ikonu `codex-clipboard-ac251a08-bbd7-488e-b
 - Hide simulated status bar and remove its reserved space at widths up to 700px. Crop the baked-in status bar from the iOS screenshot, adjusting widget/app hitboxes accordingly. Desktop remains unchanged.
 - Playwright: 375×812 homescreen visually reviewed without status indicators; widget opens login and cashier; cashier header at y=0. Desktop status bar display flex / visibility visible. No console errors.
 - final result: passed
+
+## Payment screenshot sharing and waiting rotation — 2026-10-23
+- Camera button captures current phone viewport to PNG using bundled html2canvas 1.4.1 (MIT). Opens an iOS-style simulated sharing sheet with actual image preview, app choices, image download and native file sharing when supported. App choices explicitly simulate the destination.
+- Waiting icon rotates 360 degrees around the horizontal X axis, with reduced-motion support.
+- Playwright: desktop and 375×667 mobile capture/sheet visually reviewed; mobile PNG is 750×1334. Mock destination feedback and save action work; no console errors. Computed animation is waiting-flip with an X-axis matrix3d transform. Native OS sharing not available in the desktop browser and not device-tested.
+- final result: passed
