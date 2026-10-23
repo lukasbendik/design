@@ -81,3 +81,8 @@ QR pokladna nyní používá dodanou ikonu `codex-clipboard-ac251a08-bbd7-488e-b
 - Replace calculator-shaped icon in cashier top right with Font Awesome cash-register SVG (CC BY 4.0, bundled license). Other icons unchanged.
 - Playwright visually verified actual till silhouette and clicking opens payment list; console clean.
 - final result: passed
+
+## Result illustration M — 2026-10-23
+- All result states use the documented ES Illustration M frame (375×212), per design-system/assets/icons-and-illustrations.md. Removed small-viewport shrinking and error-specific small sizing.
+- Playwright: paid, partial, timeout and cancellation all measured 375×212. Mobile 375×667 reviewed visually; actions remain visible. Console clean.
+- final result: passed
