@@ -33,3 +33,8 @@
 
 /* Remove the status bar baked into the supplied screenshot on mobile. */
 @media(max-width:700px){.ios-photo-homescreen{background-size:100% 104.166667%;background-position:center bottom}.ios-photo-homescreen .ios-widget{top:2.239583%;height:19.864583%}.ios-photo-homescreen .ios-kb{top:29.270833%}}
+
+/* Render every app from its original full-strength icon, like KB+. */
+.ios-photo-homescreen .ios-dock{background:transparent;backdrop-filter:none}
+@media(max-width:700px){.ios-photo-homescreen .ios-clock,.ios-photo-homescreen .ios-instagram{top:29.270833%}.ios-photo-homescreen .ios-telegram,.ios-photo-homescreen .ios-reminders{top:41.447917%}.ios-photo-homescreen .ios-figma,.ios-photo-homescreen .ios-folder,.ios-photo-homescreen .ios-mail,.ios-photo-homescreen .ios-spotify{top:53.614583%}.ios-photo-homescreen .ios-dock{bottom:1.40625%;height:12.041667%}}
+.ios-photo-homescreen>.ios-app{gap:2.8cqw}

@@ -86,3 +86,8 @@ QR pokladna nyní používá dodanou ikonu `codex-clipboard-ac251a08-bbd7-488e-b
 - All result states use the documented ES Illustration M frame (375×212), per design-system/assets/icons-and-illustrations.md. Removed small-viewport shrinking and error-specific small sizing.
 - Playwright: paid, partial, timeout and cancellation all measured 375×212. Mobile 375×667 reviewed visually; actions remain visible. Console clean.
 - final result: passed
+
+## Homescreen icon emphasis — 2026-10-23
+- Overlay all surrounding applications and dock icons using the existing original full-strength iOS assets, matching the KB+ icon. Align labels with screenshot text and preserve screenshot wallpaper/layout.
+- Playwright: desktop and 375×812 mobile visually reviewed; widget still opens login, console clean.
+- final result: passed
