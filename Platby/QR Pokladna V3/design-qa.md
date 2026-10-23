@@ -101,3 +101,9 @@ QR pokladna nyní používá dodanou ikonu `codex-clipboard-ac251a08-bbd7-488e-b
 - Root cause: full screenshot background already contained app icons/labels beneath live full-strength icons. Replaced with the existing icon-free wallpaper. Widget, page indicators, dock and app labels now each render once; desktop status indicators retained, mobile indicators hidden.
 - Playwright desktop and 375×812 mobile screenshots visually reviewed: no duplicate icons or labels; 13 app images; widget opens login; console clean.
 - final result: passed
+
+## Face ID launch flow — 2026-10-23
+- Replaced PIN entry with simulated iOS-style Face ID HUD over the exact user-supplied KB launch PNG. 450ms splash, scanning, success feedback, then automatic navigation at 2.5s. No biometric/camera access. Cancel stops pending timers.
+- Visual reference: Apple newsroom iPhone XR banking Face ID overlay https://www.apple.com.cn/newsroom/2018/09/apple-introduces-iphone-xr/ ; behavior reference https://support.apple.com/en-gb/108411 .
+- Playwright: desktop and mobile 375×812 visual inspection; widget → Face ID → cashier; app icon → Face ID → KB homepage; cancel → phone homescreen; homepage survives refresh; no console errors.
+- final result: passed

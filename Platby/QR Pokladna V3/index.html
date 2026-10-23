@@ -12,16 +12,16 @@
 <title>Prototyp: QR Pokladna V3</title>
 <link rel="icon" href="../QR%20Pokladna%20V2/icon.svg">
 <link rel="stylesheet" href="../../design-system/tokens.css?v=1">
-<link rel="stylesheet" href="styles.css?v=5">
+<link rel="stylesheet" href="styles.css?v=6">
 <link rel="stylesheet" href="homescreen.css?v=5">
-<script defer src="assets/html2canvas.min.js?v=1"></script><script defer src="assets/qrcode.js?v=1"></script><script defer src="homescreen.js?v=5"></script><script defer src="app.js?v=6"></script>
+<script defer src="assets/html2canvas.min.js?v=1"></script><script defer src="assets/qrcode.js?v=1"></script><script defer src="homescreen.js?v=5"></script><script defer src="app.js?v=7"></script>
 </head>
 <body>
 <aside class="tester" aria-label="Ovládání prototypu">
   <img class="desktop-logo" src="../../design-system/design-system/assets/icons/logotype-kb.svg" alt="KB">
   <p class="eyebrow">INTERAKTIVNÍ PROTOTYP · V3</p><h1>QR pokladna</h1>
   <p>Od widgetu rovnou<br>k přijetí platby.</p>
-  <div class="test-section"><span class="test-label">ZAČÍT ZNOVU</span><button data-action="home">Homescreen telefonu</button><small>Widget otevře pokladnu.<br>Ikona KB+ otevře přehled účtů.<br>Pro přihlášení zadejte libovolných 6 číslic.</small></div>
+  <div class="test-section"><span class="test-label">ZAČÍT ZNOVU</span><button data-action="home">Homescreen telefonu</button><small>Widget otevře pokladnu.<br>Ikona KB+ otevře přehled účtů.<br>Přihlášení proběhne ukázkou Face ID.</small></div>
   <div class="test-section"><label class="test-label" for="scenario">PRŮBĚH NOVÉ PLATBY</label><select id="scenario"><option value="paid">Zaplaceno za 8 sekund</option><option value="overpaid">Vyšší částka za 8 sekund</option><option value="partial">Nižší částka za 8 sekund</option><option value="timeout">Platba nedorazí (60 sekund)</option><option value="manual">Ruční simulace</option></select><small>Volba platí pro nově vytvořený QR kód.</small></div>
   <div class="simulation"><button data-sim="paid">Přijmout celou částku</button><button data-sim="partial">Přijmout nižší částku</button><button data-sim="timeout">Ukončit odpočet</button><small id="simulationHint" aria-live="polite">Nejprve vytvořte QR platbu.</small></div>
   <p class="desktop-footnote">Ukázková data · bez skutečných plateb</p>
