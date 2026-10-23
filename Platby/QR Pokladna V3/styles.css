@@ -89,3 +89,6 @@
 .compact-payment .qr-screen .rowtext>small{font-size:11px;line-height:16px}
 .compact-payment .qr-screen .payment-id{font-size:12px}
 .compact-payment .qr-screen .waiting{font-size:13px}
+
+/* Real mobile devices already provide their own status bar. */
+@media(max-width:700px){.statusbar{display:none}#app{padding-top:0}.login-screen{min-height:100%;margin-top:0}}

@@ -30,3 +30,6 @@
 .ios-photo-homescreen{background-image:url('assets/ios-homescreen-reference.png');background-size:100% 100%}
 .ios-widget-hitbox{background:transparent;padding:0}
 .os-mode .statusbar{visibility:hidden}
+
+/* Remove the status bar baked into the supplied screenshot on mobile. */
+@media(max-width:700px){.ios-photo-homescreen{background-size:100% 104.166667%;background-position:center bottom}.ios-photo-homescreen .ios-widget{top:2.239583%;height:19.864583%}.ios-photo-homescreen .ios-kb{top:29.270833%}}

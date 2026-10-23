@@ -65,3 +65,8 @@ QR pokladna nyní používá dodanou ikonu `codex-clipboard-ac251a08-bbd7-488e-b
 - Playwright: widget and app both open login; context menu opens; no console errors.
 - Desktop screenshot visually reviewed against the supplied iOS reference; mobile 375×812 reviewed, no horizontal overflow.
 - final result: passed
+
+## Mobile status bar — 2026-10-23
+- Hide simulated status bar and remove its reserved space at widths up to 700px. Crop the baked-in status bar from the iOS screenshot, adjusting widget/app hitboxes accordingly. Desktop remains unchanged.
+- Playwright: 375×812 homescreen visually reviewed without status indicators; widget opens login and cashier; cashier header at y=0. Desktop status bar display flex / visibility visible. No console errors.
+- final result: passed
