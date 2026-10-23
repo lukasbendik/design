@@ -1,3 +1,19 @@
+# Nová platba – souhrn před autorizací, 23. 10. 2026
+
+final result: passed
+
+Zdroj vizuální pravdy: /home/lukinab/.codex/attachments/e2e1ab41-3de8-47a4-832b-00eb2dfe9fa9/codex-clipboard-b26013cd-904a-4b78-a1ac-fe9a919cabbc.png (2080 × 2066 px), normalizovaný /2 na 1040 × 1033. Implementace: /home/lukinab/Projects/UX/.vavu-payment-summary-qa/summary-desktop.png (1040 × 1033 CSS i px, DPR1), summary-320.png a summary-390.png (320/390 × 844, DPR1). Společné porovnání: comparison-full.png a comparison-card.png ve stejné složce, obě otevřena a vizuálně posouzena.
+
+Stav: vyplněný účet příjemce, částka a všech pět volitelných polí. Zachováno pořadí reference. Jediné vstupní pole Komu přijímá jméno nebo účet/IBAN: souhrn ukazuje příslušný popisek a nevymýšlí druhý údaj. Termín se zobrazuje jako skutečná volba Co nejdříve/Později; formulář nemá vstup data. Změna neřeší samotné plánování plateb.
+
+Pět povrchů: stávající DS Inter 12/16 pro popisky, 16/24 medium pro hodnoty a existující titul; úzký sloupec, karta radius8, stín, řádky pad16 a DS oddělovače; stávající DS světlé pozadí a červené CTA; existující knihovní ikona zpět, žádné nové obrázky; popisky dle reference, hodnoty z konceptu, bez prázdných řádků. Malé rozdíly titulku a odsazení dividerů zachovávají DS existujícího prototypu. Bez zbývajících P0/P1/P2.
+
+Historie porovnání: první snímek měl větší horní mezeru a širší CTA, šedší popisky a běžnou váhu hodnot. Opraveno pouze na novém souhrnu: kompaktní hlavička, gap16, CTA podle obsahu, secondary popisky, DS medium hodnoty. Finální comparison-full.png a comparison-card.png potvrzují opravu.
+
+Playwright v Brave Origin ověřil skutečný vstup Nová platba → detaily → souhrn → podpis → výsledek. Minimální i plný koncept, vynechání prázdných a whitespace polí, úpravy po návratu, refresh souhrnu, browser zpět/vpřed, zavření i refresh podpisového dialogu, zachování nuly na začátku symbolu, escapování HTML, účty EUR/spoření, měny, nový koncept bez starých hodnot. 320/390 bez horizontálního přetečení včetně dlouhého příjemce; Odeslat dostupné. Žádné chyby JavaScriptu. Syntaxe inline skriptů a diff --check s cr-at-eol prošly (soubor používá CRLF).
+
+---
+
 # Samostatné podepisování – Podepisující, 22. 10. 2026
 
 final result: passed

@@ -2485,6 +2485,24 @@
       color: var(--color-content-primary);
     }
 
+    #screen-nova-platba-souhrn .payment-flow-header {
+      padding: 0 var(--padding-xl);
+    }
+
+    #screen-nova-platba-souhrn .payment-flow-column {
+      padding-top: var(--padding-sm);
+      gap: var(--space-16);
+    }
+
+    #screen-nova-platba-souhrn .btn {
+      min-width: auto;
+    }
+
+    .new-payment-summary-value {
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+    }
+
     .batch-summary-row {
       min-height: 56px;
       display: flex;
@@ -4977,7 +4995,7 @@ unicode: "ebf6"
         </header>
 
         <div class="payment-flow-content">
-          <form class="payment-flow-column" id="payment-details-form" onsubmit="event.preventDefault(); openModal('payment-signature-modal');">
+          <form class="payment-flow-column" id="payment-details-form" onsubmit="event.preventDefault(); goTo('nova-platba-souhrn');">
             <h1 class="payment-flow-title" id="nova-platba-detaily-title">Nová platba</h1>
 
             <label class="payment-control">
@@ -5019,6 +5037,27 @@ unicode: "ebf6"
           <div class="payment-buttonbar-row">
             <button class="btn btn--primary" type="submit" form="payment-details-form">Pokračovat</button>
             <button class="btn btn--secondary" type="button" onclick="alert('Uložení k autorizaci není součástí tohoto testovacího scénáře.')">Uložit k autorizaci</button>
+          </div>
+        </footer>
+      </section>
+
+      <!-- ================= VAVU: NOVÁ PLATBA – SOUHRN ================= -->
+      <section class="screen payment-screen" id="screen-nova-platba-souhrn" aria-labelledby="nova-platba-souhrn-title">
+        <header class="payment-flow-header">
+          <button class="payment-header-action" type="button" onclick="goTo('nova-platba-detaily')">
+            <svg class="icon icon--caret" style="transform:rotate(180deg)" aria-hidden="true"><use href="#es-caret-right"></use></svg>Zpět
+          </button>
+          <span class="header-spacer"></span>
+        </header>
+        <div class="payment-flow-content">
+          <div class="payment-flow-column">
+            <h1 class="payment-flow-title" id="nova-platba-souhrn-title">Souhrn</h1>
+            <div class="batch-summary-card" id="new-payment-summary"></div>
+          </div>
+        </div>
+        <footer class="payment-buttonbar">
+          <div class="payment-buttonbar-row">
+            <button class="btn btn--primary" type="button" onclick="openModal('payment-signature-modal')">Odeslat</button>
           </div>
         </footer>
       </section>
@@ -5517,7 +5556,7 @@ unicode: "ebf6"
     const PERMISSION_SIGNING_SCREENS = ['czk', 'eur'].flatMap(key => ['podpis-opravneni-uvod-' + key, 'podpis-opravneni-potvrzeni-' + key, 'podpis-opravneni-dokument-' + key, 'podpis-opravneni-vysledek-' + key]);
     const USER_DETAIL_SCREENS = [...COMPANY_USERS.map((_, index) => String(index)), 'current'].flatMap(id => ['uzivatel-' + id, 'uzivatel-opravneni-' + id]);
     const COMPANY_ACCESS_SCREENS = [...USER_DETAIL_SCREENS, ...PERMISSION_SIGNING_SCREENS, ...REVIEW_SCREENS, ...REVIEW_EDIT_SCREENS, ...AUTHORIZATION_FLOW_SCREENS, ...PERMISSION_EDITOR_SCREENS, ...PERMISSION_FLOW_SCREENS, ...COMPANY_ACCOUNT_SCREENS, 'pristupy-k-uctum', 'pristupy-opravneni', 'pristupy-uzivatele', 'pristupy-podpisova-pravidla'];
-    const SCREENS = ['vyber-subjektu', 'prehled-autorizaci', 'autorizace-davek', 'autorizace-platby', 'autorizace-tp', 'autorizace-inkasa', ...COMPANY_ACCESS_SCREENS, 'profil-firma', 'profil', 'login', 'prehled', 'sporeni-detail', 'sporeni-platby', 'extra', 'karty', 'pujcky', 'sporeni', 'investice', 'pojisteni', 'ucet-detail', 'tp-inkasa', 'tp-inkasa-s-autorizaci', 'autorizace', 'vsechny-platby', 'platba-detail', 'nova-platba', 'nova-platba-detaily', 'platba-vysledek', 'tp-novy', 'tp-detaily', 'tp-souhrn', 'tp-vysledek', 'inkaso-nove', 'inkaso-souhrn', 'inkaso-vysledek', 'davkove-platby', 'davkove-platby-detail', 'davkove-platby-souhrn', 'davkove-platby-vysledek'];
+    const SCREENS = ['vyber-subjektu', 'prehled-autorizaci', 'autorizace-davek', 'autorizace-platby', 'autorizace-tp', 'autorizace-inkasa', ...COMPANY_ACCESS_SCREENS, 'profil-firma', 'profil', 'login', 'prehled', 'sporeni-detail', 'sporeni-platby', 'extra', 'karty', 'pujcky', 'sporeni', 'investice', 'pojisteni', 'ucet-detail', 'tp-inkasa', 'tp-inkasa-s-autorizaci', 'autorizace', 'vsechny-platby', 'platba-detail', 'nova-platba', 'nova-platba-detaily', 'nova-platba-souhrn', 'platba-vysledek', 'tp-novy', 'tp-detaily', 'tp-souhrn', 'tp-vysledek', 'inkaso-nove', 'inkaso-souhrn', 'inkaso-vysledek', 'davkove-platby', 'davkove-platby-detail', 'davkove-platby-souhrn', 'davkove-platby-vysledek'];
     // Seznam modálních hashů
     const MODALS = ['povoleni-inkasa-modal', 'autorizace-potvrzeni-modal', 'no-items-modal', 'payment-signature-modal', 'filter-modal'];
 
@@ -6173,14 +6212,15 @@ unicode: "ebf6"
         if (targetScreenId === 'davkove-platby') restoreBatchTab();
         if (targetScreenId === 'davkove-platby-vysledek') renderBatchAuthorizationResult();
       }
-      if (targetScreenId === 'nova-platba' || targetScreenId === 'nova-platba-detaily') {
+      if (['nova-platba', 'nova-platba-detaily', 'nova-platba-souhrn'].includes(targetScreenId)) {
         batchFlowActive = false;
         standingOrderFlowActive = false;
         directDebitFlowActive = false;
         localStorage.removeItem('vavu_batch_flow_active');
         localStorage.removeItem('vavu_standing_order_flow_active');
         localStorage.removeItem('vavu_direct_debit_flow_active');
-        renderPaymentAccount();
+        restorePaymentValues();
+        if (targetScreenId === 'nova-platba-souhrn') renderNewPaymentSummary();
       }
       if (['tp-novy', 'tp-detaily', 'tp-souhrn', 'tp-vysledek'].includes(targetScreenId)) {
         standingOrderFlowActive = true;
@@ -6232,7 +6272,7 @@ unicode: "ebf6"
 
       if (targetScreenId === 'davka-detail') renderExistingBatchDetail(screenId.slice('davka-detail-'.length));
       if (targetScreenId === 'davka-souhrn') renderExistingBatchSummary(screenId.slice('davka-souhrn-'.length));
-      const paymentFlowScreens = ['auth-bulk-summary', 'auth-bulk-result', 'auth-item-summary', 'auth-item-result', 'davka-souhrn', 'davka-detail', 'nova-platba', 'nova-platba-detaily', 'platba-vysledek', 'tp-novy', 'tp-detaily', 'tp-souhrn', 'tp-vysledek', 'inkaso-nove', 'inkaso-souhrn', 'inkaso-vysledek', 'davkove-platby', 'davkove-platby-detail', 'davkove-platby-souhrn', 'davkove-platby-vysledek'];
+      const paymentFlowScreens = ['auth-bulk-summary', 'auth-bulk-result', 'auth-item-summary', 'auth-item-result', 'davka-souhrn', 'davka-detail', 'nova-platba', 'nova-platba-detaily', 'nova-platba-souhrn', 'platba-vysledek', 'tp-novy', 'tp-detaily', 'tp-souhrn', 'tp-vysledek', 'inkaso-nove', 'inkaso-souhrn', 'inkaso-vysledek', 'davkove-platby', 'davkove-platby-detail', 'davkove-platby-souhrn', 'davkove-platby-vysledek'];
       document.body.classList.toggle('flow-mode', paymentFlowScreens.includes(targetScreenId));
       document.body.classList.toggle('login-mode', targetScreenId === 'login');
 
@@ -7818,6 +7858,29 @@ unicode: "ebf6"
       goTo('nova-platba-detaily');
     }
 
+    function renderNewPaymentSummary() {
+      const value = key => (localStorage.getItem(paymentStorageKey(key)) || '').trim();
+      const account = paymentAccount();
+      const recipient = value('recipient');
+      const isAccountNumber = /^(?:[0-9]+-)?[0-9]+\/[0-9]{4}$/.test(recipient.replace(/\s/g, '')) || /^[A-Z]{2}[0-9]{2}[A-Z0-9]+$/i.test(recipient.replace(/\s/g, ''));
+      const amount = value('amount');
+      const currency = value('currency') || (paymentAccountKey() === 'eur' ? 'EUR' : 'Kč');
+      const rows = [
+        ['Z účtu', account.name + '\n' + account.number],
+        [isAccountNumber ? 'Na účet' : 'Komu', recipient],
+        ['Částka', amount && Number.isFinite(Number(amount)) ? new Intl.NumberFormat('cs-CZ', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(Number(amount)) + ' ' + currency : ''],
+        ['Zpráva pro příjemce', value('messageRecipient')],
+        ['Variabilní symbol', value('variableSymbol')],
+        ['Popis pro mě', value('description')],
+        ['Konstantní symbol', value('constantSymbol')],
+        ['Specifický symbol', value('specificSymbol')],
+        ['Odeslat platbu', value('timing') === 'later' ? 'Později' : 'Co nejdříve']
+      ];
+      document.getElementById('new-payment-summary').innerHTML = rows.filter(([, text]) => text).map(([label, text]) =>
+        `<div class="batch-summary-row" data-ds-component="CO Item Display"><span class="t-content-caption-primary" style="color:var(--color-content-secondary)">${escapeHtml(label)}</span><span class="t-content-body-primary-bold new-payment-summary-value">${escapeHtml(text)}</span></div>`
+      ).join('');
+    }
+
     function setPaymentTiming(value, persist = true) {
       document.querySelectorAll('[data-payment-timing]').forEach(button => {
         const active = button.dataset.paymentTiming === value;
@@ -8495,7 +8558,7 @@ unicode: "ebf6"
     function signatureOrigin() {
       const request = signatureRequest();
       if (request && (SCREENS.includes(request.origin) || /^autorizace-vyber-souhrn-[A-Za-z0-9_-]+$/.test(request.origin) || /^autorizace-(detail|souhrn)-(platby|tp|inkasa)-[A-Za-z0-9_-]+$/.test(request.origin) || /^davka-souhrn-[A-Za-z0-9_-]+$/.test(request.origin))) return request.origin;
-      return directDebitFlowActive ? 'inkaso-souhrn' : standingOrderFlowActive ? 'tp-souhrn' : batchFlowActive ? 'davkove-platby-souhrn' : 'nova-platba-detaily';
+      return directDebitFlowActive ? 'inkaso-souhrn' : standingOrderFlowActive ? 'tp-souhrn' : batchFlowActive ? 'davkove-platby-souhrn' : 'nova-platba-souhrn';
     }
 
     function openSignatureSelection(kind = 'payment') {
