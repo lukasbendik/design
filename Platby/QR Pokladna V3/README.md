@@ -2,7 +2,7 @@
 
 Telefonní prototyp KB+ podle dodaného schématu. Výchozí obrazovka je homescreen telefonu (`#telefon`). Widget vede přes přihlášení na pokladnu, ikona KB+ na přehled účtů. Demo přihlášení přijme libovolných šest číslic nebo Face ID.
 
-Na desktopu jsou mimo telefon volby simulace. Nová platba se podle volby zaplatí za osm sekund, přijde s nižší/vyšší částkou nebo po minutě vyprší čekání. Ruční simulace ponechá výsledek na ovládání vedle telefonu.
+Na desktopu jsou mimo telefon volby simulace. Nová platba se podle volby zaplatí za osm sekund, přijde s nižší/vyšší částkou nebo po 15 sekundách vyprší čekání. Ruční simulace ponechá výsledek na ovládání vedle telefonu.
 
 Účet, rozpracovaná částka, scénář a historie jsou uložené pod samostatným klíčem `qr_pokladna_v3__state`. PIN se neukládá. Hash i historie zachovávají navigaci. Prototyp neobsahuje měření ani bankovní integraci.
 
@@ -25,3 +25,5 @@ Homescreen, HTML widget a kontextové menu vycházejí z aktuálních screenshot
 - [HTML inputmode – MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Global_attributes/inputmode), ověřeno 23. 10. 2026.
 
 Ověření popisuje `design-qa.md`.
+
+Vyřazování ani detail QR platby nejsou součástí prototypu. Zrušená platba zůstává v přehledu se stavem „Zrušeno“. Řádky přehledu jsou neinteraktivní; původní odkazy na detail vedou na přehled.

@@ -137,3 +137,8 @@ QR pokladna nyní používá dodanou ikonu `codex-clipboard-ac251a08-bbd7-488e-b
 ## Unreceived QR requests wait in the list — 2026-10-26
 - Timeout QR requests now display Čeká na platbu in neutral text with the existing pending clock icon in the payment list. Stored status, no-receipt result and balance logic stay intact; existing saved requests render consistently.
 - Playwright, local Brave Origin 375×812: existing timeout, removal, refresh and preserved partial-payment red status verified; no page errors. Syntax/diff checks passed. app.js v13.
+
+## Remove exclusion and payment detail — 2026-10-26
+- Removed exclusion actions, labels, strike-through styling, payment detail and clickable payment rows. Legacy detail hashes redirect to the list; old removal flags are retired without deleting payment records.
+- Cancel payment preserves its record with red Zrušeno status. Historical cancelled records stay cancelled; legacy removed pending demo becomes cancelled.
+- Playwright in local Brave Origin at 375×812 and desktop: create/cancel/list, refresh persistence, old detail URL redirect, actual 15-second timeout, result without exclusion and noninteractive rows passed; no page errors. Syntax and scoped diff checks passed. app.js v14, styles.css v7.
