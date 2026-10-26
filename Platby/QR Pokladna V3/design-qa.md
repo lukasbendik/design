@@ -133,3 +133,7 @@ QR pokladna nyní používá dodanou ikonu `codex-clipboard-ac251a08-bbd7-488e-b
 ## Equal random outcome probabilities — 2026-10-26
 - Paid, overpaid, partial and timeout each occupy one quarter of Math.random() range (25%). Only newly created random payments use the changed distribution; existing outcomes stay persisted.
 - Node verified all interval boundaries and 10,000 evenly spaced draws: exactly 2,500 per outcome. Syntax and diff checks passed. Asset cache app.js v12.
+
+## Unreceived QR requests wait in the list — 2026-10-26
+- Timeout QR requests now display Čeká na platbu in neutral text with the existing pending clock icon in the payment list. Stored status, no-receipt result and balance logic stay intact; existing saved requests render consistently.
+- Playwright, local Brave Origin 375×812: existing timeout, removal, refresh and preserved partial-payment red status verified; no page errors. Syntax/diff checks passed. app.js v13.
