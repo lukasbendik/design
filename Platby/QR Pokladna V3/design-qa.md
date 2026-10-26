@@ -129,3 +129,7 @@ QR pokladna nyní používá dodanou ikonu `codex-clipboard-ac251a08-bbd7-488e-b
 - Clear the persisted amount when entering #pokladna, including initial load/refresh and browser Back. Preserve the current draft during account selection and validation on the same screen.
 - Unpaid result already uses the supplied copy: Platba zatím nedorazila / Zobrazit přehled / Vyřadit / Zavřít. No copy change required.
 - Playwright in local Brave Origin, 375×812: stale persisted amount, account rerender, QR Back, refresh, result Close and browser Back passed. Actual 15-second expiry displays exact supplied text and both Close controls. No page errors. Syntax/diff checks passed.
+
+## Equal random outcome probabilities — 2026-10-26
+- Paid, overpaid, partial and timeout each occupy one quarter of Math.random() range (25%). Only newly created random payments use the changed distribution; existing outcomes stay persisted.
+- Node verified all interval boundaries and 10,000 evenly spaced draws: exactly 2,500 per outcome. Syntax and diff checks passed. Asset cache app.js v12.

@@ -101,7 +101,7 @@ function openAccounts(){routeBeforeSheet=route;showSheet(`<div class="sheet-top"
 function quickActions(){overlay.innerHTML=QRHomescreen.quickActions();}
 function onAmount(){const el=$('#amount');const start=el.selectionStart;const cleaned=el.value.replace(/[^\d.,]/g,'').replace('.',',');const parts=cleaned.split(',');state.amount=parts[0].slice(0,8)+(parts.length>1?','+parts.slice(1).join('').slice(0,2):'');el.value=state.amount;el.setSelectionRange(Math.min(start,el.value.length),Math.min(start,el.value.length));save();}
 function amountCents(){return Math.round(Number(state.amount.replace(',','.'))*100);}
-function randomScenario(){const draw=Math.random();return draw<.4?'paid':draw<.5?'overpaid':draw<.75?'partial':'timeout';}
+function randomScenario(){const draw=Math.random();return draw<.25?'paid':draw<.5?'overpaid':draw<.75?'partial':'timeout';}
 function createPayment(){const amount=amountCents();if(!Number.isSafeInteger(amount)||amount<=0||amount>9999999999){error='Zadejte částku větší než 0 Kč.';render();return;}
  const stamp=Date.now();const id='QR-'+new Intl.DateTimeFormat('sv-SE',{year:'2-digit',month:'2-digit',day:'2-digit'}).format(stamp).replace(/-/g,'')+'-'+String(++state.sequence).padStart(3,'0');
  const p={id,amount,account:state.account,status:'pending',received:0,removed:false,createdAt:stamp,expiresAt:stamp+15000,resolveAt:stamp+8000,scenario:state.scenario==='random'?randomScenario():state.scenario};state.payments.unshift(p);state.activeId=id;save();go('qr');}
