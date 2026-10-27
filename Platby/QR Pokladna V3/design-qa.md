@@ -142,3 +142,7 @@ QR pokladna nyní používá dodanou ikonu `codex-clipboard-ac251a08-bbd7-488e-b
 - Removed exclusion actions, labels, strike-through styling, payment detail and clickable payment rows. Legacy detail hashes redirect to the list; old removal flags are retired without deleting payment records.
 - Cancel payment preserves its record with red Zrušeno status. Historical cancelled records stay cancelled; legacy removed pending demo becomes cancelled.
 - Playwright in local Brave Origin at 375×812 and desktop: create/cancel/list, refresh persistence, old detail URL redirect, actual 15-second timeout, result without exclusion and noninteractive rows passed; no page errors. Syntax and scoped diff checks passed. app.js v14, styles.css v7.
+
+## Remove Zadat další — 2026-10-27
+- Removed the QR screen button and its unused action handler; app.js v15.
+- Node syntax and git diff checks passed. Browser QA blocked: connected Brave repeatedly times out on Page.navigate for both local and public URLs.
