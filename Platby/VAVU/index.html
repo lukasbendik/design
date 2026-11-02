@@ -647,6 +647,7 @@
 
     .overview-actions { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-4); }
     .overview-actions .card-action-red--control { border-radius: var(--radius-xl); }
+    .overview-actions > :only-child { grid-column: 1 / -1; }
     .overview-actions .overview-action-icon { width: 24px; height: 24px; filter: brightness(0) invert(1); }
     #overview-authorization-button { position: relative; }
     .overview-authorization-badge { position: absolute; top: var(--space-8); right: var(--space-8); width: var(--space-24); height: var(--space-24); display: grid; place-items: center; border-radius: var(--radius-full); background: var(--background-surface); color: var(--interactive-primary); font: var(--content-body-primary-bold); line-height: 1; }
