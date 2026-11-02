@@ -627,6 +627,10 @@
     .authorization-hub .batch-overview-icon { width: 32px; height: 32px; display: grid; place-items: center; background: var(--attention-information-surface); border-radius: var(--border-radius-sm); }
     .authorization-hub .hub-limit strong { font: var(--content-body-primary-bold); }
     .authorization-hub .batch-overview-group { margin-bottom: var(--padding-xl); }
+    .authorization-empty { padding: var(--padding-xl); text-align: center; width: 100%; box-sizing: border-box; }
+    .authorization-empty img { display: block; width: 168px; height: 152px; object-fit: contain; margin: 0 auto var(--padding-xl); }
+    .authorization-empty p { margin: 0; font: var(--content-body-primary); }
+    .hub-account > .authorization-empty { box-shadow: none; border: 0; margin: 0; }
     .authorization-hub .hub-empty { padding: var(--padding-xl); margin: 0; font: var(--content-body-primary); }
     .authorization-hub .hub-limit { display: flex; flex-direction: column; gap: var(--padding-sm); padding: var(--padding-xl); font: var(--content-body-primary); }
     .authorization-hub .hub-limit small { font: var(--content-body-secondary); color: var(--content-tertiary); }
@@ -5573,7 +5577,7 @@ unicode: "ebf6"
     const DIRECT_DEBIT_STORAGE_KEY = 'vavu_direct_debit_draft';
     const BATCH_OVERVIEW_STORAGE_KEY = 'vavu_imported_batches';
     const DEFAULT_BATCHES = [
-      { date: '10. 9.', name: 'Servis_a_material_9_2026', id: '12DE4125GW', created: { name: 'Kateřina H.', at: '2026-09-10T10:22:00+02:00' }, status: 'K autorizaci', statusType: 'pending', payments: 48, amount: '327 239,00 Kč' },
+      { date: '10. 9.', name: 'Servis_a_material_9_2026', id: '12DE4125GW', authorizations: [{ name: 'Kateřina H.', at: '2026-09-10T10:38:00+02:00' }, { name: 'Šárka B.', at: '2026-09-10T18:51:00+02:00' }], created: { name: 'Kateřina H.', at: '2026-09-10T10:22:00+02:00' }, status: '', statusType: 'success', payments: 48, amount: '327 239,00 Kč' },
       { date: '10. 9.', name: 'Obnova_vodovodni_site', id: 'SFAW5124', authorizations: [{ name: 'Kateřina H.', at: '2026-09-10T10:38:00+02:00' }, { name: 'Šárka B.', at: '2026-09-10T18:51:00+02:00' }], created: { name: 'Kateřina H.', at: '2026-09-10T10:22:00+02:00' }, status: '', statusType: 'success', payments: 150, amount: '58 267,00 Kč' },
       { date: '3. 9.', name: 'Energie_a_provoz_9_2026', id: '13IH512D2', authorizations: [{ name: 'Kateřina H.', at: '2026-09-03T10:38:00+02:00' }, { name: 'Šárka B.', at: '2026-09-03T18:51:00+02:00' }], created: { name: 'Kateřina H.', at: '2026-09-03T10:22:00+02:00' }, status: 'Čekající', statusType: 'pending', payments: 24, amount: '41 000,00 Kč' },
       { date: '3. 9.', name: 'Armatury_a_potrubi_9_2026', id: '1025I252M', cancelled: { name: 'Šárka B.', at: '2026-09-03T11:38:00+02:00' }, created: { name: 'Kateřina H.', at: '2026-09-03T10:22:00+02:00' }, status: 'Zrušeno', statusType: 'alert', payments: 50, amount: '20 525,12 Kč' }
@@ -6308,8 +6312,8 @@ unicode: "ebf6"
       // Speciální chování pro obrazovku Trvalé příkazy a Inkasa (obr. 3 vs obr. 6)
       const authCard = document.getElementById('right-column-auth-card');
       if (authCard) {
-        const hasAuthItem = localStorage.getItem('inkaso_saved_for_auth') === '1';
-        if (screenId === 'tp-inkasa-s-autorizaci' || window.location.hash === '#tp-inkasa-s-autorizaci' || forceAuthCard || hasAuthItem) {
+        const hasAuthItem = ['tp', 'inkasa'].some(tab => authorizationItems(tab).some(item => instrumentAccountKey(item) === (localStorage.getItem('vavu_selected_account') || 'czk')));
+        if (hasAuthItem) {
           authCard.style.display = 'block';
         } else {
           authCard.style.display = 'none';
@@ -7122,7 +7126,15 @@ unicode: "ebf6"
       }
       return { outcome, signatures: state.signatures };
     }
-    function authorizedInstruments() { try { return JSON.parse(localStorage.getItem('vavu_authorized_instruments') || '[]'); } catch (_) { return []; } }
+    function authorizedInstruments() {
+      const seeded = ['platby', 'tp', 'inkasa'].flatMap(kind => demoAuthorizationItems(kind).map(item => {
+        const history = demoAuthorizationHistory(({ platba_auth_1: '2026-07-10', platba_auth_2: '2026-07-09', platba_auth_3: '2026-07-08', tp_auth_1: '2026-07-10', tp_auth_2: '2026-07-08', tp_auth_3: '2026-07-05', internet: '2026-07-10' })[item.id]);
+        const completed = { ...item, created: history.created, authorizations: history.authorizations };
+        return { kind, fingerprint: instrumentFingerprint(completed), item: completed, signatures: history.authorizations, at: history.authorizations.at(-1).at };
+      }));
+      const demoIds = new Set(seeded.map(entry => entry.kind + ':' + entry.item.id));
+      try { return [...new Map([...seeded, ...JSON.parse(localStorage.getItem('vavu_authorized_instruments') || '[]')].map(entry => [demoIds.has(entry.kind + ':' + entry.item.id) ? entry.kind + ':' + entry.item.id : entry.kind + ':' + entry.fingerprint, entry])).values()]; } catch (_) { return seeded; }
+    }
     function finishCreatedInstrument(tab, id, route) {
       const item = authorizationItems(tab).find(item => item.id === id);
       const result = signInstrument(tab, item, signatureRequest()?.creationPolicy);
@@ -7147,7 +7159,7 @@ unicode: "ebf6"
       art.src = ['forbidden', 'error', 'duplicate'].includes(result.outcome) ? 'assets/batch-authorization-warning.png' : '../../design-system/design-system/assets/illustrations/success-light.png'; art.alt = '';
     }
 
-    function authorizationItems(tab) {
+    function demoAuthorizationItems(tab) {
       const account = ACCOUNT_DATA.czk;
       const base = { accountName: account.name, accountNumber: account.number };
       const paymentDemo = [
@@ -7160,7 +7172,13 @@ unicode: "ebf6"
         { id: 'tp_auth_2', name: 'Zálohy na elektřinu – ČOV', recipient: '623423/0100', amount: '42 000,00 Kč', date: '8. 7. 2026', message: 'Měsíční záloha na elektřinu pro ČOV', description: 'Energie pro čistírnu odpadních vod', orderId: 'SWG123456790' },
         { id: 'tp_auth_3', name: 'Servis vodárenské technologie', recipient: '76234523/0100', amount: '18 500,00 Kč', date: '5. 7. 2026', message: 'Pravidelný servis úpravny vody', description: 'Měsíční servis a údržba technologie', orderId: 'SWG123456791' }
       ].map(item => ({ frequency: 'Měsíčně', desc: 'Měsíčně', endDate: 'Nikdy', death: 'Neprovádět', ...item }));
-      let items = tab === 'platby' ? paymentDemo : tab === 'tp' ? orderDemo : [];
+      const items = tab === 'platby' ? paymentDemo : tab === 'tp' ? orderDemo : [{ id: 'internet', name: 'Vodafone Business', recipient: '4835477/0100', desc: 'Datové připojení a telemetrie čerpacích stanic', frequency: 'Měsíčně', date: '10. 7. 2026', endDate: 'Neomezeně', amount: '4 890,00 Kč' }];
+      return items.map(item => ({ ...base, ...item }));
+    }
+
+    function authorizationItems(tab) {
+      const base = { accountName: ACCOUNT_DATA.czk.name, accountNumber: ACCOUNT_DATA.czk.number };
+      const items = [];
       try {
         if (tab === 'platby') {
           const item = JSON.parse(localStorage.getItem('vavu_pending_payment') || 'null');
@@ -7172,11 +7190,15 @@ unicode: "ebf6"
       } catch (_) {}
       if (tab === 'inkasa') {
         if (localStorage.getItem('inkaso_saved_for_auth') === '1') items.push({ id: 'dynamic', authorizationId: localStorage.getItem('vavu_dynamic_inkaso_id'), ...(localStorage.getItem('vavu_dynamic_inkaso_created') ? { created: JSON.parse(localStorage.getItem('vavu_dynamic_inkaso_created')) } : {}), name: localStorage.getItem('inkaso_nazev') || 'Povolení inkasa', recipient: localStorage.getItem('inkaso_prijemce'), desc: localStorage.getItem('inkaso_obdobi'), frequency: localStorage.getItem('inkaso_obdobi'), date: localStorage.getItem('inkaso_platnost_od'), endDate: localStorage.getItem('inkaso_platnost_do') || 'Neomezeně', amount: localStorage.getItem('inkaso_limit') });
-        if (localStorage.getItem('inkaso_internet_deleted') !== '1') items.push({ id: 'internet', name: 'Vodafone Business', recipient: '4835477/0100', desc: 'Datové připojení a telemetrie čerpacích stanic', frequency: 'Měsíčně', date: '10. 7. 2026', endDate: 'Neomezeně', amount: '4 890,00 Kč' });
       }
       let deleted = [];
       try { deleted = JSON.parse(localStorage.getItem(tab === 'tp' ? 'deleted_tp' : 'deleted_platby') || '[]'); } catch (_) {}
       return items.filter(item => !deleted.includes(item.id)).map(item => ({ ...base, ...item }));
+    }
+
+    function authorizationEmptyState(message, kind = 'platby') {
+      const art = kind === 'inkasa' ? 'assets/account-limits-empty.png' : 'assets/authorization-empty.svg';
+      return `<div class="profile-card authorization-empty" role="status"><img src="${art}" width="168" height="152" alt=""><p>${escapeHtml(message)}</p></div>`;
     }
 
     function renderDynamicContent() {
@@ -7196,6 +7218,7 @@ unicode: "ebf6"
         card.onclick = event => { if (!event.target.closest('label, button')) openAuthItemDetail(currentAuthTab, item.id); };
         card.append(label, open); return card;
       }));
+      if (!authorizationItems(currentAuthTab).length) authList.innerHTML = authorizationEmptyState({ platby: 'Nemáte žádné platby k autorizaci.', tp: 'Nemáte žádné trvalé příkazy k autorizaci.', inkasa: 'Nemáte žádná inkasa k autorizaci.' }[currentAuthTab], currentAuthTab);
       const boxes = [...authList.querySelectorAll('.auth-checkbox')];
       const all = document.getElementById('select-all-checkbox');
       all.checked = boxes.length > 0 && boxes.every(input => input.checked); all.indeterminate = !all.checked && boxes.some(input => input.checked);
@@ -8285,7 +8308,7 @@ unicode: "ebf6"
         if (!account) return '';
         const counts = subject.id === 'vodarny' ? authorizationCategoryCounts(key) : { platby: 0, tp: 0, inkasa: 0 };
         const rows = [['Platby', 'platby'], ['Trvalé příkazy', 'tp'], ['Inkasa', 'inkasa']].filter(([, tab]) => counts[tab] > 0);
-        return `<div class="profile-card hub-account"><h2 class="hub-card-heading">${escapeHtml(account.name)}<small>${escapeHtml(account.number)}</small></h2>${rows.length ? rows.map(([label, tab]) => `<button class="profile-row" type="button" onclick="goTo('autorizace-${tab}')"><span class="profile-row-copy"><span>${label}</span><small>${authorizationItemCount(counts[tab])}</small></span>${caret}</button>`).join('') : '<p class="hub-empty">Žádné požadavky k autorizaci.</p>'}</div>`;
+        return `<div class="profile-card hub-account"><h2 class="hub-card-heading">${escapeHtml(account.name)}<small>${escapeHtml(account.number)}</small></h2>${rows.length ? rows.map(([label, tab]) => `<button class="profile-row" type="button" onclick="goTo('autorizace-${tab}')"><span class="profile-row-copy"><span>${label}</span><small>${authorizationItemCount(counts[tab])}</small></span>${caret}</button>`).join('') : authorizationEmptyState('Nemáte žádné požadavky k autorizaci.')}</div>`;
       }).join('');
       const groups = new Map();
       batches.forEach(batch => { if (!groups.has(batch.date)) groups.set(batch.date, []); groups.get(batch.date).push(batch); });
@@ -8299,7 +8322,7 @@ unicode: "ebf6"
           return item;
         })); return group;
       }));
-      if (!batches.length) document.getElementById('hub-batches-list').innerHTML = '<div class="profile-card"><p class="hub-empty">Žádné dávky k autorizaci.</p></div>';
+      if (!batches.length) document.getElementById('hub-batches-list').innerHTML = authorizationEmptyState('Nemáte žádné dávky k autorizaci.');
     }
 
     function createBatchOverviewItem(batch) {
