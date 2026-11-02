@@ -3291,6 +3291,12 @@
     .profile-header { display: flex; justify-content: flex-end; height: 32px; }
     .profile-close { display: grid; place-items: center; width: 32px; height: 32px; border: 0; background: none; color: var(--content-primary); cursor: pointer; }
     .profile-close .icon { width: 16px; height: 16px; }
+    .centrum-screen .profile-wrap { box-sizing: border-box; }
+    .centrum-screen h1 { margin: var(--padding-xl) 0 var(--padding-2xl); }
+    .centrum-group { border: 1px solid var(--background-border); border-radius: var(--border-radius-md); overflow: hidden; margin-bottom: var(--padding-xl); }
+    .centrum-group h2 { font: var(--headings-headline-secondary-bold); margin: 0 var(--padding-xl); padding: var(--padding-xl) 0; border-bottom: 1px solid var(--background-divider); }
+    .centrum-icon { width: 32px; height: 24px; flex: none; background: var(--interactive-primary); mask: var(--centrum-icon) center / 24px 24px no-repeat; }
+    .centrum-screen .profile-row-copy { flex: 1; }
     .profile-identity { display: flex; align-items: center; flex-direction: column; gap: var(--padding-xl); margin: var(--padding-xl) 0 var(--padding-3xl); text-align: center; }
     .profile-identity .user-avatar { width: 64px; height: 64px; font-size: 24px; background: var(--background-surface-avatar); }
     .profile-name { font: var(--headings-title-tertiary); margin: 0; }
@@ -3507,9 +3513,9 @@
 
     <!-- 2. HORNÍ LIŠTA (TOPBAR) -->
     <header class="topbar">
-      <div class="topbar-item">
-        <img class="topbar-centrum-icon" src="assets/centrum-kb.png" alt="Centrum KB+" />
-      </div>
+      <button class="topbar-item" type="button" id="centrum-trigger" onclick="openCentrum()" aria-label="Otevřít Centrum KB+">
+        <svg class="icon" aria-hidden="true"><use href="#es-bank"></use></svg><span class="t-content-body-secondary-bold">Centrum KB+</span>
+      </button>
       <button class="topbar-item" type="button" id="profile-trigger" onclick="openProfile()" aria-label="Otevřít profil">
         <span class="user-avatar" id="avatar-letters" aria-hidden="true">FK</span>
         <span class="t-content-body-secondary-bold" id="topbar-user-name">František Koudelka</span>
@@ -3530,6 +3536,7 @@
 
 
       <!-- Profil uživatele: obsah odpovídá zvolenému přihlášení. -->
+<section class="screen profile-screen centrum-screen" id="screen-centrum-kb" aria-labelledby="centrum-title"><div class="profile-wrap"><div class="profile-header"><button class="profile-close" type="button" onclick="closeCentrum()" aria-label="Zavřít Centrum KB+"><svg class="icon" aria-hidden="true"><use href="#es-close"></use></svg></button></div><h1 class="profile-name" id="centrum-title">Centrum KB+</h1><div class="profile-card"><button type="button" class="profile-row" onclick="showToast('Tato část není v prototypu rozpracovaná.')"><span class="centrum-icon" style="--centrum-icon: url(assets/centrum/mail.svg)" aria-hidden="true"></span><span class="profile-row-copy"><span>Zprávy</span></span><svg class="icon profile-caret" aria-hidden="true"><use href="#es-caret-right"></use></svg></button></div><section class="centrum-group" aria-label="Podpora"><h2>Podpora</h2><button type="button" class="profile-row" onclick="showToast('Tato část není v prototypu rozpracovaná.')"><svg class="icon" aria-hidden="true"><use href="#es-calendar"></use></svg><span class="profile-row-copy"><span>Poradci a schůzky</span><small>Nemáte žádnou schůzku</small></span><svg class="icon profile-caret" aria-hidden="true"><use href="#es-caret-right"></use></svg></button><button type="button" class="profile-row" onclick="showToast('Tato část není v prototypu rozpracovaná.')"><span class="centrum-icon" style="--centrum-icon: url(assets/centrum/phone.svg)" aria-hidden="true"></span><span class="profile-row-copy"><span>Kontakty</span></span><svg class="icon profile-caret" aria-hidden="true"><use href="#es-caret-right"></use></svg></button><button type="button" class="profile-row" onclick="showToast('Tato část není v prototypu rozpracovaná.')"><span class="centrum-icon" style="--centrum-icon: url(assets/centrum/map-pin.svg)" aria-hidden="true"></span><span class="profile-row-copy"><span>Bankomaty a pobočky</span></span><svg class="icon profile-caret" aria-hidden="true"><use href="#es-caret-right"></use></svg></button></section><section class="centrum-group" aria-label="Vyplatí se sledovat"><h2>Vyplatí se sledovat</h2><button type="button" class="profile-row" onclick="showToast('Tato část není v prototypu rozpracovaná.')"><span class="centrum-icon" style="--centrum-icon: url(assets/centrum/bulb.svg)" aria-hidden="true"></span><span class="profile-row-copy"><span>Průvodce KB+</span></span><svg class="icon profile-caret" aria-hidden="true"><use href="#es-caret-right"></use></svg></button><button type="button" class="profile-row" onclick="showToast('Tato část není v prototypu rozpracovaná.')"><span class="centrum-icon" style="--centrum-icon: url(assets/centrum/shield-exclamation.svg)" aria-hidden="true"></span><span class="profile-row-copy"><span>Aktuální bezpečnostní hrozby</span></span><svg class="icon profile-caret" aria-hidden="true"><use href="#es-caret-right"></use></svg></button></section><section class="centrum-group" aria-label="Pomáháme společně"><h2>Pomáháme společně</h2><button type="button" class="profile-row" onclick="showToast('Tato část není v prototypu rozpracovaná.')"><span class="centrum-icon" style="--centrum-icon: url(assets/centrum/plant.svg)" aria-hidden="true"></span><span class="profile-row-copy"><span>Udržitelnost v KB</span><small>Naše strategie pro lepší budoucnost</small></span><svg class="icon profile-caret" aria-hidden="true"><use href="#es-caret-right"></use></svg></button><button type="button" class="profile-row" onclick="showToast('Tato část není v prototypu rozpracovaná.')"><span class="centrum-icon" style="--centrum-icon: url(assets/centrum/heart-handshake.svg)" aria-hidden="true"></span><span class="profile-row-copy"><span>Nadace KB</span><small>Pomoc druhým je naše poslání</small></span><svg class="icon profile-caret" aria-hidden="true"><use href="#es-caret-right"></use></svg></button></section></div></section>
       <section class="screen profile-screen" id="screen-profil" aria-labelledby="profile-name">
         <div class="profile-wrap">
           <div class="profile-header"><button class="profile-close" type="button" onclick="closeProfile()" aria-label="Zavřít profil"><svg class="icon" aria-hidden="true"><use href="#es-close"></use></svg></button></div>
@@ -5562,7 +5569,7 @@ unicode: "ebf6"
     const PERMISSION_SIGNING_SCREENS = ['czk', 'eur'].flatMap(key => ['podpis-opravneni-uvod-' + key, 'podpis-opravneni-potvrzeni-' + key, 'podpis-opravneni-dokument-' + key, 'podpis-opravneni-vysledek-' + key]);
     const USER_DETAIL_SCREENS = [...COMPANY_USERS.map((_, index) => String(index)), 'current'].flatMap(id => ['uzivatel-' + id, 'uzivatel-opravneni-' + id]);
     const COMPANY_ACCESS_SCREENS = [...USER_DETAIL_SCREENS, ...PERMISSION_SIGNING_SCREENS, ...REVIEW_SCREENS, ...REVIEW_EDIT_SCREENS, ...AUTHORIZATION_FLOW_SCREENS, ...PERMISSION_EDITOR_SCREENS, ...PERMISSION_FLOW_SCREENS, ...COMPANY_ACCOUNT_SCREENS, 'pristupy-k-uctum', 'pristupy-opravneni', 'pristupy-uzivatele', 'pristupy-podpisova-pravidla'];
-    const SCREENS = ['vyber-subjektu', 'prehled-autorizaci', 'autorizace-davek', 'autorizace-platby', 'autorizace-tp', 'autorizace-inkasa', ...COMPANY_ACCESS_SCREENS, 'profil-firma', 'profil', 'login', 'prehled', 'sporeni-detail', 'sporeni-platby', 'extra', 'karty', 'pujcky', 'sporeni', 'investice', 'pojisteni', 'ucet-detail', 'tp-inkasa', 'tp-inkasa-s-autorizaci', 'autorizace', 'vsechny-platby', 'platba-detail', 'nova-platba', 'nova-platba-detaily', 'nova-platba-souhrn', 'platba-vysledek', 'tp-novy', 'tp-detaily', 'tp-souhrn', 'tp-vysledek', 'inkaso-nove', 'inkaso-souhrn', 'inkaso-vysledek', 'davkove-platby', 'davkove-platby-detail', 'davkove-platby-souhrn', 'davkove-platby-vysledek'];
+    const SCREENS = ['centrum-kb', 'vyber-subjektu', 'prehled-autorizaci', 'autorizace-davek', 'autorizace-platby', 'autorizace-tp', 'autorizace-inkasa', ...COMPANY_ACCESS_SCREENS, 'profil-firma', 'profil', 'login', 'prehled', 'sporeni-detail', 'sporeni-platby', 'extra', 'karty', 'pujcky', 'sporeni', 'investice', 'pojisteni', 'ucet-detail', 'tp-inkasa', 'tp-inkasa-s-autorizaci', 'autorizace', 'vsechny-platby', 'platba-detail', 'nova-platba', 'nova-platba-detaily', 'nova-platba-souhrn', 'platba-vysledek', 'tp-novy', 'tp-detaily', 'tp-souhrn', 'tp-vysledek', 'inkaso-nove', 'inkaso-souhrn', 'inkaso-vysledek', 'davkove-platby', 'davkove-platby-detail', 'davkove-platby-souhrn', 'davkove-platby-vysledek'];
     // Seznam modálních hashů
     const MODALS = ['povoleni-inkasa-modal', 'autorizace-potvrzeni-modal', 'no-items-modal', 'payment-signature-modal', 'filter-modal'];
 
@@ -6255,7 +6262,7 @@ unicode: "ebf6"
       if (['platba-vysledek', 'tp-vysledek', 'inkaso-vysledek'].includes(targetScreenId)) renderCreatedInstrumentResult(targetScreenId);
       document.body.classList.toggle('authorization-hub-mode', ['vyber-subjektu', 'prehled-autorizaci', 'autorizace-davek'].includes(targetScreenId));
       if (['vyber-subjektu', 'prehled-autorizaci', 'autorizace-davek'].includes(targetScreenId)) renderAuthorizationHub(targetScreenId);
-      document.body.classList.toggle('profile-mode', ['profil', 'profil-firma', ...COMPANY_ACCESS_SCREENS].includes(targetScreenId));
+      document.body.classList.toggle('profile-mode', ['centrum-kb', 'profil', 'profil-firma', ...COMPANY_ACCESS_SCREENS].includes(targetScreenId));
       if (userRoute) renderUserDetail(userRoute[2]);
       if (targetScreenId === 'profil-firma') renderCompanyProfile();
       if (COMPANY_ACCESS_SCREENS.includes(targetScreenId)) renderCompanyAccess();
@@ -6916,6 +6923,16 @@ unicode: "ebf6"
       }
       switchProfileTab('profiles');
       goTo('profil');
+    }
+
+    function openCentrum() {
+      localStorage.setItem('vavu_centrum_return', currentScreen);
+      goTo('centrum-kb');
+    }
+    function closeCentrum() {
+      const target = localStorage.getItem('vavu_centrum_return');
+      goTo(SCREENS.includes(target) && !['centrum-kb', 'login'].includes(target) ? target : 'prehled');
+      requestAnimationFrame(() => document.getElementById('centrum-trigger').focus());
     }
 
     function openProfile() {
