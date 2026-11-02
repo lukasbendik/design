@@ -7182,7 +7182,7 @@ unicode: "ebf6"
       goTo(route);
     }
     function instrumentPartialResultMessage(tab) {
-      return { tp: 'Trvalý příkaz ještě musí autorizovat ostatní.', inkasa: 'Povolení inkasa ještě musí autorizovat ostatní.' }[tab] || 'Požádejte dalšího oprávněného uživatele o podpis. Může se přihlásit po vašem odhlášení.';
+      return { platby: 'Musí ji autorizovat ještě ostatní.', tp: 'Trvalý příkaz ještě musí autorizovat ostatní.', inkasa: 'Povolení inkasa ještě musí autorizovat ostatní.' }[tab] || 'Požádejte dalšího oprávněného uživatele o podpis. Může se přihlásit po vašem odhlášení.';
     }
     function renderCreatedInstrumentResult(route) {
       let result;
