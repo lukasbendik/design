@@ -1949,6 +1949,7 @@
     #screen-auth-item-detail h1 { margin: 0; font: var(--headings-title-tertiary); }
     #screen-auth-item-detail .profile-card { margin: 0; }
     #screen-auth-item-detail .center-column > * { flex-shrink: 0; }
+    .detail-row[hidden] { display: none !important; }
     .batch-summary-row[hidden] { display: none; }
     .auth-detail-field { position: relative; padding: var(--padding-xl); display: flex; flex-direction: column; gap: var(--padding-xs); }
     .auth-detail-field + .auth-detail-field::before { content: ''; position: absolute; top: 0; left: var(--padding-xl); right: 0; border-top: 1px solid var(--background-divider); }
@@ -5775,7 +5776,7 @@ unicode: "ebf6"
       if (deposit) { document.getElementById('payment-recipient').value = SAVINGS_ACCOUNT.number;localStorage.setItem(paymentStorageKey('recipient'),SAVINGS_ACCOUNT.number); }
     }
     function openSavingsInfo(kind) {
-      const rows = pairs => pairs.map(([label,value]) => `<div class="auth-detail-field"><span>${escapeHtml(label)}</span><strong>${escapeHtml(value)}</strong></div>`).join('');
+      const rows = pairs => pairs.filter(([, value]) => hasSummaryValue(value)).map(([label,value]) => `<div class="auth-detail-field"><span>${escapeHtml(label)}</span><strong>${escapeHtml(value)}</strong></div>`).join('');
       const content = {
         management: ['Detail a správa účtu', rows([['Název účtu',SAVINGS_ACCOUNT.name],['Číslo účtu',SAVINGS_ACCOUNT.number],['Majitel','Vodárny, a.s.'],['Měna','CZK'],['Účel rezervy','Provoz a obnova vodovodní sítě']])],
         about: ['O účtu', rows([['Produkt',SAVINGS_ACCOUNT.name],['Číslo účtu',SAVINGS_ACCOUNT.number],['Majitel','Vodárny, a.s.'],['Dostupný zůstatek',SAVINGS_ACCOUNT.balance]])],
@@ -7320,8 +7321,8 @@ unicode: "ebf6"
       const dateParts = /^(\d{1,2})\.\s*(\d{1,2})\.\s*(\d{4})$/.exec(item.date || '');
       const date = dateParts && new Date(Date.UTC(Number(dateParts[3]), Number(dateParts[2]) - 1, Number(dateParts[1]), 12));
       document.getElementById('auth-detail-date').textContent = date && date.getUTCDate() === Number(dateParts[1]) && date.getUTCMonth() === Number(dateParts[2]) - 1 ? new Intl.DateTimeFormat('cs-CZ', { weekday: 'long', day: 'numeric', month: 'numeric', year: 'numeric', timeZone: 'Europe/Prague' }).format(date) : item.date || '';
-      const rows = payment ? [['Z účtu', from], ['Zpráva pro příjemce', item.message], ['Popis pro mě', item.description || item.desc], ['Variabilní symbol', item.variableSymbol], ['Konstantní symbol', item.constantSymbol], ['Specifický symbol', item.specificSymbol]] : tab === 'tp' ? [['Z účtu', from], ['Příjemce', item.recipient], ['Název trvalého příkazu', item.name], ['Částka', item.amount], ['Opakovat', item.frequency], ['Datum první platby', item.date], ['Ukončit', item.endDate], ['Variabilní symbol', item.variableSymbol], ['Zpráva pro příjemce', item.message], ['Popis pro mě', item.description || item.name], ['Konstantní symbol', item.constantSymbol], ['Specifický symbol', item.specificSymbol], ['Platby v případě úmrtí', item.death || 'Neprovádět'], ['ID trvalého příkazu', item.orderId]] : [['Z účtu', from], ['Příjemce', item.recipient], ['Název povolení inkasa', item.name], ['Limit inkasa', item.amount], ['Období', item.frequency], ['Platnost od', item.date], ['Platnost do', item.endDate]];
-      document.getElementById('auth-detail-fields').innerHTML = rows.map(([label,value]) => `<div class="auth-detail-field"><span>${escapeHtml(label)}</span><strong>${escapeHtml(value || '—')}</strong></div>`).join('');
+      const rows = payment ? [['Z účtu', from], ['Zpráva pro příjemce', item.message], ['Popis pro mě', instrumentDescription(item)], ['Variabilní symbol', item.variableSymbol], ['Konstantní symbol', item.constantSymbol], ['Specifický symbol', item.specificSymbol]] : tab === 'tp' ? [['Z účtu', from], ['Příjemce', item.recipient], ['Název trvalého příkazu', item.name], ['Částka', item.amount], ['Opakovat', item.frequency], ['Datum první platby', item.date], ['Ukončit', item.endDate], ['Variabilní symbol', item.variableSymbol], ['Zpráva pro příjemce', item.message], ['Popis pro mě', instrumentDescription(item)], ['Konstantní symbol', item.constantSymbol], ['Specifický symbol', item.specificSymbol], ['Platby v případě úmrtí', item.death || 'Neprovádět'], ['ID trvalého příkazu', item.orderId]] : [['Z účtu', from], ['Příjemce', item.recipient], ['Název povolení inkasa', item.name], ['Limit inkasa', item.amount], ['Období', item.frequency], ['Platnost od', item.date], ['Platnost do', item.endDate]];
+      document.getElementById('auth-detail-fields').innerHTML = rows.filter(([, value]) => hasSummaryValue(value)).map(([label,value]) => `<div class="auth-detail-field"><span>${escapeHtml(label)}</span><strong>${escapeHtml(String(value))}</strong></div>`).join('');
       if (!payment && !completed) document.getElementById('auth-detail-fields').insertAdjacentHTML('afterbegin', `<div class="auth-detail-field"><span>Stav autorizace</span><strong>${escapeHtml(instrumentSigningStatus(tab, item))}</strong></div>`);
       updateAuthDetailSelection(id);
     }
@@ -7338,6 +7339,17 @@ unicode: "ebf6"
       const route = currentScreen.match(/^autorizace-souhrn-(platby|tp|inkasa)-([A-Za-z0-9_-]+)$/);
       if (route) goTo('autorizace-detail-' + route[1] + '-' + route[2]);
     }
+    function instrumentDescription(item) {
+      // Earlier versions inserted this status as a made-up personal description.
+      return item?.description === 'Platba čeká na další autorizaci' ? '' : item?.description;
+    }
+
+    function setOptionalDetailValue(id, value) {
+      const element = document.getElementById(id);
+      element.textContent = value ?? '';
+      element.closest('.detail-row').hidden = !hasSummaryValue(value);
+    }
+
     function hasSummaryValue(value) {
       return value !== null && value !== undefined && String(value).trim() !== '';
     }
@@ -7346,7 +7358,7 @@ unicode: "ebf6"
       const item = authorizationItems(tab).find(item => item.id === id);
       if (!item) { goTo(authDetailReturnRoute(tab, id), true); handleRouting(); return false; }
       const from = item.accountName + '\n' + item.accountNumber;
-      const rows = tab === 'platby' ? [['Z účtu', from], ['Na účet', item.recipient || item.name], ['Částka', item.amount], ['Zpráva pro příjemce', item.message], ['Variabilní symbol', item.variableSymbol], ['Popis pro mě', item.description], ['Konstantní symbol', item.constantSymbol], ['Specifický symbol', item.specificSymbol], ['Datum platby', item.date]] : tab === 'tp' ? [['Z účtu', from], ['Na účet', item.recipient], ['Název trvalého příkazu', item.name], ['Částka', item.amount], ['Opakovat', item.frequency], ['Datum první platby', item.date], ['Ukončit', item.endDate], ['Zpráva pro příjemce', item.message], ['Variabilní symbol', item.variableSymbol], ['Popis pro mě', item.description], ['Konstantní symbol', item.constantSymbol], ['Specifický symbol', item.specificSymbol], ['Platby v případě úmrtí', item.death || 'Neprovádět']] : [['Z účtu', from], ['Příjemce', item.recipient], ['Název povolení inkasa', item.name], ['Limit inkasa', item.amount], ['Období', item.frequency], ['Platnost od', item.date], ['Platnost do', item.endDate]];
+      const rows = tab === 'platby' ? [['Z účtu', from], ['Na účet', item.recipient || item.name], ['Částka', item.amount], ['Zpráva pro příjemce', item.message], ['Variabilní symbol', item.variableSymbol], ['Popis pro mě', instrumentDescription(item)], ['Konstantní symbol', item.constantSymbol], ['Specifický symbol', item.specificSymbol], ['Datum platby', item.date]] : tab === 'tp' ? [['Z účtu', from], ['Na účet', item.recipient], ['Název trvalého příkazu', item.name], ['Částka', item.amount], ['Opakovat', item.frequency], ['Datum první platby', item.date], ['Ukončit', item.endDate], ['Zpráva pro příjemce', item.message], ['Variabilní symbol', item.variableSymbol], ['Popis pro mě', instrumentDescription(item)], ['Konstantní symbol', item.constantSymbol], ['Specifický symbol', item.specificSymbol], ['Platby v případě úmrtí', item.death || 'Neprovádět']] : [['Z účtu', from], ['Příjemce', item.recipient], ['Název povolení inkasa', item.name], ['Limit inkasa', item.amount], ['Období', item.frequency], ['Platnost od', item.date], ['Platnost do', item.endDate]];
       document.getElementById('auth-item-summary-fields').innerHTML = rows.filter(([, value]) => hasSummaryValue(value)).map(([label,value]) => `<div class="auth-detail-field"><span>${escapeHtml(label)}</span><strong>${escapeHtml(String(value))}</strong></div>`).join('');
       document.getElementById('auth-item-summary-submit').textContent = tab === 'platby' ? 'Odeslat' : 'Autorizovat';
     }
@@ -7643,27 +7655,16 @@ unicode: "ebf6"
       // Formátovat datum
       document.getElementById('detail-date').textContent = date;
 
-      // 4. Nastavit doplňující tabulkové údaje
-      document.getElementById('detail-from-account').innerHTML = `Můj KB účet<br><span style="font-weight: 400; color: var(--color-content-secondary);">3827897080/0100</span>`;
-      document.getElementById('detail-msg-recipient').textContent = note || 'Bez zprávy';
-      document.getElementById('detail-msg-me').textContent = isPrichozi ? 'Příchozí platba' : 'Za nákup';
-      
-      // Vygenerovat náhodné / fiktivní symboly
-      document.getElementById('detail-vs').textContent = isPrichozi ? '192837465' : '1352568798';
-      document.getElementById('detail-ks').textContent = '308';
-      document.getElementById('detail-ss').textContent = '777';
-      document.getElementById('detail-id').textContent = displayId;
+      const source = accountData(accountKey);
+      setOptionalDetailValue('detail-from-account', source ? [source.name, source.number].filter(hasSummaryValue).join('\n') : '');
+      setOptionalDetailValue('detail-msg-recipient', transactionItem ? transactionItem.message : note);
+      setOptionalDetailValue('detail-msg-me', instrumentDescription(transactionItem));
+      setOptionalDetailValue('detail-vs', transactionItem?.variableSymbol);
+      setOptionalDetailValue('detail-ks', transactionItem?.constantSymbol);
+      setOptionalDetailValue('detail-ss', transactionItem?.specificSymbol);
+      setOptionalDetailValue('detail-id', transactionItem?.authorizationId || transactionItem?.id || displayId);
       document.getElementById('detail-category').textContent = 'Nezatříděné';
 
-      if (transactionItem) {
-        document.getElementById('detail-from-account').textContent = accountData(accountKey).name + '\n' + accountData(accountKey).number;
-        document.getElementById('detail-msg-recipient').textContent = transactionItem.message || '—';
-        document.getElementById('detail-msg-me').textContent = transactionItem.description || transactionItem.desc || '—';
-        document.getElementById('detail-vs').textContent = transactionItem.variableSymbol || '—';
-        document.getElementById('detail-ks').textContent = transactionItem.constantSymbol || '—';
-        document.getElementById('detail-ss').textContent = transactionItem.specificSymbol || '—';
-        document.getElementById('detail-id').textContent = transactionItem.authorizationId || transactionItem.id;
-      }
       document.getElementById('payment-detail-audit-card').hidden = false;
     }
 
