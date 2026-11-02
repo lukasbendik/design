@@ -1949,6 +1949,7 @@
     #screen-auth-item-detail h1 { margin: 0; font: var(--headings-title-tertiary); }
     #screen-auth-item-detail .profile-card { margin: 0; }
     #screen-auth-item-detail .center-column > * { flex-shrink: 0; }
+    .batch-summary-row[hidden] { display: none; }
     .auth-detail-field { position: relative; padding: var(--padding-xl); display: flex; flex-direction: column; gap: var(--padding-xs); }
     .auth-detail-field + .auth-detail-field::before { content: ''; position: absolute; top: 0; left: var(--padding-xl); right: 0; border-top: 1px solid var(--background-divider); }
     .auth-detail-field > span { font: var(--content-caption-primary); }
@@ -7328,12 +7329,16 @@ unicode: "ebf6"
       const route = currentScreen.match(/^autorizace-souhrn-(platby|tp|inkasa)-([A-Za-z0-9_-]+)$/);
       if (route) goTo('autorizace-detail-' + route[1] + '-' + route[2]);
     }
+    function hasSummaryValue(value) {
+      return value !== null && value !== undefined && String(value).trim() !== '';
+    }
+
     function renderAuthItemSummary(tab, id) {
       const item = authorizationItems(tab).find(item => item.id === id);
       if (!item) { goTo(authDetailReturnRoute(tab, id), true); handleRouting(); return false; }
       const from = item.accountName + '\n' + item.accountNumber;
-      const rows = tab === 'platby' ? [['Z účtu', from], ['Na účet', item.recipient || item.name], ['Částka', item.amount], ['Zpráva pro příjemce', item.message], ['Variabilní symbol', item.variableSymbol], ['Popis pro mě', item.description || item.desc], ['Konstantní symbol', item.constantSymbol], ['Specifický symbol', item.specificSymbol], ['Datum platby', item.date]] : tab === 'tp' ? [['Z účtu', from], ['Na účet', item.recipient], ['Název trvalého příkazu', item.name], ['Částka', item.amount], ['Opakovat', item.frequency], ['Datum první platby', item.date], ['Ukončit', item.endDate], ['Zpráva pro příjemce', item.message], ['Variabilní symbol', item.variableSymbol], ['Popis pro mě', item.description || item.name], ['Konstantní symbol', item.constantSymbol], ['Specifický symbol', item.specificSymbol], ['Platby v případě úmrtí', item.death || 'Neprovádět']] : [['Z účtu', from], ['Příjemce', item.recipient], ['Název povolení inkasa', item.name], ['Limit inkasa', item.amount], ['Období', item.frequency], ['Platnost od', item.date], ['Platnost do', item.endDate]];
-      document.getElementById('auth-item-summary-fields').innerHTML = rows.map(([label,value]) => `<div class="auth-detail-field"><span>${escapeHtml(label)}</span><strong>${escapeHtml(value || '—')}</strong></div>`).join('');
+      const rows = tab === 'platby' ? [['Z účtu', from], ['Na účet', item.recipient || item.name], ['Částka', item.amount], ['Zpráva pro příjemce', item.message], ['Variabilní symbol', item.variableSymbol], ['Popis pro mě', item.description], ['Konstantní symbol', item.constantSymbol], ['Specifický symbol', item.specificSymbol], ['Datum platby', item.date]] : tab === 'tp' ? [['Z účtu', from], ['Na účet', item.recipient], ['Název trvalého příkazu', item.name], ['Částka', item.amount], ['Opakovat', item.frequency], ['Datum první platby', item.date], ['Ukončit', item.endDate], ['Zpráva pro příjemce', item.message], ['Variabilní symbol', item.variableSymbol], ['Popis pro mě', item.description], ['Konstantní symbol', item.constantSymbol], ['Specifický symbol', item.specificSymbol], ['Platby v případě úmrtí', item.death || 'Neprovádět']] : [['Z účtu', from], ['Příjemce', item.recipient], ['Název povolení inkasa', item.name], ['Limit inkasa', item.amount], ['Období', item.frequency], ['Platnost od', item.date], ['Platnost do', item.endDate]];
+      document.getElementById('auth-item-summary-fields').innerHTML = rows.filter(([, value]) => hasSummaryValue(value)).map(([label,value]) => `<div class="auth-detail-field"><span>${escapeHtml(label)}</span><strong>${escapeHtml(String(value))}</strong></div>`).join('');
       document.getElementById('auth-item-summary-submit').textContent = tab === 'platby' ? 'Odeslat' : 'Autorizovat';
     }
     function completeAuthItem(request) {
@@ -7940,7 +7945,7 @@ unicode: "ebf6"
         ['Specifický symbol', value('specificSymbol')],
         ['Odeslat platbu', value('timing') === 'later' ? 'Později' : 'Co nejdříve']
       ];
-      document.getElementById('new-payment-summary').innerHTML = rows.filter(([, text]) => text).map(([label, text]) =>
+      document.getElementById('new-payment-summary').innerHTML = rows.filter(([, text]) => hasSummaryValue(text)).map(([label, text]) =>
         `<div class="batch-summary-row" data-ds-component="CO Item Display"><span class="t-content-caption-primary" style="color:var(--color-content-secondary)">${escapeHtml(label)}</span><span class="t-content-body-primary-bold new-payment-summary-value">${escapeHtml(text)}</span></div>`
       ).join('');
     }
@@ -8141,7 +8146,7 @@ unicode: "ebf6"
       document.getElementById('existing-batch-info').style.display = state.canDelete ? 'none' : '';
       document.getElementById('existing-batch-info').removeAttribute('hidden');
       const values = [['Z účtu', batch.accountName + ' · ' + batch.accountNumber], ['Název dávky', batch.name], ['KB ID dávky', batch.id], ['Stav', state.label], ['Celkem plateb', batch.payments], ['Celková částka', batch.amount]];
-      document.getElementById('existing-batch-summary').innerHTML = values.map(([label, value]) => `<div class="batch-summary-row" data-ds-component="CO Item Display"><span class="t-content-caption-primary">${escapeHtml(label)}</span><strong class="t-content-body-primary">${escapeHtml(String(value))}</strong></div>`).join('');
+      document.getElementById('existing-batch-summary').innerHTML = values.filter(([, value]) => hasSummaryValue(value)).map(([label, value]) => `<div class="batch-summary-row" data-ds-component="CO Item Display"><span class="t-content-caption-primary">${escapeHtml(label)}</span><strong class="t-content-body-primary">${escapeHtml(String(value))}</strong></div>`).join('');
       // Existující prototyp import pouze simuluje; ukázkové platby odvozujeme ze stejného seznamu.
       const sourceRows = [...document.querySelectorAll('#screen-davkove-platby-detail .batch-transaction')];
       const totalCents = Math.round(Number(batch.amount.replace(/[^0-9,]/g, '').replace(',', '.')) * 100);
@@ -8207,7 +8212,7 @@ unicode: "ebf6"
     });
 
     function batchSummaryRows(values) {
-      return values.map(([label, value]) => `<div class="batch-summary-row"><span class="t-content-caption-primary">${escapeHtml(label)}</span><strong class="t-content-body-primary">${escapeHtml(String(value))}</strong></div>`).join('');
+      return values.filter(([, value]) => hasSummaryValue(value)).map(([label, value]) => `<div class="batch-summary-row"><span class="t-content-caption-primary">${escapeHtml(label)}</span><strong class="t-content-body-primary">${escapeHtml(String(value))}</strong></div>`).join('');
     }
 
     function renderExistingBatchSummary(id) {
@@ -8479,14 +8484,17 @@ unicode: "ebf6"
       const values = {
         name: data.name,
         frequency: data.frequency,
-        startDate: formatStandingOrderDate(data.startDate),
+        startDate: hasSummaryValue(data.startDate) ? formatStandingOrderDate(data.startDate) : '',
         endDate: formatStandingOrderDate(data.endDate),
         recipient: data.recipient,
-        formattedAmount: formatStandingOrderAmount(data.amount, data.currency)
+        formattedAmount: hasSummaryValue(data.amount) ? formatStandingOrderAmount(data.amount, data.currency) : ''
       };
       Object.entries(values).forEach(([key, value]) => {
         const element = document.querySelector(`[data-standing-summary="${key}"]`);
-        if (element) element.textContent = value;
+        if (element) {
+          element.textContent = value ?? '';
+          element.closest('.batch-summary-row').hidden = !hasSummaryValue(value);
+        }
       });
     }
 
@@ -8569,14 +8577,17 @@ unicode: "ebf6"
       const values = {
         recipient: data.recipient,
         name: data.name,
-        formattedLimit: formatStandingOrderAmount(data.limit, 'Kč'),
+        formattedLimit: hasSummaryValue(data.limit) ? formatStandingOrderAmount(data.limit, 'Kč') : '',
         period: data.period,
-        startDate: formatStandingOrderDate(data.startDate),
+        startDate: hasSummaryValue(data.startDate) ? formatStandingOrderDate(data.startDate) : '',
         endDate: data.endDate ? formatStandingOrderDate(data.endDate) : 'Neomezeně'
       };
       Object.entries(values).forEach(([key, value]) => {
         const element = document.querySelector(`[data-direct-debit-summary="${key}"]`);
-        if (element) element.textContent = value;
+        if (element) {
+          element.textContent = value ?? '';
+          element.closest('.batch-summary-row').hidden = !hasSummaryValue(value);
+        }
       });
     }
 
@@ -8752,7 +8763,7 @@ unicode: "ebf6"
       } else {
         if (!batchFlowActive) {
           const recipient = localStorage.getItem(paymentStorageKey('recipient')) || 'Nová platba';
-          const description = localStorage.getItem(paymentStorageKey('description')) || localStorage.getItem(paymentStorageKey('messageRecipient')) || 'Platba čeká na další autorizaci';
+          const description = localStorage.getItem(paymentStorageKey('description')) || '';
           const amount = localStorage.getItem(paymentStorageKey('amount')) || '0';
           const currency = localStorage.getItem(paymentStorageKey('currency')) || 'Kč';
           localStorage.setItem('vavu_pending_payment', JSON.stringify({
