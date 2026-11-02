@@ -5817,7 +5817,9 @@ unicode: "ebf6"
         }
       ];
 
-      sidebar.innerHTML = sections.map(section => `
+      sidebar.innerHTML = `<div class="overview-actions">
+        <button class="card-action-red card-action-red--control" type="button" onclick="localStorage.setItem('vavu_payment_return', 'ucet-detail'); startNewPayment(localStorage.getItem('vavu_selected_account') || 'czk')"><svg class="icon" aria-hidden="true"><use href="#es-send-payment"></use></svg><span>Nová platba</span></button>
+      </div>` + sections.map(section => `
         <section class="account-sidebar-section">
           <h2 class="account-sidebar-section-title t-content-body-primary-bold">${section.title}</h2>
           <div class="card-navigation">
