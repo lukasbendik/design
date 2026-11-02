@@ -627,6 +627,7 @@
     .authorization-hub .batch-overview-icon { width: 32px; height: 32px; display: grid; place-items: center; background: var(--attention-information-surface); border-radius: var(--border-radius-sm); }
     .authorization-hub .hub-limit strong { font: var(--content-body-primary-bold); }
     .authorization-hub .batch-overview-group { margin-bottom: var(--padding-xl); }
+    #hub-batch-category[hidden], #hub-overview-empty[hidden] { display: none; }
     .authorization-empty { padding: var(--padding-xl); text-align: center; width: 100%; box-sizing: border-box; }
     .authorization-empty img { display: block; width: 168px; height: 152px; object-fit: contain; margin: 0 auto var(--padding-xl); }
     .authorization-empty p { margin: 0; font: var(--content-body-primary); }
@@ -4478,7 +4479,7 @@ unicode: "ebf6"
       <!-- ================= SCREEN 7: AUTORIZACE ================= -->
 
       <section class="screen authorization-hub" id="screen-vyber-subjektu" aria-labelledby="hub-subjects-title"><button class="company-back" type="button" onclick="closeAuthorizationHub()"><svg class="icon" aria-hidden="true"><use href="#es-caret-left"></use></svg>Zpět</button><h1 class="hub-heading" id="hub-subjects-title">Vyberte subjekt</h1><p class="hub-description">U těchto máte požadavek k autorizaci.</p><div class="profile-card" id="hub-subjects-list"></div></section>
-      <section class="screen authorization-hub" id="screen-prehled-autorizaci" aria-labelledby="hub-overview-title"><button class="company-back" type="button" onclick="backFromAuthorizationOverview()"><svg class="icon" aria-hidden="true"><use href="#es-caret-left"></use></svg>Zpět</button><h1 class="hub-heading" id="hub-overview-title">Přehled autorizací</h1><div class="card-secondary hub-subject"><svg class="icon" aria-hidden="true"><use href="#es-bank"></use></svg><span class="profile-row-copy"><span id="hub-company-name"></span><small id="hub-company-ico"></small></span></div><div class="profile-card"><button type="button" class="profile-row" onclick="goTo('autorizace-davek')"><span class="profile-row-copy"><span>Dávkové platby</span><small id="hub-batch-count"></small></span><svg class="icon profile-caret" aria-hidden="true"><use href="#es-caret-right"></use></svg></button></div><div id="hub-account-categories"></div></section>
+      <section class="screen authorization-hub" id="screen-prehled-autorizaci" aria-labelledby="hub-overview-title"><button class="company-back" type="button" onclick="backFromAuthorizationOverview()"><svg class="icon" aria-hidden="true"><use href="#es-caret-left"></use></svg>Zpět</button><h1 class="hub-heading" id="hub-overview-title">Přehled autorizací</h1><div class="card-secondary hub-subject"><svg class="icon" aria-hidden="true"><use href="#es-bank"></use></svg><span class="profile-row-copy"><span id="hub-company-name"></span><small id="hub-company-ico"></small></span></div><div class="profile-card" id="hub-batch-category"><button type="button" class="profile-row" onclick="goTo('autorizace-davek')"><span class="profile-row-copy"><span>Dávkové platby</span><small id="hub-batch-count"></small></span><svg class="icon profile-caret" aria-hidden="true"><use href="#es-caret-right"></use></svg></button></div><div id="hub-account-categories"></div><div id="hub-overview-empty" hidden></div></section>
       <section class="screen authorization-hub" id="screen-autorizace-davek" aria-labelledby="hub-batches-title"><button class="company-back" type="button" onclick="goTo('prehled-autorizaci')"><svg class="icon" aria-hidden="true"><use href="#es-caret-left"></use></svg>Zpět</button><h1 class="hub-heading" id="hub-batches-title">Autorizace dávek</h1><div class="card-secondary hub-limit"><strong>K dispozici</strong><small id="hub-subject-limit"></small></div><div id="hub-batches-list"></div></section>
 
       <div class="screen" id="screen-autorizace">
@@ -8301,6 +8302,7 @@ unicode: "ebf6"
       document.getElementById('hub-subject-limit').textContent = subject.availableLimit ? 'Z vlastního limitu subjektu: ' + subject.availableLimit : 'Bez nastaveného limitu subjektu';
       const batches = authorizableBatches();
       document.getElementById('hub-batch-count').textContent = authorizationItemCount(batches.length);
+      document.getElementById('hub-batch-category').hidden = batches.length === 0;
       const savingsPending = subject.id === 'vodarny' && Object.values(authorizationCategoryCounts('savings')).some(count => count > 0);
       const accountKeys = [...(subject.accounts || []), ...(savingsPending ? ['savings'] : [])];
       document.getElementById('hub-account-categories').innerHTML = accountKeys.map(key => {
@@ -8308,8 +8310,12 @@ unicode: "ebf6"
         if (!account) return '';
         const counts = subject.id === 'vodarny' ? authorizationCategoryCounts(key) : { platby: 0, tp: 0, inkasa: 0 };
         const rows = [['Platby', 'platby'], ['Trvalé příkazy', 'tp'], ['Inkasa', 'inkasa']].filter(([, tab]) => counts[tab] > 0);
+        if (!rows.length) return '';
         return `<div class="profile-card hub-account"><h2 class="hub-card-heading">${escapeHtml(account.name)}<small>${escapeHtml(account.number)}</small></h2>${rows.length ? rows.map(([label, tab]) => `<button class="profile-row" type="button" onclick="goTo('autorizace-${tab}')"><span class="profile-row-copy"><span>${label}</span><small>${authorizationItemCount(counts[tab])}</small></span>${caret}</button>`).join('') : authorizationEmptyState('Nemáte žádné požadavky k autorizaci.')}</div>`;
       }).join('');
+      const emptyOverview = document.getElementById('hub-overview-empty');
+      emptyOverview.hidden = batches.length > 0 || document.getElementById('hub-account-categories').innerHTML !== '';
+      emptyOverview.innerHTML = emptyOverview.hidden ? '' : authorizationEmptyState('Nemáte nic k autorizaci');
       const groups = new Map();
       batches.forEach(batch => { if (!groups.has(batch.date)) groups.set(batch.date, []); groups.get(batch.date).push(batch); });
       document.getElementById('hub-batches-list').replaceChildren(...[...groups].map(([date, items]) => {
