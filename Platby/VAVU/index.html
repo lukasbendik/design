@@ -1949,6 +1949,7 @@
     #screen-auth-item-detail h1 { margin: 0; font: var(--headings-title-tertiary); }
     #screen-auth-item-detail .profile-card { margin: 0; }
     #screen-auth-item-detail .center-column > * { flex-shrink: 0; }
+    [data-ds-component="CO Item Display"][hidden] { display: none !important; }
     .detail-row[hidden] { display: none !important; }
     .batch-summary-row[hidden] { display: none; }
     .auth-detail-field { position: relative; padding: var(--padding-xl); display: flex; flex-direction: column; gap: var(--padding-xs); }
@@ -5940,6 +5941,15 @@ unicode: "ebf6"
 
     // DS normalization layer: keep the proven VAVU geometry, but expose every
     // reusable control through the canonical prototype-kit component names.
+    function syncItemDisplayVisibility(root = document) {
+      root.querySelectorAll('[data-ds-component="CO Item Display"]').forEach(row => {
+        const values = [...row.querySelectorAll('[data-ds-value], strong, .t-content-body-primary, .t-content-body-primary-bold, .new-payment-summary-value')];
+        // Ignore structural containers without a display value and never hide form controls.
+        if (!values.length || row.querySelector('input, select, textarea')) return;
+        row.hidden = !values.some(value => hasSummaryValue(value.textContent));
+      });
+    }
+
     function applyDesignSystemComponents(root = document) {
       const mark = (selector, component) => {
         root.querySelectorAll(selector).forEach(element => {
@@ -5947,6 +5957,8 @@ unicode: "ebf6"
         });
       };
 
+      mark('.detail-row, .auth-detail-field, .batch-summary-row', 'CO Item Display');
+      syncItemDisplayVisibility(root);
       mark('.payment-flow-header', 'CO Header');
       mark('.payment-header-action, .back-btn', 'CO Header Action');
       mark('.payment-buttonbar, .modal-footer-gray', 'CO Button Bar Bottom');
@@ -7351,7 +7363,7 @@ unicode: "ebf6"
     }
 
     function hasSummaryValue(value) {
-      return value !== null && value !== undefined && String(value).trim() !== '';
+      return value !== null && value !== undefined && String(value).trim() !== '' && !/^[—–-]+$/.test(String(value).trim());
     }
 
     function renderAuthItemSummary(tab, id) {
