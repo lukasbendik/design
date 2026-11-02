@@ -7185,6 +7185,15 @@ unicode: "ebf6"
     function instrumentPartialResultMessage(tab) {
       return { platby: 'Musí ji autorizovat ještě ostatní.', tp: 'Trvalý příkaz ještě musí autorizovat ostatní.', inkasa: 'Povolení inkasa ještě musí autorizovat ostatní.' }[tab] || 'Požádejte dalšího oprávněného uživatele o podpis. Může se přihlásit po vašem odhlášení.';
     }
+    function duplicateInstrumentResult(tab) {
+      return {
+        platby: { title: 'Platbu už jste autorizovali', message: 'Platbu ještě musí autorizovat ostatní.' },
+        tp: { title: 'Trvalý příkaz už jste autorizovali', message: 'Trvalý příkaz ještě musí autorizovat ostatní.' },
+        inkasa: { title: 'Povolení inkasa už jste autorizovali', message: 'Povolení inkasa ještě musí autorizovat ostatní.' },
+        batch: { title: 'Dávku už jste autorizovali', message: 'Dávku ještě musí autorizovat ostatní.' }
+      }[tab];
+    }
+
     function renderCreatedInstrumentResult(route) {
       let result;
       try { result = JSON.parse(localStorage.getItem('vavu_creation_result')); } catch (_) {}
@@ -7192,11 +7201,11 @@ unicode: "ebf6"
       const screen = document.getElementById('screen-' + route);
       const success = result.outcome === 'success';
       screen.querySelector('.result-heading').textContent = success ? { platby: 'Platbu jste plně autorizovali', tp: 'Vytvořili jste trvalý příkaz', inkasa: 'Povolili jste inkaso' }[result.tab] : { platby: 'Autorizovali jste platbu', tp: 'Autorizovali jste trvalý příkaz', inkasa: 'Autorizovali jste povolení inkasa' }[result.tab];
-      if (['forbidden', 'duplicate', 'error'].includes(result.outcome)) screen.querySelector('.result-heading').textContent = instrumentAuthorizationMessage(result.outcome);
-      const lead = screen.querySelector('.result-lead'); lead.textContent = success ? '' : result.outcome === 'partial' ? instrumentPartialResultMessage(result.tab) : 'Instrument zůstává k autorizaci.'; lead.hidden = success;
+      if (['forbidden', 'duplicate', 'error'].includes(result.outcome)) screen.querySelector('.result-heading').textContent = result.outcome === 'duplicate' ? duplicateInstrumentResult(result.tab).title : instrumentAuthorizationMessage(result.outcome);
+      const lead = screen.querySelector('.result-lead'); lead.textContent = success ? '' : result.outcome === 'partial' ? instrumentPartialResultMessage(result.tab) : result.outcome === 'duplicate' ? duplicateInstrumentResult(result.tab).message : 'Instrument zůstává k autorizaci.'; lead.hidden = success;
       screen.querySelector('.result-copy').hidden = true;
       const art = screen.querySelector('.result-illustration');
-      art.src = ['forbidden', 'error', 'duplicate'].includes(result.outcome) ? 'assets/batch-authorization-warning.png' : '../../design-system/design-system/assets/illustrations/success-light.png'; art.alt = '';
+      art.src = result.outcome === 'duplicate' ? 'assets/authorization-already-signed.png' : ['forbidden', 'error'].includes(result.outcome) ? 'assets/batch-authorization-warning.png' : '../../design-system/design-system/assets/illustrations/success-light.png'; art.alt = '';
     }
 
     function demoAuthorizationItems(tab) {
@@ -7355,10 +7364,10 @@ unicode: "ebf6"
     function renderAuthItemResult(tab, id) {
       const result = authItemResult();
       if (!result || result.id !== id || result.tab !== tab || result.user !== localStorage.getItem('vavu_selected_user')) { goTo(authDetailReturnRoute(tab, id), true); handleRouting(); return false; }
-      document.getElementById('auth-item-result-title').textContent = result.outcome === 'success' ? { platby: 'Platbu jste plně autorizovali', tp: 'Vytvořili jste trvalý příkaz', inkasa: 'Povolili jste inkaso' }[tab] : result.outcome === 'partial' ? { platby: 'Autorizovali jste platbu', tp: 'Autorizovali jste trvalý příkaz', inkasa: 'Autorizovali jste povolení inkasa' }[tab] : instrumentAuthorizationMessage(result.outcome);
+      document.getElementById('auth-item-result-title').textContent = result.outcome === 'success' ? { platby: 'Platbu jste plně autorizovali', tp: 'Vytvořili jste trvalý příkaz', inkasa: 'Povolili jste inkaso' }[tab] : result.outcome === 'partial' ? { platby: 'Autorizovali jste platbu', tp: 'Autorizovali jste trvalý příkaz', inkasa: 'Autorizovali jste povolení inkasa' }[tab] : result.outcome === 'duplicate' ? duplicateInstrumentResult(tab).title : instrumentAuthorizationMessage(result.outcome);
       const lead = document.getElementById('auth-item-result-message');
-      lead.hidden = result.outcome === 'success'; lead.textContent = result.outcome === 'partial' ? instrumentPartialResultMessage(tab) : result.outcome === 'duplicate' ? 'Požádejte dalšího oprávněného uživatele o podpis. Může se přihlásit po vašem odhlášení.' : 'Instrument zůstává k autorizaci.';
-      document.querySelector('#screen-auth-item-result .result-illustration').src = ['forbidden', 'duplicate', 'error'].includes(result.outcome) ? 'assets/batch-authorization-warning.png' : '../../design-system/design-system/assets/illustrations/success-light.png';
+      lead.hidden = result.outcome === 'success'; lead.textContent = result.outcome === 'partial' ? instrumentPartialResultMessage(tab) : result.outcome === 'duplicate' ? duplicateInstrumentResult(tab).message : 'Instrument zůstává k autorizaci.';
+      document.querySelector('#screen-auth-item-result .result-illustration').src = result.outcome === 'duplicate' ? 'assets/authorization-already-signed.png' : ['forbidden', 'error'].includes(result.outcome) ? 'assets/batch-authorization-warning.png' : '../../design-system/design-system/assets/illustrations/success-light.png';
     }
     function closeAuthItemResult() {
       const result = authItemResult(); goTo(result?.returnRoute || 'autorizace');
@@ -8279,9 +8288,9 @@ unicode: "ebf6"
       screen.dataset.outcome = outcome;
       document.getElementById('davkove-platby-vysledek-title').textContent = outcome === 'duplicate' ? 'Dávku už jste autorizovali' : duplicate ? instrumentAuthorizationMessage(outcome) : 'Autorizovali jste dávku';
       const message = document.getElementById('batch-result-message');
-      message.textContent = ['partial', 'duplicate'].includes(outcome) ? 'Požádejte dalšího oprávněného uživatele o podpis. Může se přihlásit po vašem odhlášení.' : '';
+      message.textContent = outcome === 'duplicate' ? duplicateInstrumentResult('batch').message : outcome === 'partial' ? 'Požádejte dalšího oprávněného uživatele o podpis. Může se přihlásit po vašem odhlášení.' : '';
       message.hidden = !message.textContent;
-      document.getElementById('batch-result-illustration').src = duplicate ? 'assets/batch-authorization-warning.png' : '../../design-system/design-system/assets/illustrations/success-light.png';
+      document.getElementById('batch-result-illustration').src = outcome === 'duplicate' ? 'assets/authorization-already-signed.png' : duplicate ? 'assets/batch-authorization-warning.png' : '../../design-system/design-system/assets/illustrations/success-light.png';
       document.getElementById('batch-result-overview').hidden = duplicate;
     }
 
