@@ -7071,6 +7071,7 @@ unicode: "ebf6"
 
     // Uložit vyplněná data z formuláře k autorizaci
     function saveToAuthorization() {
+      preservePendingInstruments('inkasa');
       const prijemce = document.getElementById('inp-prijemce').value || 'Neznámý příjemce';
       const nazev = document.getElementById('inp-nazev').value || 'Bez názvu';
       const limit = document.getElementById('inp-limit').value || '0';
@@ -7087,6 +7088,7 @@ unicode: "ebf6"
 
       localStorage.setItem('vavu_dynamic_inkaso_id', newInstrumentId());
       localStorage.setItem('vavu_dynamic_inkaso_created', JSON.stringify({ name: localStorage.getItem('vavu_selected_user'), at: new Date().toISOString() }));
+      appendCreatedPendingInstrument('inkasa', 'dynamic');
       // Překreslit dynamický obsah
       renderDynamicContent();
 
@@ -7238,6 +7240,28 @@ unicode: "ebf6"
       return items.map(item => ({ ...base, ...item }));
     }
 
+    function pendingInstrumentQueue(tab) {
+      return JSON.parse(localStorage.getItem('vavu_pending_items_' + tab) || '[]');
+    }
+    function clearLegacyPendingInstrument(tab) {
+      if (tab === 'platby') localStorage.removeItem('vavu_pending_payment');
+      if (tab === 'tp') localStorage.removeItem('vavu_pending_standing_order');
+      if (tab === 'inkasa') localStorage.removeItem('inkaso_saved_for_auth');
+    }
+    function preservePendingInstruments(tab) {
+      // Retain old IDs and fingerprints so existing signatures remain valid.
+      const items = authorizationItems(tab);
+      localStorage.setItem('vavu_pending_items_' + tab, JSON.stringify(items));
+      clearLegacyPendingInstrument(tab);
+    }
+    function appendCreatedPendingInstrument(tab, legacyId) {
+      const item = authorizationItems(tab).findLast(item => item.id === legacyId);
+      const created = { ...item, id: 'created_' + (item.authorizationId || newInstrumentId()) };
+      localStorage.setItem('vavu_pending_items_' + tab, JSON.stringify([...pendingInstrumentQueue(tab), created]));
+      clearLegacyPendingInstrument(tab);
+      return created.id;
+    }
+
     function authorizationItems(tab) {
       const base = { accountName: ACCOUNT_DATA.czk.name, accountNumber: ACCOUNT_DATA.czk.number };
       const items = [];
@@ -7255,7 +7279,7 @@ unicode: "ebf6"
       }
       let deleted = [];
       try { deleted = JSON.parse(localStorage.getItem(tab === 'tp' ? 'deleted_tp' : 'deleted_platby') || '[]'); } catch (_) {}
-      return items.filter(item => !deleted.includes(item.id)).map(item => ({ ...base, ...item }));
+      return [...pendingInstrumentQueue(tab), ...items].filter(item => !deleted.includes(item.id)).map(item => ({ ...base, ...item }));
     }
 
     function authorizationEmptyState(message, kind = 'platby') {
@@ -7544,6 +7568,9 @@ unicode: "ebf6"
 
     // Smazat vybrané položky z autorizace
     function removeAuthorizationItems(ids) {
+      ['platby', 'tp', 'inkasa'].forEach(tab => {
+        localStorage.setItem('vavu_pending_items_' + tab, JSON.stringify(pendingInstrumentQueue(tab).filter(item => !ids.includes(item.id))));
+      });
       const deletedPlatby = JSON.parse(localStorage.getItem('deleted_platby') || '[]');
       const deletedTp = JSON.parse(localStorage.getItem('deleted_tp') || '[]');
 
@@ -8767,6 +8794,8 @@ unicode: "ebf6"
       if (request?.kind === 'selected-authorization') { closeAllModalsElements(); completeBulkAuthorization(request); return; }
 
       closeAllModalsElements();
+      const creationTab = directDebitFlowActive ? 'inkasa' : standingOrderFlowActive ? 'tp' : 'platby';
+      preservePendingInstruments(creationTab);
       if (directDebitFlowActive) {
         const data = getDirectDebitData();
         localStorage.setItem('inkaso_prijemce', data.recipient);
@@ -8778,10 +8807,10 @@ unicode: "ebf6"
         localStorage.setItem('inkaso_saved_for_auth', '1');
         localStorage.setItem('vavu_dynamic_inkaso_id', newInstrumentId());
         localStorage.setItem('vavu_dynamic_inkaso_created', JSON.stringify({ name: localStorage.getItem('vavu_selected_user'), at: new Date().toISOString() }));
-        finishCreatedInstrument('inkasa', 'dynamic', 'inkaso-vysledek');
+        finishCreatedInstrument('inkasa', appendCreatedPendingInstrument('inkasa', 'dynamic'), 'inkaso-vysledek');
       } else if (standingOrderFlowActive) {
         localStorage.setItem('vavu_pending_standing_order', JSON.stringify({ ...getStandingOrderData(), created: { name: localStorage.getItem('vavu_selected_user'), at: new Date().toISOString() }, authorizationId: newInstrumentId(), status: 'K autorizaci' }));
-        finishCreatedInstrument('tp', 'tp_auth_created', 'tp-vysledek');
+        finishCreatedInstrument('tp', appendCreatedPendingInstrument('tp', 'tp_auth_created'), 'tp-vysledek');
       } else {
         if (!batchFlowActive) {
           const recipient = localStorage.getItem(paymentStorageKey('recipient')) || 'Nová platba';
@@ -8796,7 +8825,7 @@ unicode: "ebf6"
             amount: formatStandingOrderAmount(amount, currency)
           }));
         }
-        finishCreatedInstrument('platby', 'platba_auth_created', 'platba-vysledek');
+        finishCreatedInstrument('platby', appendCreatedPendingInstrument('platby', 'platba_auth_created'), 'platba-vysledek');
       }
     }
 
