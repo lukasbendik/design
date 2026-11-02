@@ -5652,14 +5652,21 @@ unicode: "ebf6"
       return dates[id] ? demoAuthorizationHistory(dates[id], false) : null;
     }
 
+    function historyDateDaysAgo(days) {
+      const date = new Date(getPragueCalendarDate() + 'T12:00:00Z');
+      date.setUTCDate(date.getUTCDate() - days);
+      return date.toISOString().slice(0, 10);
+    }
+    function transactionDateLabel(iso) {
+      if (iso === historyDateDaysAgo(0)) return 'Dnes';
+      if (iso === historyDateDaysAgo(1)) return 'Včera';
+      return new Intl.DateTimeFormat('cs-CZ', { day: 'numeric', month: 'numeric', year: 'numeric', timeZone: 'Europe/Prague' }).format(new Date(iso + 'T12:00:00Z'));
+    }
+
     function buildTransactionHistory(currency) {
       const isEur = currency === 'EUR';
-      const dates = ['Dnes', 'Včera', '26. 8.', '25. 8.', '22. 8.', '21. 8.', '20. 8.', '19. 8.', '18. 8.', '15. 8.'];
-      const today = getPragueCalendarDate();
-      const previousDay = new Date(today + 'T12:00:00Z');
-      previousDay.setUTCDate(previousDay.getUTCDate() - 1);
-      const historyYear = Number(today.slice(0, 4)) - (Number(today.slice(5, 7)) < 8 ? 1 : 0);
-      const datesISO = [today, previousDay.toISOString().slice(0, 10), ...[26, 25, 22, 21, 20, 19, 18, 15].map(day => `${historyYear}-08-${String(day).padStart(2, '0')}`)];
+      const datesISO = Array.from({ length: 10 }, (_, days) => historyDateDaysAgo(days));
+      const dates = datesISO.map(transactionDateLabel);
       const czkTransactions = [
         ['Vodárna Kárany', 'Údržba čerpací stanice'],
         ['Povodí Vltavy, s. p.', 'Fakturace za odběr vody'],
@@ -5729,9 +5736,9 @@ unicode: "ebf6"
         ['Včera', 'Účet CZK', 'Převod do rezervy na obnovu sítě', 450000, recent],
         ['Včera', 'Provozní rezerva', 'Odložení volných provozních prostředků', 250000, recent],
         ['Včera', 'Účet CZK', 'Doplnění provozních prostředků', -100000, recent],
-        ['3. 7.', 'Účet CZK', 'Rezerva na obnovu vodovodní sítě', 1250000, '2026-07-03'],
-        ['2. 7.', 'Účet CZK', 'Převod do provozní rezervy', 200000, '2026-07-02'],
-        ['1. 7.', 'Účet CZK', 'Čerpání provozní rezervy', -200000, '2026-07-01']
+        [transactionDateLabel(historyDateDaysAgo(2)), 'Účet CZK', 'Rezerva na obnovu vodovodní sítě', 1250000, historyDateDaysAgo(2)],
+        [transactionDateLabel(historyDateDaysAgo(3)), 'Účet CZK', 'Převod do provozní rezervy', 200000, historyDateDaysAgo(3)],
+        [transactionDateLabel(historyDateDaysAgo(4)), 'Účet CZK', 'Čerpání provozní rezervy', -200000, historyDateDaysAgo(4)]
       ];
       SAVINGS_ACCOUNT.transactions = rows.map(([date, name, note, amount, iso], index) => [date, name, note, new Intl.NumberFormat('cs-CZ', {minimumFractionDigits:2, maximumFractionDigits:2}).format(amount) + ' Kč', amount > 0 ? 'prichozi' : 'odchozi', iso, Math.abs(amount), { id: 'seed_savings_' + index, recipient: ACCOUNT_DATA.czk.number, message: note, description: note, ...demoAuthorizationHistory(iso) }]);
     })();
@@ -5873,14 +5880,15 @@ unicode: "ebf6"
       const posted = completedAccountInstruments('platby', accountKey).map(entry => {
         const item = entry.item;
         const validDate = entry.at && Number.isFinite(Date.parse(entry.at));
-        const iso = validDate ? getPragueCalendarDate(new Date(entry.at)) : null;
-        const date = iso === getPragueCalendarDate() ? 'Dnes' : iso ? new Intl.DateTimeFormat('cs-CZ', {day:'numeric', month:'numeric', year:'numeric', timeZone:'Europe/Prague'}).format(new Date(entry.at)) : item.date || 'Datum není uložené';
+        const demoOffset = { platba_auth_1: 1, platba_auth_2: 2, platba_auth_3: 3 }[item.id];
+        const iso = demoOffset ? historyDateDaysAgo(demoOffset) : validDate ? getPragueCalendarDate(new Date(entry.at)) : null;
+        const date = iso ? transactionDateLabel(iso) : item.date || 'Datum není uložené';
         const money = bulkMoney(item.amount);
         const explicit = item.authorizationAmount ? bulkMoney(item.authorizationAmount) : null;
         const accountAmount = money.currency === currency ? Math.abs(money.cents) / 100 : explicit?.currency === currency ? Math.abs(explicit.cents) / 100 : Number.isFinite(item.accountDebitCents) ? Math.abs(item.accountDebitCents) / 100 : null;
         return [date, item.name || item.recipient, item.message || item.description || item.desc || '', '-' + String(item.amount || '').replace(/^[−-]/, ''), 'odchozi', iso, accountAmount, item];
       });
-      return [...posted, ...account.transactions];
+      return [...posted, ...account.transactions].map(transaction => transaction[5] ? [transactionDateLabel(transaction[5]), ...transaction.slice(1)] : transaction).sort((a, b) => String(b[5] || '').localeCompare(String(a[5] || '')));
     }
 
     function renderAccountDetail(accountKey = localStorage.getItem('vavu_selected_account') || 'czk') {
